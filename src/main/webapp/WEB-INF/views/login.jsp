@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!doctype html>
@@ -10,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Web Panel Login</title>
+<title>RTO Login</title>
 <meta name="description" content="Web Panel Login">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -66,11 +65,8 @@
 				<form action="loginProcess" method="post">
 					<div class="col-lg-12">
 						<div class="card">
-							<spring:message code="label.login" var="login" />
 
-							<div class="card-header" align="center">
-								<spring:message code="label.login" />
-							</div>
+							<div class="card-header" align="center">Login</div>
 							<div class="card-body card-block">
 
 								<c:if test="${not empty errorMessage}">
@@ -83,10 +79,8 @@
 										<div class="input-group-addon">
 											<i class="fa fa-user"></i>
 										</div>
-										<spring:message code="label.userName" var="userName" />
-
 										<input type="text" id="username" name="username"
-											placeholder="${userName}" class="form-control"
+											placeholder="User Name" class="form-control"
 											autocomplete="off">
 									</div>
 								</div>
@@ -96,17 +90,14 @@
 										<div class="input-group-addon">
 											<i class="fa fa-asterisk"></i>
 										</div>
-										<spring:message code="label.password" var="password" />
-
 										<input type="password" id="password" name="password"
-											placeholder="${password}" class="form-control"
+											placeholder="Password" class="form-control"
 											autocomplete="off">
 									</div>
 								</div>
 								<button type="submit" class="btn btn-primary"
 									style="align-content: center; width: 226px; margin-left: 80px;">
-									<spring:message code="label.login" />
-								</button>
+									Login</button>
 							</div>
 						</div>
 					</div>
