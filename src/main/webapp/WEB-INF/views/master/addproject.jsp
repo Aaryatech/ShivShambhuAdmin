@@ -55,7 +55,7 @@
 }
 </style>
 </head>
-<body >
+<body>
 
 
 	<!-- Left Panel -->
@@ -79,113 +79,68 @@
 							<strong>${title}</strong>
 						</div>
 						<div class="card-body card-block">
-							<form
-								action="${pageContext.request.contextPath}/insertPlant"
-								method="post" >
+							<form action="${pageContext.request.contextPath}/insertProject"
+								method="post">
 
 								<div class="row">
 
-									<div class="col-md-2">Select Company</div>
-									
+									<div class="col-md-2">Select Plant</div>
+
 									<div class="col-md-4">
-										<select id="compId" name="compId"  
-											class="standardSelect" tabindex="1" required>
-											<c:forEach items="${compList}" var="comp">
-										<option  value="${comp.companyId}">${comp.compName}</option>
+										<select id="plant_id" name="plant_id" class="standardSelect"
+											tabindex="1" required>
+											<c:forEach items="${plantList}" var="plant">
+												<option value="${plant.plantId}">${plant.plantName}</option>
 											</c:forEach>
 										</select>
 									</div>
-								
-									<div class="col-md-2">Plant Name</div>
+
+									<div class="col-md-2">Select Customer</div>
+
 									<div class="col-md-4">
-										<input type="text" id="plant_name" name="plant_name" class="form-control" required 
-										style="width: 100%;">
-									</div>
-
-								</div>
-										<input type="hidden" name="plant_id" id="plant_id" value="0">
-
-								
-																<div class="form-group"></div>
-								
-								<div class="row">
-									<div class="col-md-2">Telephone No</div>
-									<div class="col-md-4">
-										<input type="text" id="tel_no" name="tel_no" required
-											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter tel no')"
-											maxlength="10" pattern="[0-9]+" value="${editComp.contactNo2}"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
-									</div>
-
-									<div class="col-md-2">Mobile No</div>
-									<div class="col-md-4">
-										<input type="text" id="mob_no" name="mob_no" required
-											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter mob no')"
-											maxlength="10" value="${editComp.contactNo1}"
-											pattern="[0-9]{10}"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
-									</div>
-								</div>
-
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Email Id</div>
-									<div class="col-md-4">
-										<input type="text" id="email" name="email" required
-											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter email')"
-											maxlength="50" value="${editComp.email1}"
-											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
-									</div>
-
-									<div class="col-md-2">FAX No</div>
-									<div class="col-md-4">
-										<input type="text" id="fax" name="fax" required
-											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter FAX no')"
-											maxlength="20" value="${editComp.faxNo1}"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
-									</div>
-								</div>
-								<div class="form-group"></div>
-								
-								<div class="row">
-
-									<div class="col-md-2">Plant Address</div>
-									<div class="col-md-10">
-										<input type='text' id="plant_add" name="plant_add" 
-										style="width: 100%;" value="${getWork.vehicalNo}" required/>
-									</div>
-
-								</div>
-								<div class="form-group"></div>
-
-								<div class="row">
-
-									<div class="col-md-2">Select Plant Head</div>
-									
-									<div class="col-md-10">
-										<select id="plant_head" name="plant_head"   style="width: 100%;"
-											class="standardSelect" tabindex="1" required>
-											<c:forEach items="${usrList}" var="usr">
-										<option  value="${usr.userId}">${usr.usrName}</option>
+										<select id="cust_id" name="cust_id" class="standardSelect"
+											tabindex="1" required>
+											<c:forEach items="${custList}" var="cust">
+												<option value="${cust.custId}">${cust.custName}</option>
 											</c:forEach>
 										</select>
 									</div>
+
+								</div>
+																	<input type="hidden" name="proj_id" id="proj_id" value="0">
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Project Name</div>
+									<div class="col-md-4">
+										<input type="text" id="proj_name" name="proj_name"
+											class="form-control" required style="width: 100%;">
 									</div>
 
-																<div class="form-group"></div>
+									<div class="col-md-2">Project Location</div>
+
+									<div class="col-md-4">
+										<input type="text" id="proj_loc" name="proj_loc"
+											class="form-control" required style="width: 100%;">
+									</div>
+
+									</div>
+									<div class="form-group"></div>
+										<div class="row">
+									<div class="col-md-2">Start Date</div>
+									<div class="col-md-4">
+										<input type="text" id="start_date" name="start_date"
+											class="form-control" required style="width: 100%;">
+									</div>
+
+									<div class="col-md-2">End Date</div>
+
+									<div class="col-md-4">
+										<input type="text" id="end_date" name="end_date"
+											class="form-control" required style="width: 100%;">
+									</div>
+
+									</div>
+								<div class="form-group"></div>
 
 
 								<div class="col-lg-12" align="center">
@@ -363,7 +318,7 @@
 		});
 	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 
 function callSel() {
 	//alert("Call me");
@@ -445,7 +400,7 @@ else if(workType==5){
 
 }
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 function onLoadCall() {
 	//alert("onload Call")
 	var workType=${getWork.workTypeTd};
@@ -548,7 +503,7 @@ else if(workType==5){
 
 </script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
   $(function() {
    
     	// document.getElementById('ac').style.color = 'black';
@@ -610,93 +565,20 @@ else if(workType==5){
      
   });
 </script>
-<!-- 	<script type="text/javascript">
-$(document).ready(function() { 
-	$('#workTypeId').change(
-			function() {
-				//alert("Hi");
-				
-				var workType = document.getElementById("workTypeId").value;
-				if(workType==1){
-					
-					document.getElementById('rc_book_div').style.display = "flow-root";
-					document.getElementById('ins1_div').style.display = "flow-root";
-					document.getElementById('ins2_div').style.display = "flow-root";
-					document.getElementById('puc_div').style.display = "flow-root";
-					document.getElementById('add_pf_div').style.display = "flow-root";
-				
-					document.getElementById('bank_noc_div').style = "display:none";
-					document.getElementById('bank_letter_div').style = "display:none";
-					document.getElementById('form_17_div').style = "display:none";
-					document.getElementById('orig_lic_div').style = "display:none";
-
-				}
-				
-			if(workType==2){
-					
-					document.getElementById('rc_book_div').style.display = "flow-root";
-					document.getElementById('ins1_div').style.display = "flow-root";
-					document.getElementById('ins2_div').style.display = "flow-root";
-					document.getElementById('puc_div').style.display = "flow-root";
-					document.getElementById('bank_noc_div').style = "flow_root";
-
-					document.getElementById('add_pf_div').style.display = "display:none";
-				
-					document.getElementById('bank_letter_div').style = "display:none";
-					document.getElementById('form_17_div').style = "display:none";
-					document.getElementById('orig_lic_div').style = "display:none";
-
-				}
-			
-			if(workType==3){
-				
-				document.getElementById('rc_book_div').style.display = "flow-root";
-				document.getElementById('ins1_div').style.display = "flow-root";
-				document.getElementById('ins2_div').style.display = "flow-root";
-				document.getElementById('puc_div').style.display = "flow-root";
-				document.getElementById('bank_letter_div').style = "flow_root";
-				document.getElementById('form_17_div').style = "flow_root";
-
-				document.getElementById('add_pf_div').style.display = "display:none";
-				document.getElementById('orig_lic_div').style = "display:none";
-				document.getElementById('bank_noc_div').style =  "display:none";
-
-			}if(workType==4){
-				
-				document.getElementById('rc_book_div').style.display = "flow-root";
-				document.getElementById('ins1_div').style.display = "flow-root";
-				document.getElementById('ins2_div').style.display = "flow-root";
-				document.getElementById('puc_div').style.display = "flow-root";
-				document.getElementById('add_pf_div').style.display = "flow-root";
-			
-				document.getElementById('bank_noc_div').style = "display:none";
-				document.getElementById('bank_letter_div').style = "display:none";
-				document.getElementById('form_17_div').style = "display:none";
-				document.getElementById('orig_lic_div').style = "display:none";
-
-			}
-
-if(workType==5	){
-				
-				document.getElementById('rc_book_div').style.display = "display:none";
-				document.getElementById('ins1_div').style.display = "display:none";
-				document.getElementById('ins2_div').style.display ="display:none";
-				document.getElementById('puc_div').style.display = "display:none";
-				document.getElementById('add_pf_div').style.display = "display:none";
-			
-				document.getElementById('bank_noc_div').style = "display:none";
-				document.getElementById('bank_letter_div').style = "display:none";
-				document.getElementById('form_17_div').style = "display:none";
-				document.getElementById('orig_lic_div').style = "flow-root";
-
-			}
-
-			});
-});
-
-</script> -->
 
 
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+  $( function() {
+	  $('input[id$=start_date]').datepicker({
+		    dateFormat: 'dd-mm-yy'
+		});
+	  
+	  $('input[id$=end_date]').datepicker({
+		    dateFormat: 'dd-mm-yy'
+		});
+  } );
+  </script>
 
 </body>
 </html>

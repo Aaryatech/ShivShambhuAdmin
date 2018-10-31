@@ -25,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.Plant;
+import com.ats.ssgs.model.master.User;
 
 @Controller
 @Scope("session")
@@ -32,7 +34,8 @@ public class MasterController {
 
 	
 	RestTemplate rest = new RestTemplate();
-	
+	List<User> usrList;
+	List<Plant> plantList;
 	
 	@RequestMapping(value = "/showAddPlant", method = RequestMethod.GET)
 	public ModelAndView showAddPlant(HttpServletRequest request, HttpServletResponse response) {
@@ -43,6 +46,22 @@ public class MasterController {
 			model = new ModelAndView("master/addplant");
 		
 			model.addObject("title","Add Plant");
+			
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllUserList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			
+			model.addObject("plantList",plantList);
+			
+			User[] usrArray = rest.getForObject(Constants.url + "getAllUserList", User[].class);
+			usrList = new ArrayList<User>(Arrays.asList(usrArray));
+			
+			model.addObject("usrList",usrList);
+			
+			
+			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
+			compList = new ArrayList<Company>(Arrays.asList(compArray));
+
+			model.addObject("compList",compList);
 			
 		} catch (Exception e) {
 
@@ -55,7 +74,78 @@ public class MasterController {
 		return model;
 
 	}
+	//insertPlant
 	
+	@RequestMapping(value = "/insertPlant", method = RequestMethod.POST)
+	public String insertPlant(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			
+			System.err.println("Inside insert plant method");
+
+			int plantId = 0;
+			try {
+				plantId = Integer.parseInt(request.getParameter("plant_id"));
+			} catch (Exception e) {
+				plantId = 0;
+			}
+
+			int compId = Integer.parseInt(request.getParameter("compId"));
+			
+			System.err.println("Comp Id " +compId);
+			String plantName = request.getParameter("plant_name");
+
+			String telNo = request.getParameter("tel_no");
+			String mobNo = request.getParameter("mob_no");
+			String faxNo = request.getParameter("fax");
+			String email = request.getParameter("email");
+			String plantAdd = request.getParameter("plant_add");
+
+			int plantHeadId = Integer.parseInt(request.getParameter("plant_head"));
+
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cal = Calendar.getInstance();
+
+			String curDate=dateFormat.format(new Date());
+			
+			Plant plant=new Plant();
+			String na="NA";
+			plant.setCompanyId(compId);
+			plant.setDelStatus(0);
+			plant.setExDate1(curDate);
+			plant.setExDate2(curDate);
+			plant.setExVar1(na);
+			plant.setExVar2(na);
+			plant.setExVar3(na);
+			plant.setIsUsed(0);
+			plant.setPlantAddress1(plantAdd);
+			plant.setPlantAddress2(na);
+			plant.setPlantContactNo1(mobNo);
+			plant.setPlantContactNo2(mobNo);
+			plant.setPlantEmail1(email);
+			
+			plant.setPlantEmail2(na);
+			plant.setPlantFax1(faxNo);
+			plant.setPlantFax2(na);
+			plant.setPlantHead(plantHeadId);
+			plant.setPlantId(plantId);
+			plant.setPlantName(plantName);
+			
+			System.err.println("plant " + plant.toString());
+
+			// saveItem
+
+			Plant plantInsertRes = rest.postForObject(Constants.url + "savePlant", plant, Plant.class);
+			System.err.println("plantInsertRes " + plantInsertRes.toString());
+
+		}catch (Exception e) {
+			System.err.println("EXCE in insertPlant " +e.getMessage());
+			e.printStackTrace();
+			
+		}
+		return null;
+		
+	}
 	
 	@RequestMapping(value = "/showAddCompany", method = RequestMethod.GET)
 	public ModelAndView showAddCompany(HttpServletRequest request, HttpServletResponse response) {
@@ -198,7 +288,7 @@ public class MasterController {
 	
 	
 	@RequestMapping(value = "/editCompany/{compId}", method = RequestMethod.GET)
-	public String showEditCompany(HttpServletRequest request, HttpServletResponse response,@PathVariable int compId) {
+	public ModelAndView showEditCompany(HttpServletRequest request, HttpServletResponse response,@PathVariable int compId) {
 
 		ModelAndView model = null;
 		try {
@@ -223,7 +313,7 @@ public class MasterController {
 
 		}
 
-		return "redirect:/showCompList";
+		return model;
 	}
 	
 	
@@ -246,6 +336,44 @@ public class MasterController {
 		}
 
 		return  "redirect:/showCompList";
+	}
+	
+	@RequestMapping(value = "/showAddProject", method = RequestMethod.GET)
+	public ModelAndView showAddProject(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			
+			model = new ModelAndView("master/addproject");
+		
+			model.addObject("title","Add Project");
+			
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllUserList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			
+			model.addObject("plantList",plantList);
+			
+			User[] usrArray = rest.getForObject(Constants.url + "getAllUserList", User[].class);
+			usrList = new ArrayList<User>(Arrays.asList(usrArray));
+			
+			model.addObject("usrList",usrList);
+			
+			
+			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
+			compList = new ArrayList<Company>(Arrays.asList(compArray));
+
+			model.addObject("compList",compList);
+			
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddPlant at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
 	}
 
 	
