@@ -54,6 +54,23 @@
 								
 								
 					</ul></li>
+					
+					
+					
+					
+				<li class="menu-item-has-children dropdown"><a href="#"
+					class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="true"> <i class="menu-icon fa fa-table"></i>
+						Transaction
+				</a>
+					<ul class="sub-menu children dropdown-menu ">
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddEnquiry">Add
+								Enquiry</a></li>
+
+								
+								
+					</ul></li>
 
 			<%-- 	<li class="menu-item-has-children dropdown"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"

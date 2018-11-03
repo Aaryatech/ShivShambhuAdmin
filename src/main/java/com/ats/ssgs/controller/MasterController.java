@@ -1,5 +1,6 @@
 package com.ats.ssgs.controller;
 
+import java.awt.datatransfer.FlavorEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.fileupload.MultipartStream.ItemInputStream;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -28,9 +30,12 @@ import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.CustType;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.master.Setting;
+import com.ats.ssgs.model.master.Tax;
+import com.ats.ssgs.model.master.Uom;
 import com.ats.ssgs.model.master.User;
 
 @Controller
@@ -261,6 +266,8 @@ public class MasterController {
 	List<Cust> custList;
 	List<CustType> custTypeList;
 	List<Setting> settingList;
+	private ArrayList<Uom> uomList;
+	private ArrayList<Tax> taxList;
 
 	@RequestMapping(value = "/showCompList", method = RequestMethod.GET)
 	public ModelAndView showCompList(HttpServletRequest request, HttpServletResponse response) {
@@ -646,6 +653,16 @@ public class MasterController {
 			custTypeList = new ArrayList<CustType>(Arrays.asList(custTypeArray));
 			System.err.println("custList In showAddPlant at Master Contr" + custTypeList);
 			model.addObject("custTypeList", custTypeList);
+			
+			Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+			model.addObject("uomList", uomList);
+
+			Tax[] taxArray = rest.getForObject(Constants.url + "getTaxList", Tax[].class);
+			taxList = new ArrayList<Tax>(Arrays.asList(taxArray));
+			model.addObject("taxList", taxList);
+			
+			
 
 		} catch (Exception e) {
 
@@ -676,32 +693,106 @@ public class MasterController {
 
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
 
-			int custType = Integer.parseInt(request.getParameter("cust_type"));
+			int itemType = Integer.parseInt(request.getParameter("item_type"));
 
-			String custName = request.getParameter("cust_name");
+			String itemName = request.getParameter("item_name");
 
-			System.err.println("cust Name " + custName);
+			System.err.println("item Name " + itemName);
 			
-			String mobNo = request.getParameter("mob_no");
+			String itemCode = request.getParameter("item_code");
 //
+			int uomId = Integer.parseInt(request.getParameter("uomId"));
 
-			String refName = request.getParameter("ref_name");
-			String email = request.getParameter("email");
+			int taxId = Integer.parseInt(request.getParameter("taxId"));
 
-			String panNo = request.getParameter("pan_no");
 
-			String gstNo = request.getParameter("gst_no");
+			String shortName = request.getParameter("short_name");
+			String rate = request.getParameter("rate");
 
-			int custCate = Integer.parseInt(request.getParameter("cust_cate"));
-			System.err.println("custCate " + custCate);
-			String custAdd = request.getParameter("cust_add");
+			 String actWeight = request.getParameter("act_weight");
 
-			String dob = request.getParameter("dob");
+			String baseWeight = request.getParameter("base_weight");
 
-			String custCode = request.getParameter("cust_code");
+			String[] vendorIds = request.getParameterValues("vendor_ids");
+
+			String dispLimit = request.getParameter("disp_limit");
+
+			String minStock = request.getParameter("min_stock");
+			String maxStock = request.getParameter("max_stock");
+			String rolStock = request.getParameter("rol_stock");
+			
+			String pminStock = request.getParameter("pmin_stock");
+			String pmaxStock = request.getParameter("pmax_stock");
+			String prolStock = request.getParameter("prol_stock");
+			
+			int isCritItem=Integer.parseInt(request.getParameter("is_crit"));
+			
+			int sortNo=Integer.parseInt(request.getParameter("sort_no"));
+			
+			
+			Item item=new Item();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Calendar cal = Calendar.getInstance();
+
+			String curDate = dateFormat.format(new Date());
+			
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < vendorIds.length; i++) {
+				sb = sb.append(vendorIds[i] + ",");
+
+			}
+
+			String vendors = sb.toString();
+			vendors = vendors.substring(0, vendors.length() - 1);
+			System.out.println("vendors" + vendors);
+
+			item.setActualWeight(Float.parseFloat(actWeight));
+			item.setBaseWeight(Float.parseFloat(baseWeight));
+			item.setDelStatus(0);
+			item.setDispatchLimit(Float.parseFloat(dispLimit));
+			item.setExDate1(curDate);
+			item.setExDate2(curDate);
+			item.setIsCritical(isCritItem);
+			item.setItemCode(itemCode);
+			item.setItemId(itemId);
+			item.setItemImage("NA");
+			item.setItemIsUsed(0);
+			item.setItemName(itemName);
+			
+			item.setItemRate1(Float.parseFloat(rate));
+			item.setItemRate2(Float.parseFloat(rate));
+			item.setItemRate3(Float.parseFloat(rate));
+			item.setItemRate4(Float.parseFloat(rate));
+			
+			item.setItemType(itemType);
+			item.setMaxStock(Float.parseFloat(maxStock));
+			item.setMinStock(Float.parseFloat(minStock));
+			item.setPlantId(plantId);
+			item.setPlantMaxStock(Float.parseFloat(pmaxStock));
+			
+			item.setPlantMinStock(Float.parseFloat(pminStock));
+			
+			item.setPlantRolStock(Float.parseFloat(prolStock));
+			item.setRolStock(Float.parseFloat(rolStock));
+			item.setShortName(shortName);
+			item.setSortNo(sortNo);
+			item.setTaxId(taxId);
+			item.setUomId(uomId);
+			item.setVendorIds(vendors);
+			
+			item.setExVar1("NA");
+			item.setExVar2("NA");
+			item.setExVar3("NA");
+			
+			Item itemInsertRes = rest.postForObject(Constants.url + "saveItem", item, Item.class);
+
 
 		}catch (Exception e) {
-			// TODO: handle exception
+
+			System.err.println("Exce in item Insert Res " +e.getMessage());
+			e.printStackTrace();
+
 		}
 		return null;
 	}

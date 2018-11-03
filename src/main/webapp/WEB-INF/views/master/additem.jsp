@@ -145,8 +145,8 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select uom')"
 											onchange="try{setCustomValidity('')}catch(e){}">
-											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+											<c:forEach items="${uomList}" var="uom">
+												<option value="${uom.uomId}">${uom.uomName}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -158,8 +158,8 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select tax')"
 											onchange="try{setCustomValidity('')}catch(e){}">
-											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+											<c:forEach items="${taxList}" var="tax">
+												<option value="${tax.taxId}">${tax.taxName}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -254,7 +254,7 @@
 									</div>
 
 								</div>
-								
+
 								<div class="form-group"></div>
 								<div class="row">
 
@@ -264,13 +264,13 @@
 										<input type="text" id="pmin_stock" name="pmin_stock"
 											class="form-control" style="width: 100%;">
 									</div>
-									<div class="col-md-2"> Plant Max Stock</div>
+									<div class="col-md-2">Plant Max Stock</div>
 
 									<div class="col-md-2">
 										<input type="text" id="pmax_stock" name="pmax_stock"
 											class="form-control" style="width: 100%;">
 									</div>
-									<div class="col-md-2"> Plant ROL Stock</div>
+									<div class="col-md-2">Plant ROL Stock</div>
 
 									<div class="col-md-2">
 										<input type="text" id="prol_stock" name="prol_stock"
@@ -278,25 +278,28 @@
 									</div>
 
 								</div>
-<div class="form-group"></div>
+								<div class="form-group"></div>
 								<div class="row">
 
 									<div class="col-md-2">Critical Item ?</div>
 
 
 									<div class="col-md-1">
-										Yes <input type="radio"  name="is_crit" id="is_crit"
-											value="1">
+										Yes <input type="radio" name="is_crit" id="is_crit" value="1">
 									</div>
 
 									<div class="col-md-1">
-										NO <input type="radio" checked name="is_crit" id="is_crit" value="0">
+										NO <input type="radio" checked name="is_crit" id="is_crit"
+											value="0">
 									</div>
 
 									<div class="col-md-2"></div>
+									<div class="col-md-2">Sort No</div>
 
-
-									
+									<div class="col-md-4">
+										<input type="text" id="sort_no" name="sort_no"
+											class="form-control" style="width: 100%;">
+									</div>
 
 								</div>
 
@@ -392,7 +395,6 @@
 				dateFormat : 'dd-mm-yy'
 			});
 
-			
 		});
 	</script>
 
