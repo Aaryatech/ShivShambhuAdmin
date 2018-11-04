@@ -8,14 +8,22 @@ public class TempEnqItem {
 	
 	private float enqQty;
 	
-
 	private int uomId;
 
 	private String uomName;
 	
 	private String itemEnqRemark;
 	
+	private int isDuplicate;
 	
+	
+	public int getIsDuplicate() {
+		return isDuplicate;
+	}
+
+	public void setIsDuplicate(int isDuplicate) {
+		this.isDuplicate = isDuplicate;
+	}
 
 	public String getItemEnqRemark() {
 		return itemEnqRemark;

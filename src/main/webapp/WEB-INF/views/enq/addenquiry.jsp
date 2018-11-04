@@ -17,7 +17,7 @@
 
 <c:url var="addEnqItem" value="/addEnqItem" />
 
-
+<c:url var="getItemForEdit" value="/getItemForEdit" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -149,7 +149,7 @@
 									</div>
 
 								</div>
-
+<input type="hidden" id="isEdit" name="isEdit" value="0">
 								<div class="form-group"></div>
 								<section class="form-control" style="background: orange;">
 
@@ -226,7 +226,7 @@
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
 												<th style="text-align: center">Qty</th>
-												<th style="text-align: center">Action</th>
+												<th style="text-align: center; width: 5%;">Action</th>
 
 											</tr>
 										</thead>
@@ -343,7 +343,7 @@
 		//alert("in getData()");
 			var plantId = document.getElementById("plant_id").value;
 			//alert("plant" +plantId);
-			
+			document.getElementById("isEdit").value=0;
 			var valid = true;
 			if (plantId == null || plantId == "") {
 				valid = false;
@@ -470,9 +470,18 @@
 		var uomName=$("#uomId option:selected").html();
 
 		var qty=document.getElementById("qty").value;
+		var isEdit=document.getElementById("isEdit").value;
+		
+		
 
 		var itemRemark=document.getElementById("item_remark").value;
 		
+		//var x=validate(qty);
+	//	alert("x== " +x);
+		
+	var x=isNaN(qty)
+	alert("x= " +x);
+	if(x==false){
 		//alert("Itemm Name  " +itemName + "uomName " +uomName);
 //alert("itemId" +itemId + " uomId" +uomId + " qty " +qty + "remark  " +itemRemark);
 
@@ -480,8 +489,9 @@
 		.getJSON(
 				'${addEnqItem}',
 				{
-
-					itemId : itemId,
+					isEdit :isEdit,
+					key  :-1,
+ 					itemId : itemId,
 					itemName : itemName,
 					uomId : uomId,
 					uomName : uomName,
@@ -500,8 +510,12 @@
 	
 					$.each(data, function(i, v) {
 						//alert(v.itemName)
-						
-			var str = '<input  type="button" value="callEdit" onclick="callEdit('+v.itemId+')" style="width:30%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+')" style="width:30%;"/> ';
+						if(v.isDuplicate==1){
+							alert("Item Already Added in Enquiry");
+						}
+			//var str = '<input  type="button"  class="fa  fa-stack-exchange" onclick="callEdit('+v.itemId+','+i+')" style="width:100%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:100%;"/> ';
+			
+			var str='<a href="#" class="action_btn" onclick="callDelete('+v.itemId+','+i+')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('+v.itemId+','+i+')"><i class="fa fa-edit"></i></a>'
 
 						dataTable.row.add([ i + 1, v.itemName, v.uomName,v.enqQty,str]).draw();
 					});
@@ -513,12 +527,74 @@
 		document.getElementById("uomId").options.selectedIndex = "0";
 		$("#uomId").trigger("chosen:updated");
 		$("#item_name").trigger("chosen:updated");
-	
+		document.getElementById("isEdit").value=0;
+	}//end of if
+	else{
+		alert("Please Enter Valid Quantity");
+		document.getElementById("qty").focus();
+	}
 	}
 	
-	function callEdit(itemId){
+	function callEdit(itemId,index){
 		
-		alert("callEdit" +itemId);
+		//alert("id" +index);
+		
+		
+		$
+		.getJSON(
+				'${getItemForEdit}',
+				{
+					itemId : itemId,
+					index : index,
+					ajax : 'true',
+
+				},
+
+				function(data) {
+
+					document.getElementById("uomId").value =data.uomId;
+					$("#uomId").trigger("chosen:updated");
+					document.getElementById("qty").value=data.enqQty;
+					document.getElementById("item_remark").value=data.itemEnqRemark;
+					document.getElementById("item_name").value=data.itemId;
+					$("#item_name").trigger("chosen:updated");
+					document.getElementById("isEdit").value=1;
+
+				});
+		
+		
+		
+		
+	}
+	
+	function callDelete(itemId,index){
+		document.getElementById("isEdit").value=0;
+
+		$
+		.getJSON(
+				'${addEnqItem}',
+				{isEdit :0,
+					key  :index,
+					
+					ajax : 'true',
+
+				},
+
+				function(data) {
+//alert(data);table
+  		var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
+					$.each(data, function(i, v) {
+					
+						//alert(v.itemName)
+						
+		//	var str = '<input  type="button" value="callEdit" onclick="callEdit('+v.itemId+','+i+')" style="width:30%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:30%;"/> ';
+					var str='<a href="#" class="action_btn" onclick="callDelete('+v.itemId+','+i+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('+v.itemId+','+i+')"><abbr title="Edit"><i class="fa fa-edit"></i></abbr></a>'
+
+
+						dataTable.row.add([ i + 1, v.itemName, v.uomName,v.enqQty,str]).draw();
+					});
+				});
 		
 		document.getElementById("qty").value="";
 		document.getElementById("item_remark").value="";
@@ -528,6 +604,12 @@
 		$("#item_name").trigger("chosen:updated");
 		
 	}
+	
+	function validate(s) {
+	    var rgx = /^[0-9]*\.?[0-9]*$/;
+	    return s.match(rgx);
+	}
+	
 	</script>
 
 	<!-- <script type="text/javascript">
