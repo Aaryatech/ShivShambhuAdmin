@@ -936,4 +936,28 @@ public class MasterController {
 		}
 		return null;
 	}
+
+	@RequestMapping(value = "/showItemList", method = RequestMethod.GET)
+	public ModelAndView showItemList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/itemList");
+			GetCust[] custArray = rest.getForObject(Constants.url + "getAllCustomerList", GetCust[].class);
+			getCustList = new ArrayList<GetCust>(Arrays.asList(custArray));
+
+			model.addObject("title", "Item List");
+			model.addObject("custList", getCustList);
+		} catch (Exception e) {
+
+			System.err.println("exception In showCustList at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
 }
