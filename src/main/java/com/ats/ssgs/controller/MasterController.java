@@ -26,6 +26,7 @@ import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.CustType;
+import com.ats.ssgs.model.master.GetCust;
 import com.ats.ssgs.model.master.GetPlant;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
@@ -164,6 +165,7 @@ public class MasterController {
 			GetPlant[] plantArray = rest.getForObject(Constants.url + "getAllCompanyPlantList", GetPlant[].class);
 			getPlantList = new ArrayList<GetPlant>(Arrays.asList(plantArray));
 
+			model.addObject("title", "Plant List");
 			model.addObject("plantList", getPlantList);
 		} catch (Exception e) {
 
@@ -671,8 +673,8 @@ public class MasterController {
 			Project proj = new Project();
 
 			proj.setCustId(custInsertRes.getCustId());
-			proj.setDelStatus(0);
-			proj.setIsUsed(0);
+			proj.setDelStatus(1);
+			proj.setIsUsed(1);
 			proj.setLocation(custAdd);
 			proj.setProjName(custName);
 			proj.setStartDate(curDate);
@@ -687,6 +689,79 @@ public class MasterController {
 		}
 		return null;
 
+	}
+
+	List<GetCust> getCustList;
+
+	@RequestMapping(value = "/showCustList", method = RequestMethod.GET)
+	public ModelAndView showCustList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/custList");
+			GetCust[] custArray = rest.getForObject(Constants.url + "getAllCustomerList", GetCust[].class);
+			getCustList = new ArrayList<GetCust>(Arrays.asList(custArray));
+
+			model.addObject("title", "Customer List");
+			model.addObject("custList", getCustList);
+		} catch (Exception e) {
+
+			System.err.println("exception In showCustList at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/editCust/{custId}", method = RequestMethod.GET)
+	public ModelAndView editCust(HttpServletRequest request, HttpServletResponse response, @PathVariable int custId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/addcust");
+			// getCompByCompanyId
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custId", custId);
+
+			Cust editCust = rest.postForObject(Constants.url + "getCompByCompanyId", map, Cust.class);
+
+			model.addObject("title", "Edit Customer");
+			model.addObject("editCust", editCust);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editCust at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/deleteCust/{custId}", method = RequestMethod.GET)
+	public String deleteCustMethod(HttpServletRequest request, HttpServletResponse response, @PathVariable int custId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custId", custId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteCust", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteCust @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showCustList";
 	}
 
 	@RequestMapping(value = "/showAddItem", method = RequestMethod.GET)

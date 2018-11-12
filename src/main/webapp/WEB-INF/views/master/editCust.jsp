@@ -411,50 +411,6 @@
 	</script>
 
 
-	<!-- 	<script type="text/javascript">
-	
-	function editMsUser(msId){
-		
-		//alert(catId);
-		
-		$.getJSON('${getEditMsUser}',{
-			
-			msId : msId,
-			
-			ajax : 'true',
-
-		},
-		
-		function(data){
-			document.getElementById('addDiv').style.display = "block";
-			$("#usrname_mr").val(data.msMarName);
-			$("#usrname_eng").val(data.msEngName);
-        	
-			//hidden field msId
-			$("#ms_id").val(data.msId);
-			
-			$("#contact_no").val(data.msContactNo);
-			 document.getElementById("contact_no").readOnly = true; 
-			$("#usr_pass").val(data.msPwd); 
-			$("#conf_pass").val(data.msPwd); 
-			document.getElementById("usr_role").options.selectedIndex =data.isAdmin;
-			$("#usr_role").trigger("chosen:updated");
-			var temp=new Array();
-			
-			temp=(data.hubIds).split(",");
-			//alert(temp);
-			$("#sel_hub").val(temp); 
-			$("#sel_hub").trigger("chosen:updated");
-
-			//$('#sel_hub').formcontrol('refresh');
-	 		document.getElementById('submitButton').disabled = false;
-
-
-		});
-		
-	}
-	
-	</script> -->
 
 	<script>
 		jQuery(document).ready(function() {

@@ -64,6 +64,7 @@
 
 
 	<!-- Header-->
+	<jsp:include page="/WEB-INF/views/common/right.jsp"></jsp:include>
 	<!-- Header-->
 
 
@@ -81,16 +82,17 @@
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertCompany"
 								method="post">
-<input type="hidden" name="comp_id"  id="comp_id" value="${editComp.companyId}">
+								<input type="hidden" name="comp_id" id="comp_id"
+									value="${editComp.companyId}">
 
 								<div class="row">
 
 									<div class="col-md-2">Company Name</div>
 									<div class="col-md-10">
 										<input type="text" id="comp_name" name="comp_name"
-										value="${editComp.compName}"
-											style="width: 50%;" class="form-control" required>
-											
+											value="${editComp.compName}" style="width: 50%;"
+											class="form-control" required>
+
 									</div>
 								</div>
 								<div class="form-group"></div>
