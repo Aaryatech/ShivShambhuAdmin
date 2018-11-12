@@ -117,7 +117,7 @@ public class MasterController {
 			Plant plant = new Plant();
 			String na = "NA";
 			plant.setCompanyId(compId);
-			plant.setDelStatus(0);
+			plant.setDelStatus(1);
 			plant.setExDate1(curDate);
 			plant.setExDate2(curDate);
 			plant.setExVar1(na);
