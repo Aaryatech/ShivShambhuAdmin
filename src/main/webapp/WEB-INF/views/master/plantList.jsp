@@ -78,7 +78,7 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<strong>${title}</strong>
+							<strong>Plant List</strong>
 						</div>
 						<div class="card-body card-block">
 
@@ -89,28 +89,32 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
+										<th style="text-align: center">Plant Name</th>
 										<th style="text-align: center">Company Name</th>
-										<th style="text-align: center">Mobile No</th>
+										<th style="text-align: center">Plant Address</th>
 										<th style="text-align: center">Action</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${compList}" var="comp" varStatus="count">
+									<c:forEach items="${plantList}" var="plant" varStatus="count">
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
 
 
 											<td style="text-align: left"><c:out
-													value="${comp.compName}" /></td>
-											<td style="text-align: center">${comp.contactNo1}</td>
+													value="${plant.plantName}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${plant.compName}" /></td>
+											<td style="text-align: left">${plant.plantAddress1}</td>
 
 											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editCompany/${comp.companyId}"><i
+												href="${pageContext.request.contextPath}/editPlant/${plant.plantId}"><i
 													class="fa fa-edit"></i> <span class="text-muted"></span></a>
 												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteCompany/${comp.companyId}"
+												href="${pageContext.request.contextPath}/deletePlant/${plant.plantId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
 													class="fa fa-trash-o"></i></a></td>
 

@@ -55,7 +55,7 @@
 }
 </style>
 </head>
-<body >
+<body>
 
 
 	<!-- Left Panel -->
@@ -64,7 +64,9 @@
 
 
 	<!-- Header-->
+	<jsp:include page="/WEB-INF/views/common/right.jsp"></jsp:include>
 	<!-- Header-->
+
 
 
 
@@ -79,42 +81,52 @@
 							<strong>${title}</strong>
 						</div>
 						<div class="card-body card-block">
-							<form
-								action="${pageContext.request.contextPath}/insertPlant"
-								method="post" >
+							<form action="${pageContext.request.contextPath}/insertPlant"
+								method="post">
 
 								<div class="row">
 
 									<div class="col-md-2">Select Company</div>
-									
+
 									<div class="col-md-4">
-										<select id="compId" name="compId"  
-											class="standardSelect" tabindex="1" required>
+										<select id="compId" name="compId" class="standardSelect"
+											tabindex="1" required>
 											<c:forEach items="${compList}" var="comp">
-										<option  value="${comp.companyId}">${comp.compName}</option>
+
+												<c:choose>
+													<c:when test="${comp.companyId==editPlant.companyId}">
+														<option value="${comp.companyId}" selected>${comp.compName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${comp.companyId}">${comp.compName}
+													</c:otherwise>
+												</c:choose>
+												<%-- 	<option value="${comp.companyId}">${comp.compName}</option> --%>
 											</c:forEach>
 										</select>
 									</div>
-								
+
 									<div class="col-md-2">Plant Name</div>
 									<div class="col-md-4">
-										<input type="text" id="plant_name" name="plant_name" class="form-control" required 
-										style="width: 100%;">
+										<input type="text" id="plant_name" name="plant_name"
+											value="${editPlant.plantName}" class="form-control" required
+											style="width: 100%;">
 									</div>
 
 								</div>
-										<input type="hidden" name="plant_id" id="plant_id" value="0">
+								<input type="hidden" name="plant_id" id="plant_id" value=${editPlant.plantId}>
 
-								
-																<div class="form-group"></div>
-								
+
+								<div class="form-group"></div>
+
 								<div class="row">
 									<div class="col-md-2">Telephone No</div>
 									<div class="col-md-4">
 										<input type="text" id="tel_no" name="tel_no" required
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter tel no')"
-											maxlength="10" pattern="[0-9]+" value="${editComp.contactNo2}"
+											maxlength="10" pattern="[0-9]+"
+											value="${editPlant.plantContactNo1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -125,7 +137,7 @@
 										<input type="text" id="mob_no" name="mob_no" required
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter mob no')"
-											maxlength="10" value="${editComp.contactNo1}"
+											maxlength="10" value="${editPlant.plantContactNo2}"
 											pattern="[0-9]{10}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -140,7 +152,7 @@
 										<input type="text" id="email" name="email" required
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter email')"
-											maxlength="50" value="${editComp.email1}"
+											maxlength="50" value="${editPlant.plantEmail1}"
 											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -152,20 +164,21 @@
 										<input type="text" id="fax" name="fax" required
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter FAX no')"
-											maxlength="20" value="${editComp.faxNo1}"
+											maxlength="20" value="${editPlant.plantFax1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
 									</div>
 								</div>
 								<div class="form-group"></div>
-								
+
 								<div class="row">
 
 									<div class="col-md-2">Plant Address</div>
 									<div class="col-md-10">
-										<input type='text' id="plant_add" name="plant_add" 
-										style="width: 100%;" value="${getWork.vehicalNo}" required/>
+										<input type='text' id="plant_add" name="plant_add"
+											style="width: 100%;" value="${editPlant.plantAddress1}"
+											required />
 									</div>
 
 								</div>
@@ -174,18 +187,29 @@
 								<div class="row">
 
 									<div class="col-md-2">Select Plant Head</div>
-									
+
 									<div class="col-md-10">
-										<select id="plant_head" name="plant_head"   style="width: 100%;"
+										<select id="plant_head" name="plant_head" style="width: 100%;"
 											class="standardSelect" tabindex="1" required>
 											<c:forEach items="${usrList}" var="usr">
-										<option  value="${usr.userId}">${usr.usrName}</option>
+
+
+												<c:choose>
+													<c:when test="${usr.userId==editPlant.plantHead}">
+														<option value="${usr.userId}" selected>${usr.usrName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${usr.userId}">${usr.usrName}
+													</c:otherwise>
+												</c:choose>
+												<%-- 	<option value="${usr.userId}">${usr.usrName}</option> --%>
+ -
 											</c:forEach>
 										</select>
 									</div>
-									</div>
+								</div>
 
-																<div class="form-group"></div>
+								<div class="form-group"></div>
 
 
 								<div class="col-lg-12" align="center">
@@ -363,254 +387,257 @@
 		});
 	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
+		function callSel() {
+			//alert("Call me");
+			var workType = document.getElementById("workTypeId").value;
+			if (workType == 1) {
+				//alert("In work Type  " +workType);
+				document.getElementById('rc_book_div').style.display = "flow-root";
+				document.getElementById('ins1_div').style.display = "flow-root";
+				document.getElementById('ins2_div').style.display = "flow-root";
+				document.getElementById('puc_div').style.display = "flow-root";
+				document.getElementById('add_pf_div').style.display = "flow-root";
 
-function callSel() {
-	//alert("Call me");
-	var workType = document.getElementById("workTypeId").value;
-	if(workType==1){
-		//alert("In work Type  " +workType);
-		document.getElementById('rc_book_div').style.display = "flow-root";
-		document.getElementById('ins1_div').style.display = "flow-root";
-		document.getElementById('ins2_div').style.display = "flow-root";
-		document.getElementById('puc_div').style.display = "flow-root";
-		document.getElementById('add_pf_div').style.display = "flow-root";
-	
-		document.getElementById('bank_noc_div').style = "display:none";
-		document.getElementById('bank_letter_div').style = "display:none";
-		document.getElementById('form_17_div').style = "display:none";
-		document.getElementById('orig_lic_div').style = "display:none";
+				document.getElementById('bank_noc_div').style = "display:none";
+				document.getElementById('bank_letter_div').style = "display:none";
+				document.getElementById('form_17_div').style = "display:none";
+				document.getElementById('orig_lic_div').style = "display:none";
 
-	}
-	
-	else if(workType==2){
-		//alert("In work Type  " +workType);
-		document.getElementById('rc_book_div').style.display = "flow-root";
-		document.getElementById('ins1_div').style.display = "flow-root";
-		document.getElementById('ins2_div').style.display = "flow-root";
-		document.getElementById('puc_div').style.display = "flow-root";
-		document.getElementById('bank_noc_div').style = "flow_root";
+			}
 
-		document.getElementById('add_pf_div').style.display = "display:none";
-	
-		document.getElementById('bank_letter_div').style = "display:none";
-		document.getElementById('form_17_div').style = "display:none";
-		document.getElementById('orig_lic_div').style = "display:none";
+			else if (workType == 2) {
+				//alert("In work Type  " +workType);
+				document.getElementById('rc_book_div').style.display = "flow-root";
+				document.getElementById('ins1_div').style.display = "flow-root";
+				document.getElementById('ins2_div').style.display = "flow-root";
+				document.getElementById('puc_div').style.display = "flow-root";
+				document.getElementById('bank_noc_div').style = "flow_root";
 
-	}
+				document.getElementById('add_pf_div').style.display = "display:none";
 
-else if(workType==3){
-	//alert("In work Type  " +workType);
-	document.getElementById('rc_book_div').style.display = "flow-root";
-	document.getElementById('ins1_div').style.display = "flow-root";
-	document.getElementById('ins2_div').style.display = "flow-root";
-	document.getElementById('puc_div').style.display = "flow-root";
-	document.getElementById('bank_letter_div').style = "flow_root";
-	document.getElementById('form_17_div').style = "flow_root";
+				document.getElementById('bank_letter_div').style = "display:none";
+				document.getElementById('form_17_div').style = "display:none";
+				document.getElementById('orig_lic_div').style = "display:none";
 
-	document.getElementById('add_pf_div').style.display = "display:none";
-	document.getElementById('orig_lic_div').style = "display:none";
-	document.getElementById('bank_noc_div').style =  "display:none";
+			}
 
-}else if(workType==4){
-	//alert("In work Type  " +workType);
-	document.getElementById('rc_book_div').style.display = "flow-root";
-	document.getElementById('ins1_div').style.display = "flow-root";
-	document.getElementById('ins2_div').style.display = "flow-root";
-	document.getElementById('puc_div').style.display = "flow-root";
-	document.getElementById('add_pf_div').style.display = "flow-root";
+			else if (workType == 3) {
+				//alert("In work Type  " +workType);
+				document.getElementById('rc_book_div').style.display = "flow-root";
+				document.getElementById('ins1_div').style.display = "flow-root";
+				document.getElementById('ins2_div').style.display = "flow-root";
+				document.getElementById('puc_div').style.display = "flow-root";
+				document.getElementById('bank_letter_div').style = "flow_root";
+				document.getElementById('form_17_div').style = "flow_root";
 
-	document.getElementById('bank_noc_div').style = "display:none";
-	document.getElementById('bank_letter_div').style = "display:none";
-	document.getElementById('form_17_div').style = "display:none";
-	document.getElementById('orig_lic_div').style = "display:none";
+				document.getElementById('add_pf_div').style.display = "display:none";
+				document.getElementById('orig_lic_div').style = "display:none";
+				document.getElementById('bank_noc_div').style = "display:none";
 
-}
+			} else if (workType == 4) {
+				//alert("In work Type  " +workType);
+				document.getElementById('rc_book_div').style.display = "flow-root";
+				document.getElementById('ins1_div').style.display = "flow-root";
+				document.getElementById('ins2_div').style.display = "flow-root";
+				document.getElementById('puc_div').style.display = "flow-root";
+				document.getElementById('add_pf_div').style.display = "flow-root";
 
-else if(workType==5){
-	//alert("workType " +workType)
-	$('#rc_book_div').hide();
-	$('#ins1_div').hide();
-	$('#ins2_div').hide();
-	$('#puc_div').hide();
-	$('#bank_noc_div').hide();
+				document.getElementById('bank_noc_div').style = "display:none";
+				document.getElementById('bank_letter_div').style = "display:none";
+				document.getElementById('form_17_div').style = "display:none";
+				document.getElementById('orig_lic_div').style = "display:none";
 
-	$('#add_pf_div').hide();
+			}
 
-	$('#bank_letter_div').hide();
-	$('#form_17_div').hide();
-	document.getElementById('orig_lic_div').style.display = "flow-root";
+			else if (workType == 5) {
+				//alert("workType " +workType)
+				$('#rc_book_div').hide();
+				$('#ins1_div').hide();
+				$('#ins2_div').hide();
+				$('#puc_div').hide();
+				$('#bank_noc_div').hide();
 
-}
+				$('#add_pf_div').hide();
 
-}
-</script>
-<script type="text/javascript">
-function onLoadCall() {
-	//alert("onload Call")
-	var workType=${getWork.workTypeTd};
-	//$('#workTypeId').prop('readoly', true);
-	 //document.getElementById("pets").options[2].disabled = true;
-	
-	document.getElementById('workTypeId').disabled = true;
-	document.getElementById('ac').style.color = 'white';
-	
-	document.getElementById('imgInp').style.color = 'white';
-	document.getElementById('imgInp1').style.color = 'white';
-	
-	document.getElementById('rc_book').style.color = 'white';
-	document.getElementById('puc').style.color = 'white';
-	document.getElementById('ins1').style.color = 'white';
-	document.getElementById('ins2').style.color = 'white';
-	document.getElementById('add_proof').style.color = 'white';
-	document.getElementById('bank_noc').style.color = 'white';
-	document.getElementById('bank_letter').style.color = 'white';
-	document.getElementById('form_no17').style.color = 'white';
-	document.getElementById('orig_lic').style.color = 'white';
-	
+				$('#bank_letter_div').hide();
+				$('#form_17_div').hide();
+				document.getElementById('orig_lic_div').style.display = "flow-root";
 
-	document.getElementById("ac").required = false;
-	if(workType==1){
-		//alert("In work Type  " +workType);
-		document.getElementById('rc_book_div').style.display = "flow-root";
-		document.getElementById('ins1_div').style.display = "flow-root";
-		document.getElementById('ins2_div').style.display = "flow-root";
-		document.getElementById('puc_div').style.display = "flow-root";
-		document.getElementById('add_pf_div').style.display = "flow-root";
-	
-		document.getElementById('bank_noc_div').style = "display:none";
-		document.getElementById('bank_letter_div').style = "display:none";
-		document.getElementById('form_17_div').style = "display:none";
-		document.getElementById('orig_lic_div').style = "display:none";
+			}
 
-	}
-	
-	else if(workType==2){
-		//alert("In work Type  " +workType);
-		document.getElementById('rc_book_div').style.display = "flow-root";
-		document.getElementById('ins1_div').style.display = "flow-root";
-		document.getElementById('ins2_div').style.display = "flow-root";
-		document.getElementById('puc_div').style.display = "flow-root";
-		document.getElementById('bank_noc_div').style = "flow_root";
+		}
+	</script>
+	<script type="text/javascript">
+		function onLoadCall() {
+			//alert("onload Call")
+			var workType = $
+			{
+				getWork.workTypeTd
+			}
+			;
+			//$('#workTypeId').prop('readoly', true);
+			//document.getElementById("pets").options[2].disabled = true;
 
-		document.getElementById('add_pf_div').style.display = "display:none";
-	
-		document.getElementById('bank_letter_div').style = "display:none";
-		document.getElementById('form_17_div').style = "display:none";
-		document.getElementById('orig_lic_div').style = "display:none";
+			document.getElementById('workTypeId').disabled = true;
+			document.getElementById('ac').style.color = 'white';
 
-	}
+			document.getElementById('imgInp').style.color = 'white';
+			document.getElementById('imgInp1').style.color = 'white';
 
-else if(workType==3){
-	//alert("In work Type  " +workType);
-	document.getElementById('rc_book_div').style.display = "flow-root";
-	document.getElementById('ins1_div').style.display = "flow-root";
-	document.getElementById('ins2_div').style.display = "flow-root";
-	document.getElementById('puc_div').style.display = "flow-root";
-	document.getElementById('bank_letter_div').style = "flow_root";
-	document.getElementById('form_17_div').style = "flow_root";
+			document.getElementById('rc_book').style.color = 'white';
+			document.getElementById('puc').style.color = 'white';
+			document.getElementById('ins1').style.color = 'white';
+			document.getElementById('ins2').style.color = 'white';
+			document.getElementById('add_proof').style.color = 'white';
+			document.getElementById('bank_noc').style.color = 'white';
+			document.getElementById('bank_letter').style.color = 'white';
+			document.getElementById('form_no17').style.color = 'white';
+			document.getElementById('orig_lic').style.color = 'white';
 
-	document.getElementById('add_pf_div').style.display = "display:none";
-	document.getElementById('orig_lic_div').style = "display:none";
-	document.getElementById('bank_noc_div').style =  "display:none";
+			document.getElementById("ac").required = false;
+			if (workType == 1) {
+				//alert("In work Type  " +workType);
+				document.getElementById('rc_book_div').style.display = "flow-root";
+				document.getElementById('ins1_div').style.display = "flow-root";
+				document.getElementById('ins2_div').style.display = "flow-root";
+				document.getElementById('puc_div').style.display = "flow-root";
+				document.getElementById('add_pf_div').style.display = "flow-root";
 
-}else if(workType==4){
-	//alert("In work Type  " +workType);
-	document.getElementById('rc_book_div').style.display = "flow-root";
-	document.getElementById('ins1_div').style.display = "flow-root";
-	document.getElementById('ins2_div').style.display = "flow-root";
-	document.getElementById('puc_div').style.display = "flow-root";
-	document.getElementById('add_pf_div').style.display = "flow-root";
+				document.getElementById('bank_noc_div').style = "display:none";
+				document.getElementById('bank_letter_div').style = "display:none";
+				document.getElementById('form_17_div').style = "display:none";
+				document.getElementById('orig_lic_div').style = "display:none";
 
-	document.getElementById('bank_noc_div').style = "display:none";
-	document.getElementById('bank_letter_div').style = "display:none";
-	document.getElementById('form_17_div').style = "display:none";
-	document.getElementById('orig_lic_div').style = "display:none";
+			}
 
-}
+			else if (workType == 2) {
+				//alert("In work Type  " +workType);
+				document.getElementById('rc_book_div').style.display = "flow-root";
+				document.getElementById('ins1_div').style.display = "flow-root";
+				document.getElementById('ins2_div').style.display = "flow-root";
+				document.getElementById('puc_div').style.display = "flow-root";
+				document.getElementById('bank_noc_div').style = "flow_root";
 
-else if(workType==5){
-	document.getElementById('rc_book_div').style.display = "display:none";
-	document.getElementById('ins1_div').style.display = "display:none";
-	document.getElementById('ins2_div').style.display = "display:none";
-	document.getElementById('puc_div').style.display = "display:none";
-	document.getElementById('bank_noc_div').style = "display:none";
+				document.getElementById('add_pf_div').style.display = "display:none";
 
-	document.getElementById('add_pf_div').style.display = "display:none";
+				document.getElementById('bank_letter_div').style = "display:none";
+				document.getElementById('form_17_div').style = "display:none";
+				document.getElementById('orig_lic_div').style = "display:none";
 
-	document.getElementById('bank_letter_div').style = "display:none";
-	document.getElementById('form_17_div').style = "display:none";
-	document.getElementById('orig_lic_div').style = "flow-root";
+			}
 
-}
+			else if (workType == 3) {
+				//alert("In work Type  " +workType);
+				document.getElementById('rc_book_div').style.display = "flow-root";
+				document.getElementById('ins1_div').style.display = "flow-root";
+				document.getElementById('ins2_div').style.display = "flow-root";
+				document.getElementById('puc_div').style.display = "flow-root";
+				document.getElementById('bank_letter_div').style = "flow_root";
+				document.getElementById('form_17_div').style = "flow_root";
 
-}
+				document.getElementById('add_pf_div').style.display = "display:none";
+				document.getElementById('orig_lic_div').style = "display:none";
+				document.getElementById('bank_noc_div').style = "display:none";
 
-</script>
+			} else if (workType == 4) {
+				//alert("In work Type  " +workType);
+				document.getElementById('rc_book_div').style.display = "flow-root";
+				document.getElementById('ins1_div').style.display = "flow-root";
+				document.getElementById('ins2_div').style.display = "flow-root";
+				document.getElementById('puc_div').style.display = "flow-root";
+				document.getElementById('add_pf_div').style.display = "flow-root";
 
-<script type="text/javascript">
-  $(function() {
-   
-    	// document.getElementById('ac').style.color = 'black';
-    	 var workType=${getWork.workTypeTd};
-    	 if(workType!=null){
-    	  $('#ac').change(function(){
-    		  document.getElementById('ac').style.color = 'black';
-    	  });
-    	  
-    	  $('#imgInp').change(function(){
-    		  document.getElementById('imgInp').style.color = 'black';
-    	  });
-    	  
-    	  $('#imgInp1').change(function(){
-    		  document.getElementById('imgInp1').style.color = 'black';
-    	  });
-    	  
-    	  $('#rc_book').change(function(){
-    		  document.getElementById('rc_book').style.color = 'black';
-    	  });
-    	  
-    	  $('#puc').change(function(){
-    		  document.getElementById('puc').style.color = 'black';
-    	  });
-    	  
-    	  $('#ins1').change(function(){
-    		  document.getElementById('ins1').style.color = 'black';
-    	  });
-    	  
-    	  $('#ins2').change(function(){
-    		  document.getElementById('ins2').style.color = 'black';
-    	  });
-    	  
-    	  $('#add_proof').change(function(){
-    		  document.getElementById('add_proof').style.color = 'black';
-    	  });
-    	  
-    	  $('#bank_noc').change(function(){
-    		  document.getElementById('bank_noc').style.color = 'black';
-    	  });
-    	  
-    	  
-    	  $('#bank_letter').change(function(){
-    		  document.getElementById('bank_letter').style.color = 'black';
-    	  });
-    	  
-    	  
-    	  $('#form_no17').change(function(){
-    		  document.getElementById('form_no17').style.color = 'black';
-    	  });
-    	  
-    	  $('#orig_lic').change(function(){
-    		  document.getElementById('orig_lic').style.color = 'black';
-    	  });
-    	  
-    	  
-    	 }//end Of if
-    	 
-     
-  });
-</script>
-<!-- 	<script type="text/javascript">
+				document.getElementById('bank_noc_div').style = "display:none";
+				document.getElementById('bank_letter_div').style = "display:none";
+				document.getElementById('form_17_div').style = "display:none";
+				document.getElementById('orig_lic_div').style = "display:none";
+
+			}
+
+			else if (workType == 5) {
+				document.getElementById('rc_book_div').style.display = "display:none";
+				document.getElementById('ins1_div').style.display = "display:none";
+				document.getElementById('ins2_div').style.display = "display:none";
+				document.getElementById('puc_div').style.display = "display:none";
+				document.getElementById('bank_noc_div').style = "display:none";
+
+				document.getElementById('add_pf_div').style.display = "display:none";
+
+				document.getElementById('bank_letter_div').style = "display:none";
+				document.getElementById('form_17_div').style = "display:none";
+				document.getElementById('orig_lic_div').style = "flow-root";
+
+			}
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		$(function() {
+
+			// document.getElementById('ac').style.color = 'black';
+			var workType = $
+			{
+				getWork.workTypeTd
+			}
+			;
+			if (workType != null) {
+				$('#ac').change(function() {
+					document.getElementById('ac').style.color = 'black';
+				});
+
+				$('#imgInp').change(function() {
+					document.getElementById('imgInp').style.color = 'black';
+				});
+
+				$('#imgInp1').change(function() {
+					document.getElementById('imgInp1').style.color = 'black';
+				});
+
+				$('#rc_book').change(function() {
+					document.getElementById('rc_book').style.color = 'black';
+				});
+
+				$('#puc').change(function() {
+					document.getElementById('puc').style.color = 'black';
+				});
+
+				$('#ins1').change(function() {
+					document.getElementById('ins1').style.color = 'black';
+				});
+
+				$('#ins2').change(function() {
+					document.getElementById('ins2').style.color = 'black';
+				});
+
+				$('#add_proof').change(function() {
+					document.getElementById('add_proof').style.color = 'black';
+				});
+
+				$('#bank_noc').change(function() {
+					document.getElementById('bank_noc').style.color = 'black';
+				});
+
+				$('#bank_letter')
+						.change(
+								function() {
+									document.getElementById('bank_letter').style.color = 'black';
+								});
+
+				$('#form_no17').change(function() {
+					document.getElementById('form_no17').style.color = 'black';
+				});
+
+				$('#orig_lic').change(function() {
+					document.getElementById('orig_lic').style.color = 'black';
+				});
+
+			}//end Of if
+
+		});
+	</script>
+	<!-- 	<script type="text/javascript">
 $(document).ready(function() { 
 	$('#workTypeId').change(
 			function() {

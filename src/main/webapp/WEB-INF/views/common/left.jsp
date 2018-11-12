@@ -38,26 +38,31 @@
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddItem">Add
 								Item</a></li>
-								
-								
-									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddProject">Add
 								Project</a></li>
-								
-									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddCompany">Add
 								Company</a></li>
-								
-								<li class="active"><i class="fa fa-puzzle-piece"></i><a
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showCompList">
 								Company List</a></li>
-								
-								
+
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showPlantList">
+								Plant List</a></li>
+
+
 					</ul></li>
-					
-					
-					
-					
+
+
+
+
 				<li class="menu-item-has-children dropdown"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="true"> <i class="menu-icon fa fa-table"></i>
@@ -68,11 +73,11 @@
 							href="${pageContext.request.contextPath}/showAddEnquiry">Add
 								Enquiry</a></li>
 
-								
-								
+
+
 					</ul></li>
 
-			<%-- 	<li class="menu-item-has-children dropdown"><a href="#"
+				<%-- 	<li class="menu-item-has-children dropdown"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="true"> <i class="menu-icon fa fa-table"></i>
 						Work

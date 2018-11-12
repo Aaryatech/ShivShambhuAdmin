@@ -12,9 +12,9 @@
 					class="fa fa fa-tasks"></i></a>
 				<div class="header-left">
 
+					<strong class="card-title">ShivShambhu Admin Panel</strong>
 
-
-					<div class="dropdown for-notification">
+					<!-- <div class="dropdown for-notification">
 						<button class="btn btn-secondary dropdown-toggle" type="button"
 							id="notification" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false">
@@ -33,9 +33,9 @@
 								<p>Server #3 overloaded.</p>
 							</a>
 						</div>
-					</div>
+					</div> -->
 
-					<div class="dropdown for-message">
+					<%-- 		<div class="dropdown for-message">
 						<button class="btn btn-secondary dropdown-toggle" type="button"
 							id="message" data-toggle="dropdown" aria-haspopup="true"
 							aria-expanded="false">
@@ -77,21 +77,19 @@
 							</span>
 							</a>
 						</div>
-					</div>
+					</div> --%>
 				</div>
 			</div>
 
 			<div class="col-sm-5">
 				<div class="user-area dropdown float-right">
 
-					<div align="right" style="align-self: center; align-content: center; align-items: center; vertical-align: middle;">
+					<div align="right"
+						style="align-self: center; align-content: center; align-items: center; vertical-align: middle;">
 
-						<a href="?lang=en" style="color: #000;"> English | </a> <a
-							href="?lang=mr" style="color: #000;">मराठी </a>
- 
-						&nbsp;&nbsp;&nbsp;&nbsp; <a href="#" class="dropdown-toggle"
-							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<img class="user-avatar rounded-circle"
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false"> <img
+							class="user-avatar rounded-circle"
 							src="${pageContext.request.contextPath}/resources/images/admin.jpg"
 							alt="User Avatar">
 						</a>
