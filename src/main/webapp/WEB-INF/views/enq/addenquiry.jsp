@@ -200,7 +200,7 @@
 
 										<div class="col-md-4">
 											<input type="text" id="item_remark" name="item_remark"
-												class="form-control" style="width: 100%;">
+												class="form-control" style="width: 100%;" value="-">
 										</div>
 
 									</div>
@@ -252,6 +252,10 @@
 									<div class="col-md-4">
 										<select id="enq_prio" name="enq_prio" class="standardSelect"
 											tabindex="1" onchange="setSelectedUom(this.value)">
+											
+											<option value="0">Low</option>
+											<option selected  value="1">Medium</option>
+											<option value="2">High</option>
 										</select>
 									</div>
 
@@ -261,7 +265,7 @@
 									<div class="col-md-4">
 										<select id="enq_gen_fact" name="enq_gen_fact"
 											class="standardSelect" tabindex="1"
-											oninvalid="setCustomValidity('Please Enq Gen Fact')"
+											oninvalid="setCustomValidity('Please select enq gen fact')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 
 											<option value="0">Select Enquiry From</option>
@@ -476,21 +480,32 @@
 			var itemRemark = document.getElementById("item_remark").value;
 			var itemUomId = document.getElementById("itemUomId").value;
 			var x = false;
+			var y = false;
 			x = isNaN(qty);
+			
+			var plantId = document.getElementById("plant_id").value;
+			var valid = false;
 
-			if ((x == true) || (qty == null) || (qty == "") || (qty < 0)) {
-				var msg = "Please Enter Valid Quantity";
+			if (plantId == null || plantId == "") {
+				valid = true;
+				var msg = "Please Select plant";
 				callAlert(msg);
 			}
-			var y = false;
-			if (itemId == "" || itemId < 0) {
-				y = true;
+			
+			else if (itemId == "" || itemId < 0) {
+				valid = true;
 				var msg = "Please Select Item Name";
 				callAlert(msg);
 			}
+			else if ((x == true) || (qty == null) || (qty == "") || (qty < 0)) {
+				var msg = "Please Enter Valid Quantity";
+				valid=true;
+				callAlert(msg);
+			}
+			
 			//alert("x=" +x + "y= " +y);
-			if (x == false && y == false) {
-				//alert("Inside add ajax");
+			if (valid == false) {
+				alert("Inside add ajax");
 				$
 						.getJSON(
 								'${addEnqItem}',

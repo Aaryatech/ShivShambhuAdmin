@@ -54,7 +54,7 @@ public class EnqController {
 
 		ModelAndView model = null;
 		try {
-			enqItemList=new ArrayList<>();
+			enqItemList = new ArrayList<>();
 			model = new ModelAndView("enq/addenquiry");
 
 			model.addObject("title", "Add Enquiry");
@@ -73,8 +73,7 @@ public class EnqController {
 			enqGenFactList = new ArrayList<EnqGenFact>(Arrays.asList(enqFactArray));
 
 			model.addObject("enqGenFactList", enqGenFactList);
-			
-			
+
 		} catch (Exception e) {
 
 			System.err.println("Exce in showing add Enq page " + e.getMessage());
@@ -147,95 +146,118 @@ public class EnqController {
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-/*		int itemId = Integer.parseInt(request.getParameter("itemId"));
-		int uomId = Integer.parseInt(request.getParameter("uomId"));
+		/*
+		 * int itemId = Integer.parseInt(request.getParameter("itemId")); int uomId =
+		 * Integer.parseInt(request.getParameter("uomId"));
+		 * 
+		 * float qty = Float.parseFloat(request.getParameter("qty"));
+		 * 
+		 * String itemName = request.getParameter("itemName"); String uomName =
+		 * request.getParameter("uomName"); String itemRemark =
+		 * request.getParameter("itemRemark");
+		 * 
+		 * TempEnqItem enqItem=new TempEnqItem();
+		 * 
+		 * enqItem.setItemId(itemId); enqItem.setItemName(itemName);
+		 * enqItem.setUomId(uomId); enqItem.setUomName(uomName); enqItem.setEnqQty(qty);
+		 * enqItem.setItemEnqRemark(itemRemark);
+		 * 
+		 * enqItemList.add(enqItem);
+		 * 
+		 * System.err.println("Ajax enqItem List size  " + enqItemList.size());
+		 * 
+		 * System.err.println("Ajax enqItem List " + enqItemList.toString());
+		 */
 
-		float qty = Float.parseFloat(request.getParameter("qty"));
+		// new code
 
-		String itemName = request.getParameter("itemName");
-		String uomName = request.getParameter("uomName");
-		String itemRemark = request.getParameter("itemRemark");
-		
-		TempEnqItem enqItem=new TempEnqItem();
-		
-		enqItem.setItemId(itemId);
-		enqItem.setItemName(itemName);
-		enqItem.setUomId(uomId);
-		enqItem.setUomName(uomName);
-		enqItem.setEnqQty(qty);
-		enqItem.setItemEnqRemark(itemRemark);
-		
-		enqItemList.add(enqItem);
-		
-		System.err.println("Ajax enqItem List size  " + enqItemList.size());
-
-		System.err.println("Ajax enqItem List " + enqItemList.toString());*/
-		
-		
-		//new code
-		
 		int key = Integer.parseInt(request.getParameter("key"));
-		
+
 		int isEdit = Integer.parseInt(request.getParameter("isEdit"));
-try {
-		
-		if(isEdit==1) {
-			
-			System.err.println("Is Edit ==1");
-			
-			int itemId = Integer.parseInt(request.getParameter("itemId"));
-			int uomId = Integer.parseInt(request.getParameter("uomId"));
+		try {
 
-			float qty = Float.parseFloat(request.getParameter("qty"));
+			if (isEdit == 1) {
 
-			String itemName = request.getParameter("itemName");
-			String uomName = request.getParameter("uomName");
-			String itemRemark = request.getParameter("itemRemark");
-			
+				System.err.println("Is Edit ==1");
 
-			TempEnqItem enqItem=new TempEnqItem();
-			
-			enqItem.setItemId(itemId);
-			enqItem.setItemName(itemName);
-			enqItem.setUomId(uomId);
-			enqItem.setUomName(uomName);
-			enqItem.setEnqQty(qty);
-			enqItem.setItemEnqRemark(itemRemark);
-			int itemUomId = Integer.parseInt(request.getParameter("itemUomId"));
-			enqItem.setItemUomId(itemUomId);
-			
-			
-for(int i=0;i<enqItemList.size();i++) {
-	System.err.println("i value " +i);
+				int itemId = Integer.parseInt(request.getParameter("itemId"));
+				int uomId = Integer.parseInt(request.getParameter("uomId"));
 
-	if(enqItemList.get(i).getItemId()==itemId) {
-		enqItemList.set(i, enqItem);
-		System.err.println("called break");
-		break;
-		
-	}
-}
-		}
+				float qty = Float.parseFloat(request.getParameter("qty"));
 
-		else if (key == -1) {
-			System.err.println("else if (key == -1)");
-			System.err.println("Add Call enq");
-		
-			int itemId = Integer.parseInt(request.getParameter("itemId"));
-			
-			if (enqItemList.size() > 0) {
-				int flag = 0;
+				String itemName = request.getParameter("itemName");
+				String uomName = request.getParameter("uomName");
+				String itemRemark = request.getParameter("itemRemark");
+
+				TempEnqItem enqItem = new TempEnqItem();
+
+				enqItem.setItemId(itemId);
+				enqItem.setItemName(itemName);
+				enqItem.setUomId(uomId);
+				enqItem.setUomName(uomName);
+				enqItem.setEnqQty(qty);
+				enqItem.setItemEnqRemark(itemRemark);
+				int itemUomId = Integer.parseInt(request.getParameter("itemUomId"));
+				enqItem.setItemUomId(itemUomId);
+
 				for (int i = 0; i < enqItemList.size(); i++) {
-					enqItemList.get(i).setIsDuplicate(0);
+					System.err.println("i value " + i);
+
 					if (enqItemList.get(i).getItemId() == itemId) {
-						enqItemList.get(i).setIsDuplicate(1);
-						flag = 1;
+						enqItemList.set(i, enqItem);
+						System.err.println("called break");
+						break;
 
-					} // end of if item exist
+					}
+				}
+			}
 
-				} // end of for 
-				if (flag == 0) {
-					System.err.println("New Item added to existing list");
+			else if (key == -1) {
+				System.err.println("else if (key == -1)");
+				System.err.println("Add Call enq");
+
+				int itemId = Integer.parseInt(request.getParameter("itemId"));
+
+				if (enqItemList.size() > 0) {
+					int flag = 0;
+					for (int i = 0; i < enqItemList.size(); i++) {
+						enqItemList.get(i).setIsDuplicate(0);
+						if (enqItemList.get(i).getItemId() == itemId) {
+							enqItemList.get(i).setIsDuplicate(1);
+							flag = 1;
+
+						} // end of if item exist
+
+					} // end of for
+					if (flag == 0) {
+						System.err.println("New Item added to existing list");
+
+						int uomId = Integer.parseInt(request.getParameter("uomId"));
+
+						float qty = Float.parseFloat(request.getParameter("qty"));
+
+						String itemName = request.getParameter("itemName");
+						String uomName = request.getParameter("uomName");
+						String itemRemark = request.getParameter("itemRemark");
+
+						TempEnqItem enqItem = new TempEnqItem();
+
+						enqItem.setItemId(itemId);
+						enqItem.setItemName(itemName);
+						enqItem.setUomId(uomId);
+						enqItem.setUomName(uomName);
+						enqItem.setEnqQty(qty);
+						enqItem.setItemEnqRemark(itemRemark);
+						int itemUomId = Integer.parseInt(request.getParameter("itemUomId"));
+						enqItem.setItemUomId(itemUomId);
+
+						enqItemList.add(enqItem);
+					}
+				} // end of if tempIndentList.size>0
+
+				else {
+
+					System.err.println("New Item added first time : list is empty");
 
 					int uomId = Integer.parseInt(request.getParameter("uomId"));
 
@@ -244,80 +266,53 @@ for(int i=0;i<enqItemList.size();i++) {
 					String itemName = request.getParameter("itemName");
 					String uomName = request.getParameter("uomName");
 					String itemRemark = request.getParameter("itemRemark");
-					
-					TempEnqItem enqItem=new TempEnqItem();
-					
+
+					TempEnqItem enqItem = new TempEnqItem();
+
 					enqItem.setItemId(itemId);
 					enqItem.setItemName(itemName);
 					enqItem.setUomId(uomId);
 					enqItem.setUomName(uomName);
 					enqItem.setEnqQty(qty);
 					enqItem.setItemEnqRemark(itemRemark);
+
 					int itemUomId = Integer.parseInt(request.getParameter("itemUomId"));
 					enqItem.setItemUomId(itemUomId);
-					
-					
+
 					enqItemList.add(enqItem);
-				}
-			} // end of if tempIndentList.size>0
+
+				} // else it is first item
+			} // end of if key==-1
 
 			else {
+				System.err.println("remove call enq");
+				enqItemList.remove(key);
+			}
+		} catch (Exception e) {
+			System.err.println("Exce In addEnqItem  temp List " + e.getMessage());
+			e.printStackTrace();
 
-				System.err.println("New Item added first time : list is empty");
-
-				int uomId = Integer.parseInt(request.getParameter("uomId"));
-
-				float qty = Float.parseFloat(request.getParameter("qty"));
-
-				String itemName = request.getParameter("itemName");
-				String uomName = request.getParameter("uomName");
-				String itemRemark = request.getParameter("itemRemark");
-				
-				TempEnqItem enqItem=new TempEnqItem();
-				
-				enqItem.setItemId(itemId);
-				enqItem.setItemName(itemName);
-				enqItem.setUomId(uomId);
-				enqItem.setUomName(uomName);
-				enqItem.setEnqQty(qty);
-				enqItem.setItemEnqRemark(itemRemark);
-				
-				int itemUomId = Integer.parseInt(request.getParameter("itemUomId"));
-				enqItem.setItemUomId(itemUomId);
-				
-				enqItemList.add(enqItem);
-				
-			} // else it is first item
-		} // end of if key==-1
-
-		else {
-			System.err.println("remove call enq");
-			enqItemList.remove(key);
 		}
-}catch (Exception e) {
-	System.err.println("Exce In addEnqItem  temp List " +e.getMessage());
-	e.printStackTrace();
-	
-}
 		System.err.println(" enq Item List " + enqItemList.toString());
-		//end of new code
-		
+		// end of new code
+
 		return enqItemList;
 
 	}
-	
-	//getItemForEdit
-	
+
+	// getItemForEdit
+
 	@RequestMapping(value = "/getItemForEdit", method = RequestMethod.GET)
 	public @ResponseBody TempEnqItem getItemForEdit(HttpServletRequest request, HttpServletResponse response) {
-		
+
 		int itemId = Integer.parseInt(request.getParameter("itemId"));
 		int index = Integer.parseInt(request.getParameter("index"));
-		
+
 		return enqItemList.get(index);
-		
+
 	}
-	//insertEnq
+
+	// insertEnq
 	@RequestMapping(value = "/insertEnq", method = RequestMethod.POST)
 	public String insertEnq(HttpServletRequest request, HttpServletResponse response) {
 
@@ -329,83 +324,82 @@ for(int i=0;i<enqItemList.size();i++) {
 			int custId = Integer.parseInt(request.getParameter("cust_name"));
 
 			System.err.println("plantId Id " + plantId);
-			
+
 			String enqDate = request.getParameter("enq_date");
 			String enqNo = request.getParameter("enq_no");
 			String enqRemark = request.getParameter("enq_remark");
-			
+
 			int enqGenId = Integer.parseInt(request.getParameter("enq_gen_fact"));
+			
+			int enqPrio = Integer.parseInt(request.getParameter("enq_prio"));
+
 
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar cal = Calendar.getInstance();
 
 			String curDate = dateFormat.format(new Date());
-			
-			EnqHeader enqHead=new EnqHeader();
-			
-			
+
+			EnqHeader enqHead = new EnqHeader();
+
 			DateFormat dateTimeFrmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			
+
 			enqHead.setCustId(custId);
 			enqHead.setEnqDate(DateConvertor.convertToYMD(enqDate));
 			enqHead.setEnqDateTime(dateTimeFrmt.format(cal.getTime()));
-			enqHead.setEnqGenId(enqGenId);//to be filled from form select list enq_gen_fact table
+			enqHead.setEnqGenId(enqGenId);// to be filled from form select list enq_gen_fact table
 			enqHead.setEnqHeadId(0);
 			enqHead.setEnqHRemark(enqRemark);
 			enqHead.setEnqNo(enqNo);
-			enqHead.setEnqPriority(1);
+			enqHead.setEnqPriority(enqPrio);
 			enqHead.setEnqStatus(0);
 			enqHead.setEnqUsrId(0);
 			enqHead.setEnqUsrId2(0);
 			enqHead.setExDate1(curDate);
 			enqHead.setExDate2(curDate);
-			enqHead.setExVar1("na");
-			enqHead.setExVar2("na");
-			enqHead.setExVar3("na");
-			
+			enqHead.setExVar1("NA");
+			enqHead.setExVar2("NA");
+			enqHead.setExVar3("NA");
+
 			enqHead.setPlantId(plantId);
 			enqHead.setQuotId(0);
-			
-			List<EnqDetail> enqDetList=new ArrayList<>();
-			
-			
-			for(int i=0;i<enqItemList.size();i++) {
-			
-				
-				EnqDetail eDetail=new EnqDetail();
-				
-				eDetail.setDelStatus(0);
+
+			List<EnqDetail> enqDetList = new ArrayList<>();
+
+			for (int i = 0; i < enqItemList.size(); i++) {
+
+				EnqDetail eDetail = new EnqDetail();
+
+				eDetail.setDelStatus(1);
 				eDetail.setEnqDRemark(enqItemList.get(i).getItemEnqRemark());
 				eDetail.setEnqUomId(enqItemList.get(i).getUomId());
 				eDetail.setExDate1(curDate);
 				eDetail.setExDate2(curDate);
-				eDetail.setExVar1("na");
-				eDetail.setExVar2("na");
-				eDetail.setExVar3("na");
+				eDetail.setExVar1("NA");
+				eDetail.setExVar2("NA");
+				eDetail.setExVar3("NA");
 				eDetail.setItemId(enqItemList.get(i).getItemId());
 				eDetail.setItemQty(enqItemList.get(i).getEnqQty());
 				eDetail.setItemUom(enqItemList.get(i).getUomName());
 				eDetail.setItemUomId(enqItemList.get(i).getItemUomId());
 				eDetail.setStatus(0);
 				enqDetList.add(eDetail);
-				
+
 			}
-			
+
 			enqHead.setEnqDetailList(enqDetList);
-			
-			Info enqInsertRes=rest.postForObject(Constants.url+ "saveEnqHeaderAndDetail", enqHead, Info.class);
-			
-			System.err.println("enqInsertRes " +enqInsertRes.toString());
-			
-		
-		}catch (Exception e) {
+
+			Info enqInsertRes = rest.postForObject(Constants.url + "saveEnqHeaderAndDetail", enqHead, Info.class);
+
+			System.err.println("enqInsertRes " + enqInsertRes.toString());
+
+		} catch (Exception e) {
 			// TODO: handle exception
-			System.err.println("Exce In insertEnq method  " +e.getMessage());
+			System.err.println("Exce In insertEnq method  " + e.getMessage());
 			e.printStackTrace();
-			
+
 		}
 		return null;
-		
+
 	}
 
 }
