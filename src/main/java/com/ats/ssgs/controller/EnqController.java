@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.el.ELContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,9 +25,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.enq.EnqDetail;
+import com.ats.ssgs.model.enq.EnqGenFact;
 import com.ats.ssgs.model.enq.EnqHeader;
 import com.ats.ssgs.model.enq.TempEnqItem;
 import com.ats.ssgs.model.master.Cust;
+import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Uom;
@@ -43,6 +46,8 @@ public class EnqController {
 
 	List<Item> itemList;
 	RestTemplate rest = new RestTemplate();
+
+	private ArrayList<EnqGenFact> enqGenFactList;
 
 	@RequestMapping(value = "/showAddEnquiry", method = RequestMethod.GET)
 	public ModelAndView showAddItem(HttpServletRequest request, HttpServletResponse response) {
@@ -64,6 +69,12 @@ public class EnqController {
 
 			model.addObject("uomList", uomList);
 
+			EnqGenFact[] enqFactArray = rest.getForObject(Constants.url + "getAllEGFList", EnqGenFact[].class);
+			enqGenFactList = new ArrayList<EnqGenFact>(Arrays.asList(enqFactArray));
+
+			model.addObject("enqGenFactList", enqGenFactList);
+			
+			
 		} catch (Exception e) {
 
 			System.err.println("Exce in showing add Enq page " + e.getMessage());
@@ -181,6 +192,7 @@ try {
 			String uomName = request.getParameter("uomName");
 			String itemRemark = request.getParameter("itemRemark");
 			
+
 			TempEnqItem enqItem=new TempEnqItem();
 			
 			enqItem.setItemId(itemId);
@@ -189,6 +201,9 @@ try {
 			enqItem.setUomName(uomName);
 			enqItem.setEnqQty(qty);
 			enqItem.setItemEnqRemark(itemRemark);
+			int itemUomId = Integer.parseInt(request.getParameter("itemUomId"));
+			enqItem.setItemUomId(itemUomId);
+			
 			
 for(int i=0;i<enqItemList.size();i++) {
 	System.err.println("i value " +i);
@@ -238,6 +253,9 @@ for(int i=0;i<enqItemList.size();i++) {
 					enqItem.setUomName(uomName);
 					enqItem.setEnqQty(qty);
 					enqItem.setItemEnqRemark(itemRemark);
+					int itemUomId = Integer.parseInt(request.getParameter("itemUomId"));
+					enqItem.setItemUomId(itemUomId);
+					
 					
 					enqItemList.add(enqItem);
 				}
@@ -264,7 +282,11 @@ for(int i=0;i<enqItemList.size();i++) {
 				enqItem.setEnqQty(qty);
 				enqItem.setItemEnqRemark(itemRemark);
 				
+				int itemUomId = Integer.parseInt(request.getParameter("itemUomId"));
+				enqItem.setItemUomId(itemUomId);
+				
 				enqItemList.add(enqItem);
+				
 			} // else it is first item
 		} // end of if key==-1
 
@@ -277,7 +299,7 @@ for(int i=0;i<enqItemList.size();i++) {
 	e.printStackTrace();
 	
 }
-		
+		System.err.println(" enq Item List " + enqItemList.toString());
 		//end of new code
 		
 		return enqItemList;
@@ -295,8 +317,6 @@ for(int i=0;i<enqItemList.size();i++) {
 		return enqItemList.get(index);
 		
 	}
-	
-	
 	//insertEnq
 	@RequestMapping(value = "/insertEnq", method = RequestMethod.POST)
 	public String insertEnq(HttpServletRequest request, HttpServletResponse response) {
@@ -314,6 +334,8 @@ for(int i=0;i<enqItemList.size();i++) {
 			String enqNo = request.getParameter("enq_no");
 			String enqRemark = request.getParameter("enq_remark");
 			
+			int enqGenId = Integer.parseInt(request.getParameter("enq_gen_fact"));
+
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar cal = Calendar.getInstance();
 
@@ -321,10 +343,13 @@ for(int i=0;i<enqItemList.size();i++) {
 			
 			EnqHeader enqHead=new EnqHeader();
 			
+			
+			DateFormat dateTimeFrmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
 			enqHead.setCustId(custId);
 			enqHead.setEnqDate(DateConvertor.convertToYMD(enqDate));
-			enqHead.setEnqDateTime("");
-			enqHead.setEnqGenId(5);
+			enqHead.setEnqDateTime(dateTimeFrmt.format(cal.getTime()));
+			enqHead.setEnqGenId(enqGenId);//to be filled from form select list enq_gen_fact table
 			enqHead.setEnqHeadId(0);
 			enqHead.setEnqHRemark(enqRemark);
 			enqHead.setEnqNo(enqNo);
@@ -341,6 +366,7 @@ for(int i=0;i<enqItemList.size();i++) {
 			enqHead.setPlantId(plantId);
 			enqHead.setQuotId(0);
 			
+			List<EnqDetail> enqDetList=new ArrayList<>();
 			
 			
 			for(int i=0;i<enqItemList.size();i++) {
@@ -350,23 +376,28 @@ for(int i=0;i<enqItemList.size();i++) {
 				
 				eDetail.setDelStatus(0);
 				eDetail.setEnqDRemark(enqItemList.get(i).getItemEnqRemark());
-				/*eDetail
-				eDetail
-				eDetail
-				eDetail
-				eDetail
-				eDetail
-				eDetail
-				eDetail
-				
-				eDetail*/
+				eDetail.setEnqUomId(enqItemList.get(i).getUomId());
+				eDetail.setExDate1(curDate);
+				eDetail.setExDate2(curDate);
+				eDetail.setExVar1("na");
+				eDetail.setExVar2("na");
+				eDetail.setExVar3("na");
+				eDetail.setItemId(enqItemList.get(i).getItemId());
+				eDetail.setItemQty(enqItemList.get(i).getEnqQty());
+				eDetail.setItemUom(enqItemList.get(i).getUomName());
+				eDetail.setItemUomId(enqItemList.get(i).getItemUomId());
+				eDetail.setStatus(0);
+				enqDetList.add(eDetail);
 				
 			}
 			
+			enqHead.setEnqDetailList(enqDetList);
 			
+			Info enqInsertRes=rest.postForObject(Constants.url+ "saveEnqHeaderAndDetail", enqHead, Info.class);
 			
+			System.err.println("enqInsertRes " +enqInsertRes.toString());
 			
-			
+		
 		}catch (Exception e) {
 			// TODO: handle exception
 			System.err.println("Exce In insertEnq method  " +e.getMessage());

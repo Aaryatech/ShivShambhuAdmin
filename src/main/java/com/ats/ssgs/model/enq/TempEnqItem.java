@@ -16,7 +16,18 @@ public class TempEnqItem {
 	
 	private int isDuplicate;
 	
+	private int itemUomId;
 	
+	private float itemRate1;
+	
+	public int getItemUomId() {
+		return itemUomId;
+	}
+
+	public void setItemUomId(int itemUomId) {
+		this.itemUomId = itemUomId;
+	}
+
 	public int getIsDuplicate() {
 		return isDuplicate;
 	}
@@ -73,10 +84,19 @@ public class TempEnqItem {
 		this.enqQty = enqQty;
 	}
 
+	public float getItemRate1() {
+		return itemRate1;
+	}
+
+	public void setItemRate1(float itemRate1) {
+		this.itemRate1 = itemRate1;
+	}
+
 	@Override
 	public String toString() {
 		return "TempEnqItem [itemId=" + itemId + ", itemName=" + itemName + ", enqQty=" + enqQty + ", uomId=" + uomId
-				+ ", uomName=" + uomName + ", itemEnqRemark=" + itemEnqRemark + "]";
+				+ ", uomName=" + uomName + ", itemEnqRemark=" + itemEnqRemark + ", isDuplicate=" + isDuplicate
+				+ ", itemUomId=" + itemUomId + ", itemRate1=" + itemRate1 + "]";
 	}
 	
 }
