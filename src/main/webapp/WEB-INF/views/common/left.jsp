@@ -57,6 +57,15 @@
 							href="${pageContext.request.contextPath}/showPlantList">
 								Plant List</a></li>
 
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showCustList">
+								Customer List</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showItemList"> Item
+								List</a></li>
+
+
 
 					</ul></li>
 

@@ -89,51 +89,48 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
+										<th style="text-align: center">Cust Name</th>
 										<th style="text-align: center">Plant Name</th>
-										<th style="text-align: center">Company Name</th>
-										<th style="text-align: center">Telephone No</th>
-										<th style="text-align: center">Landline No</th>
-										<th style="text-align: center">Fax No</th>
+										<th style="text-align: center">Mobile No</th>
 										<th style="text-align: center">Email</th>
-										<th style="text-align: center">Plant Address</th>
+										<th style="text-align: center">Pan No</th>
+										<th style="text-align: center">Address</th>
 										<th style="text-align: center">Action</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${plantList}" var="plant" varStatus="count">
+									<c:forEach items="${custList}" var="cust" varStatus="count">
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
 
 
 											<td style="text-align: left"><c:out
-													value="${plant.plantName}" /></td>
+													value="${cust.custName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${plant.compName}" /></td>
-
-
-											<td style="text-align: left"><c:out
-													value="${plant.plantContactNo1}" /></td>
+													value="${cust.plantName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${plant.plantContactNo2}" /></td>
+													value="${cust.custMobNo}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${plant.plantFax1}" /></td>
+													value="${cust.custEmail}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${plant.plantEmail1}" /></td>
+													value="${cust.custPanNo}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${cust.custAddress}" /></td>
 
 
-											<td style="text-align: left">${plant.plantAddress1}</td>
 
 											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editPlant/${plant.plantId}"><i
+												href="${pageContext.request.contextPath}/editCust/${cust.custId}"><i
 													class="fa fa-edit"></i> <span class="text-muted"></span></a>
 												&nbsp; <a
-												href="${pageContext.request.contextPath}/deletePlant/${plant.plantId}"
+												href="${pageContext.request.contextPath}/deleteCust/${cust.custId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
 													class="fa fa-trash-o"></i></a></td>
 

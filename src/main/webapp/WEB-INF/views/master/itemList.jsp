@@ -89,51 +89,36 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
+										<th style="text-align: center">Item Name</th>
 										<th style="text-align: center">Plant Name</th>
-										<th style="text-align: center">Company Name</th>
-										<th style="text-align: center">Telephone No</th>
-										<th style="text-align: center">Landline No</th>
-										<th style="text-align: center">Fax No</th>
-										<th style="text-align: center">Email</th>
-										<th style="text-align: center">Plant Address</th>
+										<th style="text-align: center">Item Code</th>
+
 										<th style="text-align: center">Action</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${plantList}" var="plant" varStatus="count">
+									<c:forEach items="${itemList}" var="item" varStatus="count">
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
 
 
 											<td style="text-align: left"><c:out
-													value="${plant.plantName}" /></td>
+													value="${item.itemName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${plant.compName}" /></td>
-
-
-											<td style="text-align: left"><c:out
-													value="${plant.plantContactNo1}" /></td>
+													value="${item.plantName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${plant.plantContactNo2}" /></td>
+													value="${item.itemCode}" /></td>
 
-											<td style="text-align: left"><c:out
-													value="${plant.plantFax1}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${plant.plantEmail1}" /></td>
-
-
-											<td style="text-align: left">${plant.plantAddress1}</td>
 
 											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editPlant/${plant.plantId}"><i
+												href="${pageContext.request.contextPath}/editItem/${item.itemId}"><i
 													class="fa fa-edit"></i> <span class="text-muted"></span></a>
 												&nbsp; <a
-												href="${pageContext.request.contextPath}/deletePlant/${plant.plantId}"
+												href="${pageContext.request.contextPath}/deleteItem/${item.itemId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
 													class="fa fa-trash-o"></i></a></td>
 
@@ -215,52 +200,6 @@
 		});
 	</script>
 
-
-	<!-- <script type="text/javascript">
-	
-	function editComp(compId){
-		
-		//alert(catId);
-		
-		$.getJSON('${getEditCompany}',{
-			
-			compId : compId,
-			
-			ajax : 'true',
-
-		},
-		
-		function(data){
-			//document.getElementById('addDiv').style.display = "block";
-			$("#usrname_mr").val(data.msMarName);
-			$("#usrname_eng").val(data.msEngName);
-        	
-			//hidden field msId
-			$("#ms_id").val(data.msId);
-			
-			$("#contact_no").val(data.msContactNo);
-			 document.getElementById("contact_no").readOnly = true; 
-			$("#usr_pass").val(data.msPwd); 
-			$("#conf_pass").val(data.msPwd); 
-			document.getElementById("usr_role").options.selectedIndex =data.isAdmin;
-			$("#usr_role").trigger("chosen:updated");
-			var temp=new Array();
-			
-			temp=(data.hubIds).split(",");
-			//alert(temp);
-			$("#sel_hub").val(temp); 
-			$("#sel_hub").trigger("chosen:updated");
-
-			//$('#sel_hub').formcontrol('refresh');
-	 		document.getElementById('submitButton').disabled = false;
-
-
-		});
-		
-	}
-	
-	</script>
- -->
 
 </body>
 </html>
