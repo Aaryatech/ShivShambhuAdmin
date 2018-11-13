@@ -8,11 +8,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.el.ELContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Scope;
+import org.springframework.expression.spel.ast.QualifiedIdentifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -29,10 +29,13 @@ import com.ats.ssgs.model.enq.EnqGenFact;
 import com.ats.ssgs.model.enq.EnqHeader;
 import com.ats.ssgs.model.enq.TempEnqItem;
 import com.ats.ssgs.model.master.Cust;
+import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Uom;
+import com.ats.ssgs.model.quot.QuotDetail;
+import com.ats.ssgs.model.quot.QuotHeader;
 
 @Controller
 @Scope("session")
@@ -45,9 +48,10 @@ public class EnqController {
 	List<Uom> uomList;
 
 	List<Item> itemList;
+
 	RestTemplate rest = new RestTemplate();
 
-	private ArrayList<EnqGenFact> enqGenFactList;
+	List<EnqGenFact> enqGenFactList;
 
 	@RequestMapping(value = "/showAddEnquiry", method = RequestMethod.GET)
 	public ModelAndView showAddItem(HttpServletRequest request, HttpServletResponse response) {
@@ -73,6 +77,11 @@ public class EnqController {
 			enqGenFactList = new ArrayList<EnqGenFact>(Arrays.asList(enqFactArray));
 
 			model.addObject("enqGenFactList", enqGenFactList);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("docCode", 1);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			model.addObject("doc", doc);
 
 		} catch (Exception e) {
 
@@ -330,9 +339,8 @@ public class EnqController {
 			String enqRemark = request.getParameter("enq_remark");
 
 			int enqGenId = Integer.parseInt(request.getParameter("enq_gen_fact"));
-			
-			int enqPrio = Integer.parseInt(request.getParameter("enq_prio"));
 
+			int enqPrio = Integer.parseInt(request.getParameter("enq_prio"));
 
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar cal = Calendar.getInstance();
@@ -382,23 +390,146 @@ public class EnqController {
 				eDetail.setItemUom(enqItemList.get(i).getUomName());
 				eDetail.setItemUomId(enqItemList.get(i).getItemUomId());
 				eDetail.setStatus(0);
+
 				enqDetList.add(eDetail);
 
 			}
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
+			map.add("docCode", 1);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+
+			enqHead.setEnqNo(doc.getDocPrefix() + "" + doc.getSrNo());
 			enqHead.setEnqDetailList(enqDetList);
 
-			Info enqInsertRes = rest.postForObject(Constants.url + "saveEnqHeaderAndDetail", enqHead, Info.class);
+			EnqHeader enqInsertRes = rest.postForObject(Constants.url + "saveEnqHeaderAndDetail", enqHead,
+					EnqHeader.class);
+
+			if (enqInsertRes != null) {
+
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("srNo", doc.getSrNo() + 1);
+				map.add("docCode", doc.getDocCode());
+
+				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+
+			}
+
+			QuotHeader quotHeader = new QuotHeader();
+
+			List<QuotDetail> quotDetailList = new ArrayList<>();
+
+			quotHeader.setCompanyId(0);
+
+			quotHeader.setCustId(enqInsertRes.getCustId());
+
+			quotHeader.setDelStatus(1);
+			quotHeader.setEnqHeadId(enqInsertRes.getEnqHeadId());
+			quotHeader.setExDate1(curDate);
+			quotHeader.setExDate2(curDate);
+			quotHeader.setExVar1("NA");
+			quotHeader.setExVar2("NA");
+			quotHeader.setExVar3("NA");
+			quotHeader.setNoOfTolls(0);
+			quotHeader.setOtherCost(0);
+			quotHeader.setOtherRemark1("NA");
+			quotHeader.setOtherRemark3("NA");
+			quotHeader.setOtherRemark2("NA");
+			quotHeader.setOtherRemark4("NA");
+			quotHeader.setOtherValueAfterTax1(0);
+			quotHeader.setOtherValueAfterTax2(0);
+			quotHeader.setPayTermId(0);
+			quotHeader.setPayTerms("NA");
+			quotHeader.setPlantIds(enqInsertRes.getPlantId());
+			quotHeader.setProjId(0);
+			quotHeader.setQuotDate(curDate);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("docCode", 2);
+			Document docs = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+
+			quotHeader.setQuotNo(docs.getDocPrefix() + "" + docs.getSrNo());
+
+			quotHeader.setQuotTaxableAmt(0);
+			quotHeader.setQuotTaxAmt(0);
+			quotHeader.setQuotTermId(0);
+			quotHeader.setQuotTotal(0);
+			quotHeader.setQuotValue(0);
+			quotHeader.setStatus(0);
+			quotHeader.setTaxableValue(0);
+
+			quotHeader.setTaxValue(0);
+			quotHeader.setTollCost(0);
+			quotHeader.setTransportCost(0);
+
+			quotHeader.setTransportTermId(0);
+			quotHeader.setTransportTerms("NA");
+
+			quotHeader.setUserId(0);// get from session
+
+			for (int i = 0; i < enqInsertRes.getEnqDetailList().size(); i++) {
+
+				QuotDetail qDetail = new QuotDetail();
+				qDetail.setCgstValue(0);
+				qDetail.setConFactor(0);
+				qDetail.setConvQty(0);
+				qDetail.setDelStatus(1);
+				qDetail.setEnqDetailId(enqInsertRes.getEnqDetailList().get(i).getEnqDetailId());
+				qDetail.setExDate1(curDate);
+				qDetail.setExDate2(curDate);
+				qDetail.setExVar1("NA");
+				qDetail.setExVar2("NA");
+				qDetail.setExVar3("NA");
+				qDetail.setIgstPer(0);
+				qDetail.setIgstValue(0);
+				qDetail.setItemId(enqInsertRes.getEnqDetailList().get(i).getItemId());
+				qDetail.setOtherCost(0);
+				qDetail.setQuotUomId(0);
+				qDetail.setQuotQty(0);
+				qDetail.setRate(0);
+				qDetail.setSgstValue(0);
+				qDetail.setStatus(0);
+				qDetail.setTaxableValue(0);
+				qDetail.setTaxId(0);
+				qDetail.setTaxValue(0);
+
+				qDetail.setSgstPer(0);
+				qDetail.setCgstPer(0);
+
+				quotDetailList.add(qDetail);
+
+			}
+
+			quotHeader.setQuotDetailList(quotDetailList);
 
 			System.err.println("enqInsertRes " + enqInsertRes.toString());
 
+			QuotHeader quotHeadInsertRes = rest.postForObject(Constants.url + "saveQuotHeaderAndDetail", quotHeader,
+					QuotHeader.class);
+
+			System.err.println("quotHeadInsertRes  " + quotHeadInsertRes.toString());
+			
+			if (quotHeadInsertRes != null) {
+
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("srNo", docs.getSrNo() + 1);
+				map.add("docCode", docs.getDocCode());
+
+				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+
+			}
+
 		} catch (Exception e) {
-			// TODO: handle exception
+
 			System.err.println("Exce In insertEnq method  " + e.getMessage());
 			e.printStackTrace();
 
 		}
-		return null;
+
+		return "redirect:/showAddEnquiry";
 
 	}
 

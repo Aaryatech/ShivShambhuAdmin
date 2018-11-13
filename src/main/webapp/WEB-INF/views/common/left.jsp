@@ -72,6 +72,9 @@
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddEnquiry">Add
 								Enquiry</a></li>
+								
+								<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showQuotations">View Quotations</a></li>
 
 
 

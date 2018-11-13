@@ -91,7 +91,7 @@
 							<strong>${title}</strong>
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertEnq"
+							<form action="${pageContext.request.contextPath}/updateQuotation"
 								method="post">
 
 								<div class="row">
