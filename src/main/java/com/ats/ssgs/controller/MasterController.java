@@ -27,6 +27,7 @@ import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.CustType;
 import com.ats.ssgs.model.master.GetCust;
+import com.ats.ssgs.model.master.GetItem;
 import com.ats.ssgs.model.master.GetPlant;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
@@ -937,17 +938,19 @@ public class MasterController {
 		return null;
 	}
 
+	List<GetItem> getItemList;
+
 	@RequestMapping(value = "/showItemList", method = RequestMethod.GET)
 	public ModelAndView showItemList(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("master/itemList");
-			GetCust[] custArray = rest.getForObject(Constants.url + "getAllCustomerList", GetCust[].class);
-			getCustList = new ArrayList<GetCust>(Arrays.asList(custArray));
+			GetItem[] itemArray = rest.getForObject(Constants.url + "getAllItemList", GetItem[].class);
+			getItemList = new ArrayList<GetItem>(Arrays.asList(itemArray));
 
 			model.addObject("title", "Item List");
-			model.addObject("custList", getCustList);
+			model.addObject("itemList", getItemList);
 		} catch (Exception e) {
 
 			System.err.println("exception In showCustList at Master Contr" + e.getMessage());

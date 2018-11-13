@@ -89,48 +89,36 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Cust Name</th>
+										<th style="text-align: center">Item Name</th>
 										<th style="text-align: center">Plant Name</th>
-										<th style="text-align: center">Mobile No</th>
-										<th style="text-align: center">Email</th>
-										<th style="text-align: center">Pan No</th>
-										<th style="text-align: center">Address</th>
+										<th style="text-align: center">Item Code</th>
+
 										<th style="text-align: center">Action</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${custList}" var="cust" varStatus="count">
+									<c:forEach items="${itemList}" var="item" varStatus="count">
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
 
 
 											<td style="text-align: left"><c:out
-													value="${cust.custName}" /></td>
+													value="${item.itemName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${cust.plantName}" /></td>
+													value="${item.plantName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${cust.custMobNo}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${cust.custEmail}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${cust.custPanNo}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${cust.custAddress}" /></td>
-
+													value="${item.itemCode}" /></td>
 
 
 											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editCust/${cust.custId}"><i
+												href="${pageContext.request.contextPath}/editItem/${item.itemId}"><i
 													class="fa fa-edit"></i> <span class="text-muted"></span></a>
 												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteCust/${cust.custId}"
+												href="${pageContext.request.contextPath}/deleteItem/${item.itemId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
 													class="fa fa-trash-o"></i></a></td>
 
