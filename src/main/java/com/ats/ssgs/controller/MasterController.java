@@ -963,4 +963,51 @@ public class MasterController {
 
 	}
 
+	@RequestMapping(value = "/editItem/{itemId}", method = RequestMethod.GET)
+	public ModelAndView editItem(HttpServletRequest request, HttpServletResponse response, @PathVariable int custId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/editItem");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custId", custId);
+
+			Item editItem = rest.postForObject(Constants.url + "getItemByItemId", map, Item.class);
+
+			model.addObject("title", "Edit Item");
+			model.addObject("editItem", editItem);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editItem at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/deleteItem/{itemId}", method = RequestMethod.GET)
+	public String deleteItem(HttpServletRequest request, HttpServletResponse response, @PathVariable int itemId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("itemId", itemId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteItem", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteCust @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showCustList";
+	}
+
 }
