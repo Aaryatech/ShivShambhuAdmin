@@ -15,9 +15,9 @@
 
 <c:url var="getItemByItemId" value="/getItemByItemId" />
 
-<c:url var="addEnqItem" value="/addEnqItem" />
+<c:url var="addDocTermDetail" value="/addDocTermDetail" />
 
-<c:url var="getItemForEdit" value="/getItemForEdit" />
+<c:url var="getDocTermForEdit" value="/getDocTermForEdit" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -117,8 +117,8 @@
 								<div class="row">
 									<div class="col-md-2">Term Title</div>
 									<div class="col-md-4">
-										<input type="text" id="qty" name="qty" class="form-control"
-											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
+										<input type="text" id="termTitle" name="termTitle"
+											class="form-control" style="width: 100%;">
 									</div>
 
 
@@ -126,8 +126,9 @@
 									<div class="col-md-2">Sort No</div>
 
 									<div class="col-md-4">
-										<input type="text" id="item_remark" name="item_remark"
-											class="form-control" style="width: 100%;">
+										<input type="text" id="sortNo" name="sortNo"
+											class="form-control" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?">
 									</div>
 
 
@@ -142,8 +143,8 @@
 									<div class="row">
 										<div class="col-md-2">Term Desc</div>
 										<div class="col-md-3">
-											<input type="text" id="qty" name="qty" class="form-control"
-												style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
+											<input type="text" id="termDesc" name="termDesc"
+												class="form-control" style="width: 100%;">
 										</div>
 
 
@@ -151,21 +152,23 @@
 										<div class="col-md-1">Sort No</div>
 
 										<div class="col-md-3">
-											<input type="text" id="item_remark" name="item_remark"
-												class="form-control" style="width: 100%;">
+											<input type="text" id="sortNoDetail" name="sortNoDetail"
+												class="form-control" style="width: 100%;"
+												pattern="[0-9]+(\.[0-9]{0,2})?%?">
 										</div>
 										<div class="col-md-1"></div>
 
 										<div class="col-md-2">
 											<input type="button" value="Add" class="btn btn-primary"
-												style="align-content: center; width: 113px;"
-												onclick="addItem()" />
+												style="align-content: center; width: 113px;" onclick="add()" />
 
 										</div>
 
 
 									</div>
-									<input type="hidden" name="item_id" id="item_id" value="0">
+									<input type="hidden" id="isDelete" name="isDelete" value="0">
+									<input type="hidden" name="isEdit" id="isEdit" value="0">
+									<input type="hidden" name="index" id="index" value="0">
 									<div class="form-group"></div>
 
 								</section>
@@ -194,6 +197,15 @@
 
 								</div>
 
+								<div class="form-group"></div>
+								<div class="col-lg-12" align="center">
+
+
+									<button type="submit" class="btn btn-primary"
+										style="align-content: center; width: 226px; margin-left: 80px;">
+										Submit</button>
+								</div>
+
 
 							</form>
 						</div>
@@ -206,12 +218,8 @@
 		<!-- .animated -->
 	</div>
 	<!-- .content -->
-
-
 	<!-- .animated -->
 	<!-- .content -->
-
-
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	<!-- Footer -->
@@ -279,238 +287,95 @@
 		});
 	</script>
 
-	<script type="text/javascript">
-		function getData() {
-			var plantId = document.getElementById("plant_id").value;
-			document.getElementById("isEdit").value = 0;
-			var valid = true;
-
-			if (plantId == null || plantId == "") {
-				valid = false;
-				alert("Please Select plant");
-			}
-
-			if (valid == true) {
-
-				$.getJSON('${getItemsByPlantId}', {
-
-					plantId : plantId,
-					ajax : 'true',
-
-				},
-
-				function(data) {
-					var html;
-					var len = data.length;
-					var html = '<option value="-1"  >Select Item</option>';
-					for (var i = 0; i < len; i++) {
-
-						html += '<option value="' + data[i].itemId + '">'
-								+ data[i].itemName + '</option>';
-					}
-					html += '</option>';
-
-					$('#item_name').html(html);
-					$("#item_name").trigger("chosen:updated");
-
-				});
-
-				$.getJSON('${getCustByPlantId}', {
-					plantId : plantId,
-					ajax : 'true',
-				},
-
-				function(data) {
-					var html;
-					var len = data.length;
-					for (var i = 0; i < len; i++) {
-
-						html += '<option value="' + data[i].custId + '">'
-								+ data[i].custName + '</option>';
-
-					}
-					html += '</option>';
-
-					$('#cust_name').html(html);
-					$("#cust_name").trigger("chosen:updated");
-
-				});
-
-			}//end of if
-
-		}
-	</script>
 
 	<script type="text/javascript">
-		function setSelectedUom(itemId) {
-
-			if (itemId == -1) {
-				document.getElementById("qty").value = "";
-				document.getElementById("item_remark").value = "";
-				document.getElementById("item_name").options.selectedIndex = "0";
-				document.getElementById("uomId").options.selectedIndex = "0";
-				$("#uomId").trigger("chosen:updated");
-				$("#item_name").trigger("chosen:updated");
-				document.getElementById("isEdit").value = "0";
-				document.getElementById("itemUomId").value = "0";
-				document.getElementById("item_rate").value = "0"
-			} else {
-				$
-						.getJSON(
-								'${getItemByItemId}',
-								{
-									itemId : itemId,
-									ajax : 'true',
-								},
-
-								function(data) {
-									document.getElementById("uomId").value = data.uomId;
-									$("#uomId").trigger("chosen:updated");
-									document.getElementById("itemUomId").value = data.uomId;
-									document.getElementById("item_rate").value = data.itemRate1;
-								});
-			}
-		}
-	</script>
-
-	<script type="text/javascript">
-		function addItem() {
-			//alert("in add Item ");
-			var itemId = document.getElementById("item_name").value;
-			var itemName = $("#item_name option:selected").html();
-			var uomId = document.getElementById("uomId").value;
-			var uomName = $("#uomId option:selected").html();
-			var qty = document.getElementById("qty").value;
+		function add() {
+			alert("in add  ");
+			var termDesc = document.getElementById("termDesc").value;
+			var isDelete = document.getElementById("isDelete").value;
+			var sortNoDetail = document.getElementById("sortNoDetail").value;
 			var isEdit = document.getElementById("isEdit").value;
-			var itemRemark = document.getElementById("item_remark").value;
-			var itemUomId = document.getElementById("itemUomId").value;
-			var x = false;
-			var y = false;
-			x = isNaN(qty);
+			var index = document.getElementById("index").value;
 
-			var plantId = document.getElementById("plant_id").value;
-			var valid = false;
-
-			if (plantId == null || plantId == "") {
-				valid = true;
-				var msg = "Please Select plant";
-				callAlert(msg);
-			}
-
-			else if (itemId == "" || itemId < 0) {
-				valid = true;
-				var msg = "Please Select Item Name";
-				callAlert(msg);
-			} else if ((x == true) || (qty == null) || (qty == "") || (qty < 0)) {
-				var msg = "Please Enter Valid Quantity";
-				valid = true;
-				callAlert(msg);
-			}
-
-			//alert("x=" +x + "y= " +y);
-			if (valid == false) {
-				alert("Inside add ajax");
-				$
-						.getJSON(
-								'${addEnqItem}',
-								{
-									isEdit : isEdit,
-									key : -1,
-									itemId : itemId,
-									itemName : itemName,
-									uomId : uomId,
-									uomName : uomName,
-									qty : qty,
-									itemRemark : itemRemark,
-									itemUomId : itemUomId,
-									ajax : 'true',
-
-								},
-
-								function(data) {
-									var dataTable = $('#bootstrap-data-table')
-											.DataTable();
-									dataTable.clear().draw();
-
-									$
-											.each(
-													data,
-													function(i, v) {
-														if (v.isDuplicate == 1) {
-															alert("Item Already Added in Enquiry");
-														}
-														//var str = '<input  type="button"  class="fa  fa-stack-exchange" onclick="callEdit('+v.itemId+','+i+')" style="width:100%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:100%;"/> ';
-
-														var str = '<a href="#" class="action_btn" onclick="callDelete('
-																+ v.itemId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-																+ v.itemId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-edit"></i></a>'
-
-														dataTable.row
-																.add(
-																		[
-																				i + 1,
-																				v.itemName,
-																				v.uomName,
-																				v.enqQty,
-																				str ])
-																.draw();
-													});
-									document.getElementById("qty").value = "";
-									document.getElementById("item_remark").value = "";
-									document.getElementById("item_name").options.selectedIndex = "0";
-									document.getElementById("uomId").options.selectedIndex = "0";
-									$("#uomId").trigger("chosen:updated");
-									$("#item_name").trigger("chosen:updated");
-									document.getElementById("isEdit").value = 0;
-									document.getElementById("itemUomId").value = "0";
-									document.getElementById("item_rate").value = "0"
-								});
-
-			}//end of if
-			else {
-
-			}
-		}
-
-		function callEdit(itemId, index) {
+			alert("Inside add ajax");
 			$
 					.getJSON(
-							'${getItemForEdit}',
+							'${addDocTermDetail}',
 							{
-								itemId : itemId,
+
+								isDelete : isDelete,
+								isEdit : isEdit,
 								index : index,
+								termDesc : termDesc,
+								sortNoDetail : sortNoDetail,
 								ajax : 'true',
 
 							},
-							function(data) {
 
-								document.getElementById("uomId").value = data.uomId;
-								$("#uomId").trigger("chosen:updated");
-								document.getElementById("qty").value = data.enqQty;
-								document.getElementById("item_remark").value = data.itemEnqRemark;
-								document.getElementById("item_name").value = data.itemId;
-								$("#item_name").trigger("chosen:updated");
-								document.getElementById("isEdit").value = 1;
-								document.getElementById("itemUomId").value = data.itemUomId;
-								document.getElementById("item_rate").value = data.itemRate1;
+							function(data) {
+								var dataTable = $('#bootstrap-data-table')
+										.DataTable();
+								dataTable.clear().draw();
+
+								$
+										.each(
+												data,
+												function(i, v) {
+
+													var str = '<a href="#" class="action_btn" onclick="callDelete('
+															+ v.termDetailId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
+															+ v.termDetailId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-edit"></i></a>'
+
+													dataTable.row.add(
+															[ i + 1,
+																	v.termDesc,
+																	v.sortNo,
+																	str ])
+															.draw();
+												});
+
 							});
+			document.getElementById("termDesc").value = "";
+			document.getElementById("sortNoDetail").value = "";
+			document.getElementById("isDelete").value = 0;
+			document.getElementById("isEdit").value = 0;
+			document.getElementById("index").value = 0;
 
 		}
 
-		function callDelete(itemId, index) {
-			document.getElementById("isEdit").value = 0;
+		function callEdit(termDetailId, index) {
 
+			document.getElementById("isEdit").value = "1";
+
+			$.getJSON('${getDocTermForEdit}', {
+				termDetailId : termDetailId,
+				index : index,
+				ajax : 'true',
+
+			}, function(data) {
+
+				document.getElementById("sortNoDetail").value = data.sortNo;
+				document.getElementById("termDesc").value = data.termDesc;
+				document.getElementById("index").value = index;
+
+			});
+
+		}
+
+		function callDelete(termDetailId, index) {
+			//document.getElementById("isEdit").value = 0;
+			alert("index" + index);
 			$
 					.getJSON(
-							'${addEnqItem}',
+							'${addDocTermDetail}',
 							{
-								isEdit : 0,
+								isDelete : 1,
 								key : index,
 								ajax : 'true',
 
@@ -526,32 +391,25 @@
 												function(i, v) {
 													//	var str = '<input  type="button" value="callEdit" onclick="callEdit('+v.itemId+','+i+')" style="width:30%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:30%;"/> ';
 													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.itemId
+															+ v.termDetailId
 															+ ','
 															+ i
-															+ ')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.itemId
+															+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
+															+ v.termDetailId
 															+ ','
 															+ i
-															+ ')"><abbr title="Edit"><i class="fa fa-edit"></i></abbr></a>'
+															+ ')"><i class="fa fa-edit"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
-																	v.itemName,
-																	v.uomName,
-																	v.enqQty,
+																	v.termDesc,
+																	v.sortNo,
+
 																	str ])
 															.draw();
 												});
 							});
 
-			document.getElementById("qty").value = "";
-			document.getElementById("item_remark").value = "";
-			document.getElementById("item_name").options.selectedIndex = "0";
-			document.getElementById("uomId").options.selectedIndex = "0";
-			$("#uomId").trigger("chosen:updated");
-			$("#item_name").trigger("chosen:updated");
-			document.getElementById("item_rate").value = "0";
 		}
 		function validate(s) {
 			var rgx = /^[0-9]*\.?[0-9]*$/;
