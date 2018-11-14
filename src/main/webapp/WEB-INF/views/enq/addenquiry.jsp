@@ -144,8 +144,8 @@
 									<div class="col-md-4">
 										<input type="text" readonly id="enq_no" name="enq_no"
 											style="width: 100%;" class="form-control"
-											value="${doc.docPrefix}${doc.srNo}"> <span class="error"
-											aria-live="polite"></span>
+											value="${doc.docPrefix}${doc.srNo}"> <span
+											class="error" aria-live="polite"></span>
 									</div>
 
 								</div>
@@ -193,8 +193,8 @@
 											<input type="text" id="qty" name="qty" class="form-control"
 												style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
 										</div>
-										
-										
+
+
 
 										<div class="col-md-2">Remark</div>
 
@@ -207,9 +207,11 @@
 									<div class="form-group"></div>
 
 									<div class="row">
-<div class="col-md-2">Rate</div><div class="col-md-4">
-											<input type="text" readonly="readonly" id="item_rate" name="item_rate" class="form-control"
-												style="width: 100%;" value="0">
+										<div class="col-md-2">Rate</div>
+										<div class="col-md-4">
+											<input type="text" readonly="readonly" id="item_rate"
+												name="item_rate" class="form-control" style="width: 100%;"
+												value="0">
 										</div>
 
 										<div class="col-md-2"></div>
@@ -252,9 +254,9 @@
 									<div class="col-md-4">
 										<select id="enq_prio" name="enq_prio" class="standardSelect"
 											tabindex="1" required>
-											
+
 											<option value="0">Low</option>
-											<option selected  value="1">Medium</option>
+											<option selected value="1">Medium</option>
 											<option value="2">High</option>
 										</select>
 									</div>
@@ -440,30 +442,33 @@
 
 	<script type="text/javascript">
 		function setSelectedUom(itemId) {
-		
-		if(itemId==-1 ){
-			document.getElementById("qty").value = "";
-			document.getElementById("item_remark").value = "";
-			document.getElementById("item_name").options.selectedIndex = "0";
-			document.getElementById("uomId").options.selectedIndex = "0";
-			$("#uomId").trigger("chosen:updated");
-			$("#item_name").trigger("chosen:updated");
-			document.getElementById("isEdit").value ="0";
-			document.getElementById("itemUomId").value = "0";
-			document.getElementById("item_rate").value ="0"
-		}else{
-			$.getJSON('${getItemByItemId}', {
-				itemId : itemId,
-				ajax : 'true',
-			},
 
-			function(data) {
-				document.getElementById("uomId").value = data.uomId;
+			if (itemId == -1) {
+				document.getElementById("qty").value = "";
+				document.getElementById("item_remark").value = "";
+				document.getElementById("item_name").options.selectedIndex = "0";
+				document.getElementById("uomId").options.selectedIndex = "0";
 				$("#uomId").trigger("chosen:updated");
-				document.getElementById("itemUomId").value = data.uomId;
-				document.getElementById("item_rate").value = data.itemRate1;
-			});
-		}
+				$("#item_name").trigger("chosen:updated");
+				document.getElementById("isEdit").value = "0";
+				document.getElementById("itemUomId").value = "0";
+				document.getElementById("item_rate").value = "0"
+			} else {
+				$
+						.getJSON(
+								'${getItemByItemId}',
+								{
+									itemId : itemId,
+									ajax : 'true',
+								},
+
+								function(data) {
+									document.getElementById("uomId").value = data.uomId;
+									$("#uomId").trigger("chosen:updated");
+									document.getElementById("itemUomId").value = data.uomId;
+									document.getElementById("item_rate").value = data.itemRate1;
+								});
+			}
 		}
 	</script>
 
@@ -481,7 +486,7 @@
 			var x = false;
 			var y = false;
 			x = isNaN(qty);
-			
+
 			var plantId = document.getElementById("plant_id").value;
 			var valid = false;
 
@@ -490,18 +495,17 @@
 				var msg = "Please Select plant";
 				callAlert(msg);
 			}
-			
+
 			else if (itemId == "" || itemId < 0) {
 				valid = true;
 				var msg = "Please Select Item Name";
 				callAlert(msg);
-			}
-			else if ((x == true) || (qty == null) || (qty == "") || (qty < 0)) {
+			} else if ((x == true) || (qty == null) || (qty == "") || (qty < 0)) {
 				var msg = "Please Enter Valid Quantity";
-				valid=true;
+				valid = true;
 				callAlert(msg);
 			}
-			
+
 			//alert("x=" +x + "y= " +y);
 			if (valid == false) {
 				alert("Inside add ajax");
@@ -564,7 +568,7 @@
 									$("#item_name").trigger("chosen:updated");
 									document.getElementById("isEdit").value = 0;
 									document.getElementById("itemUomId").value = "0";
-									document.getElementById("item_rate").value ="0"
+									document.getElementById("item_rate").value = "0"
 								});
 
 			}//end of if
@@ -593,7 +597,7 @@
 								$("#item_name").trigger("chosen:updated");
 								document.getElementById("isEdit").value = 1;
 								document.getElementById("itemUomId").value = data.itemUomId;
-								document.getElementById("item_rate").value =data.itemRate1;
+								document.getElementById("item_rate").value = data.itemRate1;
 							});
 
 		}
@@ -646,7 +650,7 @@
 			document.getElementById("uomId").options.selectedIndex = "0";
 			$("#uomId").trigger("chosen:updated");
 			$("#item_name").trigger("chosen:updated");
-			document.getElementById("item_rate").value ="0";
+			document.getElementById("item_rate").value = "0";
 		}
 		function validate(s) {
 			var rgx = /^[0-9]*\.?[0-9]*$/;

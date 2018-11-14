@@ -7,23 +7,12 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Shiv Admin</title>
+<title>Shiv Admin3333</title>
 
-<c:url var="getItemsByPlantId" value="/getItemsByPlantId" />
-
-<c:url var="getCustByPlantId" value="/getCustByPlantId" />
-
-<c:url var="getItemByItemId" value="/getItemByItemId" />
-
-<c:url var="addEnqItem" value="/addEnqItem" />
-
-<c:url var="getItemForEdit" value="/getItemForEdit" />
+<c:url var="getProjectByCustId" value="/getProjectByCustId" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<link rel="apple-touch-icon" href="apple-icon.png">
-<link rel="shortcut icon" href="favicon.ico">
 
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -74,6 +63,7 @@
 	<jsp:include page="/WEB-INF/views/common/left.jsp"></jsp:include>
 	<!-- Left Panel -->
 
+	<jsp:include page="/WEB-INF/views/common/right.jsp"></jsp:include>
 
 	<!-- Header-->
 	<!-- Header-->
@@ -106,7 +96,10 @@
 											<option value="">Select Plant</option>
 
 											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+												<c:if test="${plantId==plant.plantId}">
+
+													<option selected value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
 											</c:forEach>
 										</select>
 									</div>
@@ -117,7 +110,19 @@
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 
- 
+											<c:forEach items="${custList}" var="cust">
+												<c:choose>
+													<c:when test="${custId==cust.custId}">
+
+														<option selected value="${cust.custId}">${cust.custName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${cust.custId}">${cust.custName}</option>
+
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
 										</select>
 									</div>
 
@@ -125,28 +130,34 @@
 								<input type="hidden" name="item_id" id="item_id" value="0">
 								<div class="form-group"></div>
 								<div class="row">
+									<div class="col-md-2">Project</div>
+									<div class="col-md-4">
+										<select id="cust_name" name="cust_name" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select customer')"
+											onchange="try{setCustomValidity('')}catch(e){}">
 
+											<c:forEach items="${projList}" var="proj">
+												<option value="${proj.projId}">${proj.projName}</option>
+											</c:forEach>
 
-
-									<div class="col-md-2">Enquiry Date</div>
+										</select>
+									</div>
+									<div class="col-md-2">Payment Term</div>
 
 									<div class="col-md-4">
-										<input type="text" id="enq_date" name="enq_date" required
-											style="width: 100%;" class="form-control"
-											value="${editComp.contactNo1}"> <span class="error"
-											aria-live="polite"></span>
+										<select id="plant_id" name="plant_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select payment term')"
+											onchange="getData()">
+											<option value="">Select Pay Term</option>
+
+											<c:forEach items="${payTermList}" var="pTerm">
+												<option value="${pTerm.payTermId}">${pTerm.payTerm}</option>
+											</c:forEach>
+										</select>
 									</div>
 
-
-
-									<div class="col-md-2">Enquiry No</div>
-
-									<div class="col-md-4">
-										<input type="text" readonly id="enq_no" name="enq_no"
-											style="width: 100%;" class="form-control"
-											value="${doc.docPrefix}${doc.srNo}"> <span class="error"
-											aria-live="polite"></span>
-									</div>
 
 								</div>
 								<input type="hidden" id="isEdit" name="isEdit" value="0">
@@ -154,75 +165,126 @@
 								<input type="hidden" id="itemUomId" name="itemUomId" value="0">
 
 								<div class="form-group"></div>
-								<section class="form-control" style="background: orange;">
 
-									<div class="row">
+								<div class="row">
+									<div class="col-md-2">Quotation Term</div>
 
+									<div class="col-md-4">
+										<select id="plant_id" name="plant_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select plant name')"
+											onchange="getData()">
+											<option value="">Select Term</option>
 
-										<div class="col-md-2">Item Name</div>
-										<div class="col-md-4">
-											<select id="item_name" name="item_name"
-												class="standardSelect" tabindex="1"
-												onchange="setSelectedUom(this.value)">
-											</select>
-										</div>
-
-
-										<div class="col-md-2">Select UOM</div>
-
-										<div class="col-md-4">
-											<select id="uomId" name="uomId" class="standardSelect"
-												tabindex="1"
-												oninvalid="setCustomValidity('Please select uom')"
-												onchange="try{setCustomValidity('')}catch(e){}">
-
-												<option value="0">Select UOM</option>
-												<c:forEach items="${uomList}" var="uom">
-													<option value="${uom.uomId}">${uom.uomName}</option>
-												</c:forEach>
-											</select>
-										</div>
-
+											<c:forEach items="${docTermList}" var="qTerm">
+												<option value="${qTerm.termId}">${qTerm.termTitle}</option>
+											</c:forEach>
+										</select>
 									</div>
 
 
-									<div class="form-group"></div>
-									<div class="row">
-										<div class="col-md-2">Quantity</div>
-										<div class="col-md-4">
-											<input type="text" id="qty" name="qty" class="form-control"
-												style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
-										</div>
-										
-										
+									<div class="col-md-2">Transport Term</div>
 
-										<div class="col-md-2">Remark</div>
-
-										<div class="col-md-4">
-											<input type="text" id="item_remark" name="item_remark"
-												class="form-control" style="width: 100%;" value="-">
-										</div>
-
+									<div class="col-md-4">
+										<textarea id="trans_term" name="trans_term"
+											class="form-control" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter transport term')"
+											onchange="try{setCustomValidity('')}catch(e){}"></textarea>
 									</div>
-									<div class="form-group"></div>
 
-									<div class="row">
-<div class="col-md-2">Rate</div><div class="col-md-4">
-											<input type="text" readonly="readonly" id="item_rate" name="item_rate" class="form-control"
-												style="width: 100%;" value="0">
-										</div>
+								</div>
 
-										<div class="col-md-2"></div>
 
-										<div class="col-md-4">
-											<input type="button" value="Add Item" class="btn btn-primary"
-												style="align-content: center; width: 226px;"
-												onclick="addItem()" />
-
-										</div>
-
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Quotation Date</div>
+									<div class="col-md-4">
+										<input type="text" id="quot_date" name="quot_date"
+											class="form-control" style="width: 100%;"
+											value="${quotHeader.quotDate }">
 									</div>
-								</section>
+
+									<div class="col-md-2">Delivery Place</div>
+									<div class="col-md-2">
+										On Spot <input type="radio" checked name="del_place"
+											id="del_place" value="1">
+									</div>
+
+									<div class="col-md-2">
+										Specific Place <input type="radio" name="del_place"
+											id="del_place" value="0">
+									</div>
+
+
+								</div>
+
+								<div class="form-group"></div>
+
+								<div class="row">
+									<div class="col-md-2">No of KM</div>
+									<div class="col-md-4">
+										<input type="text" id="no_of_km" name="item_rate"
+											class="form-control" style="width: 100%;" value="0">
+									</div>
+
+									<div class="col-md-2">Location</div>
+
+									<div class="col-md-4">
+										<input type="text" id="location" name="location"
+											class="form-control" style="width: 100%;" value="-">
+									</div>
+
+								</div>
+
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Calculate By</div>
+									<div class="col-md-2">
+										Automatic<input type="radio" checked name="del_place"
+											id="del_place" value="1">
+									</div>
+
+									<div class="col-md-2">
+										Manual<input type="radio" name="del_place" id="del_place"
+											value="0">
+									</div>
+
+									<div class="col-md-2">No of Tolls</div>
+									<div class="col-md-4">
+										<input type="text" id="no_of_tolls" name="no_of_tolls"
+											class="form-control" style="width: 100%;">
+									</div>
+
+
+								</div>
+
+								<div class="form-group"></div>
+
+
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">is Tax Included</div>
+									<div class="col-md-1">
+										Yes<input type="radio" checked name="is_tax_inc"
+											id="is_tax_inc" value="1">
+									</div>
+
+									<div class="col-md-1">
+										No<input type="radio" name="is_tax_inc" id="is_tax_inc"
+											value="0">
+									</div>
+									<div class="col-md-2"></div>
+
+									<!-- <div class="col-md-2">Toll  Amount</div>
+									<div class="col-md-4">
+										<input type="text" id="toll_value" name="toll_value"
+											class="form-control" >
+									</div>
+ -->
+								</div>
+
 								<div class="card-body card-block">
 
 									<table id="bootstrap-data-table"
@@ -230,14 +292,86 @@
 										<thead>
 											<tr>
 
-												<th style="text-align: center">Sr</th>
-												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">UOM</th>
-												<th style="text-align: center">Qty</th>
-												<th style="text-align: center; width: 5%;">Action</th>
+												<th style="text-align: center" width="2%">Sr</th>
+
+												<th style="text-align: center" class="col-md-1">Item</th>
+												<th style="text-align: center" class="col-md-1">Qty</th>
+												<th style="text-align: center" class="col-md-1">UOM</th>
+
+												<th style="text-align: center" class="col-md-1">Tran co</th>
+												<th style="text-align: center" class="col-md-1">Toll
+													Cost</th>
+												<th style="text-align: center" class="col-md-1">Other
+													Cost</th>
+
+												<th style="text-align: center" class="col-md-1">Item
+													Rate</th>
+												<th style="text-align: center" class="col-md-1">Roy
+													Rate</th>
+												<th style="text-align: center" class="col-md-1">GSt%</th>
+
+												<th style="text-align: center" class="col-md-1">Taxable</th>
+												<th style="text-align: center" class="col-md-1">Tax</th>
+												<th style="text-align: center" class="col-md-1">Final</th>
 
 											</tr>
 										</thead>
+										<tbody>
+
+											<c:forEach items="${itemList}" var="item" varStatus="count">
+												<tr>
+
+													<td style="text-align: center">${count.index+1}</td>
+
+
+													<td style="text-align: left"><c:out
+															value="${item.itemName}" /></td>
+
+													<td style="text-align: left"><input type="text"
+														id="quot_qty" name="quot_qty" class="form-control"></td>
+
+													<td style="text-align: left"><c:out
+															value="${item.uomName}" /></td>
+
+
+													<td style="text-align: center"><input type="text"
+														id="trans_cost" name="trans_cost" class="form-control"></td>
+
+													<td style="text-align: center"><input type="text"
+														id="toll_cost" name="toll_cost" class="form-control"></td>
+
+													<td style="text-align: center"><input type="text"
+														id="other_cost" name="other_cost" class="form-control"></td>
+													<!-- 
+													<td style="text-align: center"><input type="text"
+														id="trans_cost" name="trans_cost" class="form-control"
+														style="width: 100%;"></td>
+ -->
+
+
+													<td style="text-align: left"><c:out
+															value="${item.itemRate1}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${item.royaltyRate}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${item.taxName}" /></td>
+
+													<td style="text-align: center"><input type="text"
+														id="taxable_amt" name="taxable_amt" class="form-control"></td>
+
+
+													<td style="text-align: left"><input type="text"
+														id="tax_amt" name="tax_amt" class="form-control"></td>
+
+													<td style="text-align: center"><input type="text"
+														id="final_amt" name="final_amt" class="form-control"></td>
+
+
+												</tr>
+											</c:forEach>
+										</tbody>
 
 									</table>
 
@@ -252,9 +386,9 @@
 									<div class="col-md-4">
 										<select id="enq_prio" name="enq_prio" class="standardSelect"
 											tabindex="1" required>
-											
+
 											<option value="0">Low</option>
-											<option selected  value="1">Medium</option>
+											<option selected value="1">Medium</option>
 											<option value="2">High</option>
 										</select>
 									</div>
@@ -278,7 +412,7 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Enquiry Remark</div>
+									<div class="col-md-2">Remark</div>
 
 									<div class="col-md-9">
 										<input type="text" id="enq_remark" name="enq_remark"
@@ -324,6 +458,7 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
+
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables.min.js"></script>
 	<script
@@ -349,6 +484,8 @@
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
+
+
 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({
@@ -369,7 +506,7 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$('input[id$=enq_date]').datepicker({
+			$('input[id$=quot_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 
@@ -440,30 +577,33 @@
 
 	<script type="text/javascript">
 		function setSelectedUom(itemId) {
-		
-		if(itemId==-1 ){
-			document.getElementById("qty").value = "";
-			document.getElementById("item_remark").value = "";
-			document.getElementById("item_name").options.selectedIndex = "0";
-			document.getElementById("uomId").options.selectedIndex = "0";
-			$("#uomId").trigger("chosen:updated");
-			$("#item_name").trigger("chosen:updated");
-			document.getElementById("isEdit").value ="0";
-			document.getElementById("itemUomId").value = "0";
-			document.getElementById("item_rate").value ="0"
-		}else{
-			$.getJSON('${getItemByItemId}', {
-				itemId : itemId,
-				ajax : 'true',
-			},
 
-			function(data) {
-				document.getElementById("uomId").value = data.uomId;
+			if (itemId == -1) {
+				document.getElementById("qty").value = "";
+				document.getElementById("item_remark").value = "";
+				document.getElementById("item_name").options.selectedIndex = "0";
+				document.getElementById("uomId").options.selectedIndex = "0";
 				$("#uomId").trigger("chosen:updated");
-				document.getElementById("itemUomId").value = data.uomId;
-				document.getElementById("item_rate").value = data.itemRate1;
-			});
-		}
+				$("#item_name").trigger("chosen:updated");
+				document.getElementById("isEdit").value = "0";
+				document.getElementById("itemUomId").value = "0";
+				document.getElementById("item_rate").value = "0"
+			} else {
+				$
+						.getJSON(
+								'${getItemByItemId}',
+								{
+									itemId : itemId,
+									ajax : 'true',
+								},
+
+								function(data) {
+									document.getElementById("uomId").value = data.uomId;
+									$("#uomId").trigger("chosen:updated");
+									document.getElementById("itemUomId").value = data.uomId;
+									document.getElementById("item_rate").value = data.itemRate1;
+								});
+			}
 		}
 	</script>
 
@@ -481,7 +621,7 @@
 			var x = false;
 			var y = false;
 			x = isNaN(qty);
-			
+
 			var plantId = document.getElementById("plant_id").value;
 			var valid = false;
 
@@ -490,18 +630,17 @@
 				var msg = "Please Select plant";
 				callAlert(msg);
 			}
-			
+
 			else if (itemId == "" || itemId < 0) {
 				valid = true;
 				var msg = "Please Select Item Name";
 				callAlert(msg);
-			}
-			else if ((x == true) || (qty == null) || (qty == "") || (qty < 0)) {
+			} else if ((x == true) || (qty == null) || (qty == "") || (qty < 0)) {
 				var msg = "Please Enter Valid Quantity";
-				valid=true;
+				valid = true;
 				callAlert(msg);
 			}
-			
+
 			//alert("x=" +x + "y= " +y);
 			if (valid == false) {
 				alert("Inside add ajax");
@@ -564,7 +703,7 @@
 									$("#item_name").trigger("chosen:updated");
 									document.getElementById("isEdit").value = 0;
 									document.getElementById("itemUomId").value = "0";
-									document.getElementById("item_rate").value ="0"
+									document.getElementById("item_rate").value = "0"
 								});
 
 			}//end of if
@@ -593,7 +732,7 @@
 								$("#item_name").trigger("chosen:updated");
 								document.getElementById("isEdit").value = 1;
 								document.getElementById("itemUomId").value = data.itemUomId;
-								document.getElementById("item_rate").value =data.itemRate1;
+								document.getElementById("item_rate").value = data.itemRate1;
 							});
 
 		}
@@ -646,7 +785,7 @@
 			document.getElementById("uomId").options.selectedIndex = "0";
 			$("#uomId").trigger("chosen:updated");
 			$("#item_name").trigger("chosen:updated");
-			document.getElementById("item_rate").value ="0";
+			document.getElementById("item_rate").value = "0";
 		}
 		function validate(s) {
 			var rgx = /^[0-9]*\.?[0-9]*$/;
