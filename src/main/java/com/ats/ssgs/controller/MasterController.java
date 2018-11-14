@@ -37,6 +37,7 @@ import com.ats.ssgs.model.master.Setting;
 import com.ats.ssgs.model.master.Tax;
 import com.ats.ssgs.model.master.Uom;
 import com.ats.ssgs.model.master.User;
+import com.ats.ssgs.model.master.Vendor;
 
 @Controller
 @Scope("session")
@@ -45,6 +46,7 @@ public class MasterController {
 	RestTemplate rest = new RestTemplate();
 	List<User> usrList;
 	List<Plant> plantList;
+	List<Vendor> vendList;
 
 	@RequestMapping(value = "/showAddPlant", method = RequestMethod.GET)
 	public ModelAndView showAddPlant(HttpServletRequest request, HttpServletResponse response) {
@@ -688,7 +690,7 @@ public class MasterController {
 			System.err.println("Exc in saving customet ->project  " + e.getMessage());
 			e.printStackTrace();
 		}
-		return null;
+		return "redirect:/showCustList";
 
 	}
 
@@ -700,11 +702,13 @@ public class MasterController {
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("master/custList");
+
 			GetCust[] custArray = rest.getForObject(Constants.url + "getAllCustomerList", GetCust[].class);
 			getCustList = new ArrayList<GetCust>(Arrays.asList(custArray));
 
 			model.addObject("title", "Customer List");
 			model.addObject("custList", getCustList);
+
 		} catch (Exception e) {
 
 			System.err.println("exception In showCustList at Master Contr" + e.getMessage());
@@ -722,14 +726,39 @@ public class MasterController {
 
 		ModelAndView model = null;
 		try {
-			model = new ModelAndView("master/addcust");
-			// getCompByCompanyId
+			model = new ModelAndView("master/editCust");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			CustType[] custTypeArray = rest.getForObject(Constants.url + "getAllCustTypeList", CustType[].class);
+			custTypeList = new ArrayList<CustType>(Arrays.asList(custTypeArray));
+
+			model.addObject("custTypeList", custTypeList);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("custId", custId);
+			List<Integer> keyList = new ArrayList<>();
 
-			Cust editCust = rest.postForObject(Constants.url + "getCompByCompanyId", map, Cust.class);
+			keyList.add(1);
+			keyList.add(2);
+			keyList.add(3);
+			keyList.add(4);
+
+			map.add("keyList", "1,2,3,4");
+
+			Setting[] settArray = rest.postForObject(Constants.url + "getSettingValueByKeyList", map, Setting[].class);
+			settingList = new ArrayList<Setting>(Arrays.asList(settArray));
+
+			model.addObject("settingList", settingList);
+
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+			map1.add("custId", custId);
+
+			Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map1, Cust.class);
 
 			model.addObject("title", "Edit Customer");
 			model.addObject("editCust", editCust);
@@ -809,6 +838,10 @@ public class MasterController {
 			taxList = new ArrayList<Tax>(Arrays.asList(taxArray));
 			model.addObject("taxList", taxList);
 
+			Vendor[] vendorArray = rest.getForObject(Constants.url + "getAllVendList", Vendor[].class);
+			vendList = new ArrayList<Vendor>(Arrays.asList(vendorArray));
+			model.addObject("vendList", vendList);
+
 		} catch (Exception e) {
 
 			System.err.println("exception In showAddItem at Master Contr" + e.getMessage());
@@ -867,6 +900,8 @@ public class MasterController {
 			String pminStock = request.getParameter("pmin_stock");
 			String pmaxStock = request.getParameter("pmax_stock");
 			String prolStock = request.getParameter("prol_stock");
+			String freightRate = request.getParameter("freight_rate");
+			String royaltyRate = request.getParameter("royalty_rate");
 
 			int isCritItem = Integer.parseInt(request.getParameter("is_crit"));
 
@@ -926,6 +961,12 @@ public class MasterController {
 			item.setExVar1("NA");
 			item.setExVar2("NA");
 			item.setExVar3("NA");
+			item.setLength(0);
+			item.setWidth(0);
+			item.setHeight(0);
+			item.setItemLocation("NA");
+			item.setFreightRate(Float.parseFloat(freightRate));
+			item.setRoyaltyRate(Float.parseFloat(royaltyRate));
 
 			Item itemInsertRes = rest.postForObject(Constants.url + "saveItem", item, Item.class);
 
@@ -951,6 +992,7 @@ public class MasterController {
 
 			model.addObject("title", "Item List");
 			model.addObject("itemList", getItemList);
+
 		} catch (Exception e) {
 
 			System.err.println("exception In showCustList at Master Contr" + e.getMessage());
@@ -964,15 +1006,32 @@ public class MasterController {
 	}
 
 	@RequestMapping(value = "/editItem/{itemId}", method = RequestMethod.GET)
-	public ModelAndView editItem(HttpServletRequest request, HttpServletResponse response, @PathVariable int custId) {
+	public ModelAndView editItem(HttpServletRequest request, HttpServletResponse response, @PathVariable int itemId) {
 
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("master/editItem");
 
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+			model.addObject("uomList", uomList);
+
+			Tax[] taxArray = rest.getForObject(Constants.url + "getTaxList", Tax[].class);
+			taxList = new ArrayList<Tax>(Arrays.asList(taxArray));
+			model.addObject("taxList", taxList);
+
+			Vendor[] vendorArray = rest.getForObject(Constants.url + "getAllVendList", Vendor[].class);
+			vendList = new ArrayList<Vendor>(Arrays.asList(vendorArray));
+			model.addObject("vendList", vendList);
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("custId", custId);
+			map.add("itemId", itemId);
 
 			Item editItem = rest.postForObject(Constants.url + "getItemByItemId", map, Item.class);
 
@@ -1003,11 +1062,11 @@ public class MasterController {
 
 		} catch (Exception e) {
 
-			System.err.println("Exception in /deleteCust @MastContr  " + e.getMessage());
+			System.err.println("Exception in /deleteItem @MastContr  " + e.getMessage());
 			e.printStackTrace();
 		}
 
-		return "redirect:/showCustList";
+		return "redirect:/showItemList";
 	}
 
 }

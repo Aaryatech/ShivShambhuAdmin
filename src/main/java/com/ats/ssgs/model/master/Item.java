@@ -1,19 +1,14 @@
 package com.ats.ssgs.model.master;
 
-
 public class Item {
-	
+
 	private int itemId;
 
-	
 	private String itemName;
-
 
 	private String itemCode;
 
-	
 	private String itemImage;
-
 
 	private int itemType;
 
@@ -82,6 +77,18 @@ public class Item {
 	private int exBool3;
 
 	private int sortNo;
+
+	private float length;
+
+	private float height;
+
+	private float width;
+
+	private String itemLocation;
+
+	private float royaltyRate;
+
+	private float freightRate;
 
 	public int getItemId() {
 		return itemId;
@@ -387,6 +394,54 @@ public class Item {
 		this.sortNo = sortNo;
 	}
 
+	public float getLength() {
+		return length;
+	}
+
+	public void setLength(float length) {
+		this.length = length;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
+	public float getWidth() {
+		return width;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public String getItemLocation() {
+		return itemLocation;
+	}
+
+	public void setItemLocation(String itemLocation) {
+		this.itemLocation = itemLocation;
+	}
+
+	public float getRoyaltyRate() {
+		return royaltyRate;
+	}
+
+	public void setRoyaltyRate(float royaltyRate) {
+		this.royaltyRate = royaltyRate;
+	}
+
+	public float getFreightRate() {
+		return freightRate;
+	}
+
+	public void setFreightRate(float freightRate) {
+		this.freightRate = freightRate;
+	}
+
 	@Override
 	public String toString() {
 		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", itemCode=" + itemCode + ", itemImage="
@@ -399,7 +454,9 @@ public class Item {
 				+ ", plantRolStock=" + plantRolStock + ", vendorIds=" + vendorIds + ", delStatus=" + delStatus
 				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1
 				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2
-				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", sortNo=" + sortNo + "]";
+				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", sortNo=" + sortNo
+				+ ", length=" + length + ", height=" + height + ", width=" + width + ", itemLocation=" + itemLocation
+				+ ", royaltyRate=" + royaltyRate + ", freightRate=" + freightRate + "]";
 	}
 
 }
