@@ -30,6 +30,10 @@
 							href="${pageContext.request.contextPath}/showAddPlant">Add
 								Plant</a></li>
 
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddDocTerm">Add
+								Doc Term</a></li>
+
 
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddCustomer">Add
@@ -81,9 +85,10 @@
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddEnquiry">Add
 								Enquiry</a></li>
-								
-								<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showQuotations">View Quotations</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showQuotations">View
+								Quotations</a></li>
 
 
 

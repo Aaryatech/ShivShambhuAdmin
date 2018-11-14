@@ -93,7 +93,17 @@
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+
+												<c:choose>
+													<c:when test="${plant.plantId==editItem.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}">${plant.plantName}
+													</c:otherwise>
+												</c:choose>
+
+												<%-- <option value="${plant.plantId}">${plant.plantName}</option> --%>
 											</c:forEach>
 										</select>
 									</div>
@@ -112,13 +122,16 @@
 									</div>
 
 								</div>
-								<input type="hidden" name="cust_id" id="cust_id" value="0">
+								<input type="hidden" name="cust_id" id="cust_id"
+									value="${editCust.custId}"> <input type="hidden"
+									name="reg_date" id="reg_date" value="${editCust.dateOfReg}">
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Customer Name</div>
 									<div class="col-md-4">
 										<input type="text" id="cust_name" name="cust_name"
-											class="form-control" required style="width: 100%;"
+											value="${editCust.custName}" class="form-control" required
+											style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -129,7 +142,7 @@
 										<input type="text" id="mob_no" name="mob_no" required
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter mob no')"
-											maxlength="10" value="${editComp.contactNo1}"
+											maxlength="10" value="${editCust.custMobNo}"
 											pattern="[0-9]{10}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -139,10 +152,11 @@
 								<hr style="color: pink; background: pink;"></hr>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Referee Name</div>
+									<div class="col-md-2">Reference Name</div>
 									<div class="col-md-4">
 										<input type="text" id="ref_name" name="ref_name"
-											class="form-control" style="width: 100%;">
+											value="${editCust.respPerson}" class="form-control"
+											style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">Email</div>
@@ -151,7 +165,7 @@
 										<input type="text" id="email" name="email"
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter email')"
-											maxlength="50" value="${editComp.email1}"
+											maxlength="50" value="${editCust.custEmail}"
 											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -166,14 +180,16 @@
 
 									<div class="col-md-4">
 										<input type="text" id="pan_no" name="pan_no"
-											class="form-control" style="width: 100%;">
+											value="${editCust.custPanNo}" class="form-control"
+											style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">GST No</div>
 
 									<div class="col-md-4">
 										<input type="text" id="gst_no" name="gst_no"
-											class="form-control" style="width: 100%;">
+											value="${editCust.custGstNo}" class="form-control"
+											style="width: 100%;">
 									</div>
 
 								</div>
@@ -188,7 +204,16 @@
 											oninvalid="setCustomValidity('Please enter customer category')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 											<c:forEach items="${settingList}" var="custCate">
-												<option value="${custCate.settingId}">${custCate.settingValue}</option>
+
+												<c:choose>
+													<c:when test="${custCate.settingId==editItem.settingId}">
+														<option value="${custCate.settingId}" selected>${custCate.settingValue}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${custCate.settingId}">${custCate.settingValue}
+													</c:otherwise>
+												</c:choose>
+												<%-- <option value="${custCate.settingId}">${custCate.settingValue}</option> --%>
 											</c:forEach>
 										</select>
 									</div>
@@ -197,7 +222,7 @@
 
 									<div class="col-md-4">
 										<textarea id="cust_add" name="cust_add" class="form-control"
-											style="width: 100%;"></textarea>
+											style="width: 100%;">${editCust.custAddress}</textarea>
 									</div>
 
 								</div>
@@ -209,14 +234,15 @@
 
 									<div class="col-md-4">
 										<input type="text" id="dob" name="dob" class="form-control"
-											style="width: 100%;">
+											value="${editCust.custDob}" style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">Customer Code</div>
 
 									<div class="col-md-4">
 										<input type="text" id="cust_code" name="cust_code"
-											class="form-control" style="width: 100%;">
+											value="${editCust.custCode}" class="form-control"
+											style="width: 100%;">
 									</div>
 
 								</div>
@@ -227,6 +253,44 @@
 									<div class="col-md-2">Security CHEQUE?</div>
 
 
+
+
+
+
+									<c:choose>
+										<c:when test="${editCust.isChequeRcvd==0}">
+											<div class="col-md-1">
+
+												<input type="radio" name="cheque" id="cheque" value="1">Yes
+
+											</div>
+
+
+
+											<div class="col-md-1">
+												<input type="radio" name="cheque" value="0" checked>
+												No
+
+											</div>
+										</c:when>
+										<c:when test="${editCust.isChequeRcvd==1}">
+											<div class="col-md-1">
+
+												<input type="radio" name="cheque" id="cheque" value="1"
+													checked>Yes
+											</div>
+											<div class="col-md-1">
+												<input type="radio" name="cheque" value="0"> No
+
+											</div>
+										</c:when>
+									</c:choose>
+
+
+
+
+
+									<!-- 
 									<div class="col-md-1">
 										Yes <input type="radio" checked name="cheque" id="cheque"
 											value="1">
@@ -234,7 +298,7 @@
 
 									<div class="col-md-1">
 										NO <input type="radio" name="cheque" id="cheque" value="0">
-									</div>
+									</div> -->
 
 									<div class="col-md-2"></div>
 
@@ -245,7 +309,7 @@
 										<textarea id="cheque_remark" name="cheque_remark"
 											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter cheque remark')"
-											onchange="try{setCustomValidity('')}catch(e){}"></textarea>
+											onchange="try{setCustomValidity('')}catch(e){}">${editCust.chequeRemark}</textarea>
 									</div>
 
 								</div>
@@ -255,7 +319,8 @@
 									<div class="col-md-2">Contact Person Name</div>
 									<div class="col-md-4">
 										<input type="text" id="cont_per_name" name="cont_per_name"
-											class="form-control" style="width: 100%;"
+											value="${editCust.contactPerName}" class="form-control"
+											style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -264,9 +329,10 @@
 
 									<div class="col-md-4">
 										<input type="text" id="con_per_mob" name="con_per_mob"
-											style="width: 100%;" class="form-control"
+											value="${editCust.custMobNo}" style="width: 100%;"
+											class="form-control"
 											oninvalid="setCustomValidity('Please enter mob no')"
-											maxlength="10" value="${editComp.contactNo1}"
+											maxlength="10" value="${editComp.contactPerMob}"
 											pattern="[0-9]{10}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -281,7 +347,7 @@
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter tel no')"
 											maxlength="10" pattern="[0-9]+"
-											value="${editComp.contactNo2}"
+											value="${editCust.custLandline}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -292,7 +358,7 @@
 										<input type="text" id="cust_vendor" name="cust_vendor"
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter vendor')"
-											value="${editComp.contactNo1}"
+											value="${editCust.custVendor}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -304,15 +370,51 @@
 
 									<div class="col-md-2">Is same State?</div>
 
+									<c:choose>
+										<c:when test="${editCust.isSameState==0}">
+											<div class="col-md-1">
 
-									<div class="col-md-1">
+												<input type="radio" name="state" id="state" value="1">Yes
+
+											</div>
+
+
+
+											<div class="col-md-1">
+												<input type="radio" name="state" value="0" checked>
+												No
+
+											</div>
+										</c:when>
+										<c:when test="${editCust.isSameState==1}">
+											<div class="col-md-1">
+
+												<input type="radio" name="state" id="state" value="1"
+													checked>Yes
+											</div>
+											<div class="col-md-1">
+												<input type="radio" name="state" value="0"> No
+
+											</div>
+										</c:when>
+									</c:choose>
+
+
+
+
+
+
+
+
+
+									<!-- <div class="col-md-1">
 										Yes <input type="radio" checked name="state" id="state"
 											value="1">
 									</div>
 
 									<div class="col-md-1">
 										NO <input type="radio" name="state" id="state" value="0">
-									</div>
+									</div> -->
 
 									<div class="col-md-2"></div>
 

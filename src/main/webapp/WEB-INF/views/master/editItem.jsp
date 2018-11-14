@@ -90,10 +90,20 @@
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required
-											oninvalid="setCustomValidity('Please enter customer name')"
+											oninvalid="setCustomValidity('Please enter Plant name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+
+												<c:choose>
+													<c:when test="${plant.plantId==editItem.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}">${plant.plantName}
+													</c:otherwise>
+												</c:choose>
+
+												<%-- <option value="${plant.plantId}">${plant.plantName}</option> --%>
 											</c:forEach>
 										</select>
 									</div>
@@ -103,21 +113,36 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select item type')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+											<c:choose>
 
-											<option value="0">Raw Material</option>
-											<option value="1">Finished Good</option>
+												<c:when test="${editItem.itemType==0}">
+													<option selected value="0">Raw Material</option>
+													<option value="1">Finished Good</option>
+
+												</c:when>
+												<c:otherwise>
+													<option value="0">Raw Material</option>
+													<option selected value="1">Finished Good</option>
+
+
+												</c:otherwise>
+
+											</c:choose>
+
 
 										</select>
 									</div>
 
 								</div>
-								<input type="hidden" name="item_id" id="item_id" value="0">
+								<input type="hidden" name="item_id" id="item_id"
+									value="${editItem.itemId}">
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Item Name</div>
 									<div class="col-md-4">
 										<input type="text" id="item_name" name="item_name"
-											class="form-control" required style="width: 100%;"
+											value="${editItem.itemName}" class="form-control" required
+											style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -128,7 +153,7 @@
 										<input type="text" id="item_code" name="item_code" required
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter item code')"
-											value="${editComp.contactNo1}"
+											value="${editItem.itemCode}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -147,7 +172,18 @@
 											oninvalid="setCustomValidity('Please select uom')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 											<c:forEach items="${uomList}" var="uom">
-												<option value="${uom.uomId}">${uom.uomName}</option>
+
+												<c:choose>
+													<c:when test="${uom.uomId==editItem.uomId}">
+														<option value="${uom.uomId}" selected>${uom.uomName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${uom.uomId}">${uom.uomName}
+													</c:otherwise>
+												</c:choose>
+
+
+												<%-- <option value="${uom.uomId}">${uom.uomName}</option> --%>
 											</c:forEach>
 										</select>
 									</div>
@@ -172,7 +208,8 @@
 									<div class="col-md-2">Short Name</div>
 									<div class="col-md-4">
 										<input type="text" id="short_name" name="short_name"
-											class="form-control" style="width: 100%;">
+											value="${editItem.shortName}" class="form-control"
+											style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">Item Rate</div>
@@ -182,6 +219,7 @@
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
 											class="form-control"
 											oninvalid="setCustomValidity('Please enter rate')"
+											value="${editItem.itemRate1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -195,14 +233,16 @@
 
 									<div class="col-md-4">
 										<input type="text" id="act_weight" name="act_weight"
-											class="form-control" style="width: 100%;">
+											class="form-control" style="width: 100%;"
+											value="${editItem.actualWeight}">
 									</div>
 
 									<div class="col-md-2">Base Measurement</div>
 
 									<div class="col-md-4">
 										<input type="text" id="base_weight" name="base_weight"
-											class="form-control" style="width: 100%;">
+											class="form-control" style="width: 100%;"
+											value="${editItem.baseWeight}">
 									</div>
 
 								</div>
@@ -217,6 +257,15 @@
 											oninvalid="setCustomValidity('Please select vendors')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 											<c:forEach items="${vendList}" var="vendor">
+
+												<%-- <c:choose>
+													<c:when test="${vendor.vendId==editItem.vendorIds}">
+														<option value="${vendor.vendId}" selected>${vendor.vendCompName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${vendor.vendId}">${vendor.vendCompName}
+													</c:otherwise>
+												</c:choose> --%>
 												<option value="${vendor.vendId}">${vendor.vendCompName}</option>
 											</c:forEach>
 										</select>
@@ -226,7 +275,8 @@
 
 									<div class="col-md-4">
 										<input type="text" id="disp_limit" name="disp_limit"
-											class="form-control" style="width: 100%;">
+											value="${editItem.dispatchLimit}" class="form-control"
+											style="width: 100%;">
 									</div>
 
 								</div>
@@ -238,19 +288,22 @@
 
 									<div class="col-md-2">
 										<input type="text" id="min_stock" name="min_stock"
-											class="form-control" style="width: 100%;">
+											value="${editItem.minStock}" class="form-control"
+											style="width: 100%;">
 									</div>
 									<div class="col-md-2">Max Stock</div>
 
 									<div class="col-md-2">
 										<input type="text" id="max_stock" name="max_stock"
-											class="form-control" style="width: 100%;">
+											value="${editItem.maxStock}" class="form-control"
+											style="width: 100%;">
 									</div>
 									<div class="col-md-2">ROL Stock</div>
 
 									<div class="col-md-2">
 										<input type="text" id="rol_stock" name="rol_stock"
-											class="form-control" style="width: 100%;">
+											value="${editItem.rolStock}" class="form-control"
+											style="width: 100%;">
 									</div>
 
 								</div>
@@ -262,19 +315,22 @@
 
 									<div class="col-md-2">
 										<input type="text" id="pmin_stock" name="pmin_stock"
-											class="form-control" style="width: 100%;">
+											value="${editItem.plantMinStock}" class="form-control"
+											style="width: 100%;">
 									</div>
 									<div class="col-md-2">Plant Max Stock</div>
 
 									<div class="col-md-2">
 										<input type="text" id="pmax_stock" name="pmax_stock"
-											class="form-control" style="width: 100%;">
+											value="${editItem.plantMaxStock}" class="form-control"
+											style="width: 100%;">
 									</div>
 									<div class="col-md-2">Plant ROL Stock</div>
 
 									<div class="col-md-2">
 										<input type="text" id="prol_stock" name="prol_stock"
-											class="form-control" style="width: 100%;">
+											value="${editItem.plantRolStock}" class="form-control"
+											style="width: 100%;">
 									</div>
 
 								</div>
@@ -284,25 +340,57 @@
 									<div class="col-md-2">Critical Item ?</div>
 
 
-									<div class="col-md-1">
+
+
+									<c:choose>
+										<c:when test="${editItem.isCritical==0}">
+											<div class="col-md-1">
+
+												<input type="radio" name="is_crit" id="is_crit" value="1">Yes
+
+											</div>
+
+
+
+											<div class="col-md-1">
+												<input type="radio" name="is_crit" value="0" checked>
+												No
+
+											</div>
+										</c:when>
+										<c:when test="${editItem.isCritical==1}">
+											<div class="col-md-1">
+
+												<input type="radio" name="is_crit" id="is_crit" value="1"
+													checked>Yes
+											</div>
+											<div class="col-md-1">
+												<input type="radio" name="is_crit" value="0"> No
+
+											</div>
+										</c:when>
+									</c:choose>
+
+
+									<!-- <div class="col-md-1">
 										Yes <input type="radio" name="is_crit" id="is_crit" value="1">
 									</div>
 
 									<div class="col-md-1">
 										NO <input type="radio" checked name="is_crit" id="is_crit"
 											value="0">
-									</div>
+									</div> -->
 
 									<div class="col-md-2"></div>
 									<div class="col-md-2">Sort No</div>
 
 									<div class="col-md-4">
 										<input type="text" id="sort_no" name="sort_no"
-											class="form-control" style="width: 100%;">
+											value="${editItem.sortNo}" class="form-control"
+											style="width: 100%;">
 									</div>
 
 								</div>
-
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -313,7 +401,7 @@
 									<div class="col-md-4">
 										<input type="text" id="freight_rate" name="freight_rate"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
-											class="form-control"
+											class="form-control" value="${editItem.freightRate}"
 											oninvalid="setCustomValidity('Please enter rate')"
 											onchange="try{setCustomValidity('')}catch(e){}" />
 									</div>
@@ -323,13 +411,12 @@
 									<div class="col-md-4">
 										<input type="text" id="royalty_rate" name="royalty_rate"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
-											class="form-control"
+											class="form-control" value="${editItem.royaltyRate}"
 											oninvalid="setCustomValidity('Please enter rate')"
 											onchange="try{setCustomValidity('')}catch(e){}" />
 									</div>
 
 								</div>
-
 
 
 
