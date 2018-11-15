@@ -61,7 +61,7 @@ public class MasterController {
 
 			model.addObject("title", "Add Plant");
 
-			Plant[] plantArray = rest.getForObject(Constants.url + "getAllUserList", Plant[].class);
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
@@ -493,6 +493,9 @@ public class MasterController {
 			String startDate = request.getParameter("start_date");
 			String endDate = request.getParameter("end_date");
 
+			String contactPerName = request.getParameter("contactPerName");
+			String contactPerMob = request.getParameter("contactPerMob");
+
 			Project proj = new Project();
 
 			proj.setCustId(custId);
@@ -503,6 +506,8 @@ public class MasterController {
 			proj.setProjId(projId);
 			proj.setProjName(projName);
 			proj.setStartDate(DateConvertor.convertToYMD(startDate));
+			proj.setContactPerMob(contactPerMob);
+			proj.setContactPerName(contactPerName);
 
 			Project projInsertRes = rest.postForObject(Constants.url + "saveProject", proj, Project.class);
 
@@ -683,6 +688,10 @@ public class MasterController {
 
 			String gstNo = request.getParameter("gst_no");
 
+			String ownerName = request.getParameter("ownerName");
+			String accPerson = request.getParameter("accPerson");
+			String accPerMob = request.getParameter("accPerMob");
+
 			int custCate = Integer.parseInt(request.getParameter("cust_cate"));
 			System.err.println("custCate " + custCate);
 			String custAdd = request.getParameter("cust_add");
@@ -737,6 +746,9 @@ public class MasterController {
 
 			cust.setCustPanNo(panNo);
 			cust.setCustType(custType);
+			cust.setOwnerName(ownerName);
+			cust.setAccPerMob(accPerMob);
+			cust.setAccPerson(accPerson);
 
 			cust.setCustVendor(Integer.parseInt(custVendor));
 
@@ -770,6 +782,8 @@ public class MasterController {
 			proj.setProjName(custName);
 			proj.setStartDate(curDate);
 			proj.setEndDate(curDate);
+			proj.setContactPerMob(mobNo);
+			proj.setContactPerName(custName);
 
 			Project projInsertRes = rest.postForObject(Constants.url + "saveProject", proj, Project.class);
 
@@ -1278,6 +1292,256 @@ public class MasterController {
 		}
 
 		return "redirect:/showAddDept";
+	}
+
+	@RequestMapping(value = "/showAddUom", method = RequestMethod.GET)
+	public ModelAndView showAddUom(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("master/adduom");
+			Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+
+			model.addObject("uomList", uomList);
+			model.addObject("title", "Add Uom");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddUom at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/insertUom", method = RequestMethod.POST)
+	public String insertUom(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			System.err.println("Inside insert insertUom method");
+
+			int uomId = 0;
+			try {
+				uomId = Integer.parseInt(request.getParameter("uomId"));
+			} catch (Exception e) {
+				uomId = 0;
+			}
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			String curDate = dateFormat.format(new Date());
+
+			String uomName = request.getParameter("uomName");
+			String uomShortName = request.getParameter("uomShortName");
+
+			String sortNo = request.getParameter("sortNo");
+
+			Uom uom = new Uom();
+			uom.setDelStatus(1);
+			uom.setUomName(uomName);
+			uom.setSortNo(Integer.parseInt(sortNo));
+			uom.setUomShortName(uomShortName);
+			uom.setExBool1(0);
+			uom.setExBool2(0);
+			uom.setExBool3(0);
+			uom.setExDate1(curDate);
+			uom.setExDate2(curDate);
+			uom.setExInt1(0);
+			uom.setExInt2(0);
+			uom.setExInt3(0);
+
+			uom.setExVar1("NA");
+			uom.setExVar2("NA");
+			uom.setExVar3("NA");
+
+			Uom uomInsertRes = rest.postForObject(Constants.url + "saveUom", uom, Uom.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in insert Uom " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return "redirect:/showAddUom";
+	}
+
+	@RequestMapping(value = "/editUom/{uomId}", method = RequestMethod.GET)
+	public ModelAndView editUom(HttpServletRequest request, HttpServletResponse response, @PathVariable int uomId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/adduom");
+
+			Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+
+			model.addObject("uomList", uomList);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("uomId", uomId);
+
+			Uom editUom = rest.postForObject(Constants.url + "getUomByUomId", map, Uom.class);
+
+			model.addObject("title", "Edit Uom");
+			model.addObject("editUom", editUom);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editDept at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/deleteUom/{uomId}", method = RequestMethod.GET)
+	public String deleteUom(HttpServletRequest request, HttpServletResponse response, @PathVariable int uomId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("uomId", uomId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteUom", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteDept @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showAddDept";
+	}
+
+	@RequestMapping(value = "/showAddUser", method = RequestMethod.GET)
+	public ModelAndView showAddUser(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("master/adduser");
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			Dept[] deptArray = rest.getForObject(Constants.url + "getAllDeptList", Dept[].class);
+			deptList = new ArrayList<Dept>(Arrays.asList(deptArray));
+
+			model.addObject("deptList", deptList);
+
+			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
+			compList = new ArrayList<Company>(Arrays.asList(compArray));
+
+			model.addObject("compList", compList);
+			model.addObject("title", "Add User");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddUser at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/insertUser", method = RequestMethod.POST)
+	public String insertUser(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			System.err.println("Inside insert insertUom method");
+
+			int userId = 0;
+			try {
+				userId = Integer.parseInt(request.getParameter("userId"));
+			} catch (Exception e) {
+				userId = 0;
+			}
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			int deptId = Integer.parseInt(request.getParameter("dept_id"));
+			int plantId = Integer.parseInt(request.getParameter("plant_id"));
+
+			int companyId = Integer.parseInt(request.getParameter("company_id"));
+			String curDate = dateFormat.format(new Date());
+
+			String usrName = request.getParameter("usrName");
+
+			String usrMob = request.getParameter("usrMob");
+
+			String usrEmail = request.getParameter("usrEmail");
+
+			String usrDob = request.getParameter("usrDob");
+
+			String userPass = request.getParameter("userPass");
+
+			String sortNo = request.getParameter("sortNo");
+
+			User user = new User();
+			user.setCompanyId(companyId);
+			user.setDelStatus(1);
+			user.setDeviceToken("NA");
+			user.setDeptId(deptId);
+			user.setExDate1(curDate);
+			user.setExDate2(curDate);
+			user.setExInt1(0);
+			user.setExInt2(0);
+			user.setPlantId(plantId);
+			user.setRoleId(0);
+			user.setSortNo(Integer.parseInt(sortNo));
+			user.setUserPass(userPass);
+			user.setUsrEmail(usrEmail);
+			user.setUsrDob(DateConvertor.convertToYMD(usrDob));
+			user.setUsrMob(usrMob);
+			user.setUsrName(usrName);
+			user.setExVar1("NA");
+			user.setExVar2("NA");
+
+			User userInsertRes = rest.postForObject(Constants.url + "saveUser", user, User.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in insert Uom " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return "redirect:/showAddUser";
+	}
+
+	@RequestMapping(value = "/showUserList", method = RequestMethod.GET)
+	public ModelAndView showUserList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/userlist");
+			GetItem[] itemArray = rest.getForObject(Constants.url + "getAllItemList", GetItem[].class);
+			getItemList = new ArrayList<GetItem>(Arrays.asList(itemArray));
+
+			model.addObject("title", "Item List");
+			model.addObject("itemList", getItemList);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showCustList at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
 	}
 
 }

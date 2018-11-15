@@ -287,7 +287,7 @@
 
 									</div>
 
-									<div class="col-md-2">Customer Vendor</div>
+									<div class="col-md-2">Vendor Code</div>
 									<div class="col-md-4">
 										<input type="text" id="cust_vendor" name="cust_vendor"
 											style="width: 100%;" class="form-control"
@@ -298,9 +298,16 @@
 
 									</div>
 								</div>
-								<div class="form-group"></div>
 
+								<div class="form-group"></div>
 								<div class="row">
+									<div class="col-md-2">Owner Name</div>
+									<div class="col-md-4">
+										<input type="text" id="ownerName" name="ownerName"
+											class="form-control" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter owner name')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
 
 									<div class="col-md-2">Is same State?</div>
 
@@ -314,26 +321,38 @@
 										NO <input type="radio" name="state" id="state" value="0">
 									</div>
 
-									<div class="col-md-2"></div>
 
-									<div class="col-md-2"></div>
+								</div>
+								<div class="form-group"></div>
 
+								<div class="row">
+
+									<div class="col-md-2">Account Person Name</div>
 									<div class="col-md-4">
-
-										<button type="submit" class="btn btn-primary"
-											style="align-content: center; width: 100%;">Submit</button>
+										<input type="text" id="accPerson" name="accPerson"
+											class="form-control" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter Account name')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+									<div class="col-md-2">Account Mobile No</div>
+									<div class="col-md-4">
+										<input type="text" id="accPerMob" name="accPerMob"
+											class="form-control" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter Mobile no')"
+											pattern="[0-9]{10}"
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
 								</div>
 
 								<div class="form-group"></div>
-								<!-- <div class="col-lg-12" align="center">
+								<div class="col-lg-12" align="center">
 
 
 									<button type="submit" class="btn btn-primary"
 										style="align-content: center; width: 226px; margin-left: 80px;">
 										Submit</button>
-								</div> -->
+								</div>
 							</form>
 						</div>
 					</div>

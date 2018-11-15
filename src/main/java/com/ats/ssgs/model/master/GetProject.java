@@ -21,6 +21,9 @@ public class GetProject {
 
 	private String plantName;
 
+	private String contactPerName;
+	private String contactPerMob;
+
 	public int getProjId() {
 		return projId;
 	}
@@ -101,11 +104,28 @@ public class GetProject {
 		this.plantName = plantName;
 	}
 
+	public String getContactPerName() {
+		return contactPerName;
+	}
+
+	public void setContactPerName(String contactPerName) {
+		this.contactPerName = contactPerName;
+	}
+
+	public String getContactPerMob() {
+		return contactPerMob;
+	}
+
+	public void setContactPerMob(String contactPerMob) {
+		this.contactPerMob = contactPerMob;
+	}
+
 	@Override
 	public String toString() {
 		return "GetProject [projId=" + projId + ", projName=" + projName + ", custId=" + custId + ", location="
 				+ location + ", startDate=" + startDate + ", endDate=" + endDate + ", isUsed=" + isUsed + ", delStatus="
-				+ delStatus + ", custName=" + custName + ", plantName=" + plantName + "]";
+				+ delStatus + ", custName=" + custName + ", plantName=" + plantName + ", contactPerName="
+				+ contactPerName + ", contactPerMob=" + contactPerMob + "]";
 	}
 
 }
