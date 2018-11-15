@@ -29,6 +29,7 @@ import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.master.Uom;
 import com.ats.ssgs.model.master.User;
+import com.ats.ssgs.model.quot.GetItemWithEnq;
 import com.ats.ssgs.model.quot.GetQuotHeads;
 import com.ats.ssgs.model.quot.QuotHeader;
 
@@ -42,7 +43,7 @@ public class QuotController {
 
 	List<Cust> custList;
 
-	List<GetItem> itemList;
+	List<GetItemWithEnq> itemList;
 	List<Project> projList;
 	List<Plant> plantList;
 	List<PaymentTerm> payTermList;
@@ -79,9 +80,9 @@ public class QuotController {
 
 	// editQuot
 
-	@RequestMapping(value = "/editQuot/{quotId}/{plantId}/{custId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/editQuot/{quotId}/{plantId}/{custId}/{enqHeadId}", method = RequestMethod.GET)
 	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotId,
-			@PathVariable int plantId,@PathVariable int custId) {
+			@PathVariable int plantId,@PathVariable int custId,@PathVariable int enqHeadId) {
 
 		ModelAndView model = null;
 		try {
@@ -96,9 +97,10 @@ public class QuotController {
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("plantId", plantId);
+			map.add("enqHeadId", enqHeadId);
 
-			GetItem[] itemArray = rest.postForObject(Constants.url + "getGetItemsByPlantId", map, GetItem[].class);
-			itemList = new ArrayList<GetItem>(Arrays.asList(itemArray));
+			GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map, GetItemWithEnq[].class);
+			itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
 			model.addObject("itemList", itemList);
 
 
@@ -164,5 +166,26 @@ public class QuotController {
 		return projList;
 
 	}
+	
+	// Ajax call
+		@RequestMapping(value = "/getItemsAndEnqItemList", method = RequestMethod.GET)
+		public @ResponseBody List<GetItemWithEnq> getItemsAndEnqItemList(HttpServletRequest request, HttpServletResponse response) {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			
+			int plantId = Integer.parseInt(request.getParameter("plantId"));
+			int enqHeadId = Integer.parseInt(request.getParameter("enqHeadId"));
+
+			map.add("plantId", plantId);
+			map.add("enqHeadId", enqHeadId);
+
+			GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map, GetItemWithEnq[].class);
+			itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
+			
+			System.err.println("Ajax Item list for km onchange  List " + itemList.toString());
+
+			return itemList;
+
+		}
 
 }

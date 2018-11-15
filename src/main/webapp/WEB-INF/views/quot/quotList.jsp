@@ -118,7 +118,7 @@
 
 
 											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editQuot/${quot.quotHeadId}/${quot.plantId}/${quot.custId}"><i
+												href="${pageContext.request.contextPath}/editQuot/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
 													class="fa fa-edit"></i> <span class="text-muted"></span></a>
 												&nbsp; <a
 												href="${pageContext.request.contextPath}/deleteQuot/${quot.quotHeadId}"

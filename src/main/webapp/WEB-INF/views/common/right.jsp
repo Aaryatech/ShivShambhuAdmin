@@ -12,7 +12,7 @@
 					class="fa fa fa-tasks"></i></a>
 				<div class="header-left">
 
-					<strong class="card-title">ShivShambhu Admin Panel</strong>
+					<strong class="card-title">Shiv Shambhu-Gajanan Stone Admin </strong>
 
 					<!-- <div class="dropdown for-notification">
 						<button class="btn btn-secondary dropdown-toggle" type="button"

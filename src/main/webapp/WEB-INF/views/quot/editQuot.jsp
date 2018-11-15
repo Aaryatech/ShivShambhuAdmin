@@ -11,6 +11,9 @@
 
 <c:url var="getProjectByCustId" value="/getProjectByCustId" />
 
+<c:url var="getItemsAndEnqItemList" value="/getItemsAndEnqItemList" />
+
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -97,7 +100,6 @@
 
 											<c:forEach items="${plantList}" var="plant">
 												<c:if test="${plantId==plant.plantId}">
-
 													<option selected value="${plant.plantId}">${plant.plantName}</option>
 												</c:if>
 											</c:forEach>
@@ -116,10 +118,10 @@
 
 														<option selected value="${cust.custId}">${cust.custName}</option>
 													</c:when>
-													<c:otherwise>
+													<%-- <c:otherwise>
 														<option value="${cust.custId}">${cust.custName}</option>
 
-													</c:otherwise>
+													</c:otherwise> --%>
 												</c:choose>
 
 											</c:forEach>
@@ -132,9 +134,9 @@
 								<div class="row">
 									<div class="col-md-2">Project</div>
 									<div class="col-md-4">
-										<select id="cust_name" name="cust_name" class="standardSelect"
+										<select id="proj_id" name="proj_id" class="standardSelect"
 											tabindex="1" required
-											oninvalid="setCustomValidity('Please select customer')"
+											oninvalid="setCustomValidity('Please select project')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 
 											<c:forEach items="${projList}" var="proj">
@@ -146,7 +148,7 @@
 									<div class="col-md-2">Payment Term</div>
 
 									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
+										<select id="pay_term_id" name="pay_term_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select payment term')"
 											onchange="getData()">
@@ -162,7 +164,6 @@
 								</div>
 								<input type="hidden" id="isEdit" name="isEdit" value="0">
 
-								<input type="hidden" id="itemUomId" name="itemUomId" value="0">
 
 								<div class="form-group"></div>
 
@@ -170,9 +171,9 @@
 									<div class="col-md-2">Quotation Term</div>
 
 									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
+										<select id="quot_doc _term_id" name="quot_doc _term_id" class="standardSelect"
 											tabindex="1" required
-											oninvalid="setCustomValidity('Please select plant name')"
+											oninvalid="setCustomValidity('Please select quotation term')"
 											onchange="getData()">
 											<option value="">Select Term</option>
 
@@ -223,7 +224,7 @@
 								<div class="row">
 									<div class="col-md-2">No of KM</div>
 									<div class="col-md-4">
-										<input type="text" id="no_of_km" name="item_rate"
+										<input type="text" id="no_of_km" name="no_of_km" onchange="calcAll(this.value)"
 											class="form-control" style="width: 100%;" value="0">
 									</div>
 
@@ -241,12 +242,12 @@
 
 									<div class="col-md-2">Calculate By</div>
 									<div class="col-md-2">
-										Automatic<input type="radio" checked name="del_place"
-											id="del_place" value="1">
+										Automatic<input type="radio" checked name="calc_by"
+											id="calc_by" value="1">
 									</div>
 
 									<div class="col-md-2">
-										Manual<input type="radio" name="del_place" id="del_place"
+										Manual<input type="radio" name="calc_by" id="calc_by"
 											value="0">
 									</div>
 
@@ -277,12 +278,12 @@
 									</div>
 									<div class="col-md-2"></div>
 
-									<!-- <div class="col-md-2">Toll  Amount</div>
+									<div class="col-md-2">Toll  Amount</div>
 									<div class="col-md-4">
-										<input type="text" id="toll_value" name="toll_value"
+										<input type="text" id="toll_amt" name="toll_amt"
 											class="form-control" >
 									</div>
- -->
+
 								</div>
 
 								<div class="card-body card-block">
@@ -328,20 +329,20 @@
 															value="${item.itemName}" /></td>
 
 													<td style="text-align: left"><input type="text"
-														id="quot_qty" name="quot_qty" class="form-control"></td>
+														id="quot_qty${item.itemId}" name="quot_qty${item.itemId}" value="${item.enqQty}" class="form-control"></td>
 
 													<td style="text-align: left"><c:out
 															value="${item.uomName}" /></td>
 
 
 													<td style="text-align: center"><input type="text"
-														id="trans_cost" name="trans_cost" class="form-control"></td>
+														id="trans_cost${item.itemId}" name="trans_cost${item.itemId}" class="form-control"></td>
 
 													<td style="text-align: center"><input type="text"
-														id="toll_cost" name="toll_cost" class="form-control"></td>
+														id="toll_cost${item.itemId}" name="toll_cost${item.itemId}" class="form-control"></td>
 
 													<td style="text-align: center"><input type="text"
-														id="other_cost" name="other_cost" class="form-control"></td>
+														id="other_cost${item.itemId}" name="other_cost${item.itemId}" class="form-control"></td>
 													<!-- 
 													<td style="text-align: center"><input type="text"
 														id="trans_cost" name="trans_cost" class="form-control"
@@ -359,14 +360,14 @@
 															value="${item.taxName}" /></td>
 
 													<td style="text-align: center"><input type="text"
-														id="taxable_amt" name="taxable_amt" class="form-control"></td>
+														id="taxable_amt${item.itemId}" name="taxable_amt${item.itemId}" class="form-control"></td>
 
 
 													<td style="text-align: left"><input type="text"
-														id="tax_amt" name="tax_amt" class="form-control"></td>
+														id="tax_amt${item.itemId}" name="tax_amt${item.itemId}" class="form-control"></td>
 
 													<td style="text-align: center"><input type="text"
-														id="final_amt" name="final_amt" class="form-control"></td>
+														id="final_amt${item.itemId}" name="final_amt${item.itemId}" class="form-control"></td>
 
 
 												</tr>
@@ -379,7 +380,7 @@
 								</div>
 								<div class="form-group"></div>
 
-								<div class="row">
+								<%-- <div class="row">
 
 
 									<div class="col-md-2">Priority</div>
@@ -408,7 +409,7 @@
 										</select>
 									</div>
 
-								</div>
+								</div> --%>
 								<div class="form-group"></div>
 								<div class="row">
 
@@ -512,7 +513,56 @@
 
 		});
 	</script>
+	
+	<!--  CalcAll function onchange of KM  -->
+	
+		<script type="text/javascript">
+		function calcAll(km) {
+			//alert("KM " +km);
+			
+		 var plantId=${quotHeader.plantIds};
+		 var enqHeadId=${quotHeader.enqHeadId};
+		// alert("Plant " +plantId);
+			
+			$.getJSON('${getItemsAndEnqItemList}', {
 
+				plantId : plantId,
+				enqHeadId : enqHeadId,
+				ajax : 'true',
+
+			},
+
+			function(data) {
+				//alert("data " +JSON.stringify(data));
+				var len = data.length;
+				//	alert("len " +len);
+				// var qty = document.getElementById(data[1].itemId+"quot_qty").value;
+				// alert("qty " +qty);
+										 var tollCost= document.getElementById("toll_amt").value;
+
+//alert("tollCost" +tollCost);
+				 for (var i = 0; i < len; i++) {
+					 var frRate=parseFloat(data[i].freightRate);
+					 var transCost=frRate*km;
+					 var itemRate=parseFloat(data[i].itemRate1);
+					 var royRate=parseFloat(data[i].royaltyRate);
+					// alert("transCost" +transCost);
+					 document.getElementById("trans_cost"+data[i].itemId).value=transCost.toFixed(2);
+					 document.getElementById("toll_cost"+data[i].itemId).value=tollCost;
+					 var otherCost= document.getElementById("other_cost"+data[i].itemId).value;
+					 
+					 var taxableAmt=(itemRate+tollCost)+(transCost+otherCost)+royRate;
+					 alert("taxabelAmt " +taxableAmt);
+					 document.getElementById("taxable_amt"+data[i].itemId).value=taxableAmt;
+
+				 } 
+				 
+				 
+			});
+ 
+			
+		}
+</script>
 	<script type="text/javascript">
 		function getData() {
 			var plantId = document.getElementById("plant_id").value;

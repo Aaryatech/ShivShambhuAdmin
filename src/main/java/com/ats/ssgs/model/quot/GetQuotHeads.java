@@ -25,11 +25,22 @@ public class GetQuotHeads {
 	private int plantId;
 	
 	private int custId;
+	private int enqHeadId;
+	
+	
 
 	
 	
 	
 	
+
+	public int getEnqHeadId() {
+		return enqHeadId;
+	}
+
+	public void setEnqHeadId(int enqHeadId) {
+		this.enqHeadId = enqHeadId;
+	}
 
 	public int getCustId() {
 		return custId;
@@ -124,7 +135,8 @@ public class GetQuotHeads {
 	public String toString() {
 		return "GetQuotHeads [quotHeadId=" + quotHeadId + ", quotNo=" + quotNo + ", quotDate=" + quotDate + ", status="
 				+ status + ", custName=" + custName + ", compName=" + compName + ", plantName=" + plantName + ", enqNo="
-				+ enqNo + ", usrName=" + usrName + ", plantId=" + plantId + ", custId=" + custId + "]";
+				+ enqNo + ", usrName=" + usrName + ", plantId=" + plantId + ", custId=" + custId + ", enqHeadId="
+				+ enqHeadId + "]";
 	}
 
 }
