@@ -32,6 +32,13 @@
 								Dept</a></li>
 
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddUser">Add
+								User</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddUom">Add Uom</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddPlant">Add
 								Plant</a></li>
 

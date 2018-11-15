@@ -44,8 +44,8 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
-	
-	<link rel="stylesheet"
+
+<link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- css for date picker proper UI -->
 
@@ -132,6 +132,29 @@
 								</div>
 								<input type="hidden" name="proj_id" id="proj_id"
 									value="${editPro.projId}">
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Contact Person Name</div>
+									<div class="col-md-4">
+										<input type="text" id="contactPerName" name="contactPerName"
+											value="${editPro.contactPerName}" class="form-control"
+											required style="width: 100%;">
+									</div>
+
+									<div class="col-md-2">Mobile No</div>
+
+									<div class="col-md-4">
+										<input type="text" id="contactPerMob" name="contactPerMob"
+											value="${editPro.contactPerMob}"
+											oninvalid="setCustomValidity('Please enter tel no')"
+											maxlength="10" pattern="[0-9]+"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											class="form-control" required style="width: 100%;">
+									</div>
+
+								</div>
+
+
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Project Name</div>

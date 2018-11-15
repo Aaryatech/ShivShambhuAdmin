@@ -1,113 +1,82 @@
 package com.ats.ssgs.model.master;
 
-
-
 public class Cust {
 
-	
 	private int custId;
 
-	
 	private String custName;
 
-	
 	private String respPerson;
 
-	
 	private String custMobNo;
 
-	
 	private String custEmail;
 
-	
 	private String custAddress;
-
 
 	private String custPanNo;
 
-	
 	private String custGstNo;
-
 
 	private int custType;
 
-	
 	private int custRateType;
 
-	
 	private int delStatus;
 
-	
 	private String token;
 
-	
 	private String custDob;
 
-	
 	private int plantId;
 
-	
 	private int custCat;
 
-	
 	private int exInt1;
 
-	
 	private int exInt2;
 
-	
 	private int exInt3;
 
-	
 	private String exVar1;
 
-	
 	private String exVar2;
 
-	
 	private String exVar3;
 
-	
 	private String exDate1;
 
-	
 	private String exDate2;
 
-	
 	private int exBool1;
 
-	
 	private int exBool2;
 
-	
 	private int exBool3;
 
-	
 	private String dateOfReg;
-
 
 	private String chequeRemark;
 
-	
 	private int isChequeRcvd;
 
-	
 	private String contactPerName;
 
-	
 	private String contactPerMob;
 
-	
 	private String custLandline;
 
-	
 	private int isSameState;
 
-	
 	private String custCode;
 
-	
 	private int custVendor;
+
+	private String ownerName;
+
+	private String accPerson;
+
+	private String accPerMob;
 
 	public int getCustId() {
 		return custId;
@@ -389,6 +358,30 @@ public class Cust {
 		this.custVendor = custVendor;
 	}
 
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public String getAccPerson() {
+		return accPerson;
+	}
+
+	public void setAccPerson(String accPerson) {
+		this.accPerson = accPerson;
+	}
+
+	public String getAccPerMob() {
+		return accPerMob;
+	}
+
+	public void setAccPerMob(String accPerMob) {
+		this.accPerMob = accPerMob;
+	}
+
 	@Override
 	public String toString() {
 		return "Cust [custId=" + custId + ", custName=" + custName + ", respPerson=" + respPerson + ", custMobNo="
@@ -401,7 +394,8 @@ public class Cust {
 				+ ", dateOfReg=" + dateOfReg + ", chequeRemark=" + chequeRemark + ", isChequeRcvd=" + isChequeRcvd
 				+ ", contactPerName=" + contactPerName + ", contactPerMob=" + contactPerMob + ", custLandline="
 				+ custLandline + ", isSameState=" + isSameState + ", custCode=" + custCode + ", custVendor="
-				+ custVendor + "]";
+				+ custVendor + ", ownerName=" + ownerName + ", accPerson=" + accPerson + ", accPerMob=" + accPerMob
+				+ "]";
 	}
 
 }

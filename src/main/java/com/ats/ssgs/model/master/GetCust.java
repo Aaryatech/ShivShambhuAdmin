@@ -70,6 +70,12 @@ public class GetCust {
 	private String custCode;
 
 	private int custVendor;
+	
+	private String ownerName;
+
+	private String accPerson;
+
+	private String accPerMob;
 
 	private String plantName;
 
@@ -361,6 +367,30 @@ public class GetCust {
 		this.plantName = plantName;
 	}
 
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public String getAccPerson() {
+		return accPerson;
+	}
+
+	public void setAccPerson(String accPerson) {
+		this.accPerson = accPerson;
+	}
+
+	public String getAccPerMob() {
+		return accPerMob;
+	}
+
+	public void setAccPerMob(String accPerMob) {
+		this.accPerMob = accPerMob;
+	}
+
 	@Override
 	public String toString() {
 		return "GetCust [custId=" + custId + ", custName=" + custName + ", respPerson=" + respPerson + ", custMobNo="
@@ -373,7 +403,8 @@ public class GetCust {
 				+ ", dateOfReg=" + dateOfReg + ", chequeRemark=" + chequeRemark + ", isChequeRcvd=" + isChequeRcvd
 				+ ", contactPerName=" + contactPerName + ", contactPerMob=" + contactPerMob + ", custLandline="
 				+ custLandline + ", isSameState=" + isSameState + ", custCode=" + custCode + ", custVendor="
-				+ custVendor + ", plantName=" + plantName + "]";
+				+ custVendor + ", ownerName=" + ownerName + ", accPerson=" + accPerson + ", accPerMob=" + accPerMob
+				+ ", plantName=" + plantName + "]";
 	}
 
 }
