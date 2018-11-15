@@ -552,7 +552,7 @@
 					 var otherCost= document.getElementById("other_cost"+data[i].itemId).value;
 					 
 					 var taxableAmt=(itemRate+tollCost)+(transCost+otherCost)+royRate;
-					 alert("taxabelAmt " +taxableAmt);
+					 alert("taxabelAmt " +taxableAmt); 
 					 document.getElementById("taxable_amt"+data[i].itemId).value=taxableAmt;
 
 				 } 
