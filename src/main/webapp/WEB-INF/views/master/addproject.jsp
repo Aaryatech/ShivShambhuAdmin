@@ -44,6 +44,10 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
+	
+	<link rel="stylesheet"
+	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- css for date picker proper UI -->
 
 <style type="text/css">
 .right {
@@ -603,6 +607,7 @@
 
 			$('input[id$=end_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
+
 			});
 		});
 	</script>
