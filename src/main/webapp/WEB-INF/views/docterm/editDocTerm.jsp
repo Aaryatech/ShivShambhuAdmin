@@ -76,6 +76,7 @@
 
 
 	<!-- Header-->
+	<jsp:include page="/WEB-INF/views/common/right.jsp"></jsp:include>
 	<!-- Header-->
 
 
@@ -106,7 +107,18 @@
 											<option value="">Select Document</option>
 
 											<c:forEach items="${docList}" var="doc">
-												<option value="${doc.docId}">${doc.docName}</option>
+
+												<c:choose>
+													<c:when test="${doc.docId==editDoc.docId}">
+														<option value="${doc.docId}" selected>${doc.docName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${doc.docId}">${doc.docName}
+													</c:otherwise>
+												</c:choose>
+
+
+												<%-- <option value="${doc.docId}">${doc.docName}</option> --%>
 											</c:forEach>
 										</select>
 									</div>
@@ -118,7 +130,8 @@
 									<div class="col-md-2">Term Title</div>
 									<div class="col-md-4">
 										<input type="text" id="termTitle" name="termTitle"
-											class="form-control" style="width: 100%;">
+											value="${editDoc.termTitle}" class="form-control"
+											style="width: 100%;">
 									</div>
 
 
@@ -127,8 +140,8 @@
 
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
-											class="form-control" style="width: 100%;"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?">
+											value="${editDoc.sortNo}" class="form-control"
+											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
 									</div>
 
 
@@ -191,6 +204,32 @@
 
 											</tr>
 										</thead>
+										<tbody>
+											<c:forEach items="${editDocDetail}" var="docDetail"
+												varStatus="count">
+												<tr>
+
+													<td style="text-align: center">${count.index+1}</td>
+
+
+													<td style="text-align: left"><c:out
+															value="${docDetail.termDesc}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${docDetail.sortNo}" /></td>
+
+
+													<td style="text-align: center"><a
+														href="${pageContext.request.contextPath}/editDocHeader/${docDetail.termDetailId}"><i
+															class="fa fa-edit"></i> <span class="text-muted"></span></a>
+														&nbsp; <a
+														href="${pageContext.request.contextPath}/deleteDocHeader/${docDetail.termDetailId}"
+														onClick="return confirm('Are you sure want to delete this record');"><i
+															class="fa fa-trash-o"></i></a></td>
+
+												</tr>
+											</c:forEach>
+										</tbody>
 
 									</table>
 
@@ -290,14 +329,14 @@
 
 	<script type="text/javascript">
 		function add() {
-		//	alert("in add  ");
+			alert("in add  ");
 			var termDesc = document.getElementById("termDesc").value;
 			var isDelete = document.getElementById("isDelete").value;
 			var sortNoDetail = document.getElementById("sortNoDetail").value;
 			var isEdit = document.getElementById("isEdit").value;
 			var index = document.getElementById("index").value;
 
-			//alert("Inside add ajax");
+			alert("Inside add ajax");
 			$
 					.getJSON(
 							'${addDocTermDetail}',
@@ -370,7 +409,7 @@
 
 		function callDelete(termDetailId, index) {
 			//document.getElementById("isEdit").value = 0;
-			//alert("index" + index);
+			alert("index" + index);
 			$
 					.getJSON(
 							'${addDocTermDetail}',

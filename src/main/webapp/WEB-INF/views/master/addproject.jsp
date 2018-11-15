@@ -91,7 +91,16 @@
 										<select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required>
 											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+
+												<c:choose>
+													<c:when test="${plant.plantId==editItem.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}">${plant.plantName}
+													</c:otherwise>
+												</c:choose>
+
 											</c:forEach>
 										</select>
 									</div>
@@ -102,26 +111,38 @@
 										<select id="cust_id" name="cust_id" class="standardSelect"
 											tabindex="1" required>
 											<c:forEach items="${custList}" var="cust">
-												<option value="${cust.custId}">${cust.custName}</option>
+
+												<c:choose>
+													<c:when test="${cust.custId==editPro.custId}">
+														<option value="${cust.custId}" selected>${cust.custName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${cust.custId}">${cust.custName}
+													</c:otherwise>
+												</c:choose>
+												<%-- 	<option value="${cust.custId}">${cust.custName}</option> --%>
 											</c:forEach>
 										</select>
 									</div>
 
 								</div>
-								<input type="hidden" name="proj_id" id="proj_id" value="0">
+								<input type="hidden" name="proj_id" id="proj_id"
+									value="${editPro.projId}">
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Project Name</div>
 									<div class="col-md-4">
 										<input type="text" id="proj_name" name="proj_name"
-											class="form-control" required style="width: 100%;">
+											value="${editPro.projName}" class="form-control" required
+											style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">Project Location</div>
 
 									<div class="col-md-4">
 										<input type="text" id="proj_loc" name="proj_loc"
-											class="form-control" required style="width: 100%;">
+											value="${editPro.location}" class="form-control" required
+											style="width: 100%;">
 									</div>
 
 								</div>
@@ -130,14 +151,16 @@
 									<div class="col-md-2">Start Date</div>
 									<div class="col-md-4">
 										<input type="text" id="start_date" name="start_date"
-											class="form-control" required style="width: 100%;">
+											value="${editPro.startDate}" class="form-control" required
+											style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">End Date</div>
 
 									<div class="col-md-4">
 										<input type="text" id="end_date" name="end_date"
-											class="form-control" required style="width: 100%;">
+											value="${editPro.endDate}" class="form-control" required
+											style="width: 100%;">
 									</div>
 
 								</div>

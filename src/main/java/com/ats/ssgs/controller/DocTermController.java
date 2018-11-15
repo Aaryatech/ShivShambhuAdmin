@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,11 +23,15 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
+import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.DocTermDetail;
 import com.ats.ssgs.model.master.DocTermHeader;
 import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.GetPlant;
+import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.TempDocDetail;
+import com.ats.ssgs.model.master.User;
 
 @Controller
 public class DocTermController {
@@ -191,11 +198,10 @@ public class DocTermController {
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("docterm/doctermlist");
-			DocTermHeader[] plantArray = rest.getForObject(Constants.url + "getAllCompanyPlantList",
-					DocTermHeader[].class);
+			DocTermHeader[] plantArray = rest.getForObject(Constants.url + "getDocHeaderList", DocTermHeader[].class);
 			docTermHeaderList = new ArrayList<DocTermHeader>(Arrays.asList(plantArray));
 
-			model.addObject("title", "Plant List");
+			model.addObject("title", "Document Term List");
 			model.addObject("docHeaderList", docTermHeaderList);
 		} catch (Exception e) {
 
@@ -207,6 +213,61 @@ public class DocTermController {
 
 		return model;
 
+	}
+
+	@RequestMapping(value = "/editDocHeader/{termId}", method = RequestMethod.GET)
+	public ModelAndView editDocHeader(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int termId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("docterm/editDocTerm");
+
+			Document[] docArray = rest.getForObject(Constants.url + "getAllDocList", Document[].class);
+			docList = new ArrayList<Document>(Arrays.asList(docArray));
+
+			model.addObject("docList", docList);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("termId", termId);
+
+			DocTermHeader editDoc = rest.postForObject(Constants.url + "getDocHeaderByTermId", map,
+					DocTermHeader.class);
+
+			model.addObject("title", "Edit Document Term");
+			model.addObject("editDoc", editDoc);
+			model.addObject("editDocDetail", editDoc.getDetailList());
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editDoc at Doc Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/deleteDocHeader/{termId}", method = RequestMethod.GET)
+	public String deleteDocHeader(HttpServletRequest request, HttpServletResponse response, @PathVariable int termId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("termId", termId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteDocHeader", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteDocHeader @DocContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showDocTermList";
 	}
 
 }

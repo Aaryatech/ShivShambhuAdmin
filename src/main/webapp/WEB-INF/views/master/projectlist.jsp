@@ -89,32 +89,37 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Term Title</th>
-										<th style="text-align: center">Sort No</th>
+										<th style="text-align: center">Project Name</th>
+										<th style="text-align: center">Cust Name</th>
+										<th style="text-align: center">Plant Name</th>
+
 
 										<th style="text-align: center">Action</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${docHeaderList}" var="doc" varStatus="count">
+									<c:forEach items="${proList}" var="pro" varStatus="count">
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
 
+											<td style="text-align: left"><c:out
+													value="${pro.projName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${doc.termTitle}" /></td>
+													value="${pro.custName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${doc.sortNo}" /></td>
+													value="${pro.plantName}" /></td>
+
 
 
 											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editDocHeader/${doc.termId}"><i
+												href="${pageContext.request.contextPath}/editProject/${pro.projId}"><i
 													class="fa fa-edit"></i> <span class="text-muted"></span></a>
 												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteDocHeader/${doc.termId}"
+												href="${pageContext.request.contextPath}/deleteProject/${pro.projId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
 													class="fa fa-trash-o"></i></a></td>
 

@@ -1,7 +1,6 @@
 package com.ats.ssgs.model.master;
 
-public class Project {
-
+public class GetProject {
 	private int projId;
 
 	private String projName;
@@ -17,6 +16,10 @@ public class Project {
 	private int isUsed;
 
 	private int delStatus;
+
+	private String custName;
+
+	private String plantName;
 
 	public int getProjId() {
 		return projId;
@@ -82,11 +85,27 @@ public class Project {
 		this.delStatus = delStatus;
 	}
 
+	public String getCustName() {
+		return custName;
+	}
+
+	public void setCustName(String custName) {
+		this.custName = custName;
+	}
+
+	public String getPlantName() {
+		return plantName;
+	}
+
+	public void setPlantName(String plantName) {
+		this.plantName = plantName;
+	}
+
 	@Override
 	public String toString() {
-		return "Project [projId=" + projId + ", projName=" + projName + ", custId=" + custId + ", location=" + location
-				+ ", startDate=" + startDate + ", endDate=" + endDate + ", isUsed=" + isUsed + ", delStatus="
-				+ delStatus + "]";
+		return "GetProject [projId=" + projId + ", projName=" + projName + ", custId=" + custId + ", location="
+				+ location + ", startDate=" + startDate + ", endDate=" + endDate + ", isUsed=" + isUsed + ", delStatus="
+				+ delStatus + ", custName=" + custName + ", plantName=" + plantName + "]";
 	}
 
 }

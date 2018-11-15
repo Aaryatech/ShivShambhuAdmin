@@ -26,6 +26,11 @@
 						Masters
 				</a>
 					<ul class="sub-menu children dropdown-menu ">
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddDept">Add
+								Dept</a></li>
+
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddPlant">Add
 								Plant</a></li>
@@ -68,6 +73,15 @@
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showItemList"> Item
 								List</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showDocTermList">
+								Document Term List</a></li>
+
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showProjectList">
+								Project List</a></li>
 
 
 

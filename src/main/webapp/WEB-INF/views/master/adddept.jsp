@@ -8,6 +8,17 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+
+<c:url var="getItemsByPlantId" value="/getItemsByPlantId" />
+
+<c:url var="getCustByPlantId" value="/getCustByPlantId" />
+
+<c:url var="getItemByItemId" value="/getItemByItemId" />
+
+<c:url var="addDocTermDetail" value="/addDocTermDetail" />
+
+<c:url var="getDocTermForEdit" value="/getDocTermForEdit" />
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -81,7 +92,55 @@
 							<strong>${title}</strong>
 						</div>
 						<div class="card-body card-block">
+							<form action="${pageContext.request.contextPath}/insertDept"
+								method="post">
 
+
+
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Department Name</div>
+									<div class="col-md-4">
+										<input type="text" id="deptName" name="deptName"
+											value="${editDept.deptName}" class="form-control"
+											style="width: 100%;">
+									</div>
+
+
+
+									<div class="col-md-2">Sort No</div>
+
+									<div class="col-md-4">
+										<input type="text" id="sortNo" name="sortNo"
+											value="${editDept.sortNo}" class="form-control"
+											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
+									</div>
+
+									<input type="hidden" id="deptId" name="deptId"
+										value="${editDept.deptId}">
+
+								</div>
+								<div class="form-group"></div>
+								<div class="col-lg-12" align="center">
+
+
+									<button type="submit" class="btn btn-primary"
+										style="align-content: center; width: 226px; margin-left: 80px;">
+										Submit</button>
+								</div>
+
+
+
+
+
+
+
+							</form>
+						</div>
+
+
+
+						<div class="card-body card-block">
 
 							<table id="bootstrap-data-table"
 								class="table table-striped table-bordered">
@@ -89,42 +148,44 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Term Title</th>
+										<th style="text-align: center">Department Name</th>
 										<th style="text-align: center">Sort No</th>
 
-										<th style="text-align: center">Action</th>
+										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${docHeaderList}" var="doc" varStatus="count">
+									<c:forEach items="${deptList}" var="dept" varStatus="count">
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
 
 
 											<td style="text-align: left"><c:out
-													value="${doc.termTitle}" /></td>
+													value="${dept.deptName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${doc.sortNo}" /></td>
+													value="${dept.sortNo}" /></td>
 
 
 											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editDocHeader/${doc.termId}"><i
+												href="${pageContext.request.contextPath}/editDept/${dept.deptId}"><i
 													class="fa fa-edit"></i> <span class="text-muted"></span></a>
 												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteDocHeader/${doc.termId}"
+												href="${pageContext.request.contextPath}/deleteDept/${dept.deptId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
 													class="fa fa-trash-o"></i></a></td>
 
 										</tr>
 									</c:forEach>
 								</tbody>
+
 							</table>
 
 
 						</div>
+
 					</div>
 				</div>
 			</div>
@@ -134,15 +195,13 @@
 		<!-- .animated -->
 	</div>
 	<!-- .content -->
-
-
 	<!-- .animated -->
 	<!-- .content -->
-
-
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	<!-- Footer -->
+
+
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
@@ -152,7 +211,6 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
-
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables.min.js"></script>
@@ -179,12 +237,10 @@
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
-
-
 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({
-				disable_search_threshold : 2,
+				disable_search_threshold : 1,
 				no_results_text : "Oops, nothing found!",
 				width : "100%"
 			});
@@ -192,9 +248,23 @@
 	</script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#bootstrap-data-table-export').DataTable();
+			$('#bootstrap-data-table').DataTable();
 		});
 	</script>
+
+
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$('input[id$=enq_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+
+		});
+	</script>
+
+
 
 
 </body>

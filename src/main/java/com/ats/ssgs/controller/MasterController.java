@@ -26,9 +26,11 @@ import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.CustType;
+import com.ats.ssgs.model.master.Dept;
 import com.ats.ssgs.model.master.GetCust;
 import com.ats.ssgs.model.master.GetItem;
 import com.ats.ssgs.model.master.GetPlant;
+import com.ats.ssgs.model.master.GetProject;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.Plant;
@@ -47,6 +49,7 @@ public class MasterController {
 	List<User> usrList;
 	List<Plant> plantList;
 	List<Vendor> vendList;
+	List<Dept> deptList;
 
 	@RequestMapping(value = "/showAddPlant", method = RequestMethod.GET)
 	public ModelAndView showAddPlant(HttpServletRequest request, HttpServletResponse response) {
@@ -493,7 +496,7 @@ public class MasterController {
 			Project proj = new Project();
 
 			proj.setCustId(custId);
-			proj.setDelStatus(0);
+			proj.setDelStatus(1);
 			proj.setEndDate(DateConvertor.convertToYMD(endDate));
 			proj.setIsUsed(1);
 			proj.setLocation(projLoc);
@@ -509,7 +512,92 @@ public class MasterController {
 			e.printStackTrace();
 
 		}
-		return null;
+		return "redirect:/showAddProject";
+
+	}
+
+	@RequestMapping(value = "/editProject/{projId}", method = RequestMethod.GET)
+	public ModelAndView editProject(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int projId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/addproject");
+			// getProjectByProjId
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			Cust[] custArray = rest.getForObject(Constants.url + "getAllCustList", Cust[].class);
+			custList = new ArrayList<Cust>(Arrays.asList(custArray));
+			System.err.println("custList In showAddPlant at Master Contr" + custList);
+			model.addObject("custList", custList);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("projId", projId);
+
+			Project editPro = rest.postForObject(Constants.url + "getProjectByProjId", map, Project.class);
+
+			model.addObject("title", "Edit Project");
+			model.addObject("editPro", editPro);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editProject at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	List<GetProject> proList;
+
+	@RequestMapping(value = "/showProjectList", method = RequestMethod.GET)
+	public ModelAndView showProjectList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/projectlist");
+			GetProject[] proArray = rest.getForObject(Constants.url + "getAllProList", GetProject[].class);
+			proList = new ArrayList<GetProject>(Arrays.asList(proArray));
+
+			model.addObject("title", "Project List");
+			model.addObject("proList", proList);
+		} catch (Exception e) {
+
+			System.err.println("exception In showProjectList at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/deleteProject/{projId}", method = RequestMethod.GET)
+	public String deleteProject(HttpServletRequest request, HttpServletResponse response, @PathVariable int projId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("projId", projId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteProject", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteDept @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showProjectList";
 	}
 
 	// showAddCustomer
@@ -1067,6 +1155,129 @@ public class MasterController {
 		}
 
 		return "redirect:/showItemList";
+	}
+
+	@RequestMapping(value = "/showAddDept", method = RequestMethod.GET)
+	public ModelAndView showAddDept(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("master/adddept");
+			Dept[] deptArray = rest.getForObject(Constants.url + "getAllDeptList", Dept[].class);
+			deptList = new ArrayList<Dept>(Arrays.asList(deptArray));
+
+			model.addObject("deptList", deptList);
+			model.addObject("title", "Add Dept");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddDept at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/insertDept", method = RequestMethod.POST)
+	public String insertDept(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			System.err.println("Inside insert insertDept method");
+
+			int deptId = 0;
+			try {
+				deptId = Integer.parseInt(request.getParameter("deptId"));
+			} catch (Exception e) {
+				deptId = 0;
+			}
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			String curDate = dateFormat.format(new Date());
+
+			String deptName = request.getParameter("deptName");
+
+			String sortNo = request.getParameter("sortNo");
+
+			Dept dept = new Dept();
+			dept.setDelStatus(1);
+			dept.setDeptName(deptName);
+			dept.setExBool1(0);
+			dept.setExBool2(0);
+			dept.setExDate1(curDate);
+			dept.setExDate2(curDate);
+			dept.setExInt1(0);
+			dept.setExInt2(0);
+			dept.setSortNo(Integer.parseInt(sortNo));
+			dept.setIsUsed(1);
+			dept.setExVar1("NA");
+			dept.setExVar2("NA");
+
+			Dept deptInsertRes = rest.postForObject(Constants.url + "saveDept", dept, Dept.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in insert Dept " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return "redirect:/showAddDept";
+	}
+
+	@RequestMapping(value = "/editDept/{deptId}", method = RequestMethod.GET)
+	public ModelAndView editDept(HttpServletRequest request, HttpServletResponse response, @PathVariable int deptId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/adddept");
+
+			Dept[] deptArray = rest.getForObject(Constants.url + "getAllDeptList", Dept[].class);
+			deptList = new ArrayList<Dept>(Arrays.asList(deptArray));
+
+			model.addObject("deptList", deptList);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("deptId", deptId);
+
+			Dept editDept = rest.postForObject(Constants.url + "getDeptByDeptId", map, Dept.class);
+
+			model.addObject("title", "Edit Dept");
+			model.addObject("editDept", editDept);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editDept at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/deleteDept/{deptId}", method = RequestMethod.GET)
+	public String deleteDept(HttpServletRequest request, HttpServletResponse response, @PathVariable int deptId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("deptId", deptId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteDept", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteDept @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showAddDept";
 	}
 
 }
