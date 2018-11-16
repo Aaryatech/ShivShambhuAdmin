@@ -92,7 +92,8 @@
 							<strong>${title}</strong>
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertDocTerm"
+							<form
+								action="${pageContext.request.contextPath}/editSubmitDocTerm"
 								method="post">
 
 								<div class="row">
@@ -102,20 +103,17 @@
 									<div class="col-md-4">
 										<select id="doc_id" name="doc_id" class="standardSelect"
 											tabindex="1" required
-											oninvalid="setCustomValidity('Please select Document name')"
-											onchange="getData()">
+											oninvalid="setCustomValidity('Please select Document name')">
 											<option value="">Select Document</option>
 
 											<c:forEach items="${docList}" var="doc">
 
-												<c:choose>
-													<c:when test="${doc.docId==editDoc.docId}">
-														<option value="${doc.docId}" selected>${doc.docName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${doc.docId}">${doc.docName}
-													</c:otherwise>
-												</c:choose>
+
+												<c:if test="${doc.docId==editDoc.docId}">
+													<option value="${doc.docId}" selected>${doc.docName}</option>
+												</c:if>
+
+
 
 
 												<%-- <option value="${doc.docId}">${doc.docName}</option> --%>
@@ -150,42 +148,6 @@
 
 								<hr>
 
-								<br>
-								<section class="form-control" style="color: red;">
-									<div class="form-group"></div>
-									<div class="row">
-										<div class="col-md-2">Term Desc</div>
-										<div class="col-md-3">
-											<input type="text" id="termDesc" name="termDesc"
-												class="form-control" style="width: 100%;">
-										</div>
-
-
-
-										<div class="col-md-1">Sort No</div>
-
-										<div class="col-md-3">
-											<input type="text" id="sortNoDetail" name="sortNoDetail"
-												class="form-control" style="width: 100%;"
-												pattern="[0-9]+(\.[0-9]{0,2})?%?">
-										</div>
-										<div class="col-md-1"></div>
-
-										<div class="col-md-2">
-											<input type="button" value="Add" class="btn btn-primary"
-												style="align-content: center; width: 113px;" onclick="add()" />
-
-										</div>
-
-
-									</div>
-									<input type="hidden" id="isDelete" name="isDelete" value="0">
-									<input type="hidden" name="isEdit" id="isEdit" value="0">
-									<input type="hidden" name="index" id="index" value="0">
-									<div class="form-group"></div>
-
-								</section>
-
 
 
 
@@ -211,12 +173,25 @@
 
 													<td style="text-align: center">${count.index+1}</td>
 
+													<td align="right"><input class="form-control"
+														id="termDesc${docDetail.termDetailId}"
+														placeholder="Term Desc" type="text"
+														name="termDesc${docDetail.termDetailId}"
+														value="${docDetail.termDesc}" /></td>
 
-													<td style="text-align: left"><c:out
-															value="${docDetail.termDesc}" /></td>
 
-													<td style="text-align: left"><c:out
-															value="${docDetail.sortNo}" /></td>
+													<%-- 	<td style="text-align: left"><c:out
+															value="${docDetail.termDesc}" /></td>--%>
+
+
+													<td align="right"><input class="form-control"
+														id="detailSortNo${docDetail.termDetailId}"
+														placeholder="Sort No" type="text"
+														name="detailSortNo${docDetail.termDetailId}"
+														value="${docDetail.sortNo}" /></td>
+
+													<%-- 	<td style="text-align: left"><c:out
+															value="${docDetail.sortNo}" /></td> --%>
 
 
 													<td style="text-align: center"><a

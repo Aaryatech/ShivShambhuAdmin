@@ -89,6 +89,7 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
+										<th style="text-align: center">Document Name</th>
 										<th style="text-align: center">Term Title</th>
 										<th style="text-align: center">Sort No</th>
 
@@ -102,11 +103,13 @@
 
 											<td style="text-align: center">${count.index+1}</td>
 
+											<td style="text-align: left"><c:out
+													value="${doc.docName}" /></td>
 
 											<td style="text-align: left"><c:out
 													value="${doc.termTitle}" /></td>
 
-											<td style="text-align: left"><c:out
+											<td style="text-align: right"><c:out
 													value="${doc.sortNo}" /></td>
 
 

@@ -164,7 +164,7 @@
 									<div class="col-md-2">User Name</div>
 									<div class="col-md-4">
 										<input type="text" id="usrName" name="usrName"
-											value="${editPro.projName}" class="form-control" required
+											value="${editUser.usrName}" class="form-control" required
 											style="width: 100%;">
 									</div>
 
@@ -172,7 +172,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="usrMob" name="usrMob"
-											value="${editPro.location}" class="form-control" required
+											value="${editUser.usrMob}" class="form-control" required
 											style="width: 100%;">
 									</div>
 
@@ -182,55 +182,55 @@
 									<div class="col-md-2">Date of Birth</div>
 									<div class="col-md-4">
 										<input type="text" id="usrDob" name="usrDob"
-											value="${editPro.startDate}" class="form-control" required
+											value="${editUser.usrDob}" class="form-control" required
 											style="width: 100%;">
 									</div>
 									<div class="col-md-2">Sort No</div>
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
-											value="${editPro.sortNo}" class="form-control" required
+											value="${editUser.sortNo}" class="form-control" required
 											style="width: 100%;">
 									</div>
 								</div>
 
 								<div class="form-group"></div>
 								<div class="row">
-							<div class="col-md-2">User Email</div>
-							<div class="col-md-4">
-								<input type="text" id="usrEmail" name="usrEmail"
-									value="${editPro.projName}" class="form-control" required
-									style="width: 100%;">
-							</div>
+									<div class="col-md-2">User Email</div>
+									<div class="col-md-4">
+										<input type="text" id="usrEmail" name="usrEmail"
+											value="${editUser.usrEmail}" class="form-control" required
+											style="width: 100%;">
+									</div>
 
-							<div class="col-md-2">User Password</div>
+									<div class="col-md-2">User Password</div>
 
-							<div class="col-md-4">
-								<input type="password" id="userPass" name="userPass"
-									value="${editPro.location}" class="form-control" required
-									style="width: 100%;">
-							</div>
+									<div class="col-md-4">
+										<input type="password" id="userPass" name="userPass"
+											value="${editUser.userPass}" class="form-control" required
+											style="width: 100%;">
+									</div>
 
+								</div>
+
+								<div class="form-group"></div>
+
+
+								<div class="col-lg-12" align="center">
+
+
+									<button type="submit" class="btn btn-primary"
+										style="align-content: center; width: 226px; margin-left: 80px;">
+										Submit</button>
+								</div>
+							</form>
 						</div>
-
-						<div class="form-group"></div>
-
-
-						<div class="col-lg-12" align="center">
-
-
-							<button type="submit" class="btn btn-primary"
-								style="align-content: center; width: 226px; margin-left: 80px;">
-								Submit</button>
-						</div>
-						</form>
 					</div>
 				</div>
 			</div>
+
+
 		</div>
-
-
-	</div>
-	<!-- .animated -->
+		<!-- .animated -->
 	</div>
 	<!-- .content -->
 

@@ -90,6 +90,11 @@
 							href="${pageContext.request.contextPath}/showProjectList">
 								Project List</a></li>
 
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showUserList"> User
+								List</a></li>
+
+
 
 
 					</ul></li>

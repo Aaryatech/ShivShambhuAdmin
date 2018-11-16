@@ -89,9 +89,13 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Project Name</th>
-										<th style="text-align: center">Cust Name</th>
+										<th style="text-align: center">User Name</th>
+										<th style="text-align: center">Mobile No</th>
 										<th style="text-align: center">Plant Name</th>
+										<th style="text-align: center">Dept Name</th>
+										<th style="text-align: center">Company Name</th>
+
+
 
 
 										<th style="text-align: center">Action</th>
@@ -99,27 +103,34 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${proList}" var="pro" varStatus="count">
+									<c:forEach items="${userList}" var="user" varStatus="count">
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
 
 											<td style="text-align: left"><c:out
-													value="${pro.projName}" /></td>
+													value="${user.usrName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${pro.custName}" /></td>
+													value="${user.usrMob}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${pro.plantName}" /></td>
+													value="${user.plantName}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${user.deptName}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${user.compName}" /></td>
+
 
 
 
 											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editProject/${pro.projId}"><i
+												href="${pageContext.request.contextPath}/editUser/${user.userId}"><i
 													class="fa fa-edit"></i> <span class="text-muted"></span></a>
 												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteProject/${pro.projId}"
+												href="${pageContext.request.contextPath}/deleteUser/${user.userId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
 													class="fa fa-trash-o"></i></a></td>
 

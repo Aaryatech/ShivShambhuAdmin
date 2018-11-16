@@ -27,6 +27,7 @@ import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.DocTermDetail;
 import com.ats.ssgs.model.master.DocTermHeader;
 import com.ats.ssgs.model.master.Document;
+import com.ats.ssgs.model.master.GetDocTermHeader;
 import com.ats.ssgs.model.master.GetPlant;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Plant;
@@ -190,7 +191,7 @@ public class DocTermController {
 
 	}
 
-	List<DocTermHeader> docTermHeaderList;
+	List<GetDocTermHeader> docTermHeaderList;
 
 	@RequestMapping(value = "/showDocTermList", method = RequestMethod.GET)
 	public ModelAndView showDocTermList(HttpServletRequest request, HttpServletResponse response) {
@@ -198,8 +199,9 @@ public class DocTermController {
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("docterm/doctermlist");
-			DocTermHeader[] plantArray = rest.getForObject(Constants.url + "getDocHeaderList", DocTermHeader[].class);
-			docTermHeaderList = new ArrayList<DocTermHeader>(Arrays.asList(plantArray));
+			GetDocTermHeader[] docArray = rest.getForObject(Constants.url + "getAllDocHeaderList",
+					GetDocTermHeader[].class);
+			docTermHeaderList = new ArrayList<GetDocTermHeader>(Arrays.asList(docArray));
 
 			model.addObject("title", "Document Term List");
 			model.addObject("docHeaderList", docTermHeaderList);
@@ -214,6 +216,8 @@ public class DocTermController {
 		return model;
 
 	}
+
+	DocTermHeader editDoc;
 
 	@RequestMapping(value = "/editDocHeader/{termId}", method = RequestMethod.GET)
 	public ModelAndView editDocHeader(HttpServletRequest request, HttpServletResponse response,
@@ -231,9 +235,7 @@ public class DocTermController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("termId", termId);
-
-			DocTermHeader editDoc = rest.postForObject(Constants.url + "getDocHeaderByTermId", map,
-					DocTermHeader.class);
+			editDoc = rest.postForObject(Constants.url + "getDocHeaderByTermId", map, DocTermHeader.class);
 
 			model.addObject("title", "Edit Document Term");
 			model.addObject("editDoc", editDoc);
@@ -268,6 +270,49 @@ public class DocTermController {
 		}
 
 		return "redirect:/showDocTermList";
+	}
+
+	@RequestMapping(value = "/editSubmitDocTerm", method = RequestMethod.POST)
+	public String editSubmitDocTerm(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			System.err.println("Inside insert editSubmitDocTerm method");
+
+			String termTitle = request.getParameter("termTitle");
+
+			int sortNo = Integer.parseInt(request.getParameter("sortNo"));
+
+			editDoc.setSortNo(sortNo);
+			editDoc.setTermTitle(termTitle);
+			List<DocTermDetail> doc = editDoc.getDetailList();
+
+			for (int i = 0; i < editDoc.getDetailList().size(); i++) {
+				int detailSortNo = Integer
+						.parseInt(request.getParameter("sortNo" + editDoc.getDetailList().get(i).getTermDetailId()));
+
+				String termDesc = request.getParameter("termDesc" + editDoc.getDetailList().get(i).getTermDetailId());
+
+				DocTermDetail docDetail = new DocTermDetail();
+				docDetail.setSortNo(detailSortNo);
+				docDetail.setTermDesc(termDesc);
+				doc.add(docDetail);
+
+			}
+			editDoc.setDetailList(doc);
+
+			DocTermHeader docInsertRes = rest.postForObject(Constants.url + "saveDocTermHeaderAndDetail", editDoc,
+					DocTermHeader.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce In insertEnq method  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return "redirect:/showAddDocTerm";
+
 	}
 
 }

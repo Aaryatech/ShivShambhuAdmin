@@ -78,8 +78,16 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<strong>${title}</strong>
+							<div class="col-md-3">
+								<strong>${title}</strong>
+							</div>
+							<div class="col-md-6"></div>
+							<div class="col-md-3" align="left">
+								<a href="${pageContext.request.contextPath}/showPlantList"><strong>Plant
+										List</strong></a>
+							</div>
 						</div>
+
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertPlant"
 								method="post">
@@ -114,7 +122,8 @@
 									</div>
 
 								</div>
-								<input type="hidden" name="plant_id" id="plant_id" value=${editPlant.plantId}>
+								<input type="hidden" name="plant_id" id="plant_id"
+									value=${editPlant.plantId}>
 
 
 								<div class="form-group"></div>

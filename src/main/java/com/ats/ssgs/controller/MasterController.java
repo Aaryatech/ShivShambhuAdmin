@@ -31,6 +31,7 @@ import com.ats.ssgs.model.master.GetCust;
 import com.ats.ssgs.model.master.GetItem;
 import com.ats.ssgs.model.master.GetPlant;
 import com.ats.ssgs.model.master.GetProject;
+import com.ats.ssgs.model.master.GetUser;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.Plant;
@@ -1462,11 +1463,13 @@ public class MasterController {
 
 		try {
 
-			System.err.println("Inside insert insertUom method");
+			System.err.println("Inside insert insertUser method");
 
 			int userId = 0;
 			try {
+
 				userId = Integer.parseInt(request.getParameter("userId"));
+				System.out.println("User Id" + userId);
 			} catch (Exception e) {
 				userId = 0;
 			}
@@ -1508,6 +1511,7 @@ public class MasterController {
 			user.setUsrName(usrName);
 			user.setExVar1("NA");
 			user.setExVar2("NA");
+			user.setUserId(userId);
 
 			User userInsertRes = rest.postForObject(Constants.url + "saveUser", user, User.class);
 
@@ -1520,21 +1524,23 @@ public class MasterController {
 		return "redirect:/showAddUser";
 	}
 
+	List<GetUser> getUserList;
+
 	@RequestMapping(value = "/showUserList", method = RequestMethod.GET)
 	public ModelAndView showUserList(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("master/userlist");
-			GetItem[] itemArray = rest.getForObject(Constants.url + "getAllItemList", GetItem[].class);
-			getItemList = new ArrayList<GetItem>(Arrays.asList(itemArray));
+			GetUser[] userArray = rest.getForObject(Constants.url + "getUserList", GetUser[].class);
+			getUserList = new ArrayList<GetUser>(Arrays.asList(userArray));
 
-			model.addObject("title", "Item List");
-			model.addObject("itemList", getItemList);
+			model.addObject("title", "User List");
+			model.addObject("userList", getUserList);
 
 		} catch (Exception e) {
 
-			System.err.println("exception In showCustList at Master Contr" + e.getMessage());
+			System.err.println("exception In showUserList at Master Contr" + e.getMessage());
 
 			e.printStackTrace();
 
@@ -1542,6 +1548,71 @@ public class MasterController {
 
 		return model;
 
+	}
+
+	@RequestMapping(value = "/editUser/{userId}", method = RequestMethod.GET)
+	public ModelAndView editUser(HttpServletRequest request, HttpServletResponse response, @PathVariable int userId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/adduser");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			Dept[] deptArray = rest.getForObject(Constants.url + "getAllDeptList", Dept[].class);
+			deptList = new ArrayList<Dept>(Arrays.asList(deptArray));
+
+			model.addObject("deptList", deptList);
+
+			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
+			compList = new ArrayList<Company>(Arrays.asList(compArray));
+
+			model.addObject("compList", compList);
+			GetUser[] userArray = rest.getForObject(Constants.url + "getUserList", GetUser[].class);
+			getUserList = new ArrayList<GetUser>(Arrays.asList(userArray));
+
+			model.addObject("userList", getUserList);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("userId", userId);
+
+			User editUser = rest.postForObject(Constants.url + "getUserByUserId", map, User.class);
+
+			model.addObject("title", "Edit User");
+			model.addObject("editUser", editUser);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editUser at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/deleteUser/{userId}", method = RequestMethod.GET)
+	public String deleteUser(HttpServletRequest request, HttpServletResponse response, @PathVariable int userId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("userId", userId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteUser", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteUser @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showUserList";
 	}
 
 }
