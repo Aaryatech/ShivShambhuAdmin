@@ -81,7 +81,15 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<strong>${title}</strong>
+							<div class="col-md-2">
+								<strong>${title}</strong>
+							</div>
+							<div class="col-md-8"></div>
+							<div class="col-md-2" align="left">
+								<a href="${pageContext.request.contextPath}/showUserList"><strong>User
+										List</strong></a>
+							</div>
+
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertUser"
@@ -164,7 +172,9 @@
 									<div class="col-md-2">User Name</div>
 									<div class="col-md-4">
 										<input type="text" id="usrName" name="usrName"
-											value="${editUser.usrName}" class="form-control" required
+											oninvalid="setCustomValidity('Please enter User Name')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											value="${editUser.usrName}" class="form-control"
 											style="width: 100%;">
 									</div>
 
@@ -172,7 +182,10 @@
 
 									<div class="col-md-4">
 										<input type="text" id="usrMob" name="usrMob"
-											value="${editUser.usrMob}" class="form-control" required
+											value="${editUser.usrMob}" class="form-control"
+											oninvalid="setCustomValidity('Please enter mob no')"
+											maxlength="10" pattern="[0-9]+"
+											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
 
@@ -182,13 +195,16 @@
 									<div class="col-md-2">Date of Birth</div>
 									<div class="col-md-4">
 										<input type="text" id="usrDob" name="usrDob"
-											value="${editUser.usrDob}" class="form-control" required
+											value="${editUser.usrDob}" class="form-control"
+											oninvalid="setCustomValidity('Please enter Date')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
 									<div class="col-md-2">Sort No</div>
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
-											value="${editUser.sortNo}" class="form-control" required
+											value="${editUser.sortNo}" class="form-control"
+											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
 								</div>
@@ -198,8 +214,10 @@
 									<div class="col-md-2">User Email</div>
 									<div class="col-md-4">
 										<input type="text" id="usrEmail" name="usrEmail"
-											value="${editUser.usrEmail}" class="form-control" required
-											style="width: 100%;">
+											value="${editUser.usrEmail}" class="form-control"
+											oninvalid="setCustomValidity('Please enter email')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											style="width: 100%;" style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">User Password</div>

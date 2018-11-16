@@ -88,16 +88,11 @@
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
+
 						<div class="card-header">
-							<div class="col-md-3">
-								<strong>${title}</strong>
-							</div>
-							<div class="col-md-6"></div>
-							<div class="col-md-3" align="left">
-								<a href="${pageContext.request.contextPath}/showDeptList"><strong>Dept
-										List</strong></a>
-							</div>
+							<strong>${title}</strong>
 						</div>
+
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertDept"
 								method="post">
@@ -109,7 +104,9 @@
 									<div class="col-md-2">Department Name</div>
 									<div class="col-md-4">
 										<input type="text" id="deptName" name="deptName"
-											value="${editDept.deptName}" class="form-control"
+											oninvalid="setCustomValidity('Please Enter Dept Name')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											value="${editDept.deptName}" class="form-control" required
 											style="width: 100%;">
 									</div>
 
@@ -120,7 +117,10 @@
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
 											value="${editDept.sortNo}" class="form-control"
-											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
+											oninvalid="setCustomValidity('Please enter Sort No')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											required>
 									</div>
 
 									<input type="hidden" id="deptId" name="deptId"

@@ -76,6 +76,7 @@
 
 
 	<!-- Header-->
+	<jsp:include page="/WEB-INF/views/common/right.jsp"></jsp:include>
 	<!-- Header-->
 
 
@@ -88,7 +89,15 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<strong>${title}</strong>
+							<div class="col-md-2">
+								<strong>${title}</strong>
+							</div>
+							<div class="col-md-8"></div>
+							<div class="col-md-2" align="left">
+								<a href="${pageContext.request.contextPath}/showDocTermList"><strong>Doc
+										Term List</strong></a>
+							</div>
+
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertDocTerm"
@@ -290,7 +299,7 @@
 
 	<script type="text/javascript">
 		function add() {
-		//	alert("in add  ");
+			//	alert("in add  ");
 			var termDesc = document.getElementById("termDesc").value;
 			var isDelete = document.getElementById("isDelete").value;
 			var sortNoDetail = document.getElementById("sortNoDetail").value;

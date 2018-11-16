@@ -78,7 +78,15 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<strong>${title}</strong>
+							<div class="col-md-2">
+								<strong>${title}</strong>
+							</div>
+							<div class="col-md-8"></div>
+							<div class="col-md-2" align="left">
+								<a href="${pageContext.request.contextPath}/showAddItem"><strong>Add
+										Item </strong></a>
+							</div>
+
 						</div>
 						<div class="card-body card-block">
 

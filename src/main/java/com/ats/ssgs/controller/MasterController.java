@@ -157,7 +157,7 @@ public class MasterController {
 			e.printStackTrace();
 
 		}
-		return "redirect:/showPlantList";
+		return "redirect:/showAddPlant";
 
 	}
 
@@ -793,7 +793,7 @@ public class MasterController {
 			System.err.println("Exc in saving customet ->project  " + e.getMessage());
 			e.printStackTrace();
 		}
-		return "redirect:/showCustList";
+		return "redirect:/showAddCustomer";
 
 	}
 
@@ -1079,7 +1079,7 @@ public class MasterController {
 			e.printStackTrace();
 
 		}
-		return null;
+		return "redirect:/showAddItem";
 	}
 
 	List<GetItem> getItemList;
@@ -1220,6 +1220,7 @@ public class MasterController {
 
 			Dept dept = new Dept();
 			dept.setDelStatus(1);
+			dept.setDeptId(deptId);
 			dept.setDeptName(deptName);
 			dept.setExBool1(0);
 			dept.setExBool2(0);
@@ -1420,7 +1421,7 @@ public class MasterController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showAddDept";
+		return "redirect:/showAddUom";
 	}
 
 	@RequestMapping(value = "/showAddUser", method = RequestMethod.GET)
