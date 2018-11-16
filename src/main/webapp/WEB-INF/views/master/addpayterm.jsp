@@ -9,15 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
-<c:url var="getItemsByPlantId" value="/getItemsByPlantId" />
 
-<c:url var="getCustByPlantId" value="/getCustByPlantId" />
-
-<c:url var="getItemByItemId" value="/getItemByItemId" />
-
-<c:url var="addDocTermDetail" value="/addDocTermDetail" />
-
-<c:url var="getDocTermForEdit" value="/getDocTermForEdit" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -94,37 +86,31 @@
 						</div>
 
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertDept"
+							<form action="${pageContext.request.contextPath}/insertPayTerm"
 								method="post">
 
 
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Department Name</div>
+									<div class="col-md-2">Payment Term</div>
+
 									<div class="col-md-4">
-										<input type="text" id="deptName" name="deptName"
-											oninvalid="setCustomValidity('Please Enter Dept Name')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editDept.deptName}" class="form-control" required
-											style="width: 100%;">
+										<textarea id="payTerm" name="payTerm" class="form-control"
+											style="width: 100%;">${editPayTerm.payTerm}</textarea>
 									</div>
 
 
-
-									<div class="col-md-2">Sort No</div>
+									<div class="col-md-2">Date</div>
 
 									<div class="col-md-4">
-										<input type="text" id="sortNo" name="sortNo"
-											value="${editDept.sortNo}" class="form-control"
-											oninvalid="setCustomValidity('Please enter Sort No')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											required>
+										<input type="text" id="date" name="date" class="form-control"
+											value="${editPayTerm.date}" style="width: 100%;">
 									</div>
 
-									<input type="hidden" id="deptId" name="deptId"
-										value="${editDept.deptId}">
+
+									<input type="hidden" id="payTermId" name="payTermId"
+										value="${editPayTerm.payTermId}">
 
 								</div>
 								<div class="form-group"></div>
@@ -155,32 +141,33 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Department Name</th>
-										<th style="text-align: center">Sort No</th>
+										<th style="text-align: center">Payment Term</th>
+										<th style="text-align: center">Date</th>
 
 										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${deptList}" var="dept" varStatus="count">
+									<c:forEach items="${payTermList}" var="payTerm"
+										varStatus="count">
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
 
 
 											<td style="text-align: left"><c:out
-													value="${dept.deptName}" /></td>
+													value="${payTerm.payTerm}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${dept.sortNo}" /></td>
+													value="${payTerm.date}" /></td>
 
 
 											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editDept/${dept.deptId}"><i
+												href="${pageContext.request.contextPath}/editPaymentTerm/${payTerm.payTermId}"><i
 													class="fa fa-edit"></i> <span class="text-muted"></span></a>
 												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteDept/${dept.deptId}"
+												href="${pageContext.request.contextPath}/deletePayTerm/${payTerm.payTermId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
 													class="fa fa-trash-o"></i></a></td>
 
@@ -257,8 +244,8 @@
 		$(document).ready(function() {
 			$('#bootstrap-data-table').DataTable();
 		});
-		
 	</script>
+
 
 
 

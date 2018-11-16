@@ -20,9 +20,11 @@ public class GetProject {
 	private String custName;
 
 	private String plantName;
-
 	private String contactPerName;
 	private String contactPerMob;
+	private String pincode;
+	private float km;
+	private String address;
 
 	public int getProjId() {
 		return projId;
@@ -120,12 +122,37 @@ public class GetProject {
 		this.contactPerMob = contactPerMob;
 	}
 
+	public String getPincode() {
+		return pincode;
+	}
+
+	public void setPincode(String pincode) {
+		this.pincode = pincode;
+	}
+
+	public float getKm() {
+		return km;
+	}
+
+	public void setKm(float km) {
+		this.km = km;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	@Override
 	public String toString() {
 		return "GetProject [projId=" + projId + ", projName=" + projName + ", custId=" + custId + ", location="
 				+ location + ", startDate=" + startDate + ", endDate=" + endDate + ", isUsed=" + isUsed + ", delStatus="
 				+ delStatus + ", custName=" + custName + ", plantName=" + plantName + ", contactPerName="
-				+ contactPerName + ", contactPerMob=" + contactPerMob + "]";
+				+ contactPerName + ", contactPerMob=" + contactPerMob + ", pincode=" + pincode + ", km=" + km
+				+ ", address=" + address + "]";
 	}
 
 }

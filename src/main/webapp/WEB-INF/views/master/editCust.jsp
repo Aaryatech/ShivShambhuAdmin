@@ -332,8 +332,7 @@
 											value="${editCust.custMobNo}" style="width: 100%;"
 											class="form-control"
 											oninvalid="setCustomValidity('Please enter mob no')"
-											maxlength="10" value="${editComp.contactPerMob}"
-											pattern="[0-9]{10}"
+											maxlength="10" pattern="[0-9]{10}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -353,7 +352,7 @@
 
 									</div>
 
-									<div class="col-md-2">Customer Vendor</div>
+									<div class="col-md-2">Vendor Code</div>
 									<div class="col-md-4">
 										<input type="text" id="cust_vendor" name="cust_vendor"
 											style="width: 100%;" class="form-control"
@@ -367,6 +366,15 @@
 								<div class="form-group"></div>
 
 								<div class="row">
+
+									<div class="col-md-2">Owner Name</div>
+									<div class="col-md-4">
+										<input type="text" id="ownerName" name="ownerName"
+											class="form-control" style="width: 100%;"
+											value="${editCust.ownerName}"
+											oninvalid="setCustomValidity('Please enter owner name')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
 
 									<div class="col-md-2">Is same State?</div>
 
@@ -398,44 +406,87 @@
 											</div>
 										</c:when>
 									</c:choose>
+								</div>
+								<div class="form-group"></div>
 
+								<div class="row">
 
-
-
-
-
-
-
-
-									<!-- <div class="col-md-1">
-										Yes <input type="radio" checked name="state" id="state"
-											value="1">
-									</div>
-
-									<div class="col-md-1">
-										NO <input type="radio" name="state" id="state" value="0">
-									</div> -->
-
-									<div class="col-md-2"></div>
-
-									<div class="col-md-2"></div>
-
+									<div class="col-md-2">Account Person Name</div>
 									<div class="col-md-4">
-
-										<button type="submit" class="btn btn-primary"
-											style="align-content: center; width: 100%;">Submit</button>
+										<input type="text" id="accPerson" name="accPerson"
+											value="${editCust.accPerson}" class="form-control"
+											style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter Account name')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+									<div class="col-md-2">Account Mobile No</div>
+									<div class="col-md-4">
+										<input type="text" id="accPerMob" name="accPerMob"
+											value="${editCust.accPerMob}" class="form-control"
+											style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter Mobile no')"
+											pattern="[0-9]{10}"
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
 								</div>
 
 								<div class="form-group"></div>
-								<!-- <div class="col-lg-12" align="center">
+
+								<div class="row">
+
+									<div class="col-md-2">Pincode No</div>
+									<div class="col-md-4">
+										<input type="text" id="pincode" name="pincode"
+											class="form-control" style="width: 100%;"
+											value="${editCust.pincode}"
+											oninvalid="setCustomValidity('Please enter Pincode')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+									<div class="col-md-2">Kilometer</div>
+									<div class="col-md-4">
+										<input type="text" id="km" name="km" class="form-control"
+											style="width: 100%;" value="${editCust.km}"
+											oninvalid="setCustomValidity('Please enter Kilometer')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+
+								</div>
+
+
+								<div class="form-group"></div>
+
+								<div class="row">
+
+									<div class="col-md-2">Credit Limit</div>
+									<div class="col-md-4">
+										<input type="text" id="creaditLimit" name="creaditLimit"
+											class="form-control" style="width: 100%;"
+											value="${editCust.creaditLimit}"
+											oninvalid="setCustomValidity('Please enter creaditLimit')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+									<div class="col-md-2">Credit Days</div>
+									<div class="col-md-4">
+										<input type="text" id="creaditDays" name="creaditDays"
+											class="form-control" style="width: 100%;"
+											value="${editCust.creaditDays}"
+											oninvalid="setCustomValidity('Please enter creaditDays')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+
+								</div>
+
+
+
+								<div class="form-group"></div>
+								<div class="col-lg-12" align="center">
 
 
 									<button type="submit" class="btn btn-primary"
 										style="align-content: center; width: 226px; margin-left: 80px;">
 										Submit</button>
-								</div> -->
+								</div>
 							</form>
 						</div>
 					</div>

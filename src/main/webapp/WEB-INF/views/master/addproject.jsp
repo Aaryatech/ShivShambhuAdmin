@@ -201,8 +201,35 @@
 								</div>
 								<div class="form-group"></div>
 
+								<div class="row">
 
-								<div class="col-lg-12" align="center">
+									<div class="col-md-2">Pincode No</div>
+									<div class="col-md-4">
+										<input type="text" id="pincode" name="pincode"
+											class="form-control" style="width: 100%;"
+											value="${editPro.pincode}"
+											oninvalid="setCustomValidity('Please enter Pincode')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+									<div class="col-md-2">Kilometer</div>
+									<div class="col-md-4">
+										<input type="text" id="km" name="km" class="form-control"
+											style="width: 100%;" value="${editPro.km}"
+											oninvalid="setCustomValidity('Please enter Kilometer')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+
+								</div>
+								<div class="form-group"></div>
+
+								<div class="col-md-2">Address</div>
+
+								<div class="col-md-4">
+									<textarea id="address" name="address" class="form-control"
+										style="width: 100%;">${editPro.address}</textarea>
+								</div>
+
+								<div class="col-lg-2" align="left">
 
 
 									<button type="submit" class="btn btn-primary"

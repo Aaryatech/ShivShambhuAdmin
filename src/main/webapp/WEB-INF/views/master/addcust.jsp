@@ -146,7 +146,7 @@
 								<hr style="color: pink; background: pink;"></hr>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Referee Name</div>
+									<div class="col-md-2">Reference Name</div>
 									<div class="col-md-4">
 										<input type="text" id="ref_name" name="ref_name"
 											class="form-control" style="width: 100%;">
@@ -351,6 +351,51 @@
 									</div>
 
 								</div>
+
+								<div class="form-group"></div>
+
+								<div class="row">
+
+									<div class="col-md-2">Pincode No</div>
+									<div class="col-md-4">
+										<input type="text" id="pincode" name="pincode"
+											class="form-control" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter Pincode')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+									<div class="col-md-2">Kilometer</div>
+									<div class="col-md-4">
+										<input type="text" id="km" name="km" class="form-control"
+											style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter Kilometer')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+
+								</div>
+
+
+								<div class="form-group"></div>
+
+								<div class="row">
+
+									<div class="col-md-2">Credit Limit</div>
+									<div class="col-md-4">
+										<input type="text" id="creaditLimit" name="creaditLimit"
+											class="form-control" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter creaditLimit')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+									<div class="col-md-2">Credit Days</div>
+									<div class="col-md-4">
+										<input type="text" id="creaditDays" name="creaditDays"
+											class="form-control" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter creaditDays')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+
+								</div>
+
+
 
 								<div class="form-group"></div>
 								<div class="col-lg-12" align="center">

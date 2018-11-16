@@ -497,6 +497,10 @@ public class MasterController {
 			String contactPerName = request.getParameter("contactPerName");
 			String contactPerMob = request.getParameter("contactPerMob");
 
+			String address = request.getParameter("address");
+			String pincode = request.getParameter("pincode");
+			String km = request.getParameter("km");
+
 			Project proj = new Project();
 
 			proj.setCustId(custId);
@@ -509,6 +513,9 @@ public class MasterController {
 			proj.setStartDate(DateConvertor.convertToYMD(startDate));
 			proj.setContactPerMob(contactPerMob);
 			proj.setContactPerName(contactPerName);
+			proj.setKm(Float.parseFloat(km));
+			proj.setAddress(address);
+			proj.setPincode(pincode);
 
 			Project projInsertRes = rest.postForObject(Constants.url + "saveProject", proj, Project.class);
 
@@ -662,7 +669,7 @@ public class MasterController {
 
 		try {
 
-			System.err.println("Inside insert insertProject method");
+			System.err.println("Inside insert insertCust method");
 
 			int custId = 0;
 			try {
@@ -713,6 +720,13 @@ public class MasterController {
 
 			int sameState = Integer.parseInt(request.getParameter("state"));
 
+			String creaditDays = request.getParameter("creaditDays");
+
+			String creaditLimit = request.getParameter("creaditLimit");
+
+			String km = request.getParameter("km");
+			String pincode = request.getParameter("pincode");
+
 			System.err.println("refName Name " + refName);
 			String dateOfReg = request.getParameter("reg_date");
 
@@ -750,6 +764,12 @@ public class MasterController {
 			cust.setOwnerName(ownerName);
 			cust.setAccPerMob(accPerMob);
 			cust.setAccPerson(accPerson);
+			cust.setPincode(pincode);
+			cust.setKm(Float.parseFloat(km));
+
+			cust.setCreaditDays(Float.parseFloat(creaditDays));
+
+			cust.setCreaditLimit(Float.parseFloat(creaditLimit));
 
 			cust.setCustVendor(Integer.parseInt(custVendor));
 
@@ -785,6 +805,8 @@ public class MasterController {
 			proj.setEndDate(curDate);
 			proj.setContactPerMob(mobNo);
 			proj.setContactPerName(custName);
+			proj.setAddress(custAdd);
+			proj.setKm(Float.parseFloat(km));
 
 			Project projInsertRes = rest.postForObject(Constants.url + "saveProject", proj, Project.class);
 
