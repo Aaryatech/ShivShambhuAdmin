@@ -1,7 +1,11 @@
 package com.ats.ssgs.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,6 +35,7 @@ import com.ats.ssgs.model.master.Uom;
 import com.ats.ssgs.model.master.User;
 import com.ats.ssgs.model.quot.GetItemWithEnq;
 import com.ats.ssgs.model.quot.GetQuotHeads;
+import com.ats.ssgs.model.quot.QuotDetail;
 import com.ats.ssgs.model.quot.QuotHeader;
 
 @Controller
@@ -93,9 +98,6 @@ public class QuotController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("statusList", "0,1");
-
-			map = new LinkedMultiValueMap<String, Object>();
 			map.add("plantId", plantId);
 			map.add("enqHeadId", enqHeadId);
 
@@ -103,7 +105,8 @@ public class QuotController {
 			itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
 			model.addObject("itemList", itemList);
 
-
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("plantId", plantId);
 			Cust[] custArray = rest.postForObject(Constants.url + "getCustListByPlant", map, Cust[].class);
 			custList = new ArrayList<Cust>(Arrays.asList(custArray));
 			model.addObject("custList", custList);
@@ -112,19 +115,23 @@ public class QuotController {
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			System.err.println("Plant List  " +plantList.toString());
 
 			model.addObject("plantList", plantList);
 
 			model.addObject("plantId", plantId);
 			model.addObject("custId", custId);
+			
+			map = new LinkedMultiValueMap<String, Object>();
 			map.add("custId", custId);
-
 			Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
 			projList = new ArrayList<Project>(Arrays.asList(projArray));
+			
 			model.addObject("projList", projList);
 			
 			PaymentTerm[] payTermArray = rest.getForObject(Constants.url + "getAllPaymentTermList",  PaymentTerm[].class);
 			payTermList = new ArrayList<PaymentTerm>(Arrays.asList(payTermArray));
+			
 			model.addObject("payTermList", payTermList);
 			
 			map = new LinkedMultiValueMap<String, Object>();
@@ -134,12 +141,15 @@ public class QuotController {
 			docTermList = new ArrayList<DocTermHeader>(Arrays.asList(docTermArray));
 
 			model.addObject("docTermList",docTermList);
+			
+			
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("quotHeadId", quotId);
-			//getQuotHeaderByQuotHeadId
+			
 			QuotHeader quotHeader=rest.postForObject(Constants.url + "getQuotHeaderByQuotHeadId", map, QuotHeader.class);
 			quotHeader.setQuotDate(DateConvertor.convertToDMY(quotHeader.getQuotDate()));
 			model.addObject("quotHeader",quotHeader);
+			
 		} catch (Exception e) {
 			System.err.println("Exce in /showQuotations" + e.getMessage());
 			e.printStackTrace();
@@ -187,5 +197,89 @@ public class QuotController {
 			return itemList;
 
 		}
+		
+		//updateQuotation Form Action 
+		
+		@RequestMapping(value = "/updateQuotation", method = RequestMethod.POST)
+		public ModelAndView updateQuotationProcess(HttpServletRequest request, HttpServletResponse response) {
 
+			ModelAndView model = null;
+			try {
+				
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String curDate = dateFormat.format(new Date());
+
+				model = new ModelAndView("quot/quotList");
+				model.addObject("title", "Quotation List");
+				
+				int quotHeadId = Integer.parseInt(request.getParameter("quotHeadId"));
+				
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("quotHeadId", quotHeadId);
+				
+				QuotHeader quotHeader=rest.postForObject(Constants.url + "getQuotHeaderByQuotHeadId", map, QuotHeader.class);
+				
+				int plantId = Integer.parseInt(request.getParameter("plant_id"));
+				int payTermId = Integer.parseInt(request.getParameter("pay_term_id"));
+				String transportTerms = request.getParameter("trans_term");
+				String otherRemark1 = request.getParameter("quot_remark");
+				int projId = Integer.parseInt(request.getParameter("proj_id"));
+
+				int noOfTolls = Integer.parseInt(request.getParameter("no_of_tolls"));
+				Float tollCost = Float.parseFloat(request.getParameter("toll_amt"));
+				Float otherCost=Float.parseFloat(request.getParameter("other_cost"));
+				int quotTermId = Integer.parseInt(request.getParameter("quot_doc_term_id"));
+				int noOfKm = Integer.parseInt(request.getParameter("no_of_km"));
+				
+				String payTerms = request.getParameter("pay_term_name");
+
+				quotHeader.setUserId(1);//to be get from session who logged in to do this activity
+				
+				quotHeader.setStatus(1);
+				
+				quotHeader.setPayTermId(payTermId);
+				quotHeader.setTransportTerms(transportTerms);
+
+				quotHeader.setPayTerms(payTerms);
+				quotHeader.setOtherRemark1(otherRemark1);
+				quotHeader.setProjId(projId);
+				quotHeader.setNoOfTolls(noOfTolls);
+				quotHeader.setTollCost(tollCost);
+				quotHeader.setOtherCost(otherCost);
+				quotHeader.setQuotTermId(quotTermId);
+				quotHeader.setNoOfKm(noOfKm);
+				quotHeader.setExDate2(curDate);
+				
+				List<QuotDetail> quotDetList=quotHeader.getQuotDetailList();
+				
+				System.err.println("Header  " +quotHeader.toString());
+				String [] selectItem=request.getParameterValues("selectItem");
+				
+				for(int i=0;i<selectItem.length;i++) {
+					
+					System.err.println("selItem " +selectItem[i]);
+					
+					for(int j=0;j<quotDetList.size();j++) {
+						
+						if(quotDetList.get(j).getItemId()==Integer.parseInt(selectItem[i])) {
+							
+							
+							
+							
+						}
+						
+					}
+					
+				}
+						
+
+				
+			}catch (Exception e) {
+				System.err.println("Exce in upd qtn process " +e.getMessage());
+				e.printStackTrace();
+				
+			}
+			return model;
+		}
 }

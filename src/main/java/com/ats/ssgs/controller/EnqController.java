@@ -487,7 +487,7 @@ public class EnqController {
 				qDetail.setItemId(enqInsertRes.getEnqDetailList().get(i).getItemId());
 				qDetail.setOtherCost(0);
 				qDetail.setQuotUomId(0);
-				qDetail.setQuotQty(0);
+				qDetail.setQuotQty(enqInsertRes.getEnqDetailList().get(i).getItemQty());
 				qDetail.setRate(0);
 				qDetail.setSgstValue(0);
 				qDetail.setStatus(0);

@@ -7,7 +7,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Shiv Admin3333</title>
+<title>Shiv Admin</title>
 
 <c:url var="getProjectByCustId" value="/getProjectByCustId" />
 
@@ -81,7 +81,8 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<strong>${title}</strong>
+							<strong>${title}</strong> Quotation No : <strong>${quotHeader.quotNo}</strong>
+							Date : <strong>${quotHeader.quotDate}</strong>
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/updateQuotation"
@@ -148,10 +149,10 @@
 									<div class="col-md-2">Payment Term</div>
 
 									<div class="col-md-4">
-										<select id="pay_term_id" name="pay_term_id" class="standardSelect"
-											tabindex="1" required
+										<select id="pay_term_id" name="pay_term_id"
+											class="standardSelect" tabindex="1" required
 											oninvalid="setCustomValidity('Please select payment term')"
-											onchange="getData()">
+											onchange="setData()">
 											<option value="">Select Pay Term</option>
 
 											<c:forEach items="${payTermList}" var="pTerm">
@@ -162,7 +163,8 @@
 
 
 								</div>
-								<input type="hidden" id="isEdit" name="isEdit" value="0">
+								<input type="hidden" id="quotHeadId" name="quotHeadId" value="${quotHeader.quotHeadId}">
+								<input type="hidden" id="pay_term_name" name="pay_term_name" value="${quotHeader.payTerms}">
 
 
 								<div class="form-group"></div>
@@ -171,10 +173,9 @@
 									<div class="col-md-2">Quotation Term</div>
 
 									<div class="col-md-4">
-										<select id="quot_doc _term_id" name="quot_doc _term_id" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select quotation term')"
-											onchange="getData()">
+										<select id="quot_doc_term_id" name="quot_doc_term_id"
+											class="standardSelect" tabindex="1" required
+											oninvalid="setCustomValidity('Please select quotation term')">
 											<option value="">Select Term</option>
 
 											<c:forEach items="${docTermList}" var="qTerm">
@@ -202,18 +203,18 @@
 									<div class="col-md-4">
 										<input type="text" id="quot_date" name="quot_date"
 											class="form-control" style="width: 100%;"
-											value="${quotHeader.quotDate }">
+											value="${quotHeader.quotDate}">
 									</div>
 
 									<div class="col-md-2">Delivery Place</div>
 									<div class="col-md-2">
-										On Spot <input type="radio" checked name="del_place"
-											id="del_place" value="1">
+										On Spot <input type="radio" name="del_place"
+											onchange="setKM(this.value)" id="del_place" value="1">
 									</div>
 
 									<div class="col-md-2">
 										Specific Place <input type="radio" name="del_place"
-											id="del_place" value="0">
+											onchange="setKM(this.value)" id="del_place" value="0">
 									</div>
 
 
@@ -224,23 +225,21 @@
 								<div class="row">
 									<div class="col-md-2">No of KM</div>
 									<div class="col-md-4">
-										<input type="text" id="no_of_km" name="no_of_km" onchange="calcAll(this.value)"
-											class="form-control" style="width: 100%;" value="0">
+										<input type="text" id="no_of_km" name="no_of_km"
+											onchange="calcAll()" class="form-control"
+											style="width: 100%;">
 									</div>
-
-									<div class="col-md-2">Location</div>
-
+									<div class="col-md-2">Toll Amount</div>
 									<div class="col-md-4">
-										<input type="text" id="location" name="location"
-											class="form-control" style="width: 100%;" value="-">
+										<input type="text" id="toll_amt" name="toll_amt"
+											onchange="calcAll()" class="form-control">
 									</div>
-
 								</div>
 
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Calculate By</div>
+									<!-- <div class="col-md-2">Calculate By</div>
 									<div class="col-md-2">
 										Automatic<input type="radio" checked name="calc_by"
 											id="calc_by" value="1">
@@ -249,6 +248,12 @@
 									<div class="col-md-2">
 										Manual<input type="radio" name="calc_by" id="calc_by"
 											value="0">
+									</div> -->
+
+									<div class="col-md-2">Other Cost</div>
+									<div class="col-md-4">
+										<input type="text" onchange="calcAll()" id="other_cost"
+											name="other_cost" class="form-control" style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">No of Tolls</div>
@@ -257,11 +262,9 @@
 											class="form-control" style="width: 100%;">
 									</div>
 
-
 								</div>
 
 								<div class="form-group"></div>
-
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -269,31 +272,35 @@
 									<div class="col-md-2">is Tax Included</div>
 									<div class="col-md-1">
 										Yes<input type="radio" checked name="is_tax_inc"
-											id="is_tax_inc" value="1">
+											id="is_tax_inc" value="1"
+											onchange="changeTaxValue(this.value)">
 									</div>
 
 									<div class="col-md-1">
 										No<input type="radio" name="is_tax_inc" id="is_tax_inc"
-											value="0">
+											value="0" onchange="changeTaxValue(this.value)">
 									</div>
 									<div class="col-md-2"></div>
+									<div class="col-md-2">Location</div>
 
-									<div class="col-md-2">Toll  Amount</div>
 									<div class="col-md-4">
-										<input type="text" id="toll_amt" name="toll_amt"
-											class="form-control" >
+										<input type="text" id="location" name="location"
+											class="form-control" style="width: 100%;" value="-">
 									</div>
 
-								</div>
 
-								<div class="card-body card-block">
+								</div>
+								<input type="checkbox" name="selAll" id="selAll" /> All	
+							<div class="card-body card-block">
 
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
+										
 										<thead>
+										
 											<tr>
 
-												<th style="text-align: center" width="2%">Sr</th>
+												<th style="text-align: center" width="2%">Sr </th>
 
 												<th style="text-align: center" class="col-md-1">Item</th>
 												<th style="text-align: center" class="col-md-1">Qty</th>
@@ -309,10 +316,13 @@
 													Rate</th>
 												<th style="text-align: center" class="col-md-1">Roy
 													Rate</th>
-												<th style="text-align: center" class="col-md-1">GSt%</th>
+												<th style="text-align: center" class="col-md-1">GST</th>
 
 												<th style="text-align: center" class="col-md-1">Taxable</th>
 												<th style="text-align: center" class="col-md-1">Tax</th>
+												<th style="text-align: center" class="col-md-1">Other
+													Cost After Tax</th>
+
 												<th style="text-align: center" class="col-md-1">Final</th>
 
 											</tr>
@@ -322,27 +332,33 @@
 											<c:forEach items="${itemList}" var="item" varStatus="count">
 												<tr>
 
-													<td style="text-align: center">${count.index+1}</td>
+													<td style="text-align: center">${count.index+1}<input type="checkbox" value="${item.itemId}"  name="selectItem"></td>
 
 
 													<td style="text-align: left"><c:out
 															value="${item.itemName}" /></td>
 
 													<td style="text-align: left"><input type="text"
-														id="quot_qty${item.itemId}" name="quot_qty${item.itemId}" value="${item.enqQty}" class="form-control"></td>
+														id="quot_qty${item.itemId}" name="quot_qty${item.itemId}"
+														value="${item.enqQty}" class="form-control"></td>
 
 													<td style="text-align: left"><c:out
 															value="${item.uomName}" /></td>
 
 
 													<td style="text-align: center"><input type="text"
-														id="trans_cost${item.itemId}" name="trans_cost${item.itemId}" class="form-control"></td>
+														id="trans_cost${item.itemId}"
+														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
+														name="trans_cost${item.itemId}" class="form-control"></td>
 
 													<td style="text-align: center"><input type="text"
-														id="toll_cost${item.itemId}" name="toll_cost${item.itemId}" class="form-control"></td>
+														id="toll_cost${item.itemId}" readonly
+														name="toll_cost${item.itemId}" class="form-control"></td>
 
 													<td style="text-align: center"><input type="text"
-														id="other_cost${item.itemId}" name="other_cost${item.itemId}" class="form-control"></td>
+														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
+														id="other_cost${item.itemId}"
+														name="other_cost${item.itemId}" class="form-control"></td>
 													<!-- 
 													<td style="text-align: center"><input type="text"
 														id="trans_cost" name="trans_cost" class="form-control"
@@ -357,17 +373,27 @@
 															value="${item.royaltyRate}" /></td>
 
 													<td style="text-align: left"><c:out
-															value="${item.taxName}" /></td>
+															value="${item.totalTaxPer}%" /></td>
+
+													<td style="text-align: right"><input type="text"
+														readonly id="taxable_amt${item.itemId}"
+														name="taxable_amt${item.itemId}" class="form-control"></td>
+
+
+													<td style="text-align: right" width="100%"><input
+														type="text" readonly id="tax_amt${item.itemId}"
+														name="tax_amt${item.itemId}" class="form-control"></td>
+
+
 
 													<td style="text-align: center"><input type="text"
-														id="taxable_amt${item.itemId}" name="taxable_amt${item.itemId}" class="form-control"></td>
+														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
+														id="oth_cost_aft_tax${item.itemId}"
+														name="oth_cost_aft_tax${item.itemId}" class="form-control"></td>
 
-
-													<td style="text-align: left"><input type="text"
-														id="tax_amt${item.itemId}" name="tax_amt${item.itemId}" class="form-control"></td>
-
-													<td style="text-align: center"><input type="text"
-														id="final_amt${item.itemId}" name="final_amt${item.itemId}" class="form-control"></td>
+													<td style="text-align: right"><input type="text"
+														readonly id="final_amt${item.itemId}"
+														name="final_amt${item.itemId}" class="form-control"></td>
 
 
 												</tr>
@@ -380,43 +406,14 @@
 								</div>
 								<div class="form-group"></div>
 
-								<%-- <div class="row">
 
-
-									<div class="col-md-2">Priority</div>
-									<div class="col-md-4">
-										<select id="enq_prio" name="enq_prio" class="standardSelect"
-											tabindex="1" required>
-
-											<option value="0">Low</option>
-											<option selected value="1">Medium</option>
-											<option value="2">High</option>
-										</select>
-									</div>
-
-
-									<div class="col-md-2">Enquiry From</div>
-
-									<div class="col-md-4">
-										<select id="enq_gen_fact" name="enq_gen_fact"
-											class="standardSelect" tabindex="1" required
-											oninvalid="setCustomValidity('Please select enq gen fact')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-
-											<c:forEach items="${enqGenFactList}" var="enqFrom">
-												<option value="${enqFrom.enqGenId}">${enqFrom.enqGenBy}</option>
-											</c:forEach>
-										</select>
-									</div>
-
-								</div> --%>
 								<div class="form-group"></div>
 								<div class="row">
 
 									<div class="col-md-2">Remark</div>
 
 									<div class="col-md-9">
-										<input type="text" id="enq_remark" name="enq_remark"
+										<input type="text" id="quot_remark" name="quot_remark"
 											class="form-control" style="width: 100%;" value="-" required>
 									</div>
 
@@ -499,6 +496,10 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#bootstrap-data-table').DataTable();
+			
+			 $("#selAll").click(function () {
+	              $('#bootstrap-data-table tbody input[type="checkbox"]').prop('checked', this.checked);
+	          });
 		});
 	</script>
 
@@ -513,18 +514,74 @@
 
 		});
 	</script>
-	
-	<!--  CalcAll function onchange of KM  -->
-	
-		<script type="text/javascript">
-		function calcAll(km) {
-			//alert("KM " +km);
+
+
+	<script type="text/javascript">
+		function setKM(delPlace) {
+		//	alert("delPlace " +delPlace)
+			if(delPlace==1){
+				document.getElementById("no_of_km").value="0";
+				document.getElementById("toll_amt").value="0";
+				calcAll();
+			}
+		
+		}
+		function changeTaxValue(value){
+			calcAll();
+		}
+		
+		function setData(){
+			var payTerm= $("#pay_term_id option:selected").html();
+			alert("payTerm " +payTerm);
+			document.getElementById("pay_term_name").value=payTerm;
 			
+		}
+		
+		function toggle() {
+			  checkboxes = document.getElementsByName('selectItem');
+			  for(var i=0, n=checkboxes.length;i<n;i++) {
+			    checkboxes[i].checked = source.checked;
+			  }
+			}
+		</script>
+
+
+	<!--  CalcAll function onchange of KM  -->
+
+	<script type="text/javascript">
+		function calcAll() {
+			//alert("KM " +km);
+			var isTaxInc;
+			if (document.getElementById('is_tax_inc').checked) {
+				isTaxInc = document.getElementById('is_tax_inc').value;
+				}
+			else{
+				isTaxInc=0;
+			}
+			//alert("isTaxInc " +isTaxInc);
+			
+			var otherCostHeader= document.getElementById("other_cost").value;
+			var tollCost= document.getElementById("toll_amt").value;
+			var km= document.getElementById("no_of_km").value;
+			
+			var valid=true;
+			
+			 if(otherCostHeader==null || otherCostHeader==""){
+				 valid=false;
+			 }
+			 else if(tollCost==null || tollCost==""){
+				 valid=false;
+			 }
+			 else if(km==null || km==""){
+			 valid=false;
+ 			}
+	//alert("Valid " +valid);
+			 if(valid==true){
+
 		 var plantId=${quotHeader.plantIds};
 		 var enqHeadId=${quotHeader.enqHeadId};
-		// alert("Plant " +plantId);
 			
-			$.getJSON('${getItemsAndEnqItemList}', {
+		 $.getJSON('${getItemsAndEnqItemList}', {
 
 				plantId : plantId,
 				enqHeadId : enqHeadId,
@@ -535,35 +592,105 @@
 			function(data) {
 				//alert("data " +JSON.stringify(data));
 				var len = data.length;
-				//	alert("len " +len);
-				// var qty = document.getElementById(data[1].itemId+"quot_qty").value;
-				// alert("qty " +qty);
-										 var tollCost= document.getElementById("toll_amt").value;
-
-//alert("tollCost" +tollCost);
+				
+				 if(tollCost==null || tollCost==""){
+					tollCost=0;
+				 }
+				 
 				 for (var i = 0; i < len; i++) {
 					 var frRate=parseFloat(data[i].freightRate);
 					 var transCost=frRate*km;
 					 var itemRate=parseFloat(data[i].itemRate1);
 					 var royRate=parseFloat(data[i].royaltyRate);
+					 var taxPer=parseFloat(data[i].totalTaxPer);
+					 
+					 if(isTaxInc==0){
+						 taxPer=0;
+					 }
 					// alert("transCost" +transCost);
-					 document.getElementById("trans_cost"+data[i].itemId).value=transCost.toFixed(2);
-					 document.getElementById("toll_cost"+data[i].itemId).value=tollCost;
+					
+					document.getElementById("trans_cost"+data[i].itemId).value=transCost.toFixed(2);
+					document.getElementById("toll_cost"+data[i].itemId).value=tollCost;
+					document.getElementById("other_cost"+data[i].itemId).value=otherCostHeader;
+					
 					 var otherCost= document.getElementById("other_cost"+data[i].itemId).value;
 					 
-					 var taxableAmt=(itemRate+tollCost)+(transCost+otherCost)+royRate;
-					 alert("taxabelAmt " +taxableAmt); 
+					 if(otherCost==null || otherCost==""){
+						 otherCost=0;
+					 }
+					 
+					 var taxableAmt=parseFloat(itemRate)+parseFloat(tollCost)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
+					// alert("taxabelAmt " +taxableAmt); 
 					 document.getElementById("taxable_amt"+data[i].itemId).value=taxableAmt;
 
+					 var taxAmt=(taxableAmt*taxPer)/100;
+					 document.getElementById("tax_amt"+data[i].itemId).value=taxAmt;
+					 
+					var otherCostAfterTax= document.getElementById("oth_cost_aft_tax"+data[i].itemId).value;
+					 
+					 if(otherCostAfterTax==null || otherCostAfterTax==""){
+						 otherCostAfterTax=0;
+					 }
+					 var finalAmt=parseFloat(taxableAmt)+parseFloat(taxAmt)+parseFloat(otherCostAfterTax);
+
+					 document.getElementById("final_amt"+data[i].itemId).value=finalAmt;
+					 
 				 } 
-				 
 				 
 			});
  
-			
+			 }
 		}
 </script>
 	<script type="text/javascript">
+
+function itemCalc(itemId,fRate,itemRate,royRate,taxPer){
+	//alert("Hi");
+	var isTaxInc;
+			if (document.getElementById('is_tax_inc').checked) {
+				isTaxInc = document.getElementById('is_tax_inc').value;
+				}
+			else{
+				isTaxInc=0;
+			}
+			 if(isTaxInc==0){
+				 taxPer=0;
+			 }
+	var tollCost =document.getElementById("toll_cost"+itemId).value;
+	var transCost =document.getElementById("trans_cost"+itemId).value;
+	var otherCost= document.getElementById("other_cost"+itemId).value;
+	
+	var otherCostAfterTax= document.getElementById("oth_cost_aft_tax"+itemId).value;
+	 if(otherCostAfterTax==null || otherCostAfterTax==""){
+		 otherCostAfterTax=0;
+	 }
+	
+	 if(otherCost==null || otherCost==""){
+		 otherCost=0;
+	 }
+	 
+	 if(tollCost==null || tollCost==""){
+		 tollCost=0;
+	 }
+	 
+	 if(transCost==null || transCost==""){
+		 transCost=0;
+	 }
+	
+	var taxableAmt=parseFloat(itemRate)+parseFloat(tollCost)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
+	
+	document.getElementById("taxable_amt"+itemId).value=taxableAmt;
+
+	var taxAmt=(taxableAmt*taxPer)/100;
+
+	document.getElementById("tax_amt"+itemId).value=taxAmt;
+	 var finalAmt=parseFloat(taxableAmt)+parseFloat(taxAmt)+parseFloat(otherCostAfterTax);
+	 document.getElementById("final_amt"+itemId).value=finalAmt;
+	 
+}
+
+</script>
+	<!-- <script type="text/javascript">
 		function getData() {
 			var plantId = document.getElementById("plant_id").value;
 			document.getElementById("isEdit").value = 0;
@@ -655,9 +782,9 @@
 								});
 			}
 		}
-	</script>
+	</script> -->
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function addItem() {
 			//alert("in add Item ");
 			var itemId = document.getElementById("item_name").value;
@@ -844,7 +971,8 @@
 		function callAlert(msg) {
 			alert(msg);
 		}
-	</script>
+		
+	</script> -->
 
 	<!-- <script type="text/javascript">
 		$(document).ready(function() {

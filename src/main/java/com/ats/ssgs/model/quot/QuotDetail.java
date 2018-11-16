@@ -1,6 +1,5 @@
 package com.ats.ssgs.model.quot;
 
-
 public class QuotDetail {
 
 	
@@ -82,6 +81,23 @@ public class QuotDetail {
 	private float igstPer;
 
 	private float igstValue;
+	
+	
+	//new field ..
+	
+	private float total;
+
+	private float tollCost;
+
+	private float transCost;
+
+	private float otherCostBeforeTax;
+
+	private float otherCostAfterTax;
+
+	private float royaltyRate;
+
+	private float noOfKm;//end of new field
 
 	public int getQuotDetailId() {
 		return quotDetailId;
@@ -327,6 +343,62 @@ public class QuotDetail {
 		this.igstValue = igstValue;
 	}
 
+	public float getTotal() {
+		return total;
+	}
+
+	public void setTotal(float total) {
+		this.total = total;
+	}
+
+	public float getTollCost() {
+		return tollCost;
+	}
+
+	public void setTollCost(float tollCost) {
+		this.tollCost = tollCost;
+	}
+
+	public float getTransCost() {
+		return transCost;
+	}
+
+	public void setTransCost(float transCost) {
+		this.transCost = transCost;
+	}
+
+	public float getOtherCostBeforeTax() {
+		return otherCostBeforeTax;
+	}
+
+	public void setOtherCostBeforeTax(float otherCostBeforeTax) {
+		this.otherCostBeforeTax = otherCostBeforeTax;
+	}
+
+	public float getOtherCostAfterTax() {
+		return otherCostAfterTax;
+	}
+
+	public void setOtherCostAfterTax(float otherCostAfterTax) {
+		this.otherCostAfterTax = otherCostAfterTax;
+	}
+
+	public float getRoyaltyRate() {
+		return royaltyRate;
+	}
+
+	public void setRoyaltyRate(float royaltyRate) {
+		this.royaltyRate = royaltyRate;
+	}
+
+	public float getNoOfKm() {
+		return noOfKm;
+	}
+
+	public void setNoOfKm(float noOfKm) {
+		this.noOfKm = noOfKm;
+	}
+
 	@Override
 	public String toString() {
 		return "QuotDetail [quotDetailId=" + quotDetailId + ", quotHeadId=" + quotHeadId + ", itemId=" + itemId
@@ -337,7 +409,12 @@ public class QuotDetail {
 				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
 				+ ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2
 				+ ", exBool3=" + exBool3 + ", conFactor=" + conFactor + ", convQty=" + convQty + ", quotUomId="
-				+ quotUomId + ", igstPer=" + igstPer + ", igstValue=" + igstValue + "]";
+				+ quotUomId + ", igstPer=" + igstPer + ", igstValue=" + igstValue + ", total=" + total + ", tollCost="
+				+ tollCost + ", transCost=" + transCost + ", otherCostBeforeTax=" + otherCostBeforeTax
+				+ ", otherCostAfterTax=" + otherCostAfterTax + ", royaltyRate=" + royaltyRate + ", noOfKm=" + noOfKm
+				+ "]";
 	}
+
+	
 
 }

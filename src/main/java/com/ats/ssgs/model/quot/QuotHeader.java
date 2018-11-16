@@ -93,6 +93,20 @@ public class QuotHeader {
 	private float taxableValue;
 
 	private int quotTermId;
+	
+	
+	
+	private float noOfKm;
+	
+	
+
+	public float getNoOfKm() {
+		return noOfKm;
+	}
+
+	public void setNoOfKm(float noOfKm) {
+		this.noOfKm = noOfKm;
+	}
 
 	List<QuotDetail> quotDetailList;
 
@@ -480,7 +494,7 @@ public class QuotHeader {
 				+ exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1
 				+ ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3
 				+ ", quotValue=" + quotValue + ", taxValue=" + taxValue + ", taxableValue=" + taxableValue
-				+ ", quotTermId=" + quotTermId + ", quotDetailList=" + quotDetailList + "]";
+				+ ", quotTermId=" + quotTermId + ", noOfKm=" + noOfKm + ", quotDetailList=" + quotDetailList + "]";
 	}
 
 }
