@@ -52,6 +52,168 @@ public class MasterController {
 	List<Vendor> vendList;
 	List<Dept> deptList;
 
+	List<Tax> getTaxList;
+
+	@RequestMapping(value = "/showAddTax", method = RequestMethod.GET)
+	public ModelAndView showAddTax(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("master/addtax");
+
+			model.addObject("title", "Add Tax");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddTax at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/insertTax", method = RequestMethod.POST)
+	public String insertTax(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			System.err.println("Inside insert Tax method");
+
+			int taxId = 0;
+			try {
+				taxId = Integer.parseInt(request.getParameter("taxId"));
+			} catch (Exception e) {
+				taxId = 0;
+			}
+
+			int sortNo = Integer.parseInt(request.getParameter("sortNo"));
+
+			float cess = Float.parseFloat(request.getParameter("cess"));
+			float cgst = Float.parseFloat(request.getParameter("cgst"));
+			float igst = Float.parseFloat(request.getParameter("igst"));
+			float sgst = Float.parseFloat(request.getParameter("sgst"));
+			float totalTaxPer = Float.parseFloat(request.getParameter("totalTaxPer"));
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			String curDate = dateFormat.format(new Date());
+			String hsnCode = request.getParameter("hsnCode");
+			String taxName = request.getParameter("taxName");
+
+			Tax tax = new Tax();
+			tax.setCess(cess);
+			tax.setCgst(cgst);
+			tax.setDelStatus(1);
+			tax.setExBool1(0);
+			tax.setExBool2(0);
+			tax.setExBool3(0);
+			tax.setExDate1(curDate);
+			tax.setExDate2(curDate);
+			tax.setExInt1(0);
+			tax.setExInt2(0);
+			tax.setExInt3(0);
+			tax.setExVar1("NA");
+			tax.setExVar2("NA");
+			tax.setExVar3("NA");
+			tax.setHsnCode(hsnCode);
+			tax.setIgst(igst);
+			tax.setTotalTaxPer(totalTaxPer);
+			tax.setTaxName(taxName);
+			tax.setSortNo(sortNo);
+			tax.setSgst(sgst);
+			tax.setTaxId(taxId);
+
+			// saveTax
+
+			Tax plantInsertRes = rest.postForObject(Constants.url + "saveTax", tax, Tax.class);
+			System.err.println("plantInsertRes " + plantInsertRes.toString());
+
+		} catch (Exception e) {
+			System.err.println("EXCE in insertPlant " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return "redirect:/showAddTax";
+
+	}
+
+	@RequestMapping(value = "/showTaxList", method = RequestMethod.GET)
+	public ModelAndView showTaxList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/taxList");
+			Tax[] taxArray = rest.getForObject(Constants.url + "getTaxList", Tax[].class);
+			getTaxList = new ArrayList<Tax>(Arrays.asList(taxArray));
+
+			model.addObject("title", "Plant List");
+			model.addObject("taxList", getTaxList);
+		} catch (Exception e) {
+
+			System.err.println("exception In showTaxList at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/editTax/{taxId}", method = RequestMethod.GET)
+	public ModelAndView editTax(HttpServletRequest request, HttpServletResponse response, @PathVariable int taxId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/addtax");
+			// getTaxByTaxId
+			Tax[] taxArray = rest.getForObject(Constants.url + "getTaxList", Tax[].class);
+			getTaxList = new ArrayList<Tax>(Arrays.asList(taxArray));
+
+			model.addObject("taxList", getTaxList);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("taxId", taxId);
+
+			Tax editTax = rest.postForObject(Constants.url + "getTaxByTaxId", map, Tax.class);
+
+			model.addObject("title", "Edit Tax");
+			model.addObject("editTax", editTax);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editTax at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/deleteTax/{taxId}", method = RequestMethod.GET)
+	public String deleteTax(HttpServletRequest request, HttpServletResponse response, @PathVariable int taxId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("taxId", taxId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteTax", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteTax @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showTaxList";
+	}
+
 	@RequestMapping(value = "/showAddPlant", method = RequestMethod.GET)
 	public ModelAndView showAddPlant(HttpServletRequest request, HttpServletResponse response) {
 
