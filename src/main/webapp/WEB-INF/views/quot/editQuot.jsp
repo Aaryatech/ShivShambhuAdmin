@@ -95,10 +95,7 @@
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required
-											oninvalid="setCustomValidity('Please select plant name')"
-											onchange="getData()">
-											<option value="">Select Plant</option>
-
+											oninvalid="setCustomValidity('Please select plant name')">
 											<c:forEach items="${plantList}" var="plant">
 												<c:if test="${plantId==plant.plantId}">
 													<option selected value="${plant.plantId}">${plant.plantName}</option>
@@ -141,7 +138,16 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 
 											<c:forEach items="${projList}" var="proj">
+											
+											<c:choose>
+											<c:when test="${quotHeader.projId==proj.projId}">
+												<option selected value="${proj.projId}">${proj.projName}</option>
+											</c:when>
+											<c:otherwise>
 												<option value="${proj.projId}">${proj.projName}</option>
+											</c:otherwise>
+											</c:choose>
+											
 											</c:forEach>
 
 										</select>
@@ -156,7 +162,17 @@
 											<option value="">Select Pay Term</option>
 
 											<c:forEach items="${payTermList}" var="pTerm">
-												<option value="${pTerm.payTermId}">${pTerm.payTerm}</option>
+											<c:choose>
+											
+											<c:when test="${quotHeader.payTermId==pTerm.payTermId}">
+											<option selected value="${pTerm.payTermId}">${pTerm.payTerm}</option>
+											</c:when>
+											
+											<c:otherwise>
+											<option value="${pTerm.payTermId}">${pTerm.payTerm}</option>
+											</c:otherwise>
+											
+											</c:choose>
 											</c:forEach>
 										</select>
 									</div>
@@ -179,7 +195,14 @@
 											<option value="">Select Term</option>
 
 											<c:forEach items="${docTermList}" var="qTerm">
-												<option value="${qTerm.termId}">${qTerm.termTitle}</option>
+											<c:choose>
+											<c:when test="${quotHeader.quotTermId==qTerm.termId}">
+												<option selected  value="${qTerm.termId}">${qTerm.termTitle}</option>
+												</c:when>
+												<c:otherwise>
+												<option   value="${qTerm.termId}">${qTerm.termTitle}</option>
+												</c:otherwise>
+												</c:choose>
 											</c:forEach>
 										</select>
 									</div>
@@ -191,7 +214,7 @@
 										<textarea id="trans_term" name="trans_term"
 											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter transport term')"
-											onchange="try{setCustomValidity('')}catch(e){}"></textarea>
+											onchange="try{setCustomValidity('')}catch(e){}">${quotHeader.transportTerms}</textarea>
 									</div>
 
 								</div>
@@ -207,8 +230,11 @@
 									</div>
 
 									<div class="col-md-2">Delivery Place</div>
+									
+										<c:choose>
+									<c:when test="${quotHeader.noOfKm==0}">
 									<div class="col-md-2">
-										On Spot <input type="radio" name="del_place"
+										On Spot <input type="radio" name="del_place" checked
 											onchange="setKM(this.value)" id="del_place" value="1">
 									</div>
 
@@ -216,6 +242,20 @@
 										Specific Place <input type="radio" name="del_place"
 											onchange="setKM(this.value)" id="del_place" value="0">
 									</div>
+									</c:when>
+									<c:otherwise>
+									<div class="col-md-2">
+										On Spot <input type="radio" name="del_place"
+											onchange="setKM(this.value)" id="del_place" value="1">
+									</div>
+
+									<div class="col-md-2">
+										Specific Place <input type="radio" name="del_place" checked
+											onchange="setKM(this.value)" id="del_place" value="0">
+									</div>
+									
+									</c:otherwise>
+									</c:choose>
 
 
 								</div>
@@ -226,12 +266,12 @@
 									<div class="col-md-2">No of KM</div>
 									<div class="col-md-4">
 										<input type="text" id="no_of_km" name="no_of_km"
-											onchange="calcAll()" class="form-control"
+											onchange="calcAll()" class="form-control" value="${quotHeader.noOfKm}"
 											style="width: 100%;">
 									</div>
 									<div class="col-md-2">Toll Amount</div>
 									<div class="col-md-4">
-										<input type="text" id="toll_amt" name="toll_amt"
+										<input type="text" id="toll_amt" name="toll_amt" value="${quotHeader.tollCost}"
 											onchange="calcAll()" class="form-control">
 									</div>
 								</div>
@@ -252,13 +292,13 @@
 
 									<div class="col-md-2">Other Cost</div>
 									<div class="col-md-4">
-										<input type="text" onchange="calcAll()" id="other_cost"
+										<input type="text" onchange="calcAll()" id="other_cost" value="${quotHeader.otherCost}"
 											name="other_cost" class="form-control" style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">No of Tolls</div>
 									<div class="col-md-4">
-										<input type="text" id="no_of_tolls" name="no_of_tolls"
+										<input type="text" id="no_of_tolls" name="no_of_tolls" value="${quotHeader.noOfTolls}"
 											class="form-control" style="width: 100%;">
 									</div>
 
@@ -270,6 +310,21 @@
 								<div class="row">
 
 									<div class="col-md-2">is Tax Included</div>
+									
+									<c:choose>
+									<c:when test="${quotHeader.taxValue==0}">
+										<div class="col-md-1">
+										Yes<input type="radio"  name="is_tax_inc"
+											id="is_tax_inc" value="1"
+											onchange="changeTaxValue(this.value)">
+									</div>
+
+									<div class="col-md-1">
+										No<input  checked type="radio" name="is_tax_inc" id="is_tax_inc"
+											value="0" onchange="changeTaxValue(this.value)">
+									</div>
+									</c:when>
+									<c:otherwise>
 									<div class="col-md-1">
 										Yes<input type="radio" checked name="is_tax_inc"
 											id="is_tax_inc" value="1"
@@ -277,24 +332,26 @@
 									</div>
 
 									<div class="col-md-1">
-										No<input type="radio" name="is_tax_inc" id="is_tax_inc"
+										No<input   type="radio" name="is_tax_inc" id="is_tax_inc"
 											value="0" onchange="changeTaxValue(this.value)">
 									</div>
-									<div class="col-md-2"></div>
+									</c:otherwise>
+									</c:choose>
+								</div>
+									<!-- <div class="col-md-2"></div>
 									<div class="col-md-2">Location</div>
 
 									<div class="col-md-4">
 										<input type="text" id="location" name="location"
 											class="form-control" style="width: 100%;" value="-">
 									</div>
+ -->
 
-
-								</div>
-								<input type="checkbox" name="selAll" id="selAll" /> All	
+								
+								<input type="checkbox" name="selAll" id="selAll" /> 
 							<div class="card-body card-block">
 
-									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
+									<table id="bootstrap-data-table" class="table table-striped table-bordered">
 										
 										<thead>
 										
@@ -337,27 +394,34 @@
 
 													<td style="text-align: left"><c:out
 															value="${item.itemName}" /></td>
+															
+															<c:if test="${quotHeader.status==0}">
+															<c:set var="qty" value="${item.enqQty}"></c:set>
+															</c:if>
+															
+															<c:if test="${quotHeader.status > 0}">
+															<c:set var="qty" value="${item.quotQty}"></c:set>
+															</c:if>
 
 													<td style="text-align: left"><input type="text"
 														id="quot_qty${item.itemId}" name="quot_qty${item.itemId}"
-														value="${item.enqQty}" class="form-control"></td>
+														value="${qty}" class="form-control"></td>
 
-													<td style="text-align: left"><c:out
-															value="${item.uomName}" /></td>
+													<td style="text-align: left"><c:out value="${item.uomName}" /></td>
 
 
 													<td style="text-align: center"><input type="text"
-														id="trans_cost${item.itemId}"
+														id="trans_cost${item.itemId}" value="${item.transCost}"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														name="trans_cost${item.itemId}" class="form-control"></td>
 
 													<td style="text-align: center"><input type="text"
-														id="toll_cost${item.itemId}" readonly
+														id="toll_cost${item.itemId}" readonly value="${quotHeader.tollCost}"
 														name="toll_cost${item.itemId}" class="form-control"></td>
 
-													<td style="text-align: center"><input type="text"
+													<td style="text-align: center"><input type="text" 
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
-														id="other_cost${item.itemId}"
+														id="other_cost${item.itemId}"  value="${item.otherCost}"
 														name="other_cost${item.itemId}" class="form-control"></td>
 													<!-- 
 													<td style="text-align: center"><input type="text"
@@ -376,23 +440,22 @@
 															value="${item.totalTaxPer}%" /></td>
 
 													<td style="text-align: right"><input type="text"
-														readonly id="taxable_amt${item.itemId}"
+														readonly id="taxable_amt${item.itemId}" value="${item.taxableValue}"
 														name="taxable_amt${item.itemId}" class="form-control"></td>
 
 
 													<td style="text-align: right" width="100%"><input
-														type="text" readonly id="tax_amt${item.itemId}"
+														type="text" readonly id="tax_amt${item.itemId}" value="${item.taxValue}"
 														name="tax_amt${item.itemId}" class="form-control"></td>
-
 
 
 													<td style="text-align: center"><input type="text"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
-														id="oth_cost_aft_tax${item.itemId}"
+														id="oth_cost_aft_tax${item.itemId}"  value="${item.otherCostAfterTax}"
 														name="oth_cost_aft_tax${item.itemId}" class="form-control"></td>
 
 													<td style="text-align: right"><input type="text"
-														readonly id="final_amt${item.itemId}"
+														readonly id="final_amt${item.itemId}" value="${item.finalTotal}"
 														name="final_amt${item.itemId}" class="form-control"></td>
 
 
@@ -517,6 +580,9 @@
 
 
 	<script type="text/javascript">
+	function checkEdit(){
+		calcAll();
+	}
 		function setKM(delPlace) {
 		//	alert("delPlace " +delPlace)
 			if(delPlace==1){
@@ -643,8 +709,7 @@
 		}
 </script>
 	<script type="text/javascript">
-
-function itemCalc(itemId,fRate,itemRate,royRate,taxPer){
+	function itemCalc(itemId,fRate,itemRate,royRate,taxPer){
 	//alert("Hi");
 	var isTaxInc;
 			if (document.getElementById('is_tax_inc').checked) {

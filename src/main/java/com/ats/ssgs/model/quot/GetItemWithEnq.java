@@ -102,6 +102,75 @@ public class GetItemWithEnq {
 	
 	private String enqUomName;
 	
+	
+	private float otherCostAfterTax;//19-11-18
+	private float transCost;//19-11-18
+	private float otherCost;//19-11-18
+	private float quotQty;//19-11-18
+	
+	private float taxableValue;//19-11-18
+	private float taxValue;//19-11-18
+	private float finalTotal;//19-11-18
+
+
+	
+	
+	public float getTaxableValue() {
+		return taxableValue;
+	}
+
+	public void setTaxableValue(float taxableValue) {
+		this.taxableValue = taxableValue;
+	}
+
+	public float getTaxValue() {
+		return taxValue;
+	}
+
+	public void setTaxValue(float taxValue) {
+		this.taxValue = taxValue;
+	}
+
+	public float getFinalTotal() {
+		return finalTotal;
+	}
+
+	public void setFinalTotal(float finalTotal) {
+		this.finalTotal = finalTotal;
+	}
+
+	public float getQuotQty() {
+		return quotQty;
+	}
+
+	public void setQuotQty(float quotQty) {
+		this.quotQty = quotQty;
+	}
+
+	public float getOtherCostAfterTax() {
+		return otherCostAfterTax;
+	}
+
+	public void setOtherCostAfterTax(float otherCostAfterTax) {
+		this.otherCostAfterTax = otherCostAfterTax;
+	}
+
+	public float getTransCost() {
+		return transCost;
+	}
+
+	public void setTransCost(float transCost) {
+		this.transCost = transCost;
+	}
+
+	public float getOtherCost() {
+		return otherCost;
+	}
+
+	public void setOtherCost(float otherCost) {
+		this.otherCost = otherCost;
+	}
+
 	private float totalTaxPer;
 
 	private float cgst;
@@ -576,8 +645,10 @@ public class GetItemWithEnq {
 				+ ", length=" + length + ", height=" + height + ", width=" + width + ", itemLocation=" + itemLocation
 				+ ", royaltyRate=" + royaltyRate + ", freightRate=" + freightRate + ", taxName=" + taxName
 				+ ", hsnCode=" + hsnCode + ", uomName=" + uomName + ", plantName=" + plantName + ", enqQty=" + enqQty
-				+ ", enqUomId=" + enqUomId + ", enqUomName=" + enqUomName + ", totalTaxPer=" + totalTaxPer + ", cgst="
-				+ cgst + ", igst=" + igst + ", sgst=" + sgst + ", cess=" + cess + "]";
+				+ ", enqUomId=" + enqUomId + ", enqUomName=" + enqUomName + ", otherCostAfterTax=" + otherCostAfterTax
+				+ ", transCost=" + transCost + ", otherCost=" + otherCost + ", quotQty=" + quotQty + ", taxableValue="
+				+ taxableValue + ", taxValue=" + taxValue + ", finalTotal=" + finalTotal + ", totalTaxPer="
+				+ totalTaxPer + ", cgst=" + cgst + ", igst=" + igst + ", sgst=" + sgst + ", cess=" + cess + "]";
 	}
 
 }

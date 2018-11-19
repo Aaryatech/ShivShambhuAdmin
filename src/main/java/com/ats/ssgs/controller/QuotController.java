@@ -54,7 +54,6 @@ public class QuotController {
 	List<PaymentTerm> payTermList;
 	List<DocTermHeader> docTermList;
 
-
 	@RequestMapping(value = "/showQuotations", method = RequestMethod.GET)
 	public ModelAndView showQuotations(HttpServletRequest request, HttpServletResponse response) {
 
@@ -87,7 +86,7 @@ public class QuotController {
 
 	@RequestMapping(value = "/editQuot/{quotId}/{plantId}/{custId}/{enqHeadId}", method = RequestMethod.GET)
 	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotId,
-			@PathVariable int plantId,@PathVariable int custId,@PathVariable int enqHeadId) {
+			@PathVariable int plantId, @PathVariable int custId, @PathVariable int enqHeadId) {
 
 		ModelAndView model = null;
 		try {
@@ -101,7 +100,8 @@ public class QuotController {
 			map.add("plantId", plantId);
 			map.add("enqHeadId", enqHeadId);
 
-			GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map, GetItemWithEnq[].class);
+			GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map,
+					GetItemWithEnq[].class);
 			itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
 			model.addObject("itemList", itemList);
 
@@ -111,45 +111,47 @@ public class QuotController {
 			custList = new ArrayList<Cust>(Arrays.asList(custArray));
 			model.addObject("custList", custList);
 
-			System.err.println("cust List  " +custList.toString());
+			System.err.println("cust List  " + custList.toString());
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
-			System.err.println("Plant List  " +plantList.toString());
+			System.err.println("Plant List  " + plantList.toString());
 
 			model.addObject("plantList", plantList);
 
 			model.addObject("plantId", plantId);
 			model.addObject("custId", custId);
-			
+
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("custId", custId);
 			Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
 			projList = new ArrayList<Project>(Arrays.asList(projArray));
-			
+
 			model.addObject("projList", projList);
-			
-			PaymentTerm[] payTermArray = rest.getForObject(Constants.url + "getAllPaymentTermList",  PaymentTerm[].class);
+
+			PaymentTerm[] payTermArray = rest.getForObject(Constants.url + "getAllPaymentTermList",
+					PaymentTerm[].class);
 			payTermList = new ArrayList<PaymentTerm>(Arrays.asList(payTermArray));
-			
+
 			model.addObject("payTermList", payTermList);
-			
+
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("docId", 2);
 
-			DocTermHeader[] docTermArray = rest.postForObject(Constants.url + "getDocHeaderByDocId", map, DocTermHeader[].class);
+			DocTermHeader[] docTermArray = rest.postForObject(Constants.url + "getDocHeaderByDocId", map,
+					DocTermHeader[].class);
 			docTermList = new ArrayList<DocTermHeader>(Arrays.asList(docTermArray));
 
-			model.addObject("docTermList",docTermList);
-			
-			
+			model.addObject("docTermList", docTermList);
+
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("quotHeadId", quotId);
-			
-			QuotHeader quotHeader=rest.postForObject(Constants.url + "getQuotHeaderByQuotHeadId", map, QuotHeader.class);
+
+			QuotHeader quotHeader = rest.postForObject(Constants.url + "getQuotHeaderByQuotHeadId", map,
+					QuotHeader.class);
 			quotHeader.setQuotDate(DateConvertor.convertToDMY(quotHeader.getQuotDate()));
-			model.addObject("quotHeader",quotHeader);
-			
+			model.addObject("quotHeader", quotHeader);
+
 		} catch (Exception e) {
 			System.err.println("Exce in /showQuotations" + e.getMessage());
 			e.printStackTrace();
@@ -176,227 +178,231 @@ public class QuotController {
 		return projList;
 
 	}
-	
+
 	// Ajax call
-		@RequestMapping(value = "/getItemsAndEnqItemList", method = RequestMethod.GET)
-		public @ResponseBody List<GetItemWithEnq> getItemsAndEnqItemList(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/getItemsAndEnqItemList", method = RequestMethod.GET)
+	public @ResponseBody List<GetItemWithEnq> getItemsAndEnqItemList(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		int enqHeadId = Integer.parseInt(request.getParameter("enqHeadId"));
+
+		map.add("plantId", plantId);
+		map.add("enqHeadId", enqHeadId);
+
+		GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map,
+				GetItemWithEnq[].class);
+		itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
+
+		System.err.println("Ajax Item list for km onchange  List " + itemList.toString());
+
+		return itemList;
+
+	}
+
+	// updateQuotation Form Action
+
+	@RequestMapping(value = "/updateQuotation", method = RequestMethod.POST)
+	public ModelAndView updateQuotationProcess(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String curDate = dateFormat.format(new Date());
+
+			model = new ModelAndView("quot/quotList");
+			model.addObject("title", "Quotation List");
+
+			int quotHeadId = Integer.parseInt(request.getParameter("quotHeadId"));
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			
-			int plantId = Integer.parseInt(request.getParameter("plantId"));
-			int enqHeadId = Integer.parseInt(request.getParameter("enqHeadId"));
 
-			map.add("plantId", plantId);
-			map.add("enqHeadId", enqHeadId);
+			map.add("quotHeadId", quotHeadId);
 
-			GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map, GetItemWithEnq[].class);
-			itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
-			
-			System.err.println("Ajax Item list for km onchange  List " + itemList.toString());
+			QuotHeader quotHeader = rest.postForObject(Constants.url + "getQuotHeaderByQuotHeadId", map,
+					QuotHeader.class);
 
-			return itemList;
+			int plantId = Integer.parseInt(request.getParameter("plant_id"));
+			int payTermId = Integer.parseInt(request.getParameter("pay_term_id"));
+			String transportTerms = request.getParameter("trans_term");
+			String otherRemark1 = request.getParameter("quot_remark");
+			int projId = Integer.parseInt(request.getParameter("proj_id"));
 
-		}
-		
-		//updateQuotation Form Action 
-		
-		@RequestMapping(value = "/updateQuotation", method = RequestMethod.POST)
-		public ModelAndView updateQuotationProcess(HttpServletRequest request, HttpServletResponse response) {
+			int noOfTolls = Integer.parseInt(request.getParameter("no_of_tolls"));
+			Float tollCost = Float.parseFloat(request.getParameter("toll_amt"));
+			Float otherCost = Float.parseFloat(request.getParameter("other_cost"));
+			int quotTermId = Integer.parseInt(request.getParameter("quot_doc_term_id"));
+			int noOfKm = Integer.parseInt(request.getParameter("no_of_km"));
 
-			ModelAndView model = null;
-			try {
-				
-				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				String curDate = dateFormat.format(new Date());
+			String payTerms = request.getParameter("pay_term_name");
 
-				model = new ModelAndView("quot/quotList");
-				model.addObject("title", "Quotation List");
-				
-				int quotHeadId = Integer.parseInt(request.getParameter("quotHeadId"));
-				
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			quotHeader.setUserId(1);// to be get from session who logged in to do this activity
 
-				map.add("quotHeadId", quotHeadId);
-				
-				QuotHeader quotHeader=rest.postForObject(Constants.url + "getQuotHeaderByQuotHeadId", map, QuotHeader.class);
-				
-				int plantId = Integer.parseInt(request.getParameter("plant_id"));
-				int payTermId = Integer.parseInt(request.getParameter("pay_term_id"));
-				String transportTerms = request.getParameter("trans_term");
-				String otherRemark1 = request.getParameter("quot_remark");
-				int projId = Integer.parseInt(request.getParameter("proj_id"));
+			quotHeader.setStatus(1);
 
-				int noOfTolls = Integer.parseInt(request.getParameter("no_of_tolls"));
-				Float tollCost = Float.parseFloat(request.getParameter("toll_amt"));
-				Float otherCost=Float.parseFloat(request.getParameter("other_cost"));
-				int quotTermId = Integer.parseInt(request.getParameter("quot_doc_term_id"));
-				int noOfKm = Integer.parseInt(request.getParameter("no_of_km"));
-				
-				String payTerms = request.getParameter("pay_term_name");
+			quotHeader.setPayTermId(payTermId);
+			quotHeader.setTransportTerms(transportTerms);
 
-				quotHeader.setUserId(1);//to be get from session who logged in to do this activity
-				
-				quotHeader.setStatus(1);
-				
-				quotHeader.setPayTermId(payTermId);
-				quotHeader.setTransportTerms(transportTerms);
+			quotHeader.setPayTerms(payTerms);
+			quotHeader.setOtherRemark1(otherRemark1);
+			quotHeader.setProjId(projId);
+			quotHeader.setNoOfTolls(noOfTolls);
+			quotHeader.setTollCost(tollCost);
+			quotHeader.setOtherCost(otherCost);
+			quotHeader.setQuotTermId(quotTermId);
+			quotHeader.setNoOfKm(noOfKm);
+			quotHeader.setExDate2(curDate);
 
-				quotHeader.setPayTerms(payTerms);
-				quotHeader.setOtherRemark1(otherRemark1);
-				quotHeader.setProjId(projId);
-				quotHeader.setNoOfTolls(noOfTolls);
-				quotHeader.setTollCost(tollCost);
-				quotHeader.setOtherCost(otherCost);
-				quotHeader.setQuotTermId(quotTermId);
-				quotHeader.setNoOfKm(noOfKm);
-				quotHeader.setExDate2(curDate);
-				
-				List<QuotDetail> quotDetList=quotHeader.getQuotDetailList();
-				
-				System.err.println("Header  " +quotHeader.toString());
-				String [] selectItem=request.getParameterValues("selectItem");
-				
-				List<QuotDetail> tempQDetailList=new ArrayList<>();
-				
-				
-				
-				for(int i=0;i<selectItem.length;i++) {
-					
-					System.err.println("selItem " +selectItem[i]);
-					
-					for(int j=0;j<itemList.size();j++) {
-						
-						if(itemList.get(j).getItemId()==Integer.parseInt(selectItem[i])) {
-							
-							System.err.println("Item Ids Matched ");
-							
-							QuotDetail detail=new QuotDetail();
-							
-							float quotQty=Float.parseFloat(request.getParameter("quot_qty"+itemList.get(j).getItemId()));
-							float transCost=Float.parseFloat(request.getParameter("trans_cost"+itemList.get(j).getItemId()));
-							float otherCostDetail=Float.parseFloat(request.getParameter("trans_cost"+itemList.get(j).getItemId()));
-							float taxableValue=Float.parseFloat(request.getParameter("taxable_amt"+itemList.get(j).getItemId()));
-							float taxValue=Float.parseFloat(request.getParameter("tax_amt"+itemList.get(j).getItemId()));
-							float total=Float.parseFloat(request.getParameter("final_amt"+itemList.get(j).getItemId()));
-							float otherCostAfterTax=Float.parseFloat(request.getParameter("oth_cost_aft_tax"+itemList.get(j).getItemId()));
+			List<QuotDetail> quotDetList = quotHeader.getQuotDetailList();
 
-							if(taxValue>0) {
-								
-								detail.setCgstValue((taxValue/2));
-								detail.setIgstValue((taxValue/2));
-								detail.setSgstValue((taxValue/2));
+			System.err.println("Header  " + quotHeader.toString());
+			String[] selectItem = request.getParameterValues("selectItem");
 
-							}
-							else {
-								
-								detail.setCgstValue(0);
-								detail.setIgstValue(0);
-								detail.setSgstValue(0);
+			List<QuotDetail> tempQDetailList = new ArrayList<>();
 
-							}
-							
-							detail.setCgstPer(itemList.get(j).getCgst());
-							detail.setConFactor(1);
-							detail.setDelStatus(1);
-							detail.setConvQty(1);
-							detail.setIgstPer(itemList.get(j).getIgst());
-							detail.setItemId(itemList.get(j).getItemId());
-							detail.setNoOfKm(noOfKm);
-							detail.setOtherCost(otherCostDetail);
-							detail.setOtherCostAfterTax(otherCostAfterTax);
-							detail.setQuotQty(quotQty);
-							detail.setQuotUomId(itemList.get(j).getUomId());
-							detail.setRate(total);
-							detail.setRoyaltyRate(itemList.get(j).getRoyaltyRate());
-							detail.setSgstPer(itemList.get(j).getSgst());
-							detail.setStatus(1);
-							detail.setTaxableValue(taxableValue);
-							detail.setTaxId(itemList.get(j).getTaxId());
-							detail.setTaxValue(taxValue);
-							detail.setTollCost(tollCost);
-							detail.setTotal(total);
-							detail.setTransCost(transCost);
-							detail.setExDate2(curDate);
-							detail.setOtherCostBeforeTax(0);
-							
-							tempQDetailList.add(detail);
-							
-						}//End of If
-						
-					}//End of Item List For
-					
-				}// End of Selected Item For Loop
-						
+			for (int i = 0; i < selectItem.length; i++) {
 
-				for(int i=0;i<tempQDetailList.size();i++) {
-					
-					int flag=0;
-					
-					for(int j=0;j<quotDetList.size();j++) {
-						if(tempQDetailList.get(i).getItemId()==quotDetList.get(j).getItemId()) {
-							
-							flag=1;
-							quotDetList.get(j).setCgstPer(tempQDetailList.get(i).getCgstPer());
-							quotDetList.get(j).setCgstValue(tempQDetailList.get(i).getCgstValue());
-							quotDetList.get(j).setConFactor(tempQDetailList.get(i).getConFactor());
-							quotDetList.get(j).setConvQty(tempQDetailList.get(i).getConvQty());
-							quotDetList.get(j).setDelStatus(tempQDetailList.get(i).getDelStatus());
-							//quotDetList.get(j).setEnqDetailId(tempQDetailList.get(i).get);
-							quotDetList.get(j).setExDate2(tempQDetailList.get(i).getExDate2());
-							quotDetList.get(j).setIgstPer(tempQDetailList.get(i).getIgstPer());
-							quotDetList.get(j).setIgstValue(tempQDetailList.get(i).getIgstValue());
-							//quotDetList.get(j).setItemId(itemId);
-							quotDetList.get(j).setNoOfKm(tempQDetailList.get(i).getNoOfKm());
-							quotDetList.get(j).setOtherCost(tempQDetailList.get(i).getOtherCost());
-							quotDetList.get(j).setOtherCostAfterTax(tempQDetailList.get(i).getOtherCostAfterTax());
-							//quotDetList.get(j).setQuotDetailId(quotDetailId);
-							//quotDetList.get(j).setQuotHeadId(quotHeadId);
-							quotDetList.get(j).setQuotQty(tempQDetailList.get(i).getQuotQty());
-							quotDetList.get(j).setQuotUomId(tempQDetailList.get(i).getQuotUomId());
-							quotDetList.get(j).setRate(tempQDetailList.get(i).getTotal());
-							quotDetList.get(j).setRoyaltyRate(tempQDetailList.get(i).getRoyaltyRate());
-							quotDetList.get(j).setSgstPer(tempQDetailList.get(i).getSgstPer());
-							quotDetList.get(j).setSgstValue(tempQDetailList.get(i).getSgstValue());
-							quotDetList.get(j).setStatus(tempQDetailList.get(i).getStatus());
-							quotDetList.get(j).setTaxableValue(tempQDetailList.get(i).getTaxableValue());
-							quotDetList.get(j).setTaxId(tempQDetailList.get(i).getTaxId());
-							quotDetList.get(j).setTaxValue(tempQDetailList.get(i).getTaxValue());
-							
-							quotDetList.get(j).setTollCost(tempQDetailList.get(i).getTollCost());
-							quotDetList.get(j).setTotal(tempQDetailList.get(i).getTotal());
-							quotDetList.get(j).setTransCost(tempQDetailList.get(i).getTransCost());
-							
+				System.err.println("selItem " + selectItem[i]);
+
+				for (int j = 0; j < itemList.size(); j++) {
+
+					if (itemList.get(j).getItemId() == Integer.parseInt(selectItem[i])) {
+
+						System.err.println("Item Ids Matched ");
+
+						QuotDetail detail = new QuotDetail();
+
+						float quotQty = Float
+								.parseFloat(request.getParameter("quot_qty" + itemList.get(j).getItemId()));
+						float transCost = Float
+								.parseFloat(request.getParameter("trans_cost" + itemList.get(j).getItemId()));
+						float otherCostDetail = Float
+								.parseFloat(request.getParameter("other_cost" + itemList.get(j).getItemId()));
+						float taxableValue = Float
+								.parseFloat(request.getParameter("taxable_amt" + itemList.get(j).getItemId()));
+						float taxValue = Float
+								.parseFloat(request.getParameter("tax_amt" + itemList.get(j).getItemId()));
+						float total = Float.parseFloat(request.getParameter("final_amt" + itemList.get(j).getItemId()));
+						float otherCostAfterTax = Float
+								.parseFloat(request.getParameter("oth_cost_aft_tax" + itemList.get(j).getItemId()));
+
+						detail.setCgstPer(itemList.get(j).getCgst());
+						detail.setConFactor(1);
+						detail.setDelStatus(1);
+						detail.setConvQty(1);
+						detail.setIgstPer(itemList.get(j).getIgst());
+						detail.setItemId(itemList.get(j).getItemId());
+						detail.setNoOfKm(noOfKm);
+						detail.setOtherCost(otherCostDetail);
+						detail.setOtherCostAfterTax(otherCostAfterTax);
+						detail.setQuotQty(quotQty);
+						detail.setQuotUomId(itemList.get(j).getUomId());
+						detail.setRate(total);
+						detail.setRoyaltyRate(itemList.get(j).getRoyaltyRate());
+						detail.setSgstPer(itemList.get(j).getSgst());
+						detail.setStatus(1);
+						detail.setTaxableValue(taxableValue);
+						detail.setTaxId(itemList.get(j).getTaxId());
+						detail.setTaxValue(taxValue);
+						detail.setTollCost(tollCost);
+						detail.setTotal(total);
+						detail.setTransCost(transCost);
+						detail.setExDate2(curDate);
+						detail.setOtherCostBeforeTax(0);
+
+						if (taxValue > 0) {
+
+							detail.setCgstValue((taxValue / 2));
+							detail.setIgstValue((taxValue / 2));
+							detail.setSgstValue((taxValue / 2));
+
+							quotHeader.setTaxValue(1);
+
+						} else {
+							detail.setCgstValue(0);
+							detail.setIgstValue(0);
+							detail.setSgstValue(0);
+
 						}
-						
-					} 
-					if(flag==0) {
-						
-						System.err.println("inside flag==0");
-						tempQDetailList.get(i).setExVar1("NA");
-						tempQDetailList.get(i).setExVar2("NA");
-						tempQDetailList.get(i).setExVar3("NA");
-						tempQDetailList.get(i).setExDate1(curDate);
-						tempQDetailList.get(i).setExDate2(curDate);
-						tempQDetailList.get(i).setQuotHeadId(quotHeadId);
-						quotDetList.add(tempQDetailList.get(i));
-					}
-					
-					
-				}
-				
-				quotHeader.setQuotDetailList(quotDetList);
-				
-				QuotHeader quotHeadUpdateRes = rest.postForObject(Constants.url + "saveQuotHeaderAndDetail", quotHeader,
-						QuotHeader.class);
 
-				System.err.println("quotHeadUpdateRes  " + quotHeadUpdateRes.toString());
-				
-				
-			}catch (Exception e) {
-				System.err.println("Exce in upd qtn process " +e.getMessage());
-				e.printStackTrace();
-				
+						tempQDetailList.add(detail);
+
+					} // End of If
+
+				} // End of Item List For
+
+			} // End of Selected Item For Loop
+
+			for (int i = 0; i < tempQDetailList.size(); i++) {
+
+				int flag = 0;
+
+				for (int j = 0; j < quotDetList.size(); j++) {
+					if (tempQDetailList.get(i).getItemId() == quotDetList.get(j).getItemId()) {
+
+						flag = 1;
+						quotDetList.get(j).setCgstPer(tempQDetailList.get(i).getCgstPer());
+						quotDetList.get(j).setCgstValue(tempQDetailList.get(i).getCgstValue());
+						quotDetList.get(j).setConFactor(tempQDetailList.get(i).getConFactor());
+						quotDetList.get(j).setConvQty(tempQDetailList.get(i).getConvQty());
+						quotDetList.get(j).setDelStatus(tempQDetailList.get(i).getDelStatus());
+						// quotDetList.get(j).setEnqDetailId(tempQDetailList.get(i).get);
+						quotDetList.get(j).setExDate2(tempQDetailList.get(i).getExDate2());
+						quotDetList.get(j).setIgstPer(tempQDetailList.get(i).getIgstPer());
+						quotDetList.get(j).setIgstValue(tempQDetailList.get(i).getIgstValue());
+						// quotDetList.get(j).setItemId(itemId);
+						quotDetList.get(j).setNoOfKm(tempQDetailList.get(i).getNoOfKm());
+						quotDetList.get(j).setOtherCost(tempQDetailList.get(i).getOtherCost());
+						quotDetList.get(j).setOtherCostAfterTax(tempQDetailList.get(i).getOtherCostAfterTax());
+						// quotDetList.get(j).setQuotDetailId(quotDetailId);
+						// quotDetList.get(j).setQuotHeadId(quotHeadId);
+						quotDetList.get(j).setQuotQty(tempQDetailList.get(i).getQuotQty());
+						quotDetList.get(j).setQuotUomId(tempQDetailList.get(i).getQuotUomId());
+						quotDetList.get(j).setRate(tempQDetailList.get(i).getTotal());
+						quotDetList.get(j).setRoyaltyRate(tempQDetailList.get(i).getRoyaltyRate());
+						quotDetList.get(j).setSgstPer(tempQDetailList.get(i).getSgstPer());
+						quotDetList.get(j).setSgstValue(tempQDetailList.get(i).getSgstValue());
+						quotDetList.get(j).setStatus(tempQDetailList.get(i).getStatus());
+						quotDetList.get(j).setTaxableValue(tempQDetailList.get(i).getTaxableValue());
+						quotDetList.get(j).setTaxId(tempQDetailList.get(i).getTaxId());
+						quotDetList.get(j).setTaxValue(tempQDetailList.get(i).getTaxValue());
+
+						quotDetList.get(j).setTollCost(tempQDetailList.get(i).getTollCost());
+						quotDetList.get(j).setTotal(tempQDetailList.get(i).getTotal());
+						quotDetList.get(j).setTransCost(tempQDetailList.get(i).getTransCost());
+
+					}
+
+				}
+				if (flag == 0) {
+
+					System.err.println("inside flag==0");
+					tempQDetailList.get(i).setExVar1("NA");
+					tempQDetailList.get(i).setExVar2("NA");
+					tempQDetailList.get(i).setExVar3("NA");
+					tempQDetailList.get(i).setExDate1(curDate);
+					tempQDetailList.get(i).setExDate2(curDate);
+					tempQDetailList.get(i).setQuotHeadId(quotHeadId);
+					quotDetList.add(tempQDetailList.get(i));
+				}
+
 			}
-			return model;
+
+			quotHeader.setQuotDetailList(quotDetList);
+
+			QuotHeader quotHeadUpdateRes = rest.postForObject(Constants.url + "saveQuotHeaderAndDetail", quotHeader,
+					QuotHeader.class);
+
+			System.err.println("quotHeadUpdateRes  " + quotHeadUpdateRes.toString());
+
+		} catch (Exception e) {
+			System.err.println("Exce in upd qtn process " + e.getMessage());
+			e.printStackTrace();
+
 		}
+		return model;
+	}
 }
