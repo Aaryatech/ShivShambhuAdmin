@@ -612,7 +612,7 @@ public class GetItemWithEnq {
 	public void setPlantName(String plantName) {
 		this.plantName = plantName;
 	}
-
+ 
 	public float getEnqQty() {
 		return enqQty;
 	}
