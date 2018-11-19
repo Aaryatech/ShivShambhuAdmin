@@ -191,6 +191,49 @@ public class DocTermController {
 
 	}
 
+	@RequestMapping(value = "/updateDocTerm", method = RequestMethod.POST)
+	public String updateDocTerm(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			System.err.println("Inside  updateDocTerm method");
+
+			int docId = Integer.parseInt(request.getParameter("doc_id"));
+
+			System.err.println("docId Id " + docId);
+
+			String termTitle = request.getParameter("termTitle");
+
+			int sortNo = Integer.parseInt(request.getParameter("sortNo"));
+
+			editDoc.setTermTitle(termTitle);
+			editDoc.setSortNo(sortNo);
+
+			for (int i = 0; i < editDoc.getDetailList().size(); i++) {
+				int sortNoDetail = Integer.parseInt(
+						request.getParameter("detailSortNo" + editDoc.getDetailList().get(i).getTermDetailId()));
+
+				String termDesc = request.getParameter("termDesc" + editDoc.getDetailList().get(i).getTermDetailId());
+
+				editDoc.getDetailList().get(i).setSortNo(sortNoDetail);
+				editDoc.getDetailList().get(i).setTermDesc(termDesc);
+
+			}
+
+			DocTermHeader docInsertRes = rest.postForObject(Constants.url + "saveDocTermHeaderAndDetail", editDoc,
+					DocTermHeader.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce In insertEnq method  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return "redirect:/showAddDocTerm";
+
+	}
+
 	List<GetDocTermHeader> docTermHeaderList;
 
 	@RequestMapping(value = "/showDocTermList", method = RequestMethod.GET)
@@ -270,49 +313,6 @@ public class DocTermController {
 		}
 
 		return "redirect:/showDocTermList";
-	}
-
-	@RequestMapping(value = "/editSubmitDocTerm", method = RequestMethod.POST)
-	public String editSubmitDocTerm(HttpServletRequest request, HttpServletResponse response) {
-
-		try {
-
-			System.err.println("Inside insert editSubmitDocTerm method");
-
-			String termTitle = request.getParameter("termTitle");
-
-			int sortNo = Integer.parseInt(request.getParameter("sortNo"));
-
-			editDoc.setSortNo(sortNo);
-			editDoc.setTermTitle(termTitle);
-			List<DocTermDetail> doc = editDoc.getDetailList();
-
-			for (int i = 0; i < editDoc.getDetailList().size(); i++) {
-				int detailSortNo = Integer
-						.parseInt(request.getParameter("sortNo" + editDoc.getDetailList().get(i).getTermDetailId()));
-
-				String termDesc = request.getParameter("termDesc" + editDoc.getDetailList().get(i).getTermDetailId());
-
-				DocTermDetail docDetail = new DocTermDetail();
-				docDetail.setSortNo(detailSortNo);
-				docDetail.setTermDesc(termDesc);
-				doc.add(docDetail);
-
-			}
-			editDoc.setDetailList(doc);
-
-			DocTermHeader docInsertRes = rest.postForObject(Constants.url + "saveDocTermHeaderAndDetail", editDoc,
-					DocTermHeader.class);
-
-		} catch (Exception e) {
-
-			System.err.println("Exce In insertEnq method  " + e.getMessage());
-			e.printStackTrace();
-
-		}
-
-		return "redirect:/showAddDocTerm";
-
 	}
 
 }

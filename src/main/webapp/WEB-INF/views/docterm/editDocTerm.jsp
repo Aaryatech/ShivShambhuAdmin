@@ -93,7 +93,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form
-								action="${pageContext.request.contextPath}/editSubmitDocTerm"
+								action="${pageContext.request.contextPath}/updateDocTerm"
 								method="post">
 
 								<div class="row">
