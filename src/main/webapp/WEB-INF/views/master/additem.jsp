@@ -220,7 +220,7 @@
 
 									<div class="col-md-4">
 										<select id="vendor_ids" name="vendor_ids"
-											class="standardSelect" tabindex="1"
+											class="standardSelect" tabindex="1" multiple="multiple"
 											oninvalid="setCustomValidity('Please select vendors')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 											<c:forEach items="${vendList}" var="vendor">

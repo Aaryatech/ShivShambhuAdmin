@@ -80,12 +80,12 @@
 							<div class="col-md-2">
 								<strong>${title}</strong>
 							</div>
-							<div class="col-md-8"></div>
+							<%-- <div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
 								<a href="${pageContext.request.contextPath}/showBankDetailList"><strong>Bank
 										Detail List</strong></a>
 							</div>
-
+ --%>
 						</div>
 						<div class="card-body card-block">
 							<form
@@ -103,7 +103,7 @@
 											<c:forEach items="${compList}" var="comp">
 
 												<c:choose>
-													<c:when test="${comp.companyId==editUser.companyId}">
+													<c:when test="${comp.companyId==editBankDetail.companyId}">
 														<option value="${comp.companyId}" selected>${comp.compName}</option>
 													</c:when>
 													<c:otherwise>
@@ -121,11 +121,41 @@
 									<div class="col-md-4">
 										<select id="accType" name="accType" class="standardSelect"
 											tabindex="1" required>
+											<c:choose>
+												<c:when test="${editBankDetail.accType==1}">
+													<option value="1" selected>Current Account</option>
+													<option value="2">Savings Account</option>
+													<option value="3">Recurring Deposit Account</option>
+													<option value="4">Fixed Deposit Account</option>
+												</c:when>
+												<c:when test="${editBankDetail.accType==2}">
+													<option value="1">Current Account</option>
+													<option value="2" selected>Savings Account</option>
+													<option value="3">Recurring Deposit Account</option>
+													<option value="4">Fixed Deposit Account</option>
+												</c:when>
 
-											<option value="1">Current Account</option>
-											<option value="2">Savings Account</option>
-											<option value="3">Recurring Deposit Account</option>
-											<option value="4">Fixed Deposit Account</option>
+												<c:when test="${editBankDetail.accType==3}">
+													<option value="1">Current Account</option>
+													<option value="2">Savings Account</option>
+													<option value="3" selected>Recurring Deposit
+														Account</option>
+													<option value="4">Fixed Deposit Account</option>
+												</c:when>
+												<c:when test="${editBankDetail.accType==3}">
+													<option value="1">Current Account</option>
+													<option value="2">Savings Account</option>
+													<option value="3">Recurring Deposit Account</option>
+													<option value="4" selected>Fixed Deposit Account</option>
+												</c:when>
+												<c:otherwise>
+													<option value="1" selected>Current Account</option>
+													<option value="2">Savings Account</option>
+													<option value="3">Recurring Deposit Account</option>
+													<option value="4">Fixed Deposit Account</option>
+												</c:otherwise>
+											</c:choose>
+
 
 										</select>
 									</div>
@@ -133,7 +163,7 @@
 								</div>
 
 								<input type="hidden" name="bankDetId" id="bankDetId"
-									value="${editUser.bankDetId}">
+									value="${editBankDetail.bankDetId}">
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Bank Name</div>
@@ -149,7 +179,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="bankIfsc" name="bankIfsc"
-											value="${editUser.bankIfsc}" class="form-control"
+											value="${editBankDetail.bankIfsc}" class="form-control"
 											oninvalid="setCustomValidity('Please enter IFSC Code')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
@@ -161,15 +191,15 @@
 									<div class="col-md-2">Bank Address</div>
 									<div class="col-md-4">
 										<input type="text" id="bankAddress" name="bankAddress"
-											value="${editUser.bankAddress}" class="form-control"
+											value="${editBankDetail.bankAddress}" class="form-control"
 											oninvalid="setCustomValidity('Please Enter Bank Address')"
-											onchange="try{setCustomValidity('')}catch(e){}"
+											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
 									<div class="col-md-2">Account No</div>
 									<div class="col-md-4">
 										<input type="text" id="accNo" name="accNo"
-											value="${editUser.accNo}" class="form-control"
+											value="${editBankDetail.accNo}" class="form-control"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											oninvalid="setCustomValidity('Please Enter account no')"
 											required style="width: 100%;">
@@ -198,52 +228,50 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
+										<th style="text-align: center">Bank Name</th>
 										<th style="text-align: center">Company Name</th>
 										<th style="text-align: center">Account No</th>
-										<th style="text-align: center">Bank Name</th>
+
 										<th style="text-align: center">Address</th>
-										<th style="text-align: center">Account No</th>
+										<th style="text-align: center">Bank IFSC</th>
 
 										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${bankDetList}" var="bankDet"
-										varStatus="count">
+									<c:forEach items="${bankList}" var="bankDet" varStatus="count">
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
 
 											<td style="text-align: left"><c:out
-													value="${bankDet.compName}" /></td>
-
-
-
-											<td style="text-align: left"><c:out
 													value="${bankDet.bankName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${bankDet.sortNo}" /></td>
+													value="${bankDet.compName}" /></td>
 
 
 											<td style="text-align: left"><c:out
-													value="${bankDet.deptName}" /></td>
+													value="${bankDet.accNo}" /></td>
 
 
 											<td style="text-align: left"><c:out
-													value="${bankDet.deptName}" /></td>
+													value="${bankDet.bankAddress}" /></td>
 
 
 											<td style="text-align: left"><c:out
-													value="${bankDet.deptName}" /></td>
+													value="${bankDet.bankIfsc}" /></td>
+
+
+
 
 
 											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editDept/${dept.deptId}"><i
+												href="${pageContext.request.contextPath}/editBankDetail/${bankDet.bankDetId}"><i
 													class="fa fa-edit"></i> <span class="text-muted"></span></a>
 												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteDept/${dept.deptId}"
+												href="${pageContext.request.contextPath}/deleteBankDetail/${bankDet.bankDetId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
 													class="fa fa-trash-o"></i></a></td>
 

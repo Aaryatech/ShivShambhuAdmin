@@ -145,6 +145,8 @@
 									<div class="col-md-2">Contact Person Name</div>
 									<div class="col-md-4">
 										<input type="text" id="contactPerName" name="contactPerName"
+											oninvalid="setCustomValidity('Please enter contact person Name')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editPro.contactPerName}" class="form-control"
 											required style="width: 100%;">
 									</div>
@@ -168,6 +170,8 @@
 									<div class="col-md-2">Project Name</div>
 									<div class="col-md-4">
 										<input type="text" id="proj_name" name="proj_name"
+											oninvalid="setCustomValidity('Please enter project name')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editPro.projName}" class="form-control" required
 											style="width: 100%;">
 									</div>
@@ -176,6 +180,8 @@
 
 									<div class="col-md-4">
 										<input type="text" id="proj_loc" name="proj_loc"
+											oninvalid="setCustomValidity('Please enter project location')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editPro.location}" class="form-control" required
 											style="width: 100%;">
 									</div>
@@ -209,14 +215,14 @@
 											class="form-control" style="width: 100%;"
 											value="${editPro.pincode}"
 											oninvalid="setCustomValidity('Please enter Pincode')"
-											onchange="try{setCustomValidity('')}catch(e){}">
+											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 									<div class="col-md-2">Kilometer</div>
 									<div class="col-md-4">
 										<input type="text" id="km" name="km" class="form-control"
 											style="width: 100%;" value="${editPro.km}"
 											oninvalid="setCustomValidity('Please enter Kilometer')"
-											onchange="try{setCustomValidity('')}catch(e){}">
+											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 
 								</div>
@@ -226,6 +232,8 @@
 
 								<div class="col-md-4">
 									<textarea id="address" name="address" class="form-control"
+										oninvalid="setCustomValidity('Please enter address')"
+										onchange="try{setCustomValidity('')}catch(e){}" required
 										style="width: 100%;">${editPro.address}</textarea>
 								</div>
 

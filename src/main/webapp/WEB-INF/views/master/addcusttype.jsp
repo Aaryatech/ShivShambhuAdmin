@@ -80,58 +80,28 @@
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
+
 						<div class="card-header">
 							<strong>${title}</strong>
 						</div>
+
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertUom"
+							<form action="${pageContext.request.contextPath}/insertCustType"
 								method="post">
 
 
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Uom Name</div>
+									<div class="col-md-3">Customer Type Name</div>
 									<div class="col-md-4">
-										<input type="text" id="uomName" name="uomName"
-											value="${editUom.uomName}" class="form-control"
-											oninvalid="setCustomValidity('Please enter Uom Name')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
+										<input type="text" id="custTypeName" name="custTypeName"
+											oninvalid="setCustomValidity('Please Enter Cust Type Name')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											value="${editCustType.custTypeName}" class="form-control"
+											required style="width: 100%;">
 									</div>
-
-									<div class="col-md-2">Sort No</div>
-
-									<div class="col-md-4">
-										<input type="text" id="sortNo" name="sortNo"
-											value="${editUom.sortNo}" class="form-control"
-											style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter Sort No')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											pattern="[0-9]+">
-									</div>
-
-									<input type="hidden" id="deptId" name="deptId"
-										value="${editDept.deptId}">
-
-								</div>
-								<div class="form-group"></div>
-
-
-								<div class="row">
-									<div class="col-md-2">Uom Short Name</div>
-									<div class="col-md-4">
-										<input type="text" id="uomShortName" name="uomShortName"
-											value="${editUom.uomShortName}" class="form-control"
-											oninvalid="setCustomValidity('Please enter Uom Short Name')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
-									</div>
-
-
-
-
-									<div class="col-lg-4" align="right">
+									<div class="col-lg-3" align="right">
 
 
 										<button type="submit" class="btn btn-primary"
@@ -140,15 +110,10 @@
 									</div>
 
 
+
+									<input type="hidden" id="custTypeId" name="custTypeId"
+										value="${editCustType.custTypeId}">
 								</div>
-
-
-
-
-
-
-
-
 							</form>
 						</div>
 
@@ -162,37 +127,30 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Uom Name</th>
-										<th style="text-align: center">Uom Short Name</th>
-										<th style="text-align: center">Sort No</th>
+										<th style="text-align: center">Customer Type Name</th>
 
 										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach items="${uomList}" var="uom" varStatus="count">
+									<c:forEach items="${custTypeList}" var="custType"
+										varStatus="count">
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
 
 
 											<td style="text-align: left"><c:out
-													value="${uom.uomName}" /></td>
+													value="${custType.custTypeName}" /></td>
 
-											<td style="text-align: left"><c:out
-													value="${uom.uomShortName}" /></td>
-
-
-											<td style="text-align: left"><c:out
-													value="${uom.sortNo}" /></td>
 
 
 											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editUom/${uom.uomId}"><i
+												href="${pageContext.request.contextPath}/editCustType/${custType.custTypeId}"><i
 													class="fa fa-edit"></i> <span class="text-muted"></span></a>
 												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteUom/${uom.uomId}"
+												href="${pageContext.request.contextPath}/deleteCustType/${custType.custTypeId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
 													class="fa fa-trash-o"></i></a></td>
 
@@ -273,15 +231,8 @@
 
 
 
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script>
-		$(function() {
-			$('input[id$=enq_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
-			});
 
-		});
-	</script>
+
 
 
 

@@ -37,6 +37,15 @@
 
 
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddEnqGenFact">Add
+								Enq gen Fact</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddCustType">Add
+								Cust Type</a></li>
+
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddBankDetail">Add
 								Bank Detail</a></li>
 

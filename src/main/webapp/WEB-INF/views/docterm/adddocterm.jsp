@@ -127,7 +127,9 @@
 									<div class="col-md-2">Term Title</div>
 									<div class="col-md-4">
 										<input type="text" id="termTitle" name="termTitle"
-											class="form-control" style="width: 100%;">
+											class="form-control" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter term title')"
+											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 
 
@@ -137,7 +139,9 @@
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
 											class="form-control" style="width: 100%;"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?">
+											oninvalid="setCustomValidity('Please enter Sort No')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											pattern="[0-9]+">
 									</div>
 
 
@@ -162,8 +166,7 @@
 
 										<div class="col-md-3">
 											<input type="text" id="sortNoDetail" name="sortNoDetail"
-												class="form-control" style="width: 100%;"
-												pattern="[0-9]+(\.[0-9]{0,2})?%?">
+												class="form-control" style="width: 100%;">
 										</div>
 										<div class="col-md-1"></div>
 
