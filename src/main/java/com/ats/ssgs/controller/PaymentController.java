@@ -1,6 +1,7 @@
 package com.ats.ssgs.controller;
 
 import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +23,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
+import com.ats.ssgs.model.master.BankDetail;
+import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.PaymentTerm;
 import com.ats.ssgs.model.master.Uom;
@@ -31,6 +34,7 @@ import com.ats.ssgs.model.master.Uom;
 public class PaymentController {
 	RestTemplate rest = new RestTemplate();
 	List<PaymentTerm> payTermList;
+	List<Company> compList;
 
 	@RequestMapping(value = "/showAddPaymentTerm", method = RequestMethod.GET)
 	public ModelAndView showAddPaymentTerm(HttpServletRequest request, HttpServletResponse response) {
@@ -148,6 +152,83 @@ public class PaymentController {
 		}
 
 		return "redirect:/showAddPaymentTerm";
+	}
+
+	@RequestMapping(value = "/showAddBankDetail", method = RequestMethod.GET)
+	public ModelAndView showAddBankDetail(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("master/addbankdetail");
+			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
+			compList = new ArrayList<Company>(Arrays.asList(compArray));
+
+			model.addObject("compList", compList);
+
+			model.addObject("title", "Add Bank Detail");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddBankDetail at Payment Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/insertBankDetail", method = RequestMethod.POST)
+	public String insertBankDetail(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			System.err.println("Inside  insertBankDetail method");
+
+			int bankDetId = 0;
+			try {
+				bankDetId = Integer.parseInt(request.getParameter("bankDetId"));
+			} catch (Exception e) {
+				bankDetId = 0;
+			}
+
+			int companyId = Integer.parseInt(request.getParameter("companyId"));
+			String bankName = request.getParameter("bankName");
+			String bankIfsc = request.getParameter("bankIfsc");
+			String bankAddress = request.getParameter("bankAddress");
+			String accNo = request.getParameter("accNo");
+			int accType = Integer.parseInt(request.getParameter("accType"));
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh-mm-ss");
+			String timeStamp = dateFormat.format(new Date());
+
+			BankDetail bankDetail = new BankDetail();
+			bankDetail.setAccNo(accNo);
+			bankDetail.setAccType(accType);
+			bankDetail.setBankAddress(bankAddress);
+			bankDetail.setBankDetId(bankDetId);
+			bankDetail.setBankIfsc(bankIfsc);
+			bankDetail.setBankName(bankName);
+			bankDetail.setCompanyId(companyId);
+			bankDetail.setDelStatus(1);
+			bankDetail.setExInt1(0);
+			bankDetail.setExInt2(0);
+			bankDetail.setExVar1("NA");
+			bankDetail.setExVar2("NA");
+			bankDetail.setIsUsed(1);
+			bankDetail.setTimeStamp(timeStamp);
+
+			BankDetail bankDetailInsertRes = rest.postForObject(Constants.url + "saveBankDetail", bankDetail,
+					BankDetail.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in insert Uom " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return "redirect:/showAddBankDetail";
 	}
 
 }
