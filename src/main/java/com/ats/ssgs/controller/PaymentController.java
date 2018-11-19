@@ -25,9 +25,9 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.master.BankDetail;
 import com.ats.ssgs.model.master.Company;
+import com.ats.ssgs.model.master.GetBankDetail;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.PaymentTerm;
-import com.ats.ssgs.model.master.Uom;
 
 @Controller
 @Scope("session")
@@ -35,6 +35,7 @@ public class PaymentController {
 	RestTemplate rest = new RestTemplate();
 	List<PaymentTerm> payTermList;
 	List<Company> compList;
+	List<GetBankDetail> bankList;
 
 	@RequestMapping(value = "/showAddPaymentTerm", method = RequestMethod.GET)
 	public ModelAndView showAddPaymentTerm(HttpServletRequest request, HttpServletResponse response) {
@@ -166,6 +167,12 @@ public class PaymentController {
 
 			model.addObject("compList", compList);
 
+			GetBankDetail[] bankDetailArray = rest.getForObject(Constants.url + "getAllBankDetList",
+					GetBankDetail[].class);
+			bankList = new ArrayList<GetBankDetail>(Arrays.asList(bankDetailArray));
+
+			model.addObject("bankList", bankList);
+
 			model.addObject("title", "Add Bank Detail");
 
 		} catch (Exception e) {
@@ -228,6 +235,65 @@ public class PaymentController {
 			e.printStackTrace();
 
 		}
+		return "redirect:/showAddBankDetail";
+	}
+
+	@RequestMapping(value = "/editBankDetail/{bankDetId}", method = RequestMethod.GET)
+	public ModelAndView editBankDetail(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int bankDetId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/addbankdetail");
+			GetBankDetail[] bankDetailArray = rest.getForObject(Constants.url + "getAllBankDetList",
+					GetBankDetail[].class);
+			bankList = new ArrayList<GetBankDetail>(Arrays.asList(bankDetailArray));
+
+			model.addObject("bankList", bankList);
+
+			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
+			compList = new ArrayList<Company>(Arrays.asList(compArray));
+
+			model.addObject("compList", compList);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("bankDetId", bankDetId);
+
+			BankDetail editBankDetail = rest.postForObject(Constants.url + "getBankDetailByBankDetailId", map,
+					BankDetail.class);
+
+			model.addObject("title", "Edit Bank detail");
+			model.addObject("editBankDetail", editBankDetail);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editBankDetail at PaymentContr Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/deleteBankDetail/{bankDetId}", method = RequestMethod.GET)
+	public String deleteBankDetail(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int bankDetId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("bankDetId", bankDetId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteBankDetail", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteBankDetail @PaymentContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
 		return "redirect:/showAddBankDetail";
 	}
 
