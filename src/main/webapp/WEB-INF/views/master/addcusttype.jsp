@@ -9,15 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
-<c:url var="getItemsByPlantId" value="/getItemsByPlantId" />
 
-<c:url var="getCustByPlantId" value="/getCustByPlantId" />
-
-<c:url var="getItemByItemId" value="/getItemByItemId" />
-
-<c:url var="addDocTermDetail" value="/addDocTermDetail" />
-
-<c:url var="getDocTermForEdit" value="/getDocTermForEdit" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -121,15 +113,7 @@
 
 									<input type="hidden" id="custTypeId" name="custTypeId"
 										value="${editCustType.custTypeId}">
-
 								</div>
-
-
-
-
-
-
-
 							</form>
 						</div>
 

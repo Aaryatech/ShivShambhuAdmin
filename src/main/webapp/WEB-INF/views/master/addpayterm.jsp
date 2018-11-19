@@ -97,6 +97,8 @@
 
 									<div class="col-md-4">
 										<textarea id="payTerm" name="payTerm" class="form-control"
+											oninvalid="setCustomValidity('Please enter Payment term')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">${editPayTerm.payTerm}</textarea>
 									</div>
 
@@ -105,7 +107,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="date" name="date" class="form-control"
-											value="${editPayTerm.date}" style="width: 100%;">
+											required value="${editPayTerm.date}" style="width: 100%;">
 									</div>
 
 

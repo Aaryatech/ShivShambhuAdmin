@@ -9,15 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
-<c:url var="getItemsByPlantId" value="/getItemsByPlantId" />
 
-<c:url var="getCustByPlantId" value="/getCustByPlantId" />
-
-<c:url var="getItemByItemId" value="/getItemByItemId" />
-
-<c:url var="addDocTermDetail" value="/addDocTermDetail" />
-
-<c:url var="getDocTermForEdit" value="/getDocTermForEdit" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -103,6 +95,8 @@
 									<div class="col-md-4">
 										<input type="text" id="uomName" name="uomName"
 											value="${editUom.uomName}" class="form-control"
+											oninvalid="setCustomValidity('Please enter Uom Name')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
 
@@ -111,7 +105,10 @@
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
 											value="${editUom.sortNo}" class="form-control"
-											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
+											style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter Sort No')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											pattern="[0-9]+">
 									</div>
 
 									<input type="hidden" id="deptId" name="deptId"
@@ -126,6 +123,8 @@
 									<div class="col-md-4">
 										<input type="text" id="uomShortName" name="uomShortName"
 											value="${editUom.uomShortName}" class="form-control"
+											oninvalid="setCustomValidity('Please enter Uom Short Name')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
 

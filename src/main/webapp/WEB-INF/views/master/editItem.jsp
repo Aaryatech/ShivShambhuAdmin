@@ -253,20 +253,24 @@
 
 									<div class="col-md-4">
 										<select id="vendor_ids" name="vendor_ids"
-											class="standardSelect" tabindex="1"
+											class="standardSelect" tabindex="1" multiple="multiple"
 											oninvalid="setCustomValidity('Please select vendors')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 											<c:forEach items="${vendList}" var="vendor">
 
-												<%-- <c:choose>
-													<c:when test="${vendor.vendId==editItem.vendorIds}">
-														<option value="${vendor.vendId}" selected>${vendor.vendCompName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${vendor.vendId}">${vendor.vendCompName}
-													</c:otherwise>
-												</c:choose> --%>
-												<option value="${vendor.vendId}">${vendor.vendCompName}</option>
+
+												<c:forEach items="${editItem.vendorIds}" var="ven">
+													<c:choose>
+														<c:when test="${vendor.vendId==ven}">
+															<option value="${vendor.vendId}" selected>${vendor.vendCompName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${vendor.vendId}">${vendor.vendCompName}
+														</c:otherwise>
+													</c:choose>
+												</c:forEach>
+
+												<%-- <option value="${vendor.vendId}">${vendor.vendCompName}</option> --%>
 											</c:forEach>
 										</select>
 									</div>

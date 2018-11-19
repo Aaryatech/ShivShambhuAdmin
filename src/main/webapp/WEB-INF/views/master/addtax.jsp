@@ -122,20 +122,21 @@
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Cgst</div>
+									<div class="col-md-2">CGST</div>
 									<div class="col-md-4">
 										<input type="text" id="cgst" name="cgst"
 											value="${editTax.cgst}" class="form-control"
 											oninvalid="setCustomValidity('Please enter Cgst')"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
-									<div class="col-md-2">Sgst</div>
+									<div class="col-md-2">SGST</div>
 									<div class="col-md-4">
 										<input type="text" id="sgst" name="sgst"
 											value="${editTax.sgst}" class="form-control"
 											oninvalid="setCustomValidity('Please enter Sgst')"
-											onblur="calculateIgst()"
+											onblur="calculateIgst()" pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
@@ -143,7 +144,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Igst</div>
+									<div class="col-md-2">IGST</div>
 									<div class="col-md-4">
 										<input type="text" id="igst" name="igst"
 											value="${editTax.igst}" class="form-control" readonly
@@ -155,6 +156,7 @@
 									<div class="col-md-4">
 										<input type="text" id="totalTaxPer" name="totalTaxPer"
 											value="${editTax.totalTaxPer}" class="form-control"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											oninvalid="setCustomValidity('Please enter Sgst')"
 											onchange="try{setCustomValidity('')}catch(e){}" readonly
 											style="width: 100%;">
@@ -166,7 +168,8 @@
 									<div class="col-md-2">Cess</div>
 									<div class="col-md-4">
 										<input type="text" id="cess" name="cess"
-											value="${editTax.cess}" class="form-control"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" value="${editTax.cess}"
+											class="form-control"
 											oninvalid="setCustomValidity('Please enter Cgst')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
@@ -175,6 +178,7 @@
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
 											value="${editTax.sortNo}" class="form-control"
+											pattern="[0-9]+"
 											oninvalid="setCustomValidity('Please enter Sort No')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">

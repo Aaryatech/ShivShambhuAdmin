@@ -193,7 +193,7 @@
 										<input type="text" id="bankAddress" name="bankAddress"
 											value="${editBankDetail.bankAddress}" class="form-control"
 											oninvalid="setCustomValidity('Please Enter Bank Address')"
-											onchange="try{setCustomValidity('')}catch(e){}"
+											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
 									<div class="col-md-2">Account No</div>

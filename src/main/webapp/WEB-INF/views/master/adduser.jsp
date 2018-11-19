@@ -204,8 +204,9 @@
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
 											value="${editUser.sortNo}" class="form-control"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
+											oninvalid="setCustomValidity('Please enter Sort No')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											pattern="[0-9]+" required style="width: 100%;">
 									</div>
 								</div>
 
@@ -217,13 +218,15 @@
 											value="${editUser.usrEmail}" class="form-control"
 											oninvalid="setCustomValidity('Please enter email')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											style="width: 100%;" style="width: 100%;">
+											style="width: 100%;" style="width: 100%;" required>
 									</div>
 
 									<div class="col-md-2">User Password</div>
 
 									<div class="col-md-4">
 										<input type="password" id="userPass" name="userPass"
+											oninvalid="setCustomValidity('Please enter Password')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editUser.userPass}" class="form-control" required
 											style="width: 100%;">
 									</div>
