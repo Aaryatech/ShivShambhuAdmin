@@ -256,24 +256,141 @@ public class QuotController {
 				System.err.println("Header  " +quotHeader.toString());
 				String [] selectItem=request.getParameterValues("selectItem");
 				
+				List<QuotDetail> tempQDetailList=new ArrayList<>();
+				
+				
+				
 				for(int i=0;i<selectItem.length;i++) {
 					
 					System.err.println("selItem " +selectItem[i]);
 					
-					for(int j=0;j<quotDetList.size();j++) {
+					for(int j=0;j<itemList.size();j++) {
 						
-						if(quotDetList.get(j).getItemId()==Integer.parseInt(selectItem[i])) {
+						if(itemList.get(j).getItemId()==Integer.parseInt(selectItem[i])) {
 							
+							System.err.println("Item Ids Matched ");
 							
+							QuotDetail detail=new QuotDetail();
 							
+							float quotQty=Float.parseFloat(request.getParameter("quot_qty"+itemList.get(j).getItemId()));
+							float transCost=Float.parseFloat(request.getParameter("trans_cost"+itemList.get(j).getItemId()));
+							float otherCostDetail=Float.parseFloat(request.getParameter("trans_cost"+itemList.get(j).getItemId()));
+							float taxableValue=Float.parseFloat(request.getParameter("taxable_amt"+itemList.get(j).getItemId()));
+							float taxValue=Float.parseFloat(request.getParameter("tax_amt"+itemList.get(j).getItemId()));
+							float total=Float.parseFloat(request.getParameter("final_amt"+itemList.get(j).getItemId()));
+							float otherCostAfterTax=Float.parseFloat(request.getParameter("oth_cost_aft_tax"+itemList.get(j).getItemId()));
+
+							if(taxValue>0) {
+								
+								detail.setCgstValue((taxValue/2));
+								detail.setIgstValue((taxValue/2));
+								detail.setSgstValue((taxValue/2));
+
+							}
+							else {
+								
+								detail.setCgstValue(0);
+								detail.setIgstValue(0);
+								detail.setSgstValue(0);
+
+							}
+							
+							detail.setCgstPer(itemList.get(j).getCgst());
+							detail.setConFactor(1);
+							detail.setDelStatus(1);
+							detail.setConvQty(1);
+							detail.setIgstPer(itemList.get(j).getIgst());
+							detail.setItemId(itemList.get(j).getItemId());
+							detail.setNoOfKm(noOfKm);
+							detail.setOtherCost(otherCostDetail);
+							detail.setOtherCostAfterTax(otherCostAfterTax);
+							detail.setQuotQty(quotQty);
+							detail.setQuotUomId(itemList.get(j).getUomId());
+							detail.setRate(total);
+							detail.setRoyaltyRate(itemList.get(j).getRoyaltyRate());
+							detail.setSgstPer(itemList.get(j).getSgst());
+							detail.setStatus(1);
+							detail.setTaxableValue(taxableValue);
+							detail.setTaxId(itemList.get(j).getTaxId());
+							detail.setTaxValue(taxValue);
+							detail.setTollCost(tollCost);
+							detail.setTotal(total);
+							detail.setTransCost(transCost);
+							detail.setExDate2(curDate);
+							detail.setOtherCostBeforeTax(0);
+							
+							tempQDetailList.add(detail);
+							
+						}//End of If
+						
+					}//End of Item List For
+					
+				}// End of Selected Item For Loop
+						
+
+				for(int i=0;i<tempQDetailList.size();i++) {
+					
+					int flag=0;
+					
+					for(int j=0;j<quotDetList.size();j++) {
+						if(tempQDetailList.get(i).getItemId()==quotDetList.get(j).getItemId()) {
+							
+							flag=1;
+							quotDetList.get(j).setCgstPer(tempQDetailList.get(i).getCgstPer());
+							quotDetList.get(j).setCgstValue(tempQDetailList.get(i).getCgstValue());
+							quotDetList.get(j).setConFactor(tempQDetailList.get(i).getConFactor());
+							quotDetList.get(j).setConvQty(tempQDetailList.get(i).getConvQty());
+							quotDetList.get(j).setDelStatus(tempQDetailList.get(i).getDelStatus());
+							//quotDetList.get(j).setEnqDetailId(tempQDetailList.get(i).get);
+							quotDetList.get(j).setExDate2(tempQDetailList.get(i).getExDate2());
+							quotDetList.get(j).setIgstPer(tempQDetailList.get(i).getIgstPer());
+							quotDetList.get(j).setIgstValue(tempQDetailList.get(i).getIgstValue());
+							//quotDetList.get(j).setItemId(itemId);
+							quotDetList.get(j).setNoOfKm(tempQDetailList.get(i).getNoOfKm());
+							quotDetList.get(j).setOtherCost(tempQDetailList.get(i).getOtherCost());
+							quotDetList.get(j).setOtherCostAfterTax(tempQDetailList.get(i).getOtherCostAfterTax());
+							//quotDetList.get(j).setQuotDetailId(quotDetailId);
+							//quotDetList.get(j).setQuotHeadId(quotHeadId);
+							quotDetList.get(j).setQuotQty(tempQDetailList.get(i).getQuotQty());
+							quotDetList.get(j).setQuotUomId(tempQDetailList.get(i).getQuotUomId());
+							quotDetList.get(j).setRate(tempQDetailList.get(i).getTotal());
+							quotDetList.get(j).setRoyaltyRate(tempQDetailList.get(i).getRoyaltyRate());
+							quotDetList.get(j).setSgstPer(tempQDetailList.get(i).getSgstPer());
+							quotDetList.get(j).setSgstValue(tempQDetailList.get(i).getSgstValue());
+							quotDetList.get(j).setStatus(tempQDetailList.get(i).getStatus());
+							quotDetList.get(j).setTaxableValue(tempQDetailList.get(i).getTaxableValue());
+							quotDetList.get(j).setTaxId(tempQDetailList.get(i).getTaxId());
+							quotDetList.get(j).setTaxValue(tempQDetailList.get(i).getTaxValue());
+							
+							quotDetList.get(j).setTollCost(tempQDetailList.get(i).getTollCost());
+							quotDetList.get(j).setTotal(tempQDetailList.get(i).getTotal());
+							quotDetList.get(j).setTransCost(tempQDetailList.get(i).getTransCost());
 							
 						}
 						
 					}
+					if(flag==0) {
+						
+						System.err.println("inside flag==0");
+						tempQDetailList.get(i).setExVar1("NA");
+						tempQDetailList.get(i).setExVar2("NA");
+						tempQDetailList.get(i).setExVar3("NA");
+						tempQDetailList.get(i).setExDate1(curDate);
+						tempQDetailList.get(i).setExDate2(curDate);
+						tempQDetailList.get(i).setQuotHeadId(quotHeadId);
+						quotDetList.add(tempQDetailList.get(i));
+					}
+					
 					
 				}
-						
+				
+				quotHeader.setQuotDetailList(quotDetList);
+				
+				QuotHeader quotHeadUpdateRes = rest.postForObject(Constants.url + "saveQuotHeaderAndDetail", quotHeader,
+						QuotHeader.class);
 
+				System.err.println("quotHeadUpdateRes  " + quotHeadUpdateRes.toString());
+				
 				
 			}catch (Exception e) {
 				System.err.println("Exce in upd qtn process " +e.getMessage());
