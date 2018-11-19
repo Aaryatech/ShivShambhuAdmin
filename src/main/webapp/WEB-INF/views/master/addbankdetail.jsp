@@ -121,11 +121,41 @@
 									<div class="col-md-4">
 										<select id="accType" name="accType" class="standardSelect"
 											tabindex="1" required>
+											<c:choose>
+												<c:when test="${editBankDetail.accType==1}">
+													<option value="1" selected>Current Account</option>
+													<option value="2">Savings Account</option>
+													<option value="3">Recurring Deposit Account</option>
+													<option value="4">Fixed Deposit Account</option>
+												</c:when>
+												<c:when test="${editBankDetail.accType==2}">
+													<option value="1">Current Account</option>
+													<option value="2" selected>Savings Account</option>
+													<option value="3">Recurring Deposit Account</option>
+													<option value="4">Fixed Deposit Account</option>
+												</c:when>
 
-											<option value="1">Current Account</option>
-											<option value="2">Savings Account</option>
-											<option value="3">Recurring Deposit Account</option>
-											<option value="4">Fixed Deposit Account</option>
+												<c:when test="${editBankDetail.accType==3}">
+													<option value="1">Current Account</option>
+													<option value="2">Savings Account</option>
+													<option value="3" selected>Recurring Deposit
+														Account</option>
+													<option value="4">Fixed Deposit Account</option>
+												</c:when>
+												<c:when test="${editBankDetail.accType==3}">
+													<option value="1">Current Account</option>
+													<option value="2">Savings Account</option>
+													<option value="3">Recurring Deposit Account</option>
+													<option value="4" selected>Fixed Deposit Account</option>
+												</c:when>
+												<c:otherwise>
+													<option value="1" selected>Current Account</option>
+													<option value="2">Savings Account</option>
+													<option value="3">Recurring Deposit Account</option>
+													<option value="4">Fixed Deposit Account</option>
+												</c:otherwise>
+											</c:choose>
+
 
 										</select>
 									</div>
