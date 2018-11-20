@@ -110,9 +110,9 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select item type')"
 											onchange="try{setCustomValidity('')}catch(e){}">
-
-											<option value="0">Raw Material</option>
-											<option value="1">Finished Good</option>
+											<c:forEach items="${itemTypeList}" var="item">
+												<option value="${item.itemTypeId}">${item.itemTypeName}</option>
+											</c:forEach>
 
 										</select>
 									</div>

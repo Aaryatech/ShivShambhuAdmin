@@ -113,9 +113,9 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select item type')"
 											onchange="try{setCustomValidity('')}catch(e){}">
-											<c:choose>
 
-												<c:when test="${editItem.itemType==0}">
+
+											<%-- 	<c:when test="${editItem.itemType==0}">
 													<option selected value="0">Raw Material</option>
 													<option value="1">Finished Good</option>
 
@@ -126,10 +126,19 @@
 
 
 												</c:otherwise>
+												
+ --%>
+											<c:forEach items="${itemTypeList}" var="item">
+												<c:choose>
 
-											</c:choose>
-
-
+													<c:when test="${item.itemTypeId==editItem.itemType}">
+														<option value="${item.itemTypeId}" selected>${item.itemTypeName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${item.itemTypeId}">${item.itemTypeName}
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
 										</select>
 									</div>
 

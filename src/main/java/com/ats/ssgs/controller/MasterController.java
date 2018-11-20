@@ -34,6 +34,7 @@ import com.ats.ssgs.model.master.GetProject;
 import com.ats.ssgs.model.master.GetUser;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
+import com.ats.ssgs.model.master.ItemType;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.master.Setting;
@@ -51,6 +52,7 @@ public class MasterController {
 	List<Plant> plantList;
 	List<Vendor> vendList;
 	List<Dept> deptList;
+	List<ItemType> itemTypeList;
 
 	List<Tax> getTaxList;
 
@@ -1096,6 +1098,11 @@ public class MasterController {
 
 			model.addObject("plantList", plantList);
 
+			ItemType[] itemArray = rest.getForObject(Constants.url + "getAllItemTypeList", ItemType[].class);
+			itemTypeList = new ArrayList<ItemType>(Arrays.asList(itemArray));
+
+			model.addObject("itemTypeList", itemTypeList);
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			List<Integer> keyList = new ArrayList<>();
@@ -1303,6 +1310,11 @@ public class MasterController {
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
+
+			ItemType[] itemArray = rest.getForObject(Constants.url + "getAllItemTypeList", ItemType[].class);
+			itemTypeList = new ArrayList<ItemType>(Arrays.asList(itemArray));
+
+			model.addObject("itemTypeList", itemTypeList);
 
 			Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
 			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
