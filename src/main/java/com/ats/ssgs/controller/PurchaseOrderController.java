@@ -90,12 +90,14 @@ public class PurchaseOrderController {
 			save.setPoTermId(quotHeader.getPayTermId());
 			save.setPlantId(Integer.parseInt(quotHeader.getPlantIds()));
 			save.setVarchar1(delivery);
+			save.setDelStatus(1);
 			
 			List<PoDetail> poDetailList = new ArrayList<PoDetail>();
 			
 			for(int i=0 ; i< quotHeader.getGetQuotDetailList().size() ; i++) {
 				
 				PoDetail poDetail = new PoDetail();
+				poDetail.setItemId(quotHeader.getGetQuotDetailList().get(i).getItemId());
 				poDetail.setQuDetailId(quotHeader.getGetQuotDetailList().get(i).getQuotDetailId()); 
 				poDetail.setPoQty(Float.parseFloat(request.getParameter("pOqty"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
 				poDetail.setPoRate(Float.parseFloat(request.getParameter("taxableAmt"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
