@@ -81,216 +81,85 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<strong>${title}</strong> Quotation No : <strong>${quotHeader.quotNo}</strong>
+							<strong>${title}</strong> Quotation No : <strong>${quotHeader.quotNo}</strong> &nbsp;
 							Date : <strong>${quotHeader.quotDate}</strong>
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/updateQuotation"
-								method="post">
+							<form action="${pageContext.request.contextPath}/submitPurchaseOrder"
+								onsubmit="return confirm('Do you really want to submit the Purchase Order ?');" method="post">
+								
+								<div class="row">
+
+									<div class="col-md-2"> PO No.</div>
+
+									<div class="col-md-4">
+										<input type="text" id="poNo" name="poNo"
+											class="form-control" value="00001" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
+									</div>
+									 
+
+								</div>
+							 
+								<div class="form-group"></div>
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+									<div class="col-md-2"> Plant</div>
 
 									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select plant name')"
-											onchange="getData()">
-											<option value="">Select Plant</option>
-
-											<c:forEach items="${plantList}" var="plant">
-												<c:if test="${plantId==plant.plantId}">
-													<option selected value="${plant.plantId}">${plant.plantName}</option>
-												</c:if>
-											</c:forEach>
-										</select>
+										<input type="text" id="plantName" name="plantName"
+											class="form-control" value="${quotHeader.plantName}" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
 									</div>
 									<div class="col-md-2">Customer</div>
 									<div class="col-md-4">
-										<select id="cust_name" name="cust_name" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select customer')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-
-											<c:forEach items="${custList}" var="cust">
-												<c:choose>
-													<c:when test="${custId==cust.custId}">
-
-														<option selected value="${cust.custId}">${cust.custName}</option>
-													</c:when>
-													<%-- <c:otherwise>
-														<option value="${cust.custId}">${cust.custName}</option>
-
-													</c:otherwise> --%>
-												</c:choose>
-
-											</c:forEach>
-										</select>
+										<input type="text" id="custName" name="custName"
+											class="form-control" value="${quotHeader.custName}" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
 									</div>
 
 								</div>
-								<input type="hidden" name="item_id" id="item_id" value="0">
+							 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Project</div>
+									<div class="col-md-2">PO Date</div>
 									<div class="col-md-4">
-										<select id="proj_id" name="proj_id" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select project')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-
-											<c:forEach items="${projList}" var="proj">
-												<option value="${proj.projId}">${proj.projName}</option>
-											</c:forEach>
-
-										</select>
+										<input type="text" id="poDate" name="poDate"
+											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
+											value="${todayDate}">
 									</div>
 									<div class="col-md-2">Payment Term</div>
 
 									<div class="col-md-4">
-										<select id="pay_term_id" name="pay_term_id"
-											class="standardSelect" tabindex="1" required
-											oninvalid="setCustomValidity('Please select payment term')"
-											onchange="setData()">
-											<option value="">Select Pay Term</option>
-
-											<c:forEach items="${payTermList}" var="pTerm">
-												<option value="${pTerm.payTermId}">${pTerm.payTerm}</option>
-											</c:forEach>
-										</select>
+										<input type="text" id="payTerm" name="payTerm"
+											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
+											value="${quotHeader.payTerm}" readonly>
 									</div>
 
 
 								</div>
-								<input type="hidden" id="quotHeadId" name="quotHeadId" value="${quotHeader.quotHeadId}">
-								<input type="hidden" id="pay_term_name" name="pay_term_name" value="${quotHeader.payTerms}">
-
+								 
+								 
 
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Quotation Term</div>
-
+								<div class="col-md-2">PO Validity Date </div>
 									<div class="col-md-4">
-										<select id="quot_doc_term_id" name="quot_doc_term_id"
-											class="standardSelect" tabindex="1" required
-											oninvalid="setCustomValidity('Please select quotation term')">
-											<option value="">Select Term</option>
-
-											<c:forEach items="${docTermList}" var="qTerm">
-												<option value="${qTerm.termId}">${qTerm.termTitle}</option>
-											</c:forEach>
-										</select>
+										<input type="text" id="poValidityDate" name="poValidityDate"
+											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
+											value="${todayDate}">
 									</div>
-
-
-									<div class="col-md-2">Transport Term</div>
-
+									
+									<div class="col-md-2">Delivery</div>
 									<div class="col-md-4">
-										<textarea id="trans_term" name="trans_term"
-											class="form-control" style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter transport term')"
-											onchange="try{setCustomValidity('')}catch(e){}"></textarea>
+										<input type="text" id="delivery" name="delivery"
+											  class="form-control"
+											style="height: 32px;padding-bottom: 12px;font-size: 15px;" required>
 									</div>
-
+									 
 								</div>
-
-
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Quotation Date</div>
-									<div class="col-md-4">
-										<input type="text" id="quot_date" name="quot_date"
-											class="form-control" style="width: 100%;"
-											value="${quotHeader.quotDate}">
-									</div>
-
-									<div class="col-md-2">Delivery Place</div>
-									<div class="col-md-2">
-										On Spot <input type="radio" name="del_place"
-											onchange="setKM(this.value)" id="del_place" value="1">
-									</div>
-
-									<div class="col-md-2">
-										Specific Place <input type="radio" name="del_place"
-											onchange="setKM(this.value)" id="del_place" value="0">
-									</div>
-
-
-								</div>
-
-								<div class="form-group"></div>
-
-								<div class="row">
-									<div class="col-md-2">No of KM</div>
-									<div class="col-md-4">
-										<input type="text" id="no_of_km" name="no_of_km"
-											onchange="calcAll()" class="form-control"
-											style="width: 100%;">
-									</div>
-									<div class="col-md-2">Toll Amount</div>
-									<div class="col-md-4">
-										<input type="text" id="toll_amt" name="toll_amt"
-											onchange="calcAll()" class="form-control">
-									</div>
-								</div>
-
-								<div class="form-group"></div>
-								<div class="row">
-
-									<!-- <div class="col-md-2">Calculate By</div>
-									<div class="col-md-2">
-										Automatic<input type="radio" checked name="calc_by"
-											id="calc_by" value="1">
-									</div>
-
-									<div class="col-md-2">
-										Manual<input type="radio" name="calc_by" id="calc_by"
-											value="0">
-									</div> -->
-
-									<div class="col-md-2">Other Cost</div>
-									<div class="col-md-4">
-										<input type="text" onchange="calcAll()" id="other_cost"
-											name="other_cost" class="form-control" style="width: 100%;">
-									</div>
-
-									<div class="col-md-2">No of Tolls</div>
-									<div class="col-md-4">
-										<input type="text" id="no_of_tolls" name="no_of_tolls"
-											class="form-control" style="width: 100%;">
-									</div>
-
-								</div>
-
-								<div class="form-group"></div>
-
-								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">is Tax Included</div>
-									<div class="col-md-1">
-										Yes<input type="radio" checked name="is_tax_inc"
-											id="is_tax_inc" value="1"
-											onchange="changeTaxValue(this.value)">
-									</div>
-
-									<div class="col-md-1">
-										No<input type="radio" name="is_tax_inc" id="is_tax_inc"
-											value="0" onchange="changeTaxValue(this.value)">
-									</div>
-									<div class="col-md-2"></div>
-									<div class="col-md-2">Location</div>
-
-									<div class="col-md-4">
-										<input type="text" id="location" name="location"
-											class="form-control" style="width: 100%;" value="-">
-									</div>
-
-
-								</div>
-								<input type="checkbox" name="selAll" id="selAll" /> All	
+  
+								 
+								 
 							<div class="card-body card-block">
 
 									<table id="bootstrap-data-table"
@@ -304,21 +173,10 @@
 
 												<th style="text-align: center" class="col-md-1">Item</th>
 												<th style="text-align: center" class="col-md-1">Qty</th>
-												<th style="text-align: center" class="col-md-1">UOM</th>
-
-												<th style="text-align: center" class="col-md-1">Tran co</th>
-												<th style="text-align: center" class="col-md-1">Toll
-													Cost</th>
-												<th style="text-align: center" class="col-md-1">Other
-													Cost</th>
-
+												 
 												<th style="text-align: center" class="col-md-1">Item
-													Rate</th>
-												<th style="text-align: center" class="col-md-1">Roy
-													Rate</th>
-												<th style="text-align: center" class="col-md-1">GST</th>
-
-												<th style="text-align: center" class="col-md-1">Taxable</th>
+													Rate</th> 
+												<th style="text-align: center" class="col-md-1">GST</th> 
 												<th style="text-align: center" class="col-md-1">Tax</th>
 												<th style="text-align: center" class="col-md-1">Other
 													Cost After Tax</th>
@@ -329,71 +187,42 @@
 										</thead>
 										<tbody>
 
-											<c:forEach items="${itemList}" var="item" varStatus="count">
+											<c:forEach items="${quotHeader.getQuotDetailList}" var="getQuotDetailList" varStatus="count">
 												<tr>
 
-													<td style="text-align: center">${count.index+1}<input type="checkbox" value="${item.itemId}"  name="selectItem"></td>
+													<td style="text-align: center">${count.index+1} </td>
 
 
 													<td style="text-align: left"><c:out
-															value="${item.itemName}" /></td>
+															value="${getQuotDetailList.itemName}" /></td>
 
-													<td style="text-align: left"><input type="text"
-														id="quot_qty${item.itemId}" name="quot_qty${item.itemId}"
-														value="${item.enqQty}" class="form-control"></td>
+													<td style="width: 100px"><input type="text"
+														id="pOqty${getQuotDetailList.itemId}" name="pOqty${getQuotDetailList.itemId}"
+														value="${getQuotDetailList.quotQty}" class="form-control"   style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;" required></td>
+														
+														<td style="width: 100px"><input type="text"
+														 id="taxableAmt${getQuotDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
+														name="taxableAmt${getQuotDetailList.itemId}" onchange="calFinalValue(${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer},${getQuotDetailList.itemId});" value="${getQuotDetailList.taxableValue}" class="form-control" required></td>
+														
+														<td style="text-align: right;"><c:out
+															value="${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer}%" /></td>
+    		 
 
-													<td style="text-align: left"><c:out
-															value="${item.uomName}" /></td>
+													<td id="taxValuetd${getQuotDetailList.itemId}" style="text-align: right"><c:out
+															value="${getQuotDetailList.taxValue}" /></td>
+  
+													<td style="width: 100px"><input type="text" 
+														id="othCostAftTax${getQuotDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
+														name="othCostAftTax${getQuotDetailList.itemId}" onchange="calFinalValue(${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer},${getQuotDetailList.itemId});" value="${getQuotDetailList.otherCostAfterTax}" class="form-control" required>
+													
+													<input type="hidden" id="taxAmt${getQuotDetailList.itemId}" 
+														name="taxAmt${getQuotDetailList.itemId}" value="${getQuotDetailList.taxValue}" required>
+													
+													</td>
 
-
-													<td style="text-align: center"><input type="text"
-														id="trans_cost${item.itemId}"
-														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
-														name="trans_cost${item.itemId}" class="form-control"></td>
-
-													<td style="text-align: center"><input type="text"
-														id="toll_cost${item.itemId}" readonly
-														name="toll_cost${item.itemId}" class="form-control"></td>
-
-													<td style="text-align: center"><input type="text"
-														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
-														id="other_cost${item.itemId}"
-														name="other_cost${item.itemId}" class="form-control"></td>
-													<!-- 
-													<td style="text-align: center"><input type="text"
-														id="trans_cost" name="trans_cost" class="form-control"
-														style="width: 100%;"></td>
- -->
-
-
-													<td style="text-align: left"><c:out
-															value="${item.itemRate1}" /></td>
-
-													<td style="text-align: left"><c:out
-															value="${item.royaltyRate}" /></td>
-
-													<td style="text-align: left"><c:out
-															value="${item.totalTaxPer}%" /></td>
-
-													<td style="text-align: right"><input type="text"
-														readonly id="taxable_amt${item.itemId}"
-														name="taxable_amt${item.itemId}" class="form-control"></td>
-
-
-													<td style="text-align: right" width="100%"><input
-														type="text" readonly id="tax_amt${item.itemId}"
-														name="tax_amt${item.itemId}" class="form-control"></td>
-
-
-
-													<td style="text-align: center"><input type="text"
-														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
-														id="oth_cost_aft_tax${item.itemId}"
-														name="oth_cost_aft_tax${item.itemId}" class="form-control"></td>
-
-													<td style="text-align: right"><input type="text"
-														readonly id="final_amt${item.itemId}"
-														name="final_amt${item.itemId}" class="form-control"></td>
+													<td style="width: 100px"><input type="text"
+														readonly id="finalAmt${getQuotDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
+														name="finalAmt${getQuotDetailList.itemId}" value="${getQuotDetailList.total}" class="form-control" readonly></td>
 
 
 												</tr>
@@ -404,8 +233,7 @@
 
 
 								</div>
-								<div class="form-group"></div>
-
+								 
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -413,16 +241,20 @@
 									<div class="col-md-2">Remark</div>
 
 									<div class="col-md-9">
-										<input type="text" id="quot_remark" name="quot_remark"
-											class="form-control" style="width: 100%;" value="-" required>
-									</div>
-
-									<div class="col-md-1">
-										<input type="submit" class="btn btn-primary" value="Submit">
-
-									</div>
+										<input type="text" id="poRemark" name="poRemark"
+											class="form-control"  value="-" style="height: 32px;padding-bottom: 12px; text-align: left;font-size: 15px;" required>
+									</div> 
+ 
 
 								</div>
+								<div class="form-group"></div>
+								<div class="row">
+						<div class="col-md-12" style="text-align: center">
+						 
+						<button type="submit" style="height:35px;width:80px">Submit</button>
+						</div>
+						</div>
+						
 
 							</form>
 						</div>
@@ -508,41 +340,31 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$('input[id$=quot_date]').datepicker({
+			$('input[id$=poDate]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-
+			$('input[id$=poValidityDate]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+			
 		});
 	</script>
 
 
 	<script type="text/javascript">
-		function setKM(delPlace) {
-		//	alert("delPlace " +delPlace)
-			if(delPlace==1){
-				document.getElementById("no_of_km").value="0";
-				document.getElementById("toll_amt").value="0";
-				calcAll();
-			}
-		
-		}
-		function changeTaxValue(value){
-			calcAll();
-		}
-		
-		function setData(){
-			var payTerm= $("#pay_term_id option:selected").html();
-			alert("payTerm " +payTerm);
-			document.getElementById("pay_term_name").value=payTerm;
+		function calFinalValue(taxPer,itemId) {
 			
-		}
+			var rate = parseFloat(document.getElementById("taxableAmt"+itemId).value);
+			var othCostAftTax = parseFloat(document.getElementById("othCostAftTax"+itemId).value);
+		 
+			var taxValue = parseFloat((taxPer/100)*rate);
+			
+			document.getElementById("taxAmt"+itemId).value = (taxValue).toFixed(2); 
+			document.getElementById("taxValuetd"+itemId).innerHTML = (taxValue).toFixed(2); 
+			document.getElementById("finalAmt"+itemId).value = (rate+taxValue+othCostAftTax).toFixed(2);
 		
-		function toggle() {
-			  checkboxes = document.getElementsByName('selectItem');
-			  for(var i=0, n=checkboxes.length;i<n;i++) {
-			    checkboxes[i].checked = source.checked;
-			  }
-			}
+		}
+		 
 		</script>
 
 
@@ -642,348 +464,7 @@
 			 }
 		}
 </script>
-	<script type="text/javascript">
-
-function itemCalc(itemId,fRate,itemRate,royRate,taxPer){
-	//alert("Hi");
-	var isTaxInc;
-			if (document.getElementById('is_tax_inc').checked) {
-				isTaxInc = document.getElementById('is_tax_inc').value;
-				}
-			else{
-				isTaxInc=0;
-			}
-			 if(isTaxInc==0){
-				 taxPer=0;
-			 }
-	var tollCost =document.getElementById("toll_cost"+itemId).value;
-	var transCost =document.getElementById("trans_cost"+itemId).value;
-	var otherCost= document.getElementById("other_cost"+itemId).value;
-	
-	var otherCostAfterTax= document.getElementById("oth_cost_aft_tax"+itemId).value;
-	 if(otherCostAfterTax==null || otherCostAfterTax==""){
-		 otherCostAfterTax=0;
-	 }
-	
-	 if(otherCost==null || otherCost==""){
-		 otherCost=0;
-	 }
 	 
-	 if(tollCost==null || tollCost==""){
-		 tollCost=0;
-	 }
-	 
-	 if(transCost==null || transCost==""){
-		 transCost=0;
-	 }
-	
-	var taxableAmt=parseFloat(itemRate)+parseFloat(tollCost)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
-	
-	document.getElementById("taxable_amt"+itemId).value=taxableAmt;
-
-	var taxAmt=(taxableAmt*taxPer)/100;
-
-	document.getElementById("tax_amt"+itemId).value=taxAmt;
-	 var finalAmt=parseFloat(taxableAmt)+parseFloat(taxAmt)+parseFloat(otherCostAfterTax);
-	 document.getElementById("final_amt"+itemId).value=finalAmt;
-	 
-}
-
-</script>
-	<!-- <script type="text/javascript">
-		function getData() {
-			var plantId = document.getElementById("plant_id").value;
-			document.getElementById("isEdit").value = 0;
-			var valid = true;
-
-			if (plantId == null || plantId == "") {
-				valid = false;
-				alert("Please Select plant");
-			}
-
-			if (valid == true) {
-
-				$.getJSON('${getItemsByPlantId}', {
-
-					plantId : plantId,
-					ajax : 'true',
-
-				},
-
-				function(data) {
-					var html;
-					var len = data.length;
-					var html = '<option value="-1"  >Select Item</option>';
-					for (var i = 0; i < len; i++) {
-
-						html += '<option value="' + data[i].itemId + '">'
-								+ data[i].itemName + '</option>';
-					}
-					html += '</option>';
-
-					$('#item_name').html(html);
-					$("#item_name").trigger("chosen:updated");
-
-				});
-
-				$.getJSON('${getCustByPlantId}', {
-					plantId : plantId,
-					ajax : 'true',
-				},
-
-				function(data) {
-					var html;
-					var len = data.length;
-					for (var i = 0; i < len; i++) {
-
-						html += '<option value="' + data[i].custId + '">'
-								+ data[i].custName + '</option>';
-
-					}
-					html += '</option>';
-
-					$('#cust_name').html(html);
-					$("#cust_name").trigger("chosen:updated");
-
-				});
-
-			}//end of if
-
-		}
-	</script>
-
-	<script type="text/javascript">
-		function setSelectedUom(itemId) {
-
-			if (itemId == -1) {
-				document.getElementById("qty").value = "";
-				document.getElementById("item_remark").value = "";
-				document.getElementById("item_name").options.selectedIndex = "0";
-				document.getElementById("uomId").options.selectedIndex = "0";
-				$("#uomId").trigger("chosen:updated");
-				$("#item_name").trigger("chosen:updated");
-				document.getElementById("isEdit").value = "0";
-				document.getElementById("itemUomId").value = "0";
-				document.getElementById("item_rate").value = "0"
-			} else {
-				$
-						.getJSON(
-								'${getItemByItemId}',
-								{
-									itemId : itemId,
-									ajax : 'true',
-								},
-
-								function(data) {
-									document.getElementById("uomId").value = data.uomId;
-									$("#uomId").trigger("chosen:updated");
-									document.getElementById("itemUomId").value = data.uomId;
-									document.getElementById("item_rate").value = data.itemRate1;
-								});
-			}
-		}
-	</script> -->
-
-	<!-- <script type="text/javascript">
-		function addItem() {
-			//alert("in add Item ");
-			var itemId = document.getElementById("item_name").value;
-			var itemName = $("#item_name option:selected").html();
-			var uomId = document.getElementById("uomId").value;
-			var uomName = $("#uomId option:selected").html();
-			var qty = document.getElementById("qty").value;
-			var isEdit = document.getElementById("isEdit").value;
-			var itemRemark = document.getElementById("item_remark").value;
-			var itemUomId = document.getElementById("itemUomId").value;
-			var x = false;
-			var y = false;
-			x = isNaN(qty);
-
-			var plantId = document.getElementById("plant_id").value;
-			var valid = false;
-
-			if (plantId == null || plantId == "") {
-				valid = true;
-				var msg = "Please Select plant";
-				callAlert(msg);
-			}
-
-			else if (itemId == "" || itemId < 0) {
-				valid = true;
-				var msg = "Please Select Item Name";
-				callAlert(msg);
-			} else if ((x == true) || (qty == null) || (qty == "") || (qty < 0)) {
-				var msg = "Please Enter Valid Quantity";
-				valid = true;
-				callAlert(msg);
-			}
-
-			//alert("x=" +x + "y= " +y);
-			if (valid == false) {
-				alert("Inside add ajax");
-				$
-						.getJSON(
-								'${addEnqItem}',
-								{
-									isEdit : isEdit,
-									key : -1,
-									itemId : itemId,
-									itemName : itemName,
-									uomId : uomId,
-									uomName : uomName,
-									qty : qty,
-									itemRemark : itemRemark,
-									itemUomId : itemUomId,
-									ajax : 'true',
-
-								},
-
-								function(data) {
-									var dataTable = $('#bootstrap-data-table')
-											.DataTable();
-									dataTable.clear().draw();
-
-									$
-											.each(
-													data,
-													function(i, v) {
-														if (v.isDuplicate == 1) {
-															alert("Item Already Added in Enquiry");
-														}
-														//var str = '<input  type="button"  class="fa  fa-stack-exchange" onclick="callEdit('+v.itemId+','+i+')" style="width:100%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:100%;"/> ';
-
-														var str = '<a href="#" class="action_btn" onclick="callDelete('
-																+ v.itemId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-																+ v.itemId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-edit"></i></a>'
-
-														dataTable.row
-																.add(
-																		[
-																				i + 1,
-																				v.itemName,
-																				v.uomName,
-																				v.enqQty,
-																				str ])
-																.draw();
-													});
-									document.getElementById("qty").value = "";
-									document.getElementById("item_remark").value = "";
-									document.getElementById("item_name").options.selectedIndex = "0";
-									document.getElementById("uomId").options.selectedIndex = "0";
-									$("#uomId").trigger("chosen:updated");
-									$("#item_name").trigger("chosen:updated");
-									document.getElementById("isEdit").value = 0;
-									document.getElementById("itemUomId").value = "0";
-									document.getElementById("item_rate").value = "0"
-								});
-
-			}//end of if
-			else {
-
-			}
-		}
-
-		function callEdit(itemId, index) {
-			$
-					.getJSON(
-							'${getItemForEdit}',
-							{
-								itemId : itemId,
-								index : index,
-								ajax : 'true',
-
-							},
-							function(data) {
-
-								document.getElementById("uomId").value = data.uomId;
-								$("#uomId").trigger("chosen:updated");
-								document.getElementById("qty").value = data.enqQty;
-								document.getElementById("item_remark").value = data.itemEnqRemark;
-								document.getElementById("item_name").value = data.itemId;
-								$("#item_name").trigger("chosen:updated");
-								document.getElementById("isEdit").value = 1;
-								document.getElementById("itemUomId").value = data.itemUomId;
-								document.getElementById("item_rate").value = data.itemRate1;
-							});
-
-		}
-
-		function callDelete(itemId, index) {
-			document.getElementById("isEdit").value = 0;
-
-			$
-					.getJSON(
-							'${addEnqItem}',
-							{
-								isEdit : 0,
-								key : index,
-								ajax : 'true',
-
-							},
-
-							function(data) {
-								var dataTable = $('#bootstrap-data-table')
-										.DataTable();
-								dataTable.clear().draw();
-								$
-										.each(
-												data,
-												function(i, v) {
-													//	var str = '<input  type="button" value="callEdit" onclick="callEdit('+v.itemId+','+i+')" style="width:30%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:30%;"/> ';
-													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.itemId
-															+ ','
-															+ i
-															+ ')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.itemId
-															+ ','
-															+ i
-															+ ')"><abbr title="Edit"><i class="fa fa-edit"></i></abbr></a>'
-
-													dataTable.row.add(
-															[ i + 1,
-																	v.itemName,
-																	v.uomName,
-																	v.enqQty,
-																	str ])
-															.draw();
-												});
-							});
-
-			document.getElementById("qty").value = "";
-			document.getElementById("item_remark").value = "";
-			document.getElementById("item_name").options.selectedIndex = "0";
-			document.getElementById("uomId").options.selectedIndex = "0";
-			$("#uomId").trigger("chosen:updated");
-			$("#item_name").trigger("chosen:updated");
-			document.getElementById("item_rate").value = "0";
-		}
-		function validate(s) {
-			var rgx = /^[0-9]*\.?[0-9]*$/;
-			return s.match(rgx);
-		}
-		function callAlert(msg) {
-			alert(msg);
-		}
-		
-	</script> -->
-
-	<!-- <script type="text/javascript">
-		$(document).ready(function() {
-			var dataTable = $('#bootstrap-data-table').DataTable();
-				columnDefs : [ {
-					targets : [ 1,2],
-					className : "right"
-				}, ]
-			
-		});
-	</script> -->
 
 </body>
 </html>
