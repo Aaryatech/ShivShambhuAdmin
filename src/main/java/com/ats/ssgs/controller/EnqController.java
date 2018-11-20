@@ -30,6 +30,7 @@ import com.ats.ssgs.model.enq.EnqHeader;
 import com.ats.ssgs.model.enq.TempEnqItem;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.Document;
+import com.ats.ssgs.model.master.GetCust;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.Plant;
@@ -125,6 +126,25 @@ public class EnqController {
 		System.err.println("Ajax Item  " + item.toString());
 
 		return item;
+
+	}
+
+	@RequestMapping(value = "/getCustInfoByCustId", method = RequestMethod.GET)
+	public @ResponseBody GetCust getCustInfoByCustId(HttpServletRequest request, HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int custId = Integer.parseInt(request.getParameter("custId"));
+
+		System.out.println("custId" + custId);
+
+		map.add("custId", custId);
+
+		GetCust cust = rest.postForObject(Constants.url + "getCustomerByCustId", map, GetCust.class);
+
+		System.err.println("Ajax Customer  " + cust.toString());
+
+		return cust;
 
 	}
 
@@ -510,7 +530,7 @@ public class EnqController {
 					QuotHeader.class);
 
 			System.err.println("quotHeadInsertRes  " + quotHeadInsertRes.toString());
-			
+
 			if (quotHeadInsertRes != null) {
 
 				map = new LinkedMultiValueMap<String, Object>();

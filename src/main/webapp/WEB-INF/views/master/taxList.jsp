@@ -124,14 +124,14 @@
 											<td style="text-align: left"><c:out
 													value="${tax.hsnCode}" /></td>
 
-											<td style="text-align: left"><c:out value="${tax.cgst}" /></td>
+											<td style="text-align: right"><c:out value="${tax.cgst}" /></td>
 
-											<td style="text-align: left"><c:out value="${tax.sgst}" /></td>
+											<td style="text-align: right"><c:out value="${tax.sgst}" /></td>
 
-											<td style="text-align: left"><c:out value="${tax.igst}" /></td>
-											<td style="text-align: left"><c:out value="${tax.cess}" /></td>
+											<td style="text-align: right"><c:out value="${tax.igst}" /></td>
+											<td style="text-align: right"><c:out value="${tax.cess}" /></td>
 
-											<td style="text-align: left"><c:out
+											<td style="text-align: right"><c:out
 													value="${tax.totalTaxPer}" /></td>
 
 

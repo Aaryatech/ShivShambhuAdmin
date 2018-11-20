@@ -19,6 +19,8 @@
 
 <c:url var="getItemForEdit" value="/getItemForEdit" />
 
+<c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -76,6 +78,7 @@
 
 
 	<!-- Header-->
+	<jsp:include page="/WEB-INF/views/common/right.jsp"></jsp:include>
 	<!-- Header-->
 
 
@@ -88,7 +91,15 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<strong>${title}</strong>
+							<div class="col-md-2">
+								<strong>${title}</strong>
+							</div>
+							<div class="col-md-8"></div>
+							<div class="col-md-2" align="left">
+								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
+										Customer</strong></a>
+							</div>
+
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertEnq"
@@ -115,12 +126,38 @@
 										<select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
-											onchange="try{setCustomValidity('')}catch(e){}">
+											onchange="getCustInfo()">
 
 
 										</select>
 									</div>
 
+								</div>
+								<div id="divCheckbox" style="display: none;">
+									<div class="form-group"></div>
+									<div class="row">
+
+
+
+										<div class="col-md-2">Cust Type Name</div>
+
+										<div class="col-md-4">
+											<input type="text" id="custTypeName" name="custTypeName"
+												readonly required style="width: 100%;" class="form-control">
+											<span class="error" aria-live="polite"></span>
+										</div>
+
+
+
+										<div class="col-md-2">Cust Mobile No</div>
+
+										<div class="col-md-4">
+											<input type="text" readonly id="custMobNo" name="custMobNo"
+												style="width: 100%;" class="form-control"> <span
+												class="error" aria-live="polite"></span>
+										</div>
+
+									</div>
 								</div>
 								<input type="hidden" name="item_id" id="item_id" value="0">
 								<div class="form-group"></div>
@@ -432,11 +469,47 @@
 
 					$('#cust_name').html(html);
 					$("#cust_name").trigger("chosen:updated");
+					getCustInfo();
+
 
 				});
-
 			}//end of if
 
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		function getCustInfo() {
+
+			$('#divCheckbox').show();
+			var custId = document.getElementById("cust_name").value;
+			var valid = true;
+
+			if (custId == null || custId == "") {
+				valid = false;
+				alert("Please Select Customer");
+			}
+
+			if (valid == true) {
+
+				$
+						.getJSON(
+								'${getCustInfoByCustId}',
+								{
+
+									custId : custId,
+									ajax : 'true',
+
+								},
+
+								function(data) {
+
+									document.getElementById("custTypeName").value = data.custTypeName;
+									document.getElementById("custMobNo").value = data.custMobNo;
+
+								});
+			}
 		}
 	</script>
 

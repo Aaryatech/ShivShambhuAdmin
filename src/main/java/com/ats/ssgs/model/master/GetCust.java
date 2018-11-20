@@ -71,17 +71,20 @@ public class GetCust {
 
 	private int custVendor;
 
+	private String plantName;
+
 	private String ownerName;
 
 	private String accPerson;
 
 	private String accPerMob;
 
-	private String plantName;
 	private String pincode;
 	private float km;
 	private float creaditLimit;
 	private float creaditDays;
+
+	private String custTypeName;
 
 	public int getCustId() {
 		return custId;
@@ -427,6 +430,14 @@ public class GetCust {
 		this.creaditDays = creaditDays;
 	}
 
+	public String getCustTypeName() {
+		return custTypeName;
+	}
+
+	public void setCustTypeName(String custTypeName) {
+		this.custTypeName = custTypeName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetCust [custId=" + custId + ", custName=" + custName + ", respPerson=" + respPerson + ", custMobNo="
@@ -439,9 +450,9 @@ public class GetCust {
 				+ ", dateOfReg=" + dateOfReg + ", chequeRemark=" + chequeRemark + ", isChequeRcvd=" + isChequeRcvd
 				+ ", contactPerName=" + contactPerName + ", contactPerMob=" + contactPerMob + ", custLandline="
 				+ custLandline + ", isSameState=" + isSameState + ", custCode=" + custCode + ", custVendor="
-				+ custVendor + ", ownerName=" + ownerName + ", accPerson=" + accPerson + ", accPerMob=" + accPerMob
-				+ ", plantName=" + plantName + ", pincode=" + pincode + ", km=" + km + ", creaditLimit=" + creaditLimit
-				+ ", creaditDays=" + creaditDays + "]";
+				+ custVendor + ", plantName=" + plantName + ", ownerName=" + ownerName + ", accPerson=" + accPerson
+				+ ", accPerMob=" + accPerMob + ", pincode=" + pincode + ", km=" + km + ", creaditLimit=" + creaditLimit
+				+ ", creaditDays=" + creaditDays + ", custTypeName=" + custTypeName + "]";
 	}
 
 }
