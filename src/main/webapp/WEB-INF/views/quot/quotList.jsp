@@ -119,11 +119,15 @@
 
 											<td style="text-align: center"><a
 												href="${pageContext.request.contextPath}/editQuot/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
-													class="fa fa-edit"></i> <span class="text-muted"></span></a>
-												&nbsp; <a
+													class="fa fa-edit" title="Edit"></i> <span class="text-muted"></span></a>
+												  <a
 												href="${pageContext.request.contextPath}/deleteQuot/${quot.quotHeadId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o"></i></a></td>
+													class="fa fa-trash-o" title="Delete"></i></a>
+													
+													<a
+												href="${pageContext.request.contextPath}/addPo/${quot.quotHeadId}"><i
+													class="fa fa-list" title="Create PO"></i> </a>
 
 										</tr>
 									</c:forEach>
