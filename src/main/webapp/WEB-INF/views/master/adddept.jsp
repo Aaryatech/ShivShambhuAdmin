@@ -172,7 +172,7 @@
 											<td style="text-align: left"><c:out
 													value="${dept.deptName}" /></td>
 
-											<td style="text-align: left"><c:out
+											<td style="text-align: right"><c:out
 													value="${dept.sortNo}" /></td>
 
 
@@ -257,7 +257,6 @@
 		$(document).ready(function() {
 			$('#bootstrap-data-table').DataTable();
 		});
-		
 	</script>
 
 

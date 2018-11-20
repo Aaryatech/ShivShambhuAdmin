@@ -184,7 +184,7 @@
 													value="${uom.uomShortName}" /></td>
 
 
-											<td style="text-align: left"><c:out
+											<td style="text-align: right"><c:out
 													value="${uom.sortNo}" /></td>
 
 

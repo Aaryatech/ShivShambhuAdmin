@@ -432,16 +432,16 @@
 		}
 	</script>
 
-	<!-- <script type="text/javascript">
+	<script type="text/javascript">
 		$(document).ready(function() {
 			var dataTable = $('#bootstrap-data-table').DataTable();
-				columnDefs : [ {
-					targets : [ 1,2],
-					className : "right"
-				}, ]
-			
+			columnDefs: [ {
+				targets : [ 2 ],
+				className : "right"
+			}, ]
+
 		});
-	</script> -->
+	</script>
 
 </body>
 </html>

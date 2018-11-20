@@ -126,10 +126,10 @@
 									<div class="col-md-4">
 										<input type="text" id="cgst" name="cgst"
 											value="${editTax.cgst}" class="form-control"
-											oninvalid="setCustomValidity('Please enter Cgst')"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											oninvalid="setCustomValidity('Please enter Cgst')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											style="width: 100%;">
+											style="width: 100%;" required>
 									</div>
 									<div class="col-md-2">SGST</div>
 									<div class="col-md-4">
@@ -165,14 +165,14 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Cess</div>
+									<div class="col-md-2">CESS</div>
 									<div class="col-md-4">
 										<input type="text" id="cess" name="cess"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" value="${editTax.cess}"
 											class="form-control"
 											oninvalid="setCustomValidity('Please enter Cgst')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											style="width: 100%;">
+											style="width: 100%;" required>
 									</div>
 									<div class="col-md-2">Sort No</div>
 									<div class="col-md-4">
