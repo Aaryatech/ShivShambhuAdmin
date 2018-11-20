@@ -265,8 +265,8 @@
 											class="standardSelect" tabindex="1" multiple="multiple"
 											oninvalid="setCustomValidity('Please select vendors')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+											
 											<c:forEach items="${vendList}" var="vendor">
-
 
 												<c:forEach items="${editItem.vendorIds}" var="ven">
 													<c:choose>

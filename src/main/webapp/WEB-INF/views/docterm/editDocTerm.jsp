@@ -92,8 +92,7 @@
 							<strong>${title}</strong>
 						</div>
 						<div class="card-body card-block">
-							<form
-								action="${pageContext.request.contextPath}/updateDocTerm"
+							<form action="${pageContext.request.contextPath}/updateDocTerm"
 								method="post">
 
 								<div class="row">
@@ -104,17 +103,12 @@
 										<select id="doc_id" name="doc_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select Document name')">
-											<option value="">Select Document</option>
+
 
 											<c:forEach items="${docList}" var="doc">
-
-
 												<c:if test="${doc.docId==editDoc.docId}">
 													<option value="${doc.docId}" selected>${doc.docName}</option>
 												</c:if>
-
-
-
 
 												<%-- <option value="${doc.docId}">${doc.docName}</option> --%>
 											</c:forEach>
