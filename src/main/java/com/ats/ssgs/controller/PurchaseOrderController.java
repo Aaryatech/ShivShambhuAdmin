@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
+import com.ats.ssgs.model.GetPoHeader;
 import com.ats.ssgs.model.GetQuotHeader;
 import com.ats.ssgs.model.PoDetail;
 import com.ats.ssgs.model.PoHeader;
@@ -90,6 +91,7 @@ public class PurchaseOrderController {
 			save.setPoTermId(quotHeader.getPayTermId());
 			save.setPlantId(Integer.parseInt(quotHeader.getPlantIds()));
 			save.setVarchar1(delivery);
+			save.setQutDate(quotHeader.getQuotDate());
 			save.setDelStatus(1);
 			
 			List<PoDetail> poDetailList = new ArrayList<PoDetail>();
@@ -130,7 +132,159 @@ public class PurchaseOrderController {
 			e.printStackTrace();
 
 		}
-		return "redirect:/showQuotations";
+		return "redirect:/getPoList";
+	}
+	
+	@RequestMapping(value = "/getPoList", method = RequestMethod.GET)
+	public ModelAndView getPoList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("purchaseOrder/poList");
+		try {
+
+			 Date date = new Date();
+			 SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+			 SimpleDateFormat dd = new SimpleDateFormat("dd-MM-yyyy");
+			 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			 
+			 if(request.getParameter("fromDate")!=null | request.getParameter("toDate")!=null) {
+				 
+				 String fromDate = request.getParameter("fromDate");
+				 String toDate = request.getParameter("toDate");
+				 
+				 map.add("fromDate", DateConvertor.convertToYMD(fromDate)); 
+				 map.add("toDate",  DateConvertor.convertToYMD(toDate)); 
+					
+					GetPoHeader[] getPoHeader=rest.postForObject(Constants.url + "/getPoListByDate", map, GetPoHeader[].class);
+					 
+					List<GetPoHeader> poList = new ArrayList<GetPoHeader>(Arrays.asList(getPoHeader));
+					
+					model.addObject("poList",poList); 
+					model.addObject("fromDate",fromDate);
+					model.addObject("toDate",toDate);
+			 }
+			 else{
+				 map.add("fromDate", sf.format(date)); 
+					map.add("toDate", sf.format(date)); 
+					
+					GetPoHeader[] getPoHeader=rest.postForObject(Constants.url + "/getPoListByDate", map, GetPoHeader[].class);
+					 
+					List<GetPoHeader> poList = new ArrayList<GetPoHeader>(Arrays.asList(getPoHeader));
+					
+					model.addObject("poList",poList); 
+					model.addObject("fromDate",dd.format(date));
+					model.addObject("toDate",dd.format(date));
+			 }
+			 
+			
+
+			
+			
+		} catch (Exception e) {
+			 
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+	
+	@RequestMapping(value = "/deletePurchaseOrder/{poId}", method = RequestMethod.GET)
+	public String deletePurchaseOrder(@PathVariable int poId, HttpServletRequest request, HttpServletResponse response) {
+
+		 
+		try {
+			
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				 map.add("poId",poId);  
+					
+				 Info info=rest.postForObject(Constants.url + "/deletePurchaseOrder", map, Info.class);
+				 
+				 System.out.println(info);
+			
+		} catch (Exception e) {
+			 
+			e.printStackTrace();
+		}
+		return "redirect:/getPoList";
+
+	}
+	
+	GetPoHeader editPo = new GetPoHeader();
+	
+	@RequestMapping(value = "/editPo/{poId}", method = RequestMethod.GET)
+	public ModelAndView editPo(@PathVariable int poId, HttpServletRequest request, HttpServletResponse response) {
+ 
+		ModelAndView model = new ModelAndView("purchaseOrder/editPo");
+		try {
+			
+				 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				 map.add("poId",poId);  
+					
+				 editPo =rest.postForObject(Constants.url + "/getPoHeaderWithDetail", map, GetPoHeader.class);
+				 model.addObject("editPo",editPo);
+			
+		} catch (Exception e) {
+			 
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+	
+	@RequestMapping(value = "/submitEditPurchaseOrder", method = RequestMethod.POST)
+	public String submitEditPurchaseOrder(HttpServletRequest request, HttpServletResponse response) {
+
+		 
+		try {
+ 
+			 String poRemark = request.getParameter("poRemark");
+			String poDate = request.getParameter("poDate");
+			String poValidityDate = request.getParameter("poValidityDate");
+			String delivery =  request.getParameter("delivery") ;
+			String poNo =  request.getParameter("poNo") ; 
+  
+
+			PoHeader save = new PoHeader();
+			
+			 
+			editPo.setPoNo(poNo);
+			editPo.setRemark(poRemark);
+			editPo.setPoDate(DateConvertor.convertToYMD(poDate)); 
+			editPo.setPoValidityDate(DateConvertor.convertToYMD(poValidityDate)); 
+			editPo.setVarchar1(delivery);
+			editPo.setQutDate(DateConvertor.convertToYMD(editPo.getQutDate()));
+			editPo.setExtraDate1(DateConvertor.convertToYMD(editPo.getExtraDate1()));
+			editPo.setExtraDate2(DateConvertor.convertToYMD(editPo.getExtraDate2()));
+			
+			List<PoDetail> poDetailList = new ArrayList<PoDetail>();
+			
+			/*for(int i=0 ; i< editPo.getGetPoDetailList().size() ; i++) {
+				 
+				poDetail.setPoQty(Float.parseFloat(request.getParameter("pOqty"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
+				poDetail.setPoRate(Float.parseFloat(request.getParameter("taxableAmt"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
+				poDetail.setTaxableAmt(poDetail.getPoRate());
+				poDetail.setTaxAmt(Float.parseFloat(request.getParameter("taxAmt"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
+				poDetail.setOtherCharges(Float.parseFloat(request.getParameter("othCostAftTax"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
+				poDetail.setTotal(Float.parseFloat(request.getParameter("finalAmt"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
+				poDetail.setTaxPer(quotHeader.getGetQuotDetailList().get(i).getSgstPer()+quotHeader.getGetQuotDetailList().get(i).getSgstPer()+
+						quotHeader.getGetQuotDetailList().get(i).getIgstPer());
+				poDetailList.add(poDetail);
+				
+			}
+			 
+			save.setPoDetailList(poDetailList);
+ 
+			PoHeader res = rest.postForObject(Constants.url + "savePurchaseOrder", save,
+					PoHeader.class);
+
+			System.err.println("res  " + res.toString());*/
+			 
+
+		} catch (Exception e) {
+			 
+			e.printStackTrace();
+
+		}
+		return "redirect:/getPoList";
 	}
 
 }
