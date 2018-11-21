@@ -101,7 +101,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Department Name</div>
+									<div class="col-md-2">Department Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="deptName" name="deptName"
 											oninvalid="setCustomValidity('Please Enter Dept Name')"
@@ -112,7 +112,7 @@
 
 
 
-									<div class="col-md-2">Sort No</div>
+									<div class="col-md-2">Sort No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"

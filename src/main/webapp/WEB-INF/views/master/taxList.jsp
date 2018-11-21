@@ -98,17 +98,17 @@
 
 										<th style="text-align: center">Sr</th>
 										<th style="text-align: center">Tax Name</th>
-										<th style="text-align: center">Hsn Code</th>
-										<th style="text-align: center">Cgst</th>
-										<th style="text-align: center">Sgst</th>
-										<th style="text-align: center">Igst</th>
-										<th style="text-align: center">Cess</th>
+										<th style="text-align: center">HSN Code</th>
+										<th style="text-align: center">CGST</th>
+										<th style="text-align: center">SGST</th>
+										<th style="text-align: center">IGST</th>
+										<th style="text-align: center">CESS</th>
 										<th style="text-align: center">Total tax Per</th>
 
 
 
 
-										<th style="text-align: center">Action</th>
+										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
 								</thead>

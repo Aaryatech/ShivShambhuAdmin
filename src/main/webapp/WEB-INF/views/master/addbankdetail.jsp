@@ -95,7 +95,7 @@
 								<div class="row">
 
 
-									<div class="col-md-2">Select Company</div>
+									<div class="col-md-2">Select Company*</div>
 
 									<div class="col-md-4">
 										<select id="companyId" name="companyId" class="standardSelect"
@@ -116,7 +116,7 @@
 									</div>
 
 
-									<div class="col-md-2">Account Type</div>
+									<div class="col-md-2">Account Type*</div>
 
 									<div class="col-md-4">
 										<select id="accType" name="accType" class="standardSelect"
@@ -166,7 +166,7 @@
 									value="${editBankDetail.bankDetId}">
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Bank Name</div>
+									<div class="col-md-2">Bank Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="bankName" name="bankName"
 											oninvalid="setCustomValidity('Please enter Bank Name')"
@@ -175,7 +175,7 @@
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Bank IFSC Code</div>
+									<div class="col-md-2">Bank IFSC Code*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="bankIfsc" name="bankIfsc"
@@ -188,7 +188,7 @@
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Bank Address</div>
+									<div class="col-md-2">Bank Address*</div>
 									<div class="col-md-4">
 										<input type="text" id="bankAddress" name="bankAddress"
 											value="${editBankDetail.bankAddress}" class="form-control"
@@ -196,7 +196,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
-									<div class="col-md-2">Account No</div>
+									<div class="col-md-2">Account No*</div>
 									<div class="col-md-4">
 										<input type="text" id="accNo" name="accNo"
 											value="${editBankDetail.accNo}" class="form-control"

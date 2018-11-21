@@ -101,10 +101,10 @@
 										<th style="text-align: center">Company Name</th>
 										<th style="text-align: center">Telephone No</th>
 										<th style="text-align: center">Landline No</th>
-										<th style="text-align: center">Fax No</th>
+										<th style="text-align: center">FAX No</th>
 										<th style="text-align: center">Email</th>
 										<th style="text-align: center">Plant Address</th>
-										<th style="text-align: center">Action</th>
+										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
 								</thead>

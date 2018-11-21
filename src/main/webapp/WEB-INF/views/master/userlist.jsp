@@ -98,9 +98,9 @@
 
 										<th style="text-align: center">Sr</th>
 										<th style="text-align: center">User Name</th>
-										
+
 										<th style="text-align: center">Mobile No</th>
-											<th style="text-align: center">User Email</th>
+										<th style="text-align: center">User Email</th>
 										<th style="text-align: center">Dept Name</th>
 										<th style="text-align: center">Plant Name</th>
 
@@ -109,7 +109,7 @@
 
 
 
-										<th style="text-align: center">Action</th>
+										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
 								</thead>
@@ -124,10 +124,10 @@
 
 											<td style="text-align: left"><c:out
 													value="${user.usrMob}" /></td>
-													
-													<td style="text-align: left"><c:out
+
+											<td style="text-align: left"><c:out
 													value="${user.usrEmail}" /></td>
-													
+
 
 
 

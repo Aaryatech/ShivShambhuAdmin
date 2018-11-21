@@ -98,9 +98,15 @@
 
 										<th style="text-align: center">Sr</th>
 										<th style="text-align: center">Item Name</th>
-										<th style="text-align: center">Plant Name</th>
 										<th style="text-align: center">Item Code</th>
-
+										<th style="text-align: center">Item Type</th>
+										<th style="text-align: center">Plant Name</th>
+										<th style="text-align: center">Rate</th>
+										<th style="text-align: center">Tax Name</th>
+										<th style="text-align: center">UOM Name</th>
+										<th style="text-align: center">Dispatch limit</th>
+										<th style="text-align: center">Freight Rate</th>
+										<th style="text-align: center">Royalty Rate</th>
 										<th style="text-align: center">Action</th>
 
 									</tr>
@@ -116,10 +122,47 @@
 													value="${item.itemName}" /></td>
 
 											<td style="text-align: left"><c:out
+													value="${item.itemCode}" /></td>
+
+
+
+											<c:forEach items="${itemTypeList}" var="itemTypeVar"
+												varStatus="count">
+												<c:choose>
+													<c:when test="${itemTypeVar.itemTypeId==item.itemType}">
+														<td style="text-align: left"><c:out
+																value="${itemTypeVar.itemTypeName}" /></td>
+													</c:when>
+												</c:choose>
+											</c:forEach>
+
+
+
+
+											<td style="text-align: left"><c:out
 													value="${item.plantName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${item.itemCode}" /></td>
+													value="${item.itemRate1}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${item.taxName}" /></td>
+
+
+											<td style="text-align: left"><c:out
+													value="${item.uomName}" /></td>
+
+											<td style="text-align: right"><c:out
+													value="${item.dispatchLimit}" /></td>
+
+
+											<td style="text-align: right"><c:out
+													value="${item.freightRate}" /></td>
+
+											<td style="text-align: right"><c:out
+													value="${item.royaltyRate}" /></td>
+
+
 
 
 											<td style="text-align: center"><a

@@ -93,7 +93,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-3">Customer Type Name</div>
+									<div class="col-md-3">Customer Type Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="custTypeName" name="custTypeName"
 											oninvalid="setCustomValidity('Please Enter Cust Type Name')"

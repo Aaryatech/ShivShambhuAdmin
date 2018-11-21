@@ -92,7 +92,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+									<div class="col-md-2">Select Plant*</div>
 
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
@@ -104,7 +104,7 @@
 											</c:forEach>
 										</select>
 									</div>
-									<div class="col-md-2">Item Type</div>
+									<div class="col-md-2">Item Type*</div>
 									<div class="col-md-4">
 										<select id="item_type" name="item_type" class="standardSelect"
 											tabindex="1" required
@@ -121,7 +121,7 @@
 								<input type="hidden" name="item_id" id="item_id" value="0">
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Item Name</div>
+									<div class="col-md-2">Item Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="item_name" name="item_name"
 											class="form-control" required style="width: 100%;"
@@ -129,7 +129,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Item Code</div>
+									<div class="col-md-2">Item Code*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="item_code" name="item_code" required
@@ -146,7 +146,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select UOM</div>
+									<div class="col-md-2">Select UOM*</div>
 
 									<div class="col-md-4">
 										<select id="uomId" name="uomId" class="standardSelect"
@@ -159,7 +159,7 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Select Tax</div>
+									<div class="col-md-2">Select Tax*</div>
 
 									<div class="col-md-4">
 										<select id="taxId" name="taxId" class="standardSelect"
@@ -176,13 +176,13 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Short Name</div>
+									<div class="col-md-2">Short Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="short_name" name="short_name"
 											class="form-control" style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Item Rate</div>
+									<div class="col-md-2">Item Rate*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="rate" name="rate"
@@ -198,14 +198,14 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Actual Measurement</div>
+									<div class="col-md-2">Actual Measurement*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="act_weight" name="act_weight"
 											class="form-control" style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Base Measurement</div>
+									<div class="col-md-2">Base Measurement*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="base_weight" name="base_weight"
@@ -216,7 +216,7 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Vendors</div>
+									<div class="col-md-2">Vendors*</div>
 
 									<div class="col-md-4">
 										<select id="vendor_ids" name="vendor_ids"
@@ -229,7 +229,7 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Dispatch Limit</div>
+									<div class="col-md-2">Dispatch Limit*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="disp_limit" name="disp_limit"
@@ -241,19 +241,19 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Min Stock</div>
+									<div class="col-md-2">Min Stock*</div>
 
 									<div class="col-md-2">
 										<input type="text" id="min_stock" name="min_stock"
 											class="form-control" style="width: 100%;">
 									</div>
-									<div class="col-md-2">Max Stock</div>
+									<div class="col-md-2">Max Stock*</div>
 
 									<div class="col-md-2">
 										<input type="text" id="max_stock" name="max_stock"
 											class="form-control" style="width: 100%;">
 									</div>
-									<div class="col-md-2">ROL Stock</div>
+									<div class="col-md-2">ROL Stock*</div>
 
 									<div class="col-md-2">
 										<input type="text" id="rol_stock" name="rol_stock"
@@ -265,19 +265,19 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Plant Min Stock</div>
+									<div class="col-md-2">Plant Min Stock*</div>
 
 									<div class="col-md-2">
 										<input type="text" id="pmin_stock" name="pmin_stock"
 											class="form-control" style="width: 100%;">
 									</div>
-									<div class="col-md-2">Plant Max Stock</div>
+									<div class="col-md-2">Plant Max Stock*</div>
 
 									<div class="col-md-2">
 										<input type="text" id="pmax_stock" name="pmax_stock"
 											class="form-control" style="width: 100%;">
 									</div>
-									<div class="col-md-2">Plant ROL Stock</div>
+									<div class="col-md-2">Plant ROL Stock*</div>
 
 									<div class="col-md-2">
 										<input type="text" id="prol_stock" name="prol_stock"
@@ -288,7 +288,7 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Critical Item ?</div>
+									<div class="col-md-2">Critical Item ?*</div>
 
 
 									<div class="col-md-1">
@@ -301,7 +301,7 @@
 									</div>
 
 									<div class="col-md-2"></div>
-									<div class="col-md-2">Sort No</div>
+									<div class="col-md-2">Sort No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="sort_no" name="sort_no"
@@ -315,7 +315,7 @@
 								<div class="row">
 
 
-									<div class="col-md-2">Freight Rate</div>
+									<div class="col-md-2">Freight Rate*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="freight_rate" name="freight_rate"
@@ -325,7 +325,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}" />
 									</div>
 
-									<div class="col-md-2">Royalty Rate</div>
+									<div class="col-md-2">Royalty Rate*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="royalty_rate" name="royalty_rate"

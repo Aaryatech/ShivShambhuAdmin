@@ -106,7 +106,7 @@
 										<th style="text-align: center">GST No</th>
 										<th style="text-align: center">Credit Days</th>
 										<th style="text-align: center">Credit Limit</th>
-										<th style="text-align: center">Action</th>
+										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
 								</thead>
