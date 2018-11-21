@@ -28,8 +28,37 @@
 					<ul class="sub-menu children dropdown-menu ">
 
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddCustomer">Add
+								Customer</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddItem">Add
+								Item</a></li>
+
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddProject">Add
+								Project</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddCompany">Add
+								Company</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddUser">Add
+								User</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddPlant">Add
+								Plant</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddVendor">Add
 								Vendor</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddDocTerm">Add
+								Doc Term</a></li>
 
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddTax">Add Tax</a></li>
@@ -57,49 +86,11 @@
 							href="${pageContext.request.contextPath}/showAddDept">Add
 								Dept</a></li>
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddUser">Add
-								User</a></li>
+
 
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddUom">Add Uom</a></li>
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddPlant">Add
-								Plant</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddDocTerm">Add
-								Doc Term</a></li>
-
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddCustomer">Add
-								Customer</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddItem">Add
-								Item</a></li>
-
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddProject">Add
-								Project</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddCompany">Add
-								Company</a></li>
-
-
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showCompList">
-								Company List</a></li>
-
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showPlantList">
-								Plant List</a></li>
 
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showCustList">
@@ -110,17 +101,34 @@
 								List</a></li>
 
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showDocTermList">
-								Document Term List</a></li>
+							href="${pageContext.request.contextPath}/showProjectList">
+								Project List</a></li>
 
 
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showProjectList">
-								Project List</a></li>
+							href="${pageContext.request.contextPath}/showCompList">
+								Company List</a></li>
+
 
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showUserList"> User
 								List</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showPlantList">
+								Plant List</a></li>
+
+
+
+
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showDocTermList">
+								Document Term List</a></li>
+
+
+
+
 
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showTaxList"> Tax

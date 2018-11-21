@@ -98,9 +98,12 @@
 
 										<th style="text-align: center">Sr</th>
 										<th style="text-align: center">User Name</th>
+										
 										<th style="text-align: center">Mobile No</th>
-										<th style="text-align: center">Plant Name</th>
+											<th style="text-align: center">User Email</th>
 										<th style="text-align: center">Dept Name</th>
+										<th style="text-align: center">Plant Name</th>
+
 										<th style="text-align: center">Company Name</th>
 
 
@@ -121,12 +124,18 @@
 
 											<td style="text-align: left"><c:out
 													value="${user.usrMob}" /></td>
+													
+													<td style="text-align: left"><c:out
+													value="${user.usrEmail}" /></td>
+													
 
-											<td style="text-align: left"><c:out
-													value="${user.plantName}" /></td>
+
 
 											<td style="text-align: left"><c:out
 													value="${user.deptName}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${user.plantName}" /></td>
 
 											<td style="text-align: left"><c:out
 													value="${user.compName}" /></td>

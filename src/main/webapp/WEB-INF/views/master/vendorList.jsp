@@ -97,14 +97,15 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Vendor Name</th>
-										<th style="text-align: center">Mobile No</th>
+										<th style="text-align: center">Vendor Comp Name</th>
 										<th style="text-align: center">Plant Name</th>
-
-
-
-
-
+										<th style="text-align: center">Contact Name</th>
+										<th style="text-align: center">Mobile No</th>
+										<th style="text-align: center">Email</th>
+										<th style="text-align: center">City</th>
+										<th style="text-align: center">GST No</th>
+										<th style="text-align: center">Credit Days</th>
+										<th style="text-align: center">Credit Limit</th>
 										<th style="text-align: center">Action</th>
 
 									</tr>
@@ -119,11 +120,31 @@
 													value="${vend.vendCompName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${vend.vendContact1}" /></td>
-
-											<td style="text-align: left"><c:out
 													value="${vend.plantName}" /></td>
 
+											<td style="text-align: left"><c:out
+													value="${vend.vendContactName}" /></td>
+
+											<td style="text-align: center"><c:out
+													value="${vend.vendContact1}" /></td>
+
+
+											<td style="text-align: center"><c:out
+													value="${vend.vendEmail1}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${vend.vendCity}" /></td>
+
+
+											<td style="text-align: right"><c:out
+													value="${vend.vendGst}" /></td>
+
+											<td style="text-align: right"><c:out
+													value="${vend.vendCreditDays}" /></td>
+
+
+											<td style="text-align: right"><c:out
+													value="${vend.vendCreditLimit}" /></td>
 
 
 											<td style="text-align: center"><a
