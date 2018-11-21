@@ -28,6 +28,10 @@
 					<ul class="sub-menu children dropdown-menu ">
 
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showAddVendor">Add
+								Vendor</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showAddTax">Add Tax</a></li>
 
 
@@ -86,6 +90,8 @@
 							href="${pageContext.request.contextPath}/showAddCompany">Add
 								Company</a></li>
 
+
+
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showCompList">
 								Company List</a></li>
@@ -119,6 +125,10 @@
 						<li class="active"><i class="fa fa-puzzle-piece"></i><a
 							href="${pageContext.request.contextPath}/showTaxList"> Tax
 								List</a></li>
+
+						<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							href="${pageContext.request.contextPath}/showVendorList">
+								Vendor List</a></li>
 
 
 

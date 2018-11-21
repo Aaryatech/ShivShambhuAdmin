@@ -117,6 +117,8 @@
 									<div class="col-md-2">Plant Name</div>
 									<div class="col-md-4">
 										<input type="text" id="plant_name" name="plant_name"
+											oninvalid="setCustomValidity('Please enter plant name')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editPlant.plantName}" class="form-control" required
 											style="width: 100%;">
 									</div>

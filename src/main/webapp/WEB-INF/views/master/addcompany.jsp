@@ -98,6 +98,8 @@
 									<div class="col-md-2">Company Name</div>
 									<div class="col-md-10">
 										<input type="text" id="comp_name" name="comp_name"
+											oninvalid="setCustomValidity('Please enter company name')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editComp.compName}" style="width: 50%;"
 											class="form-control" required>
 
@@ -152,7 +154,7 @@
 										<input type="text" id="lic_no" name="lic_no" required
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter License no')"
-											maxlength="50" value="${editComp.compLicence}"
+											maxlength="20" value="${editComp.compLicence}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -203,20 +205,22 @@
 									<div class="col-md-4">
 										<input type="text" id="tel_no" name="tel_no" required
 											style="width: 100%;" class="form-control"
+											value="${editComp.contactNo2}"
 											oninvalid="setCustomValidity('Please enter tel no')"
-											maxlength="50" value="${editComp.contactNo2}"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
+											onchange="try{setCustomValidity('')}catch(e){}"
+											maxlength="10" pattern="[0-9]+" /> <span class="error"
+											aria-live="polite"></span>
 
 									</div>
 
 									<div class="col-md-2">Mobile No</div>
 									<div class="col-md-4">
-										<input type="text" id="mob_no" name="mob_no" required
+										<input type="text" id="mob_no" name="mob_no"
 											style="width: 100%;" class="form-control"
+											value="${editComp.contactNo1}"
 											oninvalid="setCustomValidity('Please enter mob no')"
-											maxlength="20" value="${editComp.contactNo1}"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
+											onchange="try{setCustomValidity('')}catch(e){}"
+											maxlength="10" pattern="[0-9]+" required /> <span
 											class="error" aria-live="polite"></span>
 
 									</div>
@@ -230,6 +234,7 @@
 										<input type="text" id="email" name="email" required
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter email')"
+											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
 											maxlength="50" value="${editComp.email1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
