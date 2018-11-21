@@ -94,7 +94,7 @@
 									value="${editVend.vendId}">
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Vendor Name</div>
+									<div class="col-md-2">Vendor Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendCompName" name="vendCompName"
 											class="form-control" required style="width: 100%;"
@@ -103,7 +103,7 @@
 											value="${editVend.vendCompName}">
 									</div>
 
-									<div class="col-md-2">Vendor Contact Name</div>
+									<div class="col-md-2">Vendor Contact Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendContactName" name="vendContactName"
 											class="form-control" required style="width: 100%;"
@@ -116,7 +116,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Mobile No</div>
+									<div class="col-md-2">Mobile No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="vendContact1" name="vendContact1"
@@ -128,7 +128,7 @@
 											class="error" aria-live="polite"></span>
 									</div>
 
-									<div class="col-md-2">Landline No</div>
+									<div class="col-md-2">Landline No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="vendContact2" name="vendContact2"
@@ -144,7 +144,7 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Email</div>
+									<div class="col-md-2">Email Id*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="vendEmail1" name="vendEmail1"
@@ -157,7 +157,7 @@
 
 									</div>
 
-									<div class="col-md-2">Select Plant</div>
+									<div class="col-md-2">Select Plant*</div>
 
 									<div class="col-md-4">
 										<select id="plantId" name="plantId" class="standardSelect"
@@ -184,7 +184,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">GST No</div>
+									<div class="col-md-2">GST No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="vendGst" name="vendGst"
@@ -194,7 +194,7 @@
 											class="form-control" style="width: 100%;" required>
 									</div>
 
-									<div class="col-md-2">PAN No</div>
+									<div class="col-md-2">PAN No*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendPan" name="vendPan"
 											value="${editVend.vendPan}" class="form-control"
@@ -209,7 +209,7 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">State</div>
+									<div class="col-md-2">State*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendState" name="vendState"
 											style="width: 100%;" class="form-control"
@@ -220,7 +220,7 @@
 
 									</div>
 
-									<div class="col-md-2">City</div>
+									<div class="col-md-2">City*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendCity" name="vendCity"
 											style="width: 100%;" class="form-control"
@@ -236,7 +236,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Vendor Credit Limit</div>
+									<div class="col-md-2">Vendor Credit Limit*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendCreditLimit" name="vendCreditLimit"
 											class="form-control" style="width: 100%;"
@@ -244,7 +244,7 @@
 											oninvalid="setCustomValidity('Please enter vend Credit Limit')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
-									<div class="col-md-2">Credit Days</div>
+									<div class="col-md-2">Credit Days*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendCreditDays" name="vendCreditDays"
 											class="form-control" style="width: 100%;"
@@ -258,7 +258,7 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Is same State?</div>
+									<div class="col-md-2">Is same State?*</div>
 
 
 									<c:choose>
@@ -291,7 +291,7 @@
 										</c:when>
 									</c:choose>
 
-									<div class="col-md-2">Vendor Type</div>
+									<div class="col-md-2">Vendor Type*</div>
 
 									<c:choose>
 										<c:when test="${editVend.vendType==0}">
