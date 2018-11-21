@@ -95,7 +95,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Company Name</div>
+									<div class="col-md-2">Company Name*</div>
 									<div class="col-md-10">
 										<input type="text" id="comp_name" name="comp_name"
 											oninvalid="setCustomValidity('Please enter company name')"
@@ -108,7 +108,7 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Office Address</div>
+									<div class="col-md-2">Office Address*</div>
 									<div class="col-md-10">
 										<input type="text" id="off_add" name="off_add" required
 											style="width: 100%;" class="form-control"
@@ -122,7 +122,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Company Location</div>
+									<div class="col-md-2">Company Location*</div>
 									<div class="col-md-10">
 										<input type="text" id="comp_loc" name="comp_loc" required
 											style="width: 100%;" class="form-control"
@@ -135,7 +135,7 @@
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Factory Address</div>
+									<div class="col-md-2">Factory Address*</div>
 									<div class="col-md-10">
 										<input type="text" id="fact_add" name="fact_add" required
 											style="width: 100%;" class="form-control"
@@ -149,7 +149,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">License No</div>
+									<div class="col-md-2">License No*</div>
 									<div class="col-md-4">
 										<input type="text" id="lic_no" name="lic_no" required
 											style="width: 100%;" class="form-control"
@@ -160,7 +160,7 @@
 
 									</div>
 
-									<div class="col-md-2">GST No</div>
+									<div class="col-md-2">GST No*</div>
 									<div class="col-md-4">
 										<input type="text" id="gst_no" name="gst_no" required
 											style="width: 100%;" class="form-control"
@@ -175,7 +175,7 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Pan No</div>
+									<div class="col-md-2">Pan No*</div>
 									<div class="col-md-4">
 										<input type="text" id="pan_no" name="pan_no" required
 											style="width: 100%;" class="form-control"
@@ -186,7 +186,7 @@
 
 									</div>
 
-									<div class="col-md-2">CIN No</div>
+									<div class="col-md-2">CIN No*</div>
 									<div class="col-md-4">
 										<input type="text" id="cin_no" name="cin_no" required
 											style="width: 100%;" class="form-control"
@@ -201,7 +201,7 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Telephone No</div>
+									<div class="col-md-2">Telephone No*</div>
 									<div class="col-md-4">
 										<input type="text" id="tel_no" name="tel_no" required
 											style="width: 100%;" class="form-control"
@@ -213,7 +213,7 @@
 
 									</div>
 
-									<div class="col-md-2">Mobile No</div>
+									<div class="col-md-2">Mobile No*</div>
 									<div class="col-md-4">
 										<input type="text" id="mob_no" name="mob_no"
 											style="width: 100%;" class="form-control"
@@ -229,7 +229,7 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Email Id</div>
+									<div class="col-md-2">Email Id*</div>
 									<div class="col-md-4">
 										<input type="text" id="email" name="email" required
 											style="width: 100%;" class="form-control"
@@ -241,7 +241,7 @@
 
 									</div>
 
-									<div class="col-md-2">FAX No</div>
+									<div class="col-md-2">FAX No*</div>
 									<div class="col-md-4">
 										<input type="text" id="fax" name="fax" required
 											style="width: 100%;" class="form-control"
