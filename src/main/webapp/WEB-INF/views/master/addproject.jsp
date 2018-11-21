@@ -94,7 +94,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+									<div class="col-md-2">Select Plant*</div>
 
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
@@ -114,7 +114,7 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Select Customer</div>
+									<div class="col-md-2">Select Customer*</div>
 
 									<div class="col-md-4">
 										<select id="cust_id" name="cust_id" class="standardSelect"
@@ -139,7 +139,7 @@
 									value="${editPro.projId}">
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Contact Person Name</div>
+									<div class="col-md-2">Contact Person Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="contactPerName" name="contactPerName"
 											oninvalid="setCustomValidity('Please enter contact person Name')"
@@ -148,7 +148,7 @@
 											required style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Mobile No</div>
+									<div class="col-md-2">Mobile No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="contactPerMob" name="contactPerMob"
@@ -164,7 +164,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Project Name</div>
+									<div class="col-md-2">Project Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="proj_name" name="proj_name"
 											oninvalid="setCustomValidity('Please enter project name')"
@@ -173,7 +173,7 @@
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Project Location</div>
+									<div class="col-md-2">Project Location*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="proj_loc" name="proj_loc"
@@ -186,14 +186,14 @@
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Start Date</div>
+									<div class="col-md-2">Start Date*</div>
 									<div class="col-md-4">
 										<input type="text" id="start_date" name="start_date"
 											value="${editPro.startDate}" class="form-control" required
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">End Date</div>
+									<div class="col-md-2">End Date*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="end_date" name="end_date"
@@ -206,7 +206,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Pincode No</div>
+									<div class="col-md-2">Pincode No*</div>
 									<div class="col-md-4">
 										<input type="text" id="pincode" name="pincode"
 											class="form-control" style="width: 100%;"
@@ -214,7 +214,7 @@
 											oninvalid="setCustomValidity('Please enter Pincode')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
-									<div class="col-md-2">Kilometer</div>
+									<div class="col-md-2">Kilometer*</div>
 									<div class="col-md-4">
 										<input type="text" id="km" name="km" class="form-control"
 											style="width: 100%;" value="${editPro.km}"
@@ -225,7 +225,7 @@
 								</div>
 								<div class="form-group"></div>
 
-								<div class="col-md-2">Address</div>
+								<div class="col-md-2">Address*</div>
 
 								<div class="col-md-4">
 									<textarea id="address" name="address" class="form-control"
