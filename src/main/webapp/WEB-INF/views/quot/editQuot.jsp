@@ -3,7 +3,110 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html class="no-js" lang="">
+<style>
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
 
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+</style>
+	 <style>
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 50%;
+	height: auto;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#overlay {
+	position: fixed;
+	display: none;
+	width: 50%;
+	height: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(101, 113, 119, 0.5);
+	z-index: 2;
+	cursor: pointer;
+}
+
+#text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 25px;
+	color: white;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+.bg-overlay {
+    background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)), url("${pageContext.request.contextPath}/resources/images/smart.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    color: #fff;
+    height:auto;
+    width:auto;
+    padding-top: 10px;
+    padding-left:20px;
+}
+</style>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +115,8 @@
 <c:url var="getProjectByCustId" value="/getProjectByCustId" />
 
 <c:url var="getItemsAndEnqItemList" value="/getItemsAndEnqItemList" />
+
+<c:url var="getDocTermDetail" value="/getDocTermDetail" />
 
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
@@ -191,6 +296,7 @@
 									<div class="col-md-4">
 										<select id="quot_doc_term_id" name="quot_doc_term_id"
 											class="standardSelect" tabindex="1" required
+											onchange="showDocDetailPopup(this.value)"
 											oninvalid="setCustomValidity('Please select quotation term')">
 											<option value="">Select Term</option>
 
@@ -219,6 +325,34 @@
 
 								</div>
 
+
+						<div id="myModal" class="modal">
+										      
+					<div class="modal-content" style="color: black;">
+						<span class="close" id="close">&times;</span>
+						<h5 style="text-align: left;">Quotation Term Description</h5>
+							<div class=" box-content">
+						
+								<div style="overflow:scroll;height:50%;width:50%;overflow:auto" >
+									<table 
+										style="width: 100%" id="table_grid1">
+										<thead>
+											<tr>
+										<th class="col-md-10">TermDesc </th>
+									</tr>
+										</thead>
+										<tbody>
+ 
+										</tbody>
+									</table>
+								</div>
+							 
+							 
+						</div><br>
+						
+					</div>
+
+				</div><!-- end of myModal div -->
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -348,39 +482,39 @@
  -->
 
 								
-								<input type="checkbox" name="selAll" id="selAll" /> 
-							<div class="card-body card-block">
+								<input type="checkbox" name="selAll" id="selAll" /> <label>Select All</label>
+							<div class="card-body card-block" style="overflow: auto; width:80%;">
 
-									<table id="bootstrap-data-table" class="table table-striped table-bordered">
+									<table id="bootstrap-data-table" class="table table-striped table-bordered"  style=" table-layout: none;width: 100%; ">
 										
 										<thead>
 										
 											<tr>
 
-												<th style="text-align: center" width="2%">Sr </th>
+												<th style="text-align: center" width="5%" >Sr </th>
 
-												<th style="text-align: center" class="col-md-1">Item</th>
-												<th style="text-align: center" class="col-md-1">Qty</th>
-												<th style="text-align: center" class="col-md-1">UOM</th>
+												<th style="text-align: center" width="7%">Item</th>
+												<th style="text-align: center" width="7%">Qty</th>
+												<th style="text-align: center" width="7%">UOM</th>
 
-												<th style="text-align: center" class="col-md-1">Tran co</th>
-												<th style="text-align: center" class="col-md-1">Toll
+												<th style="text-align: center" width="7%">Tran co</th>
+												<th style="text-align: center" width="7%">Toll
 													Cost</th>
-												<th style="text-align: center" class="col-md-1">Other
+												<th style="text-align: center" width="7%">Other
 													Cost</th>
 
-												<th style="text-align: center" class="col-md-1">Item
+												<th style="text-align: center" width="7%">Item
 													Rate</th>
-												<th style="text-align: center" class="col-md-1">Roy
+												<th style="text-align: center" width="7%">Roy
 													Rate</th>
-												<th style="text-align: center" class="col-md-1">GST</th>
+												<th style="text-align: center" width="7%">GST</th>
 
-												<th style="text-align: center" class="col-md-1">Taxable</th>
-												<th style="text-align: center" class="col-md-1">Tax</th>
-												<th style="text-align: center" class="col-md-1">Other
+												<th style="text-align: center" width="7%">Taxable</th>
+												<th style="text-align: center" width="7%">Tax</th>
+												<th style="text-align: center" width="11%">
 													Cost After Tax</th>
 
-												<th style="text-align: center" class="col-md-1">Final</th>
+												<th style="text-align: center" width="7%">Final</th>
 
 											</tr>
 										</thead>
@@ -389,10 +523,10 @@
 											<c:forEach items="${itemList}" var="item" varStatus="count">
 												<tr>
 
-													<td style="text-align: center">${count.index+1}<input type="checkbox" value="${item.itemId}"  name="selectItem"></td>
+													<td class="col-md-1" style="text-align: center">${count.index+1}<input type="checkbox" value="${item.itemId}"  name="selectItem"></td>
 
 
-													<td style="text-align: left"><c:out
+													<td class="col-md-1" style="text-align: left"><c:out
 															value="${item.itemName}" /></td>
 															
 															<c:if test="${quotHeader.status==0}">
@@ -403,23 +537,23 @@
 															<c:set var="qty" value="${item.quotQty}"></c:set>
 															</c:if>
 
-													<td style="text-align: left"><input type="text"
+													<td class="col-md-1" style="text-align: left"><input type="text"
 														id="quot_qty${item.itemId}" name="quot_qty${item.itemId}"
 														value="${qty}" class="form-control"></td>
 
-													<td style="text-align: left"><c:out value="${item.uomName}" /></td>
+													<td class="col-md-1" style="text-align: left"><c:out value="${item.uomName}" /></td>
 
 
-													<td style="text-align: center"><input type="text"
+													<td class="col-md-1" style="text-align: center"><input type="text"
 														id="trans_cost${item.itemId}" value="${item.transCost}"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														name="trans_cost${item.itemId}" class="form-control"></td>
 
-													<td style="text-align: center"><input type="text"
+													<td class="col-md-1" style="text-align: center"><input type="text"
 														id="toll_cost${item.itemId}" readonly value="${quotHeader.tollCost}"
 														name="toll_cost${item.itemId}" class="form-control"></td>
 
-													<td style="text-align: center"><input type="text" 
+													<td class="col-md-1" style="text-align: center"><input type="text" 
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														id="other_cost${item.itemId}"  value="${item.otherCost}"
 														name="other_cost${item.itemId}" class="form-control"></td>
@@ -430,13 +564,13 @@
  -->
 
 
-													<td style="text-align: left"><c:out
+													<td class="col-md-1" style="text-align: left"><c:out
 															value="${item.itemRate1}" /></td>
 
-													<td style="text-align: left"><c:out
+													<td class="col-md-1" style="text-align: left"><c:out
 															value="${item.royaltyRate}" /></td>
 
-													<td style="text-align: left"><c:out
+													<td class="col-md-1" style="text-align: left"><c:out
 															value="${item.totalTaxPer}%" /></td>
 
 													<td style="text-align: right"><input type="text"
@@ -444,17 +578,17 @@
 														name="taxable_amt${item.itemId}" class="form-control"></td>
 
 
-													<td style="text-align: right" width="100%"><input
+													<td class="col-md-1" style="text-align: right" width="100%"><input
 														type="text" readonly id="tax_amt${item.itemId}" value="${item.taxValue}"
 														name="tax_amt${item.itemId}" class="form-control"></td>
 
 
-													<td style="text-align: center"><input type="text"
+													<td class="col-md-1" style="text-align: center"><input type="text"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														id="oth_cost_aft_tax${item.itemId}"  value="${item.otherCostAfterTax}"
 														name="oth_cost_aft_tax${item.itemId}" class="form-control"></td>
 
-													<td style="text-align: right"><input type="text"
+													<td class="col-md-1" style="text-align: right"><input type="text"
 														readonly id="final_amt${item.itemId}" value="${item.finalTotal}"
 														name="final_amt${item.itemId}" class="form-control"></td>
 
@@ -466,7 +600,7 @@
 									</table>
 
 
-								</div>
+								
 								<div class="form-group"></div>
 
 
@@ -475,7 +609,7 @@
 
 									<div class="col-md-2">Remark</div>
 
-									<div class="col-md-9">
+									<div class="col-md-8">
 										<input type="text" id="quot_remark" name="quot_remark"
 											class="form-control" style="width: 100%;" value="-" required>
 									</div>
@@ -486,7 +620,7 @@
 									</div>
 
 								</div>
-
+</div>
 							</form>
 						</div>
 					</div>
@@ -580,8 +714,80 @@
 
 
 	<script type="text/javascript">
-	function checkEdit(){
-		calcAll();
+	function showDocDetailPopup(termId){
+		//alert("Hi doc Detail " +termId);
+		  $.getJSON('${getDocTermDetail}', {
+			 termId : termId,
+				ajax : 'true',
+
+			},
+
+			function(data) {
+
+				//alert("Data " +JSON.stringify(data.detailList));
+				
+				//newwindow=window.open(data,'name','height=40,width=40');
+				
+				
+				var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("quot_doc_term_id");
+
+// Get the <span> element that closes the modal
+ var span = document.getElementById("close");
+
+// When the user clicks the button, open the modal 
+
+	
+		modal.style.display = "block";
+	    //itemByIntendId(); 
+	    //getValue();
+	
+    
+
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none"; 
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+        
+    }
+}
+				var temp;
+				var len = data.detailList.length;
+					
+							var dataTable = $('#table_grid1')
+									.DataTable();
+							dataTable.clear().draw();
+var termTitle=data.termTitle
+//$("term_title").text(termTitle);
+//document.getElementById("term_title").value="Term Title :" +termTitle;
+//document.getElementById("term_title").style.display="block";
+							$
+									.each(
+											data.detailList,
+											function(i, v) {
+												var index=i+1;
+												var desc=index+") "+v.termDesc;
+												dataTable.row
+														.add(
+																[
+																	desc ])
+														.draw();
+											});
+				// window.alert("Term Detail "+data.detailList[i].termDesc);
+				
+				// alert("Term Detail "+temp);
+
+
+	});
+		 
 	}
 		function setKM(delPlace) {
 		//	alert("delPlace " +delPlace)
@@ -755,6 +961,17 @@
 }
 
 </script>
+
+<script type="text/javascript">
+		$(document).ready(function() {
+			var dataTable = $('#table_grid1').DataTable();
+				columnDefs : [ {
+					targets : [ 1,2],
+					className : "right"
+				}, ]
+			
+		});
+	</script>
 	<!-- <script type="text/javascript">
 		function getData() {
 			var plantId = document.getElementById("plant_id").value;
@@ -1049,6 +1266,41 @@
 			
 		});
 	</script> -->
+	
+	<!-- <script>
+// Get the modal
+var modal = document.getElementById('myModal');
 
+// Get the button that opens the modal
+var btn = document.getElementById("quot_doc_term_id");
+
+// Get the <span> element that closes the modal
+ var span = document.getElementById("close");
+
+// When the user clicks the button, open the modal 
+btn.change = function() {
+	
+		modal.style.display = "block";
+	    //itemByIntendId(); 
+	    //getValue();
+	
+    
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none"; 
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+        
+    }
+}
+
+</script>
+ -->
 </body>
 </html>
