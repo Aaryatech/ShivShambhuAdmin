@@ -1479,6 +1479,11 @@ public class MasterController {
 			model.addObject("title", "Item List");
 			model.addObject("itemList", getItemList);
 
+			ItemType[] itemTypeArray = rest.getForObject(Constants.url + "getAllItemTypeList", ItemType[].class);
+			itemTypeList = new ArrayList<ItemType>(Arrays.asList(itemTypeArray));
+
+			model.addObject("itemTypeList", itemTypeList);
+
 		} catch (Exception e) {
 
 			System.err.println("exception In showCustList at Master Contr" + e.getMessage());
