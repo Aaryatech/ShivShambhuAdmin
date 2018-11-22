@@ -66,7 +66,7 @@ public class QuotController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("statusList", "0,1,2");
+			map.add("statusList", "0,1");
 
 			GetQuotHeads[] quotArray = rest.postForObject(Constants.url + "getQuotHeaders", map, GetQuotHeads[].class);
 			quotList = new ArrayList<GetQuotHeads>(Arrays.asList(quotArray));
@@ -201,6 +201,25 @@ public class QuotController {
 		return itemList;
 
 	}
+	
+	@RequestMapping(value = "/getDocTermDetail", method = RequestMethod.GET)
+	public @ResponseBody DocTermHeader getDocTermDetail(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		int termId = Integer.parseInt(request.getParameter("termId"));
+
+		map.add("termId", termId);
+		DocTermHeader docTerm = rest.postForObject(Constants.url + "getDocHeaderByTermId", map, DocTermHeader.class);
+
+
+		System.err.println("Ajax getDocTermDetail " + docTerm.toString());
+
+		return docTerm;
+
+	}
+	
+	
 
 	// updateQuotation Form Action
 
@@ -224,6 +243,13 @@ public class QuotController {
 
 			QuotHeader quotHeader = rest.postForObject(Constants.url + "getQuotHeaderByQuotHeadId", map,
 					QuotHeader.class);
+			int custId = Integer.parseInt(request.getParameter("cust_name"));
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custId", custId);
+			
+			Cust cust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
+			
 
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
 			int payTermId = Integer.parseInt(request.getParameter("pay_term_id"));
@@ -314,17 +340,34 @@ public class QuotController {
 						detail.setOtherCostBeforeTax(0);
 
 						if (taxValue > 0) {
+							if(cust.getIsSameState()==1) {
 
 							detail.setCgstValue((taxValue / 2));
-							detail.setIgstValue((taxValue / 2));
+							detail.setIgstValue(0);
+							detail.setIgstPer(0);
 							detail.setSgstValue((taxValue / 2));
-
+							}else {
+								detail.setIgstValue(taxValue);
+								detail.setIgstPer(itemList.get(i).getIgst());
+								
+								detail.setCgstValue(0);
+								detail.setSgstValue(0);
+								
+								detail.setCgstPer(0);
+								detail.setSgstPer(0);
+								
+							}
 							quotHeader.setTaxValue(1);
 
 						} else {
 							detail.setCgstValue(0);
 							detail.setIgstValue(0);
 							detail.setSgstValue(0);
+							
+							detail.setCgstPer(0);
+							detail.setSgstPer(0);
+							detail.setIgstPer(0);
+							
 
 						}
 
