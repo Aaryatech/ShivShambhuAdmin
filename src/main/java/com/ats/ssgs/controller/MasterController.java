@@ -696,8 +696,8 @@ public class MasterController {
 				comp.setContactNo2(telNo);
 
 			} catch (Exception e) {
-				comp.setCompLoc("NA");
-				comp.setContactNo2("NA");
+				comp.setCompLoc(NA);
+				comp.setContactNo2(NA);
 			}
 
 			System.err.println("comp " + comp.toString());
@@ -813,7 +813,7 @@ public class MasterController {
 
 			Cust[] custArray = rest.getForObject(Constants.url + "getAllCustList", Cust[].class);
 			custList = new ArrayList<Cust>(Arrays.asList(custArray));
-			System.err.println("custList In showAddPlant at Master Contr" + custList);
+			System.err.println("custList In showAddProject at Master Contr" + custList);
 			model.addObject("custList", custList);
 
 			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);

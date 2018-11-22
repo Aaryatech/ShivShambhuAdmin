@@ -100,6 +100,7 @@
 										<input type="text" id="comp_name" name="comp_name"
 											oninvalid="setCustomValidity('Please enter company name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
+											pattern="^[_A-z0-9]*((-|\s)*[_A-z0-9])*$"
 											value="${editComp.compName}" style="width: 50%;"
 											autocomplete="off" class="form-control" required>
 
@@ -167,7 +168,8 @@
 										<input type="text" id="gst_no" name="gst_no" required
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter GST no')"
-											maxlength="20" value="${editComp.compGstNo}"
+											maxlength="15" value="${editComp.compGstNo}"
+											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$           "
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -182,7 +184,8 @@
 										<input type="text" id="pan_no" name="pan_no" required
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter PAN no')"
-											maxlength="50" value="${editComp.compPanNo}"
+											maxlength="10" value="${editComp.compPanNo}"
+											pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -193,7 +196,7 @@
 										<input type="text" id="cin_no" name="cin_no" required
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter CIN no')"
-											maxlength="20" value="${editComp.cinNo}"
+											maxlength="21" value="${editComp.cinNo}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -209,9 +212,9 @@
 										<input type="text" id="mob_no" name="mob_no"
 											style="width: 100%;" class="form-control"
 											value="${editComp.contactNo1}" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter mob no')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											maxlength="10" pattern="[0-9]+" required /> <span
+											oninvalid="setCustomValidity('Please enter correct mob no')"
+											onchange=checkMobileNo(); maxlength="10"
+											pattern="/^[1-9]{1}[0-9]{9}$/" required /> <span
 											class="error" aria-live="polite"></span>
 
 									</div>
@@ -383,5 +386,19 @@
 	</script> -->
 
 
+	<!-- <script>
+		function checkMobileNo() {
+			alert("hiii");
+
+			var mobNo = document.getElementById("mob_no").value;
+
+			if (mobNo == 0000000000) {
+				document.getElementById("mob_no").reset();
+
+			}
+		}
+	</script>
+
+ -->
 </body>
 </html>
