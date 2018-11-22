@@ -99,10 +99,10 @@
 										<th style="text-align: center">Sr</th>
 										<th style="text-align: center">Plant Name</th>
 										<th style="text-align: center">Company Name</th>
-										<th style="text-align: center">Telephone No</th>
-										<th style="text-align: center">Landline No</th>
-										<th style="text-align: center">FAX No</th>
-										<th style="text-align: center">Email</th>
+										<th style="text-align: center">Mobile No</th>
+										<!--<th style="text-align: center">Landline No</th> -->
+										<!-- <th style="text-align: center">FAX No</th>
+										<th style="text-align: center">Email</th> -->
 										<th style="text-align: center">Plant Address</th>
 										<th style="text-align: center; width: 5%;">Action</th>
 
@@ -124,16 +124,15 @@
 
 											<td style="text-align: left"><c:out
 													value="${plant.plantContactNo1}" /></td>
-
-											<td style="text-align: left"><c:out
+											<%-- 
+											 <td style="text-align: left"><c:out
 													value="${plant.plantContactNo2}" /></td>
 
 											<td style="text-align: left"><c:out
 													value="${plant.plantFax1}" /></td>
-
 											<td style="text-align: left"><c:out
 													value="${plant.plantEmail1}" /></td>
-
+ --%>
 
 											<td style="text-align: left">${plant.plantAddress1}</td>
 

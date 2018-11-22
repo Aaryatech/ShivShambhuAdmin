@@ -89,7 +89,7 @@
 
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
-											tabindex="1" required
+											tabindex="1"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 											<c:forEach items="${plantList}" var="plant">
@@ -112,7 +112,7 @@
 
 									<div class="col-md-4">
 										<select id="cust_type" name="cust_type" class="standardSelect"
-											tabindex="1" required
+											tabindex="1"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 											<c:forEach items="${custTypeList}" var="custType">

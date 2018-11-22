@@ -1115,7 +1115,7 @@ public class MasterController {
 
 			cust.setCustCat(custCate);
 			cust.setCustCode(custCode);
-			cust.setCustDob(DateConvertor.convertToYMD(dob));
+			cust.setCustDob(curDate);
 			cust.setCustEmail(email);
 			cust.setCustGstNo(gstNo);
 

@@ -95,14 +95,16 @@
 
 								<div class="row">
 
+
+
 									<div class="col-md-2">Company Name*</div>
 									<div class="col-md-10">
 										<input type="text" id="comp_name" name="comp_name"
-											oninvalid="setCustomValidity('Please enter company name')"
+											oninvalid="setCustomValidity('Please enter correct company name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="^[_A-z0-9]*((-|\s)*[_A-z0-9])*$"
-											value="${editComp.compName}" style="width: 50%;"
-											autocomplete="off" class="form-control" required>
+											pattern="^[A-Za-z\s]+$" value="${editComp.compName}"
+											style="width: 50%;" autocomplete="off" class="form-control"
+											required>
 
 									</div>
 								</div>
@@ -122,7 +124,7 @@
 									</div>
 
 
-									<div class="col-md-2">Company Location(optional)</div>
+									<div class="col-md-2">Company Location(Optional)</div>
 
 									<div class="col-md-4">
 										<textarea id="comp_loc" name="comp_loc" class="form-control"
@@ -168,8 +170,9 @@
 										<input type="text" id="gst_no" name="gst_no" required
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter GST no')"
-											maxlength="15" value="${editComp.compGstNo}"
-											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$           "
+											maxlength="20" value="${editComp.compGstNo}"
+											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
+											onkeydown="upperCaseF(this)"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -186,6 +189,7 @@
 											oninvalid="setCustomValidity('Please enter PAN no')"
 											maxlength="10" value="${editComp.compPanNo}"
 											pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
+											onkeydown="upperCaseF(this)"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -213,9 +217,9 @@
 											style="width: 100%;" class="form-control"
 											value="${editComp.contactNo1}" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct mob no')"
-											onchange=checkMobileNo(); maxlength="10"
-											pattern="/^[1-9]{1}[0-9]{9}$/" required /> <span
-											class="error" aria-live="polite"></span>
+											pattern="^[1-9]{1}[0-9]{9}$" maxlength="10"
+											onchange="try{setCustomValidity('')}catch(e){}" required />
+										<span class="error" aria-live="polite"></span>
 
 									</div>
 									<div class="col-md-2">Telephone No(Optional)</div>
@@ -225,7 +229,7 @@
 											value="${editComp.contactNo2}" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter tel no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											maxlength="10" pattern="[0-9]+" /> <span class="error"
+											pattern="^[1-9]{1}[0-9]{9}$" /> <span class="error"
 											aria-live="polite"></span>
 
 									</div>
@@ -253,7 +257,8 @@
 										<input type="text" id="fax" name="fax" required
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter FAX no')"
-											maxlength="20" value="${editComp.faxNo1}" autocomplete="off"
+											pattern="/[\+? *[1-9]+]?[0-9 ]+/" maxlength="20"
+											value="${editComp.faxNo1}" autocomplete="off"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -385,7 +390,16 @@
 	
 	</script> -->
 
+	<script>
+		function upperCaseF(a) {
+			setTimeout(function() {
+				a.value = a.value.toUpperCase();
+			}, 1);
+		}
+	</script>
 
+
+	<!-- 
 	<!-- <script>
 		function checkMobileNo() {
 			alert("hiii");
@@ -398,7 +412,7 @@
 			}
 		}
 	</script>
-
  -->
+	-->
 </body>
 </html>
