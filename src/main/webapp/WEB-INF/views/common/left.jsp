@@ -1,4 +1,21 @@
-
+<html>
+<head>
+<style>
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+}
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+/* optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}
+</style>
+</head>
+<body>
 <aside id="left-panel" class="left-panel">
 	<nav class="navbar navbar-expand-sm navbar-default">
 
@@ -13,7 +30,8 @@
 		</div>
 
 		<div id="main-menu" class="main-menu collapse navbar-collapse">
-			<ul class="nav navbar-nav">
+			<ul class="nav navbar-nav" style="  max-height: calc(100vh - 9rem);
+      overflow-y: auto;">
 				<li><a href="${pageContext.request.contextPath}/home"> <i
 						class="menu-icon fa fa-dashboard"></i> Dashboard
 				</a></li>
@@ -239,3 +257,5 @@
 
 <!-- Left Panel -->
 
+</body>
+</html>
