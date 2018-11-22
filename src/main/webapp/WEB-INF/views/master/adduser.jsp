@@ -97,7 +97,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+									<div class="col-md-2">Select Plant*</div>
 
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
@@ -117,7 +117,7 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Select Company</div>
+									<div class="col-md-2">Select Company*</div>
 
 									<div class="col-md-4">
 										<select id="company_id" name="company_id"
@@ -142,7 +142,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Dept</div>
+									<div class="col-md-2">Select Dept*</div>
 
 									<div class="col-md-4">
 										<select id="dept_id" name="dept_id" class="standardSelect"
@@ -169,7 +169,7 @@
 									value="${editUser.userId}">
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">User Name</div>
+									<div class="col-md-2">User Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="usrName" name="usrName"
 											oninvalid="setCustomValidity('Please enter User Name')"
@@ -178,7 +178,7 @@
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">User Mobile No</div>
+									<div class="col-md-2">User Mobile No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="usrMob" name="usrMob"
@@ -192,7 +192,7 @@
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Date of Birth</div>
+									<div class="col-md-2">Date of Birth*</div>
 									<div class="col-md-4">
 										<input type="text" id="usrDob" name="usrDob"
 											value="${editUser.usrDob}" class="form-control"
@@ -200,7 +200,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
-									<div class="col-md-2">Sort No</div>
+									<div class="col-md-2">Sort No*</div>
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
 											value="${editUser.sortNo}" class="form-control"
@@ -212,7 +212,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">User Email</div>
+									<div class="col-md-2">User Email*</div>
 									<div class="col-md-4">
 										<input type="text" id="usrEmail" name="usrEmail"
 											value="${editUser.usrEmail}" class="form-control"
@@ -221,7 +221,7 @@
 											style="width: 100%;" style="width: 100%;" required>
 									</div>
 
-									<div class="col-md-2">User Password</div>
+									<div class="col-md-2">User Password*</div>
 
 									<div class="col-md-4">
 										<input type="password" id="userPass" name="userPass"

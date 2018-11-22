@@ -1,8 +1,7 @@
 package com.ats.ssgs.model;
  
 
-public class PoDetail {
-	
+public class GetPoDetail {
 	 
 	private int poDetailId; 
 	private int poId; 
@@ -22,7 +21,8 @@ public class PoDetail {
 	private String varchar1; 
 	private String varchar2; 
 	private int extra1; 
-	private int extra2;
+	private int extra2; 
+	private String itemName;
 	
 	public int getPoDetailId() {
 		return poDetailId;
@@ -138,14 +138,20 @@ public class PoDetail {
 	public void setExtra2(int extra2) {
 		this.extra2 = extra2;
 	}
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
 	@Override
 	public String toString() {
-		return "PoDetail [poDetailId=" + poDetailId + ", poId=" + poId + ", itemId=" + itemId + ", poRate=" + poRate
+		return "GetPoDetail [poDetailId=" + poDetailId + ", poId=" + poId + ", itemId=" + itemId + ", poRate=" + poRate
 				+ ", poQty=" + poQty + ", poConsumeQty=" + poConsumeQty + ", poRemainingQty=" + poRemainingQty
 				+ ", status=" + status + ", remark=" + remark + ", taxAmt=" + taxAmt + ", taxPer=" + taxPer
 				+ ", taxableAmt=" + taxableAmt + ", otherCharges=" + otherCharges + ", total=" + total + ", quDetailId="
 				+ quDetailId + ", varchar1=" + varchar1 + ", varchar2=" + varchar2 + ", extra1=" + extra1 + ", extra2="
-				+ extra2 + "]";
+				+ extra2 + ", itemName=" + itemName + "]";
 	}
 	
 	

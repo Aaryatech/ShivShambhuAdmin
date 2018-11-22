@@ -81,11 +81,11 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<strong>${title}</strong> Quotation No : <strong>${quotHeader.quotNo}</strong> &nbsp;
-							Date : <strong>${quotHeader.quotDate}</strong>
+							<strong>${title}</strong> Quotation No : <strong>${editPo.quatationNo}</strong> &nbsp;
+							Date : <strong>${editPo.qutDate}</strong>
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/submitPurchaseOrder"
+							<form action="${pageContext.request.contextPath}/submitEditPurchaseOrder"
 								onsubmit="return confirm('Do you really want to submit the Purchase Order ?');" method="post">
 								
 								<div class="row">
@@ -94,7 +94,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="poNo" name="poNo"
-											class="form-control" value="00001" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
+											class="form-control" value="${editPo.poNo}" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
 									</div>
 									 
 
@@ -108,12 +108,12 @@
 
 									<div class="col-md-4">
 										<input type="text" id="plantName" name="plantName"
-											class="form-control" value="${quotHeader.plantName}" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
+											class="form-control" value="${editPo.plantName}" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
 									</div>
 									<div class="col-md-2">Customer</div>
 									<div class="col-md-4">
 										<input type="text" id="custName" name="custName"
-											class="form-control" value="${quotHeader.custName}" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
+											class="form-control" value="${editPo.custName}" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
 									</div>
 
 								</div>
@@ -124,14 +124,14 @@
 									<div class="col-md-4">
 										<input type="text" id="poDate" name="poDate"
 											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
-											value="${todayDate}">
+											value="${editPo.poDate}">
 									</div>
 									<div class="col-md-2">Payment Term</div>
 
 									<div class="col-md-4">
 										<input type="text" id="payTerm" name="payTerm"
 											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
-											value="${quotHeader.payTerm}" readonly>
+											value="${editPo.payTerm}" readonly>
 									</div>
 
 
@@ -146,13 +146,13 @@
 									<div class="col-md-4">
 										<input type="text" id="poValidityDate" name="poValidityDate"
 											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
-											value="${todayDate}">
+											value="${editPo.poValidityDate}">
 									</div>
 									
 									<div class="col-md-2">Delivery</div>
 									<div class="col-md-4">
 										<input type="text" id="delivery" name="delivery"
-											  class="form-control"
+											  class="form-control" value="${editPo.varchar1}"
 											style="height: 32px;padding-bottom: 12px;font-size: 15px;" required>
 									</div>
 									 
@@ -187,42 +187,42 @@
 										</thead>
 										<tbody>
 
-											<c:forEach items="${quotHeader.getQuotDetailList}" var="getQuotDetailList" varStatus="count">
+											<c:forEach items="${editPo.getPoDetailList}" var="getPoDetailList" varStatus="count">
 												<tr>
 
 													<td style="text-align: center">${count.index+1} </td>
 
 
 													<td style="text-align: left"><c:out
-															value="${getQuotDetailList.itemName}" /></td>
+															value="${getPoDetailList.itemName}" /></td>
 
 													<td style="width: 100px"><input type="text"
-														id="pOqty${getQuotDetailList.itemId}" name="pOqty${getQuotDetailList.itemId}"
-														value="${getQuotDetailList.quotQty}" class="form-control"   style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;" required></td>
+														id="pOqty${getPoDetailList.itemId}" name="pOqty${getPoDetailList.itemId}"
+														value="${getPoDetailList.poQty}" class="form-control"   style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;" required></td>
 														
 														<td style="width: 100px"><input type="text"
-														 id="taxableAmt${getQuotDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
-														name="taxableAmt${getQuotDetailList.itemId}" onchange="calFinalValue(${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer},${getQuotDetailList.itemId});" value="${getQuotDetailList.taxableValue}" class="form-control" required></td>
+														 id="taxableAmt${getPoDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
+														name="taxableAmt${getPoDetailList.itemId}" onchange="calFinalValue(${getPoDetailList.taxPer},${getPoDetailList.itemId});" value="${getPoDetailList.poRate}" class="form-control" required></td>
 														
 														<td style="text-align: right;"><c:out
-															value="${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer}%" /></td>
+															value="${getPoDetailList.taxPer}%" /></td>
     		 
 
-													<td id="taxValuetd${getQuotDetailList.itemId}" style="text-align: right"><c:out
-															value="${getQuotDetailList.taxValue}" /></td>
+													<td id="taxValuetd${getPoDetailList.itemId}" style="text-align: right"><c:out
+															value="${getPoDetailList.taxAmt}" /></td>
   
 													<td style="width: 100px"><input type="text" 
-														id="othCostAftTax${getQuotDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
-														name="othCostAftTax${getQuotDetailList.itemId}" onchange="calFinalValue(${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer},${getQuotDetailList.itemId});" value="${getQuotDetailList.otherCostAfterTax}" class="form-control" required>
+														id="othCostAftTax${getPoDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
+														name="othCostAftTax${getPoDetailList.itemId}" onchange="calFinalValue(${getPoDetailList.taxPer},${getPoDetailList.itemId});" value="${getPoDetailList.otherCharges}" class="form-control" required>
 													
-													<input type="hidden" id="taxAmt${getQuotDetailList.itemId}" 
-														name="taxAmt${getQuotDetailList.itemId}" value="${getQuotDetailList.taxValue}" required>
+													<input type="hidden" id="taxAmt${getPoDetailList.itemId}" 
+														name="taxAmt${getPoDetailList.itemId}" value="${getPoDetailList.taxAmt}" required>
 													
 													</td>
 
 													<td style="width: 100px"><input type="text"
-														readonly id="finalAmt${getQuotDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
-														name="finalAmt${getQuotDetailList.itemId}" value="${getQuotDetailList.total}" class="form-control" readonly></td>
+														readonly id="finalAmt${getPoDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
+														name="finalAmt${getPoDetailList.itemId}" value="${getPoDetailList.total}" class="form-control" readonly></td>
 
 
 												</tr>
@@ -242,7 +242,7 @@
 
 									<div class="col-md-9">
 										<input type="text" id="poRemark" name="poRemark"
-											class="form-control"  value="-" style="height: 32px;padding-bottom: 12px; text-align: left;font-size: 15px;" required>
+											class="form-control" value="${editPo.remark}" value="-" style="height: 32px;padding-bottom: 12px; text-align: left;font-size: 15px;" required>
 									</div> 
  
 

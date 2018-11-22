@@ -91,7 +91,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Uom Name</div>
+									<div class="col-md-2">Uom Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="uomName" name="uomName"
 											value="${editUom.uomName}" class="form-control"
@@ -100,7 +100,7 @@
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Sort No</div>
+									<div class="col-md-2">Sort No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
@@ -119,7 +119,7 @@
 
 
 								<div class="row">
-									<div class="col-md-2">Uom Short Name</div>
+									<div class="col-md-2">Uom Short Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="uomShortName" name="uomShortName"
 											value="${editUom.uomShortName}" class="form-control"

@@ -102,7 +102,7 @@
 										<th style="text-align: center">Plant Name</th>
 
 
-										<th style="text-align: center">Action</th>
+										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
 								</thead>

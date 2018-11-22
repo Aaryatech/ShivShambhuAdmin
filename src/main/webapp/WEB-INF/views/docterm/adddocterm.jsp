@@ -105,7 +105,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Document</div>
+									<div class="col-md-2">Select Document*</div>
 
 									<div class="col-md-4">
 										<select id="doc_id" name="doc_id" class="standardSelect"
@@ -124,7 +124,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Term Title</div>
+									<div class="col-md-2">Term Title*</div>
 									<div class="col-md-4">
 										<input type="text" id="termTitle" name="termTitle"
 											class="form-control" style="width: 100%;"
@@ -134,7 +134,7 @@
 
 
 
-									<div class="col-md-2">Sort No</div>
+									<div class="col-md-2">Sort No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"

@@ -92,7 +92,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+									<div class="col-md-2">Select Plant*</div>
 
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
@@ -105,7 +105,7 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Customer Type</div>
+									<div class="col-md-2">Customer Type*</div>
 
 									<div class="col-md-4">
 										<select id="cust_type" name="cust_type" class="standardSelect"
@@ -122,7 +122,7 @@
 								<input type="hidden" name="cust_id" id="cust_id" value="0">
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Customer Name</div>
+									<div class="col-md-2">Customer Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="cust_name" name="cust_name"
 											class="form-control" required style="width: 100%;"
@@ -130,7 +130,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Mobile</div>
+									<div class="col-md-2">Mobile No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="mob_no" name="mob_no" required
@@ -146,13 +146,13 @@
 								<hr style="color: pink; background: pink;"></hr>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Reference Name</div>
+									<div class="col-md-2">Reference Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="ref_name" name="ref_name"
 											class="form-control" style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Email</div>
+									<div class="col-md-2">Email*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="email" name="email"
@@ -169,14 +169,14 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">PAN No</div>
+									<div class="col-md-2">PAN No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="pan_no" name="pan_no"
 											class="form-control" style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">GST No</div>
+									<div class="col-md-2">GST No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="gst_no" name="gst_no"
@@ -187,7 +187,7 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Category</div>
+									<div class="col-md-2">Category*</div>
 
 									<div class="col-md-4">
 										<select id="cust_cate" name="cust_cate" class="standardSelect"
@@ -200,7 +200,7 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Address</div>
+									<div class="col-md-2">Address*</div>
 
 									<div class="col-md-4">
 										<textarea id="cust_add" name="cust_add" class="form-control"
@@ -212,14 +212,14 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Date Of Birth</div>
+									<div class="col-md-2">Date Of Birth*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="dob" name="dob" class="form-control"
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Customer Code</div>
+									<div class="col-md-2">Customer Code*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="cust_code" name="cust_code"
@@ -231,7 +231,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Security CHEQUE?</div>
+									<div class="col-md-2">Security CHEQUE?*</div>
 
 
 									<div class="col-md-1">
@@ -259,7 +259,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Contact Person Name</div>
+									<div class="col-md-2">Contact Person Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="cont_per_name" name="cont_per_name"
 											class="form-control" style="width: 100%;"
@@ -267,7 +267,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Mobile</div>
+									<div class="col-md-2">Mobile*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="con_per_mob" name="con_per_mob"
@@ -282,7 +282,7 @@
 								</div>
 
 								<div class="row">
-									<div class="col-md-2">Telephone No</div>
+									<div class="col-md-2">Telephone No*</div>
 									<div class="col-md-4">
 										<input type="text" id="tel_no" name="tel_no"
 											style="width: 100%;" class="form-control"
@@ -294,7 +294,7 @@
 
 									</div>
 
-									<div class="col-md-2">Vendor Code</div>
+									<div class="col-md-2">Vendor Code*</div>
 									<div class="col-md-4">
 										<input type="text" id="cust_vendor" name="cust_vendor"
 											style="width: 100%;" class="form-control"
@@ -308,7 +308,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Owner Name</div>
+									<div class="col-md-2">Owner Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="ownerName" name="ownerName"
 											class="form-control" style="width: 100%;"
@@ -316,7 +316,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Is same State?</div>
+									<div class="col-md-2">Is same State?*</div>
 
 
 									<div class="col-md-1">
@@ -334,14 +334,14 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Account Person Name</div>
+									<div class="col-md-2">Account Person Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="accPerson" name="accPerson"
 											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter Account name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
-									<div class="col-md-2">Account Mobile No</div>
+									<div class="col-md-2">Account Mobile No*</div>
 									<div class="col-md-4">
 										<input type="text" id="accPerMob" name="accPerMob"
 											class="form-control" style="width: 100%;"
@@ -356,7 +356,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Pincode No</div>
+									<div class="col-md-2">PINcode No*</div>
 									<div class="col-md-4">
 										<input type="text" id="pincode" name="pincode"
 											class="form-control" style="width: 100%;"
@@ -378,14 +378,14 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Credit Limit</div>
+									<div class="col-md-2">Credit Limit*</div>
 									<div class="col-md-4">
 										<input type="text" id="creaditLimit" name="creaditLimit"
 											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter creaditLimit')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
-									<div class="col-md-2">Credit Days</div>
+									<div class="col-md-2">Credit Days*</div>
 									<div class="col-md-4">
 										<input type="text" id="creaditDays" name="creaditDays"
 											class="form-control" style="width: 100%;"

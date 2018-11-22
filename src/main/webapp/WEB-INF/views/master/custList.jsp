@@ -98,11 +98,15 @@
 
 										<th style="text-align: center">Sr</th>
 										<th style="text-align: center">Cust Name</th>
-										<th style="text-align: center">Plant Name</th>
+										<th style="text-align: center">Contact Person Name</th>
+										<th style="text-align: center">Contact Mob No</th>
 										<th style="text-align: center">Mobile No</th>
 										<th style="text-align: center">Email</th>
 										<th style="text-align: center">Pan No</th>
 										<th style="text-align: center">Address</th>
+										<th style="text-align: center">Plant Name</th>
+										<th style="text-align: center">Credit Days</th>
+										<th style="text-align: center">Credit Limit</th>
 										<th style="text-align: center">Action</th>
 
 									</tr>
@@ -117,8 +121,15 @@
 											<td style="text-align: left"><c:out
 													value="${cust.custName}" /></td>
 
+
 											<td style="text-align: left"><c:out
-													value="${cust.plantName}" /></td>
+													value="${cust.contactPerName}" /></td>
+
+
+											<td style="text-align: left"><c:out
+													value="${cust.contactPerMob}" /></td>
+
+
 
 											<td style="text-align: left"><c:out
 													value="${cust.custMobNo}" /></td>
@@ -132,6 +143,14 @@
 											<td style="text-align: left"><c:out
 													value="${cust.custAddress}" /></td>
 
+											<td style="text-align: left"><c:out
+													value="${cust.plantName}" /></td>
+
+											<td style="text-align: right"><c:out
+													value="${cust.creaditDays}" /></td>
+
+											<td style="text-align: right"><c:out
+													value="${cust.creaditLimit}" /></td>
 
 
 											<td style="text-align: center"><a

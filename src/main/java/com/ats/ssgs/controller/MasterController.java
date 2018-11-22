@@ -32,6 +32,7 @@ import com.ats.ssgs.model.master.GetItem;
 import com.ats.ssgs.model.master.GetPlant;
 import com.ats.ssgs.model.master.GetProject;
 import com.ats.ssgs.model.master.GetUser;
+import com.ats.ssgs.model.master.GetVendor;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.ItemType;
@@ -55,6 +56,197 @@ public class MasterController {
 	List<ItemType> itemTypeList;
 
 	List<Tax> getTaxList;
+	List<GetVendor> getVendList;
+
+	@RequestMapping(value = "/showAddVendor", method = RequestMethod.GET)
+	public ModelAndView showAddVendor(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("master/addvendor");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			model.addObject("title", "Add Vendor");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddVendor at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/insertVendor", method = RequestMethod.POST)
+	public String insertVendor(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			System.err.println("Inside insert Vendor method");
+
+			int vendId = 0;
+			try {
+				vendId = Integer.parseInt(request.getParameter("vendId"));
+			} catch (Exception e) {
+				vendId = 0;
+			}
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			String curDate = dateFormat.format(new Date());
+
+			int vendCreditDays = Integer.parseInt(request.getParameter("vendCreditDays"));
+
+			int plantId = Integer.parseInt(request.getParameter("plantId"));
+
+			float vendCreditLimit = Float.parseFloat(request.getParameter("vendCreditLimit"));
+			String vendCompName = request.getParameter("vendCompName");
+			String vendContactName = request.getParameter("vendContactName");
+
+			String vendContact1 = request.getParameter("vendContact1");
+			String vendContact2 = request.getParameter("vendContact2");
+
+			String vendEmail1 = request.getParameter("vendEmail1");
+
+			String vendGst = request.getParameter("vendGst");
+			String vendPan = request.getParameter("vendPan");
+
+			int vendType = Integer.parseInt(request.getParameter("vendType"));
+			int isSameState = Integer.parseInt(request.getParameter("isSameState"));
+
+			String vendCity = request.getParameter("vendCity");
+			String vendState = request.getParameter("vendState");
+
+			Vendor vend = new Vendor();
+			vend.setDelStatus(1);
+			vend.setExBool1(0);
+			vend.setExBool2(0);
+			vend.setExBool3(0);
+			vend.setExDate1(curDate);
+			vend.setExDate2(curDate);
+			vend.setExInt1(0);
+			vend.setExInt2(0);
+			vend.setExInt3(0);
+			vend.setExVar1("NA");
+			vend.setExVar2("NA");
+			vend.setPlantId(plantId);
+			vend.setVendType(vendType);
+			vend.setVendState(vendState);
+			vend.setVendPan(vendPan);
+			vend.setVendIsUsed(1);
+			vend.setVendId(vendId);
+			vend.setVendGst(vendGst);
+			vend.setVendEmail3("NA");
+			vend.setVendEmail2("NA");
+			vend.setVendEmail1(vendEmail1);
+			vend.setVendContactName(vendContactName);
+			vend.setVendCreditDays(vendCreditDays);
+			vend.setVendContact1(vendContact1);
+			vend.setVendContact2(vendContact2);
+			vend.setVendCompName(vendCompName);
+			vend.setVendCity(vendCity);
+			vend.setIsSameState(isSameState);
+			vend.setVendCreditLimit(vendCreditLimit);
+			vend.setVendCreditDays(vendCreditDays);
+
+			Vendor vendInsertRes = rest.postForObject(Constants.url + "saveVendor", vend, Vendor.class);
+			System.err.println("plantInsertRes " + vendInsertRes.toString());
+
+		} catch (Exception e) {
+			System.err.println("EXCE in vendInsertRes " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return "redirect:/showAddVendor";
+
+	}
+
+	@RequestMapping(value = "/showVendorList", method = RequestMethod.GET)
+	public ModelAndView showVendorList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/vendorList");
+			GetVendor[] vendArray = rest.getForObject(Constants.url + "getAllVendorList", GetVendor[].class);
+			getVendList = new ArrayList<GetVendor>(Arrays.asList(vendArray));
+
+			model.addObject("title", "Vendor List");
+			model.addObject("vendList", getVendList);
+		} catch (Exception e) {
+
+			System.err.println("exception In showVendorList at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/editVendor/{vendId}", method = RequestMethod.GET)
+	public ModelAndView editVendor(HttpServletRequest request, HttpServletResponse response, @PathVariable int vendId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("master/editvendor");
+			model.addObject("title", "Edit Vendor");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			GetVendor[] vendArray = rest.getForObject(Constants.url + "getAllVendorList", GetVendor[].class);
+			getVendList = new ArrayList<GetVendor>(Arrays.asList(vendArray));
+
+			model.addObject("vendList", getVendList);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("vendId", vendId);
+
+			Vendor editVend = rest.postForObject(Constants.url + "getVendorByVendorId", map, Vendor.class);
+
+			model.addObject("editVend", editVend);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editVendor at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/deleteVendor/{vendId}", method = RequestMethod.GET)
+	public String deleteVendor(HttpServletRequest request, HttpServletResponse response, @PathVariable int vendId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("vendId", vendId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteVendor", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteVendor @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showVendorList";
+	}
 
 	@RequestMapping(value = "/showAddTax", method = RequestMethod.GET)
 	public ModelAndView showAddTax(HttpServletRequest request, HttpServletResponse response) {
@@ -151,7 +343,7 @@ public class MasterController {
 			Tax[] taxArray = rest.getForObject(Constants.url + "getTaxList", Tax[].class);
 			getTaxList = new ArrayList<Tax>(Arrays.asList(taxArray));
 
-			model.addObject("title", "Plant List");
+			model.addObject("title", "Tax List");
 			model.addObject("taxList", getTaxList);
 		} catch (Exception e) {
 
@@ -1286,6 +1478,11 @@ public class MasterController {
 
 			model.addObject("title", "Item List");
 			model.addObject("itemList", getItemList);
+
+			ItemType[] itemTypeArray = rest.getForObject(Constants.url + "getAllItemTypeList", ItemType[].class);
+			itemTypeList = new ArrayList<ItemType>(Arrays.asList(itemTypeArray));
+
+			model.addObject("itemTypeList", itemTypeList);
 
 		} catch (Exception e) {
 

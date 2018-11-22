@@ -11,6 +11,9 @@
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link rel="apple-touch-icon" href="apple-icon.png">
+<link rel="shortcut icon" href="favicon.ico">
+
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
@@ -41,10 +44,6 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
-
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- css for date picker proper UI -->
 
 <style type="text/css">
 .right {
@@ -78,31 +77,95 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<div class="col-md-2">
+							<div class="col-md-3">
 								<strong>${title}</strong>
 							</div>
-							<div class="col-md-8"></div>
-							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showProjectList"><strong>Project
+							<div class="col-md-6"></div>
+							<div class="col-md-3" align="left">
+								<a href="${pageContext.request.contextPath}/showVendorList"><strong>Vendor
 										List</strong></a>
 							</div>
-
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertProject"
+							<form action="${pageContext.request.contextPath}/insertVendor"
 								method="post">
 
+								<input type="hidden" name="vendId" id="vendId"
+									value="${editVend.vendId}">
+								<div class="form-group"></div>
 								<div class="row">
+									<div class="col-md-2">Vendor Name*</div>
+									<div class="col-md-4">
+										<input type="text" id="vendCompName" name="vendCompName"
+											class="form-control" required style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter vend Comp Name')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											value="${editVend.vendCompName}">
+									</div>
+
+									<div class="col-md-2">Vendor Contact Name*</div>
+									<div class="col-md-4">
+										<input type="text" id="vendContactName" name="vendContactName"
+											class="form-control" required style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter vend Contact Name')"
+											value="${editVend.vendContactName}"
+											onchange="try{setCustomValidity('')}catch(e){}" required>
+									</div>
+
+								</div>
+
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Mobile No*</div>
+
+									<div class="col-md-4">
+										<input type="text" id="vendContact1" name="vendContact1"
+											required style="width: 100%;" class="form-control"
+											oninvalid="setCustomValidity('Please enter mob no')"
+											maxlength="10" value="${editVend.vendContact1}"
+											pattern="[0-9]{10}"
+											onchange="try{setCustomValidity('')}catch(e){}" /> <span
+											class="error" aria-live="polite"></span>
+									</div>
+
+									<div class="col-md-2">Landline No*</div>
+
+									<div class="col-md-4">
+										<input type="text" id="vendContact2" name="vendContact2"
+											required style="width: 100%;" class="form-control"
+											oninvalid="setCustomValidity('Please enter mob no')"
+											maxlength="10" value="${editVend.vendContact2}"
+											pattern="[0-9]{10}"
+											onchange="try{setCustomValidity('')}catch(e){}" /> <span
+											class="error" aria-live="polite"></span>
+									</div>
+
+								</div>
+								<div class="form-group"></div>
+
+								<div class="row">
+									<div class="col-md-2">Email Id*</div>
+
+									<div class="col-md-4">
+										<input type="text" id="vendEmail1" name="vendEmail1"
+											style="width: 100%;" class="form-control"
+											oninvalid="setCustomValidity('Please enter vendEmail1')"
+											maxlength="50" value="${editVend.vendEmail1}"
+											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+											onchange="try{setCustomValidity('')}catch(e){}" /> <span
+											class="error" aria-live="polite"></span>
+
+									</div>
 
 									<div class="col-md-2">Select Plant*</div>
 
 									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
+										<select id="plantId" name="plantId" class="standardSelect"
 											tabindex="1" required>
 											<c:forEach items="${plantList}" var="plant">
 
 												<c:choose>
-													<c:when test="${plant.plantId==editItem.plantId}">
+													<c:when test="${plant.plantId==editVend.plantId}">
 														<option value="${plant.plantId}" selected>${plant.plantName}</option>
 													</c:when>
 													<c:otherwise>
@@ -114,127 +177,116 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Select Customer*</div>
 
-									<div class="col-md-4">
-										<select id="cust_id" name="cust_id" class="standardSelect"
-											tabindex="1" required>
-											<c:forEach items="${custList}" var="cust">
-
-												<c:choose>
-													<c:when test="${cust.custId==editPro.custId}">
-														<option value="${cust.custId}" selected>${cust.custName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${cust.custId}">${cust.custName}
-													</c:otherwise>
-												</c:choose>
-												<%-- 	<option value="${cust.custId}">${cust.custName}</option> --%>
-											</c:forEach>
-										</select>
-									</div>
-
-								</div>
-								<input type="hidden" name="proj_id" id="proj_id"
-									value="${editPro.projId}">
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Contact Person Name*</div>
-									<div class="col-md-4">
-										<input type="text" id="contactPerName" name="contactPerName"
-											oninvalid="setCustomValidity('Please enter contact person Name')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editPro.contactPerName}" class="form-control"
-											required style="width: 100%;">
-									</div>
-
-									<div class="col-md-2">Mobile No*</div>
-
-									<div class="col-md-4">
-										<input type="text" id="contactPerMob" name="contactPerMob"
-											value="${editPro.contactPerMob}"
-											oninvalid="setCustomValidity('Please enter tel no')"
-											maxlength="10" pattern="[0-9]+"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" required style="width: 100%;">
-									</div>
 
 								</div>
 
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Project Name*</div>
+									<div class="col-md-2">GST No*</div>
+
 									<div class="col-md-4">
-										<input type="text" id="proj_name" name="proj_name"
-											oninvalid="setCustomValidity('Please enter project name')"
+										<input type="text" id="vendGst" name="vendGst"
+											value="${editVend.vendGst}"
+											oninvalid="setCustomValidity('Please enter GST no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editPro.projName}" class="form-control" required
-											style="width: 100%;">
+											class="form-control" style="width: 100%;" required>
 									</div>
 
-									<div class="col-md-2">Project Location*</div>
-
+									<div class="col-md-2">PAN No*</div>
 									<div class="col-md-4">
-										<input type="text" id="proj_loc" name="proj_loc"
-											oninvalid="setCustomValidity('Please enter project location')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editPro.location}" class="form-control" required
-											style="width: 100%;">
+										<input type="text" id="vendPan" name="vendPan"
+											value="${editVend.vendPan}" class="form-control"
+											style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter PAN no')"
+											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 
-								</div>
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Start Date*</div>
-									<div class="col-md-4">
-										<input type="text" id="start_date" name="start_date"
-											value="${editPro.startDate}" class="form-control" required
-											style="width: 100%;">
-									</div>
 
-									<div class="col-md-2">End Date*</div>
-
-									<div class="col-md-4">
-										<input type="text" id="end_date" name="end_date"
-											value="${editPro.endDate}" class="form-control" required
-											style="width: 100%;">
-									</div>
 
 								</div>
 								<div class="form-group"></div>
 
 								<div class="row">
-
-									<div class="col-md-2">Pincode No*</div>
+									<div class="col-md-2">State*</div>
 									<div class="col-md-4">
-										<input type="text" id="pincode" name="pincode"
+										<input type="text" id="vendState" name="vendState"
+											style="width: 100%;" class="form-control"
+											oninvalid="setCustomValidity('Please enter vend State')"
+											value="${editVend.vendState}"
+											onchange="try{setCustomValidity('')}catch(e){}" required />
+										<span class="error" aria-live="polite"></span>
+
+									</div>
+
+									<div class="col-md-2">City*</div>
+									<div class="col-md-4">
+										<input type="text" id="vendCity" name="vendCity"
+											style="width: 100%;" class="form-control"
+											oninvalid="setCustomValidity('Please enter vend City')"
+											value="${editVend.vendCity}"
+											onchange="try{setCustomValidity('')}catch(e){}" /> <span
+											class="error" aria-live="polite"></span>
+
+									</div>
+								</div>
+
+								<div class="form-group"></div>
+
+								<div class="row">
+
+									<div class="col-md-2">Vendor Credit Limit*</div>
+									<div class="col-md-4">
+										<input type="text" id="vendCreditLimit" name="vendCreditLimit"
 											class="form-control" style="width: 100%;"
-											value="${editPro.pincode}"
-											oninvalid="setCustomValidity('Please enter Pincode')"
+											value="${editVend.vendCreditLimit}"
+											oninvalid="setCustomValidity('Please enter vend Credit Limit')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
-									<div class="col-md-2">Kilometer*</div>
+									<div class="col-md-2">Credit Days*</div>
 									<div class="col-md-4">
-										<input type="text" id="km" name="km" class="form-control"
-											style="width: 100%;" value="${editPro.km}"
-											oninvalid="setCustomValidity('Please enter Kilometer')"
+										<input type="text" id="vendCreditDays" name="vendCreditDays"
+											class="form-control" style="width: 100%;"
+											value="${editVend.vendCreditDays}"
+											oninvalid="setCustomValidity('Please enter creadit Days')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 
 								</div>
+
 								<div class="form-group"></div>
+								<div class="row">
 
-								<div class="col-md-2">Address*</div>
+									<div class="col-md-2">Is same State?*</div>
 
-								<div class="col-md-4">
-									<textarea id="address" name="address" class="form-control"
-										oninvalid="setCustomValidity('Please enter address')"
-										onchange="try{setCustomValidity('')}catch(e){}" required
-										style="width: 100%;">${editPro.address}</textarea>
+
+									<div class="col-md-2">
+										Yes <input type="radio" checked name="isSameState"
+											id="isSameState" value="1">
+									</div>
+
+									<div class="col-md-2">
+										NO <input type="radio" name="isSameState" id="isSameState"
+											value="0">
+									</div>
+
+									<div class="col-md-2">Vendor Type</div>
+
+
+									<div class="col-md-2">
+										Old <input type="radio" checked name="vendType" id="vendType"
+											value="1">
+									</div>
+
+									<div class="col-md-2">
+										New <input type="radio" name="vendType" id="vendType"
+											value="0">
+									</div>
 								</div>
 
-								<div class="col-lg-2" align="left">
+								<div class="form-group"></div>
+								<div class="col-lg-12" align="center">
 
 
 									<button type="submit" class="btn btn-primary"
@@ -376,16 +428,12 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$('input[id$=start_date]').datepicker({
+			$('input[id$=dob]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-			$('input[id$=end_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
 
-			});
 		});
 	</script>
-
 
 </body>
 </html>

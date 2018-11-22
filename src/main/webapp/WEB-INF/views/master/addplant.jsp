@@ -94,7 +94,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Company</div>
+									<div class="col-md-2">Select Company*</div>
 
 									<div class="col-md-4">
 										<select id="compId" name="compId" class="standardSelect"
@@ -114,9 +114,11 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Plant Name</div>
+									<div class="col-md-2">Plant Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="plant_name" name="plant_name"
+											oninvalid="setCustomValidity('Please enter plant name')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editPlant.plantName}" class="form-control" required
 											style="width: 100%;">
 									</div>
@@ -129,7 +131,7 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Telephone No</div>
+									<div class="col-md-2">Telephone No*</div>
 									<div class="col-md-4">
 										<input type="text" id="tel_no" name="tel_no" required
 											style="width: 100%;" class="form-control"
@@ -141,7 +143,7 @@
 
 									</div>
 
-									<div class="col-md-2">Mobile No</div>
+									<div class="col-md-2">Mobile No*</div>
 									<div class="col-md-4">
 										<input type="text" id="mob_no" name="mob_no" required
 											style="width: 100%;" class="form-control"
@@ -156,7 +158,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Email Id</div>
+									<div class="col-md-2">Email Id*</div>
 									<div class="col-md-4">
 										<input type="text" id="email" name="email" required
 											style="width: 100%;" class="form-control"
@@ -168,7 +170,7 @@
 
 									</div>
 
-									<div class="col-md-2">FAX No</div>
+									<div class="col-md-2">FAX No*</div>
 									<div class="col-md-4">
 										<input type="text" id="fax" name="fax" required
 											style="width: 100%;" class="form-control"
@@ -183,7 +185,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Plant Address</div>
+									<div class="col-md-2">Plant Address*</div>
 									<div class="col-md-10">
 										<input type='text' id="plant_add" name="plant_add"
 											style="width: 100%;" value="${editPlant.plantAddress1}"
@@ -195,7 +197,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant Head</div>
+									<div class="col-md-2">Select Plant Head*</div>
 
 									<div class="col-md-10">
 										<select id="plant_head" name="plant_head" style="width: 100%;"

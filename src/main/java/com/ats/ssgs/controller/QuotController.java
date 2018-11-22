@@ -66,7 +66,7 @@ public class QuotController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("statusList", "0,1");
+			map.add("statusList", "0,1,2");
 
 			GetQuotHeads[] quotArray = rest.postForObject(Constants.url + "getQuotHeaders", map, GetQuotHeads[].class);
 			quotList = new ArrayList<GetQuotHeads>(Arrays.asList(quotArray));

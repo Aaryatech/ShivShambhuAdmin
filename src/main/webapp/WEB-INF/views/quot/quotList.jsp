@@ -117,17 +117,22 @@
 											<td style="text-align: center">${quot.usrName}</td>
 
 
-											<td style="text-align: center"><a
+											<td  >
+											
+														<a
 												href="${pageContext.request.contextPath}/editQuot/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
 													class="fa fa-edit" title="Edit"></i> <span class="text-muted"></span></a>
-												  <a
+												  <c:choose>
+														<c:when test="${quot.status!=2}"><a
 												href="${pageContext.request.contextPath}/deleteQuot/${quot.quotHeadId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o" title="Delete"></i></a>
+													class="fa fa-trash-o" title="Delete"></i></a> 
 													
-													<a
-												href="${pageContext.request.contextPath}/addPo/${quot.quotHeadId}"><i
+														<a href="${pageContext.request.contextPath}/addPo/${quot.quotHeadId}"><i
 													class="fa fa-list" title="Create PO"></i> </a>
+														</c:when>
+													</c:choose>
+													 
 
 										</tr>
 									</c:forEach>

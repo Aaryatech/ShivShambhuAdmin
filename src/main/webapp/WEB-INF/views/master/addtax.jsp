@@ -100,7 +100,7 @@
 									value="${editTax.taxId}">
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Tax Name</div>
+									<div class="col-md-2">Tax Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="taxName" name="taxName"
 											oninvalid="setCustomValidity('Please enter Tax Name')"
@@ -109,7 +109,7 @@
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">HSN Code</div>
+									<div class="col-md-2">HSN Code*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="hsnCode" name="hsnCode"
@@ -122,7 +122,7 @@
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">CGST</div>
+									<div class="col-md-2">CGST*</div>
 									<div class="col-md-4">
 										<input type="text" id="cgst" name="cgst"
 											value="${editTax.cgst}" class="form-control"
@@ -131,7 +131,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;" required>
 									</div>
-									<div class="col-md-2">SGST</div>
+									<div class="col-md-2">SGST*</div>
 									<div class="col-md-4">
 										<input type="text" id="sgst" name="sgst"
 											value="${editTax.sgst}" class="form-control"
@@ -165,7 +165,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">CESS</div>
+									<div class="col-md-2">CESS*</div>
 									<div class="col-md-4">
 										<input type="text" id="cess" name="cess"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" value="${editTax.cess}"
@@ -174,7 +174,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;" required>
 									</div>
-									<div class="col-md-2">Sort No</div>
+									<div class="col-md-2">Sort No*</div>
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
 											value="${editTax.sortNo}" class="form-control"

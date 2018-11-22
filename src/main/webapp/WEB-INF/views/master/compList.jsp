@@ -97,8 +97,14 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Company Name</th>
+										<th style="text-align: center">Comp Name</th>
+										<th style="text-align: center">Comp Add</th>
+										<th style="text-align: center">License No</th>
+										<th style="text-align: center">GST No</th>
+										<th style="text-align: center">Email</th>
+
 										<th style="text-align: center">Mobile No</th>
+										<th style="text-align: center">Tel No</th>
 										<th style="text-align: center">Action</th>
 
 									</tr>
@@ -110,9 +116,33 @@
 											<td style="text-align: center">${count.index+1}</td>
 
 
-											<td style="text-align: left"><c:out
+											<td style="text-align: right"><c:out
 													value="${comp.compName}" /></td>
+
+											<td style="text-align: right"><c:out
+													value="${comp.compOfficeAdd}" /></td>
+
+
+											<td style="text-align: right"><c:out
+													value="${comp.compLicence}" /></td>
+
+
+											<td style="text-align: left"><c:out
+													value="${comp.compGstNo}" /></td>
+
+
+
+											<td style="text-align: left"><c:out
+													value="${comp.email1}" /></td>
+
 											<td style="text-align: center">${comp.contactNo1}</td>
+
+
+
+											<td style="text-align: center"><c:out
+													value="${comp.contactNo2}" /></td>
+
+
 
 											<td style="text-align: center"><a
 												href="${pageContext.request.contextPath}/editCompany/${comp.companyId}"><i
