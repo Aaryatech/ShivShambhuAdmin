@@ -101,50 +101,52 @@
 											oninvalid="setCustomValidity('Please enter company name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editComp.compName}" style="width: 50%;"
-											class="form-control" required>
+											autocomplete="off" class="form-control" required>
 
 									</div>
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
+
+
 
 									<div class="col-md-2">Office Address*</div>
-									<div class="col-md-10">
-										<input type="text" id="off_add" name="off_add" required
-											style="width: 100%;" class="form-control"
+
+									<div class="col-md-4">
+										<textarea id="off_add" name="off_add" class="form-control"
+											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter office address')"
-											maxlength="200" value="${editComp.compOfficeAdd}"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
+											maxlength="200"
+											onchange="try{setCustomValidity('')}catch(e){}" required>${editComp.compOfficeAdd}</textarea>
 									</div>
-								</div>
 
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Company Location*</div>
-									<div class="col-md-10">
-										<input type="text" id="comp_loc" name="comp_loc" required
-											style="width: 100%;" class="form-control"
+
+									<div class="col-md-2">Company Location(optional)</div>
+
+									<div class="col-md-4">
+										<textarea id="comp_loc" name="comp_loc" class="form-control"
+											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter location')"
-											maxlength="200" value="${editComp.compLoc}"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
+											maxlength="200"
+											onchange="try{setCustomValidity('')}catch(e){}">${editComp.compLoc}</textarea>
 									</div>
 								</div>
+
+
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Factory Address*</div>
-									<div class="col-md-10">
-										<input type="text" id="fact_add" name="fact_add" required
-											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter factory address')"
-											maxlength="200" value="${editComp.compFactAdd}"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
 
+
+									<div class="col-md-2">Factory Address*</div>
+
+									<div class="col-md-4">
+										<textarea id="fact_add" name="fact_add" class="form-control"
+											style="width: 100%;" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter factory address')"
+											maxlength="200"
+											onchange="try{setCustomValidity('')}catch(e){}" required>${editComp.compFactAdd}</textarea>
 									</div>
+
 								</div>
 
 								<div class="form-group"></div>
@@ -152,7 +154,7 @@
 									<div class="col-md-2">License No*</div>
 									<div class="col-md-4">
 										<input type="text" id="lic_no" name="lic_no" required
-											style="width: 100%;" class="form-control"
+											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter License no')"
 											maxlength="20" value="${editComp.compLicence}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
@@ -163,7 +165,7 @@
 									<div class="col-md-2">GST No*</div>
 									<div class="col-md-4">
 										<input type="text" id="gst_no" name="gst_no" required
-											style="width: 100%;" class="form-control"
+											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter GST no')"
 											maxlength="20" value="${editComp.compGstNo}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
@@ -178,7 +180,7 @@
 									<div class="col-md-2">PAN No*</div>
 									<div class="col-md-4">
 										<input type="text" id="pan_no" name="pan_no" required
-											style="width: 100%;" class="form-control"
+											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter PAN no')"
 											maxlength="50" value="${editComp.compPanNo}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
@@ -189,7 +191,7 @@
 									<div class="col-md-2">CIN No*</div>
 									<div class="col-md-4">
 										<input type="text" id="cin_no" name="cin_no" required
-											style="width: 100%;" class="form-control"
+											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter CIN no')"
 											maxlength="20" value="${editComp.cinNo}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
@@ -201,11 +203,23 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Telephone No*</div>
+
+									<div class="col-md-2">Mobile No*</div>
 									<div class="col-md-4">
-										<input type="text" id="tel_no" name="tel_no" required
+										<input type="text" id="mob_no" name="mob_no"
 											style="width: 100%;" class="form-control"
-											value="${editComp.contactNo2}"
+											value="${editComp.contactNo1}" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter mob no')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											maxlength="10" pattern="[0-9]+" required /> <span
+											class="error" aria-live="polite"></span>
+
+									</div>
+									<div class="col-md-2">Telephone No(Optional)</div>
+									<div class="col-md-4">
+										<input type="text" id="tel_no" name="tel_no"
+											style="width: 100%;" class="form-control"
+											value="${editComp.contactNo2}" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter tel no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											maxlength="10" pattern="[0-9]+" /> <span class="error"
@@ -213,17 +227,7 @@
 
 									</div>
 
-									<div class="col-md-2">Mobile No*</div>
-									<div class="col-md-4">
-										<input type="text" id="mob_no" name="mob_no"
-											style="width: 100%;" class="form-control"
-											value="${editComp.contactNo1}"
-											oninvalid="setCustomValidity('Please enter mob no')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											maxlength="10" pattern="[0-9]+" required /> <span
-											class="error" aria-live="polite"></span>
 
-									</div>
 								</div>
 
 								<div class="form-group"></div>
@@ -232,7 +236,7 @@
 									<div class="col-md-2">Email Id*</div>
 									<div class="col-md-4">
 										<input type="text" id="email" name="email" required
-											style="width: 100%;" class="form-control"
+											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter email')"
 											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
 											maxlength="50" value="${editComp.email1}"
@@ -246,7 +250,7 @@
 										<input type="text" id="fax" name="fax" required
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter FAX no')"
-											maxlength="20" value="${editComp.faxNo1}"
+											maxlength="20" value="${editComp.faxNo1}" autocomplete="off"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 

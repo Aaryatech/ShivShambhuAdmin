@@ -666,7 +666,7 @@ public class MasterController {
 			comp.setCompFactAdd(factAdd);
 			comp.setCompGstNo(gstNo);
 			comp.setCompLicence(license);
-			comp.setCompLoc(location);
+
 			comp.setCompLogo(NA);
 			comp.setCompName(compName);
 			comp.setContactNo1(mobNo);
@@ -674,7 +674,7 @@ public class MasterController {
 			comp.setCompOtherAdd(NA);
 			comp.setCompPanNo(panNo);
 			comp.setContactNo1(mobNo);
-			comp.setContactNo2(telNo);
+
 			comp.setDelStatus(1);
 			comp.setEmail1(email);
 			comp.setFaxNo1(faxNo);
@@ -690,6 +690,15 @@ public class MasterController {
 			comp.setFromDate(curDate);
 			comp.setLicence2(NA);
 			comp.setToDate(curDate);
+
+			try {
+				comp.setCompLoc(location);
+				comp.setContactNo2(telNo);
+
+			} catch (Exception e) {
+				comp.setCompLoc("NA");
+				comp.setContactNo2("NA");
+			}
 
 			System.err.println("comp " + comp.toString());
 
