@@ -96,17 +96,22 @@
 									<div class="col-md-3">Customer Type Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="custTypeName" name="custTypeName"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please Enter Cust Type Name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editCustType.custTypeName}" class="form-control"
 											required style="width: 100%;">
 									</div>
-									<div class="col-lg-3" align="right">
-
-
+									<div class="col-lg-2">
 										<button type="submit" class="btn btn-primary"
 											style="align-content: center; width: 113px; margin-left: 40px;">
 											Submit</button>
+									</div>
+
+									<div class="col-lg-2">
+										<button type="reset" class="btn btn-primary"
+											style="align-content: center; width: 113px; margin-left: 40px;">
+											Clear</button>
 									</div>
 
 

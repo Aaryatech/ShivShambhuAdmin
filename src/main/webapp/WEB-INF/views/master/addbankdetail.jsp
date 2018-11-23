@@ -100,6 +100,7 @@
 									<div class="col-md-4">
 										<select id="companyId" name="companyId" class="standardSelect"
 											tabindex="1" required>
+											<option value="">Select</option>
 											<c:forEach items="${compList}" var="comp">
 
 												<c:choose>
@@ -121,35 +122,46 @@
 									<div class="col-md-4">
 										<select id="accType" name="accType" class="standardSelect"
 											tabindex="1" required>
+
+
 											<c:choose>
 												<c:when test="${editBankDetail.accType==1}">
+													<option value="">Select</option>
 													<option value="1" selected>Current Account</option>
 													<option value="2">Savings Account</option>
 													<option value="3">Recurring Deposit Account</option>
 													<option value="4">Fixed Deposit Account</option>
 												</c:when>
+
 												<c:when test="${editBankDetail.accType==2}">
+													<option value="">Select</option>
 													<option value="1">Current Account</option>
 													<option value="2" selected>Savings Account</option>
 													<option value="3">Recurring Deposit Account</option>
 													<option value="4">Fixed Deposit Account</option>
 												</c:when>
 
+
 												<c:when test="${editBankDetail.accType==3}">
+													<option value="">Select</option>
 													<option value="1">Current Account</option>
 													<option value="2">Savings Account</option>
 													<option value="3" selected>Recurring Deposit
 														Account</option>
 													<option value="4">Fixed Deposit Account</option>
 												</c:when>
+
 												<c:when test="${editBankDetail.accType==3}">
+													<option value="">Select</option>
 													<option value="1">Current Account</option>
 													<option value="2">Savings Account</option>
 													<option value="3">Recurring Deposit Account</option>
 													<option value="4" selected>Fixed Deposit Account</option>
 												</c:when>
+
 												<c:otherwise>
-													<option value="1" selected>Current Account</option>
+													<option value="">Select</option>
+													<option value="1">Current Account</option>
 													<option value="2">Savings Account</option>
 													<option value="3">Recurring Deposit Account</option>
 													<option value="4">Fixed Deposit Account</option>
@@ -169,7 +181,8 @@
 									<div class="col-md-2">Bank Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="bankName" name="bankName"
-											oninvalid="setCustomValidity('Please enter Bank Name')"
+											pattern="^[A-Za-z\s]+$" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter correct Bank Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											value="${editBankDetail.bankName}" class="form-control"
 											style="width: 100%;">
@@ -179,8 +192,9 @@
 
 									<div class="col-md-4">
 										<input type="text" id="bankIfsc" name="bankIfsc"
+											autocomplete="off" pattern="[A-Z|a-z]{4}[0][\d]{6}$"
 											value="${editBankDetail.bankIfsc}" class="form-control"
-											oninvalid="setCustomValidity('Please enter IFSC Code')"
+											oninvalid="setCustomValidity('Please enter correct IFSC Code')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
@@ -188,20 +202,26 @@
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
+
+
+
 									<div class="col-md-2">Bank Address*</div>
+
 									<div class="col-md-4">
-										<input type="text" id="bankAddress" name="bankAddress"
-											value="${editBankDetail.bankAddress}" class="form-control"
-											oninvalid="setCustomValidity('Please Enter Bank Address')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
+										<textarea id="bankAddress" name="bankAddress"
+											class="form-control" style="width: 100%;" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter Bank address')"
+											maxlength="200"
+											onchange="try{setCustomValidity('')}catch(e){}" required>${editBankDetail.bankAddress}</textarea>
 									</div>
+
 									<div class="col-md-2">Account No*</div>
 									<div class="col-md-4">
-										<input type="text" id="accNo" name="accNo"
+										<input type="text" id="accNo" name="accNo" autocomplete="off"
 											value="${editBankDetail.accNo}" class="form-control"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											oninvalid="setCustomValidity('Please Enter account no')"
+											pattern="[0-9]+" maxlength="15"
+											oninvalid="setCustomValidity('Please enter account no')"
 											required style="width: 100%;">
 									</div>
 								</div>
@@ -209,14 +229,21 @@
 
 
 								<div class="form-group"></div>
+								<div class="col-lg-4"></div>
 
-
-								<div class="col-lg-12" align="center">
+								<div class="col-lg-2">
 
 
 									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
+										style="align-content: center; width: 113px; margin-left: 40px;">
 										Submit</button>
+								</div>
+
+								<div class="col-lg-2">
+
+									<button type="reset" class="btn btn-primary"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+										Clear</button>
 								</div>
 							</form>
 						</div>
@@ -228,13 +255,11 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Bank Name</th>
+
 										<th style="text-align: center">Company Name</th>
-										<th style="text-align: center">Account No</th>
-
-										<th style="text-align: center">Address</th>
+										<th style="text-align: center">Bank Name</th>
 										<th style="text-align: center">Bank IFSC</th>
-
+										<th style="text-align: center">Account No</th>
 										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
@@ -244,28 +269,16 @@
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
-
+											<td style="text-align: left"><c:out
+													value="${bankDet.compName}" /></td>
 											<td style="text-align: left"><c:out
 													value="${bankDet.bankName}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${bankDet.compName}" /></td>
-
+													value="${bankDet.bankIfsc}" /></td>
 
 											<td style="text-align: left"><c:out
 													value="${bankDet.accNo}" /></td>
-
-
-											<td style="text-align: left"><c:out
-													value="${bankDet.bankAddress}" /></td>
-
-
-											<td style="text-align: left"><c:out
-													value="${bankDet.bankIfsc}" /></td>
-
-
-
-
 
 											<td style="text-align: center"><a
 												href="${pageContext.request.contextPath}/editBankDetail/${bankDet.bankDetId}"><i

@@ -41,33 +41,6 @@ public class PaymentController {
 	List<CustType> custTypeList;
 	List<EnqGenFact> enqGenFactList;
 
-	@RequestMapping(value = "/showAddCustType", method = RequestMethod.GET)
-	public ModelAndView showAddCustType(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = null;
-		try {
-
-			model = new ModelAndView("master/addcusttype");
-
-			CustType[] custTypeArray = rest.getForObject(Constants.url + "getAllCustTypeList", CustType[].class);
-			custTypeList = new ArrayList<CustType>(Arrays.asList(custTypeArray));
-
-			model.addObject("custTypeList", custTypeList);
-
-			model.addObject("title", "Add Cust Type");
-
-		} catch (Exception e) {
-
-			System.err.println("exception In showAddCustType at Payment Contr" + e.getMessage());
-
-			e.printStackTrace();
-
-		}
-
-		return model;
-
-	}
-
 	@RequestMapping(value = "/showAddEnqGenFact", method = RequestMethod.GET)
 	public ModelAndView showAddEnqGenFact(HttpServletRequest request, HttpServletResponse response) {
 
@@ -183,6 +156,33 @@ public class PaymentController {
 		return "redirect:/showAddEnqGenFact";
 	}
 
+	@RequestMapping(value = "/showAddCustType", method = RequestMethod.GET)
+	public ModelAndView showAddCustType(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("master/addcusttype");
+
+			CustType[] custTypeArray = rest.getForObject(Constants.url + "getAllCustTypeList", CustType[].class);
+			custTypeList = new ArrayList<CustType>(Arrays.asList(custTypeArray));
+
+			model.addObject("custTypeList", custTypeList);
+
+			model.addObject("title", "Add Customer Type");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddCustType at Payment Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
 	@RequestMapping(value = "/insertCustType", method = RequestMethod.POST)
 	public String insertCustType(HttpServletRequest request, HttpServletResponse response) {
 
@@ -208,7 +208,7 @@ public class PaymentController {
 
 		} catch (Exception e) {
 
-			System.err.println("Exce in insert Uom " + e.getMessage());
+			System.err.println("Exce in insert CustType " + e.getMessage());
 			e.printStackTrace();
 
 		}
