@@ -173,7 +173,7 @@ public class QuotController {
 		Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
 		projList = new ArrayList<Project>(Arrays.asList(projArray));
 
-		System.err.println("Ajax Proj  List " + itemList.toString());
+		System.err.println("Ajax Proj  List " + projList.toString());
 
 		return projList;
 

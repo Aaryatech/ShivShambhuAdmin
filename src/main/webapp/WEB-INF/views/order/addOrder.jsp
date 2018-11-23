@@ -15,6 +15,9 @@
 
 <c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
 
+<c:url var="getProjectByCustId" value="/getProjectByCustId" />
+
+
 <c:url var="getPoDetailForOrderByPoId"
 	value="/getPoDetailForOrderByPoId" />
 	
@@ -70,6 +73,37 @@
 }
 </style>
 
+<style>
+.alert {
+    padding: 20px;
+    background-color: red;
+    color: white;
+    
+}
+.alert1 {
+    padding: 20px;
+    background-color: green;
+    color: white;
+    
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
+</style>
+
+
 </head>
 <body>
 
@@ -89,6 +123,31 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
+			
+			<c:choose>
+							<c:when test="${isError==1}">
+							
+							<div class="alert">
+							
+							<span class="closebtn"
+						onclick="this.parentElement.style.display='none';">&times;</span>
+					<strong>Failed !</strong>     Data not submitted  !!
+				</div>
+							
+							</c:when>
+							
+							<c:when test="${isError==2}">
+							
+							<div class="alert1">
+							
+							<span class="closebtn"
+						onclick="this.parentElement.style.display='none';">&times;</span>
+					<strong>Success</strong>     Data Submitted !!
+				</div>
+							
+							</c:when>
+							
+							</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -101,6 +160,7 @@
 								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
 										Customer</strong></a>
 							</div> --%>
+							
 
 						</div>
 						<div class="card-body card-block">
@@ -134,6 +194,34 @@
 									</div>
 
 								</div>
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Select Project</div>
+
+									<div class="col-md-10">
+										<select id="proj_id" name="proj_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select project')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+
+											<c:forEach items="${projList}" var="proj">
+											
+											<c:choose>
+											<c:when test="${quotHeader.projId==proj.projId}">
+												<option selected value="${proj.projId}">${proj.projName}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${proj.projId}">${proj.projName}</option>
+											</c:otherwise>
+											</c:choose>
+											
+											</c:forEach>
+
+										</select>
+									</div>
+								</div>
+								
 								<div id="divCheckbox" style="display: none;">
 									<div class="form-group"></div>
 									<div class="row">
@@ -181,6 +269,19 @@
 								<input type="hidden" id="isEdit" name="isEdit" value="0">
 
 								<input type="hidden" id="itemUomId" name="itemUomId" value="0">
+								
+								
+								<div class="form-group"></div>
+								<div class="row">
+								<div class="col-md-2">Delivery Date</div>
+									<div class="col-md-4">
+										<input type="text" id="del_date" name="del_date" required
+											style="width: 100%;" class="form-control"
+											value="${editComp.contactNo1}"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+								</div>
+								
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -220,7 +321,7 @@
 								</div>
 								<div class="form-group"></div>
 
-								<div class="row">
+								<!-- <div class="row">
 
 									<div class="col-md-2">Taxable Value</div>
 									<div class="col-md-4">1444</div>
@@ -228,7 +329,7 @@
 									<div class="col-md-2">Tax Value</div>
 									<div class="col-md-4">88.36</div>
 
-								</div>
+								</div> -->
 								<div class="form-group"></div>
 								<div class="row">
 
@@ -237,7 +338,7 @@
 									<div class="col-md-3">845</div> -->
 									<div class="col-md-2">Order Total</div>
 
-									<div class="col-md-3">5555666</div>
+									<div class="col-md-3" id="ordTotal">0</div>
 
 									<div class="col-md-2">
 										<input type="submit" class="btn btn-primary" value="Submit">
@@ -326,6 +427,10 @@
 			$('input[id$=ord_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
+			
+			$('input[id$=del_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
 
 		});
 	</script>
@@ -367,6 +472,12 @@
 					$("#cust_name").trigger("chosen:updated");
 					getCustInfo();
 
+					$('#po_id').html("-1");
+					$("#po_id").trigger("chosen:updated");
+					
+					var dataTable = $('#bootstrap-data-table')
+					.DataTable();
+			dataTable.clear().draw();
 
 				});
 			}//end of if
@@ -380,9 +491,28 @@
 			$('#divCheckbox').show();
 			var custId = document.getElementById("cust_name").value;
 			var valid = true;
-			if (custId == null || custId == "" || custId<0) {
+			if (custId == null || custId == "") {
 				valid = false;
 				alert("Please Select Customer");
+				
+				$('#po_id').html("-1");
+				$("#po_id").trigger("chosen:updated");
+				
+				var dataTable = $('#bootstrap-data-table')
+				.DataTable();
+		dataTable.clear().draw();
+
+			}
+			else if(custId<0){
+				valid = false;
+				
+				$('#po_id').html("-1");
+				$("#po_id").trigger("chosen:updated");
+				
+				var dataTable = $('#bootstrap-data-table')
+				.DataTable();
+		dataTable.clear().draw();
+
 			}
 			if (valid == true) {
 
@@ -420,7 +550,36 @@
 							$('#po_id').html(html);
 							$("#po_id").trigger("chosen:updated");
 						});
-			}
+				
+				
+				$	.getJSON(
+						'${getProjectByCustId}',
+						{
+							custId : custId,
+							ajax : 'true',
+						},
+						function(data) {
+							var html;
+							var len = data.length;
+							//alert("data " +JSON.stringify(data));
+							for (var i = 0; i < len; i++) {
+								var projData=data[i].projName+"-"+data[i].address
+
+								html += '<option value="' + data[i].projId + '">'
+										+projData+ '</option>';
+
+							}
+							html += '</option>';
+							$('#proj_id').html(html);
+							$("#proj_id").trigger("chosen:updated");
+						});
+				
+				
+				
+				
+				
+			}// end of if valid= true
+			
 		}
 	</script>
 
@@ -428,7 +587,7 @@
 	// on poId c change function 
 		function getPoDetailItem() {
 			var poId=document.getElementById("po_id").value;
-			alert("Po Id " +poId);
+			//alert("Po Id " +poId);
 
 			
 				$
@@ -449,9 +608,9 @@
 									.each(
 											data,
 											function(i, v) {
-												alert("hdjfh");
+												//alert("hdjfh");
 var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name='+v.itemId+' onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
+var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
 
 var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
 										/* var str = '<a href="#" class="action_btn" onclick="callDelete('
@@ -488,39 +647,57 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 	
 	<script type="text/javascript">
 	function calTotal(itemId,poRate,poDetailId,poRemainingQty){
-		alert("Hi");
+		//alert("Hi");
 		
+		var valid=true;
 		var qty=document.getElementById("ordQty"+itemId).value;
+		if(qty<0 || qty=="" || qty==null){
+			valid=false;
+			alert("Please enter valid quantity");
+			document.getElementById("itemTotal"+itemId).value="0";
 
-		var itemTotal=parseFloat(qty)*parseFloat(poRate);
-		document.getElementById("itemTotal"+itemId).value=itemTotal;
-		
+		}
+		else if(qty>poRemainingQty){
+			valid=false;
+			alert("Order quantity can not be greater than Po Remaining quantity");
+			document.getElementById("itemTotal"+itemId).value="0";
+
+		}
+		if(valid==true){
+			var itemTotal=parseFloat(qty)*parseFloat(poRate);
+			document.getElementById("itemTotal"+itemId).value=itemTotal;
 		$.getJSON('${getTempOrderHeader}', {
+			
 			
 			qty : qty,
 			itemTotal : itemTotal,
 			poDetailId : poDetailId,
 			itemId : itemId,
 			poRemainingQty : poRemainingQty,
+			poRate : poRate,
 			
 			ajax : 'true',
 		},
 
 		function(data) {
 			
-			var len = data.ordDetailList.length;
-			alert("Json " +JSON.stringify(data));
+			var len = data.length;
+			//alert("orderTotal " +data.orderTotal);
+			var tot=0;
 			for (var i = 0; i < len; i++) {
-
+				//alert("data[]" +data[i].total)
+			tot=data[i].total+tot;
 				//alert("Json " +JSON.stringify(data.ordDetailList[i]));
 
 			}
+			//alert("total " +tot);
+			document.getElementById("ordTotal").innerHTML=tot;
 		});
-		
+		}
 	}
 	</script>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function addItem() {
 			//alert("in add Item ");
 			var itemId = document.getElementById("item_name").value;
@@ -707,7 +884,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 		function callAlert(msg) {
 			alert(msg);
 		}
-	</script>
+	</script> -->
 
 	<!-- <script type="text/javascript">
 		$(document).ready(function() {
