@@ -99,6 +99,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+											<option value="">Select</option>
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
 											</c:forEach>
@@ -110,6 +111,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select item type')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+											<option value="">Select</option>
 											<c:forEach items="${itemTypeList}" var="item">
 												<option value="${item.itemTypeId}">${item.itemTypeName}</option>
 											</c:forEach>
@@ -153,6 +155,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select uom')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+											<option value="">Select</option>
 											<c:forEach items="${uomList}" var="uom">
 												<option value="${uom.uomId}">${uom.uomName}</option>
 											</c:forEach>
@@ -166,6 +169,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select tax')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+											<option value="">Select</option>
 											<c:forEach items="${taxList}" var="tax">
 												<option value="${tax.taxId}">${tax.taxName}</option>
 											</c:forEach>
@@ -223,6 +227,7 @@
 											class="standardSelect" tabindex="1" multiple="multiple"
 											oninvalid="setCustomValidity('Please select vendors')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+
 											<c:forEach items="${vendList}" var="vendor">
 												<option value="${vendor.vendId}">${vendor.vendCompName}</option>
 											</c:forEach>

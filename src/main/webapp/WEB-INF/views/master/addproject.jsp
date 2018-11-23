@@ -99,13 +99,17 @@
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required>
+											<option value="">Select</option>
 											<c:forEach items="${plantList}" var="plant">
 
 												<c:choose>
 													<c:when test="${plant.plantId==editItem.plantId}">
+
 														<option value="${plant.plantId}" selected>${plant.plantName}</option>
 													</c:when>
 													<c:otherwise>
+
+
 														<option value="${plant.plantId}">${plant.plantName}
 													</c:otherwise>
 												</c:choose>
@@ -119,11 +123,13 @@
 									<div class="col-md-4">
 										<select id="cust_id" name="cust_id" class="standardSelect"
 											tabindex="1" required>
+											<option value="">Select</option>
 											<c:forEach items="${custList}" var="cust">
 
 												<c:choose>
 													<c:when test="${cust.custId==editPro.custId}">
 														<option value="${cust.custId}" selected>${cust.custName}</option>
+
 													</c:when>
 													<c:otherwise>
 														<option value="${cust.custId}">${cust.custName}
@@ -144,8 +150,8 @@
 										<input type="text" id="contactPerName" name="contactPerName"
 											oninvalid="setCustomValidity('Please enter contact person Name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editPro.contactPerName}" class="form-control"
-											required style="width: 100%;">
+											pattern="^[A-Za-z\s]+$" value="${editPro.contactPerName}"
+											class="form-control" required style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">Mobile No*</div>
@@ -154,7 +160,7 @@
 										<input type="text" id="contactPerMob" name="contactPerMob"
 											value="${editPro.contactPerMob}"
 											oninvalid="setCustomValidity('Please enter tel no')"
-											maxlength="10" pattern="[0-9]+"
+											maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" required style="width: 100%;">
 									</div>

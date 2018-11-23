@@ -99,6 +99,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+											<option value="">Select</option>
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
 											</c:forEach>
@@ -112,6 +113,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+											<option value="">Select</option>
 											<c:forEach items="${custTypeList}" var="custType">
 												<option value="${custType.custTypeId}">${custType.custTypeName}</option>
 											</c:forEach>
@@ -194,6 +196,7 @@
 											tabindex="1"
 											oninvalid="setCustomValidity('Please enter customer category')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+											<option value="">Select</option>
 											<c:forEach items="${settingList}" var="custCate">
 												<option value="${custCate.settingId}">${custCate.settingValue}</option>
 											</c:forEach>
@@ -339,15 +342,15 @@
 										<input type="text" id="accPerson" name="accPerson"
 											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter Account name')"
-											onchange="try{setCustomValidity('')}catch(e){}" required>
+											onchange="try{setCustomValidity('')}catch(e){}" >
 									</div>
 									<div class="col-md-2">Account Mobile No*</div>
 									<div class="col-md-4">
 										<input type="text" id="accPerMob" name="accPerMob"
 											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter Mobile no')"
-											pattern="[0-9]{10}"
-											onchange="try{setCustomValidity('')}catch(e){}" required>
+											pattern="[0-9]{10}" onchange="checkMobileNo()"
+											onchange="try{setCustomValidity('')}catch(e){}" >
 									</div>
 
 								</div>
@@ -356,7 +359,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">PINcode No*</div>
+									<div class="col-md-2">PINCode No*</div>
 									<div class="col-md-4">
 										<input type="text" id="pincode" name="pincode"
 											class="form-control" style="width: 100%;"
@@ -368,7 +371,7 @@
 										<input type="text" id="km" name="km" class="form-control"
 											style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter Kilometer')"
-											onchange="try{setCustomValidity('')}catch(e){}" required>
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
 								</div>
@@ -383,14 +386,14 @@
 										<input type="text" id="creaditLimit" name="creaditLimit"
 											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter creaditLimit')"
-											onchange="try{setCustomValidity('')}catch(e){}" required>
+											onchange="try{setCustomValidity('')}catch(e){}" >
 									</div>
 									<div class="col-md-2">Credit Days*</div>
 									<div class="col-md-4">
 										<input type="text" id="creaditDays" name="creaditDays"
 											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter creaditDays')"
-											onchange="try{setCustomValidity('')}catch(e){}" required>
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
 								</div>
@@ -482,50 +485,7 @@
 	</script>
 
 
-	<!-- 	<script type="text/javascript">
-	
-	function editMsUser(msId){
-		
-		//alert(catId);
-		
-		$.getJSON('${getEditMsUser}',{
-			
-			msId : msId,
-			
-			ajax : 'true',
 
-		},
-		
-		function(data){
-			document.getElementById('addDiv').style.display = "block";
-			$("#usrname_mr").val(data.msMarName);
-			$("#usrname_eng").val(data.msEngName);
-        	
-			//hidden field msId
-			$("#ms_id").val(data.msId);
-			
-			$("#contact_no").val(data.msContactNo);
-			 document.getElementById("contact_no").readOnly = true; 
-			$("#usr_pass").val(data.msPwd); 
-			$("#conf_pass").val(data.msPwd); 
-			document.getElementById("usr_role").options.selectedIndex =data.isAdmin;
-			$("#usr_role").trigger("chosen:updated");
-			var temp=new Array();
-			
-			temp=(data.hubIds).split(",");
-			//alert(temp);
-			$("#sel_hub").val(temp); 
-			$("#sel_hub").trigger("chosen:updated");
-
-			//$('#sel_hub').formcontrol('refresh');
-	 		document.getElementById('submitButton').disabled = false;
-
-
-		});
-		
-	}
-	
-	</script> -->
 
 	<script>
 		jQuery(document).ready(function() {

@@ -99,6 +99,7 @@
 									<div class="col-md-4">
 										<select id="compId" name="compId" class="standardSelect"
 											tabindex="1" required>
+											<option value="">Select</option>
 											<c:forEach items="${compList}" var="comp">
 
 												<c:choose>
@@ -131,17 +132,6 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Telephone No*</div>
-									<div class="col-md-4">
-										<input type="text" id="tel_no" name="tel_no" required
-											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter tel no')"
-											maxlength="10" pattern="[0-9]+"
-											value="${editPlant.plantContactNo1}"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
-									</div>
 
 									<div class="col-md-2">Mobile No*</div>
 									<div class="col-md-4">
@@ -154,6 +144,19 @@
 											class="error" aria-live="polite"></span>
 
 									</div>
+									<div class="col-md-2">Telephone No(Optional)</div>
+									<div class="col-md-4">
+										<input type="text" id="tel_no" name="tel_no" required
+											style="width: 100%;" class="form-control"
+											oninvalid="setCustomValidity('Please enter tel no')"
+											maxlength="10" pattern="[0-9]+"
+											value="${editPlant.plantContactNo1}"
+											onchange="try{setCustomValidity('')}catch(e){}" /> <span
+											class="error" aria-live="polite"></span>
+
+									</div>
+
+
 								</div>
 
 								<div class="form-group"></div>
@@ -202,6 +205,7 @@
 									<div class="col-md-10">
 										<select id="plant_head" name="plant_head" style="width: 100%;"
 											class="standardSelect" tabindex="1" required>
+											<option value="">Select</option>
 											<c:forEach items="${usrList}" var="usr">
 
 
