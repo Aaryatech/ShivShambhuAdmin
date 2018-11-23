@@ -89,13 +89,13 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<div class="col-md-2">
+							<div class="col-md-4">
 								<strong>${title}</strong>
 							</div>
-							<div class="col-md-8"></div>
-							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showDocTermList"><strong>Doc
-										Term List</strong></a>
+							<div class="col-md-4"></div>
+							<div class="col-md-4" align="left">
+								<a href="${pageContext.request.contextPath}/showDocTermList"><strong>Terms
+										& Conditions List</strong></a>
 							</div>
 
 						</div>
@@ -119,71 +119,54 @@
 											</c:forEach>
 										</select>
 									</div>
-
 								</div>
-
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Term Title*</div>
+									<div class="col-md-2">Term & Conditions Title*</div>
 									<div class="col-md-4">
 										<input type="text" id="termTitle" name="termTitle"
+											pattern="^[A-Za-z\s]+$" autocomplete="off"
 											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter term title')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
-
-
-
 									<div class="col-md-2">Sort No*</div>
-
 									<div class="col-md-4">
-										<input type="text" id="sortNo" name="sortNo"
-											class="form-control" style="width: 100%;"
+										<input type="text" id="sortNo" name="sortNo" maxlength="3"
+											class="form-control" style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Sort No')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
+											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="[0-9]+">
 									</div>
-
-
-
 								</div>
-
 								<hr>
-
-								<br>
-								<section class="form-control" style="color: red;">
-									<div class="form-group"></div>
-									<div class="row">
-										<div class="col-md-2">Term Desc</div>
-										<div class="col-md-3">
-											<input type="text" id="termDesc" name="termDesc"
-												class="form-control" style="width: 100%;">
-										</div>
-
-
-
-										<div class="col-md-1">Sort No</div>
-
-										<div class="col-md-3">
-											<input type="text" id="sortNoDetail" name="sortNoDetail"
-												class="form-control" style="width: 100%;">
-										</div>
-										<div class="col-md-1"></div>
-
-										<div class="col-md-2">
-											<input type="button" value="Add" class="btn btn-primary"
-												style="align-content: center; width: 113px;" onclick="add()" />
-
-										</div>
-
-
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Term & Conditions*</div>
+									<div class="col-md-10">
+										<input type="text" id="termDesc" name="termDesc"
+											class="form-control" style="width: 100%;">
 									</div>
-									<input type="hidden" id="isDelete" name="isDelete" value="0">
-									<input type="hidden" name="isEdit" id="isEdit" value="0">
-									<input type="hidden" name="index" id="index" value="0">
-									<div class="form-group"></div>
+								</div>
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Sort No*</div>
 
-								</section>
+									<div class="col-md-3">
+										<input type="text" id="sortNoDetail" name="sortNoDetail"
+											maxlength="3" pattern="[0-9]+" class="form-control"
+											style="width: 100%;">
+									</div>
+									<div class="col-md-1"></div>
+									<div class="col-md-2">
+										<input type="button" value="Add" class="btn btn-primary"
+											style="align-content: center; width: 113px;" onclick="add()" />
+									</div>
+								</div>
+								<input type="hidden" id="isDelete" name="isDelete" value="0">
+								<input type="hidden" name="isEdit" id="isEdit" value="0">
+								<input type="hidden" name="index" id="index" value="0">
+								<div class="form-group"></div>
 
 
 
@@ -195,27 +178,28 @@
 										<thead>
 											<tr>
 
-												<th style="text-align: center">Sr</th>
-												<th style="text-align: center">Term Desc</th>
-												<th style="text-align: center">Sort No</th>
-
+												<th style="text-align: center; width: 5%;">Sr</th>
+												<th style="text-align: center">Term & Conditions</th>
+												<th style="text-align: right">Sort No</th>
 												<th style="text-align: center; width: 5%;">Action</th>
-
 											</tr>
 										</thead>
-
 									</table>
-
-
 								</div>
 
 								<div class="form-group"></div>
-								<div class="col-lg-12" align="center">
-
+								<div class="col-lg-4"></div>
+								<div class="col-lg-2">
 
 									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
+										style="align-content: center; width: 113px; margin-left: 20px;">
 										Submit</button>
+								</div>
+								<div class="col-lg-2">
+
+									<button type="reset" class="btn btn-primary"
+										style="align-content: center; width: 113px; margin-left: 20px;">
+										Clear</button>
 								</div>
 
 

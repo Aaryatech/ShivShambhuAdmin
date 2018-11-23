@@ -119,7 +119,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Term Title*</div>
+									<div class="col-md-2">Term & Conditions*</div>
 									<div class="col-md-4">
 										<input type="text" id="termTitle" name="termTitle"
 											value="${editDoc.termTitle}" class="form-control"
@@ -135,29 +135,17 @@
 											value="${editDoc.sortNo}" class="form-control"
 											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
 									</div>
-
-
-
 								</div>
-
 								<hr>
-
-
-
-
 								<div class="card-body card-block">
-
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-
 												<th style="text-align: center">Sr</th>
-												<th style="text-align: center">Term Desc</th>
+												<th style="text-align: center">Term & Conditions</th>
 												<th style="text-align: center">Sort No</th>
-
 												<th style="text-align: center; width: 5%;">Action</th>
-
 											</tr>
 										</thead>
 										<tbody>

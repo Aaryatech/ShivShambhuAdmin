@@ -1,6 +1,7 @@
 package com.ats.ssgs.controller;
 
 import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -23,16 +24,12 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
-import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.DocTermDetail;
 import com.ats.ssgs.model.master.DocTermHeader;
 import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.GetDocTermHeader;
-import com.ats.ssgs.model.master.GetPlant;
 import com.ats.ssgs.model.master.Info;
-import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.TempDocDetail;
-import com.ats.ssgs.model.master.User;
 
 @Controller
 public class DocTermController {
@@ -53,7 +50,7 @@ public class DocTermController {
 
 			model.addObject("docList", docList);
 
-			model.addObject("title", "Add DocTerm");
+			model.addObject("title", "Add Terms & Conditions");
 
 		} catch (Exception e) {
 
@@ -141,7 +138,7 @@ public class DocTermController {
 
 			String termTitle = request.getParameter("termTitle");
 
-			int sortNo = Integer.parseInt(request.getParameter("sortNo"));
+			// int sortNo = Integer.parseInt(request.getParameter("sortNo"));
 
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Calendar cal = Calendar.getInstance();
@@ -156,8 +153,14 @@ public class DocTermController {
 			docHead.setExInt2(0);
 			docHead.setExVar1("NA");
 			docHead.setExVar2("NA");
-			docHead.setSortNo(sortNo);
+
 			docHead.setTermTitle(termTitle);
+
+			try {
+				docHead.setSortNo(Integer.parseInt(request.getParameter("sortNo")));
+			} catch (Exception e) {
+				docHead.setSortNo(0);
+			}
 
 			List<DocTermDetail> docDetailList = new ArrayList<>();
 
@@ -246,7 +249,7 @@ public class DocTermController {
 					GetDocTermHeader[].class);
 			docTermHeaderList = new ArrayList<GetDocTermHeader>(Arrays.asList(docArray));
 
-			model.addObject("title", "Document Term List");
+			model.addObject("title", "Term & Conditions List");
 			model.addObject("docHeaderList", docTermHeaderList);
 		} catch (Exception e) {
 
@@ -279,15 +282,12 @@ public class DocTermController {
 
 			map.add("termId", termId);
 			editDoc = rest.postForObject(Constants.url + "getDocHeaderByTermId", map, DocTermHeader.class);
-
-			model.addObject("title", "Edit Document Term");
+			model.addObject("title", "Edit Terms & Conditions");
 			model.addObject("editDoc", editDoc);
 			model.addObject("editDocDetail", editDoc.getDetailList());
 
 		} catch (Exception e) {
-
 			System.err.println("exception In editDoc at Doc Contr" + e.getMessage());
-
 			e.printStackTrace();
 
 		}
@@ -308,7 +308,7 @@ public class DocTermController {
 
 		} catch (Exception e) {
 
-			System.err.println("Exception in /deleteDocHeader @DocContr  " + e.getMessage());
+			System.err.println("Exception in /deleteDocHeader @DocContr" + e.getMessage());
 			e.printStackTrace();
 		}
 

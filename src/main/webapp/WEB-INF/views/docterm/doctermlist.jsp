@@ -84,7 +84,7 @@
 							<div class="col-md-6"></div>
 							<div class="col-md-3" align="left">
 								<a href="${pageContext.request.contextPath}/showAddDocTerm"><strong>Add
-										Doc Term </strong></a>
+										Term & Conditions </strong></a>
 							</div>
 
 						</div>
@@ -98,7 +98,7 @@
 
 										<th style="text-align: center">Sr</th>
 										<th style="text-align: center">Document Name</th>
-										<th style="text-align: center">Term Title</th>
+										<th style="text-align: center">Term & Conditions</th>
 										<th style="text-align: center">Sort No</th>
 
 										<th style="text-align: center">Action</th>
