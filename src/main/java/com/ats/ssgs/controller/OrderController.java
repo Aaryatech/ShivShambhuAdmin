@@ -290,7 +290,7 @@ public class OrderController {
 
 				headerTotal = orDetail.getTotal() + headerTotal;
 
-			}
+		 	}
 			ordHeader.setOrderValue(headerTotal);
 			ordHeader.setTotal(headerTotal);
 
