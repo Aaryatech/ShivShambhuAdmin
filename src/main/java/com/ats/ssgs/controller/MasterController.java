@@ -57,6 +57,7 @@ public class MasterController {
 
 	List<Tax> getTaxList;
 	List<GetVendor> getVendList;
+	int isError = 0;
 
 	@RequestMapping(value = "/showAddVendor", method = RequestMethod.GET)
 	public ModelAndView showAddVendor(HttpServletRequest request, HttpServletResponse response) {
@@ -417,6 +418,8 @@ public class MasterController {
 			model = new ModelAndView("master/addplant");
 
 			model.addObject("title", "Add Plant");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -491,7 +494,7 @@ public class MasterController {
 			plant.setPlantAddress1(plantAdd);
 			plant.setPlantAddress2(na);
 			plant.setPlantContactNo1(mobNo);
-			plant.setPlantContactNo2(telNo);
+
 			plant.setPlantEmail1(email);
 
 			plant.setPlantEmail2(na);
@@ -501,12 +504,25 @@ public class MasterController {
 			plant.setPlantId(plantId);
 			plant.setPlantName(plantName);
 
+			try
+
+			{
+				plant.setPlantContactNo2(telNo);
+			} catch (Exception e) {
+				plant.setPlantContactNo2(na);
+			}
+
 			System.err.println("plant " + plant.toString());
 
-			// saveItem
-
 			Plant plantInsertRes = rest.postForObject(Constants.url + "savePlant", plant, Plant.class);
-			System.err.println("plantInsertRes " + plantInsertRes.toString());
+
+			if (plantInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
+
+			System.out.println("plantInsertRes" + plantInsertRes.toString());
 
 		} catch (Exception e) {
 			System.err.println("EXCE in insertPlant " + e.getMessage());
@@ -971,7 +987,7 @@ public class MasterController {
 
 		} catch (Exception e) {
 
-			System.err.println("Exception in /deleteDept @MastContr  " + e.getMessage());
+			System.err.println("Exception in /deleteProject @MastContr  " + e.getMessage());
 			e.printStackTrace();
 		}
 
@@ -1585,7 +1601,7 @@ public class MasterController {
 			deptList = new ArrayList<Dept>(Arrays.asList(deptArray));
 
 			model.addObject("deptList", deptList);
-			model.addObject("title", "Add Dept");
+			model.addObject("title", "Add Department");
 
 		} catch (Exception e) {
 
@@ -1612,13 +1628,15 @@ public class MasterController {
 			} catch (Exception e) {
 				deptId = 0;
 			}
+
+			// int sortNo = 0;
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			String curDate = dateFormat.format(new Date());
 
 			String deptName = request.getParameter("deptName");
 
-			String sortNo = request.getParameter("sortNo");
+			// String sortNo = request.getParameter("sortNo");
 
 			Dept dept = new Dept();
 			dept.setDelStatus(1);
@@ -1630,10 +1648,15 @@ public class MasterController {
 			dept.setExDate2(curDate);
 			dept.setExInt1(0);
 			dept.setExInt2(0);
-			dept.setSortNo(Integer.parseInt(sortNo));
+
 			dept.setIsUsed(1);
 			dept.setExVar1("NA");
 			dept.setExVar2("NA");
+			try {
+				dept.setSortNo(Integer.parseInt(request.getParameter("sortNo")));
+			} catch (Exception e) {
+				dept.setSortNo(0);
+			}
 
 			Dept deptInsertRes = rest.postForObject(Constants.url + "saveDept", dept, Dept.class);
 
@@ -1664,7 +1687,7 @@ public class MasterController {
 
 			Dept editDept = rest.postForObject(Constants.url + "getDeptByDeptId", map, Dept.class);
 
-			model.addObject("title", "Edit Dept");
+			model.addObject("title", "Edit Department");
 			model.addObject("editDept", editDept);
 
 		} catch (Exception e) {
@@ -1709,7 +1732,7 @@ public class MasterController {
 			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
 
 			model.addObject("uomList", uomList);
-			model.addObject("title", "Add Uom");
+			model.addObject("title", "Add Measurement Unit");
 
 		} catch (Exception e) {
 
@@ -1743,12 +1766,10 @@ public class MasterController {
 			String uomName = request.getParameter("uomName");
 			String uomShortName = request.getParameter("uomShortName");
 
-			String sortNo = request.getParameter("sortNo");
-
 			Uom uom = new Uom();
 			uom.setDelStatus(1);
 			uom.setUomName(uomName);
-			uom.setSortNo(Integer.parseInt(sortNo));
+
 			uom.setUomShortName(uomShortName);
 			uom.setExBool1(0);
 			uom.setExBool2(0);
@@ -1762,6 +1783,12 @@ public class MasterController {
 			uom.setExVar1("NA");
 			uom.setExVar2("NA");
 			uom.setExVar3("NA");
+
+			try {
+				uom.setSortNo(Integer.parseInt(request.getParameter("sortNo")));
+			} catch (Exception e) {
+				uom.setSortNo(0);
+			}
 
 			Uom uomInsertRes = rest.postForObject(Constants.url + "saveUom", uom, Uom.class);
 
@@ -1792,12 +1819,12 @@ public class MasterController {
 
 			Uom editUom = rest.postForObject(Constants.url + "getUomByUomId", map, Uom.class);
 
-			model.addObject("title", "Edit Uom");
+			model.addObject("title", "Edit Measurement Unit");
 			model.addObject("editUom", editUom);
 
 		} catch (Exception e) {
 
-			System.err.println("exception In editDept at Master Contr" + e.getMessage());
+			System.err.println("exception In editUom at Master Contr" + e.getMessage());
 
 			e.printStackTrace();
 

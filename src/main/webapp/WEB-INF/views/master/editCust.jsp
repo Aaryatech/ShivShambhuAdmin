@@ -411,7 +411,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Account Person Name*</div>
+									<div class="col-md-2">Accountant Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="accPerson" name="accPerson"
 											value="${editCust.accPerson}" class="form-control"
@@ -419,7 +419,7 @@
 											oninvalid="setCustomValidity('Please enter Account name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
-									<div class="col-md-2">Account Mobile No*</div>
+									<div class="col-md-2">Accountant Mob. No*</div>
 									<div class="col-md-4">
 										<input type="text" id="accPerMob" name="accPerMob"
 											value="${editCust.accPerMob}" class="form-control"

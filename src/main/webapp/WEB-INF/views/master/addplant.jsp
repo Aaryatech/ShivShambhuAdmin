@@ -54,6 +54,36 @@
 	text-align: left;
 }
 </style>
+
+<style>
+.alert {
+	padding: 20px;
+	background-color: red;
+	color: white;
+}
+
+.alert1 {
+	padding: 20px;
+	background-color: green;
+	color: white;
+}
+
+.closebtn {
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+
+.closebtn:hover {
+	color: black;
+}
+</style>
+
 </head>
 <body>
 
@@ -74,6 +104,31 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
+
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
+							<span class="closebtn"
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
+							<span class="closebtn"
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -118,10 +173,11 @@
 									<div class="col-md-2">Plant Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="plant_name" name="plant_name"
-											oninvalid="setCustomValidity('Please enter plant name')"
+											autocomplete="off"
+											oninvalid="setCustomValidity('Please enter correct plant name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editPlant.plantName}" class="form-control" required
-											style="width: 100%;">
+											pattern="^[A-Za-z\s]+$" value="${editPlant.plantName}"
+											class="form-control" required style="width: 100%;">
 									</div>
 
 								</div>
@@ -136,20 +192,20 @@
 									<div class="col-md-2">Mobile No*</div>
 									<div class="col-md-4">
 										<input type="text" id="mob_no" name="mob_no" required
-											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter mob no')"
+											style="width: 100%;" class="form-control" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" value="${editPlant.plantContactNo2}"
-											pattern="[0-9]{10}"
+											pattern="^[1-9]{1}[0-9]{9}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
 									</div>
 									<div class="col-md-2">Telephone No(Optional)</div>
 									<div class="col-md-4">
-										<input type="text" id="tel_no" name="tel_no" required
-											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter tel no')"
-											maxlength="10" pattern="[0-9]+"
+										<input type="text" id="tel_no" name="tel_no"
+											autocomplete="off" style="width: 100%;" class="form-control"
+											oninvalid="setCustomValidity('Please enter correct tel no')"
+											maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"
 											value="${editPlant.plantContactNo1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -164,8 +220,8 @@
 									<div class="col-md-2">Email Id*</div>
 									<div class="col-md-4">
 										<input type="text" id="email" name="email" required
-											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter email')"
+											autocomplete="off" style="width: 100%;" class="form-control"
+											oninvalid="setCustomValidity('Please enter correct email')"
 											maxlength="50" value="${editPlant.plantEmail1}"
 											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
@@ -175,9 +231,9 @@
 
 									<div class="col-md-2">FAX No*</div>
 									<div class="col-md-4">
-										<input type="text" id="fax" name="fax" required
-											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter FAX no')"
+										<input type="text" id="fax" name="fax" autocomplete="off"
+											required style="width: 100%;" class="form-control"
+											oninvalid="setCustomValidity('Please enter correct FAX no')"
 											maxlength="20" value="${editPlant.plantFax1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -189,20 +245,24 @@
 								<div class="row">
 
 									<div class="col-md-2">Plant Address*</div>
-									<div class="col-md-10">
-										<input type='text' id="plant_add" name="plant_add"
-											style="width: 100%;" value="${editPlant.plantAddress1}"
-											required />
+
+									<div class="col-md-4">
+										<textarea id="plant_add" name="plant_add" class="form-control"
+											style="width: 100%;" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter Plant address')"
+											maxlength="200"
+											onchange="try{setCustomValidity('')}catch(e){}" required>${editPlant.plantAddress1}</textarea>
 									</div>
 
-								</div>
-								<div class="form-group"></div>
 
-								<div class="row">
 
-									<div class="col-md-2">Select Plant Head*</div>
 
-									<div class="col-md-10">
+
+
+									<div class="col-md-2">Select User*</div>
+
+
+									<div class="col-md-4">
 										<select id="plant_head" name="plant_head" style="width: 100%;"
 											class="standardSelect" tabindex="1" required>
 											<option value="">Select</option>

@@ -91,10 +91,11 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Uom Name*</div>
+									<div class="col-md-2">Measurement Unit Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="uomName" name="uomName"
 											value="${editUom.uomName}" class="form-control"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Uom Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
@@ -105,10 +106,10 @@
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
 											value="${editUom.sortNo}" class="form-control"
-											style="width: 100%;"
+											style="width: 100%;" autocomplete="off" maxlength="3"
+											pattern="[0-9]+"
 											oninvalid="setCustomValidity('Please enter Sort No')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											pattern="[0-9]+">
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
 									<input type="hidden" id="deptId" name="deptId"
@@ -119,35 +120,33 @@
 
 
 								<div class="row">
-									<div class="col-md-2">Uom Short Name*</div>
+									<div class="col-md-2">Measurement Unit Short Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="uomShortName" name="uomShortName"
-											value="${editUom.uomShortName}" class="form-control"
+											autocomplete="off" value="${editUom.uomShortName}"
+											class="form-control"
 											oninvalid="setCustomValidity('Please enter Uom Short Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
+									<div class="col-lg-2"></div>
 
-
-
-
-									<div class="col-lg-4" align="right">
-
+									<div class="col-lg-2">
 
 										<button type="submit" class="btn btn-primary"
 											style="align-content: center; width: 113px; margin-left: 40px;">
 											Submit</button>
 									</div>
 
+									<div class="col-lg-2">
+
+										<button type="reset" class="btn btn-primary"
+											style="align-content: center; width: 113px; margin-left: 40px;">
+											Clear</button>
+									</div>
+
 
 								</div>
-
-
-
-
-
-
-
 
 							</form>
 						</div>
@@ -162,8 +161,9 @@
 									<tr>
 
 										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Uom Name</th>
-										<th style="text-align: center">Uom Short Name</th>
+										<th style="text-align: center">Measurement Unit Name</th>
+										<th style="text-align: center">Measurement Unit Short
+											Name</th>
 										<th style="text-align: center">Sort No</th>
 
 										<th style="text-align: center; width: 5%;">Action</th>

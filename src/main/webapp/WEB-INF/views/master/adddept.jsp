@@ -104,6 +104,7 @@
 									<div class="col-md-2">Department Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="deptName" name="deptName"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please Enter Dept Name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editDept.deptName}" class="form-control" required
@@ -116,11 +117,11 @@
 
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
-											value="${editDept.sortNo}" class="form-control"
+											autocomplete="off" value="${editDept.sortNo}"
+											class="form-control"
 											oninvalid="setCustomValidity('Please enter Sort No')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											required>
+											style="width: 100%;" maxlength="3" pattern="[0-9]+">
 									</div>
 
 									<input type="hidden" id="deptId" name="deptId"
@@ -128,13 +129,22 @@
 
 								</div>
 								<div class="form-group"></div>
-								<div class="col-lg-12" align="center">
-
+								<div class="col-lg-4"></div>
+								<div class="col-lg-2">
 
 									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
+										style="align-content: center; width: 113px; margin-left: 40px;">
 										Submit</button>
 								</div>
+
+								<div class="col-lg-2">
+
+
+									<button type="reset" class="btn btn-primary"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+										Clear</button>
+								</div>
+
 
 
 
