@@ -31,6 +31,7 @@ import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.order.GetOrder;
+import com.ats.ssgs.model.order.GetOrderDetail;
 import com.ats.ssgs.model.order.GetPoForOrder;
 import com.ats.ssgs.model.order.OrderDetail;
 import com.ats.ssgs.model.order.OrderHeader;
@@ -154,7 +155,9 @@ public class OrderController {
 		float poRemainingQty = Float.parseFloat(request.getParameter("poRemainingQty"));
 		float itemTotal = Float.parseFloat(request.getParameter("itemTotal"));
 		float orderRate = Float.parseFloat(request.getParameter("poRate"));
-		if (tempOrdDetail.size() == 0) {
+		
+		int orderDetId =Integer.parseInt(request.getParameter("orderDetId"));
+		if (tempOrdDetail == null) {
 			System.err.println("Ord Head =null ");
 			/*
 			 * ordHeader=new TempOrdHeader();
@@ -172,7 +175,7 @@ public class OrderController {
 			detail.setPoDetailId(poDetailId);
 			detail.setTotal(itemTotal);
 			detail.setOrderRate(orderRate);
-
+detail.setOrderDetId(orderDetId);
 			tempOrdDetail.add(detail);
 			// ordHeader.setOrdDetailList(tempOrdDetail);
 			// return tempOrdDetail;
@@ -207,6 +210,8 @@ public class OrderController {
 				detail.setPoDetailId(poDetailId);
 				detail.setTotal(itemTotal);
 				detail.setOrderRate(orderRate);
+				detail.setOrderDetId(orderDetId);
+
 
 				/*
 				 * ordHeader.setOrderTotal(ordHeader.getOrderTotal()+itemTotal);
@@ -365,38 +370,36 @@ public class OrderController {
 
 			model.addObject("plantList", plantList);
 
-			String fromDate = null,toDate = null;
-			
-			if(request.getParameter("fromDate")==null || request.getParameter("fromDate")=="") {
-				
-				System.err.println("onload call  " );
-				
+			String fromDate = null, toDate = null;
+
+			if (request.getParameter("fromDate") == null || request.getParameter("fromDate") == "") {
+
+				System.err.println("onload call  ");
+
 				Calendar date = Calendar.getInstance();
 				date.set(Calendar.DAY_OF_MONTH, 1);
-				
+
 				Date firstDate = date.getTime();
 
 				DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 
 				fromDate = dateFormat.format(firstDate);
-				
-				toDate=dateFormat.format(new Date());
-					System.err.println("cu Date  " + fromDate + "todays date   " + toDate);
+
+				toDate = dateFormat.format(new Date());
+				System.err.println("cu Date  " + fromDate + "todays date   " + toDate);
+
+			} else {
+
+				System.err.println("After page load call");
+				fromDate = request.getParameter("fromDate");
+				toDate = request.getParameter("toDate");
 
 			}
-			else {
-				
-				System.err.println("After page load call");
-				fromDate=request.getParameter("fromDate");
-				toDate=request.getParameter("toDate");
-				
-			}
-			
+
 			// getOrderListBetDate
 
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
-			
 
 		} catch (Exception e) {
 
@@ -408,22 +411,20 @@ public class OrderController {
 
 		return model;
 	}
-	
-	List<GetOrder> getOrdList=new ArrayList<>();
-	
-	
+
+	List<GetOrder> getOrdList = new ArrayList<>();
+
 	@RequestMapping(value = "/getOrderListBetDate", method = RequestMethod.GET)
-	public @ResponseBody List<GetOrder> getOrderListBetDate(HttpServletRequest request,
-			HttpServletResponse response) {
+	public @ResponseBody List<GetOrder> getOrderListBetDate(HttpServletRequest request, HttpServletResponse response) {
 
 		System.err.println(" in getTempOrderHeader");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
 		int custId = Integer.parseInt(request.getParameter("custId"));
-		
-		String fromDate=request.getParameter("fromDate");
-		String toDate=request.getParameter("toDate");
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
 
 		map.add("plantId", plantId);
 		map.add("custId", custId);
@@ -431,54 +432,172 @@ public class OrderController {
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
 		map.add("status", 0);
 
-		GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getOrderListBetDate", map,
-				GetOrder[].class);
+		GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getOrderListBetDate", map, GetOrder[].class);
 		getOrdList = new ArrayList<GetOrder>(Arrays.asList(ordHeadArray));
 
 		return getOrdList;
 	}
-	
-	
-	
-	
+
+	List<GetOrderDetail> ordDetailList;
+
 	@RequestMapping(value = "/editOrder/{orderId}", method = RequestMethod.GET)
-	public ModelAndView editOrder(HttpServletRequest request, HttpServletResponse response,
-	 		@PathVariable int orderId) {
+	public ModelAndView editOrder(HttpServletRequest request, HttpServletResponse response, @PathVariable int orderId) {
 
 		ModelAndView model = null;
 		try {
 
 			model = new ModelAndView("order/editOrder");
-			
+
 			GetOrder editOrder = null;
-			for(int i=0;i<getOrdList.size();i++) {
-				
-				if(getOrdList.get(i).getOrderId()==orderId) {
-					editOrder=new GetOrder();
-					editOrder=getOrdList.get(i);
-					break;
-				}
-			}
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			/*
+			 * for(int i=0;i<getOrdList.size();i++) {
+			 * 
+			 * if(getOrdList.get(i).getOrderId()==orderId) { editOrder=new GetOrder();
+			 * editOrder=getOrdList.get(i); break; } }
+			 */
+			MultiValueMap<String, Object>
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("orderId", orderId);
+			editOrder = rest.postForObject(Constants.url + "getOrderHeaderById", map, GetOrder.class);
+
+			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("custId", editOrder.getCustId());
 			List<Project> projList;
 			Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
 			projList = new ArrayList<Project>(Arrays.asList(projArray));
 
-			model.addObject("editOrder",editOrder);
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("orderHeaderId", orderId);
+			GetOrderDetail[] ordDetailArray = rest.postForObject(Constants.url + "getOrderDetailList", map,
+					GetOrderDetail[].class);
+			ordDetailList = new ArrayList<GetOrderDetail>(Arrays.asList(ordDetailArray));
+
+			model.addObject("orderDetailList", ordDetailList);
+
+			model.addObject("editOrder", editOrder);
 			model.addObject("projList", projList);
 
 			model.addObject("title", "Edit Order");
-			
-			
-			
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			System.err.println("Exce in edit Order " + e.getMessage());
 			e.printStackTrace();
 		}
 		return model;
 	}
 	
+	//
+	
+	
+	// updateOrder
+		@RequestMapping(value = "/updateOrder", method = RequestMethod.POST)
+		public String updateOrder(HttpServletRequest request, HttpServletResponse response) {
+
+			ModelAndView model = null;
+			try {
+
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				String curDate = dateFormat.format(new Date());
+
+				model = new ModelAndView("order/addOrder");
+
+				model.addObject("title", "Add Order");
+
+				int orderId = Integer.parseInt(request.getParameter("orderId"));
+				//int custId = Integer.parseInt(request.getParameter("cust_name"));
+				int projId = Integer.parseInt(request.getParameter("proj_id"));
+				int poId = Integer.parseInt(request.getParameter("po_id"));
+
+				//String ordDate = request.getParameter("ord_date");
+				String delDate = request.getParameter("del_date");
+
+				// float itemTotal = Float.parseFloat(request.getParameter("itemTotal"));
+
+				OrderHeader ordHeader = new OrderHeader();
+				
+				MultiValueMap<String, Object>
+
+				map = new LinkedMultiValueMap<String, Object>();
+					map.add("orderHeaderId", orderId);
+				ordHeader = rest.postForObject(Constants.url + "getOrdHeaderByOrdId", map, OrderHeader.class);
+
+
+				List<OrderDetail> ordDetailList = new ArrayList<>();
+				String NA = "NA";
+				ordHeader.setDeliveryDate(DateConvertor.convertToYMD(delDate));
+				ordHeader.setProdDate(DateConvertor.convertToYMD(delDate));
+				ordHeader.setProjId(projId);
+
+				float headerTotal = 0;
+
+				for (int i = 0; i < tempOrdDetail.size(); i++) {
+
+					OrderDetail orDetail = new OrderDetail();
+					
+					 orDetail.setOrderDetId(tempOrdDetail.get(i).getOrderDetId());
+					orDetail.setDelStatus(1);
+					orDetail.setExDate1(curDate);
+					orDetail.setExDate2(curDate);
+					orDetail.setExVar1(NA);
+					orDetail.setExVar2(NA);
+					orDetail.setExVar3(NA);
+					orDetail.setItemId(tempOrdDetail.get(i).getItemId());
+					orDetail.setOrderQty(tempOrdDetail.get(i).getOrderQty());
+					orDetail.setOrderRate(tempOrdDetail.get(i).getOrderRate());
+
+					orDetail.setPoDetailId(tempOrdDetail.get(i).getPoDetailId());
+					orDetail.setPoId(poId);
+
+					orDetail.setTotal(tempOrdDetail.get(i).getTotal());
+					ordDetailList.add(orDetail);
+
+					headerTotal = orDetail.getTotal() + headerTotal;
+
+				}
+				ordHeader.setOrderValue(headerTotal);
+				ordHeader.setTotal(headerTotal);
+
+
+				/*if (poDetailForOrdList.get(0).getTaxAmt() == 0) {
+
+					ordHeader.setIsTaxIncluding(0);// tax not included
+
+				} else {
+
+					ordHeader.setIsTaxIncluding(1);// yes tax included
+
+				}
+*/
+				ordHeader.setOrderDetailList(ordDetailList);
+
+				OrderHeader insertOrdHeadRes = rest.postForObject(Constants.url + "saveOrder", ordHeader,
+						OrderHeader.class);
+
+				if (insertOrdHeadRes != null) {
+
+					isError = 2;
+
+
+				} else {
+
+					isError = 1;
+				}
+				System.err.println("insertOrdHeadRes " + insertOrdHeadRes.toString());
+
+			} catch (Exception e) {
+				isError = 1;
+				System.err.println("exception In updateOrder at OrderController " + e.getMessage());
+
+				e.printStackTrace();
+
+			}
+
+			return "redirect:/showAddOrder";
+		}
+
+
 }

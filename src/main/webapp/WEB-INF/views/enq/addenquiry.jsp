@@ -244,12 +244,12 @@
 									<div class="form-group"></div>
 
 									<div class="row">
-										<div class="col-md-2">Rate</div>
+									<!-- 	<div class="col-md-2">Rate</div>
 										<div class="col-md-4">
 											<input type="text" readonly="readonly" id="item_rate"
 												name="item_rate" class="form-control" style="width: 100%;"
 												value="0">
-										</div>
+										</div> -->
 
 										<div class="col-md-2"></div>
 
@@ -299,12 +299,12 @@
 									</div>
 
 
-									<div class="col-md-2">Enquiry From</div>
+									<div class="col-md-2">Enquiry Source</div>
 
 									<div class="col-md-4">
 										<select id="enq_gen_fact" name="enq_gen_fact"
 											class="standardSelect" tabindex="1" required
-											oninvalid="setCustomValidity('Please select enq gen fact')"
+											oninvalid="setCustomValidity('Please select enquiry source')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 
 											<c:forEach items="${enqGenFactList}" var="enqFrom">
@@ -582,7 +582,7 @@
 
 			//alert("x=" +x + "y= " +y);
 			if (valid == false) {
-				alert("Inside add ajax");
+				//alert("Inside add ajax");
 				$
 						.getJSON(
 								'${addEnqItem}',

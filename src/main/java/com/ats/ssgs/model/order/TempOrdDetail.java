@@ -11,7 +11,15 @@ public class TempOrdDetail {
 	
 	private float orderRate;
 	
+	private int orderDetId;
 	
+	
+	public int getOrderDetId() {
+		return orderDetId;
+	}
+	public void setOrderDetId(int orderDetId) {
+		this.orderDetId = orderDetId;
+	}
 	public float getOrderRate() {
 		return orderRate;
 	}
@@ -45,10 +53,8 @@ public class TempOrdDetail {
 	@Override
 	public String toString() {
 		return "TempOrdDetail [itemId=" + itemId + ", poDetailId=" + poDetailId + ", orderQty=" + orderQty + ", total="
-				+ total + ", orderRate=" + orderRate + "]";
+				+ total + ", orderRate=" + orderRate + ", orderDetId=" + orderDetId + "]";
 	}
-	
-	
 	
 
 }

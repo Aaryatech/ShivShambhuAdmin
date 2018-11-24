@@ -651,7 +651,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 		
 		var valid=true;
 		var qty=document.getElementById("ordQty"+itemId).value;
-		if(qty<0 || qty=="" || qty==null){
+		if(qty<0 || qty=="" || qty==null || qty==0){
 			valid=false;
 			alert("Please enter valid quantity");
 			document.getElementById("itemTotal"+itemId).value="0";
@@ -675,7 +675,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 			itemId : itemId,
 			poRemainingQty : poRemainingQty,
 			poRate : poRate,
-			
+			orderDetId : 0,
 			ajax : 'true',
 		},
 

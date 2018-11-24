@@ -164,7 +164,7 @@
 
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertOrder"
+							<form action="${pageContext.request.contextPath}/updateOrder"
 								method="post">
 
 								<div class="row">
@@ -267,12 +267,10 @@
 									</div>
 
 								</div>
+								<input type="hidden" id="po_id" name="po_id" value="${editOrder.poId}">
 
-								<input type="hidden" id="isEdit" name="isEdit" value="0">
+								<input type="hidden" id="orderId" name="orderId" value="${editOrder.orderId}">
 
-								<input type="hidden" id="itemUomId" name="itemUomId" value="0">
-								
-								
 								<div class="form-group"></div>
 								<div class="row">
 								<div class="col-md-2">Delivery Date</div>
@@ -318,6 +316,37 @@
 													<th style="text-align: center">Item Total</th>
 											</tr>
 										</thead>
+										<tbody>
+									<c:forEach items="${orderDetailList}" var="ordDetail" varStatus="count">
+										<tr>
+
+											<td style="text-align: center">${count.index+1}</td>
+
+
+											<td style="text-align: left"><c:out
+													value="${ordDetail.itemName}" /></td>
+											<td style="text-align: center"><c:out
+													value="${ordDetail.itemCode}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${ordDetail.poQty}" /></td>
+
+											<td style="text-align: center"><c:out
+													value="${ordDetail.poRemainingQty}" /></td>
+													
+											<td style="text-align: center"><c:out
+													value="${ordDetail.poRate}" /></td>
+												
+												
+													<td style="text-align: center">
+													<input  type="text"  class="form-control" value="${ordDetail.orderQty}"  id="ordQty${ordDetail.itemId}" name="ordQty${ordDetail.itemId}" onchange="calTotal(${ordDetail.itemId},${ordDetail.poRate},${ordDetail.poDetailId},${ordDetail.poRemainingQty},${ordDetail.orderDetId})"/>
+													</td>
+													<td style="text-align: center">
+													<input  type="text" readonly  class="form-control"  id="itemTotal${ordDetail.itemId}" value="${ordDetail.total}" name="${ordDetail.itemId}"/>'
+													</td>
+													
+										</tr>
+										</c:forEach>
 
 									</table>
 								</div>
@@ -340,7 +369,7 @@
 									<div class="col-md-3">845</div> -->
 									<div class="col-md-2">Order Total</div>
 
-									<div class="col-md-3" id="ordTotal">0</div>
+									<div class="col-md-3" id="ordTotal">${editOrder.total}</div>
 
 									<div class="col-md-2">
 										<input type="submit" class="btn btn-primary" value="Submit">
@@ -437,6 +466,60 @@
 		});
 	</script>
 
+
+	<script type="text/javascript">
+	function calTotal(itemId,poRate,poDetailId,poRemainingQty,orderDetId){
+		//alert("Hi");
+		
+		var valid=true;
+		var qty=document.getElementById("ordQty"+itemId).value;
+		if(qty<0 || qty=="" || qty==null || qty==0){
+			valid=false;
+			alert("Please enter valid quantity");
+			document.getElementById("itemTotal"+itemId).value="0";
+
+		}
+		else if(qty>poRemainingQty){
+			valid=false;
+			alert("Order quantity can not be greater than Po Remaining quantity");
+			document.getElementById("itemTotal"+itemId).value="0";
+
+		}
+		if(valid==true){
+			var itemTotal=parseFloat(qty)*parseFloat(poRate);
+			document.getElementById("itemTotal"+itemId).value=itemTotal;
+		$.getJSON('${getTempOrderHeader}', {
+			
+			
+			qty : qty,
+			itemTotal : itemTotal,
+			poDetailId : poDetailId,
+			itemId : itemId,
+			poRemainingQty : poRemainingQty,
+			poRate : poRate,
+			orderDetId :orderDetId,
+			
+			ajax : 'true',
+		},
+
+		function(data) {
+			
+			var len = data.length;
+			//alert("orderTotal " +data.orderTotal);
+			var tot=0;
+			for (var i = 0; i < len; i++) {
+				
+			tot=data[i].total+tot;
+
+			}
+			//alert("total " +tot);
+			document.getElementById("ordTotal").innerHTML=tot;
+		});
+		}
+	}
+	
+	</script>
+	
 	<script type="text/javascript">
 	
 	// on plant change function 
@@ -585,7 +668,7 @@
 		}
 	</script>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 	// on poId c change function 
 		function getPoDetailItem() {
 			var poId=document.getElementById("po_id").value;
@@ -645,59 +728,9 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 		}
 	
 	
-	</script>
+	</script> -->
 	
-	<script type="text/javascript">
-	function calTotal(itemId,poRate,poDetailId,poRemainingQty){
-		//alert("Hi");
-		
-		var valid=true;
-		var qty=document.getElementById("ordQty"+itemId).value;
-		if(qty<0 || qty=="" || qty==null){
-			valid=false;
-			alert("Please enter valid quantity");
-			document.getElementById("itemTotal"+itemId).value="0";
 
-		}
-		else if(qty>poRemainingQty){
-			valid=false;
-			alert("Order quantity can not be greater than Po Remaining quantity");
-			document.getElementById("itemTotal"+itemId).value="0";
-
-		}
-		if(valid==true){
-			var itemTotal=parseFloat(qty)*parseFloat(poRate);
-			document.getElementById("itemTotal"+itemId).value=itemTotal;
-		$.getJSON('${getTempOrderHeader}', {
-			
-			
-			qty : qty,
-			itemTotal : itemTotal,
-			poDetailId : poDetailId,
-			itemId : itemId,
-			poRemainingQty : poRemainingQty,
-			poRate : poRate,
-			
-			ajax : 'true',
-		},
-
-		function(data) {
-			
-			var len = data.length;
-			//alert("orderTotal " +data.orderTotal);
-			var tot=0;
-			for (var i = 0; i < len; i++) {
-				//alert("data[]" +data[i].total)
-			tot=data[i].total+tot;
-				//alert("Json " +JSON.stringify(data.ordDetailList[i]));
-
-			}
-			//alert("total " +tot);
-			document.getElementById("ordTotal").innerHTML=tot;
-		});
-		}
-	}
-	</script>
 
 	<!-- <script type="text/javascript">
 		function addItem() {
