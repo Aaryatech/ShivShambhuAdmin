@@ -9,17 +9,22 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
-<c:url var="getItemsByPlantId" value="/getItemsByPlantId" />
+<c:url var="getPOHeaderByCustId" value="/getPOHeaderByCustId" />
 
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
 
-<c:url var="getItemByItemId" value="/getItemByItemId" />
-
-<c:url var="addEnqItem" value="/addEnqItem" />
-
-<c:url var="getItemForEdit" value="/getItemForEdit" />
-
 <c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
+
+<c:url var="getProjectByCustId" value="/getProjectByCustId" />
+
+
+<c:url var="getPoDetailForOrderByPoId"
+	value="/getPoDetailForOrderByPoId" />
+	
+	
+<c:url var="getTempOrderHeader"
+	value="/getTempOrderHeader" />
+	
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -68,6 +73,37 @@
 }
 </style>
 
+<style>
+.alert {
+    padding: 20px;
+    background-color: red;
+    color: white;
+    
+}
+.alert1 {
+    padding: 20px;
+    background-color: green;
+    color: white;
+    
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
+</style>
+
+
 </head>
 <body>
 
@@ -87,6 +123,31 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
+			
+			<c:choose>
+							<c:when test="${isError==1}">
+							
+							<div class="alert">
+							
+							<span class="closebtn"
+						onclick="this.parentElement.style.display='none';">&times;</span>
+					<strong>Failed !</strong>     Data not submitted  !!
+				</div>
+							
+							</c:when>
+							
+							<c:when test="${isError==2}">
+							
+							<div class="alert1">
+							
+							<span class="closebtn"
+						onclick="this.parentElement.style.display='none';">&times;</span>
+					<strong>Success</strong>     Data Submitted !!
+				</div>
+							
+							</c:when>
+							
+							</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -94,23 +155,24 @@
 							<div class="col-md-2">
 								<strong>${title}</strong>
 							</div>
-							<div class="col-md-8"></div>
+							<%-- <div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
 								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
 										Customer</strong></a>
-							</div>
+							</div> --%>
+							
 
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertEnq"
+							<form action="${pageContext.request.contextPath}/insertOrder"
 								method="post">
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+									<div class="col-md-2">Plant</div>
 
-									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
+									<div class="col-md-4"> ${editOrder.plantName}
+										<%-- <select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
@@ -119,21 +181,48 @@
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
 											</c:forEach>
-										</select>
+										</select> --%>
 									</div>
 									<div class="col-md-2">Customer</div>
-									<div class="col-md-4">
-										<select id="cust_name" name="cust_name" class="standardSelect"
+									<div class="col-md-4">${editOrder.custName}
+										<!-- <select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
 
-
-										</select>
+										</select> -->
 									</div>
 
 								</div>
-								<div id="divCheckbox" style="display: none;">
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Select Project</div>
+
+									<div class="col-md-10">
+										<select id="proj_id" name="proj_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select project')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+
+											<c:forEach items="${projList}" var="proj">
+											
+											<c:choose>
+											<c:when test="${editOrder.projId==proj.projId}">
+												<option selected value="${proj.projId}">${proj.projName}-${proj.address}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${proj.projId}">${proj.projName}</option>
+											</c:otherwise>
+											</c:choose>
+											
+											</c:forEach>
+
+										</select>
+									</div>
+								</div>
+								
+								<!-- <div id="divCheckbox" style="display: none;">
 									<div class="form-group"></div>
 									<div class="row">
 
@@ -147,8 +236,6 @@
 											<span class="error" aria-live="polite"></span>
 										</div>
 
-
-
 										<div class="col-md-2">Cust Mobile No</div>
 
 										<div class="col-md-4">
@@ -158,173 +245,104 @@
 										</div>
 
 									</div>
-								</div>
+								</div> -->
+								
 								<input type="hidden" name="item_id" id="item_id" value="0">
+								
 								<div class="form-group"></div>
 								<div class="row">
-
-
-
-									<div class="col-md-2">Enquiry Date</div>
-
+									<div class="col-md-2">Order Date</div>
 									<div class="col-md-4">
-										<input type="text" id="enq_date" name="enq_date" required
+										<input type="text" disabled id="ord_date" name="ord_date" required
 											style="width: 100%;" class="form-control"
-											value="${editComp.contactNo1}"> <span class="error"
+											value="${editOrder.orderDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
-
-
-
-									<div class="col-md-2">Enquiry No</div>
-
+									<div class="col-md-2">Order No</div>
 									<div class="col-md-4">
-										<input type="text" readonly id="enq_no" name="enq_no"
+										<input type="text" readonly id="ord_no" name="ord_no"
 											style="width: 100%;" class="form-control"
-											value="${doc.docPrefix}${doc.srNo}"> <span
+											value="${editOrder.orderNo}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 
 								</div>
+
 								<input type="hidden" id="isEdit" name="isEdit" value="0">
 
 								<input type="hidden" id="itemUomId" name="itemUomId" value="0">
+								
+								
+								<div class="form-group"></div>
+								<div class="row">
+								<div class="col-md-2">Delivery Date</div>
+									<div class="col-md-4">
+										<input type="text" id="del_date" name="del_date" required
+											style="width: 100%;" class="form-control"
+											value="${editOrder.deliveryDate}"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+								</div>
+								
 
 								<div class="form-group"></div>
-								<section class="form-control" style="background: orange;">
+							<%--	<div class="row">
 
-									<div class="row">
+									<div class="col-md-2">Select PO</div>
 
+									<div class="col-md-10">
+										<select id="po_id" name="po_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select po ')"
+											onchange="getPoDetailItem()">
+											<option value="-1">Select PO</option>
 
-										<div class="col-md-2">Item Name</div>
-										<div class="col-md-4">
-											<select id="item_name" name="item_name"
-												class="standardSelect" tabindex="1"
-												onchange="setSelectedUom(this.value)">
-											</select>
-										</div>
-
-
-										<div class="col-md-2">Select UOM</div>
-
-										<div class="col-md-4">
-											<select id="uomId" name="uomId" class="standardSelect"
-												tabindex="1"
-												oninvalid="setCustomValidity('Please select uom')"
-												onchange="try{setCustomValidity('')}catch(e){}">
-
-												<option value="0">Select UOM</option>
-												<c:forEach items="${uomList}" var="uom">
-													<option value="${uom.uomId}">${uom.uomName}</option>
-												</c:forEach>
-											</select>
-										</div>
-
+										</select>
 									</div>
-
-
-									<div class="form-group"></div>
-									<div class="row">
-										<div class="col-md-2">Quantity</div>
-										<div class="col-md-4">
-											<input type="text" id="qty" name="qty" class="form-control"
-												style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
-										</div>
-
-
-
-										<div class="col-md-2">Remark</div>
-
-										<div class="col-md-4">
-											<input type="text" id="item_remark" name="item_remark"
-												class="form-control" style="width: 100%;" value="-">
-										</div>
-
-									</div>
-									<div class="form-group"></div>
-
-									<div class="row">
-										<div class="col-md-2">Rate</div>
-										<div class="col-md-4">
-											<input type="text" readonly="readonly" id="item_rate"
-												name="item_rate" class="form-control" style="width: 100%;"
-												value="0">
-										</div>
-
-										<div class="col-md-2"></div>
-
-										<div class="col-md-4">
-											<input type="button" value="Add Item" class="btn btn-primary"
-												style="align-content: center; width: 226px;"
-												onclick="addItem()" />
-
-										</div>
-
-									</div>
-								</section>
+								</div>--%>
+								
+								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
+								
 								<div class="card-body card-block">
-
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-
-												<th style="text-align: center">Sr</th>
+												<th style="text-align: center">Sr &nbsp;</th>
 												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">UOM</th>
-												<th style="text-align: center">Qty</th>
-												<th style="text-align: center; width: 5%;">Action</th>
-
+												<th style="text-align: center">Code</th>
+												<th style="text-align: center">PO Qty</th>
+												<th style="text-align: center">Remaining Qty</th>
+												<th style="text-align: center">PO Rate</th>
+												<th style="text-align: center">Order Qty</th>
+													<th style="text-align: center">Item Total</th>
 											</tr>
 										</thead>
 
 									</table>
-
-
 								</div>
 								<div class="form-group"></div>
 
-								<div class="row">
+								<!-- <div class="row">
 
+									<div class="col-md-2">Taxable Value</div>
+									<div class="col-md-4">1444</div>
 
-									<div class="col-md-2">Priority</div>
-									<div class="col-md-4">
-										<select id="enq_prio" name="enq_prio" class="standardSelect"
-											tabindex="1" required>
+									<div class="col-md-2">Tax Value</div>
+									<div class="col-md-4">88.36</div>
 
-											<option value="0">Low</option>
-											<option selected value="1">Medium</option>
-											<option value="2">High</option>
-										</select>
-									</div>
-
-
-									<div class="col-md-2">Enquiry From</div>
-
-									<div class="col-md-4">
-										<select id="enq_gen_fact" name="enq_gen_fact"
-											class="standardSelect" tabindex="1" required
-											oninvalid="setCustomValidity('Please select enq gen fact')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-
-											<c:forEach items="${enqGenFactList}" var="enqFrom">
-												<option value="${enqFrom.enqGenId}">${enqFrom.enqGenBy}</option>
-											</c:forEach>
-										</select>
-									</div>
-
-								</div>
+								</div> -->
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Enquiry Remark</div>
+								<!-- 	<div class="col-md-2">Other Cost After Tax</div>
 
-									<div class="col-md-9">
-										<input type="text" id="enq_remark" name="enq_remark"
-											class="form-control" style="width: 100%;" value="-" required>
-									</div>
+									<div class="col-md-3">845</div> -->
+									<div class="col-md-2">Order Total</div>
 
-									<div class="col-md-1">
+									<div class="col-md-3" id="ordTotal">0</div>
+
+									<div class="col-md-2">
 										<input type="submit" class="btn btn-primary" value="Submit">
 
 									</div>
@@ -408,7 +426,11 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$('input[id$=enq_date]').datepicker({
+			$('input[id$=ord_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+			
+			$('input[id$=del_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 
@@ -416,42 +438,19 @@
 	</script>
 
 	<script type="text/javascript">
-		function getData() {
-			//alert("Item Id ")
+	
+	// on plant change function 
+		function getData() { 
 			var plantId = document.getElementById("plant_id").value;
-			//alert("Plant Id " +plantId);
 			document.getElementById("isEdit").value = 0;
 			var valid = true;
 
 			if (plantId == null || plantId == "") {
 				valid = false;
-				alert("Please Select plant");
+				alert("Please select plant");
 			}
 
 			if (valid == true) {
-
-				$.getJSON('${getItemsByPlantId}', {
-
-					plantId : plantId,
-					ajax : 'true',
-
-				},
-
-				function(data) {
-					var html;
-					var len = data.length;
-					var html = '<option value="-1"  >Select Item</option>';
-					for (var i = 0; i < len; i++) {
-
-						html += '<option value="' + data[i].itemId + '">'
-								+ data[i].itemName + '</option>';
-					}
-					html += '</option>';
-
-					$('#item_name').html(html);
-					$("#item_name").trigger("chosen:updated");
-
-				});
 
 				$.getJSON('${getCustByPlantId}', {
 					plantId : plantId,
@@ -461,6 +460,8 @@
 				function(data) {
 					var html;
 					var len = data.length;
+					var html = '<option selected value="-1"  >Select Customer</option>';
+
 					for (var i = 0; i < len; i++) {
 
 						html += '<option value="' + data[i].custId + '">'
@@ -473,80 +474,232 @@
 					$("#cust_name").trigger("chosen:updated");
 					getCustInfo();
 
+					$('#po_id').html("-1");
+					$("#po_id").trigger("chosen:updated");
+					
+					var dataTable = $('#bootstrap-data-table')
+					.DataTable();
+			dataTable.clear().draw();
+
 				});
 			}//end of if
 
 		}
 	</script>
 
-
 	<script type="text/javascript">
+	// on cust change function 
 		function getCustInfo() {
-
 			$('#divCheckbox').show();
 			var custId = document.getElementById("cust_name").value;
 			var valid = true;
-
 			if (custId == null || custId == "") {
 				valid = false;
 				alert("Please Select Customer");
-			}
+				
+				$('#po_id').html("-1");
+				$("#po_id").trigger("chosen:updated");
+				
+				var dataTable = $('#bootstrap-data-table')
+				.DataTable();
+		dataTable.clear().draw();
 
+			}
+			else if(custId<0){
+				valid = false;
+				
+				$('#po_id').html("-1");
+				$("#po_id").trigger("chosen:updated");
+				
+				var dataTable = $('#bootstrap-data-table')
+				.DataTable();
+		dataTable.clear().draw();
+
+			}
 			if (valid == true) {
 
 				$
 						.getJSON(
 								'${getCustInfoByCustId}',
 								{
-
 									custId : custId,
 									ajax : 'true',
 
 								},
-
 								function(data) {
-
 									document.getElementById("custTypeName").value = data.custTypeName;
 									document.getElementById("custMobNo").value = data.custMobNo;
-
 								});
-			}
+
+				$	.getJSON(
+						'${getPOHeaderByCustId}',
+						{
+							custId : custId,
+							ajax : 'true',
+						},
+						function(data) {
+							var html;
+							var len = data.length;
+							//alert("data " +JSON.stringify(data));
+							for (var i = 0; i < len; i++) {
+								var PNo=data[i].poNo+"-"+ data[i].poDate 
+
+								html += '<option value="' + data[i].poId + '">'
+										+PNo+ '</option>';
+
+							}
+							html += '</option>';
+							$('#po_id').html(html);
+							$("#po_id").trigger("chosen:updated");
+						});
+				
+				
+				$	.getJSON(
+						'${getProjectByCustId}',
+						{
+							custId : custId,
+							ajax : 'true',
+						},
+						function(data) {
+							var html;
+							var len = data.length;
+							//alert("data " +JSON.stringify(data));
+							for (var i = 0; i < len; i++) {
+								var projData=data[i].projName+"-"+data[i].address
+
+								html += '<option value="' + data[i].projId + '">'
+										+projData+ '</option>';
+
+							}
+							html += '</option>';
+							$('#proj_id').html(html);
+							$("#proj_id").trigger("chosen:updated");
+						});
+				
+				
+				
+				
+				
+			}// end of if valid= true
+			
 		}
 	</script>
 
 	<script type="text/javascript">
-		function setSelectedUom(itemId) {
+	// on poId c change function 
+		function getPoDetailItem() {
+			var poId=document.getElementById("po_id").value;
+			//alert("Po Id " +poId);
 
-			if (itemId == -1) {
-				document.getElementById("qty").value = "";
-				document.getElementById("item_remark").value = "";
-				document.getElementById("item_name").options.selectedIndex = "0";
-				document.getElementById("uomId").options.selectedIndex = "0";
-				$("#uomId").trigger("chosen:updated");
-				$("#item_name").trigger("chosen:updated");
-				document.getElementById("isEdit").value = "0";
-				document.getElementById("itemUomId").value = "0";
-				document.getElementById("item_rate").value = "0"
-			} else {
+			
 				$
 						.getJSON(
-								'${getItemByItemId}',
+								'${getPoDetailForOrderByPoId}',
 								{
-									itemId : itemId,
+									poId : poId,
 									ajax : 'true',
 								},
 
 								function(data) {
-									document.getElementById("uomId").value = data.uomId;
-									$("#uomId").trigger("chosen:updated");
-									document.getElementById("itemUomId").value = data.uomId;
-									document.getElementById("item_rate").value = data.itemRate1;
-								});
-			}
+									
+									var dataTable = $('#bootstrap-data-table')
+									.DataTable();
+							dataTable.clear().draw();
+
+							$
+									.each(
+											data,
+											function(i, v) {
+												//alert("hdjfh");
+var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
+var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
+
+var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
+										/* var str = '<a href="#" class="action_btn" onclick="callDelete('
+														+ v.itemId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
+														+ v.itemId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-edit"></i></a>'
+ */
+												dataTable.row
+														.add(
+																[
+																		i + 1,
+																		v.itemName,
+																		v.itemCode,
+																		v.poQty,
+																		v.poRemainingQty,
+																		v.poRate,
+																		ordQty,
+																		itemTotal
+																		 ])
+														.draw();
+											});
+						
+								});	
+						
 		}
+	
+	
+	</script>
+	
+	<script type="text/javascript">
+	function calTotal(itemId,poRate,poDetailId,poRemainingQty){
+		//alert("Hi");
+		
+		var valid=true;
+		var qty=document.getElementById("ordQty"+itemId).value;
+		if(qty<0 || qty=="" || qty==null){
+			valid=false;
+			alert("Please enter valid quantity");
+			document.getElementById("itemTotal"+itemId).value="0";
+
+		}
+		else if(qty>poRemainingQty){
+			valid=false;
+			alert("Order quantity can not be greater than Po Remaining quantity");
+			document.getElementById("itemTotal"+itemId).value="0";
+
+		}
+		if(valid==true){
+			var itemTotal=parseFloat(qty)*parseFloat(poRate);
+			document.getElementById("itemTotal"+itemId).value=itemTotal;
+		$.getJSON('${getTempOrderHeader}', {
+			
+			
+			qty : qty,
+			itemTotal : itemTotal,
+			poDetailId : poDetailId,
+			itemId : itemId,
+			poRemainingQty : poRemainingQty,
+			poRate : poRate,
+			
+			ajax : 'true',
+		},
+
+		function(data) {
+			
+			var len = data.length;
+			//alert("orderTotal " +data.orderTotal);
+			var tot=0;
+			for (var i = 0; i < len; i++) {
+				//alert("data[]" +data[i].total)
+			tot=data[i].total+tot;
+				//alert("Json " +JSON.stringify(data.ordDetailList[i]));
+
+			}
+			//alert("total " +tot);
+			document.getElementById("ordTotal").innerHTML=tot;
+		});
+		}
+	}
 	</script>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function addItem() {
 			//alert("in add Item ");
 			var itemId = document.getElementById("item_name").value;
@@ -733,7 +886,7 @@
 		function callAlert(msg) {
 			alert(msg);
 		}
-	</script>
+	</script> -->
 
 	<!-- <script type="text/javascript">
 		$(document).ready(function() {
