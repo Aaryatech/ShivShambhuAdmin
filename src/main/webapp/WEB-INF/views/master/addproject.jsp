@@ -101,7 +101,7 @@
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required onchange="getData()">
-											<option value="">Select</option>
+											<option value="-1">Select</option>
 											<c:forEach items="${plantList}" var="plant">
 												<c:choose>
 													<c:when test="${plant.plantId==editItem.plantId}">

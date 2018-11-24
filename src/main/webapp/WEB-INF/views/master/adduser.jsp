@@ -104,9 +104,8 @@
 
 									<div class="col-md-4">
 										<select id="company_id" name="company_id"
-											class="standardSelect" tabindex="1" onchange="getData()"
-											required>
-											<option value="">Select</option>
+											class="standardSelect" tabindex="1" onchange="getData()">
+											<option value="-1">Select</option>
 											<c:forEach items="${compList}" var="comp">
 
 												<c:choose>
@@ -129,7 +128,7 @@
 										<select id="plant_name" name="plant_id" class="standardSelect"
 											tabindex="1" required>
 
-											<%-- <c:forEach items="${plantList}" var="plant">
+											<c:forEach items="${plantList}" var="plant">
 
 												<c:choose>
 													<c:when test="${plant.plantId==editUser.plantId}">
@@ -140,7 +139,7 @@
 													</c:otherwise>
 												</c:choose>
 
-											</c:forEach> --%>
+											</c:forEach>
 										</select>
 									</div>
 
@@ -245,7 +244,6 @@
 											style="width: 100%;">
 									</div>
 								</div>
-
 								<div class="form-group"></div>
 
 								<div class="col-lg-4"></div>

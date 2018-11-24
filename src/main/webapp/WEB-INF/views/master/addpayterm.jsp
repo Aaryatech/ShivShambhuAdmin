@@ -97,7 +97,7 @@
 
 									<div class="col-md-4">
 										<textarea id="payTerm" name="payTerm" class="form-control"
-											oninvalid="setCustomValidity('Please enter Payment term')"
+											oninvalid="setCustomValidity('Please enter correct Payment term')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">${editPayTerm.payTerm}</textarea>
 									</div>
@@ -107,7 +107,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="date" name="date" class="form-control"
-											required value="${editPayTerm.date}" style="width: 100%;">
+											value="${editPayTerm.date}" style="width: 100%;" required>
 									</div>
 
 
@@ -116,24 +116,20 @@
 
 								</div>
 								<div class="form-group"></div>
-								<div class="col-lg-12" align="center">
-
-
+								<div class="col-lg-4"></div>
+								<div class="col-lg-2">
 									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
+										style="align-content: center; width: 113px; margin-left: 40px;">
 										Submit</button>
 								</div>
 
-
-
-
-
-
-
+								<div class="col-lg-2">
+									<button type="reset" class="btn btn-primary"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+										Clear</button>
+								</div>
 							</form>
 						</div>
-
-
 
 						<div class="card-body card-block">
 
@@ -141,11 +137,9 @@
 								class="table table-striped table-bordered">
 								<thead>
 									<tr>
-
-										<th style="text-align: center">Sr</th>
+										<th style="text-align: center; width: 5%;">Sr</th>
 										<th style="text-align: center">Payment Term</th>
 										<th style="text-align: center">Date</th>
-
 										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
@@ -161,7 +155,7 @@
 											<td style="text-align: left"><c:out
 													value="${payTerm.payTerm}" /></td>
 
-											<td style="text-align: left"><c:out
+											<td style="text-align: center"><c:out
 													value="${payTerm.date}" /></td>
 
 

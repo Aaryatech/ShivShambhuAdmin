@@ -95,7 +95,7 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a href="${pageContext.request.contextPath}/showDocTermList"><strong>Terms
-										& Conditions List</strong></a>
+										And Conditions List</strong></a>
 							</div>
 
 						</div>
@@ -112,7 +112,6 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select Document name')"
 											onchange="getData()">
-											<option value="">Select Document</option>
 
 											<c:forEach items="${docList}" var="doc">
 												<option value="${doc.docId}">${doc.docName}</option>
@@ -122,15 +121,15 @@
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Term & Conditions Title*</div>
+									<div class="col-md-2">Term And Conditions Title*</div>
 									<div class="col-md-4">
 										<input type="text" id="termTitle" name="termTitle"
 											pattern="^[A-Za-z\s]+$" autocomplete="off"
 											class="form-control" style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter term title')"
+											oninvalid="setCustomValidity('Please enter correct term title')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
-									<div class="col-md-2">Sort No*</div>
+									<div class="col-md-2">Sort No(Optional)</div>
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo" maxlength="3"
 											class="form-control" style="width: 100%;" autocomplete="off"
@@ -142,7 +141,7 @@
 								<hr>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Term & Conditions*</div>
+									<div class="col-md-2">Term And Conditions*</div>
 									<div class="col-md-10">
 										<input type="text" id="termDesc" name="termDesc"
 											class="form-control" style="width: 100%;">
@@ -179,8 +178,8 @@
 											<tr>
 
 												<th style="text-align: center; width: 5%;">Sr</th>
-												<th style="text-align: center">Term & Conditions</th>
-												<th style="text-align: right">Sort No</th>
+												<th style="text-align: center">Term And Conditions</th>
+												<th style="text-align: center">Sort No</th>
 												<th style="text-align: center; width: 5%;">Action</th>
 											</tr>
 										</thead>
@@ -191,15 +190,15 @@
 								<div class="col-lg-4"></div>
 								<div class="col-lg-2">
 
-									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 113px; margin-left: 20px;">
-										Submit</button>
+									<input type="submit" class="btn btn-primary" value="Submit11"
+										style="align-content: center;">
+
 								</div>
 								<div class="col-lg-2">
 
-									<button type="reset" class="btn btn-primary"
+									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 20px;">
-										Clear</button>
+
 								</div>
 
 

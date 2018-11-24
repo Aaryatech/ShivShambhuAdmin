@@ -96,7 +96,7 @@
 								<thead>
 									<tr>
 
-										<th style="text-align: center">Sr</th>
+										<th style="text-align: center; width: 5%;">Sr</th>
 										<th style="text-align: center">Company Name</th>
 										<th style="text-align: center">Company Add</th>
 										<!-- <th style="text-align: center">License No</th>
@@ -105,7 +105,7 @@
  -->
 										<th style="text-align: center">Mob. No</th>
 										<!-- <th style="text-align: center">Tel No</th> -->
-										<th style="text-align: center">Action</th>
+										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
 								</thead>

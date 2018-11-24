@@ -1872,10 +1872,9 @@ public class MasterController {
 		try {
 
 			model = new ModelAndView("master/adduser");
-			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+		/*	Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
-
-			model.addObject("plantList", plantList);
+			model.addObject("plantList", plantList);*/
 
 			Dept[] deptArray = rest.getForObject(Constants.url + "getAllDeptList", Dept[].class);
 			deptList = new ArrayList<Dept>(Arrays.asList(deptArray));
