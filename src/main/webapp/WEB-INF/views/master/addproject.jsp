@@ -159,7 +159,7 @@
 									<div class="col-md-4">
 										<input type="text" id="contactPerMob" name="contactPerMob"
 											value="${editPro.contactPerMob}"
-											oninvalid="setCustomValidity('Please enter tel no')"
+											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" required style="width: 100%;">
@@ -215,15 +215,15 @@
 									<div class="col-md-2">Pincode No*</div>
 									<div class="col-md-4">
 										<input type="text" id="pincode" name="pincode"
-											class="form-control" style="width: 100%;"
-											value="${editPro.pincode}"
-											oninvalid="setCustomValidity('Please enter Pincode')"
+											class="form-control" style="width: 100%;" maxlength="10"
+											value="${editPro.pincode}" pattern="^[1-9][0-9]{6}*$"
+											oninvalid="setCustomValidity('Please enter correct Pincode')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 									<div class="col-md-2">Kilometer*</div>
 									<div class="col-md-4">
-										<input type="text" id="km" name="km" class="form-control"
-											style="width: 100%;" value="${editPro.km}"
+										<input type="number" id="km" name="km" class="form-control"
+											maxlength="10" style="width: 100%;" value="${editPro.km}"
 											oninvalid="setCustomValidity('Please enter Kilometer')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>

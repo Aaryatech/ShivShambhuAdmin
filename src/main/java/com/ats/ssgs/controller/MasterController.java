@@ -18,6 +18,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -1920,7 +1921,7 @@ public class MasterController {
 
 			String userPass = request.getParameter("userPass");
 
-			String sortNo = request.getParameter("sortNo");
+			// String sortNo = request.getParameter("sortNo");
 
 			User user = new User();
 			user.setCompanyId(companyId);
@@ -1933,7 +1934,7 @@ public class MasterController {
 			user.setExInt2(0);
 			user.setPlantId(plantId);
 			user.setRoleId(0);
-			user.setSortNo(Integer.parseInt(sortNo));
+
 			user.setUserPass(userPass);
 			user.setUsrEmail(usrEmail);
 			user.setUsrDob(DateConvertor.convertToYMD(usrDob));
@@ -1943,11 +1944,20 @@ public class MasterController {
 			user.setExVar2("NA");
 			user.setUserId(userId);
 
+			try {
+
+				user.setSortNo(Integer.parseInt(request.getParameter("sortNo")));
+
+			} catch (Exception e) {
+				user.setSortNo(0);
+				// TODO: handle exception
+			}
+
 			User userInsertRes = rest.postForObject(Constants.url + "saveUser", user, User.class);
 
 		} catch (Exception e) {
 
-			System.err.println("Exce in insert Uom " + e.getMessage());
+			System.err.println("Exce in insert user " + e.getMessage());
 			e.printStackTrace();
 
 		}
@@ -2043,6 +2053,25 @@ public class MasterController {
 		}
 
 		return "redirect:/showUserList";
+	}
+
+	// Ajax call
+	@RequestMapping(value = "/getPlantByCompanyId", method = RequestMethod.GET)
+	public @ResponseBody List<Plant> getPlantByCompanyId(HttpServletRequest request, HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int companyId = Integer.parseInt(request.getParameter("companyId"));
+
+		map.add("companyId", companyId);
+
+		Plant[] plantArray = rest.postForObject(Constants.url + "getPlantListByCompanyId", map, Plant[].class);
+		plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+		System.err.println("Ajax Company List " + plantList.toString());
+
+		return plantList;
+
 	}
 
 }

@@ -8,6 +8,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+
+<c:url var="getPlantByCompanyId" value="/getPlantByCompanyId" />
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -97,31 +100,13 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant*</div>
-
-									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
-											tabindex="1" required>
-											<c:forEach items="${plantList}" var="plant">
-
-												<c:choose>
-													<c:when test="${plant.plantId==editUser.plantId}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
-													</c:otherwise>
-												</c:choose>
-
-											</c:forEach>
-										</select>
-									</div>
-
 									<div class="col-md-2">Select Company*</div>
 
 									<div class="col-md-4">
 										<select id="company_id" name="company_id"
-											class="standardSelect" tabindex="1" required>
+											class="standardSelect" tabindex="1" onchange="getData()"
+											required>
+											<option value="">Select</option>
 											<c:forEach items="${compList}" var="comp">
 
 												<c:choose>
@@ -137,16 +122,40 @@
 										</select>
 									</div>
 
+
+									<div class="col-md-2">Select Plant*</div>
+
+									<div class="col-md-4">
+										<select id="plant_name" name="plant_id" class="standardSelect"
+											tabindex="1" required>
+
+											<%-- <c:forEach items="${plantList}" var="plant">
+
+												<c:choose>
+													<c:when test="${plant.plantId==editUser.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}">${plant.plantName}
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach> --%>
+										</select>
+									</div>
+
+
 								</div>
 								<div class="form-group"></div>
 
 								<div class="row">
 
-									<div class="col-md-2">Select Dept*</div>
+									<div class="col-md-2">Select Department*</div>
 
 									<div class="col-md-4">
 										<select id="dept_id" name="dept_id" class="standardSelect"
 											tabindex="1" required>
+											<option value="">Select</option>
 											<c:forEach items="${deptList}" var="dept">
 
 												<c:choose>
@@ -172,7 +181,8 @@
 									<div class="col-md-2">User Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="usrName" name="usrName"
-											oninvalid="setCustomValidity('Please enter User Name')"
+											autocomplete="off" pattern="^[A-Za-z\s]+$"
+											oninvalid="setCustomValidity('Please enter correct user name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											value="${editUser.usrName}" class="form-control"
 											style="width: 100%;">
@@ -182,9 +192,10 @@
 
 									<div class="col-md-4">
 										<input type="text" id="usrMob" name="usrMob"
-											value="${editUser.usrMob}" class="form-control"
-											oninvalid="setCustomValidity('Please enter mob no')"
-											maxlength="10" pattern="[0-9]+"
+											autocomplete="off" value="${editUser.usrMob}"
+											class="form-control"
+											oninvalid="setCustomValidity('Please enter correct mob no')"
+											pattern="^[1-9]{1}[0-9]{9}$" maxlength="10"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
@@ -195,53 +206,58 @@
 									<div class="col-md-2">Date of Birth*</div>
 									<div class="col-md-4">
 										<input type="text" id="usrDob" name="usrDob"
-											value="${editUser.usrDob}" class="form-control"
-											oninvalid="setCustomValidity('Please enter Date')"
+											autocomplete="off" value="${editUser.usrDob}"
+											class="form-control"
+											oninvalid="setCustomValidity('Please select Date')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
 									<div class="col-md-2">Sort No*</div>
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
-											value="${editUser.sortNo}" class="form-control"
-											oninvalid="setCustomValidity('Please enter Sort No')"
+											autocomplete="off" value="${editUser.sortNo}"
+											class="form-control" maxlength="3"
+											oninvalid="setCustomValidity('Please enter correct Sort No')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="[0-9]+" required style="width: 100%;">
+											pattern="[0-9]+" style="width: 100%;">
 									</div>
 								</div>
-
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">User Email*</div>
 									<div class="col-md-4">
 										<input type="text" id="usrEmail" name="usrEmail"
-											value="${editUser.usrEmail}" class="form-control"
-											oninvalid="setCustomValidity('Please enter email')"
+											autocomplete="off" value="${editUser.usrEmail}"
+											class="form-control"
+											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+											maxlength="50"
+											oninvalid="setCustomValidity('Please enter correct email')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;" style="width: 100%;" required>
 									</div>
-
 									<div class="col-md-2">User Password*</div>
-
 									<div class="col-md-4">
 										<input type="password" id="userPass" name="userPass"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Password')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editUser.userPass}" class="form-control" required
 											style="width: 100%;">
 									</div>
-
 								</div>
 
 								<div class="form-group"></div>
 
-
-								<div class="col-lg-12" align="center">
-
-
+								<div class="col-lg-4"></div>
+								<div class="col-lg-2">
 									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
+										style="align-content: center; width: 113px; margin-left: 40px;">
 										Submit</button>
+								</div>
+								<div class="col-lg-2">
+									<button type="reset" class="btn btn-primary"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+										Clear</button>
 								</div>
 							</form>
 						</div>
@@ -342,7 +358,44 @@
 
 		});
 	</script>
+	<script type="text/javascript">
+		function getData() {
+			var companyId = document.getElementById("company_id").value;
+			var valid = true;
 
+			if (companyId == null || companyId == "") {
+				valid = false;
+				alert("Please Select Company");
+			}
+
+			if (valid == true) {
+
+				$.getJSON('${getPlantByCompanyId}', {
+
+					companyId : companyId,
+					ajax : 'true',
+
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option value="-1"  >Select Company</option>';
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].plantId + '">'
+								+ data[i].plantName + '</option>';
+					}
+					html += '</option>';
+
+					$('#plant_name').html(html);
+					$("#plant_name").trigger("chosen:updated");
+
+				});
+
+			}
+		}
+	</script>
 
 
 

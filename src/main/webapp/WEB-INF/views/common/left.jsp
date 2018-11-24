@@ -2,187 +2,181 @@
 <head>
 <style>
 html {
-    overflow: scroll;
-    overflow-x: hidden;
+	overflow: scroll;
+	overflow-x: hidden;
 }
+
 ::-webkit-scrollbar {
-    width: 0px;  /* remove scrollbar space */
-    background: transparent;  /* optional: just make scrollbar invisible */
+	width: 0px; /* remove scrollbar space */
+	background: transparent; /* optional: just make scrollbar invisible */
 }
 /* optional: show position indicator in red */
 ::-webkit-scrollbar-thumb {
-    background: #FF0000;
+	background: #FF0000;
 }
 </style>
 </head>
 <body>
-<aside id="left-panel" class="left-panel">
-	<nav class="navbar navbar-expand-sm navbar-default">
+	<aside id="left-panel" class="left-panel">
+		<nav class="navbar navbar-expand-sm navbar-default">
 
-		<div class="navbar-header">
-			<button class="navbar-toggler" type="button" data-toggle="collapse"
-				data-target="#main-menu" aria-controls="main-menu"
-				aria-expanded="false" aria-label="Toggle navigation">
-				<i class="fa fa-bars"></i>
-			</button>
-			<a class="navbar-brand" href="./getLogin"> ShivShambhu Admin </a> <a
-				class="navbar-brand hidden" href="./"> </a>
-		</div>
+			<div class="navbar-header">
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#main-menu" aria-controls="main-menu"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fa fa-bars"></i>
+				</button>
+				<a class="navbar-brand" href="./getLogin"> ShivShambhu Admin </a> <a
+					class="navbar-brand hidden" href="./"> </a>
+			</div>
 
-		<div id="main-menu" class="main-menu collapse navbar-collapse">
-			<ul class="nav navbar-nav" style="  max-height: calc(100vh - 9rem);
-      overflow-y: auto;">
-				<li><a href="${pageContext.request.contextPath}/home"> <i
-						class="menu-icon fa fa-dashboard"></i> Dashboard
-				</a></li>
+			<div id="main-menu" class="main-menu collapse navbar-collapse">
+				<ul class="nav navbar-nav"
+					style="max-height: calc(100vh - 9rem); overflow-y: auto;">
+					<li><a href="${pageContext.request.contextPath}/home"> <i
+							class="menu-icon fa fa-dashboard"></i> Dashboard
+					</a></li>
 
-				<!--                     <h3 class="menu-title">UI elements</h3>/.menu-title
+					<!--                     <h3 class="menu-title">UI elements</h3>/.menu-title
  -->
-				<li class="menu-item-has-children dropdown"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="true"> <i class="menu-icon fa fa-table"></i>
-						Masters
-				</a>
-					<ul class="sub-menu children dropdown-menu ">
+					<li class="menu-item-has-children dropdown"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="true"> <i
+							class="menu-icon fa fa-table"></i> Masters
+					</a>
+						<ul class="sub-menu children dropdown-menu ">
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddCustomer">Add
-								Customer</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddCompany">Add
+									Company</a></li>
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddItem">Add
-								Item</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showCompList">
+									Company List</a></li>
 
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddDept">Add
+									Department</a></li>
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddProject">Add
-								Project</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddPlant">Add
+									Plant</a></li>
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddCompany">Add
-								Company</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddUser">Add
-								User</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddPlant">Add
-								Plant</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddVendor">Add
-								Vendor</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddDocTerm">Add
-								Doc Term</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddTax">Add Tax</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showPlantList">
+									Plant List</a></li>
 
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddPaymentTerm">Add
-								Payment Term</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddUser">Add
+									User</a></li>
 
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddEnqGenFact">Add
-								Enq gen Fact</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showUserList"> User
+									List</a></li>
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddCustType">Add
-								Cust Type</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddCustType">Add
+									Customer Type</a></li>
 
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddBankDetail">Add
-								Bank Detail</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddCustomer">Add
+									Customer</a></li>
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddDept">Add
-								Dept</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showCustList">
+									Customer List</a></li>
 
 
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddUom">Add Uom</a></li>
-
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showCustList">
-								Customer List</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showItemList"> Item
-								List</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showProjectList">
-								Project List</a></li>
-
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showCompList">
-								Company List</a></li>
-
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showUserList"> User
-								List</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showPlantList">
-								Plant List</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddProject">Add
+									Project</a></li>
 
 
 
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showProjectList">
+									Project List</a></li>
 
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showDocTermList">
-								Document Term List</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddUom">Add Uom</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddTax">Add Tax</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showTaxList"> Tax
+									List</a></li>
 
 
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddItem">Add
+									Item</a></li>
 
 
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showItemList"> Item
+									List</a></li>
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showTaxList"> Tax
-								List</a></li>
 
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showVendorList">
-								Vendor List</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddDocTerm">Add
+									Term & Conditions</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showDocTermList">
+									Term & Conditions List</a></li>
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddPaymentTerm">Add
+									Payment Term</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddBankDetail">Add
+									Bank Detail</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddVendor">Add
+									Vendor</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showVendorList">
+									Vendor List</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddEnqGenFact">Add
+									Enquiry Source</a></li>
+
+						</ul></li>
 
 
 
 
-					</ul></li>
+					<li class="menu-item-has-children dropdown"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="true"> <i
+							class="menu-icon fa fa-table"></i> Transaction
+					</a>
+						<ul class="sub-menu children dropdown-menu ">
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddEnquiry">Add
+									Enquiry</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showQuotations">View
+									Quotations</a></li>
 
 
 
+						</ul></li>
 
-				<li class="menu-item-has-children dropdown"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="true"> <i class="menu-icon fa fa-table"></i>
-						Transaction
-				</a>
-					<ul class="sub-menu children dropdown-menu ">
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddEnquiry">Add
-								Enquiry</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showQuotations">View
-								Quotations</a></li>
-
-
-
-					</ul></li>
-
-				<%-- 	<li class="menu-item-has-children dropdown"><a href="#"
+					<%-- 	<li class="menu-item-has-children dropdown"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="true"> <i class="menu-icon fa fa-table"></i>
 						Work
@@ -226,36 +220,36 @@ html {
 					</ul></li>
  --%>
 
-				<li class="menu-item-has-children dropdown"><a
-					href="${pageContext.request.contextPath}/editMyProfile/1"> <i
-						class="menu-icon fa fa-table"></i> My Profile
-				</a></li>
+					<li class="menu-item-has-children dropdown"><a
+						href="${pageContext.request.contextPath}/editMyProfile/1"> <i
+							class="menu-icon fa fa-table"></i> My Profile
+					</a></li>
 
 
 
-				<%-- 	
+					<%-- 	
 				<li class="menu-item-has-children dropdown"><a
 					href="${pageContext.request.contextPath}/editHubUser/1"> <i
 						class="menu-icon fa fa-table"></i> <spring:message
 							code="label.userProfile" />
 				</a></li> --%>
 
-				<%-- 	<li class="menu-item-has-children dropdown"><a
+					<%-- 	<li class="menu-item-has-children dropdown"><a
 					href="${pageContext.request.contextPath}/editHubUser/1"
 					class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="true"> <i class="menu-icon fa fa-table"></i> <spring:message
 							code="label.userProfile" /> --%>
-				</a>
-				<%-- 	 --%>
-			</ul>
+					</a>
+					<%-- 	 --%>
+				</ul>
 
-		</div>
-		<!-- /.navbar-collapse -->
-	</nav>
-</aside>
-<!-- /#left-panel -->
+			</div>
+			<!-- /.navbar-collapse -->
+		</nav>
+	</aside>
+	<!-- /#left-panel -->
 
-<!-- Left Panel -->
+	<!-- Left Panel -->
 
 </body>
 </html>
