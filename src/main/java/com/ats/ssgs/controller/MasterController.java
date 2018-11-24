@@ -113,7 +113,7 @@ public class MasterController {
 			String vendContactName = request.getParameter("vendContactName");
 
 			String vendContact1 = request.getParameter("vendContact1");
-			String vendContact2 = request.getParameter("vendContact2");
+			// String vendContact2 = request.getParameter("vendContact2");
 
 			String vendEmail1 = request.getParameter("vendEmail1");
 
@@ -148,15 +148,26 @@ public class MasterController {
 			vend.setVendEmail3("NA");
 			vend.setVendEmail2("NA");
 			vend.setVendEmail1(vendEmail1);
-			vend.setVendContactName(vendContactName);
+
 			vend.setVendCreditDays(vendCreditDays);
 			vend.setVendContact1(vendContact1);
-			vend.setVendContact2(vendContact2);
+
 			vend.setVendCompName(vendCompName);
 			vend.setVendCity(vendCity);
 			vend.setIsSameState(isSameState);
 			vend.setVendCreditLimit(vendCreditLimit);
 			vend.setVendCreditDays(vendCreditDays);
+
+			try {
+
+				vend.setVendContactName(vendContactName);
+				vend.setVendContact2(request.getParameter("vendContact2"));
+
+			} catch (Exception e) {
+				// TODO: handle exception
+				vend.setVendContactName("NA");
+				vend.setVendContact2("NA");
+			}
 
 			Vendor vendInsertRes = rest.postForObject(Constants.url + "saveVendor", vend, Vendor.class);
 			System.err.println("plantInsertRes " + vendInsertRes.toString());

@@ -489,7 +489,7 @@ public class EnqController {
 			quotHeader.setTransportTermId(0);
 			quotHeader.setTransportTerms("NA");
 
-			quotHeader.setUserId(0);// get from session
+			quotHeader.setUserId(1);// get from session
 
 			for (int i = 0; i < enqInsertRes.getEnqDetailList().size(); i++) {
 
