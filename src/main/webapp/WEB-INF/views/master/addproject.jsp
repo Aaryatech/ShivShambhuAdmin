@@ -8,6 +8,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+<c:url var="getCustByPlantId" value="/getCustByPlantId" />
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -98,7 +100,7 @@
 
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
-											tabindex="1" required>
+											tabindex="1" required onchange="getData()">
 											<option value="">Select</option>
 											<c:forEach items="${plantList}" var="plant">
 
@@ -121,10 +123,10 @@
 									<div class="col-md-2">Select Customer*</div>
 
 									<div class="col-md-4">
-										<select id="cust_id" name="cust_id" class="standardSelect"
+										<select id="cust_name" name="cust_id" class="standardSelect"
 											tabindex="1" required>
 											<option value="">Select</option>
-											<c:forEach items="${custList}" var="cust">
+											<%-- <c:forEach items="${custList}" var="cust">
 
 												<c:choose>
 													<c:when test="${cust.custId==editPro.custId}">
@@ -135,8 +137,8 @@
 														<option value="${cust.custId}">${cust.custName}
 													</c:otherwise>
 												</c:choose>
-												<%-- 	<option value="${cust.custId}">${cust.custName}</option> --%>
-											</c:forEach>
+													<option value="${cust.custId}">${cust.custName}</option>
+											</c:forEach> --%>
 										</select>
 									</div>
 
@@ -390,6 +392,46 @@
 
 			});
 		});
+	</script>
+
+	<script type="text/javascript">
+		function getData() {
+			//alert("Item Id ")
+			var plantId = document.getElementById("plant_id").value;
+
+			var valid = true;
+
+			if (plantId == null || plantId == "") {
+				valid = false;
+				alert("Please Select plant");
+			}
+
+			if (valid == true) {
+
+				$.getJSON('${getCustByPlantId}', {
+					plantId : plantId,
+					ajax : 'true',
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].custId + '">'
+								+ data[i].custName + '</option>';
+
+					}
+					html += '</option>';
+
+					$('#cust_name').html(html);
+					$("#cust_name").trigger("chosen:updated");
+					getCustInfo();
+
+				});
+			}//end of if
+
+		}
 	</script>
 
 

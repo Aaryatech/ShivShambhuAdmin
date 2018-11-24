@@ -464,6 +464,8 @@ public class EnqController {
 			quotHeader.setPlantIds(enqInsertRes.getPlantId());
 			quotHeader.setProjId(0);
 			quotHeader.setQuotDate(curDate);
+			quotHeader.setUserId(1);
+			
 
 			map = new LinkedMultiValueMap<String, Object>();
 

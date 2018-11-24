@@ -98,17 +98,18 @@
 									<div class="col-md-4">
 										<input type="text" id="vendCompName" name="vendCompName"
 											class="form-control" required style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter vend Comp Name')"
+											oninvalid="setCustomValidity('Please enter vendor Name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
+											maxlength="25" pattern="^[A-Za-z\s]+$"
 											value="${editVend.vendCompName}">
 									</div>
 
-									<div class="col-md-2">Vendor Contact Name*</div>
+									<div class="col-md-2">Contact Name(Optional)</div>
 									<div class="col-md-4">
 										<input type="text" id="vendContactName" name="vendContactName"
 											class="form-control" required style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter vend Contact Name')"
-											value="${editVend.vendContactName}"
+											oninvalid="setCustomValidity('Please enter correct vend Contact Name')"
+											value="${editVend.vendContactName}" pattern="^[A-Za-z\s]+$"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 
@@ -123,19 +124,19 @@
 											required style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter mob no')"
 											maxlength="10" value="${editVend.vendContact1}"
-											pattern="[0-9]{10}"
+											pattern="^[1-9]{1}[0-9]{9}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
 
-									<div class="col-md-2">Landline No*</div>
+									<div class="col-md-2">Telephone No(Optional)</div>
 
 									<div class="col-md-4">
 										<input type="text" id="vendContact2" name="vendContact2"
-											required style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter mob no')"
+											style="width: 100%;" class="form-control"
+											oninvalid="setCustomValidity('Please enter correct tel no')"
 											maxlength="10" value="${editVend.vendContact2}"
-											pattern="[0-9]{10}"
+											pattern="^[1-9]{1}[0-9]{9}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -149,7 +150,7 @@
 									<div class="col-md-4">
 										<input type="text" id="vendEmail1" name="vendEmail1"
 											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter vendEmail1')"
+											oninvalid="setCustomValidity('Please enter correct email')"
 											maxlength="50" value="${editVend.vendEmail1}"
 											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
@@ -162,6 +163,7 @@
 									<div class="col-md-4">
 										<select id="plantId" name="plantId" class="standardSelect"
 											tabindex="1" required>
+											<option>Select</option>
 											<c:forEach items="${plantList}" var="plant">
 
 												<c:choose>
@@ -172,13 +174,9 @@
 														<option value="${plant.plantId}">${plant.plantName}
 													</c:otherwise>
 												</c:choose>
-
 											</c:forEach>
 										</select>
 									</div>
-
-
-
 								</div>
 
 
@@ -191,15 +189,19 @@
 											value="${editVend.vendGst}"
 											oninvalid="setCustomValidity('Please enter GST no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" style="width: 100%;" required>
+											class="form-control" style="width: 100%;"
+											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
+											onkeydown="upperCaseF(this)" required>
 									</div>
 
 									<div class="col-md-2">PAN No*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendPan" name="vendPan"
 											value="${editVend.vendPan}" class="form-control"
-											style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter PAN no')"
+											maxlength="10" style="width: 100%;"
+											pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
+											onkeydown="upperCaseF(this)"
+											oninvalid="setCustomValidity('Please enter correct pan no')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 
@@ -214,7 +216,8 @@
 										<input type="text" id="vendState" name="vendState"
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter vend State')"
-											value="${editVend.vendState}"
+											value="${editVend.vendState}" maxlength="25"
+											pattern="^[A-Za-z\s]+$"
 											onchange="try{setCustomValidity('')}catch(e){}" required />
 										<span class="error" aria-live="polite"></span>
 
@@ -225,7 +228,8 @@
 										<input type="text" id="vendCity" name="vendCity"
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter vend City')"
-											value="${editVend.vendCity}"
+											value="${editVend.vendCity}" maxlength="25"
+											pattern="^[A-Za-z\s]+$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -433,6 +437,14 @@
 			});
 
 		});
+	</script>
+
+	<script>
+		function upperCaseF(a) {
+			setTimeout(function() {
+				a.value = a.value.toUpperCase();
+			}, 1);
+		}
 	</script>
 
 </body>
