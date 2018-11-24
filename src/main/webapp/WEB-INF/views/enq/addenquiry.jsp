@@ -603,7 +603,7 @@
 
 								function(data) {
 									
-									alert("in add  " +JSON.stringify(data));
+									//alert("in add  " +JSON.stringify(data));
 
 									if(data==null){
 										document.getElementById("submitButton").disabled=true;
@@ -674,7 +674,7 @@
 
 							},
 							function(data) {
-								alert("in edit  " +JSON.stringify(data));
+							//	alert("in edit  " +JSON.stringify(data));
 
 								document.getElementById("uomId").value = data.uomId;
 								$("#uomId").trigger("chosen:updated");
@@ -703,7 +703,7 @@
 							},
 
 							function(data) {
-								alert("in delete  " +JSON.stringify(data));
+								//alert("in delete  " +JSON.stringify(data));
 								if(data==null || data==""){
 									document.getElementById("submitButton").disabled=true;
 								}
