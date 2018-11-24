@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,7 +27,10 @@ import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.PoHeader;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.Document;
+import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Plant;
+import com.ats.ssgs.model.master.Project;
+import com.ats.ssgs.model.order.GetOrder;
 import com.ats.ssgs.model.order.GetPoForOrder;
 import com.ats.ssgs.model.order.OrderDetail;
 import com.ats.ssgs.model.order.OrderHeader;
@@ -48,9 +52,8 @@ public class OrderController {
 
 	List<GetPoForOrder> poDetailForOrdList;
 
-	int isError=0;
+	int isError = 0;
 
-	
 	@RequestMapping(value = "/showAddOrder", method = RequestMethod.GET)
 	public ModelAndView showAddOrder(HttpServletRequest request, HttpServletResponse response) {
 
@@ -72,7 +75,7 @@ public class OrderController {
 
 			model.addObject("doc", doc);
 			model.addObject("isError", isError);
-			isError=0;
+			isError = 0;
 
 		} catch (Exception e) {
 
@@ -225,7 +228,7 @@ public class OrderController {
 
 	// insertOrder
 	@RequestMapping(value = "/insertOrder", method = RequestMethod.POST)
-	public String  insertOrder(HttpServletRequest request, HttpServletResponse response) {
+	public String insertOrder(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
 		try {
@@ -290,7 +293,7 @@ public class OrderController {
 
 				headerTotal = orDetail.getTotal() + headerTotal;
 
-		 	}
+			}
 			ordHeader.setOrderValue(headerTotal);
 			ordHeader.setTotal(headerTotal);
 
@@ -306,34 +309,176 @@ public class OrderController {
 
 			} else {
 
-				ordHeader.setIsTaxIncluding(1);//yes tax included
+				ordHeader.setIsTaxIncluding(1);// yes tax included
 
 			}
-			
+
 			ordHeader.setOrderDetailList(ordDetailList);
-			
-			OrderHeader insertOrdHeadRes=rest.postForObject(Constants.url + "saveOrder", ordHeader,
+
+			OrderHeader insertOrdHeadRes = rest.postForObject(Constants.url + "saveOrder", ordHeader,
 					OrderHeader.class);
-			
-			if(insertOrdHeadRes!=null) {
-				
-				isError=2;
+
+			if (insertOrdHeadRes != null) {
+
+				isError = 2;
+
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("srNo", doc.getSrNo() + 1);
+				map.add("docCode", doc.getDocCode());
+
+				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+
+			} else {
+
+				isError = 1;
 			}
-			else {
-				isError=1;
-			}
-			System.err.println("insertOrdHeadRes " +insertOrdHeadRes.toString());
-			
+			System.err.println("insertOrdHeadRes " + insertOrdHeadRes.toString());
+
 		} catch (Exception e) {
-			isError=1;
+			isError = 1;
 			System.err.println("exception In insertOrder at OrderController " + e.getMessage());
 
 			e.printStackTrace();
 
 		}
-		
 
 		return "redirect:/showAddOrder";
 	}
 
+	// ***********************************//
+
+	// showOrderList and options for edit and delete
+
+	@RequestMapping(value = "/showOrderList", method = RequestMethod.GET)
+	public ModelAndView showOrderList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("order/orderlist");
+
+			model.addObject("title", "Order List");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			String fromDate = null,toDate = null;
+			
+			if(request.getParameter("fromDate")==null || request.getParameter("fromDate")=="") {
+				
+				System.err.println("onload call  " );
+				
+				Calendar date = Calendar.getInstance();
+				date.set(Calendar.DAY_OF_MONTH, 1);
+				
+				Date firstDate = date.getTime();
+
+				DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+				fromDate = dateFormat.format(firstDate);
+				
+				toDate=dateFormat.format(new Date());
+					System.err.println("cu Date  " + fromDate + "todays date   " + toDate);
+
+			}
+			else {
+				
+				System.err.println("After page load call");
+				fromDate=request.getParameter("fromDate");
+				toDate=request.getParameter("toDate");
+				
+			}
+			
+			// getOrderListBetDate
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+			
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+	
+	List<GetOrder> getOrdList=new ArrayList<>();
+	
+	
+	@RequestMapping(value = "/getOrderListBetDate", method = RequestMethod.GET)
+	public @ResponseBody List<GetOrder> getOrderListBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		System.err.println(" in getTempOrderHeader");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		int custId = Integer.parseInt(request.getParameter("custId"));
+		
+		String fromDate=request.getParameter("fromDate");
+		String toDate=request.getParameter("toDate");
+
+		map.add("plantId", plantId);
+		map.add("custId", custId);
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		map.add("status", 0);
+
+		GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getOrderListBetDate", map,
+				GetOrder[].class);
+		getOrdList = new ArrayList<GetOrder>(Arrays.asList(ordHeadArray));
+
+		return getOrdList;
+	}
+	
+	
+	
+	
+	@RequestMapping(value = "/editOrder/{orderId}", method = RequestMethod.GET)
+	public ModelAndView editOrder(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int orderId) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("order/editOrder");
+			
+			GetOrder editOrder = null;
+			for(int i=0;i<getOrdList.size();i++) {
+				
+				if(getOrdList.get(i).getOrderId()==orderId) {
+					editOrder=new GetOrder();
+					editOrder=getOrdList.get(i);
+					break;
+				}
+			}
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custId", editOrder.getCustId());
+			List<Project> projList;
+			Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
+			projList = new ArrayList<Project>(Arrays.asList(projArray));
+
+			model.addObject("editOrder",editOrder);
+			model.addObject("projList", projList);
+
+			model.addObject("title", "Edit Order");
+			
+			
+			
+			
+		}catch (Exception e) {
+			System.err.println("Exce in edit Order " + e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
 }
