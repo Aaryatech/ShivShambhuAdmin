@@ -147,8 +147,6 @@
 											<span class="error" aria-live="polite"></span>
 										</div>
 
-
-
 										<div class="col-md-2">Cust Mobile No</div>
 
 										<div class="col-md-4">
@@ -168,8 +166,9 @@
 									<div class="col-md-2">Enquiry Date</div>
 
 									<div class="col-md-4">
-										<input type="text" id="enq_date" name="enq_date" required
-											style="width: 100%;" class="form-control"
+										<input type="text" id="enq_date" name="enq_date" required readonly="readonly"
+											style="width: 100%;" class="form-control" autocomplete="off"
+												oninvalid="setCustomValidity('Please select enquiry date')"
 											value="${editComp.contactNo1}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
@@ -325,7 +324,7 @@
 									</div>
 
 									<div class="col-md-1">
-										<input type="submit" class="btn btn-primary" value="Submit">
+										<input type="submit" class="btn btn-primary" id="submitButton" value="Submit">
 
 									</div>
 
@@ -417,6 +416,8 @@
 
 	<script type="text/javascript">
 		function getData() {
+			document.getElementById("submitButton").disabled=true;
+			
 			//alert("Item Id ")
 			var plantId = document.getElementById("plant_id").value;
 			//alert("Plant Id " +plantId);
@@ -601,6 +602,12 @@
 								},
 
 								function(data) {
+									
+									alert("in add  " +JSON.stringify(data));
+
+									if(data==null){
+										document.getElementById("submitButton").disabled=true;
+									}
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();
 									dataTable.clear().draw();
@@ -643,7 +650,12 @@
 									document.getElementById("isEdit").value = 0;
 									document.getElementById("itemUomId").value = "0";
 									document.getElementById("item_rate").value = "0"
+									//document.getElementById("submitButton").disabled=false;
+									//$('#submitButton').prop('disabled', false);
+
 								});
+				
+				document.getElementById("submitButton").disabled=false;
 
 			}//end of if
 			else {
@@ -662,6 +674,7 @@
 
 							},
 							function(data) {
+								alert("in edit  " +JSON.stringify(data));
 
 								document.getElementById("uomId").value = data.uomId;
 								$("#uomId").trigger("chosen:updated");
@@ -690,6 +703,10 @@
 							},
 
 							function(data) {
+								alert("in delete  " +JSON.stringify(data));
+								if(data==null || data==""){
+									document.getElementById("submitButton").disabled=true;
+								}
 								var dataTable = $('#bootstrap-data-table')
 										.DataTable();
 								dataTable.clear().draw();
@@ -717,6 +734,7 @@
 															.draw();
 												});
 							});
+
 
 			document.getElementById("qty").value = "";
 			document.getElementById("item_remark").value = "";
