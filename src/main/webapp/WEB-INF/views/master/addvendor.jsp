@@ -107,10 +107,10 @@
 									<div class="col-md-2">Contact Name(Optional)</div>
 									<div class="col-md-4">
 										<input type="text" id="vendContactName" name="vendContactName"
-											class="form-control" required style="width: 100%;"
+											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter correct vend Contact Name')"
 											value="${editVend.vendContactName}" pattern="^[A-Za-z\s]+$"
-											onchange="try{setCustomValidity('')}catch(e){}" required>
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
 								</div>
@@ -122,7 +122,7 @@
 									<div class="col-md-4">
 										<input type="text" id="vendContact1" name="vendContact1"
 											required style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter mob no')"
+											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" value="${editVend.vendContact1}"
 											pattern="^[1-9]{1}[0-9]{9}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
@@ -153,8 +153,8 @@
 											oninvalid="setCustomValidity('Please enter correct email')"
 											maxlength="50" value="${editVend.vendEmail1}"
 											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
+											onchange="try{setCustomValidity('')}catch(e){}" required />
+										<span class="error" aria-live="polite"></span>
 
 									</div>
 
@@ -215,7 +215,7 @@
 									<div class="col-md-4">
 										<input type="text" id="vendState" name="vendState"
 											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter vend State')"
+											oninvalid="setCustomValidity('Please enter correct State')"
 											value="${editVend.vendState}" maxlength="25"
 											pattern="^[A-Za-z\s]+$"
 											onchange="try{setCustomValidity('')}catch(e){}" required />
@@ -227,9 +227,9 @@
 									<div class="col-md-4">
 										<input type="text" id="vendCity" name="vendCity"
 											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter vend City')"
+											oninvalid="setCustomValidity('Please enter correct City')"
 											value="${editVend.vendCity}" maxlength="25"
-											pattern="^[A-Za-z\s]+$"
+											pattern="^[A-Za-z\s]+$" required
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -244,16 +244,17 @@
 									<div class="col-md-4">
 										<input type="text" id="vendCreditLimit" name="vendCreditLimit"
 											class="form-control" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											value="${editVend.vendCreditLimit}"
-											oninvalid="setCustomValidity('Please enter vend Credit Limit')"
+											oninvalid="setCustomValidity('Please enter correct vend Credit Limit')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 									<div class="col-md-2">Credit Days*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendCreditDays" name="vendCreditDays"
-											class="form-control" style="width: 100%;"
-											value="${editVend.vendCreditDays}"
-											oninvalid="setCustomValidity('Please enter creadit Days')"
+											class="form-control" style="width: 100%;" maxlength="10"
+											pattern="[0-9]+" value="${editVend.vendCreditDays}"
+											oninvalid="setCustomValidity('Please enter correct creadit Days')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 
@@ -290,12 +291,21 @@
 								</div>
 
 								<div class="form-group"></div>
-								<div class="col-lg-12" align="center">
+								<div class="col-lg-4"></div>
+								<div class="col-lg-3">
 
 
 									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
+										style="align-content: center; width: 113px; margin-left: 40px;">
 										Submit</button>
+								</div>
+
+								<div class="col-lg-3">
+
+
+									<button type="reset" class="btn btn-primary"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+										Clear</button>
 								</div>
 							</form>
 						</div>

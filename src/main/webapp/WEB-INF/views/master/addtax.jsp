@@ -106,7 +106,7 @@
 											oninvalid="setCustomValidity('Please enter Tax Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											value="${editTax.taxName}" class="form-control"
-											style="width: 100%;">
+											maxlength="25" pattern="^[A-Za-z\s]+$" style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">HSN Code*</div>
@@ -115,8 +115,8 @@
 										<input type="text" id="hsnCode" name="hsnCode"
 											value="${editTax.hsnCode}" class="form-control"
 											oninvalid="setCustomValidity('Please enter hsn code')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
+											onchange="try{setCustomValidity('')}catch(e){}"
+											maxlength="25" required style="width: 100%;">
 									</div>
 
 								</div>
@@ -187,13 +187,16 @@
 
 								<div class="form-group"></div>
 
-
-								<div class="col-lg-12" align="center">
-
-
+								<div class="col-lg-4"></div>
+								<div class="col-lg-3">
 									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
+										style="align-content: center; width: 113px; margin-left: 40px;">
 										Submit</button>
+								</div>
+								<div class="col-lg-3">
+									<button type="reset" class="btn btn-primary"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+										Clear</button>
 								</div>
 							</form>
 						</div>
