@@ -480,7 +480,7 @@ public class MasterController {
 			System.err.println("Comp Id " + compId);
 			String plantName = request.getParameter("plant_name");
 
-			String telNo = request.getParameter("tel_no");
+			// String telNo = request.getParameter("tel_no");
 			String mobNo = request.getParameter("mob_no");
 			String faxNo = request.getParameter("fax");
 			String email = request.getParameter("email");
@@ -519,7 +519,7 @@ public class MasterController {
 			try
 
 			{
-				plant.setPlantContactNo2(telNo);
+				plant.setPlantContactNo2(request.getParameter("tel_no"));
 			} catch (Exception e) {
 				plant.setPlantContactNo2(na);
 			}
@@ -839,10 +839,10 @@ public class MasterController {
 
 			model.addObject("plantList", plantList);
 
-			Cust[] custArray = rest.getForObject(Constants.url + "getAllCustList", Cust[].class);
+			/*Cust[] custArray = rest.getForObject(Constants.url + "getAllCustList", Cust[].class);
 			custList = new ArrayList<Cust>(Arrays.asList(custArray));
 			System.err.println("custList In showAddProject at Master Contr" + custList);
-			model.addObject("custList", custList);
+			model.addObject("custList", custList);*/
 
 			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
 			compList = new ArrayList<Company>(Arrays.asList(compArray));

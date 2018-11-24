@@ -359,17 +359,11 @@
 	</div>
 	<!-- .content -->
 
-
 	<!-- .animated -->
 	<!-- .content -->
-
-
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	<!-- Footer -->
-
-
-
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>

@@ -103,15 +103,11 @@
 											tabindex="1" required onchange="getData()">
 											<option value="">Select</option>
 											<c:forEach items="${plantList}" var="plant">
-
 												<c:choose>
 													<c:when test="${plant.plantId==editItem.plantId}">
-
 														<option value="${plant.plantId}" selected>${plant.plantName}</option>
 													</c:when>
 													<c:otherwise>
-
-
 														<option value="${plant.plantId}">${plant.plantName}
 													</c:otherwise>
 												</c:choose>
@@ -126,19 +122,17 @@
 										<select id="cust_name" name="cust_id" class="standardSelect"
 											tabindex="1" required>
 											<option value="">Select</option>
-											<%-- <c:forEach items="${custList}" var="cust">
-
+											<c:forEach items="${custList}" var="cust">
 												<c:choose>
 													<c:when test="${cust.custId==editPro.custId}">
 														<option value="${cust.custId}" selected>${cust.custName}</option>
-
 													</c:when>
 													<c:otherwise>
 														<option value="${cust.custId}">${cust.custName}
 													</c:otherwise>
 												</c:choose>
-													<option value="${cust.custId}">${cust.custName}</option>
-											</c:forEach> --%>
+												<option value="${cust.custId}">${cust.custName}</option>
+											</c:forEach>
 										</select>
 									</div>
 
@@ -150,6 +144,7 @@
 									<div class="col-md-2">Contact Person Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="contactPerName" name="contactPerName"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter contact person Name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="^[A-Za-z\s]+$" value="${editPro.contactPerName}"
@@ -160,7 +155,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="contactPerMob" name="contactPerMob"
-											value="${editPro.contactPerMob}"
+											autocomplete="off" value="${editPro.contactPerMob}"
 											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"
 											onchange="try{setCustomValidity('')}catch(e){}"
@@ -175,6 +170,7 @@
 									<div class="col-md-2">Project Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="proj_name" name="proj_name"
+											autocomplete="off" pattern="^[A-Za-z\s]+$"
 											oninvalid="setCustomValidity('Please enter project name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editPro.projName}" class="form-control" required
@@ -185,6 +181,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="proj_loc" name="proj_loc"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter project location')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editPro.location}" class="form-control" required
@@ -197,16 +194,16 @@
 									<div class="col-md-2">Start Date*</div>
 									<div class="col-md-4">
 										<input type="text" id="start_date" name="start_date"
-											value="${editPro.startDate}" class="form-control" required
-											style="width: 100%;">
+											autocomplete="off" value="${editPro.startDate}"
+											class="form-control" required style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">End Date*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="end_date" name="end_date"
-											value="${editPro.endDate}" class="form-control" required
-											style="width: 100%;">
+											autocomplete="off" value="${editPro.endDate}"
+											class="form-control" required style="width: 100%;">
 									</div>
 
 								</div>
@@ -217,45 +214,50 @@
 									<div class="col-md-2">Pincode No*</div>
 									<div class="col-md-4">
 										<input type="text" id="pincode" name="pincode"
-											class="form-control" style="width: 100%;" maxlength="10"
-											value="${editPro.pincode}" pattern="^[1-9][0-9]{6}*$"
+											autocomplete="off" class="form-control" style="width: 100%;"
+											maxlength="10" value="${editPro.pincode}"
+											pattern="^[1-9][0-9]{6}*$"
 											oninvalid="setCustomValidity('Please enter correct Pincode')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 									<div class="col-md-2">Kilometer*</div>
 									<div class="col-md-4">
-										<input type="number" id="km" name="km" class="form-control"
-											maxlength="10" style="width: 100%;" value="${editPro.km}"
-											oninvalid="setCustomValidity('Please enter Kilometer')"
+										<input type="text" id="km" name="km" class="form-control"
+											style="width: 100%;" value="${editPro.km}" maxlength="10"
+											oninvalid="setCustomValidity('Please enter correct kilometer')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 
 								</div>
 								<div class="form-group"></div>
+								<div class="row">
 
-								<div class="col-md-2">Address*</div>
+									<div class="col-md-2">Address*</div>
 
-								<div class="col-md-4">
-									<textarea id="address" name="address" class="form-control"
-										oninvalid="setCustomValidity('Please enter address')"
-										onchange="try{setCustomValidity('')}catch(e){}" required
-										style="width: 100%;">${editPro.address}</textarea>
-								</div>
-
-								<div class="col-lg-2" align="left">
-
-
-									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
-										Submit</button>
+									<div class="col-md-4">
+										<textarea id="address" name="address" class="form-control"
+											autocomplete="off"
+											oninvalid="setCustomValidity('Please enter address')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											style="width: 100%;">${editPro.address}</textarea>
+									</div>
+									<div class="col-lg-2"></div>
+									<div class="col-lg-2">
+										<button type="submit" class="btn btn-primary"
+											style="align-content: center; width: 113px; margin-left: 40px;">
+											Submit</button>
+									</div>
+									<div class="col-lg-2" align="left">
+										<button type="reset" class="btn btn-primary"
+											style="align-content: center; width: 113px; margin-left: 40px;">
+											Clear</button>
+									</div>
 								</div>
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-
-
 		</div>
 		<!-- .animated -->
 	</div>

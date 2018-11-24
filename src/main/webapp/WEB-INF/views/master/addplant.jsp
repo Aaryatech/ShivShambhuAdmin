@@ -182,7 +182,7 @@
 
 								</div>
 								<input type="hidden" name="plant_id" id="plant_id"
-									value=${editPlant.plantId}>
+									value="${editPlant.plantId}">
 
 
 								<div class="form-group"></div>
@@ -194,7 +194,7 @@
 										<input type="text" id="mob_no" name="mob_no" required
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct mob no')"
-											maxlength="10" value="${editPlant.plantContactNo2}"
+											maxlength="10" value="${editPlant.plantContactNo1}"
 											pattern="^[1-9]{1}[0-9]{9}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -206,7 +206,7 @@
 											autocomplete="off" style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct tel no')"
 											maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"
-											value="${editPlant.plantContactNo1}"
+											value="${editPlant.plantContactNo2}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -285,14 +285,16 @@
 								</div>
 
 								<div class="form-group"></div>
-
-
-								<div class="col-lg-12" align="center">
-
-
+								<div class="col-lg-4"></div>
+								<div class="col-lg-3">
 									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
+										style="align-content: center; width: 113px; margin-left: 40px;">
 										Submit</button>
+								</div>
+								<div class="col-lg-3">
+									<button type="reset" class="btn btn-primary"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+										Clear</button>
 								</div>
 							</form>
 						</div>

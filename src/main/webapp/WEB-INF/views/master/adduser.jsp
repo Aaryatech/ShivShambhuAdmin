@@ -212,7 +212,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
-									<div class="col-md-2">Sort No*</div>
+									<div class="col-md-2">Sort No(Optional)</div>
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
 											autocomplete="off" value="${editUser.sortNo}"
@@ -226,8 +226,8 @@
 								<div class="row">
 									<div class="col-md-2">User Email*</div>
 									<div class="col-md-4">
-										<input type="text" autocomplete="off" id="usrEmail" name="usrEmail"
-											 value="${editUser.usrEmail}"
+										<input type="text" autocomplete="off" id="usrEmail"
+											name="usrEmail" value="${editUser.usrEmail}"
 											class="form-control"
 											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
 											maxlength="50"
@@ -238,7 +238,7 @@
 									<div class="col-md-2">User Password*</div>
 									<div class="col-md-4">
 										<input type="password" id="userPass" name="userPass"
-											autocomplete="off"
+											autocomplete="off" maxlength="20"
 											oninvalid="setCustomValidity('Please enter Password')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editUser.userPass}" class="form-control" required

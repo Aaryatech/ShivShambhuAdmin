@@ -113,7 +113,7 @@
 
 
 
-									<div class="col-md-2">Sort No*</div>
+									<div class="col-md-2">Sort No(Optional)</div>
 
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
