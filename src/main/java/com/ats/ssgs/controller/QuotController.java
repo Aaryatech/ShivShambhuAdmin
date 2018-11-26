@@ -249,7 +249,7 @@ public class QuotController {
 			map.add("custId", custId);
 			
 			Cust cust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
-			
+			 
 
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
 			int payTermId = Integer.parseInt(request.getParameter("pay_term_id"));
