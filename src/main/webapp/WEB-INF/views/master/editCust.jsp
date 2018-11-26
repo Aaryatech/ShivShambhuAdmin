@@ -253,12 +253,9 @@
 
 											</div>
 
-
-
 											<div class="col-md-1">
 												<input type="radio" name="cheque" value="0" checked>
 												No
-
 											</div>
 										</c:when>
 										<c:when test="${editCust.isChequeRcvd==1}">
@@ -273,10 +270,6 @@
 											</div>
 										</c:when>
 									</c:choose>
-
-
-
-
 
 								</div>
 
@@ -342,9 +335,6 @@
 											oninvalid="setCustomValidity('Please enter cheque remark')"
 											onchange="try{setCustomValidity('')}catch(e){}">${editCust.chequeRemark}</textarea>
 									</div>
-
-
-
 									<div class="col-md-2">Address</div>
 
 									<div class="col-md-4">
@@ -353,9 +343,6 @@
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">${editCust.custAddress}</textarea>
 									</div>
-
-
-
 								</div>
 
 								<div class="form-group"></div>
