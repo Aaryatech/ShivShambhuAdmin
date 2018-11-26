@@ -261,7 +261,7 @@ public class QuotController {
 			Float tollCost = Float.parseFloat(request.getParameter("toll_amt"));
 			Float otherCost = Float.parseFloat(request.getParameter("other_cost"));
 			int quotTermId = Integer.parseInt(request.getParameter("quot_doc_term_id"));
-			int noOfKm = Integer.parseInt(request.getParameter("no_of_km"));
+			float noOfKm = Float.parseFloat(request.getParameter("no_of_km"));
 
 			String payTerms = request.getParameter("pay_term_name");
 

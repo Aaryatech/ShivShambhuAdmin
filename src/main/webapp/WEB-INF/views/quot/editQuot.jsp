@@ -433,7 +433,7 @@ body {
 									<div class="col-md-2">No of Tolls</div>
 									<div class="col-md-4">
 										<input type="text" id="no_of_tolls" min="0" name="no_of_tolls" value="${quotHeader.noOfTolls}"
-											class="form-control" style="width: 100%;" onkeypress="return allowOnlyNumber(event);">
+											class="form-control" style="width: 100%;" onkeypress="return allowOnlyNumber1(event);">
 									</div>
 
 								</div>
@@ -537,15 +537,15 @@ body {
 															<c:set var="qty" value="${item.quotQty}"></c:set>
 															</c:if>
 
-													<td class="col-md-1" style="text-align: left"><input type="text"
+													<td class="col-md-1" style="text-align: left"><input type="text" onkeypress="return allowOnlyNumber(event);"
 														id="quot_qty${item.itemId}" name="quot_qty${item.itemId}"
-														value="${qty}" onkeypress="return allowOnlyNumber(event);" class="form-control"></td>
+														value="${qty}"  class="form-control"></td>
 
 													<td class="col-md-1" style="text-align: left"><c:out value="${item.uomName}" /></td>
 
 
 													<td class="col-md-1" style="text-align: center"><input type="text"
-														id="trans_cost${item.itemId}" value="${item.transCost}" min="0" onkeypress="return allowOnlyNumber(event);"
+														id="trans_cost${item.itemId}" value="${item.transCost}" onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														name="trans_cost${item.itemId}" class="form-control"></td>
 
@@ -553,9 +553,9 @@ body {
 														id="toll_cost${item.itemId}" readonly value="${quotHeader.tollCost}"
 														name="toll_cost${item.itemId}" class="form-control"></td>
 
-													<td class="col-md-1" style="text-align: center"><input type="text" min="0"
+													<td class="col-md-1" style="text-align: center"><input type="text" min="0"  onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
-														id="other_cost${item.itemId}"  value="${item.otherCost}" onkeypress="return allowOnlyNumber(event);"
+														id="other_cost${item.itemId}"  value="${item.otherCost}"
 														name="other_cost${item.itemId}" class="form-control"></td>
 													<!-- 
 													<td style="text-align: center"><input type="text"
@@ -583,9 +583,9 @@ body {
 														name="tax_amt${item.itemId}" class="form-control"></td>
 
 
-													<td class="col-md-1" style="text-align: center"><input type="text" min="0"
+													<td class="col-md-1" style="text-align: center"><input type="text" min="0" onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
-														id="oth_cost_aft_tax${item.itemId}"  value="${item.otherCostAfterTax}" onkeypress="return allowOnlyNumber(event);"
+														id="oth_cost_aft_tax${item.itemId}"  value="${item.otherCostAfterTax}" 
 														name="oth_cost_aft_tax${item.itemId}" class="form-control"></td>
 
 													<td class="col-md-1" style="text-align: right"><input type="text"
@@ -948,7 +948,7 @@ var termTitle=data.termTitle
 	var tollCost =document.getElementById("toll_cost"+itemId).value;
 	var transCost =document.getElementById("trans_cost"+itemId).value;
 	var otherCost= document.getElementById("other_cost"+itemId).value;
-	
+	var valid=true;
 	 if(otherCost<0){
 		 valid=false;
 		 alert("Please enter valid other cost");
@@ -984,13 +984,13 @@ var termTitle=data.termTitle
 	 
 	 if(valid==true){
 	
-	var taxableAmt=parseFloat(itemRate)+parseFloat(tollCost)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
+	 var taxableAmt=parseFloat(itemRate)+parseFloat(tollCost)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
 	
-	document.getElementById("taxable_amt"+itemId).value=taxableAmt;
+	 document.getElementById("taxable_amt"+itemId).value=taxableAmt;
 
-	var taxAmt=(taxableAmt*taxPer)/100;
+	 var taxAmt=(taxableAmt*taxPer)/100;
 
-	document.getElementById("tax_amt"+itemId).value=taxAmt;
+	 document.getElementById("tax_amt"+itemId).value=taxAmt;
 	 var finalAmt=parseFloat(taxableAmt)+parseFloat(taxAmt)+parseFloat(otherCostAfterTax);
 	 document.getElementById("final_amt"+itemId).value=finalAmt;
 	 
@@ -1079,13 +1079,16 @@ var termTitle=data.termTitle
 	    }
 	    return true;
 	}
-	/* function allowOnlyNumber1(evt)
+	
+	</script>
+	<script>
+	 function allowOnlyNumber1(evt)
 	{
 	  var charCode = (evt.which) ? evt.which : event.keyCode
 	  if (charCode > 31 && charCode==46 && (charCode < 48 || charCode > 57))
 		  	    return false;
 	  return true;
-	} */
+	} 
 	</script>
 	<!-- <script type="text/javascript">
 		function getData() {
