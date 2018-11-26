@@ -294,6 +294,8 @@ detail.setOrderDetId(orderDetId);
 				orDetail.setPoId(poId);
 
 				orDetail.setTotal(tempOrdDetail.get(i).getTotal());
+				orDetail.setRemOrdQty(orDetail.getOrderQty());
+
 				ordDetailList.add(orDetail);
 
 				headerTotal = orDetail.getTotal() + headerTotal;
@@ -551,7 +553,7 @@ detail.setOrderDetId(orderDetId);
 
 					orDetail.setPoDetailId(tempOrdDetail.get(i).getPoDetailId());
 					orDetail.setPoId(poId);
-
+					orDetail.setRemOrdQty(orDetail.getOrderQty());
 					orDetail.setTotal(tempOrdDetail.get(i).getTotal());
 					ordDetailList.add(orDetail);
 

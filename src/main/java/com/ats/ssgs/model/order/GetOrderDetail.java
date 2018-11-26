@@ -59,6 +59,16 @@ public class GetOrderDetail {
 	private String poDate;
 	private String poNo;
 
+	private float remOrdQty;//new field
+
+	public float getRemOrdQty() {
+		return remOrdQty;
+	}
+
+	public void setRemOrdQty(float remOrdQty) {
+		this.remOrdQty = remOrdQty;
+	}
+	
 	public int getOrderDetId() {
 		return orderDetId;
 	}

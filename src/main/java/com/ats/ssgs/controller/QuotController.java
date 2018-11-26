@@ -224,7 +224,7 @@ public class QuotController {
 	// updateQuotation Form Action
 
 	@RequestMapping(value = "/updateQuotation", method = RequestMethod.POST)
-	public ModelAndView updateQuotationProcess(HttpServletRequest request, HttpServletResponse response) {
+	public String updateQuotationProcess(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
 		try {
@@ -446,6 +446,6 @@ public class QuotController {
 			e.printStackTrace();
 
 		}
-		return model;
+		return "redirect:/showQuotations";
 	}
 }

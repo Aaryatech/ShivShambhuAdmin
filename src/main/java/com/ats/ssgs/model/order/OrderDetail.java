@@ -43,7 +43,15 @@ public class OrderDetail {
 	
 	private int status;
 	
-	
+	private float remOrdQty;//new Field
+
+	public float getRemOrdQty() {
+		return remOrdQty;
+	}
+
+	public void setRemOrdQty(float remOrdQty) {
+		this.remOrdQty = remOrdQty;
+	}
 
 	public int getStatus() {
 		return status;

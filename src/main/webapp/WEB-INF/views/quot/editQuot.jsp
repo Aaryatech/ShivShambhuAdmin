@@ -191,7 +191,7 @@ body {
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/updateQuotation"
-								method="post">
+								method="post" id="updateQuotation">
 
 								<div class="row">
 
@@ -298,7 +298,7 @@ body {
 											class="standardSelect" tabindex="1" required
 											onchange="showDocDetailPopup(this.value)"
 											oninvalid="setCustomValidity('Please select quotation term')">
-											<option value="">Select Term</option>
+											<option value="-1">Select Term</option>
 
 											<c:forEach items="${docTermList}" var="qTerm">
 											<c:choose>
@@ -358,7 +358,7 @@ body {
 								<div class="row">
 									<div class="col-md-2">Quotation Date</div>
 									<div class="col-md-4">
-										<input type="text" id="quot_date" name="quot_date"
+										<input type="text" id="quot_date" name="quot_date" readonly autocomplete="off"
 											class="form-control" style="width: 100%;"
 											value="${quotHeader.quotDate}">
 									</div>
@@ -615,7 +615,7 @@ body {
 									</div>
 
 									<div class="col-md-1">
-										<input type="submit" class="btn btn-primary" value="Submit">
+										<input type="button" class="btn btn-primary" onclick="valthisform()" value="Submit">
 
 									</div>
 
@@ -971,6 +971,40 @@ var termTitle=data.termTitle
 				}, ]
 			
 		});
+		
+		
+	</script>
+	
+	<script type="text/javascript">
+	
+	function valthisform()
+	{
+	    var checkboxs=document.getElementsByName("selectItem");
+	    var okay=false;
+	    for(var i=0,l=checkboxs.length;i<l;i++)
+	    {
+	        if(checkboxs[i].checked)
+	        {
+	            okay=true;
+	            break;
+	        }
+	    }
+	    
+	    var quotTerm=document.getElementById("quot_doc_term_id");
+	    if(quotTerm<0 || quotTerm=="" || quotTerm==null){
+	    	okay=false;
+	    	alert("please select quotation term ");
+	    	
+	    }
+	    if(okay){
+	    	
+	    	var form=document.getElementById("updateQuotation");
+	    	
+	    	form.submit();
+	    }
+	    else alert("Please check a checkbox");
+	}
+	
 	</script>
 	<!-- <script type="text/javascript">
 		function getData() {
