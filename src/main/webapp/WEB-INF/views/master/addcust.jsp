@@ -149,21 +149,23 @@
 								<hr style="color: pink; background: pink;"></hr>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Reference Name*</div>
+									<div class="col-md-2">Reference Name</div>
 									<div class="col-md-4">
 										<input type="text" id="ref_name" name="ref_name"
 											pattern="^[A-Za-z\s]+$" class="form-control"
-											style="width: 100%;">
+											autocomplete="off" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter correct refrence name')"
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Email*</div>
+									<div class="col-md-2">Email</div>
 
 									<div class="col-md-4">
 										<input type="text" id="email" name="email"
 											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter email')"
+											oninvalid="setCustomValidity('Please enter correct email')"
 											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-											maxlength="50"
+											maxlength="50" autocomplete="off"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -173,21 +175,25 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">PAN No*</div>
+									<div class="col-md-2">PAN No</div>
 
 									<div class="col-md-4">
 										<input type="text" id="pan_no" name="pan_no"
 											pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
 											onkeydown="upperCaseF(this)" class="form-control"
+											oninvalid="setCustomValidity('Please enter correct pan no')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">GST No*</div>
+									<div class="col-md-2">GST No</div>
 
 									<div class="col-md-4">
 										<input type="text" id="gst_no" name="gst_no"
 											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
 											onkeydown="upperCaseF(this)" class="form-control"
+											oninvalid="setCustomValidity('Please enter correct GST no')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
 
@@ -195,13 +201,13 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Category*</div>
+									<div class="col-md-2">Category</div>
 
 									<div class="col-md-4">
 										<select id="cust_cate" name="cust_cate" class="standardSelect"
 											tabindex="1"
 											oninvalid="setCustomValidity('Please enter customer category')"
-											onchange="try{setCustomValidity('')}catch(e){}" required>
+											onchange="try{setCustomValidity('')}catch(e){}">
 											<option value="">Select</option>
 											<c:forEach items="${settingList}" var="custCate">
 												<option value="${custCate.settingId}">${custCate.settingValue}</option>
@@ -209,38 +215,7 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Address*</div>
-
-									<div class="col-md-4">
-										<textarea id="cust_add" name="cust_add" class="form-control"
-											style="width: 100%;"></textarea>
-									</div>
-
-								</div>
-
-								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Date Of Birth*</div>
-
-									<div class="col-md-4">
-										<input type="text" id="dob" name="dob" class="form-control"
-											style="width: 100%;">
-									</div>
-
-									<div class="col-md-2">Customer Code*</div>
-
-									<div class="col-md-4">
-										<input type="text" id="cust_code" name="cust_code"
-											class="form-control" style="width: 100%;">
-									</div>
-
-								</div>
-								<div class="form-group"></div>
-
-								<div class="row">
-
-									<div class="col-md-2">Security CHEQUE?*</div>
+									<div class="col-md-2">Security CHEQUE?</div>
 
 
 									<div class="col-md-1">
@@ -252,7 +227,54 @@
 										NO <input type="radio" name="cheque" id="cheque" value="0">
 									</div>
 
-									<div class="col-md-2"></div>
+								</div>
+
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Date Of Birth</div>
+
+									<div class="col-md-4">
+										<input type="text" id="dob" name="dob" class="form-control"
+											style="width: 100%;">
+									</div>
+
+									<div class="col-md-2">Customer Code</div>
+
+									<div class="col-md-4">
+										<input type="text" id="cust_code" name="cust_code"
+											pattern="[0-9]+" maxlength="6"
+											oninvalid="setCustomValidity('Please enter Customer code')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											class="form-control" style="width: 100%;">
+									</div>
+
+								</div>
+
+
+								<div class="form-group"></div>
+
+								<div class="row">
+
+									<div class="col-md-2">Credit Limit</div>
+									<div class="col-md-4">
+										<input type="text" id="creaditLimit" name="creaditLimit"
+											class="form-control" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter creadit limit')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+									<div class="col-md-2">Credit Days</div>
+									<div class="col-md-4">
+										<input type="text" id="creaditDays" name="creaditDays"
+											class="form-control" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter creadit days')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+								</div>
+
+								<div class="form-group"></div>
+
+								<div class="row">
 
 
 									<div class="col-md-2">CHEQUE Remark</div>
@@ -264,19 +286,47 @@
 											onchange="try{setCustomValidity('')}catch(e){}"></textarea>
 									</div>
 
+									<div class="col-md-2">Address</div>
+
+									<div class="col-md-4">
+										<textarea id="cust_add" name="cust_add" class="form-control"
+											style="width: 100%;"></textarea>
+									</div>
+									<div class="col-md-2"></div>
+								</div>
+								<div class="form-group"></div>
+
+								<div class="row">
+
+									<div class="col-md-2">PIN Code No</div>
+									<div class="col-md-4">
+										<input type="text" id="pincode" name="pincode" maxlength="6"
+											class="form-control" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter Pincode')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+									<div class="col-md-2">Kilometer</div>
+									<div class="col-md-4">
+										<input type="text" id="km" name="km" class="form-control"
+											style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter Kilometer')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+
 								</div>
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Contact Person Name*</div>
+									<div class="col-md-2">Contact Person Name</div>
 									<div class="col-md-4">
 										<input type="text" id="cont_per_name" name="cont_per_name"
 											class="form-control" style="width: 100%;"
+											pattern="^[A-Za-z\s]+$"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Mobile*</div>
+									<div class="col-md-2">Mobile No</div>
 
 									<div class="col-md-4">
 										<input type="text" id="con_per_mob" name="con_per_mob"
@@ -291,7 +341,7 @@
 								</div>
 
 								<div class="row">
-									<div class="col-md-2">Telephone No*</div>
+									<div class="col-md-2">Telephone No</div>
 									<div class="col-md-4">
 										<input type="text" id="tel_no" name="tel_no"
 											style="width: 100%;" class="form-control"
@@ -303,11 +353,12 @@
 
 									</div>
 
-									<div class="col-md-2">Vendor Code*</div>
+									<div class="col-md-2">Vendor Code</div>
 									<div class="col-md-4">
 										<input type="text" id="cust_vendor" name="cust_vendor"
-											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter vendor')"
+											style="width: 100%;" class="form-control" autocomplete="off"
+											pattern="[0-9]+"
+											oninvalid="setCustomValidity('Please enter vendor code')"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -316,15 +367,16 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Owner Name*</div>
+									<div class="col-md-2">Owner Name</div>
 									<div class="col-md-4">
 										<input type="text" id="ownerName" name="ownerName"
-											class="form-control" style="width: 100%;"
+											autocomplete="off" class="form-control" style="width: 100%;"
+											pattern="^[A-Za-z\s]+$"
 											oninvalid="setCustomValidity('Please enter owner name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Is same State?*</div>
+									<div class="col-md-2">Is same State?</div>
 
 
 									<div class="col-md-1">
@@ -342,17 +394,17 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Accountant Name*</div>
+									<div class="col-md-2">Accountant Name</div>
 									<div class="col-md-4">
 										<input type="text" id="accPerson" name="accPerson"
-											class="form-control" style="width: 100%;"
+											class="form-control" style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Account name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
-									<div class="col-md-2">Accountant Mobile No*</div>
+									<div class="col-md-2">Accountant Mobile No</div>
 									<div class="col-md-4">
 										<input type="text" id="accPerMob" name="accPerMob"
-											class="form-control" style="width: 100%;"
+											class="form-control" style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Mobile no')"
 											pattern="^[1-9]{1}[0-9]{9}$" onchange="checkMobileNo()"
 											onchange="try{setCustomValidity('')}catch(e){}">
@@ -360,47 +412,7 @@
 
 								</div>
 
-								<div class="form-group"></div>
 
-								<div class="row">
-
-									<div class="col-md-2">PINCode No*</div>
-									<div class="col-md-4">
-										<input type="text" id="pincode" name="pincode"
-											class="form-control" style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter Pincode')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-									</div>
-									<div class="col-md-2">Kilometer</div>
-									<div class="col-md-4">
-										<input type="text" id="km" name="km" class="form-control"
-											style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter Kilometer')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-									</div>
-
-								</div>
-
-
-								<div class="form-group"></div>
-
-								<div class="row">
-
-									<div class="col-md-2">Credit Limit*</div>
-									<div class="col-md-4">
-										<input type="text" id="creaditLimit" name="creaditLimit"
-											class="form-control" style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter creaditLimit')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-									</div>
-									<div class="col-md-2">Credit Days*</div>
-									<div class="col-md-4">
-										<input type="text" id="creaditDays" name="creaditDays"
-											class="form-control" style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter creaditDays')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-									</div>
-								</div>
 								<div class="form-group"></div>
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
@@ -413,6 +425,7 @@
 										style="align-content: center; width: 113px; margin-left: 40px;">
 										Clear</button>
 								</div>
+
 
 							</form>
 						</div>

@@ -839,10 +839,12 @@ public class MasterController {
 
 			model.addObject("plantList", plantList);
 
-			/*Cust[] custArray = rest.getForObject(Constants.url + "getAllCustList", Cust[].class);
-			custList = new ArrayList<Cust>(Arrays.asList(custArray));
-			System.err.println("custList In showAddProject at Master Contr" + custList);
-			model.addObject("custList", custList);*/
+			/*
+			 * Cust[] custArray = rest.getForObject(Constants.url + "getAllCustList",
+			 * Cust[].class); custList = new ArrayList<Cust>(Arrays.asList(custArray));
+			 * System.err.println("custList In showAddProject at Master Contr" + custList);
+			 * model.addObject("custList", custList);
+			 */
 
 			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
 			compList = new ArrayList<Company>(Arrays.asList(compArray));
@@ -1408,10 +1410,11 @@ public class MasterController {
 			String shortName = request.getParameter("short_name");
 			String rate = request.getParameter("rate");
 
-			String actWeight = request.getParameter("act_weight");
-
-			String baseWeight = request.getParameter("base_weight");
-
+			/*
+			 * String actWeight = request.getParameter("act_weight");
+			 * 
+			 * String baseWeight = request.getParameter("base_weight");
+			 */
 			String[] vendorIds = request.getParameterValues("vendor_ids");
 
 			String dispLimit = request.getParameter("disp_limit");
@@ -1447,8 +1450,12 @@ public class MasterController {
 			vendors = vendors.substring(0, vendors.length() - 1);
 			System.out.println("vendors" + vendors);
 
-			item.setActualWeight(Float.parseFloat(actWeight));
-			item.setBaseWeight(Float.parseFloat(baseWeight));
+			/*
+			 * item.setActualWeight(Float.parseFloat(actWeight));
+			 * item.setBaseWeight(Float.parseFloat(baseWeight));
+			 */
+			item.setActualWeight(0);
+			item.setBaseWeight(0);
 			item.setDelStatus(1);
 			item.setDispatchLimit(Float.parseFloat(dispLimit));
 			item.setExDate1(curDate);
@@ -1872,9 +1879,11 @@ public class MasterController {
 		try {
 
 			model = new ModelAndView("master/adduser");
-		/*	Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
-			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
-			model.addObject("plantList", plantList);*/
+			/*
+			 * Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList",
+			 * Plant[].class); plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			 * model.addObject("plantList", plantList);
+			 */
 
 			Dept[] deptArray = rest.getForObject(Constants.url + "getAllDeptList", Dept[].class);
 			deptList = new ArrayList<Dept>(Arrays.asList(deptArray));

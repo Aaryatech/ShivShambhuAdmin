@@ -199,7 +199,7 @@
 									</div>
 
 								</div>
-								<div class="form-group"></div>
+								<!-- <div class="form-group"></div>
 
 								<div class="row">
 									<div class="col-md-2">Actual Measurement*</div>
@@ -216,7 +216,7 @@
 											class="form-control" style="width: 100%;">
 									</div>
 
-								</div>
+								</div> -->
 								<div class="form-group"></div>
 								<div class="row">
 
