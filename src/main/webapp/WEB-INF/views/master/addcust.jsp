@@ -128,7 +128,7 @@
 									<div class="col-md-4">
 										<input type="text" id="cust_name" name="cust_name"
 											pattern="^[A-Za-z\s]+$" class="form-control" required
-											style="width: 100%;"
+											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -140,7 +140,7 @@
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" value="${editComp.contactNo1}"
-											pattern="^[1-9]{1}[0-9]{9}$"
+											pattern="^[1-9]{1}[0-9]{9}$" autocomplete="off"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -179,7 +179,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="pan_no" name="pan_no"
-											pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
+											autocomplete="off" pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
 											onkeydown="upperCaseF(this)" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct pan no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
@@ -190,6 +190,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="gst_no" name="gst_no"
+											autocomplete="off"
 											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
 											onkeydown="upperCaseF(this)" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct GST no')"
@@ -236,14 +237,14 @@
 
 									<div class="col-md-4">
 										<input type="text" id="dob" name="dob" class="form-control"
-											style="width: 100%;">
+											autocomplete="off" style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">Customer Code</div>
 
 									<div class="col-md-4">
 										<input type="text" id="cust_code" name="cust_code"
-											pattern="[0-9]+" maxlength="6"
+											pattern="[0-9]+" maxlength="6" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Customer code')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;">
@@ -259,14 +260,16 @@
 									<div class="col-md-2">Credit Limit</div>
 									<div class="col-md-4">
 										<input type="text" id="creaditLimit" name="creaditLimit"
-											class="form-control" style="width: 100%;"
+											class="form-control" style="width: 100%;" autocomplete="off"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											oninvalid="setCustomValidity('Please enter creadit limit')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 									<div class="col-md-2">Credit Days</div>
 									<div class="col-md-4">
 										<input type="text" id="creaditDays" name="creaditDays"
-											class="form-control" style="width: 100%;"
+											autocomplete="off" class="form-control" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											oninvalid="setCustomValidity('Please enter creadit days')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -281,7 +284,7 @@
 
 									<div class="col-md-4">
 										<textarea id="cheque_remark" name="cheque_remark"
-											class="form-control" style="width: 100%;"
+											autocomplete="off" class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter cheque remark')"
 											onchange="try{setCustomValidity('')}catch(e){}"></textarea>
 									</div>
@@ -290,7 +293,7 @@
 
 									<div class="col-md-4">
 										<textarea id="cust_add" name="cust_add" class="form-control"
-											style="width: 100%;"></textarea>
+											autocomplete="off" style="width: 100%;"></textarea>
 									</div>
 									<div class="col-md-2"></div>
 								</div>
@@ -301,14 +304,15 @@
 									<div class="col-md-2">PIN Code No</div>
 									<div class="col-md-4">
 										<input type="text" id="pincode" name="pincode" maxlength="6"
-											class="form-control" style="width: 100%;"
+											class="form-control" style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Pincode')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 									<div class="col-md-2">Kilometer</div>
 									<div class="col-md-4">
 										<input type="text" id="km" name="km" class="form-control"
-											style="width: 100%;"
+											autocomplete="off" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											oninvalid="setCustomValidity('Please enter Kilometer')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -321,7 +325,7 @@
 									<div class="col-md-4">
 										<input type="text" id="cont_per_name" name="cont_per_name"
 											class="form-control" style="width: 100%;"
-											pattern="^[A-Za-z\s]+$"
+											pattern="^[A-Za-z\s]+$" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -330,7 +334,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="con_per_mob" name="con_per_mob"
-											style="width: 100%;" class="form-control"
+											autocomplete="off" style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter mob no')"
 											maxlength="10" value="${editComp.contactNo1}"
 											pattern="^[1-9]{1}[0-9]{9}$"
@@ -398,6 +402,7 @@
 									<div class="col-md-4">
 										<input type="text" id="accPerson" name="accPerson"
 											class="form-control" style="width: 100%;" autocomplete="off"
+											pattern="^[A-Za-z\s]+$"
 											oninvalid="setCustomValidity('Please enter Account name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -407,6 +412,7 @@
 											class="form-control" style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Mobile no')"
 											pattern="^[1-9]{1}[0-9]{9}$" onchange="checkMobileNo()"
+											maxlength="10"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 

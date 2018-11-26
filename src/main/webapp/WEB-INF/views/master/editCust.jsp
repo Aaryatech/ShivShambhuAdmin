@@ -92,10 +92,11 @@
 											tabindex="1"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+											<option value="">Select</option>
 											<c:forEach items="${plantList}" var="plant">
 
 												<c:choose>
-													<c:when test="${plant.plantId==editItem.plantId}">
+													<c:when test="${plant.plantId==editCust.plantId}">
 														<option value="${plant.plantId}" selected>${plant.plantName}</option>
 													</c:when>
 													<c:otherwise>
@@ -115,24 +116,37 @@
 											tabindex="1"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+											<option value="">Select</option>
 											<c:forEach items="${custTypeList}" var="custType">
-												<option value="${custType.custTypeId}">${custType.custTypeName}</option>
+
+
+												<c:choose>
+													<c:when test="${custType.custTypeId==editCust.custType}">
+														<option value="${custType.custTypeId}" selected>${custType.custTypeName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${custType.custTypeId}">${custType.custTypeName}
+													</c:otherwise>
+												</c:choose>
+
+												<%-- <option value="${custType.custTypeId}">${custType.custTypeName}</option> --%>
 											</c:forEach>
 										</select>
 									</div>
 
 								</div>
 								<input type="hidden" name="cust_id" id="cust_id"
-									value="${editCust.custId}"> <input type="hidden"
-									name="reg_date" id="reg_date" value="${editCust.dateOfReg}">
+									value="${editCust.custId}">
+								<%-- <input type="hidden"
+									name="reg_date" id="reg_date" value="${editCust.dateOfReg}"> --%>
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Customer Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="cust_name" name="cust_name"
 											value="${editCust.custName}" class="form-control" required
-											style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter customer name')"
+											style="width: 100%;" pattern="^[A-Za-z\s]+$"
+											oninvalid="setCustomValidity('Please enter correct customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
@@ -141,9 +155,9 @@
 									<div class="col-md-4">
 										<input type="text" id="mob_no" name="mob_no" required
 											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter mob no')"
+											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" value="${editCust.custMobNo}"
-											pattern="[0-9]{10}"
+											pattern="^[1-9]{1}[0-9]{9}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -152,17 +166,19 @@
 								<hr style="color: pink; background: pink;"></hr>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Reference Name*</div>
+									<div class="col-md-2">Reference Name</div>
 									<div class="col-md-4">
 										<input type="text" id="ref_name" name="ref_name"
-											value="${editCust.respPerson}" class="form-control"
-											style="width: 100%;">
+											value="${editCust.respPerson}" pattern="^[A-Za-z\s]+$"
+											class="form-control" autocomplete="off" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter correct refrence name')"
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Email Id*</div>
+									<div class="col-md-2">Email</div>
 
 									<div class="col-md-4">
-										<input type="text" id="email" name="email"
+										<input type="text" id="email" name="email" autocomplete="off"
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter email')"
 											maxlength="50" value="${editCust.custEmail}"
@@ -176,19 +192,28 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">PAN No*</div>
+									<div class="col-md-2">PAN No</div>
 
 									<div class="col-md-4">
 										<input type="text" id="pan_no" name="pan_no"
-											value="${editCust.custPanNo}" class="form-control"
+											value="${editCust.custPanNo}" autocomplete="off"
+											pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
+											onkeydown="upperCaseF(this)" class="form-control"
+											oninvalid="setCustomValidity('Please enter correct pan no')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">GST No*</div>
+									<div class="col-md-2">GST No</div>
 
 									<div class="col-md-4">
 										<input type="text" id="gst_no" name="gst_no"
-											value="${editCust.custGstNo}" class="form-control"
+											autocomplete="off" value="${editCust.custGstNo}"
+											class="form-control"
+											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
+											onkeydown="upperCaseF(this)" class="form-control"
+											oninvalid="setCustomValidity('Please enter correct GST no')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
 
@@ -196,17 +221,17 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Category*</div>
+									<div class="col-md-2">Category</div>
 
 									<div class="col-md-4">
 										<select id="cust_cate" name="cust_cate" class="standardSelect"
 											tabindex="1"
 											oninvalid="setCustomValidity('Please enter customer category')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+											<option value="">Select</option>
 											<c:forEach items="${settingList}" var="custCate">
-
 												<c:choose>
-													<c:when test="${custCate.settingId==editItem.settingId}">
+													<c:when test="${custCate.settingId==editCust.custCat}">
 														<option value="${custCate.settingId}" selected>${custCate.settingValue}</option>
 													</c:when>
 													<c:otherwise>
@@ -218,45 +243,8 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Address*</div>
 
-									<div class="col-md-4">
-										<textarea id="cust_add" name="cust_add" class="form-control"
-											style="width: 100%;">${editCust.custAddress}</textarea>
-									</div>
-
-								</div>
-
-								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Date Of Birth*</div>
-
-									<div class="col-md-4">
-										<input type="text" id="dob" name="dob" class="form-control"
-											value="${editCust.custDob}" style="width: 100%;">
-									</div>
-
-									<div class="col-md-2">Customer Code</div>
-
-									<div class="col-md-4">
-										<input type="text" id="cust_code" name="cust_code"
-											value="${editCust.custCode}" class="form-control"
-											style="width: 100%;">
-									</div>
-
-								</div>
-								<div class="form-group"></div>
-
-								<div class="row">
-
-									<div class="col-md-2">Security CHEQUE?*</div>
-
-
-
-
-
-
+									<div class="col-md-2">Security CHEQUE?</div>
 									<c:choose>
 										<c:when test="${editCust.isChequeRcvd==0}">
 											<div class="col-md-1">
@@ -290,17 +278,60 @@
 
 
 
-									<!-- 
-									<div class="col-md-1">
-										Yes <input type="radio" checked name="cheque" id="cheque"
-											value="1">
+								</div>
+
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Date Of Birth</div>
+
+									<div class="col-md-4">
+										<input type="text" id="dob" name="dob" class="form-control"
+											autocomplete="off" value="${editCust.custDob}"
+											style="width: 100%;">
 									</div>
 
-									<div class="col-md-1">
-										NO <input type="radio" name="cheque" id="cheque" value="0">
-									</div> -->
+									<div class="col-md-2">Customer Code</div>
 
-									<div class="col-md-2"></div>
+									<div class="col-md-4">
+										<input type="text" id="cust_code" name="cust_code"
+											autocomplete="off" pattern="[0-9]+" maxlength="6"
+											oninvalid="setCustomValidity('Please enter Customer code')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											value="${editCust.custCode}" class="form-control"
+											style="width: 100%;">
+									</div>
+
+								</div>
+
+								<div class="form-group"></div>
+
+								<div class="row">
+
+									<div class="col-md-2">Credit Limit</div>
+									<div class="col-md-4">
+										<input type="text" id="creaditLimit" name="creaditLimit"
+											class="form-control" style="width: 100%;"
+											value="${editCust.creaditLimit}"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											oninvalid="setCustomValidity('Please enter creaditLimit')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+									<div class="col-md-2">Credit Days</div>
+									<div class="col-md-4">
+										<input type="text" id="creaditDays" name="creaditDays"
+											class="form-control" style="width: 100%;"
+											value="${editCust.creaditDays}"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											oninvalid="setCustomValidity('Please enter creaditDays')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+
+								</div>
+
+								<div class="form-group"></div>
+
+								<div class="row">
 
 
 									<div class="col-md-2">CHEQUE Remark</div>
@@ -312,27 +343,62 @@
 											onchange="try{setCustomValidity('')}catch(e){}">${editCust.chequeRemark}</textarea>
 									</div>
 
+
+
+									<div class="col-md-2">Address</div>
+
+									<div class="col-md-4">
+										<textarea id="cust_add" name="cust_add" class="form-control"
+											oninvalid="setCustomValidity('Please enter address')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											style="width: 100%;">${editCust.custAddress}</textarea>
+									</div>
+
+
+
+								</div>
+
+								<div class="form-group"></div>
+
+								<div class="row">
+
+									<div class="col-md-2">PIN Code No</div>
+									<div class="col-md-4">
+										<input type="text" id="pincode" name="pincode" maxlength="6"
+											class="form-control" style="width: 100%;"
+											value="${editCust.pincode}"
+											oninvalid="setCustomValidity('Please enter Pincode')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+									<div class="col-md-2">Kilometer</div>
+									<div class="col-md-4">
+										<input type="text" id="km" name="km" class="form-control"
+											style="width: 100%;" value="${editCust.km}"
+											oninvalid="setCustomValidity('Please enter Kilometer')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+
 								</div>
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Contact Person Name*</div>
+									<div class="col-md-2">Contact Person Name</div>
 									<div class="col-md-4">
 										<input type="text" id="cont_per_name" name="cont_per_name"
 											value="${editCust.contactPerName}" class="form-control"
-											style="width: 100%;"
+											style="width: 100%;" pattern="^[A-Za-z\s]+$"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Mobile No*</div>
+									<div class="col-md-2">Mobile No</div>
 
 									<div class="col-md-4">
 										<input type="text" id="con_per_mob" name="con_per_mob"
 											value="${editCust.custMobNo}" style="width: 100%;"
 											class="form-control"
 											oninvalid="setCustomValidity('Please enter mob no')"
-											maxlength="10" pattern="[0-9]{10}"
+											maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -340,19 +406,19 @@
 								</div>
 
 								<div class="row">
-									<div class="col-md-2">Telephone No*</div>
+									<div class="col-md-2">Telephone No</div>
 									<div class="col-md-4">
 										<input type="text" id="tel_no" name="tel_no"
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter tel no')"
-											maxlength="10" pattern="[0-9]+"
+											maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"
 											value="${editCust.custLandline}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
 									</div>
 
-									<div class="col-md-2">Vendor Code*</div>
+									<div class="col-md-2">Vendor Code</div>
 									<div class="col-md-4">
 										<input type="text" id="cust_vendor" name="cust_vendor"
 											style="width: 100%;" class="form-control"
@@ -367,16 +433,16 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Owner Name*</div>
+									<div class="col-md-2">Owner Name</div>
 									<div class="col-md-4">
 										<input type="text" id="ownerName" name="ownerName"
-											class="form-control" style="width: 100%;"
-											value="${editCust.ownerName}"
+											autocomplete="off" class="form-control" style="width: 100%;"
+											value="${editCust.ownerName}" pattern="^[A-Za-z\s]+$"
 											oninvalid="setCustomValidity('Please enter owner name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Is same State?*</div>
+									<div class="col-md-2">Is same State?</div>
 
 									<c:choose>
 										<c:when test="${editCust.isSameState==0}">
@@ -411,81 +477,38 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Accountant Name*</div>
+									<div class="col-md-2">Accountant Name</div>
 									<div class="col-md-4">
 										<input type="text" id="accPerson" name="accPerson"
-											value="${editCust.accPerson}" class="form-control"
-											style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter Account name')"
+											autocomplete="off" value="${editCust.accPerson}"
+											class="form-control" style="width: 100%;"
+											pattern="^[A-Za-z\s]+$"
+											oninvalid="setCustomValidity('Please enter accountant name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
-									<div class="col-md-2">Accountant Mob. No*</div>
+									<div class="col-md-2">Accountant Mob. No</div>
 									<div class="col-md-4">
 										<input type="text" id="accPerMob" name="accPerMob"
 											value="${editCust.accPerMob}" class="form-control"
-											style="width: 100%;"
+											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Mobile no')"
-											pattern="[0-9]{10}"
+											pattern="^[1-9]{1}[0-9]{9}$" maxlength="10"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
 								</div>
-
 								<div class="form-group"></div>
-
-								<div class="row">
-
-									<div class="col-md-2">Pincode No*</div>
-									<div class="col-md-4">
-										<input type="text" id="pincode" name="pincode"
-											class="form-control" style="width: 100%;"
-											value="${editCust.pincode}"
-											oninvalid="setCustomValidity('Please enter Pincode')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-									</div>
-									<div class="col-md-2">Kilometer*</div>
-									<div class="col-md-4">
-										<input type="text" id="km" name="km" class="form-control"
-											style="width: 100%;" value="${editCust.km}"
-											oninvalid="setCustomValidity('Please enter Kilometer')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-									</div>
-
-								</div>
-
-
-								<div class="form-group"></div>
-
-								<div class="row">
-
-									<div class="col-md-2">Credit Limit*</div>
-									<div class="col-md-4">
-										<input type="text" id="creaditLimit" name="creaditLimit"
-											class="form-control" style="width: 100%;"
-											value="${editCust.creaditLimit}"
-											oninvalid="setCustomValidity('Please enter creaditLimit')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-									</div>
-									<div class="col-md-2">Credit Days*</div>
-									<div class="col-md-4">
-										<input type="text" id="creaditDays" name="creaditDays"
-											class="form-control" style="width: 100%;"
-											value="${editCust.creaditDays}"
-											oninvalid="setCustomValidity('Please enter creaditDays')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-									</div>
-
-								</div>
-
-
-
-								<div class="form-group"></div>
-								<div class="col-lg-12" align="center">
-
-
+								<div class="col-lg-3"></div>
+								<div class="col-lg-3">
 									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
+										style="align-content: center; width: 113px; margin-left: 40px;">
 										Submit</button>
+								</div>
+
+								<div class="col-lg-3">
+									<button type="reset" class="btn btn-primary"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+										Clear</button>
 								</div>
 							</form>
 						</div>
@@ -583,6 +606,14 @@
 			});
 
 		});
+	</script>
+
+	<script>
+		function upperCaseF(a) {
+			setTimeout(function() {
+				a.value = a.value.toUpperCase();
+			}, 1);
+		}
 	</script>
 
 </body>
