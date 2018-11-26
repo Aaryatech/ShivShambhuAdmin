@@ -143,7 +143,7 @@
 										varStatus="count">
 										<tr>
 
-											<td style="text-align: center">${count.index+1}</td>
+											<td style="text-align: center; width: 5%;">${count.index+1}</td>
 
 
 											<td style="text-align: left"><c:out
@@ -151,7 +151,7 @@
 
 
 
-											<td style="text-align: center"><a
+											<td style="text-align: center; width: 5%;"><a
 												href="${pageContext.request.contextPath}/editCustType/${custType.custTypeId}"><i
 													class="fa fa-edit"></i> <span class="text-muted"></span></a>
 												&nbsp; <a

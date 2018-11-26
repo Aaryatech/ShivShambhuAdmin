@@ -175,7 +175,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="pan_no" name="pan_no"
-											class="form-control" style="width: 100%;">
+											class="form-control" style="width: 100%;">vali
 									</div>
 
 									<div class="col-md-2">GST No*</div>

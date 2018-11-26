@@ -96,9 +96,9 @@
 								<thead>
 									<tr>
 
-										<th style="text-align: center">Sr</th>
+										<th style="text-align: center; width: 5%;">Sr</th>
 										<th style="text-align: center">Project Name</th>
-										<th style="text-align: center">Cust Name</th>
+										<th style="text-align: center">Customer Name</th>
 										<th style="text-align: center">Plant Name</th>
 
 

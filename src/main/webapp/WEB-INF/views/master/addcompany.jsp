@@ -265,12 +265,16 @@
 									</div>
 								</div>
 								<div class="form-group"></div>
-								<div class="col-lg-12" align="center">
-
-
+								<div class="col-lg-4"></div>
+								<div class="col-lg-3">
 									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
+										style="align-content: center; width: 113px; margin-left: 40px;">
 										Submit</button>
+								</div>
+								<div class="col-lg-3">
+									<button type="reset" class="btn btn-primary"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+										Clear</button>
 								</div>
 							</form>
 						</div>
