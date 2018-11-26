@@ -186,8 +186,8 @@ body {
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<strong>${title}</strong> Quotation No : <strong>${quotHeader.quotNo}</strong>
-							Date : <strong>${quotHeader.quotDate}</strong>
+							<div class="col-md-2"><strong>${title}</strong></div><div class="col-md-2"></div> <div class="col-md-3"> Quotation No : <strong>${quotHeader.quotNo}</strong></div><div class="col-md-1"></div>
+							<div class="col-md-2">Date : <strong>${quotHeader.quotDate}</strong></div>
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/updateQuotation"
@@ -195,7 +195,7 @@ body {
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+									<div class="col-md-2">Plant</div>
 
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
@@ -235,7 +235,7 @@ body {
 								<input type="hidden" name="item_id" id="item_id" value="0">
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Project</div>
+									<div class="col-md-2">Select Project</div>
 									<div class="col-md-4">
 										<select id="proj_id" name="proj_id" class="standardSelect"
 											tabindex="1" required
@@ -257,14 +257,14 @@ body {
 
 										</select>
 									</div>
-									<div class="col-md-2">Payment Term</div>
+									<div class="col-md-2">Select Payment Term</div>
 
 									<div class="col-md-4">
 										<select id="pay_term_id" name="pay_term_id"
 											class="standardSelect" tabindex="1" required
 											oninvalid="setCustomValidity('Please select payment term')"
 											onchange="setData()">
-											<option value="">Select Pay Term</option>
+											<option value="-1">Select Payment Term</option>
 
 											<c:forEach items="${payTermList}" var="pTerm">
 											<c:choose>
@@ -291,7 +291,7 @@ body {
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Quotation Term</div>
+									<div class="col-md-2">Select Quotation Term</div>
 
 									<div class="col-md-4">
 										<select id="quot_doc_term_id" name="quot_doc_term_id"
@@ -314,7 +314,7 @@ body {
 									</div>
 
 
-									<div class="col-md-2">Transport Term</div>
+									<div class="col-md-2">Enter Transport Terms</div>
 
 									<div class="col-md-4">
 										<textarea id="trans_term" name="trans_term"
@@ -330,7 +330,7 @@ body {
 										      
 					<div class="modal-content" style="color: black;">
 						<span class="close" id="close">&times;</span>
-						<h5 style="text-align: left;">Quotation Term Description</h5>
+						<h5 style="text-align: left;">Quotation Terms And Conditions</h5>
 							<div class=" box-content">
 						
 								<div style="overflow:scroll;height:50%;width:50%;overflow:auto" >
@@ -338,7 +338,7 @@ body {
 										style="width: 100%" id="table_grid1">
 										<thead>
 											<tr>
-										<th class="col-md-10">TermDesc </th>
+										<th class="col-md-10">Terms And Condition</th>
 									</tr>
 										</thead>
 										<tbody>
@@ -399,14 +399,14 @@ body {
 								<div class="row">
 									<div class="col-md-2">No of KM</div>
 									<div class="col-md-4">
-										<input type="text" id="no_of_km" name="no_of_km"
+										<input type="text" id="no_of_km" name="no_of_km" min="0" onkeypress="return allowOnlyNumber(event);"
 											onchange="calcAll()" class="form-control" value="${quotHeader.noOfKm}"
 											style="width: 100%;">
 									</div>
 									<div class="col-md-2">Toll Amount</div>
 									<div class="col-md-4">
-										<input type="text" id="toll_amt" name="toll_amt" value="${quotHeader.tollCost}"
-											onchange="calcAll()" class="form-control">
+										<input type="text" id="toll_amt" min="0" name="toll_amt" value="${quotHeader.tollCost}"
+											onchange="calcAll()" class="form-control" onkeypress="return allowOnlyNumber(event);">
 									</div>
 								</div>
 
@@ -426,14 +426,14 @@ body {
 
 									<div class="col-md-2">Other Cost</div>
 									<div class="col-md-4">
-										<input type="text" onchange="calcAll()" id="other_cost" value="${quotHeader.otherCost}"
+										<input type="text" onchange="calcAll()" onkeypress="return allowOnlyNumber(event);" min="0" id="other_cost" value="${quotHeader.otherCost}"
 											name="other_cost" class="form-control" style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">No of Tolls</div>
 									<div class="col-md-4">
-										<input type="text" id="no_of_tolls" name="no_of_tolls" value="${quotHeader.noOfTolls}"
-											class="form-control" style="width: 100%;">
+										<input type="text" id="no_of_tolls" min="0" name="no_of_tolls" value="${quotHeader.noOfTolls}"
+											class="form-control" style="width: 100%;" onkeypress="return allowOnlyNumber(event);">
 									</div>
 
 								</div>
@@ -443,7 +443,7 @@ body {
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">is Tax Included</div>
+									<div class="col-md-2">Is Tax Included</div>
 									
 									<c:choose>
 									<c:when test="${quotHeader.taxValue==0}">
@@ -539,13 +539,13 @@ body {
 
 													<td class="col-md-1" style="text-align: left"><input type="text"
 														id="quot_qty${item.itemId}" name="quot_qty${item.itemId}"
-														value="${qty}" class="form-control"></td>
+														value="${qty}" onkeypress="return allowOnlyNumber(event);" class="form-control"></td>
 
 													<td class="col-md-1" style="text-align: left"><c:out value="${item.uomName}" /></td>
 
 
 													<td class="col-md-1" style="text-align: center"><input type="text"
-														id="trans_cost${item.itemId}" value="${item.transCost}"
+														id="trans_cost${item.itemId}" value="${item.transCost}" min="0" onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														name="trans_cost${item.itemId}" class="form-control"></td>
 
@@ -553,9 +553,9 @@ body {
 														id="toll_cost${item.itemId}" readonly value="${quotHeader.tollCost}"
 														name="toll_cost${item.itemId}" class="form-control"></td>
 
-													<td class="col-md-1" style="text-align: center"><input type="text" 
+													<td class="col-md-1" style="text-align: center"><input type="text" min="0"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
-														id="other_cost${item.itemId}"  value="${item.otherCost}"
+														id="other_cost${item.itemId}"  value="${item.otherCost}" onkeypress="return allowOnlyNumber(event);"
 														name="other_cost${item.itemId}" class="form-control"></td>
 													<!-- 
 													<td style="text-align: center"><input type="text"
@@ -583,9 +583,9 @@ body {
 														name="tax_amt${item.itemId}" class="form-control"></td>
 
 
-													<td class="col-md-1" style="text-align: center"><input type="text"
+													<td class="col-md-1" style="text-align: center"><input type="text" min="0"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
-														id="oth_cost_aft_tax${item.itemId}"  value="${item.otherCostAfterTax}"
+														id="oth_cost_aft_tax${item.itemId}"  value="${item.otherCostAfterTax}" onkeypress="return allowOnlyNumber(event);"
 														name="oth_cost_aft_tax${item.itemId}" class="form-control"></td>
 
 													<td class="col-md-1" style="text-align: right"><input type="text"
@@ -847,6 +847,24 @@ var termTitle=data.termTitle
 			 else if(km==null || km==""){
 			 valid=false;
  			}
+			 
+			 
+			 if(otherCostHeader<0){
+				 valid=false;
+				 alert("Please enter valid other cost");
+			 }
+			 else if(tollCost<0){
+				 valid=false;
+				 alert("Please enter valid toll cost");
+
+			 }
+			 else if(km<0){
+			 valid=false;
+			 alert("Please enter valid kilometer");
+
+ 			}
+			 
+			 
 	//alert("Valid " +valid);
 			 if(valid==true){
 
@@ -931,8 +949,24 @@ var termTitle=data.termTitle
 	var transCost =document.getElementById("trans_cost"+itemId).value;
 	var otherCost= document.getElementById("other_cost"+itemId).value;
 	
+	 if(otherCost<0){
+		 valid=false;
+		 alert("Please enter valid other cost");
+	 }
+	 else if(tollCost<0){
+		 valid=false;
+		 alert("Please enter valid toll cost");
+
+	 }
+	 else if(transCost<0){
+	 valid=false;
+	 alert("Please enter valid transport cost");
+
+		}
+	 
+	
 	var otherCostAfterTax= document.getElementById("oth_cost_aft_tax"+itemId).value;
-	 if(otherCostAfterTax==null || otherCostAfterTax==""){
+	 if(otherCostAfterTax==null || otherCostAfterTax=="" || otherCostAfterTax<0){
 		 otherCostAfterTax=0;
 	 }
 	
@@ -947,6 +981,8 @@ var termTitle=data.termTitle
 	 if(transCost==null || transCost==""){
 		 transCost=0;
 	 }
+	 
+	 if(valid==true){
 	
 	var taxableAmt=parseFloat(itemRate)+parseFloat(tollCost)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
 	
@@ -957,6 +993,8 @@ var termTitle=data.termTitle
 	document.getElementById("tax_amt"+itemId).value=taxAmt;
 	 var finalAmt=parseFloat(taxableAmt)+parseFloat(taxAmt)+parseFloat(otherCostAfterTax);
 	 document.getElementById("final_amt"+itemId).value=finalAmt;
+	 
+	 }
 	 
 }
 
@@ -989,22 +1027,65 @@ var termTitle=data.termTitle
 	            break;
 	        }
 	    }
-	    
-	    var quotTerm=document.getElementById("quot_doc_term_id");
-	    if(quotTerm<0 || quotTerm=="" || quotTerm==null){
+	   // alert("Okay " +okay);
+
+	    var quotTerm=document.getElementById("quot_doc_term_id").value;
+	    var payTerm=document.getElementById("pay_term_id").value;
+	    if(okay==false){
+	    	
+	    	alert("please check a checkbox ");
+	    }
+	    else  if(quotTerm<0 || quotTerm=="" || quotTerm==null){
+
 	    	okay=false;
+
 	    	alert("please select quotation term ");
+	    }
+	    else if(payTerm<0 || payTerm=="" || payTerm==null){
+	    	okay=false;
+
+		   // alert("Okay in pay term " +okay);
+
+	    	alert("please select payment term ");
 	    	
 	    }
-	    if(okay){
-	    	
+	    else if(okay){
+		   // alert("Okay on submit" +okay);
+
 	    	var form=document.getElementById("updateQuotation");
-	    	
 	    	form.submit();
 	    }
-	    else alert("Please check a checkbox");
+	   
 	}
 	
+	
+	function allowOnlyNumber(evt){
+	    var charCode = (evt.which) ? evt.which : event.keyCode
+	    if (charCode == 46){
+	        var inputValue = $("#floor").val();
+	        var count = (inputValue.match(/'.'/g) || []).length;
+	        
+	        if(count<1){
+	            if (inputValue.indexOf('.') < 1){
+	                return true;
+	            }
+	            return false;
+	        }else{
+	            return false;
+	        }
+	    }
+	    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+	        return false;
+	    }
+	    return true;
+	}
+	/* function allowOnlyNumber1(evt)
+	{
+	  var charCode = (evt.which) ? evt.which : event.keyCode
+	  if (charCode > 31 && charCode==46 && (charCode < 48 || charCode > 57))
+		  	    return false;
+	  return true;
+	} */
 	</script>
 	<!-- <script type="text/javascript">
 		function getData() {
