@@ -97,8 +97,9 @@
 									<div class="col-md-2">Vendor Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendCompName" name="vendCompName"
-											class="form-control" required style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter vendor Name')"
+											autocomplete="off" class="form-control" required
+											style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter correct vendor Name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											maxlength="25" pattern="^[A-Za-z\s]+$"
 											value="${editVend.vendCompName}">
@@ -107,7 +108,7 @@
 									<div class="col-md-2">Contact Name(Optional)</div>
 									<div class="col-md-4">
 										<input type="text" id="vendContactName" name="vendContactName"
-											class="form-control" style="width: 100%;"
+											class="form-control" style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct vend Contact Name')"
 											value="${editVend.vendContactName}" pattern="^[A-Za-z\s]+$"
 											onchange="try{setCustomValidity('')}catch(e){}">
@@ -122,6 +123,7 @@
 									<div class="col-md-4">
 										<input type="text" id="vendContact1" name="vendContact1"
 											required style="width: 100%;" class="form-control"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" value="${editVend.vendContact1}"
 											pattern="^[1-9]{1}[0-9]{9}$"
@@ -133,7 +135,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="vendContact2" name="vendContact2"
-											style="width: 100%;" class="form-control"
+											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct tel no')"
 											maxlength="10" value="${editVend.vendContact2}"
 											pattern="^[1-9]{1}[0-9]{9}$"
@@ -149,7 +151,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="vendEmail1" name="vendEmail1"
-											style="width: 100%;" class="form-control"
+											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct email')"
 											maxlength="50" value="${editVend.vendEmail1}"
 											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
@@ -186,7 +188,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="vendGst" name="vendGst"
-											value="${editVend.vendGst}"
+											value="${editVend.vendGst}" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter GST no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;"
@@ -197,8 +199,8 @@
 									<div class="col-md-2">PAN No*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendPan" name="vendPan"
-											value="${editVend.vendPan}" class="form-control"
-											maxlength="10" style="width: 100%;"
+											autocomplete="off" value="${editVend.vendPan}"
+											class="form-control" maxlength="10" style="width: 100%;"
 											pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
 											onkeydown="upperCaseF(this)"
 											oninvalid="setCustomValidity('Please enter correct pan no')"
@@ -214,7 +216,7 @@
 									<div class="col-md-2">State*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendState" name="vendState"
-											style="width: 100%;" class="form-control"
+											autocomplete="off" style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct State')"
 											value="${editVend.vendState}" maxlength="25"
 											pattern="^[A-Za-z\s]+$"
@@ -226,7 +228,7 @@
 									<div class="col-md-2">City*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendCity" name="vendCity"
-											style="width: 100%;" class="form-control"
+											autocomplete="off" style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct City')"
 											value="${editVend.vendCity}" maxlength="25"
 											pattern="^[A-Za-z\s]+$" required
@@ -243,7 +245,7 @@
 									<div class="col-md-2">Vendor Credit Limit*</div>
 									<div class="col-md-4">
 										<input type="text" id="vendCreditLimit" name="vendCreditLimit"
-											class="form-control" style="width: 100%;"
+											class="form-control" style="width: 100%;" autocomplete="off"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											value="${editVend.vendCreditLimit}"
 											oninvalid="setCustomValidity('Please enter correct vend Credit Limit')"
@@ -253,7 +255,8 @@
 									<div class="col-md-4">
 										<input type="text" id="vendCreditDays" name="vendCreditDays"
 											class="form-control" style="width: 100%;" maxlength="10"
-											pattern="[0-9]+" value="${editVend.vendCreditDays}"
+											autocomplete="off" pattern="[0-9]+"
+											value="${editVend.vendCreditDays}"
 											oninvalid="setCustomValidity('Please enter correct creadit Days')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>

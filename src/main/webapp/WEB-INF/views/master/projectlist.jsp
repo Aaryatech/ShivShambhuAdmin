@@ -97,11 +97,13 @@
 									<tr>
 
 										<th style="text-align: center; width: 5%;">Sr</th>
-										<th style="text-align: center">Project Name</th>
-										<th style="text-align: center">Customer Name</th>
 										<th style="text-align: center">Plant Name</th>
+										<th style="text-align: center">Customer Name</th>
+										<th style="text-align: center">Project Name</th>
+										<th style="text-align: center">Contact Person Name</th>
+										<th style="text-align: center">Mobile No.</th>
 
-
+										<th style="text-align: center">Location</th>
 										<th style="text-align: center; width: 5%;">Action</th>
 
 									</tr>
@@ -113,15 +115,24 @@
 											<td style="text-align: center">${count.index+1}</td>
 
 											<td style="text-align: left"><c:out
-													value="${pro.projName}" /></td>
+													value="${pro.plantName}" /></td>
 
 											<td style="text-align: left"><c:out
 													value="${pro.custName}" /></td>
 
+
 											<td style="text-align: left"><c:out
-													value="${pro.plantName}" /></td>
+													value="${pro.projName}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${pro.contactPerName}" /></td>
 
 
+											<td style="text-align: left"><c:out
+													value="${pro.contactPerMob}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${pro.location}" /></td>
 
 											<td style="text-align: center"><a
 												href="${pageContext.request.contextPath}/editProject/${pro.projId}"><i

@@ -210,28 +210,6 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-
-									<div class="col-md-2">Pincode No*</div>
-									<div class="col-md-4">
-										<input type="text" id="pincode" name="pincode"
-											autocomplete="off" class="form-control" style="width: 100%;"
-											maxlength="10" value="${editPro.pincode}"
-											pattern="^[1-9][0-9]{6}*$"
-											oninvalid="setCustomValidity('Please enter correct Pincode')"
-											onchange="try{setCustomValidity('')}catch(e){}" required>
-									</div>
-									<div class="col-md-2">Kilometer*</div>
-									<div class="col-md-4">
-										<input type="text" id="km" name="km" class="form-control"
-											style="width: 100%;" value="${editPro.km}" maxlength="10"
-											oninvalid="setCustomValidity('Please enter correct kilometer')"
-											onchange="try{setCustomValidity('')}catch(e){}" required>
-									</div>
-
-								</div>
-								<div class="form-group"></div>
-								<div class="row">
-
 									<div class="col-md-2">Address*</div>
 
 									<div class="col-md-4">
@@ -241,6 +219,31 @@
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">${editPro.address}</textarea>
 									</div>
+
+									<div class="col-md-2">PIN Code No*</div>
+									<div class="col-md-4">
+										<input type="text" id="pincode" name="pincode" maxlength="6"
+											autocomplete="off" class="form-control" style="width: 100%;"
+											value="${editPro.pincode}" pattern="[0-9]+"
+											oninvalid="setCustomValidity('Please enter correct Pincode')"
+											onchange="try{setCustomValidity('')}catch(e){}" required>
+									</div>
+
+								</div>
+								<div class="form-group"></div>
+								<div class="row">
+
+
+									<div class="col-md-2">Kilometer*</div>
+									<div class="col-md-4">
+										<input type="text" id="km" name="km" class="form-control"
+											pattern="[0-9]+" style="width: 100%;" value="${editPro.km}"
+											maxlength="10"
+											oninvalid="setCustomValidity('Please enter correct kilometer')"
+											onchange="try{setCustomValidity('')}catch(e){}" required>
+									</div>
+
+
 									<div class="col-lg-2"></div>
 									<div class="col-lg-2">
 										<button type="submit" class="btn btn-primary"

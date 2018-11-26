@@ -127,7 +127,8 @@
 									<div class="col-md-2">Customer Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="cust_name" name="cust_name"
-											class="form-control" required style="width: 100%;"
+											pattern="^[A-Za-z\s]+$" class="form-control" required
+											style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -137,9 +138,9 @@
 									<div class="col-md-4">
 										<input type="text" id="mob_no" name="mob_no" required
 											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter mob no')"
+											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" value="${editComp.contactNo1}"
-											pattern="[0-9]{10}"
+											pattern="^[1-9]{1}[0-9]{9}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -151,7 +152,8 @@
 									<div class="col-md-2">Reference Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="ref_name" name="ref_name"
-											class="form-control" style="width: 100%;">
+											pattern="^[A-Za-z\s]+$" class="form-control"
+											style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">Email*</div>
@@ -160,8 +162,8 @@
 										<input type="text" id="email" name="email"
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter email')"
-											maxlength="50" value="${editComp.email1}"
 											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+											maxlength="50"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -175,14 +177,18 @@
 
 									<div class="col-md-4">
 										<input type="text" id="pan_no" name="pan_no"
-											class="form-control" style="width: 100%;">vali
+											pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
+											onkeydown="upperCaseF(this)" class="form-control"
+											style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">GST No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="gst_no" name="gst_no"
-											class="form-control" style="width: 100%;">
+											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
+											onkeydown="upperCaseF(this)" class="form-control"
+											style="width: 100%;">
 									</div>
 
 								</div>
@@ -195,7 +201,7 @@
 										<select id="cust_cate" name="cust_cate" class="standardSelect"
 											tabindex="1"
 											oninvalid="setCustomValidity('Please enter customer category')"
-											onchange="try{setCustomValidity('')}catch(e){}">
+											onchange="try{setCustomValidity('')}catch(e){}" required>
 											<option value="">Select</option>
 											<c:forEach items="${settingList}" var="custCate">
 												<option value="${custCate.settingId}">${custCate.settingValue}</option>
@@ -277,7 +283,7 @@
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter mob no')"
 											maxlength="10" value="${editComp.contactNo1}"
-											pattern="[0-9]{10}"
+											pattern="^[1-9]{1}[0-9]{9}$"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -290,7 +296,7 @@
 										<input type="text" id="tel_no" name="tel_no"
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter tel no')"
-											maxlength="10" pattern="[0-9]+"
+											maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"
 											value="${editComp.contactNo2}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -302,7 +308,6 @@
 										<input type="text" id="cust_vendor" name="cust_vendor"
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter vendor')"
-											value="${editComp.contactNo1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -337,20 +342,20 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Account Person Name*</div>
+									<div class="col-md-2">Accountant Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="accPerson" name="accPerson"
 											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter Account name')"
-											onchange="try{setCustomValidity('')}catch(e){}" >
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
-									<div class="col-md-2">Account Mobile No*</div>
+									<div class="col-md-2">Accountant Mobile No*</div>
 									<div class="col-md-4">
 										<input type="text" id="accPerMob" name="accPerMob"
 											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter Mobile no')"
-											pattern="[0-9]{10}" onchange="checkMobileNo()"
-											onchange="try{setCustomValidity('')}catch(e){}" >
+											pattern="^[1-9]{1}[0-9]{9}$" onchange="checkMobileNo()"
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
 								</div>
@@ -386,7 +391,7 @@
 										<input type="text" id="creaditLimit" name="creaditLimit"
 											class="form-control" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter creaditLimit')"
-											onchange="try{setCustomValidity('')}catch(e){}" >
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 									<div class="col-md-2">Credit Days*</div>
 									<div class="col-md-4">
@@ -395,26 +400,25 @@
 											oninvalid="setCustomValidity('Please enter creaditDays')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
-
 								</div>
-
-
-
 								<div class="form-group"></div>
-								<div class="col-lg-12" align="center">
-
-
+								<div class="col-lg-4"></div>
+								<div class="col-lg-3">
 									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
+										style="align-content: center; width: 113px; margin-left: 40px;">
 										Submit</button>
 								</div>
+								<div class="col-lg-3">
+									<button type="reset" class="btn btn-primary"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+										Clear</button>
+								</div>
+
 							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-
-
 		</div>
 		<!-- .animated -->
 	</div>
@@ -505,6 +509,14 @@
 			});
 
 		});
+	</script>
+
+	<script>
+		function upperCaseF(a) {
+			setTimeout(function() {
+				a.value = a.value.toUpperCase();
+			}, 1);
+		}
 	</script>
 
 </body>
