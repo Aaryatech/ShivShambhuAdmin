@@ -255,7 +255,7 @@ public class QuotController {
 			int payTermId = Integer.parseInt(request.getParameter("pay_term_id"));
 			String transportTerms = request.getParameter("trans_term");
 			String otherRemark1 = request.getParameter("quot_remark");
-			int projId = Integer.parseInt(request.getParameter("proj_id"));
+		  	int projId = Integer.parseInt(request.getParameter("proj_id"));
 
 			int noOfTolls = Integer.parseInt(request.getParameter("no_of_tolls"));
 			Float tollCost = Float.parseFloat(request.getParameter("toll_amt"));
