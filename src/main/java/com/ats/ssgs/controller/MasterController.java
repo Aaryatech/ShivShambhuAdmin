@@ -1402,7 +1402,7 @@ public class MasterController {
 			System.err.println("item Name " + itemName);
 
 			String itemCode = request.getParameter("item_code");
-//
+
 			int uomId = Integer.parseInt(request.getParameter("uomId"));
 
 			int taxId = Integer.parseInt(request.getParameter("taxId"));
@@ -1431,7 +1431,7 @@ public class MasterController {
 
 			int isCritItem = Integer.parseInt(request.getParameter("is_crit"));
 
-			int sortNo = Integer.parseInt(request.getParameter("sort_no"));
+			// int sortNo = Integer.parseInt(request.getParameter("sort_no"));
 
 			Item item = new Item();
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -1483,7 +1483,7 @@ public class MasterController {
 			item.setPlantRolStock(Float.parseFloat(prolStock));
 			item.setRolStock(Float.parseFloat(rolStock));
 			item.setShortName(shortName);
-			item.setSortNo(sortNo);
+
 			item.setTaxId(taxId);
 			item.setUomId(uomId);
 			item.setVendorIds(vendors);
@@ -1492,11 +1492,19 @@ public class MasterController {
 			item.setExVar2("NA");
 			item.setExVar3("NA");
 			item.setLength(0);
+
 			item.setWidth(0);
 			item.setHeight(0);
 			item.setItemLocation("NA");
 			item.setFreightRate(Float.parseFloat(freightRate));
 			item.setRoyaltyRate(Float.parseFloat(royaltyRate));
+
+			try {
+				item.setSortNo(Integer.parseInt(request.getParameter("sort_no")));
+
+			} catch (Exception e) {
+				item.setSortNo(0);
+			}
 
 			Item itemInsertRes = rest.postForObject(Constants.url + "saveItem", item, Item.class);
 
