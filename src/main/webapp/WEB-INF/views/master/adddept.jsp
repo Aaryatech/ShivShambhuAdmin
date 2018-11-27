@@ -153,7 +153,7 @@
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
 												type="checkbox" name="selAll" id="selAll"
-												onchange="deleteRecord()" /> Select All</th>
+												 />All</th>
 											<th style="text-align: center; width: 5%;">Sr No</th>
 											<th style="text-align: center">Department Name</th>
 											<th style="text-align: center">Sort No</th>
@@ -165,7 +165,7 @@
 									<tbody>
 										<c:forEach items="${deptList}" var="dept" varStatus="count">
 											<tr>
-												<td><input type="checkbox" name="deptIds" id="deptIds"
+												<td><input type="checkbox" class="chk" name="deptIds" id="deptIds${count.index+1}"
 													value="${dept.deptId}" /></td>
 												<td style="text-align: center">${count.index+1}</td>
 
@@ -191,11 +191,12 @@
 
 								</table>
 
-								<div class="col-lg-12" align="center">
+								<div class="col-lg-1" >
 
 									<input type="submit" class="btn btn-primary" value="Delete"
-										style="display: none;" id="deleteId"
-										onClick="return confirm('Are you sure want to delete record');"
+										 id="deleteId"
+										
+onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
 
@@ -311,28 +312,6 @@
 											});
 						});
 	</script>
-	<script type="text/javascript">
-		function deleteRecord() {
-			alert("hii");
-			$('#deleteId').show();
 
-			var deptIds = document.getElementById("deptIds").value;
-
-			var valid = true;
-
-			if (deptIds == null || deptIds == "") {
-				valid = false;
-				alert("Please Select checkbox");
-			}
-
-			if (valid == true) {
-				$('#deleteId').show();
-
-			} else {
-				$('#deleteId').hide();
-
-			}
-		}
-	</script>
 </body>
 </html>
