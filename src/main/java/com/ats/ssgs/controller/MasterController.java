@@ -2101,4 +2101,34 @@ public class MasterController {
 
 	}
 
+	@RequestMapping(value = "/deleteRecordofDept", method = RequestMethod.POST)
+	public String deleteRecordofDept(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] deptIds = request.getParameterValues("deptIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < deptIds.length; i++) {
+				sb = sb.append(deptIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("deptIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiDept", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofDept @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showAddDept";
+	}
+
 }

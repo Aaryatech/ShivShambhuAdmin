@@ -9,15 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
-<c:url var="getItemsByPlantId" value="/getItemsByPlantId" />
+<c:url var="deleteRecordofDept" value="/deleteRecordofDept" />
 
-<c:url var="getCustByPlantId" value="/getCustByPlantId" />
 
-<c:url var="getItemByItemId" value="/getItemByItemId" />
 
-<c:url var="addDocTermDetail" value="/addDocTermDetail" />
 
-<c:url var="getDocTermForEdit" value="/getDocTermForEdit" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -95,7 +91,7 @@
 
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertDept"
-								method="post">
+								id="submitForm" method="post">
 
 
 
@@ -132,64 +128,81 @@
 								<div class="col-lg-4"></div>
 								<div class="col-lg-2">
 
-									<button type="submit" class="btn btn-primary"
+									<input type="submit" class="btn btn-primary" value="Submit"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Submit</button>
+
 								</div>
 
 								<div class="col-lg-2">
-									<button type="reset" class="btn btn-primary"
+									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Clear</button>
+
 								</div>
 							</form>
 						</div>
 
 						<div class="card-body card-block">
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofDept"
+								method="post">
 
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
 
-										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Department Name</th>
-										<th style="text-align: center">Sort No</th>
-
-										<th style="text-align: center; width: 5%;">Action</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${deptList}" var="dept" varStatus="count">
+									<thead>
 										<tr>
+											<th class="check" style="text-align: center; width: 5%;"><input
+												type="checkbox" name="selAll" id="selAll" /> All</th>
+											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center">Department Name</th>
+											<th style="text-align: center">Sort No</th>
 
-											<td style="text-align: center">${count.index+1}</td>
-
-
-											<td style="text-align: left"><c:out
-													value="${dept.deptName}" /></td>
-
-											<td style="text-align: right"><c:out
-													value="${dept.sortNo}" /></td>
-
-
-											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editDept/${dept.deptId}"><i
-													class="fa fa-edit"></i> <span class="text-muted"></span></a>
-												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteDept/${dept.deptId}"
-												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o"></i></a></td>
+											<th style="text-align: center; width: 5%;">Action</th>
 
 										</tr>
-									</c:forEach>
-								</tbody>
+									</thead>
+									<tbody>
+										<c:forEach items="${deptList}" var="dept" varStatus="count">
+											<tr>
+												<td><input type="checkbox" name="deptIds" id="deptIds"
+													value="${dept.deptId}" /></td>
+												<td style="text-align: center">${count.index+1}</td>
 
-							</table>
+
+												<td style="text-align: left"><c:out
+														value="${dept.deptName}" /></td>
+
+												<td style="text-align: right"><c:out
+														value="${dept.sortNo}" /></td>
 
 
+												<td style="text-align: center"><a
+													href="${pageContext.request.contextPath}/editDept/${dept.deptId}"><i
+														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+													&nbsp; <a
+													href="${pageContext.request.contextPath}/deleteDept/${dept.deptId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o"></i></a></td>
+
+											</tr>
+										</c:forEach>
+									</tbody>
+
+								</table>
+
+								<div class="col-lg-12" align="center">
+
+									<input type="submit" class="btn btn-primary" value="Delete"
+										onClick="return confirm('Are you sure want to delete record');"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+
+
+								</div>
+							</form>
 						</div>
+
+
+
 
 					</div>
 				</div>
@@ -269,9 +282,64 @@
 		});
 	</script>
 
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
 
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
 
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
+	</script>
+	<!-- 	<script type="text/javascript">
+		function deleteRecord() {
 
+			var deptIds = document.getElementById("deptIds").value;
+
+			var valid = true;
+
+			if (deptIds == null || deptIds == "") {
+				valid = false;
+				alert("Please Select checkbox");
+			}
+
+			if (valid == true) {
+
+				$.getJSON('${deleteRecordofDept}', {
+					deptIds : deptIds,
+					ajax : 'true',
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					for (var i = 0; i < len; i++) {
+
+					}
+
+				});
+			}//end of if
+
+		}
+	</script> -->
 
 </body>
 </html>
