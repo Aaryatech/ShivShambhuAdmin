@@ -153,8 +153,8 @@
 
 									<div class="col-md-4">
 										<select id="compId" name="compId" class="standardSelect"
-											tabindex="1" required>
-											<option value="">Select</option>
+											tabindex="1" onchange="selectCompany()">
+											<option value="-1">Select Company</option>
 											<c:forEach items="${compList}" var="comp">
 
 												<c:choose>
@@ -799,6 +799,22 @@ if(workType==5	){
 });
 
 </script> -->
+
+
+	<script>
+		function selectCompany() {
+
+			var compId = document.getElementById("compId").value;
+
+			if (compId == -1) {
+
+				alert("Please Select Company");
+			}
+
+		}
+	</script>
+
+
 
 
 
