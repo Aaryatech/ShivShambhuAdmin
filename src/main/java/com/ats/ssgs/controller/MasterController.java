@@ -1095,8 +1095,8 @@ public class MasterController {
 			String accPerson = request.getParameter("accPerson");
 			String accPerMob = request.getParameter("accPerMob");
 
-			int custCate = Integer.parseInt(request.getParameter("cust_cate"));
-			System.err.println("custCate " + custCate);
+			// int custCate = Integer.parseInt(request.getParameter("cust_cate"));
+			// System.err.println("custCate " + custCate);
 			String custAdd = request.getParameter("cust_add");
 
 			String dob = request.getParameter("dob");
@@ -1115,11 +1115,13 @@ public class MasterController {
 
 			int sameState = Integer.parseInt(request.getParameter("state"));
 
-			String creaditDays = request.getParameter("creaditDays");
-
-			String creaditLimit = request.getParameter("creaditLimit");
-
-			String km = request.getParameter("km");
+			/*
+			 * String creaditDays = request.getParameter("creaditDays");
+			 * 
+			 * String creaditLimit = request.getParameter("creaditLimit");
+			 * 
+			 * String km = request.getParameter("km");
+			 */
 			String pincode = request.getParameter("pincode");
 
 			System.err.println("refName Name " + refName);
@@ -1143,7 +1145,6 @@ public class MasterController {
 			cust.setContactPerName(contPerName);
 			cust.setCustAddress(custAdd);
 
-			cust.setCustCat(custCate);
 			cust.setCustCode(custCode);
 			cust.setCustDob(curDate);
 			cust.setCustEmail(email);
@@ -1160,13 +1161,24 @@ public class MasterController {
 			cust.setAccPerMob(accPerMob);
 			cust.setAccPerson(accPerson);
 			cust.setPincode(pincode);
-			cust.setKm(Float.parseFloat(km));
 
-			cust.setCreaditDays(Float.parseFloat(creaditDays));
+			try {
+				cust.setCustCat(Integer.parseInt(request.getParameter("cust_cate")));
+				cust.setKm(Float.parseFloat(request.getParameter("km")));
 
-			cust.setCreaditLimit(Float.parseFloat(creaditLimit));
+				cust.setCreaditDays(Float.parseFloat(request.getParameter("creaditDays")));
 
-			cust.setCustVendor(Integer.parseInt(custVendor));
+				cust.setCreaditLimit(Float.parseFloat(request.getParameter("creaditLimit")));
+
+				cust.setCustVendor(Integer.parseInt(custVendor));
+			} catch (Exception e) {
+
+				cust.setKm(0);
+				cust.setCreaditDays(0);
+				cust.setCreaditLimit(0);
+				cust.setCustVendor(0);
+				cust.setCustCat(0);
+			}
 
 			if (custId == 0) {
 				cust.setDateOfReg(curDate);
@@ -1201,7 +1213,7 @@ public class MasterController {
 			proj.setContactPerMob(mobNo);
 			proj.setContactPerName(custName);
 			proj.setAddress(custAdd);
-			proj.setKm(Float.parseFloat(km));
+			// proj.setKm(Float.parseFloat(km));
 
 			Project projInsertRes = rest.postForObject(Constants.url + "saveProject", proj, Project.class);
 
