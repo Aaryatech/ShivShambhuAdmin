@@ -36,6 +36,7 @@ public class DocTermController {
 	RestTemplate rest = new RestTemplate();
 
 	List<Document> docList;
+	int isError = 0;
 
 	@RequestMapping(value = "/showAddDocTerm", method = RequestMethod.GET)
 	public ModelAndView showAddDocTerm(HttpServletRequest request, HttpServletResponse response) {
@@ -44,6 +45,8 @@ public class DocTermController {
 		try {
 
 			model = new ModelAndView("docterm/adddocterm");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			Document[] docArray = rest.getForObject(Constants.url + "getAllDocList", Document[].class);
 			docList = new ArrayList<Document>(Arrays.asList(docArray));
@@ -182,6 +185,12 @@ public class DocTermController {
 
 			DocTermHeader docInsertRes = rest.postForObject(Constants.url + "saveDocTermHeaderAndDetail", docHead,
 					DocTermHeader.class);
+
+			if (docInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 

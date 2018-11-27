@@ -40,6 +40,7 @@ public class PaymentController {
 	List<GetBankDetail> bankList;
 	List<CustType> custTypeList;
 	List<EnqGenFact> enqGenFactList;
+	int isError = 0;
 
 	@RequestMapping(value = "/showAddEnqGenFact", method = RequestMethod.GET)
 	public ModelAndView showAddEnqGenFact(HttpServletRequest request, HttpServletResponse response) {
@@ -48,6 +49,8 @@ public class PaymentController {
 		try {
 
 			model = new ModelAndView("master/addEnqGenFact");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			EnqGenFact[] custTypeArray = rest.getForObject(Constants.url + "getAllEGFList", EnqGenFact[].class);
 			enqGenFactList = new ArrayList<EnqGenFact>(Arrays.asList(custTypeArray));
@@ -92,6 +95,11 @@ public class PaymentController {
 
 			EnqGenFact enqInsertRes = rest.postForObject(Constants.url + "saveEnqGenFact", enqGenFact,
 					EnqGenFact.class);
+			if (enqInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -205,6 +213,11 @@ public class PaymentController {
 			custType.setDelStatus(1);
 
 			CustType custTermInsertRes = rest.postForObject(Constants.url + "saveCustType", custType, CustType.class);
+			if (custTermInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -276,6 +289,8 @@ public class PaymentController {
 		try {
 
 			model = new ModelAndView("master/addpayterm");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			PaymentTerm[] plantArray = rest.getForObject(Constants.url + "getAllPaymentTermList", PaymentTerm[].class);
 			payTermList = new ArrayList<PaymentTerm>(Arrays.asList(plantArray));
@@ -323,6 +338,12 @@ public class PaymentController {
 
 			PaymentTerm payTermInsertRes = rest.postForObject(Constants.url + "savePaymentTerm", paymentTerm,
 					PaymentTerm.class);
+
+			if (payTermInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -394,6 +415,8 @@ public class PaymentController {
 		try {
 
 			model = new ModelAndView("master/addbankdetail");
+			model.addObject("isError", isError);
+			isError = 0;
 			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
 			compList = new ArrayList<Company>(Arrays.asList(compArray));
 
@@ -460,6 +483,12 @@ public class PaymentController {
 
 			BankDetail bankDetailInsertRes = rest.postForObject(Constants.url + "saveBankDetail", bankDetail,
 					BankDetail.class);
+
+			if (bankDetailInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 

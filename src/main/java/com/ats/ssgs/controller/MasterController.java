@@ -67,6 +67,8 @@ public class MasterController {
 		try {
 
 			model = new ModelAndView("master/addvendor");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -170,6 +172,12 @@ public class MasterController {
 			}
 
 			Vendor vendInsertRes = rest.postForObject(Constants.url + "saveVendor", vend, Vendor.class);
+			if (vendInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
+
 			System.err.println("plantInsertRes " + vendInsertRes.toString());
 
 		} catch (Exception e) {
@@ -270,6 +278,8 @@ public class MasterController {
 			model = new ModelAndView("master/addtax");
 
 			model.addObject("title", "Add Tax");
+			model.addObject("isError", isError);
+			isError = 0;
 
 		} catch (Exception e) {
 
@@ -335,8 +345,13 @@ public class MasterController {
 
 			// saveTax
 
-			Tax plantInsertRes = rest.postForObject(Constants.url + "saveTax", tax, Tax.class);
-			System.err.println("plantInsertRes " + plantInsertRes.toString());
+			Tax taxInsertRes = rest.postForObject(Constants.url + "saveTax", tax, Tax.class);
+
+			if (taxInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 			System.err.println("EXCE in insertPlant " + e.getMessage());
@@ -634,6 +649,8 @@ public class MasterController {
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("master/addcompany");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			model.addObject("title", "Add Company");
 		} catch (Exception e) {
@@ -643,7 +660,6 @@ public class MasterController {
 			e.printStackTrace();
 
 		}
-
 		return model;
 
 	}
@@ -732,7 +748,12 @@ public class MasterController {
 
 			// saveItem
 
-			Company itemInsertRes = rest.postForObject(Constants.url + "saveCompany", comp, Company.class);
+			Company compInsertRes = rest.postForObject(Constants.url + "saveCompany", comp, Company.class);
+			if (compInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -762,6 +783,7 @@ public class MasterController {
 
 			model.addObject("title", "Company List");
 			model.addObject("compList", compList);
+
 		} catch (Exception e) {
 
 			System.err.println("exception In showCompList at Master Contr" + e.getMessage());
@@ -838,6 +860,8 @@ public class MasterController {
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
+			model.addObject("isError", isError);
+			isError = 0;
 
 			/*
 			 * Cust[] custArray = rest.getForObject(Constants.url + "getAllCustList",
@@ -913,6 +937,11 @@ public class MasterController {
 			proj.setPincode(pincode);
 
 			Project projInsertRes = rest.postForObject(Constants.url + "saveProject", proj, Project.class);
+			if (projInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -1019,6 +1048,8 @@ public class MasterController {
 			model = new ModelAndView("master/addcust");
 
 			model.addObject("title", "Add Customer");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -1122,9 +1153,9 @@ public class MasterController {
 			 * 
 			 * String km = request.getParameter("km");
 			 */
-			String pincode = request.getParameter("pincode");
+			// String pincode = request.getParameter("pincode");
 
-			System.err.println("refName Name " + refName);
+			// System.err.println("refName Name " + refName);
 			String dateOfReg = request.getParameter("reg_date");
 
 			if (refName.equals("")) {
@@ -1160,9 +1191,9 @@ public class MasterController {
 			cust.setOwnerName(ownerName);
 			cust.setAccPerMob(accPerMob);
 			cust.setAccPerson(accPerson);
-			cust.setPincode(pincode);
 
 			try {
+				cust.setPincode(request.getParameter("pincode"));
 				cust.setCustCat(Integer.parseInt(request.getParameter("cust_cate")));
 				cust.setKm(Float.parseFloat(request.getParameter("km")));
 
@@ -1172,7 +1203,7 @@ public class MasterController {
 
 				cust.setCustVendor(Integer.parseInt(custVendor));
 			} catch (Exception e) {
-
+				cust.setPincode("NA");
 				cust.setKm(0);
 				cust.setCreaditDays(0);
 				cust.setCreaditLimit(0);
@@ -1200,6 +1231,12 @@ public class MasterController {
 			cust.setIsSameState(sameState);
 
 			Cust custInsertRes = rest.postForObject(Constants.url + "saveCust", cust, Cust.class);
+
+			if (custInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 			Project proj = new Project();
 
@@ -1335,6 +1372,8 @@ public class MasterController {
 			model = new ModelAndView("master/additem");
 
 			model.addObject("title", "Add Item");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -1519,6 +1558,11 @@ public class MasterController {
 			}
 
 			Item itemInsertRes = rest.postForObject(Constants.url + "saveItem", item, Item.class);
+			if (itemInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -1636,6 +1680,8 @@ public class MasterController {
 		try {
 
 			model = new ModelAndView("master/adddept");
+			model.addObject("isError", isError);
+			isError = 0;
 			Dept[] deptArray = rest.getForObject(Constants.url + "getAllDeptList", Dept[].class);
 			deptList = new ArrayList<Dept>(Arrays.asList(deptArray));
 
@@ -1698,6 +1744,11 @@ public class MasterController {
 			}
 
 			Dept deptInsertRes = rest.postForObject(Constants.url + "saveDept", dept, Dept.class);
+			if (deptInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -1767,6 +1818,8 @@ public class MasterController {
 		try {
 
 			model = new ModelAndView("master/adduom");
+			model.addObject("isError", isError);
+			isError = 0;
 			Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
 			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
 
@@ -1830,6 +1883,12 @@ public class MasterController {
 			}
 
 			Uom uomInsertRes = rest.postForObject(Constants.url + "saveUom", uom, Uom.class);
+
+			if (uomInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -1904,7 +1963,8 @@ public class MasterController {
 			 * Plant[].class); plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 			 * model.addObject("plantList", plantList);
 			 */
-
+			model.addObject("isError", isError);
+			isError = 0;
 			Dept[] deptArray = rest.getForObject(Constants.url + "getAllDeptList", Dept[].class);
 			deptList = new ArrayList<Dept>(Arrays.asList(deptArray));
 
@@ -1993,6 +2053,12 @@ public class MasterController {
 			}
 
 			User userInsertRes = rest.postForObject(Constants.url + "saveUser", user, User.class);
+
+			if (userInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -2141,6 +2207,216 @@ public class MasterController {
 		}
 
 		return "redirect:/showAddDept";
+	}
+
+	@RequestMapping(value = "/deleteRecordofCompany", method = RequestMethod.POST)
+	public String deleteRecordofCompany(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] companyIds = request.getParameterValues("companyIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < companyIds.length; i++) {
+				sb = sb.append(companyIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("companyIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiCompany", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofCompany @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showCompList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofPlant", method = RequestMethod.POST)
+	public String deleteRecordofPlant(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] plantIds = request.getParameterValues("plantIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < plantIds.length; i++) {
+				sb = sb.append(plantIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("plantIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiPlant", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofPlant @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showPlantList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofUser", method = RequestMethod.POST)
+	public String deleteRecordofUser(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] userIds = request.getParameterValues("userIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < userIds.length; i++) {
+				sb = sb.append(userIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("userIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiUser", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofUser @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showUserList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofCustType", method = RequestMethod.POST)
+	public String deleteRecordofCustType(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] custTypeIds = request.getParameterValues("custTypeIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < custTypeIds.length; i++) {
+				sb = sb.append(custTypeIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custTypeIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiCustType", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofDept @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showAddCustType";
+	}
+
+	@RequestMapping(value = "/deleteRecordofCust", method = RequestMethod.POST)
+	public String deleteRecordofCust(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] custIds = request.getParameterValues("custIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < custIds.length; i++) {
+				sb = sb.append(custIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiCust", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteMultiCust @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showCustList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofProject", method = RequestMethod.POST)
+	public String deleteRecordofProject(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] projIds = request.getParameterValues("projIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < projIds.length; i++) {
+				sb = sb.append(projIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("projIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiProject", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteMultiCust @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showProjectList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofVendor", method = RequestMethod.POST)
+	public String deleteRecordofVendor(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] vendIds = request.getParameterValues("vendIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < vendIds.length; i++) {
+				sb = sb.append(vendIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("projIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deletemultiVendor", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofVendor @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showVendorList";
 	}
 
 }

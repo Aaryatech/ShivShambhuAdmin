@@ -90,73 +90,82 @@
 						</div>
 						<div class="card-body card-block">
 
-
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
-
-										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">User Name</th>
-
-										<th style="text-align: center">Mobile No</th>
-										<th style="text-align: center">User Email</th>
-										<th style="text-align: center">Dept Name</th>
-										<th style="text-align: center">Plant Name</th>
-
-										<th style="text-align: center">Company Name</th>
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofUser"
+								method="post">
 
 
-
-
-										<th style="text-align: center; width: 5%;">Action</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${userList}" var="user" varStatus="count">
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
 										<tr>
+											<th class="check" style="text-align: center; width: 5%;"><input
+												type="checkbox" name="selAll" id="selAll" /> Select All</th>
 
-											<td style="text-align: center">${count.index+1}</td>
+											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center">User Name</th>
 
-											<td style="text-align: left"><c:out
-													value="${user.usrName}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${user.usrMob}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${user.usrEmail}" /></td>
-
-
-
-
-											<td style="text-align: left"><c:out
-													value="${user.deptName}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${user.plantName}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${user.compName}" /></td>
-
-
-
-
-											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editUser/${user.userId}"><i
-													class="fa fa-edit"></i> <span class="text-muted"></span></a>
-												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteUser/${user.userId}"
-												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o"></i></a></td>
-
+											<th style="text-align: center">Mobile No</th>
+											<th style="text-align: center">User Email</th>
+											<th style="text-align: center">Dept Name</th>
+											<th style="text-align: center">Plant Name</th>
+											<th style="text-align: center">Company Name</th>
+											<th style="text-align: center; width: 5%;">Action</th>
 										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<c:forEach items="${userList}" var="user" varStatus="count">
+											<tr>
+												<td><input type="checkbox" class="chk" name="userIds"
+													id="userIds${count.index+1}" value="${user.userId}" /></td>
+												<td style="text-align: center">${count.index+1}</td>
+
+												<td style="text-align: left"><c:out
+														value="${user.usrName}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${user.usrMob}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${user.usrEmail}" /></td>
 
 
+
+
+												<td style="text-align: left"><c:out
+														value="${user.deptName}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${user.plantName}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${user.compName}" /></td>
+
+
+
+
+												<td style="text-align: center"><a
+													href="${pageContext.request.contextPath}/editUser/${user.userId}"><i
+														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+													&nbsp; <a
+													href="${pageContext.request.contextPath}/deleteUser/${user.userId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o"></i></a></td>
+
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								<div class="col-lg-1">
+
+									<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+
+
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -227,6 +236,24 @@
 		$(document).ready(function() {
 			$('#bootstrap-data-table-export').DataTable();
 		});
+	</script>
+
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
+
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
 	</script>
 
 
