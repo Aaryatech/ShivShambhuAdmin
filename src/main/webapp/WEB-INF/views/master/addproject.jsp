@@ -193,7 +193,7 @@
 								<div class="row">
 									<div class="col-md-2">Start Date*</div>
 									<div class="col-md-4">
-										<input type="text" id="start_date" name="start_date"
+										<input type="date" id="start_date" name="start_date"
 											autocomplete="off" value="${editPro.startDate}"
 											class="form-control" required style="width: 100%;">
 									</div>
@@ -201,7 +201,7 @@
 									<div class="col-md-2">End Date*</div>
 
 									<div class="col-md-4">
-										<input type="text" id="end_date" name="end_date"
+										<input type="date" id="end_date" name="end_date"
 											autocomplete="off" value="${editPro.endDate}"
 											class="form-control" required style="width: 100%;">
 									</div>

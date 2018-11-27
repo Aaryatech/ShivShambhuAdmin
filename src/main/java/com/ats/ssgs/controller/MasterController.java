@@ -2209,6 +2209,96 @@ public class MasterController {
 		return "redirect:/showAddDept";
 	}
 
+	@RequestMapping(value = "/deleteRecordofCompany", method = RequestMethod.POST)
+	public String deleteRecordofCompany(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] companyIds = request.getParameterValues("companyIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < companyIds.length; i++) {
+				sb = sb.append(companyIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("companyIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiCompany", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofCompany @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showCompList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofPlant", method = RequestMethod.POST)
+	public String deleteRecordofPlant(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] plantIds = request.getParameterValues("plantIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < plantIds.length; i++) {
+				sb = sb.append(plantIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("plantIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiPlant", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofPlant @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showPlantList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofUser", method = RequestMethod.POST)
+	public String deleteRecordofUser(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] userIds = request.getParameterValues("userIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < userIds.length; i++) {
+				sb = sb.append(userIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("userIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiUser", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofUser @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showUserList";
+	}
+
 	@RequestMapping(value = "/deleteRecordofCustType", method = RequestMethod.POST)
 	public String deleteRecordofCustType(HttpServletRequest request, HttpServletResponse response) {
 		try {
@@ -2237,6 +2327,36 @@ public class MasterController {
 		}
 
 		return "redirect:/showAddCustType";
+	}
+
+	@RequestMapping(value = "/deleteRecordofCust", method = RequestMethod.POST)
+	public String deleteRecordofCust(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] custIds = request.getParameterValues("custIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < custIds.length; i++) {
+				sb = sb.append(custIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiCust", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteMultiCust @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showCustList";
 	}
 
 }

@@ -90,66 +90,72 @@
 						</div>
 						<div class="card-body card-block">
 
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofPlant"
+								method="post">
 
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
 
-										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Plant Name</th>
-										<th style="text-align: center">Company Name</th>
-										<th style="text-align: center">Mobile No</th>
-										<!--<th style="text-align: center">Landline No</th> -->
-										<!-- <th style="text-align: center">FAX No</th>
-										<th style="text-align: center">Email</th> -->
-										<th style="text-align: center">Plant Address</th>
-										<th style="text-align: center; width: 5%;">Action</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${plantList}" var="plant" varStatus="count">
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
 										<tr>
+											<th class="check" style="text-align: center; width: 5%;"><input
+												type="checkbox" name="selAll" id="selAll" /> Select All</th>
 
-											<td style="text-align: center">${count.index+1}</td>
-
-
-											<td style="text-align: left"><c:out
-													value="${plant.plantName}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${plant.compName}" /></td>
-
-
-											<td style="text-align: left"><c:out
-													value="${plant.plantContactNo1}" /></td>
-											<%-- 
-											 <td style="text-align: left"><c:out
-													value="${plant.plantContactNo2}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${plant.plantFax1}" /></td>
-											<td style="text-align: left"><c:out
-													value="${plant.plantEmail1}" /></td>
- --%>
-
-											<td style="text-align: left">${plant.plantAddress1}</td>
-
-											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editPlant/${plant.plantId}"><i
-													class="fa fa-edit"></i> <span class="text-muted"></span></a>
-												&nbsp; <a
-												href="${pageContext.request.contextPath}/deletePlant/${plant.plantId}"
-												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o"></i></a></td>
+											<th style="text-align: center">Sr</th>
+											<th style="text-align: center">Plant Name</th>
+											<th style="text-align: center">Company Name</th>
+											<th style="text-align: center">Mobile No</th>
+											<!--<th style="text-align: center">Landline No</th> -->
+											<!-- <th style="text-align: center">FAX No</th>
+										<th style="text-align: center">Email</th> -->
+											<th style="text-align: center">Plant Address</th>
+											<th style="text-align: center; width: 5%;">Action</th>
 
 										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<c:forEach items="${plantList}" var="plant" varStatus="count">
+											<tr>
+												<td><input type="checkbox" class="chk" name="plantIds"
+													id="plantIds${count.index+1}" value="${plant.plantId}" /></td>
+												<td style="text-align: center">${count.index+1}</td>
 
 
+												<td style="text-align: left"><c:out
+														value="${plant.plantName}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${plant.compName}" /></td>
+
+
+												<td style="text-align: left"><c:out
+														value="${plant.plantContactNo1}" /></td>
+
+												<td style="text-align: left">${plant.plantAddress1}</td>
+
+												<td style="text-align: center"><a
+													href="${pageContext.request.contextPath}/editPlant/${plant.plantId}"><i
+														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+													&nbsp; <a
+													href="${pageContext.request.contextPath}/deletePlant/${plant.plantId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o"></i></a></td>
+
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								<div class="col-lg-1">
+
+									<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+
+
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -268,6 +274,23 @@
 	
 	</script>
  -->
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
+
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
+	</script>
+
 
 </body>
 </html>

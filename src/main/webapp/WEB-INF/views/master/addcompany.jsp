@@ -83,7 +83,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<strong>Data not submitted</strong>
+								<strong>Data not Submitted</strong>
 							</div>
 						</div>
 					</c:when>
