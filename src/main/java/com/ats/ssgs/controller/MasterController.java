@@ -1122,9 +1122,9 @@ public class MasterController {
 			 * 
 			 * String km = request.getParameter("km");
 			 */
-			String pincode = request.getParameter("pincode");
+			// String pincode = request.getParameter("pincode");
 
-			System.err.println("refName Name " + refName);
+			// System.err.println("refName Name " + refName);
 			String dateOfReg = request.getParameter("reg_date");
 
 			if (refName.equals("")) {
@@ -1160,9 +1160,9 @@ public class MasterController {
 			cust.setOwnerName(ownerName);
 			cust.setAccPerMob(accPerMob);
 			cust.setAccPerson(accPerson);
-			cust.setPincode(pincode);
 
 			try {
+				cust.setPincode(request.getParameter("pincode"));
 				cust.setCustCat(Integer.parseInt(request.getParameter("cust_cate")));
 				cust.setKm(Float.parseFloat(request.getParameter("km")));
 
@@ -1172,7 +1172,7 @@ public class MasterController {
 
 				cust.setCustVendor(Integer.parseInt(custVendor));
 			} catch (Exception e) {
-
+				cust.setPincode("NA");
 				cust.setKm(0);
 				cust.setCreaditDays(0);
 				cust.setCreaditLimit(0);
