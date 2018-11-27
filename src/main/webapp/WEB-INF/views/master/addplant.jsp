@@ -55,35 +55,6 @@
 }
 </style>
 
-<style>
-.alert {
-	padding: 20px;
-	background-color: red;
-	color: white;
-}
-
-.alert1 {
-	padding: 20px;
-	background-color: green;
-	color: white;
-}
-
-.closebtn {
-	margin-left: 15px;
-	color: white;
-	font-weight: bold;
-	float: right;
-	font-size: 22px;
-	line-height: 20px;
-	cursor: pointer;
-	transition: 0.3s;
-}
-
-.closebtn:hover {
-	color: black;
-}
-</style>
-
 </head>
 <body>
 
@@ -107,25 +78,31 @@
 
 				<c:choose>
 					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
 
-						<div class="alert">
-
-							<span class="closebtn"
-								onclick="this.parentElement.style.display='none';">&times;</span>
-							<strong>Failed !</strong> Data not submitted !!
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
 						</div>
-
 					</c:when>
 
 					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
 
-						<div class="alert1">
-
-							<span class="closebtn"
-								onclick="this.parentElement.style.display='none';">&times;</span>
-							<strong>Success</strong> Data Submitted !!
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
 						</div>
-
 					</c:when>
 
 				</c:choose>
@@ -145,7 +122,7 @@
 
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertPlant"
-								method="post">
+								id="submitForm" method="post">
 
 								<div class="row">
 
@@ -154,7 +131,7 @@
 									<div class="col-md-4">
 										<select id="compId" name="compId" class="standardSelect"
 											tabindex="1" onchange="selectCompany()">
-											<option value="-1">Select Company</option>
+											<option value="">Select Company</option>
 											<c:forEach items="${compList}" var="comp">
 
 												<c:choose>
@@ -265,7 +242,7 @@
 									<div class="col-md-4">
 										<select id="plant_head" name="plant_head" style="width: 100%;"
 											class="standardSelect" tabindex="1" required>
-											<option value="">Select</option>
+											<option value="">Select Plant</option>
 											<c:forEach items="${usrList}" var="usr">
 
 
@@ -287,14 +264,14 @@
 								<div class="form-group"></div>
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
-									<button type="submit" class="btn btn-primary"
+									<input type="submit" class="btn btn-primary" value="Submit"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Submit</button>
+
 								</div>
 								<div class="col-lg-3">
-									<button type="reset" class="btn btn-primary"
+									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Clear</button>
+
 								</div>
 							</form>
 						</div>
@@ -428,7 +405,7 @@
 		});
 	</script>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function readURL(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
@@ -444,7 +421,7 @@
 		$("#imgInp").change(function() {
 			readURL(this);
 		});
-	</script>
+	</script> -->
 
 	<script type="text/javascript">
 		function readURL2(input) {
@@ -464,343 +441,11 @@
 		});
 	</script>
 
-	<script type="text/javascript">
-		function callSel() {
-			//alert("Call me");
-			var workType = document.getElementById("workTypeId").value;
-			if (workType == 1) {
-				//alert("In work Type  " +workType);
-				document.getElementById('rc_book_div').style.display = "flow-root";
-				document.getElementById('ins1_div').style.display = "flow-root";
-				document.getElementById('ins2_div').style.display = "flow-root";
-				document.getElementById('puc_div').style.display = "flow-root";
-				document.getElementById('add_pf_div').style.display = "flow-root";
-
-				document.getElementById('bank_noc_div').style = "display:none";
-				document.getElementById('bank_letter_div').style = "display:none";
-				document.getElementById('form_17_div').style = "display:none";
-				document.getElementById('orig_lic_div').style = "display:none";
-
-			}
-
-			else if (workType == 2) {
-				//alert("In work Type  " +workType);
-				document.getElementById('rc_book_div').style.display = "flow-root";
-				document.getElementById('ins1_div').style.display = "flow-root";
-				document.getElementById('ins2_div').style.display = "flow-root";
-				document.getElementById('puc_div').style.display = "flow-root";
-				document.getElementById('bank_noc_div').style = "flow_root";
-
-				document.getElementById('add_pf_div').style.display = "display:none";
-
-				document.getElementById('bank_letter_div').style = "display:none";
-				document.getElementById('form_17_div').style = "display:none";
-				document.getElementById('orig_lic_div').style = "display:none";
-
-			}
-
-			else if (workType == 3) {
-				//alert("In work Type  " +workType);
-				document.getElementById('rc_book_div').style.display = "flow-root";
-				document.getElementById('ins1_div').style.display = "flow-root";
-				document.getElementById('ins2_div').style.display = "flow-root";
-				document.getElementById('puc_div').style.display = "flow-root";
-				document.getElementById('bank_letter_div').style = "flow_root";
-				document.getElementById('form_17_div').style = "flow_root";
-
-				document.getElementById('add_pf_div').style.display = "display:none";
-				document.getElementById('orig_lic_div').style = "display:none";
-				document.getElementById('bank_noc_div').style = "display:none";
-
-			} else if (workType == 4) {
-				//alert("In work Type  " +workType);
-				document.getElementById('rc_book_div').style.display = "flow-root";
-				document.getElementById('ins1_div').style.display = "flow-root";
-				document.getElementById('ins2_div').style.display = "flow-root";
-				document.getElementById('puc_div').style.display = "flow-root";
-				document.getElementById('add_pf_div').style.display = "flow-root";
-
-				document.getElementById('bank_noc_div').style = "display:none";
-				document.getElementById('bank_letter_div').style = "display:none";
-				document.getElementById('form_17_div').style = "display:none";
-				document.getElementById('orig_lic_div').style = "display:none";
-
-			}
-
-			else if (workType == 5) {
-				//alert("workType " +workType)
-				$('#rc_book_div').hide();
-				$('#ins1_div').hide();
-				$('#ins2_div').hide();
-				$('#puc_div').hide();
-				$('#bank_noc_div').hide();
-
-				$('#add_pf_div').hide();
-
-				$('#bank_letter_div').hide();
-				$('#form_17_div').hide();
-				document.getElementById('orig_lic_div').style.display = "flow-root";
-
-			}
-
-		}
-	</script>
-	<script type="text/javascript">
-		function onLoadCall() {
-			//alert("onload Call")
-			var workType = $
-			{
-				getWork.workTypeTd
-			}
-			;
-			//$('#workTypeId').prop('readoly', true);
-			//document.getElementById("pets").options[2].disabled = true;
-
-			document.getElementById('workTypeId').disabled = true;
-			document.getElementById('ac').style.color = 'white';
-
-			document.getElementById('imgInp').style.color = 'white';
-			document.getElementById('imgInp1').style.color = 'white';
-
-			document.getElementById('rc_book').style.color = 'white';
-			document.getElementById('puc').style.color = 'white';
-			document.getElementById('ins1').style.color = 'white';
-			document.getElementById('ins2').style.color = 'white';
-			document.getElementById('add_proof').style.color = 'white';
-			document.getElementById('bank_noc').style.color = 'white';
-			document.getElementById('bank_letter').style.color = 'white';
-			document.getElementById('form_no17').style.color = 'white';
-			document.getElementById('orig_lic').style.color = 'white';
-
-			document.getElementById("ac").required = false;
-			if (workType == 1) {
-				//alert("In work Type  " +workType);
-				document.getElementById('rc_book_div').style.display = "flow-root";
-				document.getElementById('ins1_div').style.display = "flow-root";
-				document.getElementById('ins2_div').style.display = "flow-root";
-				document.getElementById('puc_div').style.display = "flow-root";
-				document.getElementById('add_pf_div').style.display = "flow-root";
-
-				document.getElementById('bank_noc_div').style = "display:none";
-				document.getElementById('bank_letter_div').style = "display:none";
-				document.getElementById('form_17_div').style = "display:none";
-				document.getElementById('orig_lic_div').style = "display:none";
-
-			}
-
-			else if (workType == 2) {
-				//alert("In work Type  " +workType);
-				document.getElementById('rc_book_div').style.display = "flow-root";
-				document.getElementById('ins1_div').style.display = "flow-root";
-				document.getElementById('ins2_div').style.display = "flow-root";
-				document.getElementById('puc_div').style.display = "flow-root";
-				document.getElementById('bank_noc_div').style = "flow_root";
-
-				document.getElementById('add_pf_div').style.display = "display:none";
-
-				document.getElementById('bank_letter_div').style = "display:none";
-				document.getElementById('form_17_div').style = "display:none";
-				document.getElementById('orig_lic_div').style = "display:none";
-
-			}
-
-			else if (workType == 3) {
-				//alert("In work Type  " +workType);
-				document.getElementById('rc_book_div').style.display = "flow-root";
-				document.getElementById('ins1_div').style.display = "flow-root";
-				document.getElementById('ins2_div').style.display = "flow-root";
-				document.getElementById('puc_div').style.display = "flow-root";
-				document.getElementById('bank_letter_div').style = "flow_root";
-				document.getElementById('form_17_div').style = "flow_root";
-
-				document.getElementById('add_pf_div').style.display = "display:none";
-				document.getElementById('orig_lic_div').style = "display:none";
-				document.getElementById('bank_noc_div').style = "display:none";
-
-			} else if (workType == 4) {
-				//alert("In work Type  " +workType);
-				document.getElementById('rc_book_div').style.display = "flow-root";
-				document.getElementById('ins1_div').style.display = "flow-root";
-				document.getElementById('ins2_div').style.display = "flow-root";
-				document.getElementById('puc_div').style.display = "flow-root";
-				document.getElementById('add_pf_div').style.display = "flow-root";
-
-				document.getElementById('bank_noc_div').style = "display:none";
-				document.getElementById('bank_letter_div').style = "display:none";
-				document.getElementById('form_17_div').style = "display:none";
-				document.getElementById('orig_lic_div').style = "display:none";
-
-			}
-
-			else if (workType == 5) {
-				document.getElementById('rc_book_div').style.display = "display:none";
-				document.getElementById('ins1_div').style.display = "display:none";
-				document.getElementById('ins2_div').style.display = "display:none";
-				document.getElementById('puc_div').style.display = "display:none";
-				document.getElementById('bank_noc_div').style = "display:none";
-
-				document.getElementById('add_pf_div').style.display = "display:none";
-
-				document.getElementById('bank_letter_div').style = "display:none";
-				document.getElementById('form_17_div').style = "display:none";
-				document.getElementById('orig_lic_div').style = "flow-root";
-
-			}
-
-		}
-	</script>
-
-	<script type="text/javascript">
-		$(function() {
-
-			// document.getElementById('ac').style.color = 'black';
-			var workType = $
-			{
-				getWork.workTypeTd
-			}
-			;
-			if (workType != null) {
-				$('#ac').change(function() {
-					document.getElementById('ac').style.color = 'black';
-				});
-
-				$('#imgInp').change(function() {
-					document.getElementById('imgInp').style.color = 'black';
-				});
-
-				$('#imgInp1').change(function() {
-					document.getElementById('imgInp1').style.color = 'black';
-				});
-
-				$('#rc_book').change(function() {
-					document.getElementById('rc_book').style.color = 'black';
-				});
-
-				$('#puc').change(function() {
-					document.getElementById('puc').style.color = 'black';
-				});
-
-				$('#ins1').change(function() {
-					document.getElementById('ins1').style.color = 'black';
-				});
-
-				$('#ins2').change(function() {
-					document.getElementById('ins2').style.color = 'black';
-				});
-
-				$('#add_proof').change(function() {
-					document.getElementById('add_proof').style.color = 'black';
-				});
-
-				$('#bank_noc').change(function() {
-					document.getElementById('bank_noc').style.color = 'black';
-				});
-
-				$('#bank_letter')
-						.change(
-								function() {
-									document.getElementById('bank_letter').style.color = 'black';
-								});
-
-				$('#form_no17').change(function() {
-					document.getElementById('form_no17').style.color = 'black';
-				});
-
-				$('#orig_lic').change(function() {
-					document.getElementById('orig_lic').style.color = 'black';
-				});
-
-			}//end Of if
-
-		});
-	</script>
-	<!-- 	<script type="text/javascript">
-$(document).ready(function() { 
-	$('#workTypeId').change(
-			function() {
-				//alert("Hi");
-				
-				var workType = document.getElementById("workTypeId").value;
-				if(workType==1){
-					
-					document.getElementById('rc_book_div').style.display = "flow-root";
-					document.getElementById('ins1_div').style.display = "flow-root";
-					document.getElementById('ins2_div').style.display = "flow-root";
-					document.getElementById('puc_div').style.display = "flow-root";
-					document.getElementById('add_pf_div').style.display = "flow-root";
-				
-					document.getElementById('bank_noc_div').style = "display:none";
-					document.getElementById('bank_letter_div').style = "display:none";
-					document.getElementById('form_17_div').style = "display:none";
-					document.getElementById('orig_lic_div').style = "display:none";
-
-				}
-				
-			if(workType==2){
-					
-					document.getElementById('rc_book_div').style.display = "flow-root";
-					document.getElementById('ins1_div').style.display = "flow-root";
-					document.getElementById('ins2_div').style.display = "flow-root";
-					document.getElementById('puc_div').style.display = "flow-root";
-					document.getElementById('bank_noc_div').style = "flow_root";
-
-					document.getElementById('add_pf_div').style.display = "display:none";
-				
-					document.getElementById('bank_letter_div').style = "display:none";
-					document.getElementById('form_17_div').style = "display:none";
-					document.getElementById('orig_lic_div').style = "display:none";
-
-				}
-			
-			if(workType==3){
-				
-				document.getElementById('rc_book_div').style.display = "flow-root";
-				document.getElementById('ins1_div').style.display = "flow-root";
-				document.getElementById('ins2_div').style.display = "flow-root";
-				document.getElementById('puc_div').style.display = "flow-root";
-				document.getElementById('bank_letter_div').style = "flow_root";
-				document.getElementById('form_17_div').style = "flow_root";
-
-				document.getElementById('add_pf_div').style.display = "display:none";
-				document.getElementById('orig_lic_div').style = "display:none";
-				document.getElementById('bank_noc_div').style =  "display:none";
-
-			}if(workType==4){
-				
-				document.getElementById('rc_book_div').style.display = "flow-root";
-				document.getElementById('ins1_div').style.display = "flow-root";
-				document.getElementById('ins2_div').style.display = "flow-root";
-				document.getElementById('puc_div').style.display = "flow-root";
-				document.getElementById('add_pf_div').style.display = "flow-root";
-			
-				document.getElementById('bank_noc_div').style = "display:none";
-				document.getElementById('bank_letter_div').style = "display:none";
-				document.getElementById('form_17_div').style = "display:none";
-				document.getElementById('orig_lic_div').style = "display:none";
-
-			}
-
-if(workType==5	){
-				
-				document.getElementById('rc_book_div').style.display = "display:none";
-				document.getElementById('ins1_div').style.display = "display:none";
-				document.getElementById('ins2_div').style.display ="display:none";
-				document.getElementById('puc_div').style.display = "display:none";
-				document.getElementById('add_pf_div').style.display = "display:none";
-			
-				document.getElementById('bank_noc_div').style = "display:none";
-				document.getElementById('bank_letter_div').style = "display:none";
-				document.getElementById('form_17_div').style = "display:none";
-				document.getElementById('orig_lic_div').style = "flow-root";
-
-			}
-
-			});
-});
-
-</script> -->
 
 
+
+
+	<!-- 
 	<script>
 		function selectCompany() {
 
@@ -813,7 +458,18 @@ if(workType==5	){
 
 		}
 	</script>
+ -->
 
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
 
 
 
