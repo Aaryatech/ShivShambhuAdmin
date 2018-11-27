@@ -848,7 +848,7 @@ var termTitle=data.termTitle
 
                 else if($(this).prop("checked") == false){
 
-                   // alert("Checkbox is unchecked.");
+                    // alert("Checkbox is unchecked.");
 
                 }
 
