@@ -152,7 +152,8 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" /> All</th>
+												type="checkbox" name="selAll" id="selAll"
+												onchange="deleteRecord()" /> Select All</th>
 											<th style="text-align: center; width: 5%;">Sr No</th>
 											<th style="text-align: center">Department Name</th>
 											<th style="text-align: center">Sort No</th>
@@ -193,6 +194,7 @@
 								<div class="col-lg-12" align="center">
 
 									<input type="submit" class="btn btn-primary" value="Delete"
+										style="display: none;" id="deleteId"
 										onClick="return confirm('Are you sure want to delete record');"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
@@ -309,8 +311,10 @@
 											});
 						});
 	</script>
-	<!-- 	<script type="text/javascript">
+	<script type="text/javascript">
 		function deleteRecord() {
+			alert("hii");
+			$('#deleteId').show();
 
 			var deptIds = document.getElementById("deptIds").value;
 
@@ -322,24 +326,13 @@
 			}
 
 			if (valid == true) {
+				$('#deleteId').show();
 
-				$.getJSON('${deleteRecordofDept}', {
-					deptIds : deptIds,
-					ajax : 'true',
-				},
+			} else {
+				$('#deleteId').hide();
 
-				function(data) {
-					var html;
-					var len = data.length;
-					for (var i = 0; i < len; i++) {
-
-					}
-
-				});
-			}//end of if
-
+			}
 		}
-	</script> -->
-
+	</script>
 </body>
 </html>
