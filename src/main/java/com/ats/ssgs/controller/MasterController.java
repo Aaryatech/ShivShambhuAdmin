@@ -67,6 +67,8 @@ public class MasterController {
 		try {
 
 			model = new ModelAndView("master/addvendor");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -170,6 +172,12 @@ public class MasterController {
 			}
 
 			Vendor vendInsertRes = rest.postForObject(Constants.url + "saveVendor", vend, Vendor.class);
+			if (vendInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
+
 			System.err.println("plantInsertRes " + vendInsertRes.toString());
 
 		} catch (Exception e) {
@@ -270,6 +278,8 @@ public class MasterController {
 			model = new ModelAndView("master/addtax");
 
 			model.addObject("title", "Add Tax");
+			model.addObject("isError", isError);
+			isError = 0;
 
 		} catch (Exception e) {
 
@@ -335,8 +345,13 @@ public class MasterController {
 
 			// saveTax
 
-			Tax plantInsertRes = rest.postForObject(Constants.url + "saveTax", tax, Tax.class);
-			System.err.println("plantInsertRes " + plantInsertRes.toString());
+			Tax taxInsertRes = rest.postForObject(Constants.url + "saveTax", tax, Tax.class);
+
+			if (taxInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 			System.err.println("EXCE in insertPlant " + e.getMessage());
@@ -634,6 +649,8 @@ public class MasterController {
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("master/addcompany");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			model.addObject("title", "Add Company");
 		} catch (Exception e) {
@@ -643,7 +660,6 @@ public class MasterController {
 			e.printStackTrace();
 
 		}
-
 		return model;
 
 	}
@@ -732,7 +748,12 @@ public class MasterController {
 
 			// saveItem
 
-			Company itemInsertRes = rest.postForObject(Constants.url + "saveCompany", comp, Company.class);
+			Company compInsertRes = rest.postForObject(Constants.url + "saveCompany", comp, Company.class);
+			if (compInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -762,6 +783,7 @@ public class MasterController {
 
 			model.addObject("title", "Company List");
 			model.addObject("compList", compList);
+
 		} catch (Exception e) {
 
 			System.err.println("exception In showCompList at Master Contr" + e.getMessage());
@@ -838,6 +860,8 @@ public class MasterController {
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
+			model.addObject("isError", isError);
+			isError = 0;
 
 			/*
 			 * Cust[] custArray = rest.getForObject(Constants.url + "getAllCustList",
@@ -913,6 +937,11 @@ public class MasterController {
 			proj.setPincode(pincode);
 
 			Project projInsertRes = rest.postForObject(Constants.url + "saveProject", proj, Project.class);
+			if (projInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -1019,6 +1048,8 @@ public class MasterController {
 			model = new ModelAndView("master/addcust");
 
 			model.addObject("title", "Add Customer");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -1201,6 +1232,12 @@ public class MasterController {
 
 			Cust custInsertRes = rest.postForObject(Constants.url + "saveCust", cust, Cust.class);
 
+			if (custInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
+
 			Project proj = new Project();
 
 			proj.setCustId(custInsertRes.getCustId());
@@ -1335,6 +1372,8 @@ public class MasterController {
 			model = new ModelAndView("master/additem");
 
 			model.addObject("title", "Add Item");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -1519,6 +1558,11 @@ public class MasterController {
 			}
 
 			Item itemInsertRes = rest.postForObject(Constants.url + "saveItem", item, Item.class);
+			if (itemInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -1636,6 +1680,8 @@ public class MasterController {
 		try {
 
 			model = new ModelAndView("master/adddept");
+			model.addObject("isError", isError);
+			isError = 0;
 			Dept[] deptArray = rest.getForObject(Constants.url + "getAllDeptList", Dept[].class);
 			deptList = new ArrayList<Dept>(Arrays.asList(deptArray));
 
@@ -1698,6 +1744,11 @@ public class MasterController {
 			}
 
 			Dept deptInsertRes = rest.postForObject(Constants.url + "saveDept", dept, Dept.class);
+			if (deptInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -1767,6 +1818,8 @@ public class MasterController {
 		try {
 
 			model = new ModelAndView("master/adduom");
+			model.addObject("isError", isError);
+			isError = 0;
 			Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
 			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
 
@@ -1830,6 +1883,12 @@ public class MasterController {
 			}
 
 			Uom uomInsertRes = rest.postForObject(Constants.url + "saveUom", uom, Uom.class);
+
+			if (uomInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -1904,7 +1963,8 @@ public class MasterController {
 			 * Plant[].class); plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 			 * model.addObject("plantList", plantList);
 			 */
-
+			model.addObject("isError", isError);
+			isError = 0;
 			Dept[] deptArray = rest.getForObject(Constants.url + "getAllDeptList", Dept[].class);
 			deptList = new ArrayList<Dept>(Arrays.asList(deptArray));
 
@@ -1993,6 +2053,12 @@ public class MasterController {
 			}
 
 			User userInsertRes = rest.postForObject(Constants.url + "saveUser", user, User.class);
+
+			if (userInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
 
 		} catch (Exception e) {
 
@@ -2141,6 +2207,36 @@ public class MasterController {
 		}
 
 		return "redirect:/showAddDept";
+	}
+
+	@RequestMapping(value = "/deleteRecordofCustType", method = RequestMethod.POST)
+	public String deleteRecordofCustType(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] custTypeIds = request.getParameterValues("custTypeIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < custTypeIds.length; i++) {
+				sb = sb.append(custTypeIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custTypeIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiCustType", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofDept @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showAddCustType";
 	}
 
 }
