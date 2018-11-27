@@ -139,7 +139,7 @@
 
 
 
-										<div class="col-md-2">Cust Type Name</div>
+										<div class="col-md-2">Customer Type Name</div>
 
 										<div class="col-md-4">
 											<input type="text" id="custTypeName" name="custTypeName"
@@ -147,7 +147,7 @@
 											<span class="error" aria-live="polite"></span>
 										</div>
 
-										<div class="col-md-2">Cust Mobile No</div>
+										<div class="col-md-2">Customer Mobile No</div>
 
 										<div class="col-md-4">
 											<input type="text" readonly id="custMobNo" name="custMobNo"
@@ -212,7 +212,7 @@
 												oninvalid="setCustomValidity('Please select uom')"
 												onchange="try{setCustomValidity('')}catch(e){}">
 
-												<option value="0">Select UOM</option>
+												<option value="0">Select Unit Of Measurement</option>
 												<c:forEach items="${uomList}" var="uom">
 													<option value="${uom.uomId}">${uom.uomName}</option>
 												</c:forEach>
@@ -227,7 +227,7 @@
 										<div class="col-md-2">Quantity</div>
 										<div class="col-md-4">
 											<input type="text" id="qty" name="qty" class="form-control"
-												style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
+												style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?" onkeypress="return allowOnlyNumber(event);">
 										</div>
 
 
@@ -270,7 +270,7 @@
 
 												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">UOM</th>
+												<th style="text-align: center">Unit Of Measurement</th>
 												<th style="text-align: center">Qty</th>
 												<th style="text-align: center; width: 5%;">Action</th>
 
@@ -324,7 +324,7 @@
 									</div>
 
 									<div class="col-md-1">
-										<input type="submit" class="btn btn-primary" id="submitButton" value="Submit">
+										<input type="submit" disabled class="btn btn-primary" id="submitButton" value="Submit">
 
 									</div>
 
@@ -751,7 +751,28 @@
 		function callAlert(msg) {
 			alert(msg);
 		}
-	</script>
+		function allowOnlyNumber(evt){
+		    var charCode = (evt.which) ? evt.which : event.keyCode
+		    if (charCode == 46){
+		        var inputValue = $("#floor").val();
+		        var count = (inputValue.match(/'.'/g) || []).length;
+		        
+		        if(count<1){
+		            if (inputValue.indexOf('.') < 1){
+		                return true;
+		            }
+		            return false;
+		        }else{
+		            return false;
+		        }
+		    }
+		    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+		        return false;
+		    }
+		    return true;
+		}
+		
+		</script>
 
 	<!-- <script type="text/javascript">
 		$(document).ready(function() {

@@ -156,8 +156,6 @@ html {
 						</ul></li>
 
 
-
-
 					<li class="menu-item-has-children dropdown"><a href="#"
 						class="dropdown-toggle" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="true"> <i
@@ -171,6 +169,12 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showQuotations">View
 									Quotations</a></li>
+									
+									
+									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddOrder">Add Order</a></li>
+									
+									
 
 
 

@@ -400,13 +400,13 @@ body {
 									<div class="col-md-2">No of KM</div>
 									<div class="col-md-4">
 										<input type="text" id="no_of_km" name="no_of_km" min="0" onkeypress="return allowOnlyNumber(event);"
-											onchange="calcAll()" class="form-control" value="${quotHeader.noOfKm}"
+											oninput="calcAll()" class="form-control" value="${quotHeader.noOfKm}"
 											style="width: 100%;">
 									</div>
 									<div class="col-md-2">Toll Amount</div>
 									<div class="col-md-4">
 										<input type="text" id="toll_amt" min="0" name="toll_amt" value="${quotHeader.tollCost}"
-											onchange="calcAll()" class="form-control" onkeypress="return allowOnlyNumber(event);">
+											oninput="calcAll()" class="form-control" onkeypress="return allowOnlyNumber(event);">
 									</div>
 								</div>
 
@@ -426,7 +426,7 @@ body {
 
 									<div class="col-md-2">Other Cost</div>
 									<div class="col-md-4">
-										<input type="text" onchange="calcAll()" onkeypress="return allowOnlyNumber(event);" min="0" id="other_cost" value="${quotHeader.otherCost}"
+										<input type="text" oninput="calcAll()" onkeypress="return allowOnlyNumber(event);" min="0" id="other_cost" value="${quotHeader.otherCost}"
 											name="other_cost" class="form-control" style="width: 100%;">
 									</div>
 
@@ -483,38 +483,38 @@ body {
 
 								
 								<input type="checkbox" name="selAll" id="selAll" /> <label>Select All</label>
-							<div class="card-body card-block" style="overflow: auto; width:80%;">
+							<div class="card-body card-block" style="overflow: auto; width:100%;">
 
-									<table id="bootstrap-data-table" class="table table-striped table-bordered"  style=" table-layout: none;width: 100%; ">
+									<table id="bootstrap-data-table" class="table table-striped table-bordered"  style=" table-layout: none;width: 80%; ">
 										
 										<thead>
 										
 											<tr>
 
-												<th style="text-align: center" width="5%" >Sr </th>
+												<th style="text-align: center" class="col-md-1" >Sr </th>
 
-												<th style="text-align: center" width="7%">Item</th>
-												<th style="text-align: center" width="7%">Qty</th>
-												<th style="text-align: center" width="7%">UOM</th>
+												<th >Item name</th>
+												<th style="text-align: center" class="col-md-1">Quantity</th>
+												<th style="text-align: center"class="col-md-1">UOM</th>
 
-												<th style="text-align: center" width="7%">Tran co</th>
-												<th style="text-align: center" width="7%">Toll
+												<th style="text-align: center"class="col-md-2">Trans cost</th>
+												<th style="text-align: center" class="col-md-2">Toll
 													Cost</th>
-												<th style="text-align: center" width="7%">Other
+												<th style="text-align: center" class="col-md-2">Other
 													Cost</th>
 
-												<th style="text-align: center" width="7%">Item
+												<th style="text-align: center" class="col-md-2">Item
 													Rate</th>
-												<th style="text-align: center" width="7%">Roy
+												<th style="text-align: center" class="col-md-2">Roy
 													Rate</th>
-												<th style="text-align: center" width="7%">GST</th>
+												<th style="text-align: center" class="col-md-1">GST</th>
 
-												<th style="text-align: center" width="7%">Taxable</th>
-												<th style="text-align: center" width="7%">Tax</th>
-												<th style="text-align: center" width="11%">
+												<th style="text-align: center" class="col-md-2">Taxable</th>
+												<th style="text-align: center" class="col-md-2">Tax value</th>
+												<th style="text-align: center" class="col-md-2">
 													Cost After Tax</th>
 
-												<th style="text-align: center" width="7%">Final</th>
+												<th style="text-align: center" class="col-md-2">Final</th>
 
 											</tr>
 										</thead>
@@ -526,7 +526,7 @@ body {
 													<td class="col-md-1" style="text-align: center">${count.index+1}<input type="checkbox" value="${item.itemId}"  name="selectItem"></td>
 
 
-													<td class="col-md-1" style="text-align: left"><c:out
+													<td class="col-md-2" style="text-align: left"><c:out
 															value="${item.itemName}" /></td>
 															
 															<c:if test="${quotHeader.status==0}">
@@ -544,16 +544,16 @@ body {
 													<td class="col-md-1" style="text-align: left"><c:out value="${item.uomName}" /></td>
 
 
-													<td class="col-md-1" style="text-align: center"><input type="text"
+													<td class="col-md-2" style="text-align: center"><input type="text"
 														id="trans_cost${item.itemId}" value="${item.transCost}" onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														name="trans_cost${item.itemId}" class="form-control"></td>
 
-													<td class="col-md-1" style="text-align: center"><input type="text"
+													<td class="col-md-2" style="text-align: center"><input type="text"
 														id="toll_cost${item.itemId}" readonly value="${quotHeader.tollCost}"
 														name="toll_cost${item.itemId}" class="form-control"></td>
 
-													<td class="col-md-1" style="text-align: center"><input type="text" min="0"  onkeypress="return allowOnlyNumber(event);"
+													<td class="col-md-2" style="text-align: center"><input type="text" min="0"  onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														id="other_cost${item.itemId}"  value="${item.otherCost}"
 														name="other_cost${item.itemId}" class="form-control"></td>
@@ -564,31 +564,31 @@ body {
  -->
 
 
-													<td class="col-md-1" style="text-align: left"><c:out
+													<td class="col-md-2" style="text-align: left"><c:out
 															value="${item.itemRate1}" /></td>
 
-													<td class="col-md-1" style="text-align: left"><c:out
+													<td class="col-md-2" style="text-align: left"><c:out
 															value="${item.royaltyRate}" /></td>
 
-													<td class="col-md-1" style="text-align: left"><c:out
+													<td class="col-md-2" style="text-align: left"><c:out
 															value="${item.totalTaxPer}%" /></td>
 
-													<td style="text-align: right"><input type="text"
+													<td  class="col-md-2" style="text-align: right"><input type="text"
 														readonly id="taxable_amt${item.itemId}" value="${item.taxableValue}"
 														name="taxable_amt${item.itemId}" class="form-control"></td>
 
 
-													<td class="col-md-1" style="text-align: right" width="100%"><input
+													<td class="col-md-2" style="text-align: right" width="100%"><input
 														type="text" readonly id="tax_amt${item.itemId}" value="${item.taxValue}"
 														name="tax_amt${item.itemId}" class="form-control"></td>
 
 
-													<td class="col-md-1" style="text-align: center"><input type="text" min="0" onkeypress="return allowOnlyNumber(event);"
+													<td class="col-md-2" style="text-align: center"><input type="text" min="0" onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														id="oth_cost_aft_tax${item.itemId}"  value="${item.otherCostAfterTax}" 
 														name="oth_cost_aft_tax${item.itemId}" class="form-control"></td>
 
-													<td class="col-md-1" style="text-align: right"><input type="text"
+													<td class="col-md-2" style="text-align: right"><input type="text"
 														readonly id="final_amt${item.itemId}" value="${item.finalTotal}"
 														name="final_amt${item.itemId}" class="form-control"></td>
 
@@ -697,6 +697,9 @@ body {
 			 $("#selAll").click(function () {
 	              $('#bootstrap-data-table tbody input[type="checkbox"]').prop('checked', this.checked);
 	          });
+			 
+			 
+			
 		});
 	</script>
 
@@ -794,7 +797,17 @@ var termTitle=data.termTitle
 			if(delPlace==1){
 				document.getElementById("no_of_km").value="0";
 				document.getElementById("toll_amt").value="0";
+				
+				document.getElementById("no_of_km").readOnly = true; 
+				document.getElementById("toll_amt").readOnly = true; 
+				document.getElementById("no_of_tolls").readOnly = true; 
+				
 				calcAll();
+			}else{
+				
+				document.getElementById("no_of_km").readOnly = false; 
+				document.getElementById("toll_amt").readOnly = false; 
+				document.getElementById("no_of_tolls").readOnly = false; 
 			}
 		
 		}
@@ -804,7 +817,7 @@ var termTitle=data.termTitle
 		
 		function setData(){
 			var payTerm= $("#pay_term_id option:selected").html();
-			alert("payTerm " +payTerm);
+			//alert("payTerm " +payTerm);
 			document.getElementById("pay_term_name").value=payTerm;
 			
 		}
@@ -814,8 +827,39 @@ var termTitle=data.termTitle
 			  for(var i=0, n=checkboxes.length;i<n;i++) {
 			    checkboxes[i].checked = source.checked;
 			  }
+			  }
+				  
 			}
 		</script>
+
+
+
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            $('input[type="checkbox"]').click(function(){
+
+                if($(this).prop("checked") == true){
+
+                   // alert("Checkbox is checked.");
+
+                }
+
+                else if($(this).prop("checked") == false){
+
+                   // alert("Checkbox is unchecked.");
+
+                }
+
+            });
+            
+            
+            
+
+        });
+
+    </script>
 
 
 	<!--  CalcAll function onchange of KM  -->

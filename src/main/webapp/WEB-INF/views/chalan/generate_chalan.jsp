@@ -4,27 +4,121 @@
 <!doctype html>
 <html class="no-js" lang="">
 
+<style>
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+</style>
+	 <style>
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+	height: 80%;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#overlay {
+	position: fixed;
+	display: none;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(101, 113, 119, 0.5);
+	z-index: 2;
+	cursor: pointer;
+}
+
+#text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 25px;
+	color: white;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+.bg-overlay {
+    background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)), url("${pageContext.request.contextPath}/resources/images/smart.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    color: #fff;
+    height:auto;
+    width:auto;
+    padding-top: 10px;
+    padding-left:20px;
+}
+</style>
+
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
-<c:url var="getPOHeaderByCustId" value="/getPOHeaderByCustId" />
-
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
-
 <c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
-
 <c:url var="getProjectByCustId" value="/getProjectByCustId" />
-
-
-<c:url var="getPoDetailForOrderByPoId"
-	value="/getPoDetailForOrderByPoId" />
-	
-	
-<c:url var="getTempOrderHeader"
-	value="/getTempOrderHeader" />
-	
+<c:url var="getOrdHeaderForChalan" value="/getOrdHeaderForChalan" />
+<c:url var="getOrderDetailForChalan" value="/getOrderDetailForChalan" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -195,32 +289,7 @@
 
 								</div>
 								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Select Project</div>
-
-									<div class="col-md-10">
-										<select id="proj_id" name="proj_id" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select project')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-
-											<c:forEach items="${projList}" var="proj">
-											
-											<c:choose>
-											<c:when test="${quotHeader.projId==proj.projId}">
-												<option selected value="${proj.projId}">${proj.projName}</option>
-											</c:when>
-											<c:otherwise>
-												<option value="${proj.projId}">${proj.projName}</option>
-											</c:otherwise>
-											</c:choose>
-											
-											</c:forEach>
-
-										</select>
-									</div>
-								</div>
+								
 								
 								<div id="divCheckbox" style="display: none;">
 									<div class="form-group"></div>
@@ -244,6 +313,89 @@
 
 									</div>
 								</div>
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Select Project</div>
+
+									<div class="col-md-10">
+										<select id="proj_id" name="proj_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select project')"
+										
+											onchange="getOrderHeaders()">
+
+											<c:forEach items="${projList}" var="proj">
+											
+											<c:choose>
+											<c:when test="${quotHeader.projId==proj.projId}">
+												<option selected value="${proj.projId}">${proj.projName}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${proj.projId}">${proj.projName}</option>
+											</c:otherwise>
+											</c:choose>
+											
+											</c:forEach>
+
+										</select>
+									</div>
+								</div>
+								
+								
+								<div class="row">
+
+									<div class="col-md-2">Select Order</div>
+
+									<div class="col-md-8">
+										<select id="order_id" name="order_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select order')"
+											onchange="showOrderItemPopup(this.value)">
+											<option value="-1">Select Order</option>
+
+											<%-- <c:forEach items="${plantList}" var="plant">
+												<option value="${plant.plantId}">${plant.plantName}</option>
+											</c:forEach> --%>
+										</select>
+									</div>
+									</div>
+									
+									
+									<div id="myModal" class="modal">
+										      
+					<div class="modal-content" style="color: black;">
+						<span class="close" id="close">&times;</span>
+						<h5 style="text-align: left;">Add Chalan Quantity</h5>
+							<div class=" box-content">
+						
+								<div style="overflow:scroll;height:auto;width:auto;overflow:auto" >
+									<table 
+										style="width: 100%" id="table_grid1" class="table table-striped table-bordered">
+										<thead>
+											<tr>
+										<th style=" width: 5%;" align="center"><input type="checkbox"></th>
+										<th style=" width: 5%;" align="center">Sr</th>
+										<th style=" width: 20%;"  align="center">Item Name</th>
+										<th style=" width: 20%;" align="center">Unit of Measure</th>
+										<th style=" width: 20%;" align="center">Order Quantity</th>
+										<th style=" width: 20%;" align="center">Remaining Quantity</th>
+										<th style=" width: 10%;" align="center">Chalan Quantity</th>
+									</tr>
+										</thead>
+										<tbody>
+ 
+										</tbody>
+									</table>
+								</div>
+							 
+							 
+						</div><br>
+						
+					</div>
+
+				</div><!-- end of myModal div -->
+								
 								<input type="hidden" name="item_id" id="item_id" value="0">
 								<div class="form-group"></div>
 								<div class="row">
@@ -559,9 +711,7 @@ function allowOnlyNumber1(evt)
 				valid = false;
 				alert("Please Select Customer");
 				
-				$('#po_id').html("-1");
-				$("#po_id").trigger("chosen:updated");
-				
+			
 				var dataTable = $('#bootstrap-data-table')
 				.DataTable();
 		dataTable.clear().draw();
@@ -569,10 +719,7 @@ function allowOnlyNumber1(evt)
 			}
 			else if(custId<0){
 				valid = false;
-				
-				$('#po_id').html("-1");
-				$("#po_id").trigger("chosen:updated");
-				
+							
 				var dataTable = $('#bootstrap-data-table')
 				.DataTable();
 		dataTable.clear().draw();
@@ -593,7 +740,7 @@ function allowOnlyNumber1(evt)
 									document.getElementById("custMobNo").value = data.custMobNo;
 								});
 
-				$	.getJSON(
+			/* 	$	.getJSON(
 						'${getPOHeaderByCustId}',
 						{
 							custId : custId,
@@ -614,7 +761,7 @@ function allowOnlyNumber1(evt)
 							$('#po_id').html(html);
 							$("#po_id").trigger("chosen:updated");
 						});
-				
+				 */
 				
 				$	.getJSON(
 						'${getProjectByCustId}',
@@ -623,9 +770,10 @@ function allowOnlyNumber1(evt)
 							ajax : 'true',
 						},
 						function(data) {
-							var html;
+							//var html;
 							var len = data.length;
 							//alert("data " +JSON.stringify(data));
+							var html='<option value="-1">Select All</option>';
 							for (var i = 0; i < len; i++) {
 								var projData=data[i].projName+"-"+data[i].address
 
@@ -636,127 +784,106 @@ function allowOnlyNumber1(evt)
 							html += '</option>';
 							$('#proj_id').html(html);
 							$("#proj_id").trigger("chosen:updated");
+							getOrderHeaders();
+
 						});
-				
-				
-				
-				
-				
 			}// end of if valid= true
 			
 		}
 	</script>
 
 	<script type="text/javascript">
-	// on poId c change function 
-		function getPoDetailItem() {
-			var poId=document.getElementById("po_id").value;
-			//alert("Po Id " +poId);
+	// on proj_id  change function show Order Header Select Option List 
+		function getOrderHeaders() {
+			var projId=document.getElementById("proj_id").value;
+			var custId = document.getElementById("cust_name").value;
 
 			
 				$
 						.getJSON(
-								'${getPoDetailForOrderByPoId}',
+								'${getOrdHeaderForChalan}',
 								{
-									poId : poId,
+									projId : projId,
+									custId : custId,
 									ajax : 'true',
 								},
 
 								function(data) {
 									
-									var dataTable = $('#bootstrap-data-table')
-									.DataTable();
-							dataTable.clear().draw();
+									var len = data.length;
+									//alert("data " +JSON.stringify(data));
+									var html='<option value="-1">Select Order</option>';
+									for (var i = 0; i < len; i++) {
+										var orderData=data[i].orderNo+"__"+data[i].orderDate
 
-							$
-									.each(
-											data,
-											function(i, v) {
-												//alert("hdjfh");
-var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
+										html += '<option value="' + data[i].projId + '">'
+												+orderData+ '</option>';
 
-var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
-										/* var str = '<a href="#" class="action_btn" onclick="callDelete('
-														+ v.itemId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-														+ v.itemId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-edit"></i></a>'
- */
-												dataTable.row
-														.add(
-																[
-																		i + 1,
-																		v.itemName,
-																		v.itemCode,
-																		v.poQty,
-																		v.poRemainingQty,
-																		v.poRate,
-																		ordQty,
-																		itemTotal
-																		 ])
-														.draw();
-											});
-						
-								});	
-						
+									}
+									html += '</option>';
+									$('#order_id').html(html);
+									$("#order_id").trigger("chosen:updated");
+								});
 		}
-	
 	
 	</script>
 	
 	<script type="text/javascript">
-	function calTotal(itemId,poRate,poDetailId,poRemainingQty){
-		//alert("Hi");
-		
-		var valid=true;
-		var qty=document.getElementById("ordQty"+itemId).value;
-		if(qty<0 || qty=="" || qty==null || qty==0){
-			valid=false;
-			alert("Please enter valid quantity");
-			document.getElementById("itemTotal"+itemId).value="0";
-
+	function showOrderItemPopup(orderId){
+		var isValid=true;
+		if(orderId==-1){
+			isValid=false;
 		}
-		else if(qty>poRemainingQty){
-			valid=false;
-			alert("Order quantity can not be greater than Po Remaining quantity");
-			document.getElementById("itemTotal"+itemId).value="0";
+		if(isValid==true){
+		 var span = document.getElementById("close");
+			var modal = document.getElementById('myModal');
 
-		}
-		if(valid==true){
-			var itemTotal=parseFloat(qty)*parseFloat(poRate);
-			document.getElementById("itemTotal"+itemId).value=itemTotal;
-		$.getJSON('${getTempOrderHeader}', {
-			
-			
-			qty : qty,
-			itemTotal : itemTotal,
-			poDetailId : poDetailId,
-			itemId : itemId,
-			poRemainingQty : poRemainingQty,
-			poRate : poRate,
-			orderDetId : 0,
-			ajax : 'true',
-		},
-
-		function(data) {
-			
-			var len = data.length;
-			//alert("orderTotal " +data.orderTotal);
-			var tot=0;
-			for (var i = 0; i < len; i++) {
-				//alert("data[]" +data[i].total)
-			tot=data[i].total+tot;
-				//alert("Json " +JSON.stringify(data.ordDetailList[i]));
-
+			modal.style.display = "block";
+			span.onclick = function() {
+			    modal.style.display = "none"; 
 			}
-			//alert("total " +tot);
-			document.getElementById("ordTotal").innerHTML=tot;
-		});
+
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+			    if (event.target == modal) {
+			        modal.style.display = "none";
+			        
+			    }
+			}
+
+		  $.getJSON('${getOrderDetailForChalan}', {
+			  orderId : orderId,
+					ajax : 'true',
+
+				},
+
+				function(data) {
+					
+					alert("detail  " +JSON.stringify(data));
+					
+					var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
+					var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
+
+					var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
+					 var temp;
+					var len = data.detailList.length;
+								var dataTable = $('#table_grid1')
+										.DataTable();
+								dataTable.clear().draw();
+								$
+										.each(
+												data.detailList,
+												function(i, v) {
+													var index=i+1;
+													dataTable.row
+															.add(
+																	[
+																		checkB,index,v.itemName,v.uomName,v.orderQty,v.remOrdQty,ordQty])
+															.draw();
+												});
+				
+		} );
+		
 		}
 	}
 	</script>

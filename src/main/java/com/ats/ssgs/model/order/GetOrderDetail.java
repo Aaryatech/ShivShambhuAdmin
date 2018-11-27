@@ -60,6 +60,16 @@ public class GetOrderDetail {
 	private String poNo;
 
 	private float remOrdQty;//new field
+	private String uomName;
+
+
+	public String getUomName() {
+		return uomName;
+	}
+
+	public void setUomName(String uomName) {
+		this.uomName = uomName;
+	}
 
 	public float getRemOrdQty() {
 		return remOrdQty;
@@ -318,7 +328,8 @@ public class GetOrderDetail {
 				+ ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2
 				+ ", exBool3=" + exBool3 + ", status=" + status + ", poRate=" + poRate + ", poQty=" + poQty
 				+ ", poConsumeQty=" + poConsumeQty + ", poTotal=" + poTotal + ", poRemainingQty=" + poRemainingQty
-				+ ", itemName=" + itemName + ", itemCode=" + itemCode + ", poDate=" + poDate + ", poNo=" + poNo + "]";
+				+ ", itemName=" + itemName + ", itemCode=" + itemCode + ", poDate=" + poDate + ", poNo=" + poNo
+				+ ", remOrdQty=" + remOrdQty + ", uomName=" + uomName + "]";
 	}
 
 }
