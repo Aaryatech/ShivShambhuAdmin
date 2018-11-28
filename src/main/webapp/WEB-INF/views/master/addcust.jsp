@@ -74,6 +74,41 @@
 
 			<div class="row">
 
+
+
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
+
+
+
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
@@ -88,7 +123,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertCust"
-								method="post">
+								id="submitForm" method="post">
 
 								<div class="row">
 
@@ -105,7 +140,6 @@
 											</c:forEach>
 										</select>
 									</div>
-
 									<div class="col-md-2">Customer Type*</div>
 
 									<div class="col-md-4">
@@ -537,6 +571,17 @@
 			}, 1);
 		}
 	</script>
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
+
 
 </body>
 </html>

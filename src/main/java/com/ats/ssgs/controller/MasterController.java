@@ -2436,9 +2436,9 @@ public class MasterController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("projIds", items);
+			map.add("vendIds", items);
 
-			Info errMsg = rest.postForObject(Constants.url + "deletemultiVendor", map, Info.class);
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiVendor", map, Info.class);
 
 		} catch (Exception e) {
 
@@ -2506,7 +2506,7 @@ public class MasterController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showTaxList";
+		return "redirect:/showItemList";
 	}
 
 }

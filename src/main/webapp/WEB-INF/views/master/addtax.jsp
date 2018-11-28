@@ -77,7 +77,36 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
 
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
@@ -93,7 +122,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertTax"
-								method="post">
+								id="submitForm" method="post">
 
 
 								<input type="hidden" name="taxId" id="taxId"
@@ -258,15 +287,7 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
 
 
-	<script>
-		jQuery(document).ready(function() {
-			jQuery(".standardSelect").chosen({
-				disable_search_threshold : 2,
-				no_results_text : "Oops, nothing found!",
-				width : "100%"
-			});
-		});
-	</script>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#bootstrap-data-table-export').DataTable();
@@ -314,6 +335,17 @@
 		}
 	</script>
 
+
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
 
 
 
