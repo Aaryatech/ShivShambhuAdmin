@@ -50,7 +50,20 @@ public class ChalanHeader {
 	
 	private String exDate1;
 	
+	private String costSegment;
 	
+	
+	
+	
+	
+	public String getCostSegment() {
+		return costSegment;
+	}
+
+	public void setCostSegment(String costSegment) {
+		this.costSegment = costSegment;
+	}
+
 	List<ChalanDetail> chalanDetailList;
 	
 	public List<ChalanDetail> getChalanDetailList() {
@@ -253,7 +266,8 @@ public class ChalanHeader {
 				+ ", vehInDate=" + vehInDate + ", outKm=" + outKm + ", inKm=" + inKm + ", sitePersonName="
 				+ sitePersonName + ", sitePersonMob=" + sitePersonMob + ", orderId=" + orderId + ", orderNo=" + orderNo
 				+ ", chalanRemark=" + chalanRemark + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1 + ", exVar1="
-				+ exVar1 + ", exDate1=" + exDate1 + ", chalanDetailList=" + chalanDetailList + "]";
+				+ exVar1 + ", exDate1=" + exDate1 + ", costSegment=" + costSegment + ", chalanDetailList="
+				+ chalanDetailList + "]";
 	}
 
 	

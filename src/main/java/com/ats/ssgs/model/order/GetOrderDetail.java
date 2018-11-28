@@ -61,7 +61,17 @@ public class GetOrderDetail {
 
 	private float remOrdQty;//new field
 	private String uomName;
+	private int uomId;
+	
 
+
+	public int getUomId() {
+		return uomId;
+	}
+
+	public void setUomId(int uomId) {
+		this.uomId = uomId;
+	}
 
 	public String getUomName() {
 		return uomName;
@@ -329,7 +339,7 @@ public class GetOrderDetail {
 				+ ", exBool3=" + exBool3 + ", status=" + status + ", poRate=" + poRate + ", poQty=" + poQty
 				+ ", poConsumeQty=" + poConsumeQty + ", poTotal=" + poTotal + ", poRemainingQty=" + poRemainingQty
 				+ ", itemName=" + itemName + ", itemCode=" + itemCode + ", poDate=" + poDate + ", poNo=" + poNo
-				+ ", remOrdQty=" + remOrdQty + ", uomName=" + uomName + "]";
+				+ ", remOrdQty=" + remOrdQty + ", uomName=" + uomName + ", uomId=" + uomId + "]";
 	}
 
 }

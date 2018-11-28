@@ -440,7 +440,7 @@ public class EnqController {
 
 			List<QuotDetail> quotDetailList = new ArrayList<>();
 
-			quotHeader.setCompanyId(0);
+			//quotHeader.setCompanyId(0);
 
 			quotHeader.setCustId(enqInsertRes.getCustId());
 
@@ -465,6 +465,15 @@ public class EnqController {
 			quotHeader.setProjId(0);
 			quotHeader.setQuotDate(curDate);
 			quotHeader.setUserId(1);
+			
+			
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("plantId", plantId);
+
+			Plant plant = rest.postForObject(Constants.url + "getPlantCompanyByPlantId", map, Plant.class);
+
+			quotHeader.setCompanyId(plant.getCompanyId());
 			
 
 			map = new LinkedMultiValueMap<String, Object>();

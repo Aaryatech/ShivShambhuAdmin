@@ -175,6 +175,9 @@ html {
 								href="${pageContext.request.contextPath}/showAddOrder">Add Order</a></li>
 									
 									
+									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddChalan">Add Chalan</a></li>
+									
 
 
 

@@ -119,6 +119,8 @@ body {
 <c:url var="getProjectByCustId" value="/getProjectByCustId" />
 <c:url var="getOrdHeaderForChalan" value="/getOrdHeaderForChalan" />
 <c:url var="getOrderDetailForChalan" value="/getOrderDetailForChalan" />
+<c:url var="setChalanItem" value="/setChalanItem" />
+<c:url var="getChalanSelectedItems" value="/getChalanSelectedItems" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -342,6 +344,18 @@ body {
 									</div>
 								</div>
 								
+									<div class="form-group"></div>
+									<div class="row">
+
+										<div class="col-md-2">Cost Segment</div>
+
+										<div class="col-md-4">
+											<input type="text" id="cost_segment" name="cost_segment"
+												 value="-" required style="width: 100%;" class="form-control">
+											<span class="error" aria-live="polite"></span>
+										</div>
+										</div>
+								<div class="form-group"></div>
 								
 								<div class="row">
 
@@ -374,7 +388,6 @@ body {
 										style="width: 100%" id="table_grid1" class="table table-striped table-bordered">
 										<thead>
 											<tr>
-										<th style=" width: 5%;" align="center"><input type="checkbox"></th>
 										<th style=" width: 5%;" align="center">Sr</th>
 										<th style=" width: 20%;"  align="center">Item Name</th>
 										<th style=" width: 20%;" align="center">Unit of Measure</th>
@@ -389,6 +402,7 @@ body {
 									</table>
 								</div>
 							 
+						<input type="button" disabled id="poupSubButton" onclick="showChalnItems()" class="btn btn-primary" value="Submit">
 							 
 						</div><br>
 						
@@ -401,14 +415,14 @@ body {
 								<div class="row">
 									<div class="col-md-2">Chalan Date</div>
 									<div class="col-md-4">
-										<input type="date" autocomplete="off"  id="chalan_date" name="chalan_date" required
+										<input type="text" autocomplete="off"  id="chalan_date" name="chalan_date" required
 											style="width: 100%;" class="form-control"
-											value="${editComp.contactNo1}"> <span class="error"
+											value="${curDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
 									<div class="col-md-2">Chalan No</div>
 									<div class="col-md-4">
-										<input type="text" readonly id="ord_no" name="ord_no"
+										<input type="text" readonly id="chalan_no" name="chalan_no"
 											style="width: 100%;" class="form-control"
 											value="${doc.docPrefix}${doc.srNo}"> <span
 											class="error" aria-live="polite"></span>
@@ -466,7 +480,7 @@ body {
 									<div class="col-md-2">
 										<input type="text" id="out_km" name="out_km" required onkeypress="return allowOnlyNumber(event);"
 											style="width: 100%;" class="form-control"  maxlength="10"
-											value="${editComp.contactNo1}"> <span class="error"
+											> <span class="error"
 											aria-live="polite"></span>
 									</div>
 								</div>
@@ -475,9 +489,9 @@ body {
 									<div class="col-md-2">Chalan Remark</div>
 
 									<div class="col-md-8">
-										<input type="text" id="del_date" name="del_date" required
+										<input type="text" id="chalan_remark" name="chalan_remark" required
 											style="width: 100%;" class="form-control"
-											value="${editComp.contactNo1}"> <span class="error"
+											value="-"> <span class="error"
 											aria-live="polite"></span>
 									</div>
 									
@@ -490,7 +504,7 @@ body {
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center">Sr &nbsp;</th>
+												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
 												<th style="text-align: center">Chalan Qty</th>
@@ -500,6 +514,12 @@ body {
 												<th style="text-align: center">Chalan Total</th>
 											</tr>
 										</thead>
+										
+										<tbody>
+										
+										
+										</tbody>
+										
 									</table>
 								</div>
 								<div class="form-group"></div>
@@ -524,7 +544,7 @@ body {
 									<div class="col-md-3" id="ordTotal">0</div>
  -->
 									<div class="col-md-2">
-										<input type="submit" class="btn btn-primary" value="Submit">
+										<input type="submit"  class="btn btn-primary" value="Submit">
 
 									</div>
 
@@ -599,6 +619,11 @@ body {
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#bootstrap-data-table').DataTable();
+			
+			 $("#selChalanItem").click(function () {
+	              $('#table_grid1-data-table tbody input[type="checkbox"]').prop('checked', this.checked);
+	          });
+			 
 		});
 	</script>
 
@@ -607,7 +632,7 @@ body {
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$('input[id$=ord_date]').datepicker({
+			$('input[id$=chalan_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 			
@@ -740,28 +765,6 @@ function allowOnlyNumber1(evt)
 									document.getElementById("custMobNo").value = data.custMobNo;
 								});
 
-			/* 	$	.getJSON(
-						'${getPOHeaderByCustId}',
-						{
-							custId : custId,
-							ajax : 'true',
-						},
-						function(data) {
-							var html;
-							var len = data.length;
-							//alert("data " +JSON.stringify(data));
-							for (var i = 0; i < len; i++) {
-								var PNo=data[i].poNo+"-"+ data[i].poDate 
-
-								html += '<option value="' + data[i].poId + '">'
-										+PNo+ '</option>';
-
-							}
-							html += '</option>';
-							$('#po_id').html(html);
-							$("#po_id").trigger("chosen:updated");
-						});
-				 */
 				
 				$	.getJSON(
 						'${getProjectByCustId}',
@@ -797,7 +800,7 @@ function allowOnlyNumber1(evt)
 		function getOrderHeaders() {
 			var projId=document.getElementById("proj_id").value;
 			var custId = document.getElementById("cust_name").value;
-
+		
 			
 				$
 						.getJSON(
@@ -816,7 +819,7 @@ function allowOnlyNumber1(evt)
 									for (var i = 0; i < len; i++) {
 										var orderData=data[i].orderNo+"__"+data[i].orderDate
 
-										html += '<option value="' + data[i].projId + '">'
+										html += '<option value="' + data[i].orderId + '">'
 												+orderData+ '</option>';
 
 									}
@@ -859,26 +862,32 @@ function allowOnlyNumber1(evt)
 
 				function(data) {
 					
-					alert("detail  " +JSON.stringify(data));
+					//alert("detail  " +JSON.stringify(data));
+					if(data==null){
+						document.getElementById('poupSubButton').disabled=true;
+						
+					}else{
+						document.getElementById('poupSubButton').disabled=false;
+					}
 					
-					var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-					var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
-
-					var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
-					 var temp;
-					var len = data.detailList.length;
+					
+					var len = data.length;
+					//alert("Len " +len);
 								var dataTable = $('#table_grid1')
 										.DataTable();
 								dataTable.clear().draw();
 								$
 										.each(
-												data.detailList,
+												data,
 												function(i, v) {
+													//var checkB = '<input  type="checkbox" name="selChalanItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
+		var chalanQty = '<input  type="text" value="0"  class="form-control"  id="chalanQty'+v.itemId+'" name="chalanQty'+v.itemId+'" oninput="setChalanItem(this.value,'+v.itemId+','+v.poId+','+v.poDetailId+','+v.remOrdQty+','+v.orderDetId+','+v.orderId+','+i+','+v.uomId+',/'+v.itemName+'/)" onkeypress="return allowOnlyNumber(event);"/>'
+													//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
 													var index=i+1;
 													dataTable.row
 															.add(
 																	[
-																		checkB,index,v.itemName,v.uomName,v.orderQty,v.remOrdQty,ordQty])
+																		index,v.itemName,v.uomName,v.orderQty,v.remOrdQty,chalanQty])
 															.draw();
 												});
 				
@@ -887,6 +896,128 @@ function allowOnlyNumber1(evt)
 		}
 	}
 	</script>
+	
+	<script type="text/javascript">
+	function allowOnlyNumber(evt){
+	    var charCode = (evt.which) ? evt.which : event.keyCode
+	    if (charCode == 46){
+	        var inputValue = $("#floor").val();
+	        var count = (inputValue.match(/'.'/g) || []).length;
+	        
+	        if(count<1){
+	            if (inputValue.indexOf('.') < 1){
+	                return true;
+	            }
+	            return false;
+	        }else{
+	            return false;
+	        }
+	    }
+	    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+	        return false;
+	    }
+	    return true;
+	}
+	
+	function setChalanItem(chalanQty,itemId,poId,poDetailId,remOrdQty,orderDetId,orderId,index,uomId,itemName){
+		//alert("Item Id" +itemId + "poId" +poId+ "detail PO Id " +poDetailId + "rem Ord Qty  " +remOrdQty );
+		var isValid=true;
+		
+		if(remOrdQty<chalanQty){
+			isValid=false;
+			document.getElementById("chalanQty"+itemId).value="0";
+			alert("Chalan Quantity can not be greater than  Remaining Order Quantity ");
+		}
+	if(chalanQty<0){
+		isValid=false;
+		document.getElementById("chalanQty"+itemId).value="0";
+		alert("Please Enter Correct Chalan Quantity");
+	}
+	
+		if(isValid==true){
+	 	$
+		.getJSON(
+				'${setChalanItem}',
+				{
+					chalanQty : chalanQty,
+					itemId : itemId,
+					poId : poId,
+					poDetailId : poDetailId,
+					remOrdQty : remOrdQty,
+					orderDetId : orderDetId,
+					orderId : orderId,
+					index : index,
+					uomId : uomId,
+					itemName :itemName,
+					
+					ajax : 'true',
+				},
+
+				function(data) {
+					//alert("Data  " +JSON.stringify(data));
+					
+				}); 
+	 	
+		}//end if 
+	}
+	
+	</script>
+	<script type="text/javascript">
+	function showChalnItems(){
+		
+		  $.getJSON('${getChalanSelectedItems}', {
+					ajax : 'true',
+
+				},
+
+				function(data) {
+					var modal = document.getElementById('myModal');
+			        modal.style.display = "none";
+
+					//alert("detail  " +JSON.stringify(data));
+					
+					var len = data.length;
+					//alert("Len " +len);
+								var dataTable = $('#bootstrap-data-table')
+										.DataTable();
+								dataTable.clear().draw();
+								$
+										.each(
+												data,
+												function(i, v) {
+													//var checkB = '<input  type="checkbox" name="selChalanItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
+		var width = '<input  type="text" value="0"  class="form-control"  id="width'+v.itemId+'" name="width'+v.itemId+'"   oninput="calcChalanTotal('+v.itemId+')"  onkeypress="return allowOnlyNumber(event);"/>'
+		var height = '<input  type="text" value="0"  class="form-control"  id="height'+v.itemId+'" name="height'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
+		var length = '<input  type="text" value="0"  class="form-control"  id="length'+v.itemId+'" name="length'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
+
+													var itemChalanTotal = '<input  type="text" readonly  class="form-control"  id="itemChalanTotal'+v.itemId+'" name="itemChalanTotal'+v.itemId+'"/>'
+													var index=i+1;
+													dataTable.row
+															.add(
+																	[
+																		index,v.itemName,v.uomName,v.chalanQty,width,height,length,itemChalanTotal])
+															.draw();
+												});
+				 
+		} );
+	}
+	
+	</script>
+	<script type="text/javascript">
+	
+	function calcChalanTotal(itemId){
+		alert("Hi  inside calcChalanTotal(itemId) method ");
+
+		var width=document.getElementById("width"+itemId).value;
+		var height=document.getElementById("height"+itemId).value;
+		var length=document.getElementById("length"+itemId).value;
+
+		alert("Hi height " +height + "length  "+length + "width  " +width);;
+	}
+	
+	</script>
+	
+	
 
 	<!-- <script type="text/javascript">
 		function addItem() {
@@ -1087,6 +1218,15 @@ function allowOnlyNumber1(evt)
 			
 		});
 	</script> -->
-
+	<script type="text/javascript">
+function toggle() {
+			  checkboxes = document.getElementsByName('selChalanItem');
+			  for(var i=0, n=checkboxes.length;i<n;i++) {
+			    checkboxes[i].checked = source.checked;
+			  }
+			  }
+				  
+			
+			</script> 
 </body>
 </html>

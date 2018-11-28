@@ -4,7 +4,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +25,9 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.DocTermHeader;
-import com.ats.ssgs.model.master.GetItem;
-import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.PaymentTerm;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
-import com.ats.ssgs.model.master.Uom;
 import com.ats.ssgs.model.master.User;
 import com.ats.ssgs.model.quot.GetItemWithEnq;
 import com.ats.ssgs.model.quot.GetQuotHeads;
@@ -281,6 +277,8 @@ public class QuotController {
 			quotHeader.setQuotTermId(quotTermId);
 			quotHeader.setNoOfKm(noOfKm);
 			quotHeader.setExDate2(curDate);
+			
+			//quotHeader.setCompanyId(companyId);
 
 			List<QuotDetail> quotDetList = quotHeader.getQuotDetailList();
 

@@ -472,12 +472,15 @@
 					$("#cust_name").trigger("chosen:updated");
 					getCustInfo();
 
-					$('#po_id').html("-1");
+					//$('#po_id').html("-1");
 					$("#po_id").trigger("chosen:updated");
+				
 					
 					var dataTable = $('#bootstrap-data-table')
 					.DataTable();
 			dataTable.clear().draw();
+			
+			getPoDetailItem();
 
 				});
 			}//end of if
@@ -587,8 +590,17 @@
 	// on poId c change function 
 		function getPoDetailItem() {
 			var poId=document.getElementById("po_id").value;
-			//alert("Po Id " +poId);
-
+			
+			alert("Po Id " +poId);
+			
+			var valid=true;
+			
+			if(poId==-1 || poId=="" || poId==null){
+				valid=false;
+			}
+			if(valid==true){
+			
+			
 			
 				$
 						.getJSON(
@@ -639,7 +651,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 											});
 						
 								});	
-						
+			}	
 		}
 	
 	

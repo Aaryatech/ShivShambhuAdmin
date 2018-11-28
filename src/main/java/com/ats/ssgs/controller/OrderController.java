@@ -97,7 +97,7 @@ public class OrderController {
 		int custId = Integer.parseInt(request.getParameter("custId"));
 
 		map.add("custId", custId);
-		map.add("statusList", "1,2");
+		map.add("statusList", "0,1");
 
 		PoHeader[] poHeadArray = rest.postForObject(Constants.url + "getPoHeaderByCustIdAndStatus", map,
 				PoHeader[].class);

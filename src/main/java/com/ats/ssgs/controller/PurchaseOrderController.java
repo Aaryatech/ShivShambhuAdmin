@@ -91,7 +91,7 @@ public class PurchaseOrderController {
 			save.setPoTermId(quotHeader.getPayTermId());
 			save.setPlantId(Integer.parseInt(quotHeader.getPlantIds()));
 			save.setVarchar1(delivery);
-			save.setQutDate(quotHeader.getQuotDate());
+			save.setQutDate(DateConvertor.convertToYMD(quotHeader.getQuotDate()));
 			save.setDelStatus(1);
 			
 			List<PoDetail> poDetailList = new ArrayList<PoDetail>();
@@ -109,6 +109,7 @@ public class PurchaseOrderController {
 				poDetail.setTotal(Float.parseFloat(request.getParameter("finalAmt"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
 				poDetail.setTaxPer(quotHeader.getGetQuotDetailList().get(i).getSgstPer()+quotHeader.getGetQuotDetailList().get(i).getSgstPer()+
 						quotHeader.getGetQuotDetailList().get(i).getIgstPer());
+				poDetail.setPoRemainingQty(poDetail.getPoQty());
 				poDetailList.add(poDetail);
 				
 			}
@@ -118,7 +119,7 @@ public class PurchaseOrderController {
 			PoHeader res = rest.postForObject(Constants.url + "savePurchaseOrder", save,
 					PoHeader.class);
 
-			System.err.println("res  " + res.toString());
+			System.err.println("res  PoHeader insert " + res.toString());
 			
 			if(res!=null) {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();

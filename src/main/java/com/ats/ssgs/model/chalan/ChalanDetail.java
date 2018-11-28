@@ -16,6 +16,18 @@ public class ChalanDetail {
 	private float itemWidthPlant;
 	private float itemHeightPlant;
 	
+	private float itemTotalPlant;
+
+	
+	public float getItemTotalPlant() {
+		return itemTotalPlant;
+	}
+	public void setItemTotalPlant(float itemTotalPlant) {
+		this.itemTotalPlant = itemTotalPlant;
+	}
+
+
+
 	private float itemLengthSite;
 	private float itemWidthSite;
 	private float itemHeightSite;
@@ -151,11 +163,11 @@ public class ChalanDetail {
 	public String toString() {
 		return "ChalanDetail [chalanDetailId=" + chalanDetailId + ", chalanId=" + chalanId + ", itemId=" + itemId
 				+ ", itemUom=" + itemUom + ", itemQty=" + itemQty + ", itemLengthPlant=" + itemLengthPlant
-				+ ", itemWidthPlant=" + itemWidthPlant + ", itemHeightPlant=" + itemHeightPlant + ", itemLengthSite="
-				+ itemLengthSite + ", itemWidthSite=" + itemWidthSite + ", itemHeightSite=" + itemHeightSite
-				+ ", itemTotalSite=" + itemTotalSite + ", status=" + status + ", delStatus=" + delStatus + ", exInt1="
-				+ exInt1 + ", exFloat1=" + exFloat1 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exDate1="
-				+ exDate1 + "]";
+				+ ", itemWidthPlant=" + itemWidthPlant + ", itemHeightPlant=" + itemHeightPlant + ", itemTotalPlant="
+				+ itemTotalPlant + ", itemLengthSite=" + itemLengthSite + ", itemWidthSite=" + itemWidthSite
+				+ ", itemHeightSite=" + itemHeightSite + ", itemTotalSite=" + itemTotalSite + ", status=" + status
+				+ ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1 + ", exVar1=" + exVar1
+				+ ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + "]";
 	}
 	
 }
