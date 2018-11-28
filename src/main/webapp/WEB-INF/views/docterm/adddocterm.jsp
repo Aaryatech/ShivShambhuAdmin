@@ -112,7 +112,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select Document name')"
 											onchange="getData()">
-
+											<option>Select Document*</option>
 											<c:forEach items="${docList}" var="doc">
 												<option value="${doc.docId}">${doc.docName}</option>
 											</c:forEach>
@@ -121,7 +121,7 @@
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Term And Conditions Title*</div>
+									<div class="col-md-2">Terms And Conditions Title*</div>
 									<div class="col-md-4">
 										<input type="text" id="termTitle" name="termTitle"
 											pattern="^[A-Za-z\s]+$" autocomplete="off"
@@ -141,7 +141,7 @@
 								<hr>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Term And Conditions*</div>
+									<div class="col-md-2">Terms And Conditions*</div>
 									<div class="col-md-10">
 										<input type="text" id="termDesc" name="termDesc"
 											class="form-control" style="width: 100%;">
@@ -178,7 +178,7 @@
 											<tr>
 
 												<th style="text-align: center; width: 5%;">Sr</th>
-												<th style="text-align: center">Term And Conditions</th>
+												<th style="text-align: center">Terms And Conditions</th>
 												<th style="text-align: center">Sort No</th>
 												<th style="text-align: center; width: 5%;">Action</th>
 											</tr>

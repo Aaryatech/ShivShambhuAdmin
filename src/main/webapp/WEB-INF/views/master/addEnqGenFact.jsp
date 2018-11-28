@@ -85,7 +85,36 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
 
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 
@@ -96,7 +125,7 @@
 						<div class="card-body card-block">
 							<form
 								action="${pageContext.request.contextPath}/insertEnqGenFact"
-								method="post">
+								id="submitForm" method="post">
 
 
 
@@ -112,15 +141,14 @@
 											style="width: 100%;">
 									</div>
 									<div class="col-lg-2">
-										<button type="submit" class="btn btn-primary"
+										<input type="submit" class="btn btn-primary" value="Submit"
 											style="align-content: center; width: 113px; margin-left: 20px;">
-											Submit</button>
+
 									</div>
 									<div class="col-lg-2">
 
-										<button type="reset" class="btn btn-primary"
+										<input type="reset" class="btn btn-primary" value="Clear"
 											style="align-content: center; width: 113px; margin-left: 20px;">
-											Clear</button>
 									</div>
 									<input type="hidden" id="enqGenId" name="enqGenId"
 										value="${editEnqGen.enqGenId}">
@@ -128,43 +156,57 @@
 							</form>
 						</div>
 						<div class="card-body card-block">
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
-										<th style="text-align: center; width: 5%;">Sr</th>
-										<th style="text-align: center">Enquiry Source</th>
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofEnqGenFact"
+								method="post">
 
-										<th style="text-align: center; width: 5%;">Action</th>
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
 
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${enqGenFactList}" var="enqGenFact"
-										varStatus="count">
+									<thead>
 										<tr>
-
-											<td style="text-align: center">${count.index+1}</td>
-
-
-											<td style="text-align: left"><c:out
-													value="${enqGenFact.enqGenBy}" /></td>
-
-
-
-											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editEnqGenFact/${enqGenFact.enqGenId}"><i
-													class="fa fa-edit"></i> <span class="text-muted"></span></a>
-												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteEnqGenFact/${enqGenFact.enqGenId}"
-												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o"></i></a></td>
-
+											<th class="check" style="text-align: center; width: 5%;"><input
+												type="checkbox" name="selAll" id="selAll" />Select All</th>
+											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center">Enquiry Source</th>
+											<th style="text-align: center; width: 5%;">Action</th>
 										</tr>
-									</c:forEach>
-								</tbody>
+									</thead>
+									<tbody>
+										<c:forEach items="${enqGenFactList}" var="enqGenFact"
+											varStatus="count">
+											<tr>
+												<td><input type="checkbox" class="chk" name="enqGenIds"
+													id="enqGenIds${count.index+1}"
+													value="${enqGenFact.enqGenId}" /></td>
+												<td style="text-align: center">${count.index+1}</td>
 
-							</table>
+												<td style="text-align: left"><c:out
+														value="${enqGenFact.enqGenBy}" /></td>
+
+												<td style="text-align: center"><a
+													href="${pageContext.request.contextPath}/editEnqGenFact/${enqGenFact.enqGenId}"><i
+														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+													&nbsp; <a
+													href="${pageContext.request.contextPath}/deleteEnqGenFact/${enqGenFact.enqGenId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o"></i></a></td>
+
+											</tr>
+										</c:forEach>
+									</tbody>
+
+								</table>
+								<div class="col-lg-1">
+
+									<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+
+
+								</div>
+							</form>
 
 
 						</div>
@@ -238,9 +280,33 @@
 
 
 
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
 
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
 
-
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
+	</script>
 
 
 </body>

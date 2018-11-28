@@ -55,7 +55,6 @@ public class MasterController {
 	List<Vendor> vendList;
 	List<Dept> deptList;
 	List<ItemType> itemTypeList;
-
 	List<Tax> getTaxList;
 	List<GetVendor> getVendList;
 	int isError = 0;
@@ -1871,6 +1870,7 @@ public class MasterController {
 			uom.setExInt1(0);
 			uom.setExInt2(0);
 			uom.setExInt3(0);
+			uom.setUomId(uomId);
 
 			uom.setExVar1("NA");
 			uom.setExVar2("NA");
@@ -2382,11 +2382,41 @@ public class MasterController {
 
 		} catch (Exception e) {
 
-			System.err.println("Exception in /deleteMultiCust @MastContr  " + e.getMessage());
+			System.err.println("Exception in /deleteRecordofProject @MastContr  " + e.getMessage());
 			e.printStackTrace();
 		}
 
 		return "redirect:/showProjectList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofUom", method = RequestMethod.POST)
+	public String deleteRecordofUom(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] uomIds = request.getParameterValues("uomIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < uomIds.length; i++) {
+				sb = sb.append(uomIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("uomIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiUom", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofUom @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showAddUom";
 	}
 
 	@RequestMapping(value = "/deleteRecordofVendor", method = RequestMethod.POST)
@@ -2417,6 +2447,66 @@ public class MasterController {
 		}
 
 		return "redirect:/showVendorList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofTax", method = RequestMethod.POST)
+	public String deleteRecordofTax(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] taxIds = request.getParameterValues("taxIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < taxIds.length; i++) {
+				sb = sb.append(taxIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("taxIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiTax", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofTax @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showTaxList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofItem", method = RequestMethod.POST)
+	public String deleteRecordofItem(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] itemIds = request.getParameterValues("itemIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < itemIds.length; i++) {
+				sb = sb.append(itemIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("itemIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiItem", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofItem @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showTaxList";
 	}
 
 }
