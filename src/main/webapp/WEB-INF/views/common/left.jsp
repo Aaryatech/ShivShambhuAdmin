@@ -104,7 +104,8 @@ html {
 
 
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddUom">Add Uom</a></li>
+								href="${pageContext.request.contextPath}/showAddUom">Add
+									Measurement Unit</a></li>
 
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showAddTax">Add Tax</a></li>
@@ -126,11 +127,11 @@ html {
 
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showAddDocTerm">Add
-									Term & Conditions</a></li>
+									Terms & Conditions</a></li>
 
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showDocTermList">
-									Term & Conditions List</a></li>
+									Terms & Conditions List</a></li>
 
 
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
@@ -169,12 +170,13 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showQuotations">View
 									Quotations</a></li>
-									
-									
-									<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddOrder">Add Order</a></li>
-									
-									
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddOrder">Add
+									Order</a></li>
+
+
 
 
 

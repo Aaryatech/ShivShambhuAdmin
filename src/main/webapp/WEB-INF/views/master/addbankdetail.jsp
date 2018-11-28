@@ -222,11 +222,12 @@
 
 									<div class="col-md-4">
 										<input type="text" id="bankIfsc" name="bankIfsc"
-											autocomplete="off" pattern="[A-Z|a-z]{4}[0][\d]{6}$"
+											maxlength="11" autocomplete="off"
+											pattern="[A-Z|a-z]{4}[0][\d]{6}$"
 											value="${editBankDetail.bankIfsc}" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct IFSC Code')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
+											onchange="try{setCustomValidity('')}catch(e){}"
+											onkeydown="upperCaseF(this)" required style="width: 100%;">
 									</div>
 
 								</div>
@@ -294,7 +295,7 @@
 
 											<th style="text-align: center">Company Name</th>
 											<th style="text-align: center">Bank Name</th>
-											<th style="text-align: center">Bank IFSC</th>
+											<th style="text-align: center">Bank IFSC Code</th>
 											<th style="text-align: center">Account No</th>
 											<th style="text-align: center; width: 5%;">Action</th>
 
@@ -474,7 +475,13 @@
 	</script>
 
 
-
+	<script>
+		function upperCaseF(a) {
+			setTimeout(function() {
+				a.value = a.value.toUpperCase();
+			}, 1);
+		}
+	</script>
 
 
 </body>

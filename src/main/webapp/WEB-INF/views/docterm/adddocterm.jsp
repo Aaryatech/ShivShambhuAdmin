@@ -85,6 +85,36 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -101,7 +131,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertDocTerm"
-								method="post">
+								id="submitForm" method="post">
 
 								<div class="row">
 
@@ -112,7 +142,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select Document name')"
 											onchange="getData()">
-											<option>Select Document*</option>
+											<option>Select</option>
 											<c:forEach items="${docList}" var="doc">
 												<option value="${doc.docId}">${doc.docName}</option>
 											</c:forEach>
@@ -190,8 +220,8 @@
 								<div class="col-lg-4"></div>
 								<div class="col-lg-2">
 
-									<input type="submit" class="btn btn-primary" value="Submit11"
-										style="align-content: center;">
+									<input type="submit" class="btn btn-primary" value="Submit"
+										style="align-content: center; width: 113px; margin-left: 20px;">
 
 								</div>
 								<div class="col-lg-2">
@@ -423,6 +453,16 @@
 				className : "right"
 			}, ]
 
+		});
+	</script>
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
 		});
 	</script>
 

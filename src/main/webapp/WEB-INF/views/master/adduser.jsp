@@ -159,7 +159,7 @@
 									<div class="col-md-4">
 										<select id="plant_name" name="plant_id" class="standardSelect"
 											tabindex="1" required>
-
+											<option value="">Select</option>
 											<c:forEach items="${plantList}" var="plant">
 
 												<c:choose>
@@ -410,7 +410,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option value="-1"  >Select Company</option>';
+					var html = '<option value="-1"  >Select</option>';
 					for (var i = 0; i < len; i++) {
 
 						html += '<option value="' + data[i].plantId + '">'

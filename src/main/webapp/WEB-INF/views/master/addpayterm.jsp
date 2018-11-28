@@ -148,15 +148,15 @@
 								<div class="form-group"></div>
 								<div class="col-lg-4"></div>
 								<div class="col-lg-2">
-									<button type="submit" class="btn btn-primary"
+									<input type="submit" class="btn btn-primary" value="Submit"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Submit</button>
+
 								</div>
 
 								<div class="col-lg-2">
-									<button type="reset" class="btn btn-primary"
+									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Clear</button>
+
 								</div>
 							</form>
 						</div>

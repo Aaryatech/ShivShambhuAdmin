@@ -191,7 +191,7 @@
 											value="${editVend.vendGst}" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter GST no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" style="width: 100%;"
+											class="form-control" style="width: 100%;" maxlength="15"
 											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
 											onkeydown="upperCaseF(this)" required>
 									</div>
@@ -257,7 +257,7 @@
 											class="form-control" style="width: 100%;" maxlength="10"
 											autocomplete="off" pattern="[0-9]+"
 											value="${editVend.vendCreditDays}"
-											oninvalid="setCustomValidity('Please enter correct creadit Days')"
+											oninvalid="setCustomValidity('Please enter correct Credit Days')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 

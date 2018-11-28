@@ -132,6 +132,7 @@
 									<div class="col-md-2">Tax Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="taxName" name="taxName"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct Tax Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											value="${editTax.taxName}" class="form-control"
@@ -143,7 +144,7 @@
 									<div class="col-md-4">
 										<input type="text" id="hsnCode" name="hsnCode" maxLength="10"
 											value="${editTax.hsnCode}" class="form-control"
-											pattern="[0-9]+"
+											pattern="[0-9]+" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct hsn code')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;" required>
@@ -157,14 +158,14 @@
 									<div class="col-md-4">
 										<input type="text" id="cgst" name="cgst"
 											value="${editTax.cgst}" class="form-control"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											autocomplete="off" pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											oninvalid="setCustomValidity('Please enter correct Cgst')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;" required>
 									</div>
 									<div class="col-md-2">SGST*</div>
 									<div class="col-md-4">
-										<input type="text" id="sgst" name="sgst"
+										<input type="text" id="sgst" name="sgst" autocomplete="off"
 											value="${editTax.sgst}" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct Sgst')"
 											onblur="calculateIgst()" pattern="[0-9]+(\.[0-9]{0,2})?%?"
@@ -177,7 +178,7 @@
 								<div class="row">
 									<div class="col-md-2">IGST</div>
 									<div class="col-md-4">
-										<input type="text" id="igst" name="igst"
+										<input type="text" id="igst" name="igst" autocomplete="off"
 											value="${editTax.igst}" class="form-control" readonly
 											oninvalid="setCustomValidity('Please enter Cgst')"
 											onchange="try{setCustomValidity('')}catch(e){}"
@@ -187,7 +188,7 @@
 									<div class="col-md-4">
 										<input type="text" id="totalTaxPer" name="totalTaxPer"
 											value="${editTax.totalTaxPer}" class="form-control"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Sgst')"
 											onchange="try{setCustomValidity('')}catch(e){}" readonly
 											style="width: 100%;">
@@ -199,8 +200,8 @@
 									<div class="col-md-4">
 										<input type="text" id="cess" name="cess"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" value="${editTax.cess}"
-											class="form-control"
-											oninvalid="setCustomValidity('Please enter Cgst')"
+											class="form-control" autocomplete="off"
+											oninvalid="setCustomValidi ty('Please enter Cgst')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;" required>
 									</div>
@@ -208,7 +209,7 @@
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
 											value="${editTax.sortNo}" class="form-control"
-											pattern="[0-9]+"
+											pattern="[0-9]+" autocomplete="off" maxlength="3"
 											oninvalid="setCustomValidity('Please enter Sort No')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
@@ -217,14 +218,14 @@
 								<div class="form-group"></div>
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
-									<button type="submit" class="btn btn-primary"
+									<input type="submit" class="btn btn-primary" value="Submit"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Submit</button>
+
 								</div>
 								<div class="col-lg-3">
-									<button type="reset" class="btn btn-primary"
+									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Clear</button>
+
 								</div>
 							</form>
 						</div>

@@ -131,7 +131,7 @@
 									<div class="col-md-4">
 										<select id="compId" name="compId" class="standardSelect"
 											tabindex="1" onchange="selectCompany()">
-											<option value="">Select Company</option>
+											<option value="">Select</option>
 											<c:forEach items="${compList}" var="comp">
 
 												<c:choose>
@@ -242,7 +242,7 @@
 									<div class="col-md-4">
 										<select id="plant_head" name="plant_head" style="width: 100%;"
 											class="standardSelect" tabindex="1" required>
-											<option value="">Select Plant</option>
+											<option value="">Select</option>
 											<c:forEach items="${usrList}" var="usr">
 
 

@@ -165,7 +165,6 @@ public class MasterController {
 				vend.setVendContact2(request.getParameter("vendContact2"));
 
 			} catch (Exception e) {
-				// TODO: handle exception
 				vend.setVendContactName("NA");
 				vend.setVendContact2("NA");
 			}
@@ -306,8 +305,6 @@ public class MasterController {
 				taxId = 0;
 			}
 
-			int sortNo = Integer.parseInt(request.getParameter("sortNo"));
-
 			float cess = Float.parseFloat(request.getParameter("cess"));
 			float cgst = Float.parseFloat(request.getParameter("cgst"));
 			float igst = Float.parseFloat(request.getParameter("igst"));
@@ -338,9 +335,17 @@ public class MasterController {
 			tax.setIgst(igst);
 			tax.setTotalTaxPer(totalTaxPer);
 			tax.setTaxName(taxName);
-			tax.setSortNo(sortNo);
+
 			tax.setSgst(sgst);
 			tax.setTaxId(taxId);
+
+			try {
+				tax.setSortNo(Integer.parseInt(request.getParameter("sortNo")));
+
+			} catch (Exception e) {
+				tax.setSortNo(0);
+
+			}
 
 			// saveTax
 
@@ -2049,7 +2054,7 @@ public class MasterController {
 
 			} catch (Exception e) {
 				user.setSortNo(0);
-				// TODO: handle exception
+
 			}
 
 			User userInsertRes = rest.postForObject(Constants.url + "saveUser", user, User.class);

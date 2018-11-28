@@ -132,7 +132,7 @@
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Sort No*</div>
+									<div class="col-md-2">Sort No(Optional)</div>
 
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
@@ -164,16 +164,16 @@
 
 									<div class="col-lg-2">
 
-										<button type="submit" class="btn btn-primary"
+										<input type="submit" class="btn btn-primary" value="Submit"
 											style="align-content: center; width: 113px; margin-left: 40px;">
-											Submit</button>
 									</div>
 
 									<div class="col-lg-2">
 
-										<button type="reset" class="btn btn-primary"
+										<input type="reset" class="btn btn-primary" value="Clear"
 											style="align-content: center; width: 113px; margin-left: 40px;">
-											Clear</button>
+
+
 									</div>
 
 								</div>
