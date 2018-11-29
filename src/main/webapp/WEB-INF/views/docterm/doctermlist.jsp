@@ -101,7 +101,7 @@
 												type="checkbox" name="selAll" id="selAll" /> Select All</th>
 											<th style="text-align: center; width: 5%;"">Sr No</th>
 											<th style="text-align: center">Document Name</th>
-											<th style="text-align: center">Term & Conditions</th>
+											<th style="text-align: center">Terms & Conditions</th>
 											<th style="text-align: center">Sort No</th>
 
 											<th style="text-align: center">Action</th>

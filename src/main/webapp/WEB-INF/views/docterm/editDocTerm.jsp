@@ -161,7 +161,7 @@
 
 
 
-									<div class="col-md-2">Sort No*</div>
+									<div class="col-md-2">Sort No(Optional)</div>
 
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo" maxlength="3"
@@ -169,7 +169,7 @@
 											class="form-control"
 											oninvalid="setCustomValidity('Please enter correct sort no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
+											style="width: 100%;">
 									</div>
 								</div>
 								<hr>
@@ -181,7 +181,7 @@
 												<th style="text-align: center; width: 5%;">Sr No</th>
 												<th style="text-align: center">Terms & Conditions</th>
 												<th style="text-align: center">Sort No</th>
-												<th style="text-align: center; width: 5%;">Action</th>
+											<!-- 	<th style="text-align: center; width: 5%;">Action</th> -->
 											</tr>
 										</thead>
 										<tbody>
@@ -212,14 +212,14 @@
 															value="${docDetail.sortNo}" /></td> --%>
 
 
-													<td style="text-align: center"><a
+													<%-- <td style="text-align: center"><a
 														href="${pageContext.request.contextPath}/editDocHeader/${docDetail.termDetailId}"><i
 															class="fa fa-edit"></i> <span class="text-muted"></span></a>
 														&nbsp; <a
 														href="${pageContext.request.contextPath}/deleteDocHeader/${docDetail.termDetailId}"
 														onClick="return confirm('Are you sure want to delete this record');"><i
 															class="fa fa-trash-o"></i></a></td>
-
+ --%>
 												</tr>
 											</c:forEach>
 										</tbody>

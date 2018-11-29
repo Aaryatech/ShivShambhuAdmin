@@ -142,7 +142,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select Document name')"
 											onchange="getData()">
-											<option>Select Document*</option>
+											<option>Select</option>
 											<c:forEach items="${docList}" var="doc">
 												<option value="${doc.docId}">${doc.docName}</option>
 											</c:forEach>

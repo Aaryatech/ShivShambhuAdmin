@@ -258,7 +258,7 @@ public class DocTermController {
 					GetDocTermHeader[].class);
 			docTermHeaderList = new ArrayList<GetDocTermHeader>(Arrays.asList(docArray));
 
-			model.addObject("title", "Term & Conditions List");
+			model.addObject("title", "Terms & Conditions List");
 			model.addObject("docHeaderList", docTermHeaderList);
 		} catch (Exception e) {
 
@@ -353,8 +353,5 @@ public class DocTermController {
 
 		return "redirect:/showDocTermList";
 	}
-	
-	
 
-	
 }
