@@ -196,6 +196,7 @@
 											class="form-control"
 											oninvalid="setCustomValidity('Please enter correct mob no')"
 											pattern="^[1-9]{1}[0-9]{9}$" maxlength="10"
+											onchange="getMobileNoCheck()"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
@@ -400,7 +401,7 @@
 
 
 	<script type="text/javascript">
-		function getDeptNameCheck() {
+		function getMobileNoCheck() {
 
 			var usrMob = $("#usrMob").val();
 
