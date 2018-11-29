@@ -83,6 +83,12 @@ public class EnqController {
 			map.add("docCode", 1);
 			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
 			model.addObject("doc", doc);
+			
+			
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			String curDate = dateFormat.format(new Date());
+			
+			model.addObject("curDate" ,curDate);
 
 		} catch (Exception e) {
 

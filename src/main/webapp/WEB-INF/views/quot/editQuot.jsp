@@ -295,10 +295,9 @@ body {
 
 									<div class="col-md-4">
 										<select id="quot_doc_term_id" name="quot_doc_term_id"
-											class="standardSelect" tabindex="1" required
-											onchange="showDocDetailPopup(this.value)"
-											oninvalid="setCustomValidity('Please select quotation term')">
-											<option value="-1">Select Term</option>
+											class="standardSelect" tabindex="1" 
+											onchange="showDocDetailPopup()">
+											<option value="-1">Select</option>
 
 											<c:forEach items="${docTermList}" var="qTerm">
 											<c:choose>
@@ -368,24 +367,24 @@ body {
 										<c:choose>
 									<c:when test="${quotHeader.noOfKm==0}">
 									<div class="col-md-2">
-										On Spot <input type="radio" name="del_place" checked
-											onchange="setKM(this.value)" id="del_place" value="1">
+										On Spot <input type="radio" name="del_place"  checked
+											onchange="setKM(1)" id="del_place" value="1">
 									</div>
 
 									<div class="col-md-2">
-										Specific Place <input type="radio" name="del_place"
-											onchange="setKM(this.value)" id="del_place" value="0">
+										Specific Place <input type="radio" name="del_place" id="del_place"
+											onchange="setKM(0)"  value="0">
 									</div>
 									</c:when>
-									<c:otherwise>
+									 <c:otherwise>
 									<div class="col-md-2">
-										On Spot <input type="radio" name="del_place"
-											onchange="setKM(this.value)" id="del_place" value="1">
+										On Spot <input type="radio" name="del_place" id="del_place" 
+											onchange="setKM(1)" value="1">
 									</div>
 
 									<div class="col-md-2">
-										Specific Place <input type="radio" name="del_place" checked
-											onchange="setKM(this.value)" id="del_place" value="0">
+										Specific Place <input type="radio" name="del_place"  id="del_place" checked
+											onchange="setKM(0)" value="0" checked>
 									</div>
 									
 									</c:otherwise>
@@ -399,13 +398,13 @@ body {
 								<div class="row">
 									<div class="col-md-2">No of KM</div>
 									<div class="col-md-4">
-										<input type="text" id="no_of_km" name="no_of_km" min="0" onkeypress="return allowOnlyNumber(event);"
+										<input type="text" id="no_of_km" name="no_of_km"  onkeypress="return allowOnlyNumber(event);"
 											oninput="calcAll()" class="form-control" value="${quotHeader.noOfKm}"
 											style="width: 100%;">
 									</div>
 									<div class="col-md-2">Toll Amount</div>
 									<div class="col-md-4">
-										<input type="text" id="toll_amt" min="0" name="toll_amt" value="${quotHeader.tollCost}"
+										<input type="text" id="toll_amt"  name="toll_amt" value="${quotHeader.tollCost}"
 											oninput="calcAll()" class="form-control" onkeypress="return allowOnlyNumber(event);">
 									</div>
 								</div>
@@ -432,7 +431,7 @@ body {
 
 									<div class="col-md-2">No of Tolls</div>
 									<div class="col-md-4">
-										<input type="text" id="no_of_tolls" min="0" name="no_of_tolls" value="${quotHeader.noOfTolls}"
+										<input type="text" id="no_of_tolls"  name="no_of_tolls" value="${quotHeader.noOfTolls}"
 											class="form-control" style="width: 100%;" onkeypress="return allowOnlyNumber1(event);">
 									</div>
 
@@ -717,9 +716,13 @@ body {
 
 
 	<script type="text/javascript">
-	function showDocDetailPopup(termId){
-		//alert("Hi doc Detail " +termId);
-		  $.getJSON('${getDocTermDetail}', {
+	function showDocDetailPopup(){
+		
+		var termId=	document.getElementById('quot_doc_term_id').value;
+		alert("Hi doc Detail " +termId);
+	
+
+		   $.getJSON('${getDocTermDetail}', {
 			 termId : termId,
 				ajax : 'true',
 
@@ -727,7 +730,7 @@ body {
 
 			function(data) {
 
-				//alert("Data " +JSON.stringify(data.detailList));
+				alert("Data " +JSON.stringify(data.detailList));
 				
 				//newwindow=window.open(data,'name','height=40,width=40');
 				
@@ -777,11 +780,11 @@ var termTitle=data.termTitle
 											data.detailList,
 											function(i, v) {
 												var index=i+1;
-												var desc=index+") "+v.termDesc;
+												var desc1=index+") "+v.termDesc;
 												dataTable.row
 														.add(
 																[
-																	desc ])
+																	desc1])
 														.draw();
 											});
 				// window.alert("Term Detail "+data.detailList[i].termDesc);
@@ -789,38 +792,28 @@ var termTitle=data.termTitle
 				// alert("Term Detail "+temp);
 
 
-	});
-		 
+	}); 
 	}
-		function setKM(delPlace) {
-		//	alert("delPlace " +delPlace)
-			if(delPlace==1){
-				document.getElementById("no_of_km").value="0";
-				document.getElementById("toll_amt").value="0";
-				
-				document.getElementById("no_of_km").readOnly = true; 
-				document.getElementById("toll_amt").readOnly = true; 
-				document.getElementById("no_of_tolls").readOnly = true; 
-				
-				calcAll();
-			}else{
-				
-				document.getElementById("no_of_km").readOnly = false; 
-				document.getElementById("toll_amt").readOnly = false; 
-				document.getElementById("no_of_tolls").readOnly = false; 
-			}
+	</script>
+		 
+	
+			<script type="text/javascript">
 		
-		}
 		function changeTaxValue(value){
 			calcAll();
 		}
+		</script>
+			<script type="text/javascript">
 		
 		function setData(){
 			var payTerm= $("#pay_term_id option:selected").html();
-			//alert("payTerm " +payTerm);
+			alert("payTerm " +payTerm);
 			document.getElementById("pay_term_name").value=payTerm;
+			//showDocDetailPopup();
 			
 		}
+		</script>
+			<script type="text/javascript">
 		
 		function toggle() {
 			  checkboxes = document.getElementsByName('selectItem');
@@ -829,7 +822,40 @@ var termTitle=data.termTitle
 			  }
 			  }
 				  
+		</script>
+		<script type="text/javascript">
+		
+		function setKM(delPlace) {
+		//alert("hiii");
+				 if(delPlace==1){
+					document.getElementById("no_of_km").value="0";
+					document.getElementById("toll_amt").value="0";
+					document.getElementById("no_of_tolls").value="0";
+
+					
+					document.getElementById("no_of_km").readOnly = true; 
+					document.getElementById("toll_amt").readOnly = true; 
+					document.getElementById("no_of_tolls").readOnly = true; 
+					calcAll();
+				}else{
+					document.getElementById("no_of_km").readOnly = false; 
+					document.getElementById("toll_amt").readOnly = false; 
+					document.getElementById("no_of_tolls").readOnly = false; 
+					
+					var noofkm=${quotHeader.noOfKm};
+					var tollAmt=${quotHeader.tollCost};
+					var noOfTolls=${quotHeader.noOfTolls};
+					
+					document.getElementById("no_of_km").value=noofkm;
+					document.getElementById("toll_amt").value=tollAmt;
+					document.getElementById("no_of_tolls").value=noOfTolls;
+					
+					calcAll();
+					
+				}
+			 
 			}
+		
 		</script>
 
 
@@ -1101,8 +1127,9 @@ var termTitle=data.termTitle
 	    }
 	   
 	}
-	
-	
+	</script>
+	<script type="text/javascript">
+
 	function allowOnlyNumber(evt){
 	    var charCode = (evt.which) ? evt.which : event.keyCode
 	    if (charCode == 46){
@@ -1125,13 +1152,14 @@ var termTitle=data.termTitle
 	}
 	
 	</script>
-	<script>
-	 function allowOnlyNumber1(evt)
-	{
+	<script type="text/javascript">
+	 function allowOnlyNumber1(evt){
+		 var valid=true;
 	  var charCode = (evt.which) ? evt.which : event.keyCode
-	  if (charCode > 31 && charCode==46 && (charCode < 48 || charCode > 57))
-		  	    return false;
-	  return true;
+	  if (charCode > 31 && charCode==46 && (charCode < 48 || charCode > 57)){
+		  valid=false;
+	  }
+	  return valid;
 	} 
 	</script>
 	<!-- <script type="text/javascript">

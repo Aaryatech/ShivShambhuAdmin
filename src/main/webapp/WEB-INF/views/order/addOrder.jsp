@@ -473,7 +473,7 @@
 					getCustInfo();
 
 					//$('#po_id').html("-1");
-					$("#po_id").trigger("chosen:updated");
+					//$("#po_id").trigger("chosen:updated");
 				
 					
 					var dataTable = $('#bootstrap-data-table')

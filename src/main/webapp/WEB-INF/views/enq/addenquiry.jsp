@@ -103,7 +103,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertEnq"
-								method="post">
+								method="post" onsubmit="disableSubmitButton()">
 
 								<div class="row">
 
@@ -139,7 +139,7 @@
 
 
 
-										<div class="col-md-2">Customer Type Name</div>
+										<div class="col-md-2">Customer Type</div>
 
 										<div class="col-md-4">
 											<input type="text" id="custTypeName" name="custTypeName"
@@ -169,7 +169,7 @@
 										<input type="text" id="enq_date" name="enq_date" required readonly="readonly"
 											style="width: 100%;" class="form-control" autocomplete="off"
 												oninvalid="setCustomValidity('Please select enquiry date')"
-											value="${editComp.contactNo1}"> <span class="error"
+											value="${curDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
 
@@ -195,7 +195,7 @@
 									<div class="row">
 
 
-										<div class="col-md-2">Item Name</div>
+										<div class="col-md-2">Select Item</div>
 										<div class="col-md-4">
 											<select id="item_name" name="item_name"
 												class="standardSelect" tabindex="1"
@@ -204,7 +204,7 @@
 										</div>
 
 
-										<div class="col-md-2">Select UOM</div>
+										<div class="col-md-2">Unit Of Measure</div>
 
 										<div class="col-md-4">
 											<select id="uomId" name="uomId" class="standardSelect"
@@ -271,7 +271,7 @@
 												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">Unit Of Measurement</th>
-												<th style="text-align: center">Qty</th>
+												<th style="text-align: center">Quantity</th>
 												<th style="text-align: center; width: 5%;">Action</th>
 
 											</tr>
@@ -318,13 +318,17 @@
 
 									<div class="col-md-2">Enquiry Remark</div>
 
-									<div class="col-md-9">
+									<div class="col-md-4">
 										<input type="text" id="enq_remark" name="enq_remark"
 											class="form-control" style="width: 100%;" value="-" required>
 									</div>
 
-									<div class="col-md-1">
+									<div class="col-md-2">
 										<input type="submit" disabled class="btn btn-primary" id="submitButton" value="Submit">
+
+									</div>
+										<div class="col-md-2">
+										<input type="reset"   value="Clear" class="btn btn-primary" >
 
 									</div>
 
@@ -412,6 +416,10 @@
 			});
 
 		});
+		function disableSubmitButton(){
+			  document.getElementById('submitButton').innerHTML='Please Wait';
+			  document.getElementById("submitButton").disabled=true;
+		}
 	</script>
 
 	<script type="text/javascript">

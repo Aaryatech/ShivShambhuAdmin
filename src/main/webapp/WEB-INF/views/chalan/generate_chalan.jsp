@@ -261,6 +261,7 @@ body {
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertChalan"
+							id="insertChalan"
 								method="post">
 
 								<div class="row">
@@ -272,7 +273,7 @@ body {
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="-1">Select Plant</option>
+											<option value="-1">Select</option>
 
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
@@ -326,6 +327,7 @@ body {
 											oninvalid="setCustomValidity('Please select project')"
 										
 											onchange="getOrderHeaders()">
+												<option selected value="-1">Select All</option>
 
 											<c:forEach items="${projList}" var="proj">
 											
@@ -345,28 +347,17 @@ body {
 								</div>
 								
 									<div class="form-group"></div>
-									<div class="row">
-
-										<div class="col-md-2">Cost Segment</div>
-
-										<div class="col-md-4">
-											<input type="text" id="cost_segment" name="cost_segment"
-												 value="-" required style="width: 100%;" class="form-control">
-											<span class="error" aria-live="polite"></span>
-										</div>
-										</div>
-								<div class="form-group"></div>
-								
+									
 								<div class="row">
 
 									<div class="col-md-2">Select Order</div>
 
-									<div class="col-md-8">
+									<div class="col-md-10">
 										<select id="order_id" name="order_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select order')"
 											onchange="showOrderItemPopup(this.value)">
-											<option value="-1">Select Order</option>
+											<option value="-1">Select</option>
 
 											<%-- <c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
@@ -374,8 +365,14 @@ body {
 										</select>
 									</div>
 									</div>
+									<div class="form-group"></div>
 									
-									
+									<div class="row">
+
+										
+										</div>
+								<div class="form-group"></div>
+								
 									<div id="myModal" class="modal">
 										      
 					<div class="modal-content" style="color: black;">
@@ -441,7 +438,7 @@ body {
 									<div class="col-md-4">
 									<select id="driver_id" name="driver_id" style="width: 100%;"
 											class="standardSelect" tabindex="1" required>
-											<option value="-1">Select Driver</option>
+											<option value="-1">Select</option>
 											<c:forEach items="${usrList}" var="usr">
 											
 														<option value="${usr.userId}">${usr.usrName}</option>
@@ -449,18 +446,12 @@ body {
 											</c:forEach>
 										</select>
 									</div>
-								</div>
-								
-
-								<div class="form-group"></div>
-								<div class="row">
-
 									<div class="col-md-2">Select Vehicle</div>
 
-									<div class="col-md-2">
+									<div class="col-md-4">
 										<select id="veh_id" name="veh_id" style="width: 100%;"
 											class="standardSelect" tabindex="1" required>
-											<option value="-1">Select Vehicle</option>
+											<option value="-1">Select</option>
 											<c:forEach items="${vehicleList}" var="veh">
 											
 														<option value="${veh.vehicleId}">${veh.vehNo}-${veh.vehicleName}</option>
@@ -469,15 +460,21 @@ body {
 										</select>
 									</div>
 									
+								</div>
+								
+
+								<div class="form-group"></div>
+								<div class="row">
+
+									
 									<div class="col-md-2">Out Time</div>
 
-									<div class="col-md-1">
-										<input type="time" id="out_time" name="out_time">
+									<div class="col-md-4">
+										<input type="time" id="out_time" name="out_time" style="width: 100%;" class="form-control">
 									</div>
-										<div class="col-md-1"></div>
 									<div class="col-md-2">Out Kilometer</div>
 
-									<div class="col-md-2">
+									<div class="col-md-4">
 										<input type="text" id="out_km" name="out_km" required onkeypress="return allowOnlyNumber(event);"
 											style="width: 100%;" class="form-control"  maxlength="10"
 											> <span class="error"
@@ -488,12 +485,19 @@ body {
 								<div class="row">
 									<div class="col-md-2">Chalan Remark</div>
 
-									<div class="col-md-8">
+									<div class="col-md-4">
 										<input type="text" id="chalan_remark" name="chalan_remark" required
 											style="width: 100%;" class="form-control"
 											value="-"> <span class="error"
 											aria-live="polite"></span>
 									</div>
+									<div class="col-md-2">Cost Segment</div>
+
+										<div class="col-md-4">
+											<input type="text" id="cost_segment" name="cost_segment"
+												 value="-" required style="width: 100%;" class="form-control">
+											<span class="error" aria-live="polite"></span>
+										</div>
 									
 									</div>
 								
@@ -544,7 +548,7 @@ body {
 									<div class="col-md-3" id="ordTotal">0</div>
  -->
 									<div class="col-md-2">
-										<input type="submit"  class="btn btn-primary" value="Submit">
+										<input type="button"  onclick="validateForm()" class="btn btn-primary" value="Submit">
 
 									</div>
 
@@ -626,6 +630,97 @@ body {
 			 
 		});
 	</script>
+	
+	<script type="text/javascript">
+	
+	function validateForm()
+	{
+	    //var checkboxs=document.getElementsByName("selectItem");
+	    var okay=true;
+	   /*  for(var i=0,l=checkboxs.length;i<l;i++)
+	    {
+	        if(checkboxs[i].checked)
+	        {
+	            okay=true;
+	            break;
+	        }
+	    } */
+	   // alert("Okay " +okay);
+
+	    var plantId=document.getElementById("plant_id").value;
+	    var custId=document.getElementById("cust_name").value;
+		var orderId=document.getElementById("order_id").value;
+		
+		 var driverId=document.getElementById("driver_id").value;
+		 var vehId=document.getElementById("veh_id").value;
+		
+		 var chalanDate=document.getElementById("chalan_date").value;
+		 var costSegment=document.getElementById("cost_segment").value;
+		 var outTime=document.getElementById("out_time").value;
+		 var outKm=document.getElementById("out_km").value;
+		 var chalanRemark =document.getElementById("chalan_remark").value;
+
+	 
+	      if(plantId<0 || plantId=="" || plantId==null){
+	    	okay=false;
+	    	alert("Please select plant name");
+	    }
+	    else if(custId<0 || custId=="" || custId==null){
+	    	okay=false;
+	    	alert("Please select customer ");
+	    }
+	      
+	    else if(orderId<0 || orderId=="" || orderId==null){
+	    	okay=false;
+	    	alert("Please select order ");
+	    }
+	      
+	    else if(driverId<0 || driverId=="" || driverId==null){
+	    	okay=false;
+	    	alert("Please select driver ");
+	    }
+	      
+	    else if(vehId<0 || vehId=="" || vehId==null){
+	    	okay=false;
+	    	alert("Please select vehicle ");
+	    }
+	      
+	      
+	      //
+	      
+	      
+	    else if(chalanDate<0 || chalanDate=="" || chalanDate==null){
+	    	okay=false;
+	    	alert("Please select chalan date ");
+	    }
+	      
+	    else if(costSegment<0 || costSegment=="" || costSegment==null){
+	    	okay=false;
+	    	alert("Please enter cost segment ");
+	    }
+	      
+	    else if(outTime<0 || outTime=="" || outTime==null){
+	    	okay=false;
+	    	alert("Please select out time ");
+	    }
+	      
+	    else if(outKm<0 || outKm=="" || outKm==null){
+	    	okay=false;
+	    	alert("Please enter out kilometer ");
+	    }
+	    else if(chalanRemark<0 || chalanRemark=="" || chalanRemark==null){
+	    	okay=false;
+	    	alert("Please enter chalan remark ");
+	    }
+	      
+	    else if(okay){
+
+	    	var form=document.getElementById("insertChalan");
+	    	form.submit();
+	    }
+	   
+	}
+	</script>
 
 
 
@@ -681,7 +776,6 @@ function allowOnlyNumber1(evt)
 	// on plant change function 
 		function getData() { 
 			var plantId = document.getElementById("plant_id").value;
-			document.getElementById("isEdit").value = 0;
 			var valid = true;
 
 			if (plantId == null || plantId == "") {
@@ -699,7 +793,7 @@ function allowOnlyNumber1(evt)
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option selected value="-1"  >Select Customer</option>';
+					var html = '<option selected value="-1"  >Select</option>';
 
 					for (var i = 0; i < len; i++) {
 
@@ -711,14 +805,12 @@ function allowOnlyNumber1(evt)
 
 					$('#cust_name').html(html);
 					$("#cust_name").trigger("chosen:updated");
-					getCustInfo();
-
-					$('#po_id').html("-1");
-					$("#po_id").trigger("chosen:updated");
-					
+					getOrderHeaders();
+					//getCustInfo();
+				
 					var dataTable = $('#bootstrap-data-table')
 					.DataTable();
-			dataTable.clear().draw();
+					dataTable.clear().draw();
 
 				});
 			}//end of if
@@ -777,6 +869,7 @@ function allowOnlyNumber1(evt)
 							var len = data.length;
 							//alert("data " +JSON.stringify(data));
 							var html='<option value="-1">Select All</option>';
+
 							for (var i = 0; i < len; i++) {
 								var projData=data[i].projName+"-"+data[i].address
 
@@ -815,7 +908,7 @@ function allowOnlyNumber1(evt)
 									
 									var len = data.length;
 									//alert("data " +JSON.stringify(data));
-									var html='<option value="-1">Select Order</option>';
+									var html='<option value="-1">Select</option>';
 									for (var i = 0; i < len; i++) {
 										var orderData=data[i].orderNo+"__"+data[i].orderDate
 
@@ -1012,7 +1105,7 @@ function allowOnlyNumber1(evt)
 		var height=document.getElementById("height"+itemId).value;
 		var length=document.getElementById("length"+itemId).value;
 
-		alert("Hi height " +height + "length  "+length + "width  " +width);;
+		//alert("Hi height " +height + "length  "+length + "width  " +width);;
 	}
 	
 	</script>

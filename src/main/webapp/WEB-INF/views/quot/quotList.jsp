@@ -94,8 +94,6 @@
 										<th style="text-align: center">Quotation Date</th>
 										<th style="text-align: center">Quotation No</th>
 										<th style="text-align: center">Employee Name</th>
-
-
 										<th style="text-align: center">Action</th>
 									</tr>
 								</thead>
