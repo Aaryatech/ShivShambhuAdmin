@@ -1750,7 +1750,7 @@ public class MasterController {
 			}
 
 			Dept deptInsertRes = rest.postForObject(Constants.url + "saveDept", dept, Dept.class);
-			if (deptInsertRes != null) {
+			if (deptInsertRes.getDeptId()!=0) {
 				isError = 2;
 			} else {
 				isError = 1;

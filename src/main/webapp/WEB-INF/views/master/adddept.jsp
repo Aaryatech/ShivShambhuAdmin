@@ -127,9 +127,8 @@
 									<div class="col-md-2">Department Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="deptName" name="deptName"
-											autocomplete="off" pattern="^[A-Za-z\s]+$"
+											autocomplete="off" onblur="getDeptNameCheck()"
 											oninvalid="setCustomValidity('Please Enter Dept Name')"
-											onchange="getDeptNameCheck()"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editDept.deptName}" class="form-control" required
 											style="width: 100%;">
@@ -157,7 +156,7 @@
 								<div class="col-lg-2">
 
 									<input type="submit" class="btn btn-primary" value="Submit"
-										id="submitButton" name="submitButton"
+										id="submitButton" name="submit"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
 								</div>
@@ -173,7 +172,7 @@
 						<div class="card-body card-block">
 							<form
 								action="${pageContext.request.contextPath}/deleteRecordofDept"
-								method="post">
+								method="post" onsubmit="return getDeptNameCheck()">
 
 								<table id="bootstrap-data-table"
 									class="table table-striped table-bordered">
@@ -360,10 +359,10 @@
 					/* setTimeout(function() {
 						document.getElementById("#deptName").focus();
 					}, 100); */
-					document.getElementById("submitButton").disabled = true;
-
+					//document.getElementById("submitButton").disabled = true;
+                  
 				} else {
-					document.getElementById("submitButton").disabled = false;
+					//document.getElementById("submitButton").disabled = false;
 
 				}
 			}
