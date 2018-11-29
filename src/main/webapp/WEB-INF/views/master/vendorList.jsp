@@ -91,58 +91,74 @@
 						<div class="card-body card-block">
 
 
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofVendor"
+								method="post">
 
-										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Vendor Name</th>
-										<th style="text-align: center">Plant Name</th>
-										<th style="text-align: center">Mobile No</th>
-										<th style="text-align: center">City</th>
-										<th style="text-align: center">GST No</th>
-										<th style="text-align: center; width: 5%;">Action</th>
 
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${vendList}" var="vend" varStatus="count">
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
 										<tr>
+											<th class="check" style="text-align: center; width: 5%;"><input
+												type="checkbox" name="selAll" id="selAll" /> Select All</th>
 
-											<td style="text-align: center">${count.index+1}</td>
-
-											<td style="text-align: left"><c:out
-													value="${vend.vendCompName}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${vend.plantName}" /></td>
-
-
-											<td style="text-align: center"><c:out
-													value="${vend.vendContact1}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${vend.vendCity}" /></td>
-
-
-											<td style="text-align: right"><c:out
-													value="${vend.vendGst}" /></td>
-
-											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editVendor/${vend.vendId}"><i
-													class="fa fa-edit"></i> <span class="text-muted"></span></a>
-												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteVendor/${vend.vendId}"
-												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o"></i></a></td>
+											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center">Vendor Name</th>
+											<th style="text-align: center">Plant Name</th>
+											<th style="text-align: center">Mobile No</th>
+											<th style="text-align: center">City</th>
+											<th style="text-align: center">GST No</th>
+											<th style="text-align: center; width: 5%;">Action</th>
 
 										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<c:forEach items="${vendList}" var="vend" varStatus="count">
+											<tr>
+												<td><input type="checkbox" class="chk" name="vendIds"
+													id="vendIds${count.index+1}" value="${vend.vendId}" /></td>
+												<td style="text-align: center">${count.index+1}</td>
+
+												<td style="text-align: left"><c:out
+														value="${vend.vendCompName}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${vend.plantName}" /></td>
 
 
+												<td style="text-align: center"><c:out
+														value="${vend.vendContact1}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${vend.vendCity}" /></td>
+
+
+												<td style="text-align: right"><c:out
+														value="${vend.vendGst}" /></td>
+
+												<td style="text-align: center"><a
+													href="${pageContext.request.contextPath}/editVendor/${vend.vendId}"><i
+														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+													&nbsp; <a
+													href="${pageContext.request.contextPath}/deleteVendor/${vend.vendId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o"></i></a></td>
+
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								<div class="col-lg-1">
+
+									<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+
+
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -213,6 +229,23 @@
 		$(document).ready(function() {
 			$('#bootstrap-data-table-export').DataTable();
 		});
+	</script>
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
+
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
 	</script>
 
 

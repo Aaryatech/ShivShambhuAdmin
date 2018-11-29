@@ -280,7 +280,7 @@
 						<div class="card-body card-block">
 
 							<form
-								action="${pageContext.request.contextPath}/deleteRecordofBankDetail"
+								action="${pageContext.request.contextPath}/deleteRecordofBank"
 								method="post">
 
 								<table id="bootstrap-data-table"
