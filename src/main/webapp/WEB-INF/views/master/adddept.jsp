@@ -156,7 +156,7 @@
 								<div class="col-lg-2">
 
 									<input type="submit" class="btn btn-primary" value="Submit"
-										id="submit" name="submit"
+										id="submitButton" name="submit"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
 								</div>
@@ -356,13 +356,13 @@
 					alert("Department Name Already Exist");
 
 					document.getElementById("#deptName").value = "";
-					setTimeout(function() {
+					/* setTimeout(function() {
 						document.getElementById("#deptName").focus();
-					}, 100);
-					document.getElementById("submit").disabled = true;
+					}, 100); */
+					document.getElementById("submitButton").disabled = true;
 
 				} else {
-					document.getElementById("submit").disabled = false;
+					document.getElementById("submitButton").disabled = false;
 
 				}
 			}
