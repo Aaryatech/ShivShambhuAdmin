@@ -2419,4 +2419,23 @@ public class MasterController {
 		return "redirect:/showVendorList";
 	}
 
+	@RequestMapping(value = "/getUniqueDeptNameCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueDeptNameCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String deptName = request.getParameter("deptName");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("deptName", deptName);
+			info = rest.postForObject(Constants.url + "/saveUniqueDept", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
 }

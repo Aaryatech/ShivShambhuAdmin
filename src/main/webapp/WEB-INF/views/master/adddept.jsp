@@ -9,10 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
-<c:url var="deleteRecordofDept" value="/deleteRecordofDept" />
-
-
-
+<c:url var="getUniqueDeptNameCheck" value="/getUniqueDeptNameCheck" />
 
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
@@ -130,7 +127,7 @@
 									<div class="col-md-2">Department Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="deptName" name="deptName"
-											autocomplete="off"
+											autocomplete="off" onblur="getDeptNameCheck()"
 											oninvalid="setCustomValidity('Please Enter Dept Name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editDept.deptName}" class="form-control" required
@@ -159,6 +156,7 @@
 								<div class="col-lg-2">
 
 									<input type="submit" class="btn btn-primary" value="Submit"
+										id="submit" name="submit"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
 								</div>
@@ -340,6 +338,40 @@
 											});
 						});
 	</script>
+
+
+	<script type="text/javascript">
+		function getDeptNameCheck() {
+
+			var deptName = $("#deptName").val();
+
+			$.getJSON('${getUniqueDeptNameCheck}', {
+
+				deptName : deptName,
+
+				ajax : 'true',
+
+			}, function(data) {
+				if (data.error == true) {
+					alert("Department Name Already Exist");
+
+					document.getElementById("#deptName").value = "";
+					setTimeout(function() {
+						document.getElementById("#deptName").focus();
+					}, 100);
+					document.getElementById("submit").disabled = true;
+
+				} else {
+					document.getElementById("submit").disabled = false;
+
+				}
+			}
+
+			);
+
+		}
+	</script>
+
 
 </body>
 </html>
