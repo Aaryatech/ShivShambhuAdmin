@@ -77,6 +77,36 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -87,7 +117,7 @@
 
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertPayTerm"
-								method="post">
+								id="submitForm" method="post">
 
 
 
@@ -132,50 +162,68 @@
 						</div>
 
 						<div class="card-body card-block">
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofPaymentTerm"
+								method="post">
 
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
-										<th style="text-align: center; width: 5%;">Sr</th>
-										<th style="text-align: center">Payment Term</th>
-										<th style="text-align: center">Date</th>
-										<th style="text-align: center; width: 5%;">Action</th>
 
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${payTermList}" var="payTerm"
-										varStatus="count">
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
 										<tr>
-
-											<td style="text-align: center">${count.index+1}</td>
-
-
-											<td style="text-align: left"><c:out
-													value="${payTerm.payTerm}" /></td>
-
-											<td style="text-align: center"><c:out
-													value="${payTerm.date}" /></td>
-
-
-											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editPaymentTerm/${payTerm.payTermId}"><i
-													class="fa fa-edit"></i> <span class="text-muted"></span></a>
-												&nbsp; <a
-												href="${pageContext.request.contextPath}/deletePayTerm/${payTerm.payTermId}"
-												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o"></i></a></td>
+											<th class="check" style="text-align: center; width: 5%;"><input
+												type="checkbox" name="selAll" id="selAll" />Select All</th>
+											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center">Payment Term</th>
+											<th style="text-align: center">Date</th>
+											<th style="text-align: center; width: 5%;">Action</th>
 
 										</tr>
-									</c:forEach>
-								</tbody>
+									</thead>
+									<tbody>
+										<c:forEach items="${payTermList}" var="payTerm"
+											varStatus="count">
+											<tr>
+												<td><input type="checkbox" class="chk"
+													name="payTermIds" id="payTermIds${count.index+1}"
+													value="${payTerm.payTermId}" /></td>
 
-							</table>
+												<td style="text-align: center">${count.index+1}</td>
 
+
+												<td style="text-align: left"><c:out
+														value="${payTerm.payTerm}" /></td>
+
+												<td style="text-align: center"><c:out
+														value="${payTerm.date}" /></td>
+
+
+												<td style="text-align: center"><a
+													href="${pageContext.request.contextPath}/editPaymentTerm/${payTerm.payTermId}"><i
+														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+													&nbsp; <a
+													href="${pageContext.request.contextPath}/deletePayTerm/${payTerm.payTermId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o"></i></a></td>
+
+											</tr>
+										</c:forEach>
+									</tbody>
+
+								</table>
+
+								<div class="col-lg-1">
+
+									<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+
+
+								</div>
+							</form>
 
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -255,9 +303,33 @@
 		});
 	</script>
 
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
 
 
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
 
-
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
+	</script>
 </body>
 </html>

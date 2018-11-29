@@ -90,68 +90,84 @@
 						</div>
 						<div class="card-body card-block">
 
-
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
-
-										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Tax Name</th>
-										<th style="text-align: center">HSN Code</th>
-										<th style="text-align: center">CGST</th>
-										<th style="text-align: center">SGST</th>
-										<th style="text-align: center">IGST</th>
-										<th style="text-align: center">CESS</th>
-										<th style="text-align: center">Total tax Per</th>
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofTax"
+								method="post">
 
 
-
-
-										<th style="text-align: center; width: 5%;">Action</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${taxList}" var="tax" varStatus="count">
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
 										<tr>
+											<th class="check" style="text-align: center; width: 5%;"><input
+												type="checkbox" name="selAll" id="selAll" /> Select All</th>
 
-											<td style="text-align: center">${count.index+1}</td>
-
-											<td style="text-align: left"><c:out
-													value="${tax.taxName}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${tax.hsnCode}" /></td>
-
-											<td style="text-align: right"><c:out value="${tax.cgst}" /></td>
-
-											<td style="text-align: right"><c:out value="${tax.sgst}" /></td>
-
-											<td style="text-align: right"><c:out value="${tax.igst}" /></td>
-											<td style="text-align: right"><c:out value="${tax.cess}" /></td>
-
-											<td style="text-align: right"><c:out
-													value="${tax.totalTaxPer}" /></td>
+											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center">Tax Name</th>
+											<th style="text-align: center">HSN Code</th>
+											<th style="text-align: center">CGST</th>
+											<th style="text-align: center">SGST</th>
+											<th style="text-align: center">IGST</th>
+											<th style="text-align: center">CESS</th>
+											<th style="text-align: center">Total tax Per</th>
 
 
 
 
-
-											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editTax/${tax.taxId}"><i
-													class="fa fa-edit"></i> <span class="text-muted"></span></a>
-												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteTax/${tax.taxId}"
-												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o"></i></a></td>
+											<th style="text-align: center; width: 5%;">Action</th>
 
 										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<c:forEach items="${taxList}" var="tax" varStatus="count">
+											<tr>
+												<td><input type="checkbox" class="chk" name="taxIds"
+													id="taxIds${count.index+1}" value="${tax.taxId}" /></td>
+
+												<td style="text-align: center">${count.index+1}</td>
+
+												<td style="text-align: left"><c:out
+														value="${tax.taxName}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${tax.hsnCode}" /></td>
+
+												<td style="text-align: right"><c:out
+														value="${tax.cgst}" /></td>
+
+												<td style="text-align: right"><c:out
+														value="${tax.sgst}" /></td>
+
+												<td style="text-align: right"><c:out
+														value="${tax.igst}" /></td>
+												<td style="text-align: right"><c:out
+														value="${tax.cess}" /></td>
+
+												<td style="text-align: right"><c:out
+														value="${tax.totalTaxPer}" /></td>
+
+												<td style="text-align: center"><a
+													href="${pageContext.request.contextPath}/editTax/${tax.taxId}"><i
+														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+													&nbsp; <a
+													href="${pageContext.request.contextPath}/deleteTax/${tax.taxId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o"></i></a></td>
+
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								<div class="col-lg-1">
+
+									<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
 
 
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -224,6 +240,22 @@
 		});
 	</script>
 
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
+
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
+	</script>
 
 </body>
 </html>

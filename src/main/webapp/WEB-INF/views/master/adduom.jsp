@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
-<c:url var="getUniqueUomNameCheck" value="/getUniqueUomNameCheck" />
+
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,6 +78,37 @@
 
 			<div class="row">
 
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
+
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
@@ -97,7 +128,6 @@
 											value="${editUom.uomName}" class="form-control"
 											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Uom Name')"
-											onchange="getUomNameCheck()"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
@@ -134,19 +164,17 @@
 
 									<div class="col-lg-2">
 
-										<button type="submit" class="btn btn-primary"
-											id="submitButton" name="submitButton"
+										<input type="submit" class="btn btn-primary" value="Submit"
 											style="align-content: center; width: 113px; margin-left: 40px;">
-											Submit</button>
 									</div>
 
 									<div class="col-lg-2">
 
-										<button type="reset" class="btn btn-primary"
+										<input type="reset" class="btn btn-primary" value="Clear"
 											style="align-content: center; width: 113px; margin-left: 40px;">
-											Clear</button>
-									</div>
+										Clear
 
+									</div>
 
 								</div>
 
@@ -157,52 +185,72 @@
 
 						<div class="card-body card-block">
 
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofUom"
+								method="post">
 
-										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Measurement Unit Name</th>
-										<th style="text-align: center">Measurement Unit Short
-											Name</th>
-										<th style="text-align: center">Sort No</th>
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
 
-										<th style="text-align: center; width: 5%;">Action</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${uomList}" var="uom" varStatus="count">
+									<thead>
 										<tr>
+											<th class="check" style="text-align: center; width: 5%;"><input
+												type="checkbox" name="selAll" id="selAll" />Select All</th>
 
-											<td style="text-align: center">${count.index+1}</td>
+											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center">Measurement Unit Name</th>
+											<th style="text-align: center">Measurement Unit Short
+												Name</th>
+											<th style="text-align: center">Sort No</th>
 
-
-											<td style="text-align: left"><c:out
-													value="${uom.uomName}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${uom.uomShortName}" /></td>
-
-
-											<td style="text-align: right"><c:out
-													value="${uom.sortNo}" /></td>
-
-
-											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editUom/${uom.uomId}"><i
-													class="fa fa-edit"></i> <span class="text-muted"></span></a>
-												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteUom/${uom.uomId}"
-												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o"></i></a></td>
+											<th style="text-align: center; width: 5%;">Action</th>
 
 										</tr>
-									</c:forEach>
-								</tbody>
+									</thead>
+									<tbody>
+										<c:forEach items="${uomList}" var="uom" varStatus="count">
+											<tr>
 
-							</table>
+												<td><input type="checkbox" class="chk" name="uomIds"
+													id="uomIds${count.index+1}" value="${uom.uomId}" /></td>
+
+												<td style="text-align: center">${count.index+1}</td>
+
+
+												<td style="text-align: left"><c:out
+														value="${uom.uomName}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${uom.uomShortName}" /></td>
+
+
+												<td style="text-align: right"><c:out
+														value="${uom.sortNo}" /></td>
+
+
+												<td style="text-align: center"><a
+													href="${pageContext.request.contextPath}/editUom/${uom.uomId}"><i
+														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+													&nbsp; <a
+													href="${pageContext.request.contextPath}/deleteUom/${uom.uomId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o"></i></a></td>
+
+											</tr>
+										</c:forEach>
+									</tbody>
+
+								</table>
+								<div class="col-lg-1">
+
+									<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+
+
+								</div>
+							</form>
 
 
 						</div>
@@ -284,7 +332,6 @@
 
 		});
 	</script>
-
 	<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(
@@ -296,38 +343,23 @@
 		});
 	</script>
 
+
 	<script type="text/javascript">
-		function getUomNameCheck() {
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
 
-			var uomName = $("#uomName").val();
-
-			$.getJSON('${getUniqueUomNameCheck}', {
-
-				uomName : uomName,
-
-				ajax : 'true',
-
-			}, function(data) {
-				if (data.error == true) {
-					alert("Measurement Unit Name Already Exist");
-
-					document.getElementById("uomName").value = "";
-					/* setTimeout(function() {
-						document.getElementById("#deptName").focus();
-					}, 100); */
-					document.getElementById("submitButton").disabled = true;
-
-				} else {
-					document.getElementById("submitButton").disabled = false;
-
-				}
-			}
-
-			);
-
-		}
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
 	</script>
-
 
 
 

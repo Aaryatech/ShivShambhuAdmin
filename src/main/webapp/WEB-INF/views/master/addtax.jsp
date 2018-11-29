@@ -8,6 +8,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+
+<c:url var="getUniqueHsnCodeCheck" value="/getUniqueHsnCodeCheck" />
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -114,7 +116,7 @@
 									<div class="col-md-4">
 										<input type="text" id="hsnCode" name="hsnCode" maxLength="10"
 											value="${editTax.hsnCode}" class="form-control"
-											pattern="[0-9]+"
+											pattern="[0-9]+" onchange="getHsnCodeCheck()"
 											oninvalid="setCustomValidity('Please enter correct hsn code')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;" required>
@@ -188,14 +190,15 @@
 								<div class="form-group"></div>
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
-									<button type="submit" class="btn btn-primary"
+									<input type="submit" class="btn btn-primary" value="Submit"
+										id="submitButton"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Submit</button>
+
 								</div>
 								<div class="col-lg-3">
-									<button type="reset" class="btn btn-primary"
+									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Clear</button>
+
 								</div>
 							</form>
 						</div>
@@ -274,19 +277,6 @@
 	</script>
 
 
-
-
-	<script>
-		jQuery(document).ready(function() {
-			jQuery(".standardSelect").chosen({
-				disable_search_threshold : 2,
-				no_results_text : "Oops, nothing found!",
-				width : "100%"
-			});
-		});
-	</script>
-
-
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
@@ -314,7 +304,35 @@
 		}
 	</script>
 
+	<script type="text/javascript">
+		function getHsnCodeCheck() {
+			alert("hii");
+			var hsnCode = $("#hsnCode").val();
+			alert(hsnCode);
 
+			$.getJSON('${getUniqueHsnCodeCheck}', {
+
+				hsnCode : hsnCode,
+
+				ajax : 'true',
+
+			}, function(data) {
+				if (data.error == true) {
+					alert("HSN Code Already Exist");
+
+					document.getElementById("hsnCode").value = "";
+					document.getElementById("submitButton").disabled = true;
+
+				} else {
+					document.getElementById("submitButton").disabled = false;
+
+				}
+			}
+
+			);
+
+		}
+	</script>
 
 
 

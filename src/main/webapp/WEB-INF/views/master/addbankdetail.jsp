@@ -73,6 +73,36 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -90,7 +120,7 @@
 						<div class="card-body card-block">
 							<form
 								action="${pageContext.request.contextPath}/insertBankDetail"
-								method="post">
+								id="submitForm" method="post">
 
 								<div class="row">
 
@@ -195,8 +225,8 @@
 											autocomplete="off" pattern="[A-Z|a-z]{4}[0][\d]{6}$"
 											value="${editBankDetail.bankIfsc}" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct IFSC Code')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
+											onchange="try{setCustomValidity('')}catch(e){}"
+											onkeydown="upperCaseF(this)" required style="width: 100%;">
 									</div>
 
 								</div>
@@ -234,65 +264,84 @@
 								<div class="col-lg-2">
 
 
-									<button type="submit" class="btn btn-primary"
+									<input type="submit" class="btn btn-primary" value="Submit"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Submit</button>
+
 								</div>
 
 								<div class="col-lg-2">
 
-									<button type="reset" class="btn btn-primary"
+									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Clear</button>
+
 								</div>
 							</form>
 						</div>
 						<div class="card-body card-block">
 
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofBankDetail"
+								method="post">
 
-										<th style="text-align: center">Sr</th>
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
 
-										<th style="text-align: center">Company Name</th>
-										<th style="text-align: center">Bank Name</th>
-										<th style="text-align: center">Bank IFSC</th>
-										<th style="text-align: center">Account No</th>
-										<th style="text-align: center; width: 5%;">Action</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${bankList}" var="bankDet" varStatus="count">
+									<thead>
 										<tr>
+											<th class="check" style="text-align: center; width: 5%;"><input
+												type="checkbox" name="selAll" id="selAll" />Select All</th>
+											<th style="text-align: center; width: 5%;">Sr No</th>
 
-											<td style="text-align: center">${count.index+1}</td>
-											<td style="text-align: left"><c:out
-													value="${bankDet.compName}" /></td>
-											<td style="text-align: left"><c:out
-													value="${bankDet.bankName}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${bankDet.bankIfsc}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${bankDet.accNo}" /></td>
-
-											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editBankDetail/${bankDet.bankDetId}"><i
-													class="fa fa-edit"></i> <span class="text-muted"></span></a>
-												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteBankDetail/${bankDet.bankDetId}"
-												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o"></i></a></td>
+											<th style="text-align: center">Company Name</th>
+											<th style="text-align: center">Bank Name</th>
+											<th style="text-align: center">Bank IFSC Code</th>
+											<th style="text-align: center">Account No</th>
+											<th style="text-align: center; width: 5%;">Action</th>
 
 										</tr>
-									</c:forEach>
-								</tbody>
+									</thead>
+									<tbody>
+										<c:forEach items="${bankList}" var="bankDet" varStatus="count">
+											<tr>
+												<td><input type="checkbox" class="chk"
+													name="bankDetIds" id="bankDetIds${count.index+1}"
+													value="${bankDet.bankDetId}" /></td>
 
-							</table>
+												<td style="text-align: center">${count.index+1}</td>
+												<td style="text-align: left"><c:out
+														value="${bankDet.compName}" /></td>
+												<td style="text-align: left"><c:out
+														value="${bankDet.bankName}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${bankDet.bankIfsc}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${bankDet.accNo}" /></td>
+
+												<td style="text-align: center"><a
+													href="${pageContext.request.contextPath}/editBankDetail/${bankDet.bankDetId}"><i
+														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+													&nbsp; <a
+													href="${pageContext.request.contextPath}/deleteBankDetail/${bankDet.bankDetId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o"></i></a></td>
+
+											</tr>
+										</c:forEach>
+									</tbody>
+
+								</table>
+								<div class="col-lg-1">
+
+									<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+
+
+								</div>
+							</form>
 
 
 						</div>
@@ -396,8 +445,42 @@
 	</script>
 
 
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
+
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
+	</script>
 
 
+	<script>
+		function upperCaseF(a) {
+			setTimeout(function() {
+				a.value = a.value.toUpperCase();
+			}, 1);
+		}
+	</script>
 
 
 </body>

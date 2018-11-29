@@ -55,7 +55,6 @@ public class MasterController {
 	List<Vendor> vendList;
 	List<Dept> deptList;
 	List<ItemType> itemTypeList;
-
 	List<Tax> getTaxList;
 	List<GetVendor> getVendList;
 	int isError = 0;
@@ -166,7 +165,6 @@ public class MasterController {
 				vend.setVendContact2(request.getParameter("vendContact2"));
 
 			} catch (Exception e) {
-				// TODO: handle exception
 				vend.setVendContactName("NA");
 				vend.setVendContact2("NA");
 			}
@@ -307,7 +305,7 @@ public class MasterController {
 				taxId = 0;
 			}
 
-			int sortNo = Integer.parseInt(request.getParameter("sortNo"));
+			int sortNo = 0;
 
 			float cess = Float.parseFloat(request.getParameter("cess"));
 			float cgst = Float.parseFloat(request.getParameter("cgst"));
@@ -339,9 +337,17 @@ public class MasterController {
 			tax.setIgst(igst);
 			tax.setTotalTaxPer(totalTaxPer);
 			tax.setTaxName(taxName);
-			tax.setSortNo(sortNo);
+
 			tax.setSgst(sgst);
 			tax.setTaxId(taxId);
+
+			try {
+				tax.setSortNo(Integer.parseInt(request.getParameter("sortNo")));
+
+			} catch (Exception e) {
+				tax.setSortNo(0);
+
+			}
 
 			// saveTax
 
@@ -2050,7 +2056,7 @@ public class MasterController {
 
 			} catch (Exception e) {
 				user.setSortNo(0);
-				// TODO: handle exception
+
 			}
 
 			User userInsertRes = rest.postForObject(Constants.url + "saveUser", user, User.class);
@@ -2383,11 +2389,41 @@ public class MasterController {
 
 		} catch (Exception e) {
 
-			System.err.println("Exception in /deleteMultiCust @MastContr  " + e.getMessage());
+			System.err.println("Exception in /deleteRecordofProject @MastContr  " + e.getMessage());
 			e.printStackTrace();
 		}
 
 		return "redirect:/showProjectList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofUom", method = RequestMethod.POST)
+	public String deleteRecordofUom(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] uomIds = request.getParameterValues("uomIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < uomIds.length; i++) {
+				sb = sb.append(uomIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("uomIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiUom", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofUom @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showAddUom";
 	}
 
 	@RequestMapping(value = "/deleteRecordofVendor", method = RequestMethod.POST)
@@ -2407,9 +2443,9 @@ public class MasterController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("projIds", items);
+			map.add("vendIds", items);
 
-			Info errMsg = rest.postForObject(Constants.url + "deletemultiVendor", map, Info.class);
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiVendor", map, Info.class);
 
 		} catch (Exception e) {
 
@@ -2420,80 +2456,64 @@ public class MasterController {
 		return "redirect:/showVendorList";
 	}
 
-	@RequestMapping(value = "/getUniqueDeptNameCheck", method = RequestMethod.GET)
-	public @ResponseBody Info getUniqueDeptNameCheck(HttpServletRequest request, HttpServletResponse response) {
-		Info info = new Info();
+	@RequestMapping(value = "/deleteRecordofTax", method = RequestMethod.POST)
+	public String deleteRecordofTax(HttpServletRequest request, HttpServletResponse response) {
 		try {
 
-			String deptName = request.getParameter("deptName");
+			String[] taxIds = request.getParameterValues("taxIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < taxIds.length; i++) {
+				sb = sb.append(taxIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("deptName", deptName);
-			info = rest.postForObject(Constants.url + "/saveUniqueDept", map, Info.class);
-			System.out.println("info" + info.toString());
+
+			map.add("taxIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiTax", map, Info.class);
 
 		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofTax @MastContr  " + e.getMessage());
 			e.printStackTrace();
 		}
 
-		return info;
+		return "redirect:/showTaxList";
 	}
 
-	@RequestMapping(value = "/getUniqueCustTypeNameCheck", method = RequestMethod.GET)
-	public @ResponseBody Info getUniqueCustTypeNameCheck(HttpServletRequest request, HttpServletResponse response) {
-		Info info = new Info();
+	@RequestMapping(value = "/deleteRecordofItem", method = RequestMethod.POST)
+	public String deleteRecordofItem(HttpServletRequest request, HttpServletResponse response) {
 		try {
 
-			String custTypeName = request.getParameter("custTypeName");
+			String[] itemIds = request.getParameterValues("itemIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < itemIds.length; i++) {
+				sb = sb.append(itemIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("custTypeName", custTypeName);
-			info = rest.postForObject(Constants.url + "/saveUniqueCustType", map, Info.class);
-			System.out.println("info" + info.toString());
+
+			map.add("itemIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiItem", map, Info.class);
 
 		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofItem @MastContr  " + e.getMessage());
 			e.printStackTrace();
 		}
 
-		return info;
-	}
-
-	@RequestMapping(value = "/getUniqueUomNameCheck", method = RequestMethod.GET)
-	public @ResponseBody Info getUniqueUomNameCheck(HttpServletRequest request, HttpServletResponse response) {
-		Info info = new Info();
-		try {
-
-			String uomName = request.getParameter("uomName");
-
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("uomName", uomName);
-			info = rest.postForObject(Constants.url + "/saveUniqueUom", map, Info.class);
-			System.out.println("info" + info.toString());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return info;
-	}
-
-	@RequestMapping(value = "/getUniqueUserMobCheck", method = RequestMethod.GET)
-	public @ResponseBody Info getUniqueUserMobCheck(HttpServletRequest request, HttpServletResponse response) {
-		Info info = new Info();
-		try {
-
-			String usrMob = request.getParameter("usrMob");
-
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("usrMob", usrMob);
-			info = rest.postForObject(Constants.url + "/saveUniqueUser", map, Info.class);
-			System.out.println("info" + info.toString());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return info;
+		return "redirect:/showItemList";
 	}
 
 }

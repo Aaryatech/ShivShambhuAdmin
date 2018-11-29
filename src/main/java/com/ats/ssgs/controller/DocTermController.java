@@ -324,4 +324,35 @@ public class DocTermController {
 		return "redirect:/showDocTermList";
 	}
 
+	@RequestMapping(value = "/deleteRecordofDocTermList", method = RequestMethod.POST)
+	public String deleteRecordofDocTermList(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] termIds = request.getParameterValues("termIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < termIds.length; i++) {
+				sb = sb.append(termIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("termIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiDocHeader", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofDocTermList @DocTermContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showDocTermList";
+	}
+
+	
 }

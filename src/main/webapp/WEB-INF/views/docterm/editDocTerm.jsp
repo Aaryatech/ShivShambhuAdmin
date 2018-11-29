@@ -86,6 +86,37 @@
 
 			<div class="row">
 
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
+
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
@@ -93,11 +124,11 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/updateDocTerm"
-								method="post">
+								id="submitForm" method="post">
 
 								<div class="row">
 
-									<div class="col-md-2">Select Document</div>
+									<div class="col-md-2">Select Document*</div>
 
 									<div class="col-md-4">
 										<select id="doc_id" name="doc_id" class="standardSelect"
@@ -119,9 +150,11 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Term & Conditions*</div>
+									<div class="col-md-2">Terms & Conditions*</div>
 									<div class="col-md-4">
 										<input type="text" id="termTitle" name="termTitle"
+											oninvalid="setCustomValidity('Please enter correct terms and conditions')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editDoc.termTitle}" class="form-control"
 											style="width: 100%;">
 									</div>
@@ -131,8 +164,11 @@
 									<div class="col-md-2">Sort No*</div>
 
 									<div class="col-md-4">
-										<input type="text" id="sortNo" name="sortNo"
-											value="${editDoc.sortNo}" class="form-control"
+										<input type="text" id="sortNo" name="sortNo" maxlength="3"
+											pattern="[0-9]+" value="${editDoc.sortNo}"
+											class="form-control"
+											oninvalid="setCustomValidity('Please enter correct sort no')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?">
 									</div>
 								</div>
@@ -142,8 +178,8 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center">Sr</th>
-												<th style="text-align: center">Term & Conditions</th>
+												<th style="text-align: center; width: 5%;">Sr No</th>
+												<th style="text-align: center">Terms & Conditions</th>
 												<th style="text-align: center">Sort No</th>
 												<th style="text-align: center; width: 5%;">Action</th>
 											</tr>
@@ -194,14 +230,19 @@
 								</div>
 
 								<div class="form-group"></div>
-								<div class="col-lg-12" align="center">
+								<div class="col-lg-4"></div>
+								<div class="col-lg-2">
 
+									<input type="submit" class="btn btn-primary" value="Submit"
+										style="align-content: center;">
 
-									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
-										Submit</button>
 								</div>
+								<div class="col-lg-2">
 
+									<input type="reset" class="btn btn-primary" value="Clear"
+										style="align-content: center; width: 113px; margin-left: 20px;">
+
+								</div>
 
 							</form>
 						</div>
@@ -426,6 +467,16 @@
 			
 		});
 	</script> -->
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
 
 </body>
 </html>

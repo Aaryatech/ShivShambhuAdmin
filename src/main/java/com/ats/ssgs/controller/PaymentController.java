@@ -558,4 +558,94 @@ public class PaymentController {
 		return "redirect:/showAddBankDetail";
 	}
 
+	@RequestMapping(value = "/deleteRecordofPaymentTerm", method = RequestMethod.POST)
+	public String deleteRecordofPaymentTerm(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] payTermIds = request.getParameterValues("payTermIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < payTermIds.length; i++) {
+				sb = sb.append(payTermIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("payTermIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiPaymentTerm", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofPaymentTerm @PaymentContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showAddPaymentTerm";
+	}
+
+	@RequestMapping(value = "/deleteRecordofBank", method = RequestMethod.POST)
+	public String deleteRecordofBank(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] bankDetIds = request.getParameterValues("bankDetIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < bankDetIds.length; i++) {
+				sb = sb.append(bankDetIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("bankDetIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiBankDetail", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofBank @DocTermContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showAddBankDetail";
+	}
+
+	@RequestMapping(value = "/deleteRecordofEnqGenFact", method = RequestMethod.POST)
+	public String deleteRecordofEnqGenFact(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] enqGenIds = request.getParameterValues("enqGenIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < enqGenIds.length; i++) {
+				sb = sb.append(enqGenIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("enqGenIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiEnqGenFact", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteMultiEnqGenFact @DocTermContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showAddEnqGenFact";
+	}
+
 }

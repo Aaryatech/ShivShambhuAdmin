@@ -90,94 +90,109 @@
 						</div>
 						<div class="card-body card-block">
 
-
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
-
-										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Item Name</th>
-										<th style="text-align: center">Item Code</th>
-										<th style="text-align: center">Item Type</th>
-										<th style="text-align: center">Plant Name</th>
-										<th style="text-align: center">Rate</th>
-										<th style="text-align: center">Tax Name</th>
-										<th style="text-align: center">UOM Name</th>
-										<th style="text-align: center">Dispatch limit</th>
-										<th style="text-align: center">Freight Rate</th>
-										<th style="text-align: center">Royalty Rate</th>
-										<th style="text-align: center">Action</th>
-
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${itemList}" var="item" varStatus="count">
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofItem"
+								method="post">
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
 										<tr>
+											<th class="check" style="text-align: center; width: 5%;"><input
+												type="checkbox" name="selAll" id="selAll" /> Select All</th>
 
-											<td style="text-align: center">${count.index+1}</td>
-
-
-											<td style="text-align: left"><c:out
-													value="${item.itemName}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${item.itemCode}" /></td>
-
-
-
-											<c:forEach items="${itemTypeList}" var="itemTypeVar"
-												varStatus="count">
-												<c:choose>
-													<c:when test="${itemTypeVar.itemTypeId==item.itemType}">
-														<td style="text-align: left"><c:out
-																value="${itemTypeVar.itemTypeName}" /></td>
-													</c:when>
-												</c:choose>
-											</c:forEach>
-
-
-
-
-											<td style="text-align: left"><c:out
-													value="${item.plantName}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${item.itemRate1}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${item.taxName}" /></td>
-
-
-											<td style="text-align: left"><c:out
-													value="${item.uomName}" /></td>
-
-											<td style="text-align: right"><c:out
-													value="${item.dispatchLimit}" /></td>
-
-
-											<td style="text-align: right"><c:out
-													value="${item.freightRate}" /></td>
-
-											<td style="text-align: right"><c:out
-													value="${item.royaltyRate}" /></td>
-
-
-
-
-											<td style="text-align: center"><a
-												href="${pageContext.request.contextPath}/editItem/${item.itemId}"><i
-													class="fa fa-edit"></i> <span class="text-muted"></span></a>
-												&nbsp; <a
-												href="${pageContext.request.contextPath}/deleteItem/${item.itemId}"
-												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o"></i></a></td>
+											<th style="text-align: center">Sr No</th>
+											<th style="text-align: center">Item Name</th>
+											<th style="text-align: center">Item Code</th>
+											<th style="text-align: center">Item Type</th>
+											<th style="text-align: center">Plant Name</th>
+											<th style="text-align: center">Rate</th>
+											<th style="text-align: center">Tax Name</th>
+											<th style="text-align: center">UOM Name</th>
+											<th style="text-align: center">Dispatch limit</th>
+											<th style="text-align: center">Freight Rate</th>
+											<th style="text-align: center">Royalty Rate</th>
+											<th style="text-align: center">Action</th>
 
 										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										<c:forEach items="${itemList}" var="item" varStatus="count">
+											<tr>
+												<td><input type="checkbox" class="chk" name="itemIds"
+													id="itemIds${count.index+1}" value="${item.itemId}" /></td>
 
+												<td style="text-align: center">${count.index+1}</td>
+
+
+												<td style="text-align: left"><c:out
+														value="${item.itemName}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${item.itemCode}" /></td>
+
+
+
+												<c:forEach items="${itemTypeList}" var="itemTypeVar"
+													varStatus="count">
+													<c:choose>
+														<c:when test="${itemTypeVar.itemTypeId==item.itemType}">
+															<td style="text-align: left"><c:out
+																	value="${itemTypeVar.itemTypeName}" /></td>
+														</c:when>
+													</c:choose>
+												</c:forEach>
+
+
+
+
+												<td style="text-align: left"><c:out
+														value="${item.plantName}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${item.itemRate1}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${item.taxName}" /></td>
+
+
+												<td style="text-align: left"><c:out
+														value="${item.uomName}" /></td>
+
+												<td style="text-align: right"><c:out
+														value="${item.dispatchLimit}" /></td>
+
+
+												<td style="text-align: right"><c:out
+														value="${item.freightRate}" /></td>
+
+												<td style="text-align: right"><c:out
+														value="${item.royaltyRate}" /></td>
+
+
+
+
+												<td style="text-align: center"><a
+													href="${pageContext.request.contextPath}/editItem/${item.itemId}"><i
+														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+													&nbsp; <a
+													href="${pageContext.request.contextPath}/deleteItem/${item.itemId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o"></i></a></td>
+
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								<div class="col-lg-1">
+
+									<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+
+
+								</div>
+							</form>
 
 						</div>
 					</div>
@@ -251,6 +266,21 @@
 		});
 	</script>
 
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
 
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
+	</script>
 </body>
 </html>
