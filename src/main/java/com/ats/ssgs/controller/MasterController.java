@@ -1871,6 +1871,7 @@ public class MasterController {
 			uom.setExInt1(0);
 			uom.setExInt2(0);
 			uom.setExInt3(0);
+			uom.setUomId(uomId);
 
 			uom.setExVar1("NA");
 			uom.setExVar2("NA");
@@ -2429,6 +2430,44 @@ public class MasterController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("deptName", deptName);
 			info = rest.postForObject(Constants.url + "/saveUniqueDept", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = "/getUniqueCustTypeNameCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueCustTypeNameCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String custTypeName = request.getParameter("custTypeName");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("custTypeName", custTypeName);
+			info = rest.postForObject(Constants.url + "/saveUniqueCustType", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = "/getUniqueUomNameCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueUomNameCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String uomName = request.getParameter("uomName");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("uomName", uomName);
+			info = rest.postForObject(Constants.url + "/saveUniqueUom", map, Info.class);
 			System.out.println("info" + info.toString());
 
 		} catch (Exception e) {

@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
-
+<c:url var="getUniqueUomNameCheck" value="/getUniqueUomNameCheck" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -85,7 +85,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertUom"
-								method="post">
+								id="submitForm" method="post">
 
 
 
@@ -97,11 +97,12 @@
 											value="${editUom.uomName}" class="form-control"
 											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Uom Name')"
+											onchange="getUomNameCheck()"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Sort No*</div>
+									<div class="col-md-2">Sort No(Optional)</div>
 
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
@@ -112,8 +113,8 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<input type="hidden" id="deptId" name="deptId"
-										value="${editDept.deptId}">
+									<input type="hidden" id="uomId" name="uomId"
+										value="${editUom.uomId}">
 
 								</div>
 								<div class="form-group"></div>
@@ -134,6 +135,7 @@
 									<div class="col-lg-2">
 
 										<button type="submit" class="btn btn-primary"
+											id="submitButton" name="submitButton"
 											style="align-content: center; width: 113px; margin-left: 40px;">
 											Submit</button>
 									</div>
@@ -281,6 +283,49 @@
 			});
 
 		});
+	</script>
+
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
+
+	<script type="text/javascript">
+		function getUomNameCheck() {
+
+			var uomName = $("#uomName").val();
+
+			$.getJSON('${getUniqueUomNameCheck}', {
+
+				uomName : uomName,
+
+				ajax : 'true',
+
+			}, function(data) {
+				if (data.error == true) {
+					alert("Measurement Unit Name Already Exist");
+
+					document.getElementById("uomName").value = "";
+					/* setTimeout(function() {
+						document.getElementById("#deptName").focus();
+					}, 100); */
+					document.getElementById("submitButton").disabled = true;
+
+				} else {
+					document.getElementById("submitButton").disabled = false;
+
+				}
+			}
+
+			);
+
+		}
 	</script>
 
 

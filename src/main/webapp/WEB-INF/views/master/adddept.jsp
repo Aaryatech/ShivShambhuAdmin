@@ -127,8 +127,9 @@
 									<div class="col-md-2">Department Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="deptName" name="deptName"
-											autocomplete="off" onblur="getDeptNameCheck()"
+											autocomplete="off" pattern="^[A-Za-z\s]+$"
 											oninvalid="setCustomValidity('Please Enter Dept Name')"
+											onchange="getDeptNameCheck()"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editDept.deptName}" class="form-control" required
 											style="width: 100%;">
@@ -156,7 +157,7 @@
 								<div class="col-lg-2">
 
 									<input type="submit" class="btn btn-primary" value="Submit"
-										id="submitButton" name="submit"
+										id="submitButton" name="submitButton"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
 								</div>
@@ -355,7 +356,7 @@
 				if (data.error == true) {
 					alert("Department Name Already Exist");
 
-					document.getElementById("#deptName").value = "";
+					document.getElementById("deptName").value = "";
 					/* setTimeout(function() {
 						document.getElementById("#deptName").focus();
 					}, 100); */

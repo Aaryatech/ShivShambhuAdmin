@@ -8,6 +8,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+<c:url var="getUniqueCustTypeNameCheck"
+	value="/getUniqueCustTypeNameCheck" />
 
 
 
@@ -129,14 +131,16 @@
 									<div class="col-md-3">Customer Type Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="custTypeName" name="custTypeName"
-											autocomplete="off"
+											autocomplete="off" pattern="^[A-Za-z\s]+$"
 											oninvalid="setCustomValidity('Please Enter Cust Type Name')"
+											onchange="getCustTypeNameCheck()"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editCustType.custTypeName}" class="form-control"
 											required style="width: 100%;">
 									</div>
 									<div class="col-lg-2">
 										<input type="submit" class="btn btn-primary" value="Submit"
+											id="submitButton" name="submitButton"
 											style="align-content: center; width: 113px; margin-left: 40px;">
 
 									</div>
@@ -312,7 +316,37 @@
 											});
 						});
 	</script>
+	<script type="text/javascript">
+		function getCustTypeNameCheck() {
 
+			var custTypeName = $("#custTypeName").val();
+
+			$.getJSON('${getUniqueCustTypeNameCheck}', {
+
+				custTypeName : custTypeName,
+
+				ajax : 'true',
+
+			}, function(data) {
+				if (data.error == true) {
+					alert("Customer Type Name Already Exist");
+
+					document.getElementById("custTypeName").value = "";
+					/* setTimeout(function() {
+						document.getElementById("#deptName").focus();
+					}, 100); */
+					document.getElementById("submitButton").disabled = true;
+
+				} else {
+					document.getElementById("submitButton").disabled = false;
+
+				}
+			}
+
+			);
+
+		}
+	</script>
 
 </body>
 </html>
