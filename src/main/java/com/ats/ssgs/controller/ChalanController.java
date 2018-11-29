@@ -181,7 +181,7 @@ public class ChalanController {
 			System.err.println("Inside tempChItemList null");
 
 			tempChItemList=new ArrayList<>();
-			
+			 
 			TempChalanItem chItem=new TempChalanItem();
 			
 			chItem.setChalanQty(chalanQty);
