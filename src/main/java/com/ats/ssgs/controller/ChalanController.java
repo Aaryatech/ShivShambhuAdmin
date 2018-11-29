@@ -15,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,12 +26,14 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.chalan.ChalanDetail;
 import com.ats.ssgs.model.chalan.ChalanHeader;
+import com.ats.ssgs.model.chalan.GetChalanHeader;
 import com.ats.ssgs.model.chalan.TempChalanItem;
 import com.ats.ssgs.model.enq.EnqHeader;
 import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.Plant;
+import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.master.User;
 import com.ats.ssgs.model.master.Vehicle;
 import com.ats.ssgs.model.order.GetOrder;
@@ -392,5 +395,106 @@ public class ChalanController {
 		return "redirect:/showAddChalan";
 	
 	}
+	
+	
+	@RequestMapping(value = "/showChalanList", method = RequestMethod.GET)
+	public ModelAndView showChalanList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("chalan/chalan_list");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+			
+			model.addObject("title", "Chalan List");
+			
+			
+		}
+		catch (Exception e) {
+			System.err.println("Exce in /showChalanList   " +e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+		
+	}
+	
+	//getChalanListByPlant
+	
+	@RequestMapping(value = "/getChalanListByPlant", method = RequestMethod.GET)
+	public @ResponseBody List<GetChalanHeader> getChalanListByPlant(HttpServletRequest request, HttpServletResponse response) {
+		List<GetChalanHeader> chalanHeadList;
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		System.err.println("plantId for getChalanListByPlant  " +plantId);
+
+		map.add("plantId", plantId);
+		map.add("chalanStatus", 0);
+		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByPlantAndStatus", map,
+				GetChalanHeader[].class);
+		
+		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
+		
+		for(int i=0;i<chalanHeadList.size();i++) {
+			
+			chalanHeadList.get(i).setChalanDate(DateConvertor.convertToDMY(chalanHeadList.get(i).getChalanDate()));
+		}
+				
+				System.err.println("Ajax chalanHeadList " + chalanHeadList.toString());
+
+		
+				return chalanHeadList ;
+	}
+	
+	
+	//editChalan
+	
+	
+	@RequestMapping(value = "/editChalan/{chalanId}", method = RequestMethod.GET)
+	public ModelAndView editOrder(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("order/editOrder");
+
+			GetChalanHeader editChalan = null;
+			/*
+			 * for(int i=0;i<getOrdList.size();i++) {
+			 * 
+			 * if(getOrdList.get(i).getOrderId()==orderId) { editOrder=new GetOrder();
+			 * editOrder=getOrdList.get(i); break; } }
+			 */
+			MultiValueMap<String, Object>
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("chalanId", chalanId);
+			editChalan = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			
+		/*	map.add("chalanId", chalanId);
+			GetOrderDetail[] ordDetailArray = rest.postForObject(Constants.url + "getOrderDetailList", map,
+					GetOrderDetail[].class);
+			ordDetailList = new ArrayList<GetOrderDetail>(Arrays.asList(ordDetailArray));
+
+			model.addObject("orderDetailList", ordDetailList);
+*/
+			model.addObject("editChalan", editChalan);
+
+			model.addObject("title", "Edit Chalan");
+
+		} catch (Exception e) {
+			System.err.println("Exce in edit Order " + e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
 
 }

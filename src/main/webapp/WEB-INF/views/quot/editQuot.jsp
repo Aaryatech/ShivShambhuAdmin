@@ -164,7 +164,7 @@ body {
 </style>
 
 </head>
-<body>
+<body onload="callsetKM()">
 
 
 	<!-- Left Panel -->
@@ -824,6 +824,17 @@ var termTitle=data.termTitle
 				  
 		</script>
 		<script type="text/javascript">
+		
+		function callsetKM(){
+			
+			var x=${quotHeader.noOfKm};
+			if(x==0){
+				
+				setKM(1);
+			}else{
+				setKM(0);
+			}
+		}
 		
 		function setKM(delPlace) {
 		//alert("hiii");
