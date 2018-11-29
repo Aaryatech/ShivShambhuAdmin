@@ -172,7 +172,7 @@
 
 										<input type="reset" class="btn btn-primary" value="Clear"
 											style="align-content: center; width: 113px; margin-left: 40px;">
-										Clear
+
 
 									</div>
 

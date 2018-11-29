@@ -2516,4 +2516,99 @@ public class MasterController {
 		return "redirect:/showItemList";
 	}
 
+	@RequestMapping(value = "/getUniqueDeptNameCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueDeptNameCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String deptName = request.getParameter("deptName");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("deptName", deptName);
+			info = rest.postForObject(Constants.url + "/saveUniqueDept", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = "/getUniqueCustTypeNameCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueCustTypeNameCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String custTypeName = request.getParameter("custTypeName");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("custTypeName", custTypeName);
+			info = rest.postForObject(Constants.url + "/saveUniqueCustType", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = "/getUniqueUomNameCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueUomNameCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String uomName = request.getParameter("uomName");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("uomName", uomName);
+			info = rest.postForObject(Constants.url + "/saveUniqueUom", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = "/getUniqueUserMobCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueUserMobCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String usrMob = request.getParameter("usrMob");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("usrMob", usrMob);
+			info = rest.postForObject(Constants.url + "/saveUniqueUser", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = "/getUniqueHSNCodeCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueHSNCodeCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String hsnCode = request.getParameter("hsnCode");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("hsnCode", hsnCode);
+			info = rest.postForObject(Constants.url + "/saveUniqueTax", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
 }
