@@ -10,6 +10,7 @@
 <title>Shiv Admin</title>
 
 <c:url var="getPlantByCompanyId" value="/getPlantByCompanyId" />
+<c:url var="getUniqueUserMobCheck" value="/getUniqueUserMobCheck" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -96,7 +97,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertUser"
-								method="post">
+								id="submitForm" method="post">
 
 								<div class="row">
 
@@ -105,7 +106,7 @@
 									<div class="col-md-4">
 										<select id="company_id" name="company_id"
 											class="standardSelect" tabindex="1" onchange="getData()">
-											<option value="-1">Select</option>
+											<option value="">Select</option>
 											<c:forEach items="${compList}" var="comp">
 
 												<c:choose>
@@ -127,7 +128,7 @@
 									<div class="col-md-4">
 										<select id="plant_name" name="plant_id" class="standardSelect"
 											tabindex="1" required>
-
+											<option value="">Select</option>
 											<c:forEach items="${plantList}" var="plant">
 
 												<c:choose>
@@ -248,9 +249,10 @@
 
 								<div class="col-lg-4"></div>
 								<div class="col-lg-2">
-									<button type="submit" class="btn btn-primary"
+									<input type="submit" class="btn btn-primary" value="submit"
+										id="submitButton"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Submit</button>
+
 								</div>
 								<div class="col-lg-2">
 									<button type="reset" class="btn btn-primary"
@@ -378,7 +380,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option value="-1"  >Select Company</option>';
+					var html = '<option value="-1"  >Select</option>';
 					for (var i = 0; i < len; i++) {
 
 						html += '<option value="' + data[i].plantId + '">'
@@ -397,7 +399,48 @@
 
 
 
+	<script type="text/javascript">
+		function getDeptNameCheck() {
 
+			var usrMob = $("#usrMob").val();
+
+			$.getJSON('${getUniqueUserMobCheck}', {
+
+				usrMob : usrMob,
+
+				ajax : 'true',
+
+			}, function(data) {
+				if (data.error == true) {
+					alert("User Mobile No Already Exist");
+
+					document.getElementById("usrMob").value = "";
+					/* setTimeout(function() {
+						document.getElementById("#deptName").focus();
+					}, 100); */
+					document.getElementById("submitButton").disabled = true;
+
+				} else {
+					document.getElementById("submitButton").disabled = false;
+
+				}
+			}
+
+			);
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
 
 </body>
 </html>

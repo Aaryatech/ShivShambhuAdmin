@@ -2477,4 +2477,23 @@ public class MasterController {
 		return info;
 	}
 
+	@RequestMapping(value = "/getUniqueUserMobCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueUserMobCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String usrMob = request.getParameter("usrMob");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("usrMob", usrMob);
+			info = rest.postForObject(Constants.url + "/saveUniqueUser", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
 }
