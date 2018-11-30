@@ -95,7 +95,7 @@ public class PaymentController {
 
 			EnqGenFact enqInsertRes = rest.postForObject(Constants.url + "saveEnqGenFact", enqGenFact,
 					EnqGenFact.class);
-			if (enqInsertRes.getEnqGenId()!=0) {
+			if (enqInsertRes.getEnqGenId() != 0) {
 				isError = 2;
 			} else {
 				isError = 1;
@@ -214,7 +214,7 @@ public class PaymentController {
 			custType.setDelStatus(1);
 
 			CustType custTermInsertRes = rest.postForObject(Constants.url + "saveCustType", custType, CustType.class);
-			if (custTermInsertRes.getCustTypeId()!=0) {
+			if (custTermInsertRes.getCustTypeId() != 0) {
 				isError = 2;
 			} else {
 				isError = 1;
@@ -248,7 +248,7 @@ public class PaymentController {
 
 			CustType editCustType = rest.postForObject(Constants.url + "getCustTypeByCustTypeId", map, CustType.class);
 
-			model.addObject("title", "Edit Customer type");
+			model.addObject("title", "Edit Customer Type Name");
 			model.addObject("editCustType", editCustType);
 
 		} catch (Exception e) {
