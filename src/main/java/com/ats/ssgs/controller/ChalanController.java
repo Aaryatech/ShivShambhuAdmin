@@ -458,7 +458,7 @@ public class ChalanController {
 	List<Project> projList;
 	List<GetChalanDetail> chDetailList;
 	@RequestMapping(value = "/editChalan/{chalanId}", method = RequestMethod.GET)
-	public String editOrder(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
+	public ModelAndView editChalan(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
 
 		ModelAndView model = null;
 		try {
@@ -506,13 +506,13 @@ public class ChalanController {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/showChalanList";
+		return model;
 	}
 	
 	//closeChalan
 	
 	@RequestMapping(value = "/closeChalan", method = RequestMethod.POST)
-	public ModelAndView closeChalan(HttpServletRequest request, HttpServletResponse response) {
+	public String closeChalan(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
 		try {
@@ -541,6 +541,7 @@ public class ChalanController {
 			chHeader.setCostSegment(costSegment);
 			chHeader.setSitePersonName(sitePerName);
 			chHeader.setSitePersonMob(sitePerMob);
+			chHeader.setOrderId(orderId);
 			
 			chHeader.setStatus(1);
 		
@@ -565,6 +566,8 @@ public class ChalanController {
 					det.setItemWidthSite(siteWidth);
 					det.setItemLengthSite(siteLength);
 					det.setItemTotalSite(siteTotal);
+					det.setItemId(chDetailList.get(i).getItemId());
+					det.setOrderDetailId(chDetailList.get(i).getOrderDetailId());
 					
 					det.setStatus(1);
 					
@@ -586,7 +589,7 @@ public class ChalanController {
 			System.err.println("Exce in closeChalanApi " + e.getMessage());
 			e.printStackTrace();
 		}
-		return model;
+		return "redirect:/showChalanList";
 	
 	}
 }
