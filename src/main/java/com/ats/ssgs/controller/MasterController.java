@@ -2691,4 +2691,24 @@ public class MasterController {
 		return info;
 	}
 
+	@RequestMapping(value = "/getUniquePlantCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniquePlantCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String plantName = request.getParameter("plantName");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("plantName", plantName);
+			info = rest.postForObject(Constants.url + "/saveUniquePlant", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
 }
