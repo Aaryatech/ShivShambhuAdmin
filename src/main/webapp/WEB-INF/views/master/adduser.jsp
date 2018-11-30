@@ -82,6 +82,38 @@
 
 			<div class="row">
 
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
+
+
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
@@ -122,34 +154,6 @@
 										</select>
 									</div>
 
-
-									<div class="col-md-2">Select Plant*</div>
-
-									<div class="col-md-4">
-										<select id="plant_name" name="plant_id" class="standardSelect"
-											tabindex="1" required>
-											<option value="">Select</option>
-											<c:forEach items="${plantList}" var="plant">
-
-												<c:choose>
-													<c:when test="${plant.plantId==editUser.plantId}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
-													</c:otherwise>
-												</c:choose>
-
-											</c:forEach>
-										</select>
-									</div>
-
-
-								</div>
-								<div class="form-group"></div>
-
-								<div class="row">
-
 									<div class="col-md-2">Select Department*</div>
 
 									<div class="col-md-4">
@@ -171,9 +175,38 @@
 										</select>
 									</div>
 
+									<%-- 
+									<div class="col-md-2">Select Plant*</div>
 
+									<div class="col-md-4">
+										<select id="plant_name" name="plant_id" class="standardSelect"
+											tabindex="1" required>
+											<option value="">Select</option>
+											<c:forEach items="${plantList}" var="plant">
 
+												<c:choose>
+													<c:when test="${plant.plantId==editUser.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}">${plant.plantName}
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</select>
+									</div>
+
+ --%>
 								</div>
+
+
+
+
+
+
+
+
 								<input type="hidden" name="userId" id="userId"
 									value="${editUser.userId}">
 								<div class="form-group"></div>
@@ -250,7 +283,7 @@
 
 								<div class="col-lg-4"></div>
 								<div class="col-lg-2">
-									<input type="submit" class="btn btn-primary" value="submit"
+									<input type="submit" class="btn btn-primary" value="Submit"
 										id="submitButton"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
@@ -442,6 +475,5 @@
 					});
 		});
 	</script>
-
 </body>
 </html>

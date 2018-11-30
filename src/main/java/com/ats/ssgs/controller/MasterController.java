@@ -1987,7 +1987,7 @@ public class MasterController {
 			}
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			int deptId = Integer.parseInt(request.getParameter("dept_id"));
-			int plantId = Integer.parseInt(request.getParameter("plant_id"));
+			// int plantId = Integer.parseInt(request.getParameter("plant_id"));
 
 			int companyId = Integer.parseInt(request.getParameter("company_id"));
 			String curDate = dateFormat.format(new Date());
@@ -2013,7 +2013,7 @@ public class MasterController {
 			user.setExDate2(curDate);
 			user.setExInt1(0);
 			user.setExInt2(0);
-			user.setPlantId(plantId);
+
 			user.setRoleId(0);
 
 			user.setUserPass(userPass);
@@ -2027,10 +2027,13 @@ public class MasterController {
 
 			try {
 
+				user.setPlantId(Integer.parseInt(request.getParameter("plant_id")));
+
 				user.setSortNo(Integer.parseInt(request.getParameter("sortNo")));
 
 			} catch (Exception e) {
 				user.setSortNo(0);
+				user.setPlantId(0);
 
 			}
 

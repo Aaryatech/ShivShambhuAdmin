@@ -75,6 +75,7 @@
 
 			<div class="row">
 
+
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
@@ -107,8 +108,8 @@
 
 											<th style="text-align: center">Mobile No</th>
 											<th style="text-align: center">User Email</th>
-											<th style="text-align: center">Dept Name</th>
-											<th style="text-align: center">Plant Name</th>
+											<th style="text-align: center">Department Name</th>
+											<!-- 	<th style="text-align: center">Plant Name</th> -->
 											<th style="text-align: center">Company Name</th>
 											<th style="text-align: center; width: 5%;">Action</th>
 										</tr>
@@ -135,8 +136,8 @@
 												<td style="text-align: left"><c:out
 														value="${user.deptName}" /></td>
 
-												<td style="text-align: left"><c:out
-														value="${user.plantName}" /></td>
+												<%-- 	<td style="text-align: left"><c:out
+														value="${user.plantName}" /></td> --%>
 
 												<td style="text-align: left"><c:out
 														value="${user.compName}" /></td>

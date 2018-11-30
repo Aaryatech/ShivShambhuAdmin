@@ -39,7 +39,6 @@ public class GetUser {
 
 	private String exDate2;
 
-	private String plantName;
 	private String compName;
 	private String deptName;
 
@@ -195,14 +194,6 @@ public class GetUser {
 		this.exDate2 = exDate2;
 	}
 
-	public String getPlantName() {
-		return plantName;
-	}
-
-	public void setPlantName(String plantName) {
-		this.plantName = plantName;
-	}
-
 	public String getCompName() {
 		return compName;
 	}
@@ -225,8 +216,8 @@ public class GetUser {
 				+ ", deptId=" + deptId + ", companyId=" + companyId + ", plantId=" + plantId + ", usrEmail=" + usrEmail
 				+ ", usrDob=" + usrDob + ", roleId=" + roleId + ", sortNo=" + sortNo + ", delStatus=" + delStatus
 				+ ", deviceToken=" + deviceToken + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", plantName=" + plantName
-				+ ", compName=" + compName + ", deptName=" + deptName + "]";
+				+ ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", compName=" + compName
+				+ ", deptName=" + deptName + "]";
 	}
 
 }
