@@ -549,7 +549,7 @@ public class ChalanController {
 			
 			for(int i=0;i<chDetailList.size();i++) {
 				
-				try {
+				try { 
 					
 					float itemQty=Float.parseFloat(request.getParameter("chQty"+chDetailList.get(i).getChalanDetailId()));
 					float siteWidth=Float.parseFloat(request.getParameter("width"+chDetailList.get(i).getChalanDetailId()));
