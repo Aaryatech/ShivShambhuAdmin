@@ -88,7 +88,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<strong>Data not submitted</strong>
+								<strong>${dataNotSubmit}</strong>
 							</div>
 						</div>
 					</c:when>
@@ -102,7 +102,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<strong>Data Submitted Successfully</strong>
+								<strong>${dataSubmit}</strong>
 							</div>
 						</div>
 					</c:when>
@@ -360,7 +360,6 @@
 						document.getElementById("#deptName").focus();
 					}, 100); */
 					//document.getElementById("submitButton").disabled = true;
-                  
 				} else {
 					//document.getElementById("submitButton").disabled = false;
 

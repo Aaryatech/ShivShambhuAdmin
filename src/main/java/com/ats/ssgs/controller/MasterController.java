@@ -1750,8 +1750,9 @@ public class MasterController {
 			}
 
 			Dept deptInsertRes = rest.postForObject(Constants.url + "saveDept", dept, Dept.class);
-			if (deptInsertRes.getDeptId()!=0) {
+			if (deptInsertRes.getDeptId() != 0) {
 				isError = 2;
+
 			} else {
 				isError = 1;
 			}
@@ -2602,6 +2603,25 @@ public class MasterController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("hsnCode", hsnCode);
 			info = rest.postForObject(Constants.url + "/saveUniqueTax", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = "/getUniqueEnqGenFact", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueEnqGenFact(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String enqGenBy = request.getParameter("enqGenBy");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("enqGenBy", enqGenBy);
+			info = rest.postForObject(Constants.url + "/saveUniqueEnqGenFact", map, Info.class);
 			System.out.println("info" + info.toString());
 
 		} catch (Exception e) {

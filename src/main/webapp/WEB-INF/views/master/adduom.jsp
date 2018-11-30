@@ -9,6 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
+<c:url var="getUniqueUomNameCheck" value="/getUniqueUomNameCheck" />
 
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
@@ -126,8 +127,8 @@
 									<div class="col-md-4">
 										<input type="text" id="uomName" name="uomName"
 											value="${editUom.uomName}" class="form-control"
-											autocomplete="off"
-											oninvalid="setCustomValidity('Please enter Uom Name')"
+											onblur="getUomNameCheck()" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter correct Uom Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
@@ -165,6 +166,7 @@
 									<div class="col-lg-2">
 
 										<input type="submit" class="btn btn-primary" value="Submit"
+											id="submitButton"
 											style="align-content: center; width: 113px; margin-left: 40px;">
 									</div>
 
@@ -361,7 +363,36 @@
 						});
 	</script>
 
+	<script type="text/javascript">
+		function getUomNameCheck() {
 
+			var uomName = $("#uomName").val();
+
+			$.getJSON('${getUniqueUomNameCheck}', {
+
+				uomName : uomName,
+
+				ajax : 'true',
+
+			}, function(data) {
+				if (data.error == true) {
+					alert("Measurement Unit Name Already Exist");
+
+					document.getElementById("uomName").value = "";
+					/* setTimeout(function() {
+						document.getElementById("#deptName").focus();
+					}, 100); */
+					document.getElementById("submitButton").disabled = true;
+				} else {
+					document.getElementById("submitButton").disabled = false;
+
+				}
+			}
+
+			);
+
+		}
+	</script>
 
 </body>
 </html>
