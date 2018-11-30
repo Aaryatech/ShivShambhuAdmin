@@ -178,7 +178,7 @@ public class PaymentController {
 			isError = 0;
 			model.addObject("custTypeList", custTypeList);
 
-			model.addObject("title", "Add Customer Type");
+			model.addObject("title", "Add Customer Type Name");
 
 		} catch (Exception e) {
 
