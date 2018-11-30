@@ -95,7 +95,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<strong>Data not submitted</strong>
+								<strong> Enquiry Source Already Exist</strong>
 							</div>
 						</div>
 					</c:when>
@@ -125,7 +125,8 @@
 						<div class="card-body card-block">
 							<form
 								action="${pageContext.request.contextPath}/insertEnqGenFact"
-								id="submitForm" method="post" onsubmit="return onEnqSourceInput()">
+								id="submitForm" method="post"
+								onsubmit="return onEnqSourceInput()">
 
 
 
@@ -307,7 +308,7 @@
 											});
 						});
 	</script>
-<script type="text/javascript">
+	<script type="text/javascript">
 		function onEnqSourceInput() {
 
 			var enqGenBy = $("#enqGenBy").val();
@@ -327,7 +328,6 @@
 						document.getElementById("#deptName").focus();
 					}, 100); */
 					//document.getElementById("submitButton").disabled = true;
-
 				} else {
 					//document.getElementById("submitButton").disabled = false;
 
