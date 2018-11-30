@@ -88,7 +88,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<strong>${dataNotSubmit}</strong>
+								<strong>Department Name Already Exist</strong>
 							</div>
 						</div>
 					</c:when>
@@ -102,7 +102,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<strong>${dataSubmit}</strong>
+								<strong>Date Submitted Successfully</strong>
 							</div>
 						</div>
 					</c:when>
@@ -127,8 +127,8 @@
 									<div class="col-md-2">Department Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="deptName" name="deptName"
-											autocomplete="off" onblur="getDeptNameCheck()"
-											oninvalid="setCustomValidity('Please Enter Dept Name')"
+											pattern="^[A-Za-z\s]+$" autocomplete="off"
+											oninvalid="setCustomValidity('Please Enter correct Department Name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editDept.deptName}" class="form-control" required
 											style="width: 100%;">

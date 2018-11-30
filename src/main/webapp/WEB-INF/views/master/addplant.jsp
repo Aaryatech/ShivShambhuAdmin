@@ -8,6 +8,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+
+<c:url var="getUniquePlantCheck" value="/getUniquePlantCheck" />
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -131,7 +134,7 @@
 									<div class="col-md-4">
 										<select id="compId" name="compId" class="standardSelect"
 											tabindex="1" onchange="selectCompany()">
-											<option value="">Select Company</option>
+											<option value="">Select</option>
 											<c:forEach items="${compList}" var="comp">
 
 												<c:choose>
@@ -150,7 +153,7 @@
 									<div class="col-md-2">Plant Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="plant_name" name="plant_name"
-											autocomplete="off"
+											autocomplete="off" onblur="getCheck()"
 											oninvalid="setCustomValidity('Please enter correct plant name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="^[A-Za-z\s]+$" value="${editPlant.plantName}"
@@ -242,7 +245,7 @@
 									<div class="col-md-4">
 										<select id="plant_head" name="plant_head" style="width: 100%;"
 											class="standardSelect" tabindex="1" required>
-											<option value="">Select Plant</option>
+											<option value="">Select</option>
 											<c:forEach items="${usrList}" var="usr">
 
 
@@ -265,6 +268,7 @@
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
 									<input type="submit" class="btn btn-primary" value="Submit"
+										id="submitButton"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
 								</div>
@@ -471,7 +475,34 @@
 		});
 	</script>
 
+	<script type="text/javascript">
+		function getCheck() {
 
+			var plantName = $("#plant_name").val();
+
+			$.getJSON('${getUniquePlantCheck}', {
+
+				plantName : plantName,
+
+				ajax : 'true',
+
+			}, function(data) {
+				if (data.error == true) {
+					alert("Plant Already Exist");
+
+					document.getElementById("plant_name").value = "";
+
+					document.getElementById("submitButton").disabled = true;
+				} else {
+					document.getElementById("submitButton").disabled = false;
+
+				}
+			}
+
+			);
+
+		}
+	</script>
 
 
 </body>

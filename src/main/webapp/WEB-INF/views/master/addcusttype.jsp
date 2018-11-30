@@ -92,7 +92,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<strong>Data not submitted</strong>
+								<strong>Customer Type Name Already Exist</strong>
 							</div>
 						</div>
 					</c:when>
@@ -122,7 +122,7 @@
 
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertCustType"
-								id="submitForm" method="post" onsubmit="getCustTypeNameCheck()" >
+								id="submitForm" method="post" onsubmit="getCustTypeNameCheck()">
 
 
 
@@ -131,9 +131,8 @@
 									<div class="col-md-3">Customer Type Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="custTypeName" name="custTypeName"
-											autocomplete="off" pattern="^[A-Za-z\s]+$" 
+											autocomplete="off" pattern="^[A-Za-z\s]+$"
 											oninvalid="setCustomValidity('Please Enter Cust Type Name')"
-										
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editCustType.custTypeName}" class="form-control"
 											required style="width: 100%;">
@@ -336,7 +335,6 @@
 						document.getElementById("#deptName").focus();
 					}, 100); */
 					//document.getElementById("submitButton").disabled = true;
-
 				} else {
 					//document.getElementById("submitButton").disabled = false;
 
