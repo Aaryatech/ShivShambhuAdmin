@@ -26,6 +26,7 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.chalan.ChalanDetail;
 import com.ats.ssgs.model.chalan.ChalanHeader;
+import com.ats.ssgs.model.chalan.GetChalanDetail;
 import com.ats.ssgs.model.chalan.GetChalanHeader;
 import com.ats.ssgs.model.chalan.TempChalanItem;
 import com.ats.ssgs.model.enq.EnqHeader;
@@ -330,6 +331,7 @@ public class ChalanController {
 				chDetail.setStatus(0);
 				chDetail.setItemTotalPlant(5);
 				
+				chDetail.setOrderDetailId(tempChItemList.get(i).getOrderDetailId());
 				chDetailList.add(chDetail);
 				
 			}
@@ -354,7 +356,7 @@ public class ChalanController {
 			chHeader.setDriverId(driverId);
 			chHeader.setExDate1(curDate);
 			chHeader.setExFloat1(0);
-			chHeader.setExVar1("save time-" +dateFormat.format(cal.getTime()));
+			chHeader.setExVar1("save time-" +dateFormat.format(cal.getTime().getTime()));
 			chHeader.setInKm(0);
 			chHeader.setOrderId(orderId);
 			chHeader.setOrderNo(getOrder.getOrderNo());
@@ -392,6 +394,7 @@ public class ChalanController {
 			
 			e.printStackTrace();
 		}
+		
 		return "redirect:/showAddChalan";
 	
 	}
@@ -452,16 +455,17 @@ public class ChalanController {
 	
 	//editChalan
 	
-	
+	List<Project> projList;
+	List<GetChalanDetail> chDetailList;
 	@RequestMapping(value = "/editChalan/{chalanId}", method = RequestMethod.GET)
-	public ModelAndView editOrder(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
+	public String editOrder(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
 
 		ModelAndView model = null;
 		try {
 
-			model = new ModelAndView("order/editOrder");
+			model = new ModelAndView("chalan/chalan_edit");
 
-			GetChalanHeader editChalan = null;
+			GetChalanHeader editChalan = new GetChalanHeader();
 			/*
 			 * for(int i=0;i<getOrdList.size();i++) {
 			 * 
@@ -474,27 +478,115 @@ public class ChalanController {
 
 			map.add("chalanId", chalanId);
 			editChalan = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
+			editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate()));
 
 			map = new LinkedMultiValueMap<String, Object>();
 
-			
-		/*	map.add("chalanId", chalanId);
-			GetOrderDetail[] ordDetailArray = rest.postForObject(Constants.url + "getOrderDetailList", map,
-					GetOrderDetail[].class);
-			ordDetailList = new ArrayList<GetOrderDetail>(Arrays.asList(ordDetailArray));
+			map.add("custId", editChalan.getCustId());
+			Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
+			projList = new ArrayList<Project>(Arrays.asList(projArray));
 
-			model.addObject("orderDetailList", ordDetailList);
-*/
+			model.addObject("projList", projList);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			
+			map.add("chalanId", chalanId);
+			GetChalanDetail[] chDetailArray = rest.postForObject(Constants.url + "getGetChalanDetailByChalanId", map,
+					GetChalanDetail[].class);
+			chDetailList = new ArrayList<GetChalanDetail>(Arrays.asList(chDetailArray));
+
+			model.addObject("chDetailList", chDetailList);
+
 			model.addObject("editChalan", editChalan);
 
-			model.addObject("title", "Edit Chalan");
+			model.addObject("title", "Close Chalan");
 
 		} catch (Exception e) {
-			System.err.println("Exce in edit Order " + e.getMessage());
+			System.err.println("Exce in edit Chalan " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return "redirect:/showChalanList";
+	}
+	
+	//closeChalan
+	
+	@RequestMapping(value = "/closeChalan", method = RequestMethod.POST)
+	public ModelAndView closeChalan(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("chalan/chalan_edit");
+			
+			
+			String inTime = request.getParameter("in_time");
+			float inKm=Float.parseFloat(request.getParameter("in_km"));
+			String chalanRemark = request.getParameter("chalan_remark");
+			String costSegment = request.getParameter("cost_segment");
+			String sitePerName = request.getParameter("site_per_name");
+			String sitePerMob = request.getParameter("site_per_mob");
+			
+			int orderId=Integer.parseInt(request.getParameter("order_id"));
+			int chalanId=Integer.parseInt(request.getParameter("chalan_id"));
+			
+			ChalanHeader chHeader=new ChalanHeader();
+			
+			
+			chHeader.setChalanId(chalanId);
+			chHeader.setChalanRemark(chalanRemark);
+			chHeader.setVehTimeIn(inTime);
+			
+			chHeader.setInKm(inKm);
+			chHeader.setCostSegment(costSegment);
+			chHeader.setSitePersonName(sitePerName);
+			chHeader.setSitePersonMob(sitePerMob);
+			
+			chHeader.setStatus(1);
+		
+			List<ChalanDetail> chalanDList=new ArrayList<>();
+			
+			for(int i=0;i<chDetailList.size();i++) {
+				
+				try {
+					
+					float itemQty=Float.parseFloat(request.getParameter("chQty"+chDetailList.get(i).getChalanDetailId()));
+					float siteWidth=Float.parseFloat(request.getParameter("width"+chDetailList.get(i).getChalanDetailId()));
+					float siteHeight=Float.parseFloat(request.getParameter("height"+chDetailList.get(i).getChalanDetailId()));
+					float siteLength=Float.parseFloat(request.getParameter("length"+chDetailList.get(i).getChalanDetailId()));
+					float siteTotal=Float.parseFloat(request.getParameter("itemTotal"+chDetailList.get(i).getChalanDetailId()));
+					
+					
+					ChalanDetail det=new ChalanDetail();
+					
+					det.setChalanDetailId(chDetailList.get(i).getChalanDetailId());
+					det.setItemQty(itemQty);
+					det.setItemHeightSite(siteHeight);
+					det.setItemWidthSite(siteWidth);
+					det.setItemLengthSite(siteLength);
+					det.setItemTotalSite(siteTotal);
+					
+					det.setStatus(1);
+					
+					chalanDList.add(det);
+				}catch (Exception e) {
+					
+					System.err.println("Exce in getting chalan detail " +e.getMessage());
+					e.printStackTrace();
+				}
+			}
+			chHeader.setChalanDetailList(chalanDList);
+			System.err.println(" update bean  chHeader " +chHeader.toString());
+
+			
+			Info chHeadInserRes = rest.postForObject(Constants.url + "closeChalanApi", chHeader,
+					Info.class);
+
+		}catch (Exception e) {
+			System.err.println("Exce in closeChalanApi " + e.getMessage());
 			e.printStackTrace();
 		}
 		return model;
-	}
 	
-
+	}
 }

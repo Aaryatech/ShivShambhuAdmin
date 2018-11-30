@@ -20,11 +20,10 @@
 
 <c:url var="getPoDetailForOrderByPoId"
 	value="/getPoDetailForOrderByPoId" />
-	
-	
-<c:url var="getTempOrderHeader"
-	value="/getTempOrderHeader" />
-	
+
+
+<c:url var="getTempOrderHeader" value="/getTempOrderHeader" />
+
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,31 +74,30 @@
 
 <style>
 .alert {
-    padding: 20px;
-    background-color: red;
-    color: white;
-    
+	padding: 20px;
+	background-color: red;
+	color: white;
 }
+
 .alert1 {
-    padding: 20px;
-    background-color: green;
-    color: white;
-    
+	padding: 20px;
+	background-color: green;
+	color: white;
 }
 
 .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: black;
+	color: black;
 }
 </style>
 
@@ -123,31 +121,31 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-			
-			<c:choose>
-							<c:when test="${isError==1}">
-							
-							<div class="alert">
-							
+
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Failed !</strong>     Data not submitted  !!
-				</div>
-							
-							</c:when>
-							
-							<c:when test="${isError==2}">
-							
-							<div class="alert1">
-							
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Success</strong>     Data Submitted !!
-				</div>
-							
-							</c:when>
-							
-							</c:choose>
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -160,7 +158,7 @@
 								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
 										Customer</strong></a>
 							</div> --%>
-							
+
 
 						</div>
 						<div class="card-body card-block">
@@ -171,57 +169,55 @@
 
 									<div class="col-md-2">Plant</div>
 
-									<div class="col-md-4"> ${editChalan.plantName}
-										<%-- <select id="plant_id" name="plant_id" class="standardSelect"
+									<div class="col-md-4">
+										<select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="">Select Plant</option>
-
-											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
-											</c:forEach>
-										</select> --%>
+											<option selected value="${editChalan.plantId}">${editChalan.plantName}</option>
+										</select>
 									</div>
 									<div class="col-md-2">Customer</div>
-									<div class="col-md-4">${editChalan.custName}
-										<!-- <select id="cust_name" name="cust_name" class="standardSelect"
+									<div class="col-md-4">
+										<select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
+											<option selected value="${editChalan.custId}">${editChalan.custName}</option>
 
-										</select> -->
+
+										</select>
 									</div>
 
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2"> Project</div>
+									<div class="col-md-2">Project</div>
 
-									<div class="col-md-10">${editChalan.projName}
-										<%-- <select id="proj_id" name="proj_id" class="standardSelect"
+									<div class="col-md-10">
+										<select id="proj_id" name="proj_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select project')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 
 											<c:forEach items="${projList}" var="proj">
-											
-											<c:choose>
-											<c:when test="${editOrder.projId==proj.projId}">
-												<option selected value="${proj.projId}">${proj.projName}-${proj.address}</option>
-											</c:when>
-											<c:otherwise>
-												<option value="${proj.projId}">${proj.projName}</option>
-											</c:otherwise>
-											</c:choose>
-											
+
+												<c:choose>
+													<c:when test="${editChalan.projId==proj.projId}">
+														<option selected value="${proj.projId}">${proj.projName}-${proj.address}</option>
+													</c:when>
+													<%-- <c:otherwise>
+														<option value="${proj.projId}">${proj.projName}</option>
+													</c:otherwise> --%>
+												</c:choose>
+
 											</c:forEach>
 
-										</select> --%>
+										</select>
 									</div>
 								</div>
-								
+
 								<!-- <div id="divCheckbox" style="display: none;">
 									<div class="form-group"></div>
 									<div class="row">
@@ -246,105 +242,205 @@
 
 									</div>
 								</div> -->
-								
-								<input type="hidden" name="item_id" id="item_id" value="0">
-								
+								<input type="hidden" name="order_id" id="order_id" value="${editChalan.orderId}">
+
+								<input type="hidden" name="chalan_id" id="chalan_id" value="${editChalan.chalanId}">
+
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Order No</div>
+									<div class="col-md-10">
+										<input type="text" readonly id="ord_no" name="ord_no"
+											style="width: 100%;" class="form-control"
+											value="${editChalan.orderNo}"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+
+								</div>
+
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Chalan Date</div>
 									<div class="col-md-4">
-										<input type="text" disabled id="ord_date" name="ord_date" required
-											style="width: 100%;" class="form-control"
-											value="${editChalan.chalanDate}"> <span class="error"
+										<input type="text" readonly id="chalan_date"
+											name="chalan_date" required style="width: 100%;"
+											class="form-control" value="${editChalan.chalanDate}">
+										<span class="error" aria-live="polite"></span>
+									</div>
+
+									<div class="col-md-2">Chalan No</div>
+									<div class="col-md-4">
+										<input type="text" readonly id="chalan_no" name="chalan_no"
+											required style="width: 100%;" class="form-control"
+											value="${editChalan.chalanNo}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
-									<div class="col-md-2">Order No</div>
+								</div>
+
+
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Driver Name</div>
 									<div class="col-md-4">
-										<input type="text" readonly id="ord_no" name="ord_no"
+										<input type="text" readonly id="driver_name"
+											name="driver_name" required style="width: 100%;"
+											class="form-control" value="${editChalan.driverName}">
+										<span class="error" aria-live="polite"></span>
+									</div>
+
+									<div class="col-md-2">Vehicle No</div>
+									<div class="col-md-4">
+										<input type="text" readonly id="veh_no" name="veh_no" required
 											style="width: 100%;" class="form-control"
-											value="${editChalan.orderNo}"> <span
+											value="${editChalan.vehNo}"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+								</div>
+
+								<div class="form-group"></div>
+								<div class="row">
+
+
+									<div class="col-md-2">Out Time</div>
+
+									<div class="col-md-4">
+										<input type="time" readonly id="out_time" name="out_time"
+											style="width: 100%;" class="form-control"
+											value="${editChalan.vehTimeOut}">
+									</div>
+									<div class="col-md-2">Out Kilometer</div>
+
+									<div class="col-md-4">
+										<input type="text" readonly id="out_km" name="out_km" required
+											onkeypress="return allowOnlyNumber(event);"
+											value="${editChalan.outKm}" style="width: 100%;"
+											class="form-control" maxlength="10"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+								</div>
+								<div class="form-group"></div>
+								<hr></hr>
+								<div class="row">
+									<div class="col-md-2">In Time</div>
+
+									<div class="col-md-4">
+										<input type="time" id="in_time" name="in_time"
+											style="width: 100%;" class="form-control">
+									</div>
+									<div class="col-md-2">In Kilometer</div>
+
+									<div class="col-md-4">
+										<input type="text" id="in_km" name="in_km" required
+											onkeypress="return allowOnlyNumber(event);" 
+											style="width: 100%;" class="form-control" maxlength="10">
+										<span class="error" aria-live="polite"></span>
+									</div>
+								</div>
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Chalan Remark</div>
+
+									<div class="col-md-4">
+										<input type="text" id="chalan_remark" name="chalan_remark"
+											required style="width: 100%;" class="form-control"
+											value="${editChalan.chalanRemark}"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+									<div class="col-md-2">Cost Segment</div>
+
+									<div class="col-md-4">
+										<input type="text" id="cost_segment" name="cost_segment"
+											value="${editChalan.costSegment}" required
+											style="width: 100%;" class="form-control"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 
 								</div>
-								
 								<div class="form-group"></div>
 								<div class="row">
-								<div class="col-md-2">Delivery Date</div>
+									<div class="col-md-2">Site Person Name</div>
+
 									<div class="col-md-4">
-										<input type="text" id="del_date" name="del_date" required
-											style="width: 100%;" class="form-control"
-											value="${editChalan.deliveryDate}"> <span class="error"
-											aria-live="polite"></span>
+										<input type="text" id="site_per_name" name="site_per_name"
+											required style="width: 100%;" class="form-control" value="-">
+										<span class="error" aria-live="polite"></span>
 									</div>
+									<div class="col-md-2">Site Person Mobile No</div>
+
+									<div class="col-md-4">
+										<input type="text" id="site_per_mob" name="site_per_mob"
+											value="-" required style="width: 100%;" class="form-control">
+										<span class="error" aria-live="polite"></span>
+									</div>
+
 								</div>
-								
 
-								<div class="form-group"></div>
-							<%--	<div class="row">
 
-									<div class="col-md-2">Select PO</div>
 
-									<div class="col-md-10">
-										<select id="po_id" name="po_id" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select po ')"
-											onchange="getPoDetailItem()">
-											<option value="-1">Select PO</option>
-
-										</select>
-									</div>
-								</div>--%>
-								
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-								
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center">Sr &nbsp;</th>
+												<tr>
+												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">Code</th>
-												<th style="text-align: center">PO Qty</th>
-												<th style="text-align: center">Remaining Qty</th>
-												<th style="text-align: center">PO Rate</th>
-												<th style="text-align: center">Order Qty</th>
-													<th style="text-align: center">Item Total</th>
+												<th style="text-align: center">UOM</th>
+												<th style="text-align: center">Chalan Qty</th>
+												<th style="text-align: center">Width</th>
+												<th style="text-align: center">Height</th>
+												<th style="text-align: center">Length</th>
+												<th style="text-align: center">Chalan Total</th>
+											</tr>
 											</tr>
 										</thead>
 										<tbody>
-									<c:forEach items="${orderDetailList}" var="ordDetail" varStatus="count">
+											<c:forEach items="${chDetailList}" var="chDetail" varStatus="count">
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
 
 
-											<td style="text-align: left"><c:out
-													value="${ordDetail.itemName}" /></td>
-											<td style="text-align: center"><c:out
-													value="${ordDetail.itemCode}" /></td>
 
 											<td style="text-align: left"><c:out
-													value="${ordDetail.poQty}" /></td>
+													value="${chDetail.itemName}" /></td>
+													
+													<td style="text-align: left"><c:out
+													value="${chDetail.uomName}" /></td>
+											<%-- <td style="text-align: center"><c:out
+													value="${chDetail.item}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${chDetail.poQty}" /></td>
 
 											<td style="text-align: center"><c:out
-													value="${ordDetail.poRemainingQty}" /></td>
+													value="${chDetail.poRemainingQty}" /></td>
 													
 											<td style="text-align: center"><c:out
-													value="${ordDetail.poRate}" /></td>
-												
+													value="${chDetail.poRate}" /></td> --%>
 												
 													<td style="text-align: center">
-													<input  type="text"  class="form-control" value="${ordDetail.orderQty}"  id="ordQty${ordDetail.itemId}" name="ordQty${ordDetail.itemId}" onchange="calTotal(${ordDetail.itemId},${ordDetail.poRate},${ordDetail.poDetailId},${ordDetail.poRemainingQty},${ordDetail.orderDetId})"/>
+													<input  type="text" onkeypress="return allowOnlyNumber(event);" class="form-control" value="${chDetail.itemQty}"  id="chQty${chDetail.chalanDetailId}" name="chQty${chDetail.chalanDetailId}" onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)"/>
 													</td>
 													<td style="text-align: center">
-													<input  type="text" readonly  class="form-control"  id="itemTotal${ordDetail.itemId}" value="${ordDetail.total}" name="${ordDetail.itemId}"/>'
+													<input  type="text" onkeypress="return allowOnlyNumber(event);" class="form-control" value="${chDetail.itemWidthPlant}"  id="width${chDetail.chalanDetailId}" name="width${chDetail.chalanDetailId}" onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)"/>
+													</td>
+														<td style="text-align: center">
+													<input  type="text" onkeypress="return allowOnlyNumber(event);" class="form-control" value="${chDetail.itemHeightPlant}"  id="height${chDetail.chalanDetailId}" name="height${chDetail.chalanDetailId}" onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)"/>
+													</td>
+														<td style="text-align: center">
+													<input  type="text" onkeypress="return allowOnlyNumber(event);" class="form-control" value="${chDetail.itemLengthPlant}"  id="length${chDetail.chalanDetailId}" name="length${chDetail.chalanDetailId}" onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)"/>
+													</td>
+													
+													<td style="text-align: center">
+													<input  type="text" readonly  class="form-control"  id="itemTotal${chDetail.chalanDetailId}" value="${chDetail.itemTotalPlant}" name="itemTotal${chDetail.chalanDetailId}"/>'
 													</td>
 													
 										</tr>
 										</c:forEach>
-
 									</table>
 								</div>
 								<div class="form-group"></div>
@@ -361,12 +457,11 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-								<!-- 	<div class="col-md-2">Other Cost After Tax</div>
+									<!-- 	<div class="col-md-2">Other Cost After Tax</div>
 
 									<div class="col-md-3">845</div> -->
-									<div class="col-md-2">Order Total</div>
+									<!-- <div class="col-md-2">Order Total</div> -->
 
-									<div class="col-md-3" id="ordTotal">${editOrder.total}</div>
 
 									<div class="col-md-2">
 										<input type="submit" class="btn btn-primary" value="Submit">
@@ -455,7 +550,7 @@
 			$('input[id$=ord_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-			
+
 			$('input[id$=del_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
@@ -465,62 +560,84 @@
 
 
 	<script type="text/javascript">
-	function calTotal(itemId,poRate,poDetailId,poRemainingQty,orderDetId){
-		//alert("Hi");
-		
-		var valid=true;
-		var qty=document.getElementById("ordQty"+itemId).value;
-		if(qty<0 || qty=="" || qty==null || qty==0){
-			valid=false;
-			alert("Please enter valid quantity");
-			document.getElementById("itemTotal"+itemId).value="0";
+		function calTotal(itemId, poRate, poDetailId, poRemainingQty,
+				orderDetId) {
+			//alert("Hi");
 
-		}
-		else if(qty>poRemainingQty){
-			valid=false;
-			alert("Order quantity can not be greater than Po Remaining quantity");
-			document.getElementById("itemTotal"+itemId).value="0";
+			var valid = true;
+			var qty = document.getElementById("ordQty" + itemId).value;
+			if (qty < 0 || qty == "" || qty == null || qty == 0) {
+				valid = false;
+				alert("Please enter valid quantity");
+				document.getElementById("itemTotal" + itemId).value = "0";
 
-		}
-		if(valid==true){
-			var itemTotal=parseFloat(qty)*parseFloat(poRate);
-			document.getElementById("itemTotal"+itemId).value=itemTotal;
-		$.getJSON('${getTempOrderHeader}', {
-			
-			
-			qty : qty,
-			itemTotal : itemTotal,
-			poDetailId : poDetailId,
-			itemId : itemId,
-			poRemainingQty : poRemainingQty,
-			poRate : poRate,
-			orderDetId :orderDetId,
-			
-			ajax : 'true',
-		},
-
-		function(data) {
-			
-			var len = data.length;
-			//alert("orderTotal " +data.orderTotal);
-			var tot=0;
-			for (var i = 0; i < len; i++) {
-				
-			tot=data[i].total+tot;
+			} else if (qty > poRemainingQty) {
+				valid = false;
+				alert("Order quantity can not be greater than Po Remaining quantity");
+				document.getElementById("itemTotal" + itemId).value = "0";
 
 			}
-			//alert("total " +tot);
-			document.getElementById("ordTotal").innerHTML=tot;
-		});
+			if (valid == true) {
+				var itemTotal = parseFloat(qty) * parseFloat(poRate);
+				document.getElementById("itemTotal" + itemId).value = itemTotal;
+				$.getJSON('${getTempOrderHeader}', {
+
+					qty : qty,
+					itemTotal : itemTotal,
+					poDetailId : poDetailId,
+					itemId : itemId,
+					poRemainingQty : poRemainingQty,
+					poRate : poRate,
+					orderDetId : orderDetId,
+
+					ajax : 'true',
+				},
+
+				function(data) {
+
+					var len = data.length;
+					//alert("orderTotal " +data.orderTotal);
+					var tot = 0;
+					for (var i = 0; i < len; i++) {
+
+						tot = data[i].total + tot;
+
+					}
+					//alert("total " +tot);
+					document.getElementById("ordTotal").innerHTML = tot;
+				});
+			}
 		}
-	}
-	
 	</script>
 	
 	<script type="text/javascript">
 	
-	// on plant change function 
-		function getData() { 
+		function allowOnlyNumber(evt){
+	    var charCode = (evt.which) ? evt.which : event.keyCode
+	    if (charCode == 46){
+	        var inputValue = $("#floor").val();
+	        var count = (inputValue.match(/'.'/g) || []).length;
+	        
+	        if(count<1){
+	            if (inputValue.indexOf('.') < 1){
+	                return true;
+	            }
+	            return false;
+	        }else{
+	            return false;
+	        }
+	    }
+	    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+	        return false;
+	    }
+	    return true;
+	}
+	
+	</script>
+
+	<script type="text/javascript">
+		// on plant change function 
+		function getData() {
 			var plantId = document.getElementById("plant_id").value;
 			document.getElementById("isEdit").value = 0;
 			var valid = true;
@@ -532,138 +649,46 @@
 
 			if (valid == true) {
 
-				$.getJSON('${getCustByPlantId}', {
-					plantId : plantId,
-					ajax : 'true',
-				},
+				$
+						.getJSON(
+								'${getCustByPlantId}',
+								{
+									plantId : plantId,
+									ajax : 'true',
+								},
 
-				function(data) {
-					var html;
-					var len = data.length;
-					var html = '<option selected value="-1"  >Select Customer</option>';
+								function(data) {
+									var html;
+									var len = data.length;
+									var html = '<option selected value="-1"  >Select Customer</option>';
 
-					for (var i = 0; i < len; i++) {
+									for (var i = 0; i < len; i++) {
 
-						html += '<option value="' + data[i].custId + '">'
-								+ data[i].custName + '</option>';
+										html += '<option value="' + data[i].custId + '">'
+												+ data[i].custName
+												+ '</option>';
 
-					}
-					html += '</option>';
+									}
+									html += '</option>';
 
-					$('#cust_name').html(html);
-					$("#cust_name").trigger("chosen:updated");
-					getCustInfo();
+									$('#cust_name').html(html);
+									$("#cust_name").trigger("chosen:updated");
+									getCustInfo();
 
-					$('#po_id').html("-1");
-					$("#po_id").trigger("chosen:updated");
-					
-					var dataTable = $('#bootstrap-data-table')
-					.DataTable();
-			dataTable.clear().draw();
+									$('#po_id').html("-1");
+									$("#po_id").trigger("chosen:updated");
 
-				});
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
+
+								});
 			}//end of if
 
 		}
 	</script>
 
-	<script type="text/javascript">
-	// on cust change function 
-		function getCustInfo() {
-			$('#divCheckbox').show();
-			var custId = document.getElementById("cust_name").value;
-			var valid = true;
-			if (custId == null || custId == "") {
-				valid = false;
-				alert("Please Select Customer");
-				
-				$('#po_id').html("-1");
-				$("#po_id").trigger("chosen:updated");
-				
-				var dataTable = $('#bootstrap-data-table')
-				.DataTable();
-		dataTable.clear().draw();
 
-			}
-			else if(custId<0){
-				valid = false;
-				
-				$('#po_id').html("-1");
-				$("#po_id").trigger("chosen:updated");
-				
-				var dataTable = $('#bootstrap-data-table')
-				.DataTable();
-		dataTable.clear().draw();
-
-			}
-			if (valid == true) {
-
-				$
-						.getJSON(
-								'${getCustInfoByCustId}',
-								{
-									custId : custId,
-									ajax : 'true',
-
-								},
-								function(data) {
-									document.getElementById("custTypeName").value = data.custTypeName;
-									document.getElementById("custMobNo").value = data.custMobNo;
-								});
-
-				$	.getJSON(
-						'${getPOHeaderByCustId}',
-						{
-							custId : custId,
-							ajax : 'true',
-						},
-						function(data) {
-							var html;
-							var len = data.length;
-							//alert("data " +JSON.stringify(data));
-							for (var i = 0; i < len; i++) {
-								var PNo=data[i].poNo+"-"+ data[i].poDate 
-
-								html += '<option value="' + data[i].poId + '">'
-										+PNo+ '</option>';
-
-							}
-							html += '</option>';
-							$('#po_id').html(html);
-							$("#po_id").trigger("chosen:updated");
-						});
-				
-				
-				$	.getJSON(
-						'${getProjectByCustId}',
-						{
-							custId : custId,
-							ajax : 'true',
-						},
-						function(data) {
-							var html;
-							var len = data.length;
-							//alert("data " +JSON.stringify(data));
-							for (var i = 0; i < len; i++) {
-								var projData=data[i].projName+"-"+data[i].address
-
-								html += '<option value="' + data[i].projId + '">'
-										+projData+ '</option>';
-
-							}
-							html += '</option>';
-							$('#proj_id').html(html);
-							$("#proj_id").trigger("chosen:updated");
-						});
-				
-				
-				
-				
-				
-			}// end of if valid= true
-			
-		}
-	</script>
 
 	<!-- <script type="text/javascript">
 	// on poId c change function 
@@ -726,7 +751,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 	
 	
 	</script> -->
-	
+
 
 
 	<!-- <script type="text/javascript">
