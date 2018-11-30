@@ -395,7 +395,7 @@
 
 		function callDelete(termDetailId, index) {
 
-			alert("hii");
+			//alert("hii");
 			//document.getElementById("isEdit").value = 0;
 			//alert("index" + index);
 			$
