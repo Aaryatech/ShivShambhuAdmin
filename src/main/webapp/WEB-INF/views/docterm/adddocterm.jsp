@@ -207,7 +207,7 @@
 										<thead>
 											<tr>
 
-												<th style="text-align: center; width: 5%;">Sr</th>
+												<th style="text-align: center; width: 5%;">Sr No</th>
 												<th style="text-align: center">Terms And Conditions</th>
 												<th style="text-align: center">Sort No</th>
 												<th style="text-align: center; width: 5%;">Action</th>
@@ -317,9 +317,10 @@
 		function add() {
 			//	alert("in add  ");
 			var termDesc = document.getElementById("termDesc").value;
-			var isDelete = document.getElementById("isDelete").value;
+
 			var sortNoDetail = document.getElementById("sortNoDetail").value;
 			var isEdit = document.getElementById("isEdit").value;
+			var isDelete = document.getElementById("isDelete").value;
 			var index = document.getElementById("index").value;
 
 			//alert("Inside add ajax");
@@ -377,7 +378,6 @@
 		function callEdit(termDetailId, index) {
 
 			document.getElementById("isEdit").value = "1";
-
 			$.getJSON('${getDocTermForEdit}', {
 				termDetailId : termDetailId,
 				index : index,
@@ -394,6 +394,8 @@
 		}
 
 		function callDelete(termDetailId, index) {
+
+			alert("hii");
 			//document.getElementById("isEdit").value = 0;
 			//alert("index" + index);
 			$
@@ -401,6 +403,7 @@
 							'${addDocTermDetail}',
 							{
 								isDelete : 1,
+								isEdit : 0,
 								key : index,
 								ajax : 'true',
 

@@ -47,6 +47,7 @@ public class DocTermController {
 			model = new ModelAndView("docterm/adddocterm");
 			model.addObject("isError", isError);
 			isError = 0;
+			tempDocList = new ArrayList<TempDocDetail>();
 
 			Document[] docArray = rest.getForObject(Constants.url + "getAllDocList", Document[].class);
 			docList = new ArrayList<Document>(Arrays.asList(docArray));
@@ -80,6 +81,7 @@ public class DocTermController {
 			int isEdit = Integer.parseInt(request.getParameter("isEdit"));
 
 			if (isDelete == 1) {
+				System.out.println("IsDelete" + isDelete);
 				int key = Integer.parseInt(request.getParameter("key"));
 
 				tempDocList.remove(key);
