@@ -8,6 +8,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+
+<c:url var="getUniqueVendorCheck" value="/getUniqueVendorCheck" />
+
+
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -74,6 +79,38 @@
 
 			<div class="row">
 
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
+
+
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
@@ -88,7 +125,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertVendor"
-								method="post">
+								id="submitForm" method="post">
 
 								<input type="hidden" name="vendId" id="vendId"
 									value="${editVend.vendId}">
@@ -123,7 +160,7 @@
 									<div class="col-md-4">
 										<input type="text" id="vendContact1" name="vendContact1"
 											required style="width: 100%;" class="form-control"
-											autocomplete="off"
+											autocomplete="off" onblur="getCheck()"
 											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" value="${editVend.vendContact1}"
 											pattern="^[1-9]{1}[0-9]{9}$"
@@ -189,6 +226,7 @@
 									<div class="col-md-4">
 										<input type="text" id="vendGst" name="vendGst"
 											value="${editVend.vendGst}" autocomplete="off"
+											onblur="getCheck()"
 											oninvalid="setCustomValidity('Please enter GST no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;"
@@ -298,17 +336,17 @@
 								<div class="col-lg-3">
 
 
-									<button type="submit" class="btn btn-primary"
+									<input type="submit" class="btn btn-primary" value="Submit"
+										id="submitButton"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Submit</button>
+
 								</div>
 
 								<div class="col-lg-3">
 
-
-									<button type="reset" class="btn btn-primary"
+									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Clear</button>
+
 								</div>
 							</form>
 						</div>
@@ -457,6 +495,66 @@
 			setTimeout(function() {
 				a.value = a.value.toUpperCase();
 			}, 1);
+		}
+	</script>
+
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
+
+
+	<script type="text/javascript">
+		function getCheck() {
+
+			var vendGst = $("#vendGst").val();
+			var vendContact1 = $("#vendContact1").val();
+			var valid = true;
+
+			if (vendGst == null) {
+				valid = false;
+
+			} else if (vendContact1 == null) {
+				valid = false;
+			}
+
+			if (valid == true) {
+
+				$
+						.getJSON(
+								'${getUniqueVendorCheck}',
+								{
+
+									vendGst : vendGst,
+									vendContact1 : vendContact1,
+
+									ajax : 'true',
+
+								},
+								function(data) {
+
+									if (data.error == true) {
+										alert("Vendor Already Exist");
+
+										document.getElementById("vendGst").value = "";
+										document.getElementById("vendContact1").value = "";
+
+										document.getElementById("submitButton").disabled = true;
+									} else {
+										document.getElementById("submitButton").disabled = false;
+
+									}
+								}
+
+						);
+			}
+
 		}
 	</script>
 

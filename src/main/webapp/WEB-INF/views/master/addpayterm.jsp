@@ -11,6 +11,8 @@
 
 
 
+<c:url var="getUniquePayTermCheck" value="/getUniquePayTermCheck" />
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -127,6 +129,7 @@
 
 									<div class="col-md-4">
 										<textarea id="payTerm" name="payTerm" class="form-control"
+											onblur="getPayTermCheck()"
 											oninvalid="setCustomValidity('Please enter correct Payment term')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">${editPayTerm.payTerm}</textarea>
@@ -148,15 +151,16 @@
 								<div class="form-group"></div>
 								<div class="col-lg-4"></div>
 								<div class="col-lg-2">
-									<button type="submit" class="btn btn-primary"
+									<input type="submit" class="btn btn-primary" value="Submit"
+										id="submitButton"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Submit</button>
+
 								</div>
 
 								<div class="col-lg-2">
-									<button type="reset" class="btn btn-primary"
+									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Clear</button>
+
 								</div>
 							</form>
 						</div>
@@ -330,6 +334,35 @@
 																this.checked);
 											});
 						});
+	</script>
+
+	<script type="text/javascript">
+		function getPayTermCheck() {
+
+			var payTerm = $("#payTerm").val();
+
+			$.getJSON('${getUniquePayTermCheck}', {
+
+				payTerm : payTerm,
+
+				ajax : 'true',
+
+			}, function(data) {
+				if (data.error == true) {
+					alert("Payment Term Already Exist");
+
+					document.getElementById("payTerm").value = "";
+
+					document.getElementById("submitButton").disabled = true;
+				} else {
+					document.getElementById("submitButton").disabled = false;
+
+				}
+			}
+
+			);
+
+		}
 	</script>
 </body>
 </html>

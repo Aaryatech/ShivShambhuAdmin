@@ -8,6 +8,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+<c:url var="getUniqueCompanyCheck" value="/getUniqueCompanyCheck" />
+
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -198,7 +201,8 @@
 									<div class="col-md-2">GST No*</div>
 									<div class="col-md-4">
 										<input type="text" id="gst_no" name="gst_no" required
-											style="width: 100%;" class="form-control" autocomplete="off"
+											onblur="getCheck()" style="width: 100%;" class="form-control"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter GST no')"
 											maxlength="20" value="${editComp.compGstNo}"
 											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
@@ -254,7 +258,7 @@
 									</div>
 									<div class="col-md-2">Telephone No(Optional)</div>
 									<div class="col-md-4">
-										<input type="text" id="tel_no" name="tel_no"
+										<input type="text" id="tel_no" name="tel_no" maxlength="10"
 											style="width: 100%;" class="form-control"
 											value="${editComp.contactNo2}" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter tel no')"
@@ -298,6 +302,7 @@
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
 									<input type="submit" class="btn btn-primary" value="Submit"
+										id="submitButton"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
 								</div>
@@ -379,50 +384,6 @@
 	</script>
 
 
-	<!-- 	<script type="text/javascript">
-	
-	function editMsUser(msId){
-		
-		//alert(catId);
-		
-		$.getJSON('${getEditMsUser}',{
-			
-			msId : msId,
-			
-			ajax : 'true',
-
-		},
-		
-		function(data){
-			document.getElementById('addDiv').style.display = "block";
-			$("#usrname_mr").val(data.msMarName);
-			$("#usrname_eng").val(data.msEngName);
-        	
-			//hidden field msId
-			$("#ms_id").val(data.msId);
-			
-			$("#contact_no").val(data.msContactNo);
-			 document.getElementById("contact_no").readOnly = true; 
-			$("#usr_pass").val(data.msPwd); 
-			$("#conf_pass").val(data.msPwd); 
-			document.getElementById("usr_role").options.selectedIndex =data.isAdmin;
-			$("#usr_role").trigger("chosen:updated");
-			var temp=new Array();
-			
-			temp=(data.hubIds).split(",");
-			//alert(temp);
-			$("#sel_hub").val(temp); 
-			$("#sel_hub").trigger("chosen:updated");
-
-			//$('#sel_hub').formcontrol('refresh');
-	 		document.getElementById('submitButton').disabled = false;
-
-
-		});
-		
-	}
-	
-	</script> -->
 
 	<script>
 		function upperCaseF(a) {
@@ -442,6 +403,37 @@
 						return true;
 					});
 		});
+	</script>
+
+
+
+	<script type="text/javascript">
+		function getCheck() {
+
+			var gstNo = $("#gst_no").val();
+
+			$.getJSON('${getUniqueCompanyCheck}', {
+
+				gstNo : gstNo,
+
+				ajax : 'true',
+
+			}, function(data) {
+				if (data.error == true) {
+					alert("Company Already Exist");
+
+					document.getElementById("gst_no").value = "";
+
+					document.getElementById("submitButton").disabled = true;
+				} else {
+					document.getElementById("submitButton").disabled = false;
+
+				}
+			}
+
+			);
+
+		}
 	</script>
 </body>
 </html>

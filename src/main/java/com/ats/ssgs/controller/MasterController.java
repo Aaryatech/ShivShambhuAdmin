@@ -2631,4 +2631,64 @@ public class MasterController {
 		return info;
 	}
 
+	@RequestMapping(value = "/getUniquePayTermCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniquePayTermCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String payTerm = request.getParameter("payTerm");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("payTerm", payTerm);
+			info = rest.postForObject(Constants.url + "/saveUniquePaymentTerm", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = "/getUniqueVendorCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueVendorCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String vendGst = request.getParameter("vendGst");
+			String vendContact1 = request.getParameter("vendContact1");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("vendGst", vendGst);
+			map.add("vendContact1", vendContact1);
+			info = rest.postForObject(Constants.url + "/saveUniqueVendor", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = "/getUniqueCompanyCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueCompanyCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String gstNo = request.getParameter("gstNo");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("compGstNo", gstNo);
+			info = rest.postForObject(Constants.url + "/saveUniqueCompany", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
 }
