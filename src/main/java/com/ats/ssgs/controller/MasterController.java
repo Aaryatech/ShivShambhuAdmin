@@ -305,9 +305,7 @@ public class MasterController {
 				taxId = 0;
 			}
 
-			int sortNo = 0;
-
-			float cess = Float.parseFloat(request.getParameter("cess"));
+			// float cess = Float.parseFloat(request.getParameter("cess"));
 			float cgst = Float.parseFloat(request.getParameter("cgst"));
 			float igst = Float.parseFloat(request.getParameter("igst"));
 			float sgst = Float.parseFloat(request.getParameter("sgst"));
@@ -319,7 +317,7 @@ public class MasterController {
 			String taxName = request.getParameter("taxName");
 
 			Tax tax = new Tax();
-			tax.setCess(cess);
+
 			tax.setCgst(cgst);
 			tax.setDelStatus(1);
 			tax.setExBool1(0);
@@ -343,9 +341,11 @@ public class MasterController {
 
 			try {
 				tax.setSortNo(Integer.parseInt(request.getParameter("sortNo")));
+				tax.setCess(Float.parseFloat(request.getParameter("cess")));
 
 			} catch (Exception e) {
 				tax.setSortNo(0);
+				tax.setCess(0);
 
 			}
 
@@ -1467,26 +1467,13 @@ public class MasterController {
 			String shortName = request.getParameter("short_name");
 			String rate = request.getParameter("rate");
 
-			/*
-			 * String actWeight = request.getParameter("act_weight");
-			 * 
-			 * String baseWeight = request.getParameter("base_weight");
-			 */
-			String[] vendorIds = request.getParameterValues("vendor_ids");
-
-			String dispLimit = request.getParameter("disp_limit");
-
-			String minStock = request.getParameter("min_stock");
-			String maxStock = request.getParameter("max_stock");
-			String rolStock = request.getParameter("rol_stock");
-
 			String pminStock = request.getParameter("pmin_stock");
 			String pmaxStock = request.getParameter("pmax_stock");
 			String prolStock = request.getParameter("prol_stock");
 			String freightRate = request.getParameter("freight_rate");
 			String royaltyRate = request.getParameter("royalty_rate");
 
-			int isCritItem = Integer.parseInt(request.getParameter("is_crit"));
+			// int isCritItem = Integer.parseInt(request.getParameter("is_crit"));
 
 			// int sortNo = Integer.parseInt(request.getParameter("sort_no"));
 
@@ -1498,26 +1485,13 @@ public class MasterController {
 
 			StringBuilder sb = new StringBuilder();
 
-			for (int i = 0; i < vendorIds.length; i++) {
-				sb = sb.append(vendorIds[i] + ",");
-
-			}
-
-			String vendors = sb.toString();
-			vendors = vendors.substring(0, vendors.length() - 1);
-			System.out.println("vendors" + vendors);
-
-			/*
-			 * item.setActualWeight(Float.parseFloat(actWeight));
-			 * item.setBaseWeight(Float.parseFloat(baseWeight));
-			 */
 			item.setActualWeight(0);
 			item.setBaseWeight(0);
 			item.setDelStatus(1);
-			item.setDispatchLimit(Float.parseFloat(dispLimit));
+			item.setDispatchLimit(0);
 			item.setExDate1(curDate);
 			item.setExDate2(curDate);
-			item.setIsCritical(isCritItem);
+			item.setIsCritical(0);
 			item.setItemCode(itemCode);
 			item.setItemId(itemId);
 			item.setItemImage("NA");
@@ -1530,20 +1504,20 @@ public class MasterController {
 			item.setItemRate4(Float.parseFloat(rate));
 
 			item.setItemType(itemType);
-			item.setMaxStock(Float.parseFloat(maxStock));
-			item.setMinStock(Float.parseFloat(minStock));
+			item.setMaxStock(0);
+			item.setMinStock(0);
 			item.setPlantId(plantId);
 			item.setPlantMaxStock(Float.parseFloat(pmaxStock));
 
 			item.setPlantMinStock(Float.parseFloat(pminStock));
 
 			item.setPlantRolStock(Float.parseFloat(prolStock));
-			item.setRolStock(Float.parseFloat(rolStock));
+			item.setRolStock(0);
 			item.setShortName(shortName);
 
 			item.setTaxId(taxId);
 			item.setUomId(uomId);
-			item.setVendorIds(vendors);
+			item.setVendorIds("NA");
 
 			item.setExVar1("NA");
 			item.setExVar2("NA");
@@ -2593,8 +2567,8 @@ public class MasterController {
 		return info;
 	}
 
-	@RequestMapping(value = "/getUniqueHSNCodeCheck", method = RequestMethod.GET)
-	public @ResponseBody Info getUniqueHSNCodeCheck(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/getUniqueTaxCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueTaxCheck(HttpServletRequest request, HttpServletResponse response) {
 		Info info = new Info();
 		try {
 
@@ -2702,6 +2676,26 @@ public class MasterController {
 
 			map.add("plantName", plantName);
 			info = rest.postForObject(Constants.url + "/saveUniquePlant", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = "/getUniqueAccNoCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueAccNoCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String accNo = request.getParameter("accNo");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("accNo", accNo);
+			info = rest.postForObject(Constants.url + "/saveUniqueBankDetail", map, Info.class);
 			System.out.println("info" + info.toString());
 
 		} catch (Exception e) {

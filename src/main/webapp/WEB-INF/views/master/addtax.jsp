@@ -8,6 +8,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+<c:url var="getUniqueTaxCheck" value="/getUniqueTaxCheck" />
+
 
 <c:url var="getUniqueHsnCodeCheck" value="/getUniqueHsnCodeCheck" />
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
@@ -105,6 +107,7 @@
 									<div class="col-md-2">Tax Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="taxName" name="taxName"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct Tax Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											value="${editTax.taxName}" class="form-control"
@@ -115,8 +118,9 @@
 
 									<div class="col-md-4">
 										<input type="text" id="hsnCode" name="hsnCode" maxLength="10"
-											value="${editTax.hsnCode}" class="form-control"
-											pattern="[0-9]+" onchange="getHsnCodeCheck()"
+											autocomplete="off" value="${editTax.hsnCode}"
+											class="form-control" pattern="[0-9]+"
+											onchange="getHsnCodeCheck()"
 											oninvalid="setCustomValidity('Please enter correct hsn code')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;" required>
@@ -130,14 +134,14 @@
 									<div class="col-md-4">
 										<input type="text" id="cgst" name="cgst"
 											value="${editTax.cgst}" class="form-control"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" onblur="calculateIgst()"
 											oninvalid="setCustomValidity('Please enter correct Cgst')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;" required>
 									</div>
 									<div class="col-md-2">SGST*</div>
 									<div class="col-md-4">
-										<input type="text" id="sgst" name="sgst"
+										<input type="text" id="sgst" name="sgst" autocomplete="off"
 											value="${editTax.sgst}" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct Sgst')"
 											onblur="calculateIgst()" pattern="[0-9]+(\.[0-9]{0,2})?%?"
@@ -156,6 +160,22 @@
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
+									<div class="col-md-2">CESS(Optional)</div>
+									<div class="col-md-4">
+										<input type="text" id="cess" name="cess"
+											onblur="calculateTotalTax()"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" value="${editTax.cess}"
+											class="form-control" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter Cgst')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											style="width: 100%;">
+									</div>
+
+								</div>
+								<div class="form-group"></div>
+								<div class="row">
+
+
 									<div class="col-md-2">Total Tax Per</div>
 									<div class="col-md-4">
 										<input type="text" id="totalTaxPer" name="totalTaxPer"
@@ -165,18 +185,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}" readonly
 											style="width: 100%;">
 									</div>
-								</div>
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">CESS*</div>
-									<div class="col-md-4">
-										<input type="text" id="cess" name="cess"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" value="${editTax.cess}"
-											class="form-control"
-											oninvalid="setCustomValidity('Please enter Cgst')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											style="width: 100%;" required>
-									</div>
+
 									<div class="col-md-2">Sort No(Optional)</div>
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
@@ -292,25 +301,56 @@
 
 			var sgst = document.getElementById("sgst").value;
 			var cgst = document.getElementById("cgst").value;
+			var valid = true;
 
-			if (sgst > 0 && cgst > 0) {
+			if (sgst == null && cgst > 0) {
+
+				valid = false;
+			} else if (cgst == null && sgst > 0) {
+
+				valid = false;
+			}
+
+			if (valid == true) {
 				document.getElementById("igst").value = (parseFloat(sgst) + parseFloat(cgst));
 				document.getElementById("totalTaxPer").value = (parseFloat(sgst) + parseFloat(cgst));
-			} else {
-				document.getElementById("igst").value = "0";
-				document.getElementById("totalTaxPer").value = "0";
 			}
 
 		}
 	</script>
 
+
+	<script>
+		function calculateTotalTax() {
+
+			var igst = document.getElementById("igst").value;
+			var cess = document.getElementById("cess").value;
+			var valid = true;
+
+			if (igst == null && cess > 0) {
+
+				valid = false;
+			} else if (cess == null && igst > 0) {
+
+				valid = false;
+			}
+
+			if (valid == true) {
+
+				document.getElementById("totalTaxPer").value = (parseFloat(cess) + parseFloat(igst));
+			}
+
+		}
+	</script>
+
+
 	<script type="text/javascript">
 		function getHsnCodeCheck() {
-			alert("hii");
+
 			var hsnCode = $("#hsnCode").val();
 			alert(hsnCode);
 
-			$.getJSON('${getUniqueHsnCodeCheck}', {
+			$.getJSON('${getUniqueTaxCheck}', {
 
 				hsnCode : hsnCode,
 

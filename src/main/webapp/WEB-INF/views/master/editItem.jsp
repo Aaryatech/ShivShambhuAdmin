@@ -235,91 +235,8 @@
 									</div>
 
 								</div>
-								<div class="form-group"></div>
 
-								<div class="row">
-									<div class="col-md-2">Actual Measurement</div>
 
-									<div class="col-md-4">
-										<input type="text" id="act_weight" name="act_weight"
-											class="form-control" style="width: 100%;"
-											value="${editItem.actualWeight}">
-									</div>
-
-									<div class="col-md-2">Base Measurement</div>
-
-									<div class="col-md-4">
-										<input type="text" id="base_weight" name="base_weight"
-											class="form-control" style="width: 100%;"
-											value="${editItem.baseWeight}">
-									</div>
-
-								</div>
-								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Vendors</div>
-
-									<div class="col-md-4">
-										<select id="vendor_ids" name="vendor_ids"
-											class="standardSelect" tabindex="1" multiple="multiple"
-											oninvalid="setCustomValidity('Please select vendors')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-											
-											<c:forEach items="${vendList}" var="vendor">
-
-												<c:forEach items="${editItem.vendorIds}" var="ven">
-													<c:choose>
-														<c:when test="${vendor.vendId==ven}">
-															<option value="${vendor.vendId}" selected>${vendor.vendCompName}</option>
-														</c:when>
-														<c:otherwise>
-															<option value="${vendor.vendId}">${vendor.vendCompName}
-														</c:otherwise>
-													</c:choose>
-												</c:forEach>
-
-												<%-- <option value="${vendor.vendId}">${vendor.vendCompName}</option> --%>
-											</c:forEach>
-										</select>
-									</div>
-
-									<div class="col-md-2">Dispatch Limit</div>
-
-									<div class="col-md-4">
-										<input type="text" id="disp_limit" name="disp_limit"
-											value="${editItem.dispatchLimit}" class="form-control"
-											style="width: 100%;">
-									</div>
-
-								</div>
-
-								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Min Stock</div>
-
-									<div class="col-md-2">
-										<input type="text" id="min_stock" name="min_stock"
-											value="${editItem.minStock}" class="form-control"
-											style="width: 100%;">
-									</div>
-									<div class="col-md-2">Max Stock</div>
-
-									<div class="col-md-2">
-										<input type="text" id="max_stock" name="max_stock"
-											value="${editItem.maxStock}" class="form-control"
-											style="width: 100%;">
-									</div>
-									<div class="col-md-2">ROL Stock</div>
-
-									<div class="col-md-2">
-										<input type="text" id="rol_stock" name="rol_stock"
-											value="${editItem.rolStock}" class="form-control"
-											style="width: 100%;">
-									</div>
-
-								</div>
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -331,14 +248,14 @@
 											value="${editItem.plantMinStock}" class="form-control"
 											style="width: 100%;">
 									</div>
-									<div class="col-md-2">Plant Max Stock</div>
+									<div class="col-md-2">Plant Max Stock*</div>
 
 									<div class="col-md-2">
 										<input type="text" id="pmax_stock" name="pmax_stock"
 											value="${editItem.plantMaxStock}" class="form-control"
 											style="width: 100%;">
 									</div>
-									<div class="col-md-2">Plant ROL Stock</div>
+									<div class="col-md-2">Plant ROL Stock*</div>
 
 									<div class="col-md-2">
 										<input type="text" id="prol_stock" name="prol_stock"
@@ -350,66 +267,8 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Critical Item ?</div>
 
-
-
-
-									<c:choose>
-										<c:when test="${editItem.isCritical==0}">
-											<div class="col-md-1">
-
-												<input type="radio" name="is_crit" id="is_crit" value="1">Yes
-
-											</div>
-
-
-
-											<div class="col-md-1">
-												<input type="radio" name="is_crit" value="0" checked>
-												No
-
-											</div>
-										</c:when>
-										<c:when test="${editItem.isCritical==1}">
-											<div class="col-md-1">
-
-												<input type="radio" name="is_crit" id="is_crit" value="1"
-													checked>Yes
-											</div>
-											<div class="col-md-1">
-												<input type="radio" name="is_crit" value="0"> No
-
-											</div>
-										</c:when>
-									</c:choose>
-
-
-									<!-- <div class="col-md-1">
-										Yes <input type="radio" name="is_crit" id="is_crit" value="1">
-									</div>
-
-									<div class="col-md-1">
-										NO <input type="radio" checked name="is_crit" id="is_crit"
-											value="0">
-									</div> -->
-
-									<div class="col-md-2"></div>
-									<div class="col-md-2">Sort No</div>
-
-									<div class="col-md-4">
-										<input type="text" id="sort_no" name="sort_no"
-											value="${editItem.sortNo}" class="form-control"
-											style="width: 100%;">
-									</div>
-
-								</div>
-
-								<div class="form-group"></div>
-								<div class="row">
-
-
-									<div class="col-md-2">Freight Rate</div>
+									<div class="col-md-2">Freight Rate*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="freight_rate" name="freight_rate"
@@ -419,7 +278,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}" />
 									</div>
 
-									<div class="col-md-2">Royalty Rate</div>
+									<div class="col-md-2">Royalty Rate*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="royalty_rate" name="royalty_rate"
@@ -432,15 +291,32 @@
 								</div>
 
 
-
 								<div class="form-group"></div>
-								<div class="col-lg-12" align="center">
+								<div class="row">
 
+									<div class="col-md-2">Sort No(Optional)</div>
 
-									<button type="submit" class="btn btn-primary"
-										style="align-content: center; width: 226px; margin-left: 80px;">
-										Submit</button>
+									<div class="col-md-4">
+										<input type="text" id="sort_no" name="sort_no"
+											value="${editItem.sortNo}" class="form-control"
+											style="width: 100%;">
+									</div>
+
 								</div>
+								<div class="form-group"></div>
+								<div class="col-lg-4"></div>
+								<div class="col-lg-3">
+									<input type="submit" class="btn btn-primary" value="Submit"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+
+								</div>
+
+								<div class="col-lg-3">
+									<input type="reset" class="btn btn-primary" value="Clear"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+								</div>
+
+
 							</form>
 						</div>
 					</div>

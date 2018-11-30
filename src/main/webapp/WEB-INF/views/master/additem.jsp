@@ -184,7 +184,7 @@
 									<div class="col-md-2">Short Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="short_name" name="short_name"
-											pattern="^[A-Za-z\s]+$" autocomplete="off"
+											pattern="^[A-Za-z\s]+$" autocomplete="off" required
 											oninvalid="setCustomValidity('Please enter short name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;">
@@ -195,7 +195,7 @@
 									<div class="col-md-4">
 										<input type="text" id="rate" name="rate"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
-											class="form-control" autocomplete="off"
+											class="form-control" autocomplete="off" required
 											oninvalid="setCustomValidity('Please enter rate')"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -203,85 +203,7 @@
 									</div>
 
 								</div>
-								<!-- <div class="form-group"></div>
 
-								<div class="row">
-									<div class="col-md-2">Actual Measurement*</div>
-
-									<div class="col-md-4">
-										<input type="text" id="act_weight" name="act_weight"
-											class="form-control" style="width: 100%;">
-									</div>
-
-									<div class="col-md-2">Base Measurement*</div>
-
-									<div class="col-md-4">
-										<input type="text" id="base_weight" name="base_weight"
-											class="form-control" style="width: 100%;">
-									</div>
-
-								</div> -->
-								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Vendors*</div>
-
-									<div class="col-md-4">
-										<select id="vendor_ids" name="vendor_ids"
-											class="standardSelect" tabindex="1" multiple="multiple"
-											oninvalid="setCustomValidity('Please select vendors')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-
-											<c:forEach items="${vendList}" var="vendor">
-												<option value="${vendor.vendId}">${vendor.vendCompName}</option>
-											</c:forEach>
-										</select>
-									</div>
-
-									<div class="col-md-2">Dispatch Limit*</div>
-
-									<div class="col-md-4">
-										<input type="text" id="disp_limit" name="disp_limit"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											oninvalid="setCustomValidity('Please enter dispatch limit')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											autocomplete="off" class="form-control" style="width: 100%;">
-									</div>
-
-								</div>
-
-								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Min Stock*</div>
-
-									<div class="col-md-2">
-										<input type="text" id="min_stock" name="min_stock"
-											autocomplete="off" pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											oninvalid="setCustomValidity('Please enter min stock')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" style="width: 100%;">
-									</div>
-									<div class="col-md-2">Max Stock*</div>
-
-									<div class="col-md-2">
-										<input type="text" id="max_stock" name="max_stock"
-											autocomplete="off" pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											oninvalid="setCustomValidity('Please enter max stock')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" style="width: 100%;">
-									</div>
-									<div class="col-md-2">ROL Stock*</div>
-
-									<div class="col-md-2">
-										<input type="text" id="rol_stock" name="rol_stock"
-											autocomplete="off" pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											oninvalid="setCustomValidity('Please enter roll stock')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" style="width: 100%;">
-									</div>
-
-								</div>
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -302,7 +224,7 @@
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter plan max stock')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" style="width: 100%;">
+											class="form-control" style="width: 100%;" required>
 									</div>
 									<div class="col-md-2">Plant ROL Stock*</div>
 
@@ -311,31 +233,7 @@
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter prol stock')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" style="width: 100%;">
-									</div>
-
-								</div>
-								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Critical Item ?*</div>
-
-
-									<div class="col-md-1">
-										Yes <input type="radio" name="is_crit" id="is_crit" value="1">
-									</div>
-
-									<div class="col-md-1">
-										NO <input type="radio" checked name="is_crit" id="is_crit"
-											value="0">
-									</div>
-
-									<div class="col-md-2"></div>
-									<div class="col-md-2">Sort No(Optional)</div>
-
-									<div class="col-md-4">
-										<input type="text" id="sort_no" name="sort_no"
-											class="form-control" style="width: 100%;">
+											class="form-control" style="width: 100%;" required>
 									</div>
 
 								</div>
@@ -351,8 +249,8 @@
 										<input type="text" id="freight_rate" name="freight_rate"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
 											class="form-control"
-											oninvalid="setCustomValidity('Please enter rate')"
-											onchange="try{setCustomValidity('')}catch(e){}" />
+											oninvalid="setCustomValidity('Please enter freight rate')"
+											onchange="try{setCustomValidity('')}catch(e){}" required />
 									</div>
 
 									<div class="col-md-2">Royalty Rate*</div>
@@ -361,23 +259,38 @@
 										<input type="text" id="royalty_rate" name="royalty_rate"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
 											class="form-control"
-											oninvalid="setCustomValidity('Please enter rate')"
-											onchange="try{setCustomValidity('')}catch(e){}" />
+											oninvalid="setCustomValidity('Please enter  Royalty rate')"
+											onchange="try{setCustomValidity('')}catch(e){}" required />
 									</div>
 
 								</div>
 								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Sort No(Optional)</div>
+
+									<div class="col-md-4">
+										<input type="text" id="sort_no" name="sort_no" maxlength="3"
+											oninvalid="setCustomValidity('Please enter Sort No')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											pattern="[0-9]+" class="form-control" style="width: 100%;">
+									</div>
+
+								</div>
+
+								<div class="form-group"></div>
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
-									<button type="submit" class="btn btn-primary"
+									<input type="submit" class="btn btn-primary" value="Submit"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Submit</button>
+
 								</div>
+
 								<div class="col-lg-3">
-									<button type="reset" class="btn btn-primary"
+									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Clear</button>
 								</div>
+
+
 							</form>
 						</div>
 					</div>

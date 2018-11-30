@@ -8,6 +8,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+
+<c:url var="getUniqueAccNoCheck" value="/getUniqueAccNoCheck" />
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -249,6 +252,7 @@
 									<div class="col-md-4">
 										<input type="text" id="accNo" name="accNo" autocomplete="off"
 											value="${editBankDetail.accNo}" class="form-control"
+											onblur="getCheck()"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="[0-9]+" maxlength="15"
 											oninvalid="setCustomValidity('Please enter account no')"
@@ -481,7 +485,34 @@
 			}, 1);
 		}
 	</script>
+	<script type="text/javascript">
+		function getCheck() {
 
+			var accNo = $("#accNo").val();
+
+			$.getJSON('${getUniqueAccNoCheck}', {
+
+				accNo : accNo,
+
+				ajax : 'true',
+
+			}, function(data) {
+				if (data.error == true) {
+					alert("Account Number Already Exist");
+
+					document.getElementById("accNo").value = "";
+
+					document.getElementById("submitButton").disabled = true;
+				} else {
+					document.getElementById("submitButton").disabled = false;
+
+				}
+			}
+
+			);
+
+		}
+	</script>
 
 </body>
 </html>
