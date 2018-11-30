@@ -18,7 +18,7 @@
 <c:url var="addDocTermDetail" value="/addDocTermDetail" />
 
 <c:url var="getDocTermForEdit" value="/getDocTermForEdit" />
-
+<c:url var="getUniqueEnqGenBy" value="/getUniqueEnqGenBy" />
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -125,7 +125,7 @@
 						<div class="card-body card-block">
 							<form
 								action="${pageContext.request.contextPath}/insertEnqGenFact"
-								id="submitForm" method="post">
+								id="submitForm" method="post" onsubmit="return onEnqSourceInput()">
 
 
 
@@ -307,7 +307,37 @@
 											});
 						});
 	</script>
+<script type="text/javascript">
+		function onEnqSourceInput() {
 
+			var enqGenBy = $("#enqGenBy").val();
+
+			$.getJSON('${getUniqueEnqGenBy}', {
+
+				enqGenBy : enqGenBy,
+
+				ajax : 'true',
+
+			}, function(data) {
+				if (data.error == true) {
+					alert("Enquiry Source Already Exist");
+
+					document.getElementById("enqGenBy").value = "";
+					/* setTimeout(function() {
+						document.getElementById("#deptName").focus();
+					}, 100); */
+					//document.getElementById("submitButton").disabled = true;
+
+				} else {
+					//document.getElementById("submitButton").disabled = false;
+
+				}
+			}
+
+			);
+
+		}
+	</script>
 
 </body>
 </html>
