@@ -8,6 +8,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+
+<c:url var="getUniqueCustomerCheck" value="/getUniqueCustomerCheck" />
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -73,6 +76,36 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not Submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -88,7 +121,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertCust"
-								method="post">
+								id="submitForm" method="post">
 
 								<div class="row">
 
@@ -137,7 +170,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="mob_no" name="mob_no" required
-											style="width: 100%;" class="form-control"
+											onblur="getCheck()" style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" value="${editComp.contactNo1}"
 											pattern="^[1-9]{1}[0-9]{9}$" autocomplete="off"
@@ -422,14 +455,15 @@
 								<div class="form-group"></div>
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
-									<button type="submit" class="btn btn-primary"
+									<input type="submit" class="btn btn-primary" id="submit"
+										value="Submit"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Submit</button>
+
 								</div>
 								<div class="col-lg-3">
-									<button type="reset" class="btn btn-primary"
+									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 40px;">
-										Clear</button>
+
 								</div>
 
 
@@ -536,6 +570,46 @@
 				a.value = a.value.toUpperCase();
 			}, 1);
 		}
+	</script>
+
+	<script type="text/javascript">
+		function getCheck() {
+
+			var mobNo = $("#mob_no").val();
+
+			$.getJSON('${getUniqueCustomerCheck}', {
+
+				mobNo : mobNo,
+
+				ajax : 'true',
+
+			}, function(data) {
+				if (data.error == true) {
+					alert("Customer Already Exist");
+
+					document.getElementById("mob_no").value = "";
+
+					document.getElementById("submitButton").disabled = true;
+				} else {
+					document.getElementById("submitButton").disabled = false;
+
+				}
+			}
+
+			);
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
 	</script>
 
 </body>

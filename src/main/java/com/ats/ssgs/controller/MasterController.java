@@ -1220,7 +1220,7 @@ public class MasterController {
 			if (custId == 0) {
 				cust.setDateOfReg(curDate);
 			} else {
-				cust.setDateOfReg(DateConvertor.convertToYMD(dateOfReg));
+				cust.setDateOfReg(curDate);
 			}
 			cust.setDelStatus(1);
 			cust.setExDate1(curDate);
@@ -2696,6 +2696,26 @@ public class MasterController {
 
 			map.add("accNo", accNo);
 			info = rest.postForObject(Constants.url + "/saveUniqueBankDetail", map, Info.class);
+			System.out.println("info" + info.toString());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = "/getUniqueCustomerCheck", method = RequestMethod.GET)
+	public @ResponseBody Info getUniqueCustomerCheck(HttpServletRequest request, HttpServletResponse response) {
+		Info info = new Info();
+		try {
+
+			String mobNo = request.getParameter("mobNo");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custMobNo", mobNo);
+			info = rest.postForObject(Constants.url + "/saveUniqueCustomer", map, Info.class);
 			System.out.println("info" + info.toString());
 
 		} catch (Exception e) {

@@ -81,7 +81,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertCust"
-								method="post">
+								id="submitForm" method="post">
 
 								<div class="row">
 
@@ -144,8 +144,9 @@
 									<div class="col-md-2">Customer Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="cust_name" name="cust_name"
-											value="${editCust.custName}" class="form-control" required
-											style="width: 100%;" pattern="^[A-Za-z\s]+$"
+											autocomplete="off" value="${editCust.custName}"
+											class="form-control" required style="width: 100%;"
+											pattern="^[A-Za-z\s]+$"
 											oninvalid="setCustomValidity('Please enter correct customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -153,8 +154,9 @@
 									<div class="col-md-2">Mobile No*</div>
 
 									<div class="col-md-4">
-										<input type="text" id="mob_no" name="mob_no" required
-											style="width: 100%;" class="form-control"
+										<input type="text" id="mob_no" name="mob_no"
+											autocomplete="off" required style="width: 100%;"
+											class="form-control"
 											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" value="${editCust.custMobNo}"
 											pattern="^[1-9]{1}[0-9]{9}$"
@@ -169,8 +171,9 @@
 									<div class="col-md-2">Reference Name</div>
 									<div class="col-md-4">
 										<input type="text" id="ref_name" name="ref_name"
-											value="${editCust.respPerson}" pattern="^[A-Za-z\s]+$"
-											class="form-control" autocomplete="off" style="width: 100%;"
+											autocomplete="off" value="${editCust.respPerson}"
+											pattern="^[A-Za-z\s]+$" class="form-control"
+											autocomplete="off" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter correct refrence name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -602,6 +605,19 @@
 			}, 1);
 		}
 	</script>
+
+
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
+
 
 </body>
 </html>
