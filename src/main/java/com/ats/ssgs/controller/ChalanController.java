@@ -350,7 +350,7 @@ public class ChalanController {
 			
 			chHeader.setChalanNo(doc.getDocPrefix()+""+doc.getSrNo());
 			
-			chHeader.setChalanDate(curDate);
+			chHeader.setChalanDate(DateConvertor.convertToYMD(chalanDate));
 			chHeader.setChalanDetailList(chDetailList);
 			chHeader.setChalanRemark(chalanRemark);
 			chHeader.setCustId(custId);
@@ -596,6 +596,7 @@ public class ChalanController {
 	
 	
 	List<Cust> custList;
+	private float pHeight;
 
 	@RequestMapping(value = "/editChalan/{chalanId}", method = RequestMethod.GET)
 	public ModelAndView editChalan(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
@@ -694,4 +695,122 @@ public class ChalanController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/updateChalan", method = RequestMethod.POST)
+	public String updateChalan(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+			
+			MultiValueMap<String, Object>  map = new LinkedMultiValueMap<String, Object>();
+
+			
+			System.err.println("Inside insert updateChalan method");
+
+		
+			int chalanId=Integer.parseInt(request.getParameter("chalanId"));
+
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String curDate=dateFormat.format(new Date());
+			
+			List<ChalanDetail> chDeList=new ArrayList<>();
+			for(int i=0;i<chDetailList.size();i++) {
+				
+
+				float itemQty=Float.parseFloat(request.getParameter("chQty"+chDetailList.get(i).getChalanDetailId()));
+				float pWidth=Float.parseFloat(request.getParameter("width"+chDetailList.get(i).getChalanDetailId()));
+				float pHeight=Float.parseFloat(request.getParameter("height"+chDetailList.get(i).getChalanDetailId()));
+				float pLength=Float.parseFloat(request.getParameter("length"+chDetailList.get(i).getChalanDetailId()));
+				float pTotal=Float.parseFloat(request.getParameter("itemTotal"+chDetailList.get(i).getChalanDetailId()));
+				
+				
+				
+				
+				ChalanDetail det=new ChalanDetail();
+				
+				det.setChalanDetailId(chDetailList.get(i).getChalanDetailId());
+				det.setItemQty(itemQty);
+				det.setItemHeightPlant(pHeight);
+				det.setItemWidthPlant(pWidth);
+				det.setItemLengthPlant(pLength);
+				det.setItemTotalSite(pTotal);
+				det.setItemId(chDetailList.get(i).getItemId());
+				det.setOrderDetailId(chDetailList.get(i).getOrderDetailId());
+				
+				
+				det.setChalanId(chDetailList.get(i).getChalanId());
+				det.setExDate1(curDate);
+				det.setExVar1("na");
+				det.setExVar2("na");
+				det.setItemHeightSite(chDetailList.get(i).getItemHeightSite());
+				det.setItemLengthSite(chDetailList.get(i).getItemLengthSite());
+				det.setItemQty(itemQty);
+				det.setItemTotalPlant(pTotal);
+				det.setItemTotalSite(chDetailList.get(i).getItemTotalSite());
+				
+				det.setItemUom(chDetailList.get(i).getItemUom());
+				det.setItemWidthSite(chDetailList.get(i).getItemWidthSite());
+				
+				det.setStatus(0);
+				det.setDelStatus(1);
+				
+				chDeList.add(det);
+			}
+			
+			
+			
+			int plantId = Integer.parseInt(request.getParameter("plant_id"));
+			int custId = Integer.parseInt(request.getParameter("cust_name"));
+			int orderId = Integer.parseInt(request.getParameter("order_id"));
+
+			String chalanDate = request.getParameter("chalan_date");
+			String chalanRemark = request.getParameter("chalan_remark");
+			String costSegment = request.getParameter("cost_segment");
+
+			String chalanNo = request.getParameter("chalan_no");
+
+			int driverId = Integer.parseInt(request.getParameter("driver_id"));
+			int vehicleId = Integer.parseInt(request.getParameter("veh_id"));
+
+			
+			String outTime = request.getParameter("out_time");
+			float outKm=Float.parseFloat(request.getParameter("out_km"));
+			ChalanHeader chHeader=new ChalanHeader();
+			
+			chHeader.setChalanNo(chalanNo);
+			
+			chHeader.setChalanDetailList(chDeList);
+			chHeader.setChalanId(chalanId);
+			chHeader.setChalanRemark(chalanRemark);
+			chHeader.setCustId(custId);
+			chHeader.setDriverId(driverId);
+			chHeader.setExDate1(curDate);
+			chHeader.setExFloat1(0);
+			chHeader.setExVar1("save time-");
+			chHeader.setInKm(0);
+			chHeader.setOrderId(orderId);
+			chHeader.setOrderNo(request.getParameter("orderNo"));
+			chHeader.setOutKm(outKm);
+			chHeader.setPlantId(plantId);
+			chHeader.setProjId(Integer.parseInt(request.getParameter("projId")));
+			chHeader.setSitePersonMob("-");
+			chHeader.setSitePersonName("-");
+			chHeader.setStatus(0);
+			chHeader.setVehicleId(vehicleId);
+			chHeader.setVehInDate(curDate);
+			chHeader.setVehTimeIn("-");
+			chHeader.setVehTimeOut(outTime);
+			chHeader.setChalanDate(DateConvertor.convertToYMD(chalanDate));
+			chHeader.setCostSegment(costSegment);
+			
+			
+			ChalanHeader chUpdateResponse = rest.postForObject(Constants.url + "saveChalanHeaderDetail", chHeader,
+					ChalanHeader.class);
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return "redirect:/showChalanList";
+		
+	}
 }

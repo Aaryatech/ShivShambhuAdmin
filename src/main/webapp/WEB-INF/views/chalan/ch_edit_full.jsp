@@ -450,6 +450,8 @@ body {
 									</div>
 
 								</div>
+								<input type="hidden" id="projId" name="projId" value="${editChalan.projId}">
+								<input type="hidden" id="orderNo" name="orderNo" value="${editChalan.orderNo}">
 
 								<input type="hidden" id="chalanId" name="chalanId" value="${editChalan.chalanId}">
 
