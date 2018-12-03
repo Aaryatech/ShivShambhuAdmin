@@ -175,16 +175,21 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showAddOrder">Add
 									Order</a></li>
-										<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showOrderList">
 									Orders List</a></li>
 
-<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showAddChalan">Add
 									Chalan</a></li>
-									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showChalanList">
 									Chalan List</a></li>
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddMatIssueContractor">Add
+									Material Issue Contractor</a></li>
 
 
 
