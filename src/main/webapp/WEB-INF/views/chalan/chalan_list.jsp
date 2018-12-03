@@ -426,15 +426,19 @@
 //var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
 //var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
 //var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
-										 var acButton = '<a href="#" class="action_btn" onclick="callDelete('
+										 var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+												+ v.chalanId
+												+ ','
+												+ i
+												+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 														+ v.chalanId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-														+ v.chalanId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-edit"></i></a>'
+														+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose('
+															+ v.chalanId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i></a>'
  
 												dataTable.row
 														.add(
@@ -460,6 +464,12 @@
 	function callEdit(chalanId){
 		
 		window.open("${pageContext.request.contextPath}/editChalan/"+chalanId);
+		
+	}
+	
+function callClose(chalanId){
+		
+		window.open("${pageContext.request.contextPath}/closeChalan/"+chalanId);
 		
 	}
 	</script>

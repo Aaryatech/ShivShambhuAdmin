@@ -325,7 +325,7 @@
 									<div class="col-md-2">In Time</div>
 
 									<div class="col-md-4">
-										<input type="time" id="in_time" name="in_time"
+										<input type="time" id="in_time" name="in_time" required
 											style="width: 100%;" class="form-control">
 									</div>
 									<div class="col-md-2">In Kilometer</div>
@@ -370,6 +370,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="site_per_mob" name="site_per_mob"
+										onkeypress="return allowOnlyNumber(event);"  maxlength="10"
 											value="-" required style="width: 100%;" class="form-control">
 										<span class="error" aria-live="polite"></span>
 									</div>
@@ -395,7 +396,7 @@
 												<th style="text-align: center">Length</th>
 												<th style="text-align: center">Chalan Total</th>
 											</tr>
-											</tr>
+											
 										</thead>
 										<tbody>
 											<c:forEach items="${chDetailList}" var="chDetail" varStatus="count">
@@ -568,21 +569,21 @@
 			var qty = document.getElementById("ordQty" + itemId).value;
 			if (qty < 0 || qty == "" || qty == null || qty == 0) {
 				valid = false;
-				alert("Please enter valid quantity");
+				//alert("Please enter valid quantity");
 				document.getElementById("itemTotal" + itemId).value = "0";
 
 			} else if (qty > poRemainingQty) {
 				valid = false;
-				alert("Order quantity can not be greater than Po Remaining quantity");
+				//alert("Order quantity can not be greater than Po Remaining quantity");
 				document.getElementById("itemTotal" + itemId).value = "0";
 
 			}
-			if (valid == true) {
+			/* if (valid == true) {
 				var itemTotal = parseFloat(qty) * parseFloat(poRate);
-				document.getElementById("itemTotal" + itemId).value = itemTotal;
+				//document.getElementById("itemTotal" + itemId).value = itemTotal;
 				$.getJSON('${getTempOrderHeader}', {
 
-					qty : qty,
+					qty : qty,s
 					itemTotal : itemTotal,
 					poDetailId : poDetailId,
 					itemId : itemId,
@@ -606,7 +607,7 @@
 					//alert("total " +tot);
 					document.getElementById("ordTotal").innerHTML = tot;
 				});
-			}
+			} */
 		}
 	</script>
 	

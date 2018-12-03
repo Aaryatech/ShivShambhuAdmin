@@ -30,6 +30,7 @@ import com.ats.ssgs.model.chalan.GetChalanDetail;
 import com.ats.ssgs.model.chalan.GetChalanHeader;
 import com.ats.ssgs.model.chalan.TempChalanItem;
 import com.ats.ssgs.model.enq.EnqHeader;
+import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
@@ -457,8 +458,8 @@ public class ChalanController {
 	
 	List<Project> projList;
 	List<GetChalanDetail> chDetailList;
-	@RequestMapping(value = "/editChalan/{chalanId}", method = RequestMethod.GET)
-	public ModelAndView editChalan(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
+	@RequestMapping(value = "/closeChalan/{chalanId}", method = RequestMethod.GET)
+	public ModelAndView closeChalan(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
 
 		ModelAndView model = null;
 		try {
@@ -592,4 +593,105 @@ public class ChalanController {
 		return "redirect:/showChalanList";
 	
 	}
+	
+	
+	List<Cust> custList;
+
+	@RequestMapping(value = "/editChalan/{chalanId}", method = RequestMethod.GET)
+	public ModelAndView editChalan(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("chalan/ch_edit_full");
+
+			GetChalanHeader editChalan = new GetChalanHeader();
+			/*
+			 * for(int i=0;i<getOrdList.size();i++) {
+			 * 
+			 * if(getOrdList.get(i).getOrderId()==orderId) { editOrder=new GetOrder();
+			 * editOrder=getOrdList.get(i); break; } }
+			 */
+			MultiValueMap<String, Object>
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("chalanId", chalanId);
+			editChalan = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
+			editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate()));
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custId", editChalan.getCustId());
+			Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
+			projList = new ArrayList<Project>(Arrays.asList(projArray));
+
+			model.addObject("projList", projList);
+			
+			
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custId", editChalan.getCustId());
+			map.add("projId", editChalan.getProjId());
+
+			map.add("statusList", "0,1,2");
+
+			OrderHeader[] ordArray = rest.postForObject(Constants.url + "getOrdHeaderForChalan", map, OrderHeader[].class);
+			ordHeadList = new ArrayList<OrderHeader>(Arrays.asList(ordArray));
+
+			for (int i = 0; i < ordHeadList.size(); i++) {
+
+				ordHeadList.get(i).setOrderDate(DateConvertor.convertToDMY(ordHeadList.get(i).getOrderDate()));
+			}
+
+			System.err.println(" Order List " + ordHeadList.toString());
+
+			model.addObject("ordHeadList", ordHeadList);
+			map = new LinkedMultiValueMap<String, Object>();
+			
+			map.add("chalanId", chalanId);
+			GetChalanDetail[] chDetailArray = rest.postForObject(Constants.url + "getGetChalanDetailByChalanId", map,
+					GetChalanDetail[].class);
+			chDetailList = new ArrayList<GetChalanDetail>(Arrays.asList(chDetailArray));
+
+			model.addObject("chDetailList", chDetailList);
+
+			model.addObject("editChalan", editChalan);
+
+			model.addObject("title", "Edit Chalan");
+			
+			
+			map = new LinkedMultiValueMap<String, Object>();
+
+
+			map.add("plantId", editChalan.getPlantId());
+
+			Cust[] custArray = rest.postForObject(Constants.url + "getCustListByPlant", map, Cust[].class);
+			custList = new ArrayList<Cust>(Arrays.asList(custArray));
+			model.addObject("custList", custList);
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
+			vehicleList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
+
+			model.addObject("vehicleList", vehicleList);
+
+			User[] usrArray = rest.getForObject(Constants.url + "getAllUserList", User[].class);
+			usrList = new ArrayList<User>(Arrays.asList(usrArray));
+
+			model.addObject("usrList", usrList);
+
+
+		} catch (Exception e) {
+			System.err.println("Exce in edit Chalan " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return model;
+	}
+	
 }

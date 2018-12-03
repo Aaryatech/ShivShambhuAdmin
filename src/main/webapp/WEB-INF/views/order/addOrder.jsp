@@ -183,7 +183,7 @@
 											</c:forEach>
 										</select>
 									</div>
-									<div class="col-md-2">Customer</div>
+									<div class="col-md-2">Select Customer</div>
 									<div class="col-md-4">
 										<select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required
@@ -205,6 +205,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select project')"
 											onchange="try{setCustomValidity('')}catch(e){}">
+												<option selected value="-1">Select All</option>
 
 											<c:forEach items="${projList}" var="proj">
 											
@@ -254,7 +255,7 @@
 									<div class="col-md-4">
 										<input type="text" id="ord_date" autocomplete="off" required readonly name="ord_date" required
 											style="width: 100%;" class="form-control"
-											value="${editComp.contactNo1}"> <span class="error"
+											value="${curDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
 									<div class="col-md-2">Order No</div>
@@ -278,7 +279,7 @@
 									<div class="col-md-4">
 										<input type="text" id="del_date" name="del_date" autocomplete="off" required readonly
 											style="width: 100%;" class="form-control"
-											value="${editComp.contactNo1}"> <span class="error"
+											value="${curDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
 								</div>
@@ -287,14 +288,14 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Select PO</div>
+									<div class="col-md-2">Select Purchase Order</div>
 
 									<div class="col-md-10">
 										<select id="po_id" name="po_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select po ')"
 											onchange="getPoDetailItem()">
-											<option value="-1">Select PO</option>
+											<option value="-1">Select</option>
 
 										</select>
 									</div>
@@ -322,15 +323,7 @@
 								</div>
 								<div class="form-group"></div>
 
-								<!-- <div class="row">
-
-									<div class="col-md-2">Taxable Value</div>
-									<div class="col-md-4">1444</div>
-
-									<div class="col-md-2">Tax Value</div>
-									<div class="col-md-4">88.36</div>
-
-								</div> -->
+								
 								<div class="form-group"></div>
 								<div class="row">
 
@@ -459,7 +452,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					//var html = '<option selected value="-1"  >Select</option>';
+					var html = '<option selected value="-1"  >Select</option>';
 
 					for (var i = 0; i < len; i++) {
 
@@ -481,7 +474,7 @@
 					.DataTable();
 			dataTable.clear().draw();
 			
-			getPoDetailItem();
+			//getPoDetailItem();
 
 				});
 			}//end of if
@@ -543,6 +536,8 @@
 							var html;
 							var len = data.length;
 							//alert("data " +JSON.stringify(data));
+												var html = '<option selected value="-1"  >Select</option>';
+
 							for (var i = 0; i < len; i++) {
 								var PNo=data[i].poNo+"-"+ data[i].poDate 
 
@@ -566,6 +561,8 @@
 							var html;
 							var len = data.length;
 							//alert("data " +JSON.stringify(data));
+												var html = '<option selected value="-1"  >Select All</option>';
+
 							for (var i = 0; i < len; i++) {
 								var projData=data[i].projName+"-"+data[i].address
 
@@ -623,7 +620,7 @@
 											function(i, v) {
 												//alert("hdjfh");
 var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
+var ordQty = '<input  type="text"  class="form-control" onkeypress="return allowOnlyNumber(event);" id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" oninput="placeTempOrder('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
 
 var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
 										/* var str = '<a href="#" class="action_btn" onclick="callDelete('
@@ -659,7 +656,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 	</script>
 	
 	<script type="text/javascript">
-	function calTotal(itemId,poRate,poDetailId,poRemainingQty){
+	function placeTempOrder(itemId,poRate,poDetailId,poRemainingQty){
 		//alert("Hi");
 		
 		var valid=true;
@@ -668,12 +665,14 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 			valid=false;
 			alert("Please enter valid quantity");
 			document.getElementById("itemTotal"+itemId).value="0";
+			document.getElementById("ordQty"+itemId).value="0";
 
 		}
 		else if(qty>poRemainingQty){
 			valid=false;
 			alert("Order quantity can not be greater than Po Remaining quantity");
 			document.getElementById("itemTotal"+itemId).value="0";
+			document.getElementById("ordQty"+itemId).value="0";
 
 		}
 		if(valid==true){
@@ -708,6 +707,31 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 		});
 		}
 	}
+	</script>
+	
+	<script type="text/javascript">
+	
+		function allowOnlyNumber(evt){
+	    var charCode = (evt.which) ? evt.which : event.keyCode
+	    if (charCode == 46){
+	        var inputValue = $("#floor").val();
+	        var count = (inputValue.match(/'.'/g) || []).length;
+	        
+	        if(count<1){
+	            if (inputValue.indexOf('.') < 1){
+	                return true;
+	            }
+	            return false;
+	        }else{
+	            return false;
+	        }
+	    }
+	    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+	        return false;
+	    }
+	    return true;
+	}
+	
 	</script>
 
 	<!-- <script type="text/javascript">

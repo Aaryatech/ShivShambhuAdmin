@@ -77,6 +77,13 @@ public class OrderController {
 			model.addObject("doc", doc);
 			model.addObject("isError", isError);
 			isError = 0;
+			
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar cal = Calendar.getInstance();
+
+			String curDate = dateFormat.format(new Date());
+			
+			model.addObject("curDate" ,curDate);
 
 		} catch (Exception e) {
 
