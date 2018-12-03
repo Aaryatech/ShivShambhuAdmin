@@ -9,11 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
-<c:url var="getItemsByCategoryId" value="/getItemsByCategoryId" />
+<c:url var="getRawItemByCatId" value="/getRawItemByCatId" />
 
 <c:url var="addMatIssueDetail" value="/addMatIssueDetail" />
 
-<c:url var="getDocTermForEdit" value="/getDocTermForEdit" />
+<c:url var="getMatIssueForEdit" value="/getMatIssueForEdit" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -120,13 +120,15 @@
 							</div>
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
-								<a href="${pageContext.request.contextPath}/showDocTermList"><strong>Terms
-										And Conditions List</strong></a>
+								<a
+									href="${pageContext.request.contextPath}/showMatIssueContractorList"><strong>Material
+										Issue Contractor List</strong></a>
 							</div>
 
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertDocTerm"
+							<form
+								action="${pageContext.request.contextPath}/insertMatIssueContractor"
 								id="submitForm" method="post">
 
 								<div class="row">
@@ -168,12 +170,12 @@
 								<div class="row">
 									<div class="col-md-2">Select Category*</div>
 									<div class="col-md-4">
-										<select id="item_name" name="item_name" class="standardSelect"
-											tabindex="1">
+										<select id="catId" name="catId" class="standardSelect"
+											tabindex="1" onchange="getItemByCatId()">
 
 											<option>Select</option>
 											<c:forEach items="${catList}" var="cat">
-												<option value="${cat.contrId}">${cat.contrName}</option>
+												<option value="${cat.itemCatId}">${cat.itemCatName}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -182,15 +184,10 @@
 									<div class="col-md-2">Select Item*</div>
 
 									<div class="col-md-4">
-										<select id="uomId" name="uomId" class="standardSelect"
-											tabindex="1"
-											oninvalid="setCustomValidity('Please select uom')"
-											onchange="try{setCustomValidity('')}catch(e){}">
+										<select id="itemName" name="itemName" class="standardSelect"
+											tabindex="1">
+											<option>Select</option>
 
-											<option value="0">Select Unit Of Measurement</option>
-											<c:forEach items="${uomList}" var="uom">
-												<option value="${uom.uomId}">${uom.uomName}</option>
-											</c:forEach>
 										</select>
 									</div>
 								</div>
@@ -201,6 +198,11 @@
 										<input type="text" id="qty" name="qty" class="form-control"
 											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											onkeypress="return allowOnlyNumber(event);">
+									</div>
+									<div class="col-md-2"></div>
+									<div class="col-md-2">
+										<input type="button" value="Add" class="btn btn-primary"
+											style="align-content: center; width: 113px;" onclick="add()" />
 									</div>
 								</div>
 
@@ -304,14 +306,14 @@
 
 	<script type="text/javascript">
 		function add() {
-			//	alert("in add  ");
+			alert("in add  ");
 			var itemName = document.getElementById("itemName").value;
 			var qty = document.getElementById("qty").value;
 			var isEdit = document.getElementById("isEdit").value;
 			var isDelete = document.getElementById("isDelete").value;
 			var index = document.getElementById("index").value;
 
-			//alert("Inside add ajax");
+			alert("Inside add ajax");
 			$
 					.getJSON(
 							'${addMatIssueDetail}',
@@ -327,6 +329,7 @@
 							},
 
 							function(data) {
+
 								var dataTable = $('#bootstrap-data-table')
 										.DataTable();
 								dataTable.clear().draw();
@@ -337,58 +340,61 @@
 												function(i, v) {
 
 													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.termDetailId
+															+ v.matDetailId
 															+ ','
 															+ i
 															+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.termDetailId
+															+ v.matDetailId
 															+ ','
 															+ i
 															+ ')"><i class="fa fa-edit"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
-																	v.termDesc,
-																	v.sortNo,
+																	v.itemName,
+																	v.uomId,
+																	v.itemRate,
+																	v.quantity,
+																	v.value,
 																	str ])
 															.draw();
 												});
 
 							});
-			document.getElementById("termDesc").value = "";
-			document.getElementById("sortNoDetail").value = "";
+			document.getElementById("itemName").value = "";
+			document.getElementById("qty").value = "";
 			document.getElementById("isDelete").value = 0;
 			document.getElementById("isEdit").value = 0;
 			document.getElementById("index").value = 0;
 
 		}
 
-		function callEdit(termDetailId, index) {
+		function callEdit(matDetailId, index) {
 
 			document.getElementById("isEdit").value = "1";
-			$.getJSON('${getDocTermForEdit}', {
-				termDetailId : termDetailId,
+			$.getJSON('${getMatIssueForEdit}', {
+				matDetailId : matDetailId,
 				index : index,
 				ajax : 'true',
 
 			}, function(data) {
-
-				document.getElementById("sortNoDetail").value = data.sortNo;
-				document.getElementById("termDesc").value = data.termDesc;
+				document.getElementById("catId").value = data.catId;
+				document.getElementById("itemName").value = data.itemName;
+				document.getElementById("qty").value = data.quantity;
 				document.getElementById("index").value = index;
 
 			});
 
 		}
 
-		function callDelete(termDetailId, index) {
+		function callDelete(matDetailId, index) {
 
-			//alert("hii");
-			//document.getElementById("isEdit").value = 0;
-			//alert("index" + index);
+			alert("hii");
+			document.getElementById("isEdit").value = 0;
+			alert("index" + index);
 			$
 					.getJSON(
-							'${addDocTermDetail}',
+							'${addMatIssueDetail}',
 							{
 								isDelete : 1,
 								isEdit : 0,
@@ -405,28 +411,31 @@
 										.each(
 												data,
 												function(i, v) {
-													//	var str = '<input  type="button" value="callEdit" onclick="callEdit('+v.itemId+','+i+')" style="width:30%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:30%;"/> ';
+
 													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.termDetailId
+															+ v.matDetailId
 															+ ','
 															+ i
 															+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.termDetailId
+															+ v.matDetailId
 															+ ','
 															+ i
 															+ ')"><i class="fa fa-edit"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
-																	v.termDesc,
-																	v.sortNo,
-
+																	v.itemName,
+																	v.uomId,
+																	v.itemRate,
+																	v.quantity,
+																	v.value,
 																	str ])
 															.draw();
 												});
 							});
 
 		}
+
 		function validate(s) {
 			var rgx = /^[0-9]*\.?[0-9]*$/;
 			return s.match(rgx);
@@ -474,22 +483,14 @@
 
 
 
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script>
-		$(function() {
-			$('input[id$=enq_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
-			});
 
-		});
-	</script>
 
 	<script type="text/javascript">
 		function getItemByCatId() {
 			//document.getElementById("submitButton").disabled=true;
 
 			var catId = document.getElementById("catId").value;
-			//alert("catId Id " +catId);
+			//	alert("catId Id " + catId);
 
 			var valid = true;
 
@@ -500,7 +501,7 @@
 
 			if (valid == true) {
 
-				$.getJSON('${getItemsByCategoryId}', {
+				$.getJSON('${getRawItemByCatId}', {
 
 					catId : catId,
 					ajax : 'true',
@@ -508,26 +509,35 @@
 				},
 
 				function(data) {
+					//alert("hiii");
 					var html;
 					var len = data.length;
 					var html = '<option value="-1"  >Select Item</option>';
 					for (var i = 0; i < len; i++) {
 
-						html += '<option value="' + data[i].itemId + '">'
-								+ data[i].itemName + '</option>';
+						html += '<option value="' + data[i].rmId + '">'
+								+ data[i].rmName + '</option>';
 					}
 					html += '</option>';
 
-					$('#item_name').html(html);
-					$("#item_name").trigger("chosen:updated");
+					$('#itemName').html(html);
+					$("#itemName").trigger("chosen:updated");
 
 				});
 
-			}//end of if
+			}
 
 		}
 	</script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$('input[id$=date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
 
+		});
+	</script>
 
 </body>
 </html>
