@@ -331,7 +331,7 @@ public class ChalanController {
 				chDetail.setStatus(0);
 				chDetail.setItemTotalPlant(5);
 				
-				chDetail.setOrderDetailId(tempChItemList.get(i).getOrderDetailId());
+				chDetail.setOrderDetailId(tempChItemList.get(i).getOrderDetId());
 				chDetailList.add(chDetail);
 				
 			}

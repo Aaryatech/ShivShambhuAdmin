@@ -19,16 +19,10 @@ public class TempChalanItem {
 	
 	
 	
-	private int orderDetailId;
 
 	
 	
-	public int getOrderDetailId() {
-		return orderDetailId;
-	}
-	public void setOrderDetailId(int orderDetailId) {
-		this.orderDetailId = orderDetailId;
-	}
+	
 	public int getUomId() {
 		return uomId;
 	}
@@ -99,8 +93,7 @@ public class TempChalanItem {
 	public String toString() {
 		return "TempChalanItem [chalanQty=" + chalanQty + ", itemId=" + itemId + ", poId=" + poId + ", poDetailId="
 				+ poDetailId + ", remOrdQty=" + remOrdQty + ", orderDetId=" + orderDetId + ", orderId=" + orderId
-				+ ", index=" + index + ", itemName=" + itemName + ", uomName=" + uomName + ", uomId=" + uomId
-				+ ", orderDetailId=" + orderDetailId + "]";
+				+ ", index=" + index + ", itemName=" + itemName + ", uomName=" + uomName + ", uomId=" + uomId + "]";
 	}
 	
 	

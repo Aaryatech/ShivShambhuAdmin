@@ -176,7 +176,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="">Select Plant</option>
+											<option value="">Select</option>
 
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
@@ -189,6 +189,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
+											<option selected value="-1"  >Select</option>
 
 										</select>
 									</div>
@@ -228,7 +229,7 @@
 
 
 
-										<div class="col-md-2">Cust Type Name</div>
+										<div class="col-md-2">Customer Type</div>
 
 										<div class="col-md-4">
 											<input type="text" id="custTypeName" name="custTypeName"
@@ -236,7 +237,7 @@
 											<span class="error" aria-live="polite"></span>
 										</div>
 
-										<div class="col-md-2">Cust Mobile No</div>
+										<div class="col-md-2">Customer Mobile No</div>
 
 										<div class="col-md-4">
 											<input type="text" readonly id="custMobNo" name="custMobNo"
@@ -251,7 +252,7 @@
 								<div class="row">
 									<div class="col-md-2">Order Date</div>
 									<div class="col-md-4">
-										<input type="text" id="ord_date" name="ord_date" required
+										<input type="text" id="ord_date" autocomplete="off" required readonly name="ord_date" required
 											style="width: 100%;" class="form-control"
 											value="${editComp.contactNo1}"> <span class="error"
 											aria-live="polite"></span>
@@ -275,7 +276,7 @@
 								<div class="row">
 								<div class="col-md-2">Delivery Date</div>
 									<div class="col-md-4">
-										<input type="text" id="del_date" name="del_date" required
+										<input type="text" id="del_date" name="del_date" autocomplete="off" required readonly
 											style="width: 100%;" class="form-control"
 											value="${editComp.contactNo1}"> <span class="error"
 											aria-live="polite"></span>
@@ -458,7 +459,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option selected value="-1"  >Select Customer</option>';
+					//var html = '<option selected value="-1"  >Select</option>';
 
 					for (var i = 0; i < len; i++) {
 
