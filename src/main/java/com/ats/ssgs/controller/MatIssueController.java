@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,8 +23,15 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
+import com.ats.ssgs.common.DateConvertor;
+import com.ats.ssgs.model.master.DocTermHeader;
+import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.GetDocTermHeader;
+import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.Setting;
+import com.ats.ssgs.model.master.Uom;
 import com.ats.ssgs.model.mat.Contractor;
+import com.ats.ssgs.model.mat.GetMatIssueHeader;
 import com.ats.ssgs.model.mat.ItemCategory;
 import com.ats.ssgs.model.mat.MatIssueDetail;
 import com.ats.ssgs.model.mat.MatIssueHeader;
@@ -39,6 +47,7 @@ public class MatIssueController {
 	List<Contractor> conList;
 	List<RawMatItem> rawItemList;
 	List<ItemCategory> catList;
+	List<Uom> uomList;
 
 	@RequestMapping(value = "/showAddMatIssueContractor", method = RequestMethod.GET)
 	public ModelAndView showAddMatIssueContractor(HttpServletRequest request, HttpServletResponse response) {
@@ -121,7 +130,19 @@ public class MatIssueController {
 				temp.setQuantity(qty);
 				temp.setItemRate(getSingleItem.getItemClRate());
 
-				temp.setUomName(getSingleItem.getItemUom());
+				temp.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
+
+				Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+				uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+
+				for (int i = 0; i < uomList.size(); i++) {
+					if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
+						;
+					{
+						temp.setUomName(uomList.get(i).getUomName());
+					}
+				}
+
 				temp.setValue(getSingleItem.getItemClRate() * qty);
 				tempList.add(temp);
 
@@ -179,7 +200,7 @@ public class MatIssueController {
 			int contrId = Integer.parseInt(request.getParameter("contr_id"));
 			String issueNo = request.getParameter("issueNo");
 
-			// String date = request.getParameter("date");
+			String date = request.getParameter("date");
 
 			// int sortNo = Integer.parseInt(request.getParameter("sortNo"));
 
@@ -191,7 +212,7 @@ public class MatIssueController {
 			// DateFormat dateTimeFrmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			matIssue.setContrId(contrId);
-			matIssue.setDate(curDate);
+			matIssue.setDate(DateConvertor.convertToYMD(date));
 			matIssue.setDelStatus(1);
 			matIssue.setExBool1(0);
 			matIssue.setExBool2(0);
@@ -259,24 +280,24 @@ public class MatIssueController {
 		return "redirect:/showAddMatIssueContractor";
 
 	}
-	
-	List<GetDocTermHeader> docTermHeaderList;
 
-	@RequestMapping(value = "/showDocTermList", method = RequestMethod.GET)
-	public ModelAndView showDocTermList(HttpServletRequest request, HttpServletResponse response) {
+	List<GetMatIssueHeader> matIssueHeaderList;
+
+	@RequestMapping(value = "/showMatIssueContractorList", method = RequestMethod.GET)
+	public ModelAndView showMatIssueContractorList(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
 		try {
-			model = new ModelAndView("docterm/doctermlist");
-			GetDocTermHeader[] docArray = rest.getForObject(Constants.url + "getAllDocHeaderList",
-					GetDocTermHeader[].class);
-			docTermHeaderList = new ArrayList<GetDocTermHeader>(Arrays.asList(docArray));
+			model = new ModelAndView("matissue/matissuelist");
+			GetMatIssueHeader[] matArray = rest.getForObject(Constants.url + "getMatIssueContrHeaderList",
+					GetMatIssueHeader[].class);
+			matIssueHeaderList = new ArrayList<GetMatIssueHeader>(Arrays.asList(matArray));
 
-			model.addObject("title", "Terms & Conditions List");
-			model.addObject("docHeaderList", docTermHeaderList);
+			model.addObject("title", "Material Issue Contractor List");
+			model.addObject("matIssueList", matIssueHeaderList);
 		} catch (Exception e) {
 
-			System.err.println("exception In showDocTermList at Master Contr" + e.getMessage());
+			System.err.println("exception In showMatIssueContractorList at Master Contr" + e.getMessage());
 
 			e.printStackTrace();
 
@@ -286,5 +307,87 @@ public class MatIssueController {
 
 	}
 
+	GetMatIssueHeader editMat;
+
+	@RequestMapping(value = "/editMatIssueCon/{matHeaderId}", method = RequestMethod.GET)
+	public ModelAndView editDocHeader(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int matHeaderId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("matissue/editMatIssue");
+
+			Contractor[] conArray = rest.getForObject(Constants.url + "getAllContractorList", Contractor[].class);
+			conList = new ArrayList<Contractor>(Arrays.asList(conArray));
+
+			model.addObject("conList", conList);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("matHeaderId", matHeaderId);
+			editMat = rest.postForObject(Constants.url + "getMatIssueContrByHeaderId", map, GetMatIssueHeader.class);
+			model.addObject("title", "Edit Material Issue Contractor");
+			model.addObject("editMat", editMat);
+			model.addObject("editMatDetail", editMat.getMatIssueDetailList());
+
+		} catch (Exception e) {
+			System.err.println("exception In editMat at Mat Contr" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/deleteMatIssueCon/{matHeaderId}", method = RequestMethod.GET)
+	public String deleteMatIssueCon(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int matHeaderId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("matHeaderId", matHeaderId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMatIssueHeader", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteMatIssueHeader @MatContr" + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showMatIssueContractorList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofMatIssueList", method = RequestMethod.POST)
+	public String deleteRecordofMatIssueList(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] matHeaderIds = request.getParameterValues("matHeaderIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < matHeaderIds.length; i++) {
+				sb = sb.append(matHeaderIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("matHeaderIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiMatIssueHeader", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteMultiMatIssueHeader MatContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showMatIssueContractorList";
+	}
 
 }
