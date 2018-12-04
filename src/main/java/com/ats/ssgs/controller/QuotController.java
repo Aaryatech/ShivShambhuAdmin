@@ -79,7 +79,10 @@ public class QuotController {
 	}
 
 	// editQuot
-
+	List<GetItemWithEnq> newItemList;//items that are not in quotation ie enquiry but in m_item table
+	
+	List<GetItemWithEnq> enqItemList;
+	
 	@RequestMapping(value = "/editQuot/{quotId}/{plantId}/{custId}/{enqHeadId}", method = RequestMethod.GET)
 	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotId,
 			@PathVariable int plantId, @PathVariable int custId, @PathVariable int enqHeadId) {
@@ -99,7 +102,30 @@ public class QuotController {
 			GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map,
 					GetItemWithEnq[].class);
 			itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
-			model.addObject("itemList", itemList);
+			 newItemList= new  ArrayList<GetItemWithEnq>();
+			 enqItemList= new  ArrayList<GetItemWithEnq>();
+
+			
+			List<Integer> indexList=new ArrayList<>();
+			for(int i=0;i<itemList.size();i++) {
+				
+				if(itemList.get(i).getEnqUomId()==0) {
+					
+					newItemList.add(itemList.get(i));
+				}else {
+					
+					enqItemList.add(itemList.get(i));
+				}
+				
+			}
+			
+			System.err.println("enqItemList " +enqItemList.toString());			
+			
+			System.err.println("newItemList " +newItemList.toString());			
+
+			model.addObject("itemList", enqItemList);
+			model.addObject("newItemList", newItemList);
+
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("plantId", plantId);
@@ -107,11 +133,11 @@ public class QuotController {
 			custList = new ArrayList<Cust>(Arrays.asList(custArray));
 			model.addObject("custList", custList);
 
-			System.err.println("cust List  " + custList.toString());
+			//System.err.println("cust List  " + custList.toString());
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
-			System.err.println("Plant List  " + plantList.toString());
+			//System.err.println("Plant List  " + plantList.toString());
 
 			model.addObject("plantList", plantList);
 
@@ -155,7 +181,51 @@ public class QuotController {
 		return model;
 
 	}
+//getNewItemsForQuotation
+	
+	@RequestMapping(value = "/getNewItemsForQuotation", method = RequestMethod.GET)
+	public @ResponseBody List<GetItemWithEnq> getNewItemsForQuotation(HttpServletRequest request, HttpServletResponse response) {
 
+
+		int itemId = Integer.parseInt(request.getParameter("itemId"));
+		float quotQty=Float.parseFloat(request.getParameter("quotQty"));
+		
+		int isDelete =Integer.parseInt(request.getParameter("isDelete"));
+		int index=Integer.parseInt(request.getParameter("index"));
+		
+		if(isDelete==0) {
+		for(int i=0;i<newItemList.size();i++) {
+			if(!enqItemList.contains(newItemList.get(i))){
+				
+			if(newItemList.get(i).getItemId()==itemId) {
+				System.err.println("Item Id matched");
+
+				newItemList.get(i).setEnqUomId(newItemList.get(i).getUomId());
+				newItemList.get(i).setQuotQty(quotQty);
+				
+				enqItemList.add(newItemList.get(i));
+			
+			//newItemList.remove(i);
+			break;
+		}
+			}else {
+				
+				System.err.println("Already added " +itemId);
+			
+			}
+		}
+		}//end of if isDelete=0
+		else {
+			System.err.println("IS delete ==1");
+			enqItemList.remove(index);
+		}
+		System.err.println("Ajax getNewItemsForQuotation  List size " + enqItemList.size());
+
+		System.err.println("Ajax getNewItemsForQuotation  List " + enqItemList.toString());
+
+		return enqItemList;
+
+	}
 	// Ajax call
 	@RequestMapping(value = "/getProjectByCustId", method = RequestMethod.GET)
 	public @ResponseBody List<Project> getProjectByCustId(HttpServletRequest request, HttpServletResponse response) {
@@ -284,9 +354,179 @@ public class QuotController {
 
 			System.err.println("Header  " + quotHeader.toString());
 			String[] selectItem = request.getParameterValues("selectItem");
-
+			
+			
 			List<QuotDetail> tempQDetailList = new ArrayList<>();
 
+			//
+			
+			for(int j=0;j<enqItemList.size();j++) {
+
+			int flag=0;
+			for( int i=0;i<quotDetList.size();i++) {
+				
+					
+					if(enqItemList.get(j).getItemId()==quotDetList.get(i).getItemId()) {
+						
+						flag=1;
+
+				float quotQty = Float
+						.parseFloat(request.getParameter("quot_qty" + quotDetList.get(i).getItemId()));
+				float transCost = Float
+						.parseFloat(request.getParameter("trans_cost" + quotDetList.get(i).getItemId()));
+				float otherCostDetail = Float
+						.parseFloat(request.getParameter("other_cost" + quotDetList.get(i).getItemId()));
+				float taxableValue = Float
+						.parseFloat(request.getParameter("taxable_amt" + quotDetList.get(i).getItemId()));
+				float taxValue = Float
+						.parseFloat(request.getParameter("tax_amt" + quotDetList.get(i).getItemId()));
+				float total = Float.parseFloat(request.getParameter("final_amt" + quotDetList.get(i).getItemId()));
+				float otherCostAfterTax = Float
+						.parseFloat(request.getParameter("oth_cost_aft_tax" + quotDetList.get(i).getItemId()));
+				
+				
+
+				QuotDetail detail = new QuotDetail();
+				
+				detail=quotDetList.get(i);
+				
+				detail.setQuotQty(quotQty);
+				detail.setTransCost(transCost);
+				detail.setOtherCost(otherCostDetail);
+				detail.setTaxableValue(taxableValue);
+				detail.setTaxValue(taxValue);
+				detail.setTotal(total);
+				detail.setOtherCostAfterTax(otherCostAfterTax);
+				detail.setTollCost(tollCost);
+				
+				detail.setNoOfKm(noOfKm);
+				detail.setRate(total);
+				detail.setExDate2(curDate);
+				
+				detail.setStatus(1);
+
+				if (taxValue > 0) {
+					if(cust.getIsSameState()==1) {
+
+					detail.setCgstValue((taxValue / 2));
+					detail.setIgstValue(0);
+					detail.setIgstPer(0);
+					detail.setSgstValue((taxValue / 2));
+					}else {
+						detail.setIgstValue(taxValue);
+						
+						detail.setCgstValue(0);
+						detail.setSgstValue(0);
+						
+						detail.setCgstPer(0);
+						detail.setSgstPer(0);
+						
+					}
+					quotHeader.setTaxValue(1);
+
+				}/* else {
+					detail.setCgstValue(0);
+					detail.setIgstValue(0);
+					detail.setSgstValue(0);
+					
+					detail.setCgstPer(0);
+					detail.setSgstPer(0);
+					detail.setIgstPer(0);
+				}*/
+			
+				tempQDetailList.add(detail);
+				
+					}//end of if
+				
+				}// end of inner for 
+			
+			float quotQty = Float
+					.parseFloat(request.getParameter("quot_qty" +enqItemList.get(j).getItemId()));
+			float transCost = Float
+					.parseFloat(request.getParameter("trans_cost" + enqItemList.get(j).getItemId()));
+			float otherCostDetail = Float
+					.parseFloat(request.getParameter("other_cost" + enqItemList.get(j).getItemId()));
+			float taxableValue = Float
+					.parseFloat(request.getParameter("taxable_amt" + enqItemList.get(j).getItemId()));
+			float taxValue = Float
+					.parseFloat(request.getParameter("tax_amt" + enqItemList.get(j).getItemId()));
+			float total = Float.parseFloat(request.getParameter("final_amt" + enqItemList.get(j).getItemId()));
+			float otherCostAfterTax = Float
+					.parseFloat(request.getParameter("oth_cost_aft_tax" + enqItemList.get(j).getItemId()));
+			
+			
+
+			QuotDetail detail = new QuotDetail();
+			
+			
+			detail.setQuotQty(quotQty);
+			detail.setTransCost(transCost);
+			detail.setOtherCost(otherCostDetail);
+			detail.setTaxableValue(taxableValue);
+			detail.setTaxValue(taxValue);
+			detail.setTotal(total);
+			detail.setOtherCostAfterTax(otherCostAfterTax);
+			detail.setTollCost(tollCost);
+			
+			detail.setNoOfKm(noOfKm);
+			detail.setRate(total);
+
+
+			detail.setExDate2(curDate);
+			
+			detail.setStatus(1);
+
+			if (taxValue > 0) {
+				if(cust.getIsSameState()==1) {
+
+				detail.setCgstValue((taxValue / 2));
+				detail.setIgstValue(0);
+				detail.setIgstPer(0);
+				detail.setSgstValue((taxValue / 2));
+				}else {
+					detail.setIgstValue(taxValue);
+					
+					detail.setCgstValue(0);
+					detail.setSgstValue(0);
+					
+					detail.setCgstPer(0);
+					detail.setSgstPer(0);
+					
+				}
+				quotHeader.setTaxValue(1);
+
+			} /*else {
+				detail.setCgstValue(0);
+				detail.setIgstValue(0);
+				detail.setSgstValue(0);
+				
+				detail.setCgstPer(0);
+				detail.setSgstPer(0);
+				detail.setIgstPer(0);
+			}*/
+		
+			detail.setCgstPer(enqItemList.get(j).getCgst());
+			detail.setConFactor(1);
+			detail.setDelStatus(1);
+			detail.setConvQty(1);
+			detail.setIgstPer(enqItemList.get(j).getIgst());
+			detail.setItemId(enqItemList.get(j).getItemId());
+			detail.setQuotUomId(enqItemList.get(j).getUomId());
+			detail.setRoyaltyRate(enqItemList.get(j).getRoyaltyRate());
+			detail.setSgstPer(enqItemList.get(j).getSgst());
+			detail.setStatus(1);
+			detail.setTaxId(enqItemList.get(j).getTaxId());
+			detail.setExDate2(curDate);
+			detail.setOtherCostBeforeTax(0);
+			
+			tempQDetailList.add(detail);
+			
+			
+			}
+			
+			//new COde
+
+/*
 			for (int i = 0; i < selectItem.length; i++) {
 
 				System.err.println("selItem " + selectItem[i]);
@@ -430,7 +670,7 @@ public class QuotController {
 					quotDetList.add(tempQDetailList.get(i));
 				}
 
-			}
+			}*/
 
 			quotHeader.setQuotDetailList(quotDetList);
 

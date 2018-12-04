@@ -5,30 +5,29 @@
 <html class="no-js" lang="">
 <style>
 .tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
+	position: relative;
+	display: inline-block;
+	border-bottom: 1px dotted black;
 }
 
 .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
+	visibility: hidden;
+	width: 120px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1;
 }
 
 .tooltip:hover .tooltiptext {
-    visibility: visible;
+	visibility: visible;
 }
 </style>
-	 <style>
+<style>
 body {
 	font-family: Arial, Helvetica, sans-serif;
 }
@@ -95,16 +94,18 @@ body {
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 }
+
 .bg-overlay {
-    background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)), url("${pageContext.request.contextPath}/resources/images/smart.jpeg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    color: #fff;
-    height:auto;
-    width:auto;
-    padding-top: 10px;
-    padding-left:20px;
+	background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
+		url("${pageContext.request.contextPath}/resources/images/smart.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	color: #fff;
+	height: auto;
+	width: auto;
+	padding-top: 10px;
+	padding-left: 20px;
 }
 </style>
 <head>
@@ -117,6 +118,7 @@ body {
 <c:url var="getItemsAndEnqItemList" value="/getItemsAndEnqItemList" />
 
 <c:url var="getDocTermDetail" value="/getDocTermDetail" />
+<c:url var="getNewItemsForQuotation" value="/getNewItemsForQuotation" />
 
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
@@ -186,8 +188,17 @@ body {
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<div class="col-md-2"><strong>${title}</strong></div><div class="col-md-2"></div> <div class="col-md-3"> Quotation No : <strong>${quotHeader.quotNo}</strong></div><div class="col-md-1"></div>
-							<div class="col-md-2">Date : <strong>${quotHeader.quotDate}</strong></div>
+							<div class="col-md-2">
+								<strong>${title}</strong>
+							</div>
+							<div class="col-md-2"></div>
+							<div class="col-md-3">
+								Quotation No : <strong>${quotHeader.quotNo}</strong>
+							</div>
+							<div class="col-md-1"></div>
+							<div class="col-md-2">
+								Date : <strong>${quotHeader.quotDate}</strong>
+							</div>
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/updateQuotation"
@@ -243,16 +254,16 @@ body {
 											onchange="try{setCustomValidity('')}catch(e){}">
 
 											<c:forEach items="${projList}" var="proj">
-											
-											<c:choose>
-											<c:when test="${quotHeader.projId==proj.projId}">
-												<option selected value="${proj.projId}">${proj.projName}</option>
-											</c:when>
-											<c:otherwise>
-												<option value="${proj.projId}">${proj.projName}</option>
-											</c:otherwise>
-											</c:choose>
-											
+
+												<c:choose>
+													<c:when test="${quotHeader.projId==proj.projId}">
+														<option selected value="${proj.projId}">${proj.projName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${proj.projId}">${proj.projName}</option>
+													</c:otherwise>
+												</c:choose>
+
 											</c:forEach>
 
 										</select>
@@ -264,49 +275,51 @@ body {
 											class="standardSelect" tabindex="1" required
 											oninvalid="setCustomValidity('Please select payment term')"
 											onchange="setData()">
-											<option value="-1">Select Payment Term</option>
+											<option value="-1">Select</option>
 
 											<c:forEach items="${payTermList}" var="pTerm">
-											<c:choose>
-											
-											<c:when test="${quotHeader.payTermId==pTerm.payTermId}">
-											<option selected value="${pTerm.payTermId}">${pTerm.payTerm}</option>
-											</c:when>
-											
-											<c:otherwise>
-											<option value="${pTerm.payTermId}">${pTerm.payTerm}</option>
-											</c:otherwise>
-											
-											</c:choose>
+												<c:choose>
+
+													<c:when test="${quotHeader.payTermId==pTerm.payTermId}">
+														<option selected value="${pTerm.payTermId}">${pTerm.payTerm}</option>
+													</c:when>
+
+													<c:otherwise>
+														<option value="${pTerm.payTermId}">${pTerm.payTerm}</option>
+													</c:otherwise>
+
+												</c:choose>
 											</c:forEach>
 										</select>
 									</div>
 
 
 								</div>
-								<input type="hidden" id="quotHeadId" name="quotHeadId" value="${quotHeader.quotHeadId}">
-								<input type="hidden" id="pay_term_name" name="pay_term_name" value="${quotHeader.payTerms}">
+								<input type="hidden" id="quotHeadId" name="quotHeadId"
+									value="${quotHeader.quotHeadId}"> <input type="hidden"
+									id="pay_term_name" name="pay_term_name"
+									value="${quotHeader.payTerms}">
 
 
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Select Quotation Term</div>
+									<div class="col-md-2">Select</div>
 
 									<div class="col-md-4">
 										<select id="quot_doc_term_id" name="quot_doc_term_id"
-											class="standardSelect" tabindex="1" 
+											class="standardSelect" tabindex="1"
 											onchange="showDocDetailPopup()">
 											<option value="-1">Select</option>
 
 											<c:forEach items="${docTermList}" var="qTerm">
-											<c:choose>
-											<c:when test="${quotHeader.quotTermId==qTerm.termId}">
-												<option selected  value="${qTerm.termId}">${qTerm.termTitle}</option>
-												</c:when>
-												<c:otherwise>
-												<option   value="${qTerm.termId}">${qTerm.termTitle}</option>
-												</c:otherwise>
+												<c:choose>
+													<c:when test="${quotHeader.quotTermId==qTerm.termId}">
+														<option selected value="${qTerm.termId}">${qTerm.termTitle}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${qTerm.termId}">${qTerm.termTitle}</option>
+													</c:otherwise>
 												</c:choose>
 											</c:forEach>
 										</select>
@@ -325,69 +338,73 @@ body {
 								</div>
 
 
-						<div id="myModal" class="modal">
-										      
-					<div class="modal-content" style="color: black;">
-						<span class="close" id="close">&times;</span>
-						<h5 style="text-align: left;">Quotation Terms And Conditions</h5>
-							<div class=" box-content">
-						
-								<div style="overflow:scroll;height:50%;width:50%;overflow:auto" >
-									<table 
-										style="width: 100%" id="table_grid1">
-										<thead>
-											<tr>
-										<th class="col-md-10">Terms And Condition</th>
-									</tr>
-										</thead>
-										<tbody>
- 
-										</tbody>
-									</table>
-								</div>
-							 
-							 
-						</div><br>
-						
-					</div>
+								<div id="myModal" class="modal">
 
-				</div><!-- end of myModal div -->
+									<div class="modal-content" style="color: black;">
+										<span class="close" id="close">&times;</span>
+										<h5 style="text-align: left;">Quotation Terms And
+											Conditions</h5>
+										<div class=" box-content">
+
+											<div
+												style="overflow: scroll; height: 50%; width: 50%; overflow: auto">
+												<table style="width: 100%" id="table_grid1">
+													<thead>
+														<tr>
+															<th class="col-md-10">Terms And Condition</th>
+														</tr>
+													</thead>
+													<tbody>
+
+													</tbody>
+												</table>
+											</div>
+
+
+										</div>
+										<br>
+
+									</div>
+
+								</div>
+								<!-- end of myModal div -->
 
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Quotation Date</div>
 									<div class="col-md-4">
-										<input type="text" id="quot_date" name="quot_date" readonly autocomplete="off"
-											class="form-control" style="width: 100%;"
+										<input type="text" id="quot_date" name="quot_date" readonly
+											autocomplete="off" class="form-control" style="width: 100%;"
 											value="${quotHeader.quotDate}">
 									</div>
 
 									<div class="col-md-2">Delivery Place</div>
-									
-										<c:choose>
-									<c:when test="${quotHeader.noOfKm==0}">
-									<div class="col-md-2">
-										On Spot <input type="radio" name="del_place"  checked
-											onchange="setKM(1)" id="del_place" value="1">
-									</div>
 
-									<div class="col-md-2">
-										Specific Place <input type="radio" name="del_place" id="del_place"
-											onchange="setKM(0)"  value="0">
-									</div>
-									</c:when>
-									 <c:otherwise>
-									<div class="col-md-2">
-										On Spot <input type="radio" name="del_place" id="del_place" 
-											onchange="setKM(1)" value="1">
-									</div>
+									<c:choose>
+										<c:when test="${quotHeader.noOfKm==0}">
+											<div class="col-md-2">
+												On Spot <input type="radio" name="del_place" checked
+													onchange="setKM(1)" id="del_place" value="1">
+											</div>
 
-									<div class="col-md-2">
-										Specific Place <input type="radio" name="del_place"  id="del_place" checked
-											onchange="setKM(0)" value="0" checked>
-									</div>
-									
-									</c:otherwise>
+											<div class="col-md-2">
+												Specific Place <input type="radio" name="del_place"
+													id="del_place" onchange="setKM(0)" value="0">
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="col-md-2">
+												On Spot <input type="radio" name="del_place" id="del_place"
+													onchange="setKM(1)" value="1">
+											</div>
+
+											<div class="col-md-2">
+												Specific Place <input type="radio" name="del_place"
+													id="del_place" checked onchange="setKM(0)" value="0"
+													checked>
+											</div>
+
+										</c:otherwise>
 									</c:choose>
 
 
@@ -398,14 +415,17 @@ body {
 								<div class="row">
 									<div class="col-md-2">No of KM</div>
 									<div class="col-md-4">
-										<input type="text" id="no_of_km" name="no_of_km"  onkeypress="return allowOnlyNumber(event);"
-											oninput="calcAll()" class="form-control" value="${quotHeader.noOfKm}"
-											style="width: 100%;">
+										<input type="text" id="no_of_km" name="no_of_km"
+											onkeypress="return allowOnlyNumber(event);"
+											oninput="calcAll()" class="form-control"
+											value="${quotHeader.noOfKm}" style="width: 100%;">
 									</div>
 									<div class="col-md-2">Toll Amount</div>
 									<div class="col-md-4">
-										<input type="text" id="toll_amt"  name="toll_amt" value="${quotHeader.tollCost}"
-											oninput="calcAll()" class="form-control" onkeypress="return allowOnlyNumber(event);">
+										<input type="text" id="toll_amt" name="toll_amt"
+											value="${quotHeader.tollCost}" oninput="calcAll()"
+											class="form-control"
+											onkeypress="return allowOnlyNumber(event);">
 									</div>
 								</div>
 
@@ -425,14 +445,18 @@ body {
 
 									<div class="col-md-2">Other Cost</div>
 									<div class="col-md-4">
-										<input type="text" oninput="calcAll()" onkeypress="return allowOnlyNumber(event);" min="0" id="other_cost" value="${quotHeader.otherCost}"
+										<input type="text" oninput="calcAll()"
+											onkeypress="return allowOnlyNumber(event);" min="0"
+											id="other_cost" value="${quotHeader.otherCost}"
 											name="other_cost" class="form-control" style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">No of Tolls</div>
 									<div class="col-md-4">
-										<input type="text" id="no_of_tolls"  name="no_of_tolls" value="${quotHeader.noOfTolls}"
-											class="form-control" style="width: 100%;" onkeypress="return allowOnlyNumber1(event);">
+										<input type="text" id="no_of_tolls" name="no_of_tolls"
+											value="${quotHeader.noOfTolls}" class="form-control"
+											style="width: 100%;"
+											onkeypress="return allowOnlyNumber1(event);">
 									</div>
 
 								</div>
@@ -443,60 +467,95 @@ body {
 								<div class="row">
 
 									<div class="col-md-2">Is Tax Included</div>
-									
+
 									<c:choose>
-									<c:when test="${quotHeader.taxValue==0}">
-										<div class="col-md-1">
-										Yes<input type="radio"  name="is_tax_inc"
-											id="is_tax_inc" value="1"
-											onchange="changeTaxValue(this.value)">
-									</div>
+										<c:when test="${quotHeader.taxValue==0}">
+											<div class="col-md-1">
+												Yes<input type="radio" name="is_tax_inc" id="is_tax_inc"
+													value="1" onchange="changeTaxValue(this.value)">
+											</div>
 
-									<div class="col-md-1">
-										No<input  checked type="radio" name="is_tax_inc" id="is_tax_inc"
-											value="0" onchange="changeTaxValue(this.value)">
-									</div>
-									</c:when>
-									<c:otherwise>
-									<div class="col-md-1">
-										Yes<input type="radio" checked name="is_tax_inc"
-											id="is_tax_inc" value="1"
-											onchange="changeTaxValue(this.value)">
-									</div>
+											<div class="col-md-1">
+												No<input checked type="radio" name="is_tax_inc"
+													id="is_tax_inc" value="0"
+													onchange="changeTaxValue(this.value)">
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="col-md-1">
+												Yes<input type="radio" checked name="is_tax_inc"
+													id="is_tax_inc" value="1"
+													onchange="changeTaxValue(this.value)">
+											</div>
 
-									<div class="col-md-1">
-										No<input   type="radio" name="is_tax_inc" id="is_tax_inc"
-											value="0" onchange="changeTaxValue(this.value)">
-									</div>
-									</c:otherwise>
+											<div class="col-md-1">
+												No<input type="radio" name="is_tax_inc" id="is_tax_inc"
+													value="0" onchange="changeTaxValue(this.value)">
+											</div>
+										</c:otherwise>
 									</c:choose>
-								</div>
-									<!-- <div class="col-md-2"></div>
-									<div class="col-md-2">Location</div>
-
-									<div class="col-md-4">
-										<input type="text" id="location" name="location"
-											class="form-control" style="width: 100%;" value="-">
+										<div class="col-md-2">
+										<input type="button" id="newItemAdd" name="newItemAdd"
+											class="btn btn-primary" style="width: 100%;"
+											value="Add Items" onclick="getNewItems(0)">
 									</div>
- -->
+									
+								</div>
+								<div class="form-group"></div>
+								<div class="row" id="newItemAddDiv" style="display: none;">
 
-								
-								<input type="checkbox" name="selAll" id="selAll" /> <label>Select All</label>
-							<div class="card-body card-block" style="overflow: auto; width:100%;">
-
-									<table id="bootstrap-data-table" class="table table-striped table-bordered"  style=" table-layout: none;width: 80%; ">
+									
+									<div class="col-md-2">Select Item</div>
+									<div class="col-md-4">
+										<select id="new_item_id" name="new_item_id" style="width: 100%;"
+											class="standardSelect" tabindex="1" required
+											oninvalid="setCustomValidity('Please select item name')">
+											<c:forEach items="${newItemList}" var="newItem">
+												<option value="${newItem.itemId}">${newItem.itemName}</option>
+											</c:forEach>
+										</select>
+									</div>
+									
+									<div class="col-md-1">Quantity</div>
+									<div class="col-md-1">
+									<input type="text" id="new_item_qty" name="new_item_qty"
+											value="1" class="form-control"
+											style="width: 100%;"  min="1"
+											onkeypress="return allowOnlyNumber(event);">
+									
 										
+									</div>
+									<div class="col-md-2">
+									<input type="button" id="newItemAdd" name="newItemAdd"
+											class="btn btn-primary" style="width: 100%;"
+											value="Submit Item" onclick="getNewItems(1)">
+											</div>
+																				<div class="col-md-2"></div>
+											
+									</div>
+
+
+								<input type="checkbox" name="selAll" id="selAll" /> <label>Select
+									All</label>
+								<div class="card-body card-block"
+									style="overflow: auto; width: 100%;">
+
+									<table id="bootstrap-data-table"
+										class="table table-striped table-bordered"
+										style="table-layout: none; width: 80%;">
+
 										<thead>
-										
+
 											<tr>
 
-												<th style="text-align: center" class="col-md-1" >Sr </th>
+												<th style="text-align: center" class="col-md-1">Sr</th>
 
-												<th >Item name</th>
+												<th>Item name</th>
 												<th style="text-align: center" class="col-md-1">Quantity</th>
-												<th style="text-align: center"class="col-md-1">UOM</th>
+												<th style="text-align: center" class="col-md-1">UOM</th>
 
-												<th style="text-align: center"class="col-md-2">Trans cost</th>
+												<th style="text-align: center" class="col-md-2">Trans
+													cost</th>
 												<th style="text-align: center" class="col-md-2">Toll
 													Cost</th>
 												<th style="text-align: center" class="col-md-2">Other
@@ -509,52 +568,65 @@ body {
 												<th style="text-align: center" class="col-md-1">GST</th>
 
 												<th style="text-align: center" class="col-md-2">Taxable</th>
-												<th style="text-align: center" class="col-md-2">Tax value</th>
-												<th style="text-align: center" class="col-md-2">
-													Cost After Tax</th>
+												<th style="text-align: center" class="col-md-2">Tax
+													value</th>
+												<th style="text-align: center" class="col-md-2">Cost
+													After Tax</th>
 
 												<th style="text-align: center" class="col-md-2">Final</th>
+																								<th style="text-align: center" class="col-md-2">Action</th>
+												
 
 											</tr>
 										</thead>
 										<tbody>
 
 											<c:forEach items="${itemList}" var="item" varStatus="count">
+
 												<tr>
 
-													<td class="col-md-1" style="text-align: center">${count.index+1}<input type="checkbox" value="${item.itemId}"  name="selectItem"></td>
+
+													<td class="col-md-1" style="text-align: center">${count.index+1}<input
+														type="checkbox" value="${item.itemId}" name="selectItem"></td>
 
 
 													<td class="col-md-2" style="text-align: left"><c:out
 															value="${item.itemName}" /></td>
-															
-															<c:if test="${quotHeader.status==0}">
-															<c:set var="qty" value="${item.enqQty}"></c:set>
-															</c:if>
-															
-															<c:if test="${quotHeader.status > 0}">
-															<c:set var="qty" value="${item.quotQty}"></c:set>
-															</c:if>
 
-													<td class="col-md-1" style="text-align: left"><input type="text" onkeypress="return allowOnlyNumber(event);"
+													<c:if test="${quotHeader.status==0}">
+														<c:set var="qty" value="${item.enqQty}"></c:set>
+													</c:if>
+
+													<c:if test="${quotHeader.status > 0}">
+														<c:set var="qty" value="${item.quotQty}"></c:set>
+													</c:if>
+
+													<td class="col-md-1" style="text-align: left"><input
+														type="text" onkeypress="return allowOnlyNumber(event);"
 														id="quot_qty${item.itemId}" name="quot_qty${item.itemId}"
-														value="${qty}"  class="form-control"></td>
+														value="${qty}" class="form-control"></td>
 
-													<td class="col-md-1" style="text-align: left"><c:out value="${item.uomName}" /></td>
+													<td class="col-md-1" style="text-align: left"><c:out
+															value="${item.enqUomName}" /></td>
 
 
-													<td class="col-md-2" style="text-align: center"><input type="text"
-														id="trans_cost${item.itemId}" value="${item.transCost}" onkeypress="return allowOnlyNumber(event);"
+													<td class="col-md-2" style="text-align: center"><input
+														type="text" id="trans_cost${item.itemId}"
+														value="${item.transCost}"
+														onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														name="trans_cost${item.itemId}" class="form-control"></td>
 
-													<td class="col-md-2" style="text-align: center"><input type="text"
-														id="toll_cost${item.itemId}" readonly value="${quotHeader.tollCost}"
+													<td class="col-md-2" style="text-align: center"><input
+														type="text" id="toll_cost${item.itemId}" readonly
+														value="${quotHeader.tollCost}"
 														name="toll_cost${item.itemId}" class="form-control"></td>
 
-													<td class="col-md-2" style="text-align: center"><input type="text" min="0"  onkeypress="return allowOnlyNumber(event);"
+													<td class="col-md-2" style="text-align: center"><input
+														type="text" min="0"
+														onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
-														id="other_cost${item.itemId}"  value="${item.otherCost}"
+														id="other_cost${item.itemId}" value="${item.otherCost}"
 														name="other_cost${item.itemId}" class="form-control"></td>
 													<!-- 
 													<td style="text-align: center"><input type="text"
@@ -572,24 +644,34 @@ body {
 													<td class="col-md-2" style="text-align: left"><c:out
 															value="${item.totalTaxPer}%" /></td>
 
-													<td  class="col-md-2" style="text-align: right"><input type="text"
-														readonly id="taxable_amt${item.itemId}" value="${item.taxableValue}"
+													<td class="col-md-2" style="text-align: right"><input
+														type="text" readonly id="taxable_amt${item.itemId}"
+														value="${item.taxableValue}"
 														name="taxable_amt${item.itemId}" class="form-control"></td>
 
 
 													<td class="col-md-2" style="text-align: right" width="100%"><input
-														type="text" readonly id="tax_amt${item.itemId}" value="${item.taxValue}"
-														name="tax_amt${item.itemId}" class="form-control"></td>
+														type="text" readonly id="tax_amt${item.itemId}"
+														value="${item.taxValue}" name="tax_amt${item.itemId}"
+														class="form-control"></td>
 
 
-													<td class="col-md-2" style="text-align: center"><input type="text" min="0" onkeypress="return allowOnlyNumber(event);"
+													<td class="col-md-2" style="text-align: center"><input
+														type="text" min="0"
+														onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
-														id="oth_cost_aft_tax${item.itemId}"  value="${item.otherCostAfterTax}" 
+														id="oth_cost_aft_tax${item.itemId}"
+														value="${item.otherCostAfterTax}"
 														name="oth_cost_aft_tax${item.itemId}" class="form-control"></td>
 
-													<td class="col-md-2" style="text-align: right"><input type="text"
-														readonly id="final_amt${item.itemId}" value="${item.finalTotal}"
-														name="final_amt${item.itemId}" class="form-control"></td>
+													<td class="col-md-2" style="text-align: right"><input
+														type="text" readonly id="final_amt${item.itemId}"
+														value="${item.finalTotal}" name="final_amt${item.itemId}"
+														class="form-control"></td>
+															<td class="col-md-2" style="text-align: center"><a
+												href="#" onclick="callDelete(${item.itemId},${count.index})"
+												class="action_btn"><i
+													class="fa fa-trash-o" title="Delete"></i></a> </td>
 
 
 												</tr>
@@ -599,27 +681,28 @@ body {
 									</table>
 
 
-								
-								<div class="form-group"></div>
+
+									<div class="form-group"></div>
 
 
-								<div class="form-group"></div>
-								<div class="row">
+									<div class="form-group"></div>
+									<div class="row">
 
-									<div class="col-md-2">Remark</div>
+										<div class="col-md-2">Remark</div>
 
-									<div class="col-md-8">
-										<input type="text" id="quot_remark" name="quot_remark"
-											class="form-control" style="width: 100%;" value="-" required>
+										<div class="col-md-8">
+											<input type="text" id="quot_remark" name="quot_remark"
+												class="form-control" style="width: 100%;" value="-" required>
+										</div>
+
+										<div class="col-md-1">
+											<input type="button" class="btn btn-primary"
+												onclick="valthisform()" value="Submit">
+
+										</div>
+
 									</div>
-
-									<div class="col-md-1">
-										<input type="button" class="btn btn-primary" onclick="valthisform()" value="Submit">
-
-									</div>
-
 								</div>
-</div>
 							</form>
 						</div>
 					</div>
@@ -713,13 +796,184 @@ body {
 
 		});
 	</script>
+	<script type="text/javascript">
+	
+	function getNewItems(args){
+		//alert("Hi");
+		if(args==0){
+		document.getElementById('newItemAddDiv').style.display="block";
+		}
+		else if(args==1){
+			document.getElementById('newItemAddDiv').style="display:none";
+			var itemId=	document.getElementById('new_item_id').value;
+			var quotQty=document.getElementById('new_item_qty').value;
+			var tollCost=${quotHeader.tollCost};
+			var valid=true;
+			if(quotQty<0 || quotQty==0){
+				valid=false;
+				alert("please enter valid quotation quantity ");
+			}
+				if(valid==true){
+				
+			
+				$
+						.getJSON(
+								'${getNewItemsForQuotation}',
+								{
+									itemId : itemId,
+									quotQty : quotQty,
+									isDelete : 0,
+									index : 0,
+									ajax : 'true',
+								},
+
+								function(data) {
+									//alert("length " +data.length);
+									//alert("Order Data " +JSON.stringify(data));
+									//alert("length " +data.length);
+									 var dataTable = $('#bootstrap-data-table')
+									.DataTable();
+							 dataTable.clear().draw();
+
+							$.each(data,function(i, v) {
+												//alert("hdjfh");
+var quotQty = '<input  type="text"  class="form-control" onkeypress="return allowOnlyNumber(event);" id="quotQty'+v.itemId+'" name="quotQty'+v.itemId+'"  value="'+v.quotQty+'" />'
+var finalAmt = '<input  type="text"   class="form-control"   id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
+var transCost='<input  type="text"  class="form-control" value='+v.transCost+'  onkeypress="return allowOnlyNumber(event);" id="trans_cost'+v.itemId+'" name="trans_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+var tollCosta='<input  type="text" value='+tollCost+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="toll_cost'+v.itemId+'" name="toll_cost'+v.itemId+'"/>'
+var otherCost='<input  type="text" value='+v.otherCost+' class="form-control"  onkeypress="return allowOnlyNumber(event);" id="other_cost'+v.itemId+'" name="other_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+var taxable='<input  type="text" value='+v.taxableValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="taxable_amt'+v.itemId+'" name="taxable_amt'+v.itemId+'"/>'
+var tax='<input  type="text" value='+v.taxValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="tax_amt'+v.itemId+'" name="tax_amt'+v.itemId+'"/>'
+var costAfTax='<input  type="text" value='+v.otherCostAfterTax+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+var finalAmt='<input  type="text" value='+v.finalTotal+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
+/*<a href="#" class="action_btn" onclick="callEdit('
+												+ v.itemId
+												+ ','
+												+ i
+												+ ')"><i class="fa fa-edit"></i></a>*/
+var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
+														+ v.itemId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-trash-o"></i></a>' 
+ 
+												dataTable.row
+														.add(
+																[
+																		i + 1,
+																		v.itemName,
+																		quotQty,
+																		v.enqUomName,
+																		transCost,
+																		tollCosta,
+																		otherCost,
+																		v.itemRate1,
+																		v.royaltyRate,
+																		v.totalTaxPer,
+																		taxable,
+																		tax,
+																		costAfTax,
+																		finalAmt,
+																		acButton
+																		 ])
+														.draw();
+											}); 
+							
+							calcAll();
+
+						 
+								});	
+				
+		
+				}	
+	}
+	}
+	function callDelete(itemId,index){
+		//alert("Item Id  " +itemId + "Index " +index);
+		
+		var x= confirm('Are you sure want to delete this record');
+		//alert("X" +x);
+		if(x==true){
+		var tollCost=${quotHeader.tollCost};
+		
+		$
+		.getJSON(
+				'${getNewItemsForQuotation}',
+				{
+					itemId : itemId,
+					quotQty : 0,
+					isDelete : 1,
+					index : index,
+					ajax : 'true',
+				},
+
+				function(data) {
+					alert("length " +data.length);
+					//alert("Order Data " +JSON.stringify(data));
+					//alert("length " +data.length);
+					 var dataTable = $('#bootstrap-data-table')
+					.DataTable();
+			 dataTable.clear().draw();
+
+			$.each(data,function(i, v) {
+								//alert("hdjfh");
+var quotQty = '<input  type="text"  class="form-control"  id="quotQty'+v.itemId+'" name="quotQty'+v.itemId+'"  value="'+v.quotQty+'" />'
+var finalAmt = '<input  type="text"   class="form-control"   id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
+var transCost='<input  type="text"  class="form-control" value='+v.transCost+'  onkeypress="return allowOnlyNumber(event);" id="trans_cost'+v.itemId+'" name="trans_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+var tollCosta='<input  type="text" value='+tollCost+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="toll_cost'+v.itemId+'" name="toll_cost'+v.itemId+'"/>'
+var otherCost='<input  type="text" value='+v.otherCost+' class="form-control"  onkeypress="return allowOnlyNumber(event);" id="other_cost'+v.itemId+'" name="other_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+var taxable='<input  type="text" value='+v.taxableValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="taxable_amt'+v.itemId+'" name="taxable_amt'+v.itemId+'"/>'
+var tax='<input  type="text" value='+v.taxValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="tax_amt'+v.itemId+'" name="tax_amt'+v.itemId+'"/>'
+var costAfTax='<input  type="text" value='+v.otherCostAfterTax+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+var finalAmt='<input  type="text" value='+v.finalTotal+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
+var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+								+ v.itemId
+								+ ','
+								+ i
+								+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+										+ v.itemId
+										+ ','
+										+ i
+										+ ')"><i class="fa fa-trash"></i></a>' 
+
+								dataTable.row
+										.add(
+												[
+														i + 1,
+														v.itemName,
+														quotQty,
+														v.enqUomName,
+														transCost,
+														tollCosta,
+														otherCost,
+														v.itemRate1,
+														v.royaltyRate,
+														v.totalTaxPer,
+														taxable,
+														tax,
+														costAfTax,
+														finalAmt,
+														acButton
+														 ])
+										.draw();
+							}); 
+			
+		 
+				});	
+
+
+		}
+		
+	}
+	
+	</script>
 
 
 	<script type="text/javascript">
 	function showDocDetailPopup(){
 		
 		var termId=	document.getElementById('quot_doc_term_id').value;
-		alert("Hi doc Detail " +termId);
+		//alert("Hi doc Detail " +termId);
 	
 
 		   $.getJSON('${getDocTermDetail}', {
@@ -730,7 +984,7 @@ body {
 
 			function(data) {
 
-				alert("Data " +JSON.stringify(data.detailList));
+				//alert("Data " +JSON.stringify(data.detailList));
 				
 				//newwindow=window.open(data,'name','height=40,width=40');
 				
@@ -791,29 +1045,29 @@ var termTitle=data.termTitle
 				
 				// alert("Term Detail "+temp);
 
-
 	}); 
+		   
 	}
 	</script>
-		 
-	
-			<script type="text/javascript">
+
+
+	<script type="text/javascript">
 		
 		function changeTaxValue(value){
 			calcAll();
 		}
 		</script>
-			<script type="text/javascript">
+	<script type="text/javascript">
 		
 		function setData(){
 			var payTerm= $("#pay_term_id option:selected").html();
-			alert("payTerm " +payTerm);
+			//alert("payTerm " +payTerm);
 			document.getElementById("pay_term_name").value=payTerm;
 			//showDocDetailPopup();
 			
 		}
 		</script>
-			<script type="text/javascript">
+	<script type="text/javascript">
 		
 		function toggle() {
 			  checkboxes = document.getElementsByName('selectItem');
@@ -823,7 +1077,7 @@ var termTitle=data.termTitle
 			  }
 				  
 		</script>
-		<script type="text/javascript">
+	<script type="text/javascript">
 		
 		function callsetKM(){
 			
@@ -871,7 +1125,7 @@ var termTitle=data.termTitle
 
 
 
-    <script type="text/javascript">
+	<script type="text/javascript">
 
         $(document).ready(function(){
 
@@ -903,7 +1157,7 @@ var termTitle=data.termTitle
 
 	<script type="text/javascript">
 		function calcAll() {
-			//alert("KM " +km);
+			//alert("in call ");
 			var isTaxInc;
 			if (document.getElementById('is_tax_inc').checked) {
 				isTaxInc = document.getElementById('is_tax_inc').value;
@@ -1081,7 +1335,7 @@ var termTitle=data.termTitle
 
 </script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		$(document).ready(function() {
 			var dataTable = $('#table_grid1').DataTable();
 				columnDefs : [ {
@@ -1093,7 +1347,7 @@ var termTitle=data.termTitle
 		
 		
 	</script>
-	
+
 	<script type="text/javascript">
 	
 	function valthisform()
@@ -1467,7 +1721,7 @@ var termTitle=data.termTitle
 			
 		});
 	</script> -->
-	
+
 	<!-- <script>
 // Get the modal
 var modal = document.getElementById('myModal');
