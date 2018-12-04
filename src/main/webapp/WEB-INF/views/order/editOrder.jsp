@@ -342,7 +342,7 @@
 													<input  type="text"  class="form-control" value="${ordDetail.orderQty}"  id="ordQty${ordDetail.itemId}" name="ordQty${ordDetail.itemId}" onchange="calTotal(${ordDetail.itemId},${ordDetail.poRate},${ordDetail.poDetailId},${ordDetail.poRemainingQty},${ordDetail.orderDetId})"/>
 													</td>
 													<td style="text-align: center">
-													<input  type="text" readonly  class="form-control"  id="itemTotal${ordDetail.itemId}" value="${ordDetail.total}" name="${ordDetail.itemId}"/>'
+													<input  type="text" readonly  class="form-control"  id="itemTotal${ordDetail.itemId}" value="${ordDetail.total}" name="itemTotal${ordDetail.itemId}"/>'
 													</td>
 													
 										</tr>

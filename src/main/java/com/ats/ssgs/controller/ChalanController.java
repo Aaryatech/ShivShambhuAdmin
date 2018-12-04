@@ -722,9 +722,6 @@ public class ChalanController {
 				float pLength=Float.parseFloat(request.getParameter("length"+chDetailList.get(i).getChalanDetailId()));
 				float pTotal=Float.parseFloat(request.getParameter("itemTotal"+chDetailList.get(i).getChalanDetailId()));
 				
-				
-				
-				
 				ChalanDetail det=new ChalanDetail();
 				
 				det.setChalanDetailId(chDetailList.get(i).getChalanDetailId());
@@ -807,7 +804,8 @@ public class ChalanController {
 					ChalanHeader.class);
 			
 		}catch (Exception e) {
-			// TODO: handle exception
+			
+System.err.println("Exce in update Chalan ");
 		}
 		
 		return "redirect:/showChalanList";

@@ -514,7 +514,7 @@ detail.setOrderDetId(orderDetId);
 
 				model = new ModelAndView("order/addOrder");
 
-				model.addObject("title", "Add Order");
+			//	model.addObject("title", "Add Order");
 
 				int orderId = Integer.parseInt(request.getParameter("orderId"));
 				//int custId = Integer.parseInt(request.getParameter("cust_name"));
@@ -535,7 +535,7 @@ detail.setOrderDetId(orderDetId);
 				ordHeader = rest.postForObject(Constants.url + "getOrdHeaderByOrdId", map, OrderHeader.class);
 
 
-				List<OrderDetail> ordDetailList = new ArrayList<>();
+				List<OrderDetail> orDetList = new ArrayList<>();
 				String NA = "NA";
 				ordHeader.setDeliveryDate(DateConvertor.convertToYMD(delDate));
 				ordHeader.setProdDate(DateConvertor.convertToYMD(delDate));
@@ -543,26 +543,32 @@ detail.setOrderDetId(orderDetId);
 
 				float headerTotal = 0;
 
-				for (int i = 0; i < tempOrdDetail.size(); i++) {
+				for (int i = 0; i < ordDetailList.size(); i++) {
 
 					OrderDetail orDetail = new OrderDetail();
 					
-					 orDetail.setOrderDetId(tempOrdDetail.get(i).getOrderDetId());
+					
+					float orderQty=Float.parseFloat(request.getParameter("ordQty"+ordDetailList.get(i).getItemId()));
+					float itemTotal=Float.parseFloat(request.getParameter("itemTotal"+ordDetailList.get(i).getItemId()));
+
+					 orDetail.setOrderDetId(ordDetailList.get(i).getOrderDetId());
 					orDetail.setDelStatus(1);
 					orDetail.setExDate1(curDate);
 					orDetail.setExDate2(curDate);
 					orDetail.setExVar1(NA);
 					orDetail.setExVar2(NA);
 					orDetail.setExVar3(NA);
-					orDetail.setItemId(tempOrdDetail.get(i).getItemId());
-					orDetail.setOrderQty(tempOrdDetail.get(i).getOrderQty());
-					orDetail.setOrderRate(tempOrdDetail.get(i).getOrderRate());
+					orDetail.setItemId(ordDetailList.get(i).getItemId());
+					orDetail.setOrderQty(orderQty);
+					orDetail.setOrderRate(ordDetailList.get(i).getOrderRate());
 
-					orDetail.setPoDetailId(tempOrdDetail.get(i).getPoDetailId());
+					orDetail.setPoDetailId(ordDetailList.get(i).getPoDetailId());
 					orDetail.setPoId(poId);
-					orDetail.setRemOrdQty(orDetail.getOrderQty());
-					orDetail.setTotal(tempOrdDetail.get(i).getTotal());
-					ordDetailList.add(orDetail);
+					orDetail.setRemOrdQty((orDetail.getRemOrdQty()-orDetail.getOrderQty()));
+					orDetail.setTotal(itemTotal);
+					orDetail.setOrderId(ordDetailList.get(i).getOrderId());
+					orDetail.setStatus(ordDetailList.get(i).getStatus());
+					orDetList.add(orDetail);
 
 					headerTotal = orDetail.getTotal() + headerTotal;
 
@@ -581,12 +587,12 @@ detail.setOrderDetId(orderDetId);
 
 				}
 */
-				ordHeader.setOrderDetailList(ordDetailList);
+				ordHeader.setOrderDetailList(orDetList);
 
-				OrderHeader insertOrdHeadRes = rest.postForObject(Constants.url + "saveOrder", ordHeader,
+				OrderHeader updateOrdRes = rest.postForObject(Constants.url + "saveOrder", ordHeader,
 						OrderHeader.class);
 
-				if (insertOrdHeadRes != null) {
+				if (updateOrdRes != null) {
 
 					isError = 2;
 
@@ -595,7 +601,7 @@ detail.setOrderDetId(orderDetId);
 
 					isError = 1;
 				}
-				System.err.println("insertOrdHeadRes " + insertOrdHeadRes.toString());
+				System.err.println("updateOrdRes " + updateOrdRes.toString());
 
 			} catch (Exception e) {
 				isError = 1;
@@ -605,7 +611,7 @@ detail.setOrderDetId(orderDetId);
 
 			}
 
-			return "redirect:/showAddOrder";
+			return "redirect:/showOrderList";
 		}
 
 

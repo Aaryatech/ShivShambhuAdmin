@@ -260,7 +260,7 @@ body {
 
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertChalan"
+							<form action="${pageContext.request.contextPath}/updateChalan"
 								id="insertChalan" method="post">
 
 								<div class="row">
