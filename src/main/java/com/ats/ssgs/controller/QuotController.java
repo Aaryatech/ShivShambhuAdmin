@@ -437,7 +437,7 @@ public class QuotController {
 				tempQDetailList.add(detail);
 				
 					}//end of if
-				
+				 
 				}// end of inner for 
 			
 			float quotQty = Float
