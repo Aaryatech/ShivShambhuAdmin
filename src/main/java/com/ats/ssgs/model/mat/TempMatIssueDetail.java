@@ -4,6 +4,8 @@ public class TempMatIssueDetail {
 
 	private int matDetailId;
 
+	private int itemId;
+
 	private String itemName;
 
 	private float itemRate;
@@ -72,10 +74,19 @@ public class TempMatIssueDetail {
 		this.uomName = uomName;
 	}
 
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
 	@Override
 	public String toString() {
-		return "TempMatIssueDetail [matDetailId=" + matDetailId + ", itemName=" + itemName + ", itemRate=" + itemRate
-				+ ", quantity=" + quantity + ", value=" + value + ", uomId=" + uomId + ", uomName=" + uomName + "]";
+		return "TempMatIssueDetail [matDetailId=" + matDetailId + ", itemId=" + itemId + ", itemName=" + itemName
+				+ ", itemRate=" + itemRate + ", quantity=" + quantity + ", value=" + value + ", uomId=" + uomId
+				+ ", uomName=" + uomName + "]";
 	}
 
 }

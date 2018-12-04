@@ -2,111 +2,100 @@ package com.ats.ssgs.model.mat;
 
 public class ItemCategory {
 
-	private int itemCatId;
+	private int catId;
 
-	private String itemCatName;
+	private String catDesc;
 
-	private String date;
+	private int catSeq;
 
-	private int delStatus;
+	private String catPrefix;
 
-	private int exInt1;
+	private int isUsed;
 
-	private int exInt2;
+	private int createdIn;
 
-	private String exVar1;
+	private int deletedIn;
 
-	private String exVar2;
+	private int monthlyLimit;
 
-	private String exDate;
+	private int yearlyLimit;
 
-	private int exBool1;
-
-	public int getItemCatId() {
-		return itemCatId;
+	public int getCatId() {
+		return catId;
 	}
 
-	public void setItemCatId(int itemCatId) {
-		this.itemCatId = itemCatId;
+	public void setCatId(int catId) {
+		this.catId = catId;
 	}
 
-	public String getItemCatName() {
-		return itemCatName;
+	public String getCatDesc() {
+		return catDesc;
 	}
 
-	public void setItemCatName(String itemCatName) {
-		this.itemCatName = itemCatName;
+	public void setCatDesc(String catDesc) {
+		this.catDesc = catDesc;
 	}
 
-	public String getDate() {
-		return date;
+	public int getCatSeq() {
+		return catSeq;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setCatSeq(int catSeq) {
+		this.catSeq = catSeq;
 	}
 
-	public int getDelStatus() {
-		return delStatus;
+	public String getCatPrefix() {
+		return catPrefix;
 	}
 
-	public void setDelStatus(int delStatus) {
-		this.delStatus = delStatus;
+	public void setCatPrefix(String catPrefix) {
+		this.catPrefix = catPrefix;
 	}
 
-	public int getExInt1() {
-		return exInt1;
+	public int getIsUsed() {
+		return isUsed;
 	}
 
-	public void setExInt1(int exInt1) {
-		this.exInt1 = exInt1;
+	public void setIsUsed(int isUsed) {
+		this.isUsed = isUsed;
 	}
 
-	public int getExInt2() {
-		return exInt2;
+	public int getCreatedIn() {
+		return createdIn;
 	}
 
-	public void setExInt2(int exInt2) {
-		this.exInt2 = exInt2;
+	public void setCreatedIn(int createdIn) {
+		this.createdIn = createdIn;
 	}
 
-	public String getExVar1() {
-		return exVar1;
+	public int getDeletedIn() {
+		return deletedIn;
 	}
 
-	public void setExVar1(String exVar1) {
-		this.exVar1 = exVar1;
+	public void setDeletedIn(int deletedIn) {
+		this.deletedIn = deletedIn;
 	}
 
-	public String getExVar2() {
-		return exVar2;
+	public int getMonthlyLimit() {
+		return monthlyLimit;
 	}
 
-	public void setExVar2(String exVar2) {
-		this.exVar2 = exVar2;
+	public void setMonthlyLimit(int monthlyLimit) {
+		this.monthlyLimit = monthlyLimit;
 	}
 
-	public String getExDate() {
-		return exDate;
+	public int getYearlyLimit() {
+		return yearlyLimit;
 	}
 
-	public void setExDate(String exDate) {
-		this.exDate = exDate;
-	}
-
-	public int getExBool1() {
-		return exBool1;
-	}
-
-	public void setExBool1(int exBool1) {
-		this.exBool1 = exBool1;
+	public void setYearlyLimit(int yearlyLimit) {
+		this.yearlyLimit = yearlyLimit;
 	}
 
 	@Override
 	public String toString() {
-		return "ItemCategory [itemCatId=" + itemCatId + ", itemCatName=" + itemCatName + ", date=" + date
-				+ ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
-				+ ", exVar2=" + exVar2 + ", exDate=" + exDate + ", exBool1=" + exBool1 + "]";
+		return "ItemCategory [catId=" + catId + ", catDesc=" + catDesc + ", catSeq=" + catSeq + ", catPrefix="
+				+ catPrefix + ", isUsed=" + isUsed + ", createdIn=" + createdIn + ", deletedIn=" + deletedIn
+				+ ", monthlyLimit=" + monthlyLimit + ", yearlyLimit=" + yearlyLimit + "]";
 	}
-
 }

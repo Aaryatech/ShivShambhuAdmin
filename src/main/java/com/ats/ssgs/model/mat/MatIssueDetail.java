@@ -27,6 +27,8 @@ public class MatIssueDetail {
 	private String exDate1;
 
 	private int exBool1;
+	
+	private int itemId;
 
 	public int getMatDetailId() {
 		return matDetailId;
@@ -131,12 +133,22 @@ public class MatIssueDetail {
 	public void setExBool1(int exBool1) {
 		this.exBool1 = exBool1;
 	}
+	
+	
+
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
 
 	@Override
 	public String toString() {
 		return "MatIssueDetail [matDetailId=" + matDetailId + ", matHeaderId=" + matHeaderId + ", quantity=" + quantity
 				+ ", itemRate=" + itemRate + ", value=" + value + ", uomId=" + uomId + ", delStatus=" + delStatus
 				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2
-				+ ", exDate1=" + exDate1 + ", exBool1=" + exBool1 + "]";
+				+ ", exDate1=" + exDate1 + ", exBool1=" + exBool1 + ", itemId=" + itemId + "]";
 	}
 }

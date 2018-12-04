@@ -100,7 +100,7 @@
 											<th class="check" style="text-align: center; width: 5%;"><input
 												type="checkbox" name="selAll" id="selAll" /> Select All</th>
 											<th style="text-align: center; width: 5%;"">Sr No</th>
-											<th style="text-align: center">Document Name</th>
+											<th style="text-align: center">Document Type</th>
 											<th style="text-align: center">Terms & Conditions</th>
 											<th style="text-align: center">Sort No</th>
 

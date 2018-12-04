@@ -175,7 +175,7 @@
 
 											<option>Select</option>
 											<c:forEach items="${catList}" var="cat">
-												<option value="${cat.itemCatId}">${cat.itemCatName}</option>
+												<option value="${cat.catId}">${cat.catDesc}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -352,7 +352,7 @@
 													dataTable.row.add(
 															[ i + 1,
 																	v.itemName,
-																	v.uomId,
+																	v.uomName,
 																	v.itemRate,
 																	v.quantity,
 																	v.value,
@@ -425,7 +425,7 @@
 													dataTable.row.add(
 															[ i + 1,
 																	v.itemName,
-																	v.uomId,
+																	v.uomName,
 																	v.itemRate,
 																	v.quantity,
 																	v.value,
@@ -515,8 +515,8 @@
 					var html = '<option value="-1"  >Select Item</option>';
 					for (var i = 0; i < len; i++) {
 
-						html += '<option value="' + data[i].rmId + '">'
-								+ data[i].rmName + '</option>';
+						html += '<option value="' + data[i].itemId + '">'
+								+ data[i].itemDesc + '</option>';
 					}
 					html += '</option>';
 

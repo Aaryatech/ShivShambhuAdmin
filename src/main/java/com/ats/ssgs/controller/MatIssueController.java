@@ -22,6 +22,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
+import com.ats.ssgs.model.master.GetDocTermHeader;
 import com.ats.ssgs.model.mat.Contractor;
 import com.ats.ssgs.model.mat.ItemCategory;
 import com.ats.ssgs.model.mat.MatIssueDetail;
@@ -103,11 +104,11 @@ public class MatIssueController {
 
 			else {
 
-				int rmId = Integer.parseInt(request.getParameter("itemName"));
+				int itemId = Integer.parseInt(request.getParameter("itemName"));
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-				map.add("rmId", rmId);
+				map.add("itemId", itemId);
 
 				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
 						RawMatItem.class);
@@ -115,13 +116,13 @@ public class MatIssueController {
 				float qty = Float.parseFloat(request.getParameter("qty"));
 
 				TempMatIssueDetail temp = new TempMatIssueDetail();
-				temp.setItemName(getSingleItem.getRmName());
-
+				temp.setItemName(getSingleItem.getItemDesc());
+				temp.setItemId(getSingleItem.getItemId());
 				temp.setQuantity(qty);
-				temp.setItemRate(getSingleItem.getItemRate());
-				temp.setUomId(getSingleItem.getUomId());
-				// temp.setUomName(uomName);
-				temp.setValue(getSingleItem.getItemRate() * qty);
+				temp.setItemRate(getSingleItem.getItemClRate());
+
+				temp.setUomName(getSingleItem.getItemUom());
+				temp.setValue(getSingleItem.getItemClRate() * qty);
 				tempList.add(temp);
 
 				System.out.println("Inside Add Raw Material");
@@ -158,7 +159,7 @@ public class MatIssueController {
 	public @ResponseBody TempMatIssueDetail getMatIssueForEdit(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		int matDetailId = Integer.parseInt(request.getParameter("matDetailId"));
+		// int matDetailId = Integer.parseInt(request.getParameter("matDetailId"));
 		int index = Integer.parseInt(request.getParameter("index"));
 
 		return tempList.get(index);
@@ -183,11 +184,11 @@ public class MatIssueController {
 			// int sortNo = Integer.parseInt(request.getParameter("sortNo"));
 
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			Calendar cal = Calendar.getInstance();
+			// Calendar cal = Calendar.getInstance();
 			String curDate = dateFormat.format(new Date());
 			MatIssueHeader matIssue = new MatIssueHeader();
 
-			DateFormat dateTimeFrmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			// DateFormat dateTimeFrmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			matIssue.setContrId(contrId);
 			matIssue.setDate(curDate);
@@ -224,6 +225,7 @@ public class MatIssueController {
 				dDetail.setExInt2(1);
 				dDetail.setExVar1("NA");
 				dDetail.setExVar2("NA");
+				dDetail.setItemId(tempList.get(i).getItemId());
 				dDetail.setItemRate(tempList.get(i).getItemRate());
 				dDetail.setQuantity(tempList.get(i).getQuantity());
 				dDetail.setUomId(tempList.get(i).getUomId());
@@ -257,5 +259,32 @@ public class MatIssueController {
 		return "redirect:/showAddMatIssueContractor";
 
 	}
+	
+	List<GetDocTermHeader> docTermHeaderList;
+
+	@RequestMapping(value = "/showDocTermList", method = RequestMethod.GET)
+	public ModelAndView showDocTermList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("docterm/doctermlist");
+			GetDocTermHeader[] docArray = rest.getForObject(Constants.url + "getAllDocHeaderList",
+					GetDocTermHeader[].class);
+			docTermHeaderList = new ArrayList<GetDocTermHeader>(Arrays.asList(docArray));
+
+			model.addObject("title", "Terms & Conditions List");
+			model.addObject("docHeaderList", docTermHeaderList);
+		} catch (Exception e) {
+
+			System.err.println("exception In showDocTermList at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
 
 }
