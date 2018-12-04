@@ -432,7 +432,7 @@ public class QuotController {
 					detail.setCgstPer(0);
 					detail.setSgstPer(0);
 					detail.setIgstPer(0);
-				}*/
+ 				}*/
 			
 				tempQDetailList.add(detail);
 				
