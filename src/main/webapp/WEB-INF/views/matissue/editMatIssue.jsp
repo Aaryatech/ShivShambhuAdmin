@@ -11,9 +11,10 @@
 
 <c:url var="getRawItemByCatId" value="/getRawItemByCatId" />
 
-<c:url var="addMatIssueDetail" value="/addMatIssueDetail" />
+<c:url var="editInAddMatIssueDetail" value="/editInAddMatIssueDetail" />
 
-<c:url var="getMatIssueForEdit" value="/getMatIssueForEdit" />
+<c:url var="getMatIssueForEditMatHeader"
+	value="/getMatIssueForEditMatHeader" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -128,7 +129,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form
-								action="${pageContext.request.contextPath}/insertMatIssueContractor"
+								action="${pageContext.request.contextPath}/updateMaterialContr"
 								id="submitForm" method="post">
 
 								<div class="row">
@@ -176,6 +177,9 @@
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											pattern="[0-9]+">
 									</div>
+
+									<input type="hidden" value="${editMat.matHeaderId}"
+										name="matHeaderId" id="matHeaderId">
 								</div>
 								<hr>
 								<div class="form-group"></div>
@@ -239,7 +243,7 @@
 												<th style="text-align: center">Item Rate</th>
 												<th style="text-align: center">Item Quantity</th>
 												<th style="text-align: center">Value</th>
-												<!-- <th style="text-align: center; width: 5%;">Action</th> -->
+												<th style="text-align: center; width: 5%;">Action</th>
 											</tr>
 										</thead>
 
@@ -291,14 +295,18 @@
 													<%-- 	 --%>
 
 
-													<%-- <td style="text-align: center"><a
-														href="${pageContext.request.contextPath}/editDocHeader/${docDetail.termDetailId}"><i
+
+
+													<td style="text-align: center"><a href="#"
+														onclick="callEdit(${matDetail.matDetailId},${count.index})"><i
 															class="fa fa-edit"></i> <span class="text-muted"></span></a>
-														&nbsp; <a
-														href="${pageContext.request.contextPath}/deleteDocHeader/${docDetail.termDetailId}"
-														onClick="return confirm('Are you sure want to delete this record');"><i
-															class="fa fa-trash-o"></i></a></td>
- --%>
+														<a href="#"
+														onclick="callDelete(${matDetail.matDetailId},${count.index})"><i
+															class="fa fa fa-trash-o"></i> <span class="text-muted"></span></a></td>
+
+
+
+
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -384,11 +392,13 @@
 			var isEdit = document.getElementById("isEdit").value;
 			var isDelete = document.getElementById("isDelete").value;
 			var index = document.getElementById("index").value;
+			var matHeaderId = document.getElementById("matHeaderId").value;
+			var catId = document.getElementById("catId").value;
 
 			alert("Inside add ajax");
 			$
 					.getJSON(
-							'${addMatIssueDetail}',
+							'${editInAddMatIssueDetail}',
 							{
 
 								isDelete : isDelete,
@@ -396,6 +406,8 @@
 								index : index,
 								itemName : itemName,
 								qty : qty,
+								matHeaderId : matHeaderId,
+								catId : catId,
 								ajax : 'true',
 
 							},
@@ -423,7 +435,7 @@
 
 													dataTable.row.add(
 															[ i + 1,
-																	v.itemName,
+																	v.itemDesc,
 																	v.uomName,
 																	v.itemRate,
 																	v.quantity,
@@ -442,16 +454,19 @@
 		}
 
 		function callEdit(matDetailId, index) {
-
+alert("HHHH");
 			document.getElementById("isEdit").value = "1";
-			$.getJSON('${getMatIssueForEdit}', {
+			$.getJSON('${getMatIssueForEditMatHeader}', {
 				matDetailId : matDetailId,
 				index : index,
 				ajax : 'true',
 
 			}, function(data) {
-				document.getElementById("catId").value = data.catId;
-				document.getElementById("itemName").value = data.itemName;
+				alert("data" +data);
+				alert(data.catId);
+				$("#catId").val(data.exInt1);
+				$("#catId").trigger("chosen:updated");
+				document.getElementById("itemName").value = data.itemDesc;
 				document.getElementById("qty").value = data.quantity;
 				document.getElementById("index").value = index;
 
@@ -466,7 +481,7 @@
 			alert("index" + index);
 			$
 					.getJSON(
-							'${addMatIssueDetail}',
+							'${editInAddMatIssueDetail}',
 							{
 								isDelete : 1,
 								isEdit : 0,
@@ -496,7 +511,7 @@
 
 													dataTable.row.add(
 															[ i + 1,
-																	v.itemName,
+																	v.itemDesc,
 																	v.uomName,
 																	v.itemRate,
 																	v.quantity,

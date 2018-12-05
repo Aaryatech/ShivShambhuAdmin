@@ -5,7 +5,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,12 +24,10 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.master.DocTermHeader;
-import com.ats.ssgs.model.master.Document;
-import com.ats.ssgs.model.master.GetDocTermHeader;
 import com.ats.ssgs.model.master.Info;
-import com.ats.ssgs.model.master.Setting;
 import com.ats.ssgs.model.master.Uom;
 import com.ats.ssgs.model.mat.Contractor;
+import com.ats.ssgs.model.mat.GetMatIssueDetail;
 import com.ats.ssgs.model.mat.GetMatIssueHeader;
 import com.ats.ssgs.model.mat.ItemCategory;
 import com.ats.ssgs.model.mat.MatIssueDetail;
@@ -48,6 +45,7 @@ public class MatIssueController {
 	List<RawMatItem> rawItemList;
 	List<ItemCategory> catList;
 	List<Uom> uomList;
+	List<GetMatIssueDetail> getMatIssueDetailList = new ArrayList<GetMatIssueDetail>();
 
 	@RequestMapping(value = "/showAddMatIssueContractor", method = RequestMethod.GET)
 	public ModelAndView showAddMatIssueContractor(HttpServletRequest request, HttpServletResponse response) {
@@ -87,6 +85,14 @@ public class MatIssueController {
 
 		try {
 
+			int itemId = Integer.parseInt(request.getParameter("itemName"));
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("itemId", itemId);
+
+			RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map, RawMatItem.class);
+
 			int isDelete = Integer.parseInt(request.getParameter("isDelete"));
 
 			int isEdit = Integer.parseInt(request.getParameter("isEdit"));
@@ -100,30 +106,26 @@ public class MatIssueController {
 				tempList.remove(key);
 
 			} else if (isEdit == 1) {
-
+				int catId = Integer.parseInt(request.getParameter("catId"));
 				int index = Integer.parseInt(request.getParameter("index"));
-				String itemName = request.getParameter("itemName");
+
 				float quantity = Float.parseFloat(request.getParameter("qty"));
 
 				tempList.get(index).setQuantity(quantity);
-				tempList.get(index).setItemName(itemName);
+				tempList.get(index).setItemName(getSingleItem.getItemDesc());
+				tempList.get(index).setItemId(itemId);
+
 				tempList.get(index).setValue(tempList.get(index).getItemRate() * quantity);
+				tempList.get(index).setCatId(catId);
+
+				System.out.println("templist  =====" + tempList.toString());
 
 			}
 
 			else {
-
-				int itemId = Integer.parseInt(request.getParameter("itemName"));
-
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-				map.add("itemId", itemId);
-
-				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
-						RawMatItem.class);
+				String catId = request.getParameter("catId");
 
 				float qty = Float.parseFloat(request.getParameter("qty"));
-
 				TempMatIssueDetail temp = new TempMatIssueDetail();
 				temp.setItemName(getSingleItem.getItemDesc());
 				temp.setItemId(getSingleItem.getItemId());
@@ -131,6 +133,7 @@ public class MatIssueController {
 				temp.setItemRate(getSingleItem.getItemClRate());
 
 				temp.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
+				temp.setCatId(Integer.parseInt(catId));
 
 				Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
 				uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
@@ -184,6 +187,17 @@ public class MatIssueController {
 		int index = Integer.parseInt(request.getParameter("index"));
 
 		return tempList.get(index);
+
+	}
+
+	@RequestMapping(value = "/getMatIssueForEditMatHeader", method = RequestMethod.GET)
+	public @ResponseBody GetMatIssueDetail getMatIssueForEditMatHeader(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		// int matDetailId = Integer.parseInt(request.getParameter("matDetailId"));
+		int index = Integer.parseInt(request.getParameter("index"));
+
+		return editMat.getMatIssueDetailList().get(index);
 
 	}
 
@@ -322,6 +336,11 @@ public class MatIssueController {
 
 			model.addObject("conList", conList);
 
+			ItemCategory[] catArray = rest.getForObject(Constants.url + "getAllItemCategoryList", ItemCategory[].class);
+			catList = new ArrayList<ItemCategory>(Arrays.asList(catArray));
+
+			model.addObject("catList", catList);
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("matHeaderId", matHeaderId);
@@ -388,6 +407,184 @@ public class MatIssueController {
 		}
 
 		return "redirect:/showMatIssueContractorList";
+	}
+
+	@RequestMapping(value = "/editInAddMatIssueDetail", method = RequestMethod.GET)
+	public @ResponseBody List<GetMatIssueDetail> editInAddMatIssueDetail(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		try {
+
+			int itemId = Integer.parseInt(request.getParameter("itemName"));
+			int matHeaderId = Integer.parseInt(request.getParameter("matHeaderId"));
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("itemId", itemId);
+
+			RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map, RawMatItem.class);
+
+			int isDelete = Integer.parseInt(request.getParameter("isDelete"));
+
+			int isEdit = Integer.parseInt(request.getParameter("isEdit"));
+
+			if (isDelete == 1) {
+				System.out.println("IsDelete" + isDelete);
+				int key = Integer.parseInt(request.getParameter("key"));
+
+				editMat.getMatIssueDetailList().remove(key);
+
+			} else if (isEdit == 1) {
+
+				System.out.println("isedit" + isEdit);
+				int catId = Integer.parseInt(request.getParameter("catId"));
+				int index = Integer.parseInt(request.getParameter("index"));
+				float quantity = Float.parseFloat(request.getParameter("qty"));
+
+				editMat.getMatIssueDetailList().get(index).setQuantity(quantity);
+				editMat.getMatIssueDetailList().get(index)
+						.setValue(editMat.getMatIssueDetailList().get(index).getItemRate() * quantity);
+				editMat.getMatIssueDetailList().get(index).setItemId(itemId);
+				editMat.getMatIssueDetailList().get(index).setItemDesc(getSingleItem.getItemDesc());
+				editMat.getMatIssueDetailList().get(index).setExInt1(catId);
+
+			}
+
+			else {
+
+				System.out.println("RawMatItem " + getSingleItem.toString());
+
+				float qty = Float.parseFloat(request.getParameter("qty"));
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				// Calendar cal = Calendar.getInstance();
+				String curDate = dateFormat.format(new Date());
+
+				GetMatIssueDetail matIssueDetail = new GetMatIssueDetail();
+				matIssueDetail.setDelStatus(1);
+				matIssueDetail.setExBool1(1);
+				matIssueDetail.setExDate1(curDate);
+				matIssueDetail.setExInt1(1);
+				matIssueDetail.setExInt2(1);
+				matIssueDetail.setExVar1("NA");
+				matIssueDetail.setExVar2("NA");
+				matIssueDetail.setItemCode(getSingleItem.getItemCode());
+				matIssueDetail.setItemDesc(getSingleItem.getItemDesc());
+				matIssueDetail.setItemRate(getSingleItem.getItemClRate());
+				matIssueDetail.setMatHeaderId(matHeaderId);
+				matIssueDetail.setQuantity(qty);
+				matIssueDetail.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
+				matIssueDetail.setValue(getSingleItem.getItemClRate() * qty);
+				matIssueDetail.setItemId(itemId);
+
+				Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+				uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+
+				for (int i = 0; i < uomList.size(); i++) {
+					if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
+
+					{
+						matIssueDetail.setUomName(uomList.get(i).getUomName());
+					}
+				}
+				editMat.getMatIssueDetailList().add(matIssueDetail);
+				// getMatIssueDetailList.add(matIssueDetail);
+
+				System.out.println("Inside Edit Raw Material");
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce In temp  getMatIssueDetailList List " + e.getMessage());
+			e.printStackTrace();
+		}
+		System.err.println("getMatIssueDetailList " + getMatIssueDetailList.toString());
+
+		return editMat.getMatIssueDetailList();
+
+	}
+
+	@RequestMapping(value = "/updateMaterialContr", method = RequestMethod.POST)
+	public String updateMaterialContr(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			System.err.println("Inside insert updateMaterialContr method");
+
+			int matHeaderId = Integer.parseInt(request.getParameter("matHeaderId"));
+
+			int contrId = Integer.parseInt(request.getParameter("contr_id"));
+			String issueNo = request.getParameter("issueNo");
+
+			String date = request.getParameter("date");
+
+			// int sortNo = Integer.parseInt(request.getParameter("sortNo"));
+
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			// Calendar cal = Calendar.getInstance();
+			String curDate = dateFormat.format(new Date());
+			MatIssueHeader matIssue = new MatIssueHeader();
+
+			// DateFormat dateTimeFrmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+			matIssue.setContrId(contrId);
+			matIssue.setDate(DateConvertor.convertToYMD(date));
+			matIssue.setDelStatus(1);
+			matIssue.setExDate1(curDate);
+			matIssue.setExDate2(curDate);
+
+			matIssue.setUserId(1);
+
+			matIssue.setIssueNo(issueNo);
+			matIssue.setQtyTotal(0);
+
+			matIssue.setMatHeaderId(matHeaderId);
+
+			List<MatIssueDetail> detailList = new ArrayList<>();
+			float totalValue = 0;
+			float totalQty = 0;
+
+			for (int i = 0; i < editMat.getMatIssueDetailList().size(); i++) {
+
+				MatIssueDetail dDetail = new MatIssueDetail();
+
+				dDetail.setDelStatus(1);
+				dDetail.setMatHeaderId(matHeaderId);
+
+				dDetail.setItemId(editMat.getMatIssueDetailList().get(i).getItemId());
+				dDetail.setItemRate(editMat.getMatIssueDetailList().get(i).getItemRate());
+				dDetail.setQuantity(editMat.getMatIssueDetailList().get(i).getQuantity());
+				dDetail.setUomId(editMat.getMatIssueDetailList().get(i).getUomId());
+				dDetail.setValue(editMat.getMatIssueDetailList().get(i).getValue());
+				dDetail.setMatDetailId(editMat.getMatIssueDetailList().get(i).getMatDetailId());
+				totalValue = totalValue + editMat.getMatIssueDetailList().get(i).getValue();
+				totalQty = totalQty + editMat.getMatIssueDetailList().get(i).getQuantity();
+
+				detailList.add(dDetail);
+
+			}
+			matIssue.setTotal(totalValue);
+			matIssue.setQtyTotal(totalQty);
+			matIssue.setMatIssueDetailList(detailList);
+
+			System.out.println("detailList" + detailList.size());
+
+			MatIssueHeader matIssueInsertRes = rest.postForObject(Constants.url + "saveMatIssueHeaderAndDetail",
+					matIssue, MatIssueHeader.class);
+
+			if (matIssueInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("Exce In insertEnq method  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return "redirect:/showAddMatIssueContractor";
+
 	}
 
 }
