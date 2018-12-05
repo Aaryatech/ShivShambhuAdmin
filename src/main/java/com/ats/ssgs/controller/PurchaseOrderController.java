@@ -76,7 +76,7 @@ public class PurchaseOrderController {
 			String poValidityDate = request.getParameter("poValidityDate");
 			String delivery =  request.getParameter("delivery") ;
 			String poNo =  request.getParameter("poNo") ;
-  
+			float taxIncl = Float.parseFloat(request.getParameter("taxIncl"));
 
 			PoHeader save = new PoHeader();
 			
@@ -93,6 +93,7 @@ public class PurchaseOrderController {
 			save.setVarchar1(delivery);
 			save.setQutDate(DateConvertor.convertToYMD(quotHeader.getQuotDate()));
 			save.setDelStatus(1);
+			save.setExtra1((int)taxIncl);
 			
 			List<PoDetail> poDetailList = new ArrayList<PoDetail>();
 			
@@ -253,31 +254,31 @@ public class PurchaseOrderController {
 			editPo.setPoValidityDate(DateConvertor.convertToYMD(poValidityDate)); 
 			editPo.setVarchar1(delivery);
 			editPo.setQutDate(DateConvertor.convertToYMD(editPo.getQutDate()));
+			try {
 			editPo.setExtraDate1(DateConvertor.convertToYMD(editPo.getExtraDate1()));
 			editPo.setExtraDate2(DateConvertor.convertToYMD(editPo.getExtraDate2()));
-			
-			List<PoDetail> poDetailList = new ArrayList<PoDetail>();
-			
-			/*for(int i=0 ; i< editPo.getGetPoDetailList().size() ; i++) {
+			}catch(Exception e) {
 				 
-				poDetail.setPoQty(Float.parseFloat(request.getParameter("pOqty"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
-				poDetail.setPoRate(Float.parseFloat(request.getParameter("taxableAmt"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
-				poDetail.setTaxableAmt(poDetail.getPoRate());
-				poDetail.setTaxAmt(Float.parseFloat(request.getParameter("taxAmt"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
-				poDetail.setOtherCharges(Float.parseFloat(request.getParameter("othCostAftTax"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
-				poDetail.setTotal(Float.parseFloat(request.getParameter("finalAmt"+quotHeader.getGetQuotDetailList().get(i).getItemId())));
-				poDetail.setTaxPer(quotHeader.getGetQuotDetailList().get(i).getSgstPer()+quotHeader.getGetQuotDetailList().get(i).getSgstPer()+
-						quotHeader.getGetQuotDetailList().get(i).getIgstPer());
-				poDetailList.add(poDetail);
-				
+			}
+			//List<PoDetail> poDetailList = new ArrayList<PoDetail>();
+			
+			 for(int i=0 ; i< editPo.getGetPoDetailList().size() ; i++) {
+				 
+				 editPo.getGetPoDetailList().get(i).setPoQty(Float.parseFloat(request.getParameter("pOqty"+editPo.getGetPoDetailList().get(i).getItemId())));
+				 editPo.getGetPoDetailList().get(i).setPoRate(Float.parseFloat(request.getParameter("taxableAmt"+editPo.getGetPoDetailList().get(i).getItemId())));
+				 editPo.getGetPoDetailList().get(i).setTaxableAmt(editPo.getGetPoDetailList().get(i).getPoRate());
+				 editPo.getGetPoDetailList().get(i).setTaxAmt(Float.parseFloat(request.getParameter("taxAmt"+editPo.getGetPoDetailList().get(i).getItemId())));
+				 editPo.getGetPoDetailList().get(i).setOtherCharges(Float.parseFloat(request.getParameter("othCostAftTax"+editPo.getGetPoDetailList().get(i).getItemId())));
+				 editPo.getGetPoDetailList().get(i).setTotal(Float.parseFloat(request.getParameter("finalAmt"+editPo.getGetPoDetailList().get(i).getItemId())));
+				 
 			}
 			 
-			save.setPoDetailList(poDetailList);
+			 editPo.setPoDetailList(editPo.getGetPoDetailList());
  
-			PoHeader res = rest.postForObject(Constants.url + "savePurchaseOrder", save,
+			PoHeader res = rest.postForObject(Constants.url + "savePurchaseOrder", editPo,
 					PoHeader.class);
 
-			System.err.println("res  " + res.toString());*/
+			System.err.println("res  " + res.toString()); 
 			 
 
 		} catch (Exception e) {

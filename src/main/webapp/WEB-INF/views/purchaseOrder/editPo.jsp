@@ -157,6 +157,24 @@
 									</div>
 									 
 								</div>
+								<input type="hidden" id="taxIncl" name="taxIncl" 
+											value="${editPo.extra1}" readonly>
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Tax Include</div>
+									<div class="col-md-4">
+									<c:choose>
+										<c:when test="${editPo.extra1==1}">
+										 No
+										</c:when>
+										<c:otherwise>
+										YES
+										</c:otherwise>
+									</c:choose>
+										 
+									</div>
+									 
+								</div>
   
 								 
 								 
@@ -198,11 +216,11 @@
 
 													<td style="width: 100px"><input type="text"
 														id="pOqty${getPoDetailList.itemId}" name="pOqty${getPoDetailList.itemId}"
-														value="${getPoDetailList.poQty}" class="form-control"   style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;" required></td>
+														value="${getPoDetailList.poQty}" class="form-control"  pattern="[+-]?([0-9]*[.])?[0-9]+" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;" required></td>
 														
 														<td style="width: 100px"><input type="text"
 														 id="taxableAmt${getPoDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
-														name="taxableAmt${getPoDetailList.itemId}" onchange="calFinalValue(${getPoDetailList.taxPer},${getPoDetailList.itemId});" value="${getPoDetailList.poRate}" class="form-control" required></td>
+														name="taxableAmt${getPoDetailList.itemId}" pattern="[+-]?([0-9]*[.])?[0-9]+" onchange="calFinalValue(${getPoDetailList.taxPer},${getPoDetailList.itemId});" value="${getPoDetailList.poRate}" class="form-control" required></td>
 														
 														<td style="text-align: right;"><c:out
 															value="${getPoDetailList.taxPer}%" /></td>
@@ -213,7 +231,7 @@
   
 													<td style="width: 100px"><input type="text" 
 														id="othCostAftTax${getPoDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
-														name="othCostAftTax${getPoDetailList.itemId}" onchange="calFinalValue(${getPoDetailList.taxPer},${getPoDetailList.itemId});" value="${getPoDetailList.otherCharges}" class="form-control" required>
+														name="othCostAftTax${getPoDetailList.itemId}" pattern="[+-]?([0-9]*[.])?[0-9]+" onchange="calFinalValue(${getPoDetailList.taxPer},${getPoDetailList.itemId});" value="${getPoDetailList.otherCharges}" class="form-control" required>
 													
 													<input type="hidden" id="taxAmt${getPoDetailList.itemId}" 
 														name="taxAmt${getPoDetailList.itemId}" value="${getPoDetailList.taxAmt}" required>
@@ -354,14 +372,24 @@
 	<script type="text/javascript">
 		function calFinalValue(taxPer,itemId) {
 			
+			var taxIncl = parseInt(document.getElementById("taxIncl").value);
+			
 			var rate = parseFloat(document.getElementById("taxableAmt"+itemId).value);
 			var othCostAftTax = parseFloat(document.getElementById("othCostAftTax"+itemId).value);
 		 
 			var taxValue = parseFloat((taxPer/100)*rate);
+			 
 			
-			document.getElementById("taxAmt"+itemId).value = (taxValue).toFixed(2); 
-			document.getElementById("taxValuetd"+itemId).innerHTML = (taxValue).toFixed(2); 
-			document.getElementById("finalAmt"+itemId).value = (rate+taxValue+othCostAftTax).toFixed(2);
+			if(taxIncl==1){
+				document.getElementById("finalAmt"+itemId).value = (rate+taxValue+othCostAftTax).toFixed(2);
+				document.getElementById("taxAmt"+itemId).value = (taxValue).toFixed(2); 
+				document.getElementById("taxValuetd"+itemId).innerHTML = (taxValue).toFixed(2); 
+				
+			}else{
+				document.getElementById("finalAmt"+itemId).value = (rate+othCostAftTax).toFixed(2);
+				document.getElementById("taxAmt"+itemId).value = (0).toFixed(2); 
+				document.getElementById("taxValuetd"+itemId).innerHTML = (0).toFixed(2); 
+			}
 		
 		}
 		 
