@@ -175,14 +175,14 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="">Select Plant</option>
+											<option value="">Plant</option>
 
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
 											</c:forEach>
 										</select>
 									</div>
-									<div class="col-md-2">Customer</div>
+									<div class="col-md-2">Select Customer</div>
 									<div class="col-md-4">
 										<select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required
@@ -234,7 +234,7 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center">Sr &nbsp;</th>
+												<th style="text-align: center">Sr.No.</th>
 												<th style="text-align: center">Order No</th>
 												<th style="text-align: center">Order Date</th>
 												<th style="text-align: center">Delivery Date</th>
@@ -357,7 +357,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option selected value="-1"  >Select Customer</option>';
+					var html = '<option selected value="-1"  >Select</option>';
 
 					for (var i = 0; i < len; i++) {
 
@@ -390,7 +390,7 @@
 	// onclick of submit to search order 
 		function showOrder() {
 		
-		alert("Hi View Orders  ");
+		//alert("Hi View Orders  ");
 	
 			var plantId = document.getElementById("plant_id").value;
 			 var fromDate=document.getElementById("from_date").value;
@@ -448,7 +448,7 @@
 
 								function(data) {
 									
-									alert("Order Data " +JSON.stringify(data));
+									//alert("Order Data " +JSON.stringify(data));
 									
 									 var dataTable = $('#bootstrap-data-table')
 									.DataTable();
@@ -459,15 +459,15 @@
 //var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
 //var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
 //var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
-										 var acButton = '<a href="#" class="action_btn" onclick="callDelete('
+										 var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 														+ v.orderId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
+														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 														+ v.orderId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-edit"></i></a>'
+														+ ')"><i class="fa fa-trash"></i></a>'
  
 												dataTable.row
 														.add(

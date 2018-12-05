@@ -471,25 +471,25 @@ body {
 									<c:choose>
 										<c:when test="${quotHeader.taxValue==0}">
 											<div class="col-md-1">
-												Yes<input type="radio" name="is_tax_inc" id="is_tax_inc"
+												No<input type="radio" checked name="is_tax_inc" id="is_tax_inc"
 													value="1" onchange="changeTaxValue(this.value)">
 											</div>
 
 											<div class="col-md-1">
-												No<input checked type="radio" name="is_tax_inc"
+												Yes<input  type="radio" name="is_tax_inc"
 													id="is_tax_inc" value="0"
 													onchange="changeTaxValue(this.value)">
 											</div>
 										</c:when>
 										<c:otherwise>
 											<div class="col-md-1">
-												Yes<input type="radio" checked name="is_tax_inc"
-													id="is_tax_inc" value="1"
+												No<input type="radio" checked name="is_tax_inc"
+													id="is_tax_inc" value="1" checked
 													onchange="changeTaxValue(this.value)">
 											</div>
 
 											<div class="col-md-1">
-												No<input type="radio" name="is_tax_inc" id="is_tax_inc"
+												Yes<input type="radio" name="is_tax_inc" id="is_tax_inc"
 													value="0" onchange="changeTaxValue(this.value)">
 											</div>
 										</c:otherwise>
@@ -697,7 +697,7 @@ body {
 
 										<div class="col-md-8">
 											<input type="text" id="quot_remark" name="quot_remark"
-												class="form-control" style="width: 100%;" value="-" required>
+												class="form-control" style="width: 100%;" value="${quotHeader.otherRemark1}" required>
 										</div>
 
 										<div class="col-md-1">

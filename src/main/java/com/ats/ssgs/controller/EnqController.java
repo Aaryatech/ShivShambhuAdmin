@@ -469,7 +469,7 @@ public class EnqController {
 			quotHeader.setPayTerms("NA");
 			quotHeader.setPlantIds(enqInsertRes.getPlantId());
 			quotHeader.setProjId(0);
-			quotHeader.setQuotDate(curDate);
+			quotHeader.setQuotDate(DateConvertor.convertToYMD(enqDate));
 			quotHeader.setUserId(1);
 			
 			

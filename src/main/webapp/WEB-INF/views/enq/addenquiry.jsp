@@ -127,6 +127,8 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
+																							<option value="">Select</option>
+											
 
 
 										</select>
@@ -190,7 +192,7 @@
 								<input type="hidden" id="itemUomId" name="itemUomId" value="0">
 
 								<div class="form-group"></div>
-								<section class="form-control" style="background: orange;">
+								<section class="form-control">
 
 									<div class="row">
 
@@ -200,6 +202,7 @@
 											<select id="item_name" name="item_name"
 												class="standardSelect" tabindex="1"
 												onchange="setSelectedUom(this.value)">
+												<option value="">Select</option>
 											</select>
 										</div>
 
@@ -268,7 +271,7 @@
 										<thead>
 											<tr>
 
-												<th style="text-align: center">Sr</th>
+												<th style="text-align: center">Sr.No.</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">Unit Of Measurement</th>
 												<th style="text-align: center">Quantity</th>
@@ -305,7 +308,7 @@
 											class="standardSelect" tabindex="1" required
 											oninvalid="setCustomValidity('Please select enquiry source')"
 											onchange="try{setCustomValidity('')}catch(e){}">
-
+				<option value="0">Select</option>
 											<c:forEach items="${enqGenFactList}" var="enqFrom">
 												<option value="${enqFrom.enqGenId}">${enqFrom.enqGenBy}</option>
 											</c:forEach>
@@ -449,7 +452,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option value="-1"  >Select Item</option>';
+					var html = '<option value="-1"  >Select</option>';
 					for (var i = 0; i < len; i++) {
 
 						html += '<option value="' + data[i].itemId + '">'
@@ -588,7 +591,11 @@
 				valid = true;
 				callAlert(msg);
 			}
-
+			else if (qty == "" || qty == 0) {
+				valid = true;
+				var msg = "Please Enter Proper Item Quantity";
+				callAlert(msg);
+			}
 			//alert("x=" +x + "y= " +y);
 			if (valid == false) {
 				//alert("Inside add ajax");
@@ -629,15 +636,15 @@
 														}
 														//var str = '<input  type="button"  class="fa  fa-stack-exchange" onclick="callEdit('+v.itemId+','+i+')" style="width:100%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:100%;"/> ';
 
-														var str = '<a href="#" class="action_btn" onclick="callDelete('
+														var str = '<a href="#" class="action_btn" onclick="callEdit('
+															+ v.itemId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 																+ v.itemId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-																+ v.itemId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-edit"></i></a>'
+																+ ')"><i class="fa fa-trash"></i></a>'
 
 														dataTable.row
 																.add(

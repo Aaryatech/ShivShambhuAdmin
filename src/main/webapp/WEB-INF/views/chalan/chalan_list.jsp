@@ -233,7 +233,7 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center">Sr &nbsp;</th>
+												<th style="text-align: center">Sr.No.</th>
 												<th style="text-align: center">Chalan No</th>
 												<th style="text-align: center">Chalan Date</th>
 												<th style="text-align: center">Customer Name</th>
@@ -359,7 +359,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option selected value="-1"  >Select Customer</option>';
+					var html = '<option selected value="-1"  >Select</option>';
 
 					for (var i = 0; i < len; i++) {
 
@@ -392,7 +392,7 @@
 	// onclick of submit to search order 
 		function showChalan() {
 		
-		alert("Hi View showChalan  ");
+		//alert("Hi View showChalan  ");
 	
 			var plantId = document.getElementById("plant_id").value;
 			var valid = true;
@@ -415,7 +415,7 @@
 
 								function(data) {
 									
-									alert("Order Data " +JSON.stringify(data));
+									//alert("Order Data " +JSON.stringify(data));
 									
 									 var dataTable = $('#bootstrap-data-table')
 									.DataTable();

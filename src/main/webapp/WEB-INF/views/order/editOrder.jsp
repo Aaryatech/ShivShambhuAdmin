@@ -171,7 +171,11 @@
 
 									<div class="col-md-2">Plant</div>
 
-									<div class="col-md-4"> ${editOrder.plantName}
+									<div class="col-md-4">
+									
+									<input type="text" readonly value="${editOrder.plantName}"
+												style="width: 100%;" class="form-control"> <span
+												class="error" aria-live="polite"></span>
 										<%-- <select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
@@ -184,43 +188,16 @@
 										</select> --%>
 									</div>
 									<div class="col-md-2">Customer</div>
-									<div class="col-md-4">${editOrder.custName}
-										<!-- <select id="cust_name" name="cust_name" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select customer')"
-											onchange="getCustInfo()">
-
-										</select> -->
+									<div class="col-md-4">
+										
+									<input type="text" readonly value="${editOrder.custName}"
+												style="width: 100%;" class="form-control"> <span
+												class="error" aria-live="polite"></span>
 									</div>
 
 								</div>
 								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Select Project</div>
-
-									<div class="col-md-10">
-										<select id="proj_id" name="proj_id" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select project')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-
-											<c:forEach items="${projList}" var="proj">
-											
-											<c:choose>
-											<c:when test="${editOrder.projId==proj.projId}">
-												<option selected value="${proj.projId}">${proj.projName}-${proj.address}</option>
-											</c:when>
-											<c:otherwise>
-												<option value="${proj.projId}">${proj.projName}</option>
-											</c:otherwise>
-											</c:choose>
-											
-											</c:forEach>
-
-										</select>
-									</div>
-								</div>
+								
 								
 								<!-- <div id="divCheckbox" style="display: none;">
 									<div class="form-group"></div>
@@ -267,10 +244,36 @@
 									</div>
 
 								</div>
+								<div class="form-group"></div>
 								<input type="hidden" id="po_id" name="po_id" value="${editOrder.poId}">
 
 								<input type="hidden" id="orderId" name="orderId" value="${editOrder.orderId}">
+<div class="row">
 
+									<div class="col-md-2">Select Project</div>
+
+									<div class="col-md-10">
+										<select id="proj_id" name="proj_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select project')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+
+											<c:forEach items="${projList}" var="proj">
+											
+											<c:choose>
+											<c:when test="${editOrder.projId==proj.projId}">
+												<option selected value="${proj.projId}">${proj.projName}-${proj.address}</option>
+											</c:when>
+											<c:otherwise>
+												<option value="${proj.projId}">${proj.projName}</option>
+											</c:otherwise>
+											</c:choose>
+											
+											</c:forEach>
+
+										</select>
+									</div>
+								</div>
 								<div class="form-group"></div>
 								<div class="row">
 								<div class="col-md-2">Delivery Date</div>
@@ -306,7 +309,7 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center">Sr &nbsp;</th>
+												<th style="text-align: center">Sr.No.</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">Code</th>
 												<th style="text-align: center">PO Qty</th>

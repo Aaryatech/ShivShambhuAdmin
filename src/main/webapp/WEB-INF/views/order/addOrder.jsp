@@ -165,7 +165,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertOrder"
-								method="post">
+								method="post" onsubmit="disableButton()">
 
 								<div class="row">
 
@@ -335,7 +335,7 @@
 									<div class="col-md-3" id="ordTotal">0</div>
 
 									<div class="col-md-2">
-										<input type="submit" class="btn btn-primary" value="Submit">
+										<input type="submit" disabled id="submitButton" class="btn btn-primary" value="Submit">
 
 									</div>
 
@@ -430,7 +430,9 @@
 	</script>
 
 	<script type="text/javascript">
-	
+	function disableButton(){
+		  document.getElementById("submitButton").disabled=true;
+	}
 	// on plant change function 
 		function getData() { 
 			var plantId = document.getElementById("plant_id").value;
@@ -666,6 +668,8 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 			alert("Please enter valid quantity");
 			document.getElementById("itemTotal"+itemId).value="0";
 			document.getElementById("ordQty"+itemId).value="0";
+			  document.getElementById("submitButton").disabled=true;
+
 
 		}
 		else if(qty>poRemainingQty){
@@ -673,6 +677,8 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 			alert("Order quantity can not be greater than Po Remaining quantity");
 			document.getElementById("itemTotal"+itemId).value="0";
 			document.getElementById("ordQty"+itemId).value="0";
+			  document.getElementById("submitButton").disabled=true;
+
 
 		}
 		if(valid==true){
@@ -692,7 +698,8 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 		},
 
 		function(data) {
-			
+			  document.getElementById("submitButton").disabled=false;
+
 			var len = data.length;
 			//alert("orderTotal " +data.orderTotal);
 			var tot=0;
