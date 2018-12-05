@@ -816,6 +816,7 @@ body {
 			var itemId=	document.getElementById('new_item_id').value;
 			var quotQty=document.getElementById('new_item_qty').value;
 			var tollCost=${quotHeader.tollCost};
+			var quotHeaderId=${quotHeader.quotHeadId};
 			var valid=true;
 			if(quotQty<0 || quotQty==0){
 				valid=false;
@@ -828,6 +829,7 @@ body {
 						.getJSON(
 								'${getNewItemsForQuotation}',
 								{
+									quotHeaderId : quotHeaderId,
 									itemId : itemId,
 									quotQty : quotQty,
 									isDelete : 0,
@@ -903,11 +905,13 @@ var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
 		//alert("X" +x);
 		if(x==true){
 		var tollCost=${quotHeader.tollCost};
+		var quotHeaderId=${quotHeader.quotHeadId};
 		
 		$
 		.getJSON(
 				'${getNewItemsForQuotation}',
 				{
+					quotHeaderId : quotHeaderId,
 					itemId : itemId,
 					quotQty : 0,
 					isDelete : 1,

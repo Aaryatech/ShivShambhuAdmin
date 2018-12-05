@@ -25,6 +25,7 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.DocTermHeader;
+import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.PaymentTerm;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
@@ -191,6 +192,8 @@ public class QuotController {
 
 		int isDelete = Integer.parseInt(request.getParameter("isDelete"));
 		int index = Integer.parseInt(request.getParameter("index"));
+		
+		int quotHeaderId=Integer.parseInt(request.getParameter("quotHeaderId"));
 
 		if (isDelete == 0) {
 			for (int i = 0; i < newItemList.size(); i++) {
@@ -217,6 +220,16 @@ System.err.println("Newly added item in quot " +newItemList.get(i).toString());
 		} // end of if isDelete=0
 		else {
 			System.err.println("IS delete ==1");
+			
+			
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("quotHeadId",quotHeaderId );
+			map.add("itemId", itemId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteQuotDetail", map, Info.class);
+
 			enqItemList.remove(index);
 		}
 		System.err.println("Ajax getNewItemsForQuotation  List size " + enqItemList.size());
