@@ -173,7 +173,7 @@
 										<select id="catId" name="catId" class="standardSelect"
 											tabindex="1" onchange="getItemByCatId()">
 
-											<option>Select</option>
+											<option value="-1">Select</option>
 											<c:forEach items="${catList}" var="cat">
 												<option value="${cat.catId}">${cat.catDesc}</option>
 											</c:forEach>
@@ -184,9 +184,8 @@
 									<div class="col-md-2">Select Item*</div>
 
 									<div class="col-md-4">
-										<select id="itemName" name="itemName" class="standardSelect"
-											tabindex="1">
-											<option>Select</option>
+										<select id="itemName" name="itemName" class="standardSelect">
+											<option value="-1">Select</option>
 
 										</select>
 									</div>
@@ -306,14 +305,15 @@
 
 	<script type="text/javascript">
 		function add() {
-			alert("in add  ");
+			//alert("in add  ");
 			var itemName = document.getElementById("itemName").value;
 			var qty = document.getElementById("qty").value;
 			var isEdit = document.getElementById("isEdit").value;
 			var isDelete = document.getElementById("isDelete").value;
 			var index = document.getElementById("index").value;
+			var catId = document.getElementById("catId").value;
 
-			alert("Inside add ajax");
+			//alert("Inside add ajax");
 			$
 					.getJSON(
 							'${addMatIssueDetail}',
@@ -324,11 +324,14 @@
 								index : index,
 								itemName : itemName,
 								qty : qty,
+								catId : catId,
 								ajax : 'true',
 
 							},
 
 							function(data) {
+
+								alert("Data " + JSON.stringify(data));
 
 								var dataTable = $('#bootstrap-data-table')
 										.DataTable();
@@ -361,7 +364,7 @@
 												});
 
 							});
-			document.getElementById("itemName").value = "";
+			//document.getElementById("itemName").options.selectedIndex=0;
 			document.getElementById("qty").value = "";
 			document.getElementById("isDelete").value = 0;
 			document.getElementById("isEdit").value = 0;
@@ -378,8 +381,42 @@
 				ajax : 'true',
 
 			}, function(data) {
-				document.getElementById("catId").value = data.catId;
-				document.getElementById("itemName").value = data.itemName;
+				alert("Data on edit " + JSON.stringify(data));
+
+				//document.getElementById("itemName").options.selectedIndex=data.itemId;
+
+				$("#catId").val(data.catId);
+				$("#catId").trigger("chosen:updated");
+
+				//var catId=data.catId;
+				/* $.getJSON('${getRawItemByCatId}', {
+
+					catId : catId,
+					ajax : 'true',
+
+				},
+
+				function(data) {
+					//alert("hiii");
+					var html;
+					var len = data.length;
+					var html = '<option value="-1"  >Select Item</option>';
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].itemId + '">'
+								+ data[i].itemDesc + '</option>';
+					}
+					html += '</option>';
+
+					$('#itemName').html(html);
+					$("#itemName").trigger("chosen:updated");
+
+				}); 
+				 */
+				$("#itemName").val(data.itemId);
+				$("#itemName").trigger("chosen:updated");
+
+				//document.getElementById("itemName").value = data.itemName;
 				document.getElementById("qty").value = data.quantity;
 				document.getElementById("index").value = index;
 

@@ -18,6 +18,8 @@ public class TempMatIssueDetail {
 
 	private String uomName;
 
+	private int catId;
+
 	public int getMatDetailId() {
 		return matDetailId;
 	}
@@ -82,11 +84,19 @@ public class TempMatIssueDetail {
 		this.itemId = itemId;
 	}
 
+	public int getCatId() {
+		return catId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
 	@Override
 	public String toString() {
 		return "TempMatIssueDetail [matDetailId=" + matDetailId + ", itemId=" + itemId + ", itemName=" + itemName
 				+ ", itemRate=" + itemRate + ", quantity=" + quantity + ", value=" + value + ", uomId=" + uomId
-				+ ", uomName=" + uomName + "]";
+				+ ", uomName=" + uomName + ", catId=" + catId + "]";
 	}
 
 }

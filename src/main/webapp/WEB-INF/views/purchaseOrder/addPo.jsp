@@ -132,13 +132,13 @@
 										<input type="text" id="payTerm" name="payTerm"
 											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
 											value="${quotHeader.payTerm}" readonly>
+										<input type="hidden" id="taxIncl" name="taxIncl" 
+											value="${quotHeader.taxValue}" readonly>
 									</div>
 
 
 								</div>
 								 
-								 
-
 								<div class="form-group"></div>
 
 								<div class="row">
@@ -154,6 +154,22 @@
 										<input type="text" id="delivery" name="delivery"
 											  class="form-control"
 											style="height: 32px;padding-bottom: 12px;font-size: 15px;" required>
+									</div>
+									 
+								</div>
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Tax Include</div>
+									<div class="col-md-4">
+									<c:choose>
+										<c:when test="${quotHeader.taxValue==1}">
+										 No
+										</c:when>
+										<c:otherwise>
+										YES
+										</c:otherwise>
+									</c:choose>
+										 
 									</div>
 									 
 								</div>
@@ -198,11 +214,11 @@
 
 													<td style="width: 100px"><input type="text"
 														id="pOqty${getQuotDetailList.itemId}" name="pOqty${getQuotDetailList.itemId}"
-														value="${getQuotDetailList.quotQty}" class="form-control"   style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;" required></td>
+														value="${getQuotDetailList.quotQty}" class="form-control"  pattern="[+-]?([0-9]*[.])?[0-9]+" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;" required></td>
 														
 														<td style="width: 100px"><input type="text"
 														 id="taxableAmt${getQuotDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
-														name="taxableAmt${getQuotDetailList.itemId}" onchange="calFinalValue(${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer},${getQuotDetailList.itemId});" value="${getQuotDetailList.taxableValue}" class="form-control" required></td>
+														name="taxableAmt${getQuotDetailList.itemId}" pattern="[+-]?([0-9]*[.])?[0-9]+" onchange="calFinalValue(${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer},${getQuotDetailList.itemId});" value="${getQuotDetailList.taxableValue}" class="form-control" required></td>
 														
 														<td style="text-align: right;"><c:out
 															value="${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer}%" /></td>
@@ -213,7 +229,7 @@
   
 													<td style="width: 100px"><input type="text" 
 														id="othCostAftTax${getQuotDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
-														name="othCostAftTax${getQuotDetailList.itemId}" onchange="calFinalValue(${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer},${getQuotDetailList.itemId});" value="${getQuotDetailList.otherCostAfterTax}" class="form-control" required>
+														name="othCostAftTax${getQuotDetailList.itemId}" pattern="[+-]?([0-9]*[.])?[0-9]+" onchange="calFinalValue(${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer},${getQuotDetailList.itemId});" value="${getQuotDetailList.otherCostAfterTax}" class="form-control" required>
 													
 													<input type="hidden" id="taxAmt${getQuotDetailList.itemId}" 
 														name="taxAmt${getQuotDetailList.itemId}" value="${getQuotDetailList.taxValue}" required>
@@ -354,14 +370,27 @@
 	<script type="text/javascript">
 		function calFinalValue(taxPer,itemId) {
 			
+			var taxIncl = parseInt(document.getElementById("taxIncl").value);
+			
 			var rate = parseFloat(document.getElementById("taxableAmt"+itemId).value);
 			var othCostAftTax = parseFloat(document.getElementById("othCostAftTax"+itemId).value);
 		 
 			var taxValue = parseFloat((taxPer/100)*rate);
 			
-			document.getElementById("taxAmt"+itemId).value = (taxValue).toFixed(2); 
-			document.getElementById("taxValuetd"+itemId).innerHTML = (taxValue).toFixed(2); 
-			document.getElementById("finalAmt"+itemId).value = (rate+taxValue+othCostAftTax).toFixed(2);
+			
+			
+			if(taxIncl==1){
+				document.getElementById("finalAmt"+itemId).value = (rate+taxValue+othCostAftTax).toFixed(2);
+				document.getElementById("taxAmt"+itemId).value = (taxValue).toFixed(2); 
+				document.getElementById("taxValuetd"+itemId).innerHTML = (taxValue).toFixed(2); 
+				
+			}else{
+				document.getElementById("finalAmt"+itemId).value = (rate+othCostAftTax).toFixed(2);
+				document.getElementById("taxAmt"+itemId).value = (0).toFixed(2); 
+				document.getElementById("taxValuetd"+itemId).innerHTML = (0).toFixed(2); 
+			}
+			
+			
 		
 		}
 		 

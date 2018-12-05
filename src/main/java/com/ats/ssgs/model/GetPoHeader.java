@@ -34,7 +34,7 @@ public class GetPoHeader {
 	private String qutDate;
 	
 	List<GetPoDetail> getPoDetailList;
-
+	List<GetPoDetail> poDetailList;
 	public int getPoId() {
 		return poId;
 	}
@@ -267,6 +267,14 @@ public class GetPoHeader {
 		this.qutDate = qutDate;
 	}
 
+	public List<GetPoDetail> getPoDetailList() {
+		return poDetailList;
+	}
+
+	public void setPoDetailList(List<GetPoDetail> poDetailList) {
+		this.poDetailList = poDetailList;
+	}
+
 	@Override
 	public String toString() {
 		return "GetPoHeader [poId=" + poId + ", poNo=" + poNo + ", poDate=" + poDate + ", custId=" + custId
@@ -277,7 +285,7 @@ public class GetPoHeader {
 				+ ", bool1=" + bool1 + ", bool2=" + bool2 + ", varchar1=" + varchar1 + ", varchar2=" + varchar2
 				+ ", extraDate1=" + extraDate1 + ", extraDate2=" + extraDate2 + ", custName=" + custName
 				+ ", plantName=" + plantName + ", payTerm=" + payTerm + ", projName=" + projName + ", qutDate="
-				+ qutDate + ", getPoDetailList=" + getPoDetailList + "]";
+				+ qutDate + ", getPoDetailList=" + getPoDetailList + ", poDetailList=" + poDetailList + "]";
 	}
 	
 	

@@ -187,6 +187,21 @@ html {
 									Chalan List</a></li>
 
 
+
+
+
+
+
+
+						</ul></li>
+
+					<li class="menu-item-has-children dropdown"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="true"> <i
+							class="menu-icon fa fa-table"></i> Production Crushing Plant
+					</a>
+						<ul class="sub-menu children dropdown-menu ">
+
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showAddMatIssueContractor">Add
 									Material Issue Contractor</a></li>
@@ -196,54 +211,8 @@ html {
 									Issue Contractor List</a></li>
 
 
-
-
-
 						</ul></li>
 
-					<%-- 	<li class="menu-item-has-children dropdown"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-					aria-expanded="true"> <i class="menu-icon fa fa-table"></i>
-						Work
-				</a>
-					<ul class="sub-menu children dropdown-menu ">
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showAddWorkHeader">Add
-								Work</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showWorkHeadList">
-								View Added Work</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showWorkList">Work
-								List</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showUpdatePayment">Update
-								Payment</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showUserAllocation">User
-								Allocation</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showDocInOffice">
-								Document In Office</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showDocSubmitAtRto">
-								Document Submit At RTO</a></li>
-
-						<li class="active"><i class="fa fa-puzzle-piece"></i><a
-							href="${pageContext.request.contextPath}/showActualDocToCust">
-								Handover Actual doc to Cust</a></li>
-
-
-
-					</ul></li>
- --%>
 
 					<li class="menu-item-has-children dropdown"><a
 						href="${pageContext.request.contextPath}/editMyProfile/1"> <i
