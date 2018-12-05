@@ -114,7 +114,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="">Select Plant</option>
+											<option value="">Select</option>
 
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
@@ -212,7 +212,7 @@
 												oninvalid="setCustomValidity('Please select uom')"
 												onchange="try{setCustomValidity('')}catch(e){}">
 
-												<option value="0">Select Unit Of Measurement</option>
+												<option value="0">Select</option>
 												<c:forEach items="${uomList}" var="uom">
 													<option value="${uom.uomId}">${uom.uomName}</option>
 												</c:forEach>
@@ -252,7 +252,7 @@
 
 										<div class="col-md-2"></div>
 
-										<div class="col-md-4">
+										<div class="col-md-8">
 											<input type="button" value="Add Item" class="btn btn-primary"
 												style="align-content: center; width: 226px;"
 												onclick="addItem()" />
@@ -323,14 +323,14 @@
 											class="form-control" style="width: 100%;" value="-" required>
 									</div>
 
-									<div class="col-md-2">
-										<input type="submit" disabled class="btn btn-primary" id="submitButton" value="Submit">
+									<div class="col-md-4">
+										<input type="submit" style="width: 100%;" disabled class="btn btn-primary" id="submitButton" value="Submit">
 
 									</div>
-										<div class="col-md-2">
+										<!-- <div class="col-md-2">
 										<input type="reset"   value="Clear" class="btn btn-primary" >
 
-									</div>
+									</div> -->
 
 								</div>
 

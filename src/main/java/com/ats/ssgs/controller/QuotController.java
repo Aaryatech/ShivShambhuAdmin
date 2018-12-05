@@ -192,8 +192,8 @@ public class QuotController {
 
 		int isDelete = Integer.parseInt(request.getParameter("isDelete"));
 		int index = Integer.parseInt(request.getParameter("index"));
-		
-		int quotHeaderId=Integer.parseInt(request.getParameter("quotHeaderId"));
+
+		int quotHeaderId = Integer.parseInt(request.getParameter("quotHeaderId"));
 
 		if (isDelete == 0) {
 			for (int i = 0; i < newItemList.size(); i++) {
@@ -205,9 +205,10 @@ public class QuotController {
 						newItemList.get(i).setEnqUomId(newItemList.get(i).getUomId());
 						newItemList.get(i).setEnqUomName(newItemList.get(i).getUomName());
 						newItemList.get(i).setQuotQty(quotQty);
-
+						newItemList.get(0).setTempMsg("Item Added Successfully");
 						enqItemList.add(newItemList.get(i));
-System.err.println("Newly added item in quot " +newItemList.get(i).toString());
+
+						System.err.println("Newly added item in quot " + newItemList.get(i).toString());
 						// newItemList.remove(i);
 						break;
 					}
@@ -220,15 +221,14 @@ System.err.println("Newly added item in quot " +newItemList.get(i).toString());
 		} // end of if isDelete=0
 		else {
 			System.err.println("IS delete ==1");
-			
-			
-			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("quotHeadId",quotHeaderId );
+			map.add("quotHeadId", quotHeaderId);
 			map.add("itemId", itemId);
 
 			Info errMsg = rest.postForObject(Constants.url + "deleteQuotDetail", map, Info.class);
+			enqItemList.get(0).setTempMsg("Item Deleted Successfully");
 
 			enqItemList.remove(index);
 		}
@@ -393,10 +393,10 @@ System.err.println("Newly added item in quot " +newItemList.get(i).toString());
 						float otherCostAfterTax = Float
 								.parseFloat(request.getParameter("oth_cost_aft_tax" + quotDetList.get(i).getItemId()));
 
-						QuotDetail detail ;
+						QuotDetail detail;
 
 						detail = quotDetList.get(i);
-						
+
 						detail.setQuotDetailId(quotDetList.get(i).getQuotDetailId());
 						detail.setQuotHeadId(quotDetList.get(i).getQuotHeadId());
 						detail.setItemId(quotDetList.get(i).getItemId());
@@ -405,68 +405,90 @@ System.err.println("Newly added item in quot " +newItemList.get(i).toString());
 						detail.setTaxableValue(taxableValue);
 						detail.setTaxValue(taxValue);
 						detail.setTaxId(enqItemList.get(j).getTaxId());
-						detail.setCgstPer(enqItemList.get(j).getCgst());
-						detail.setSgstPer(enqItemList.get(j).getSgst());
-						//detail.setCgstValue(cgstValue);
-						//detail.setSgstValue(sgstValue);
-						
-						
+						// detail.setCgstPer(enqItemList.get(j).getCgst());
+						// detail.setSgstPer(enqItemList.get(j).getSgst());
+						// detail.setCgstValue(cgstValue);
+						// detail.setSgstValue(sgstValue);
+
 						detail.setStatus(1);
-						
+
 						detail.setEnqDetailId(quotDetList.get(i).getEnqDetailId());
 						detail.setDelStatus(1);
 						detail.setOtherCost(otherCostDetail);
-//exint1,2,3
+						// exint1,2,3
 						detail.setExVar1("Na");
 						detail.setExVar2("Na");
 						detail.setExVar3("Na");
 						detail.setExDate1(curDate);
 						detail.setExDate2(curDate);
-						
-						//exBool1,2,3
+
+						// exBool1,2,3
 						detail.setConFactor(1);
 						detail.setConvQty(1);
-						detail.setQuotUomId((int)enqItemList.get(j).getEnqUomId());
-						
-						detail.setIgstPer(enqItemList.get(j).getIgst());
-						//detail.setIgstValue(igstValue);
-						
+						detail.setQuotUomId((int) enqItemList.get(j).getEnqUomId());
+
+						// detail.setIgstPer(enqItemList.get(j).getIgst());
+						// detail.setIgstValue(igstValue);
+
 						detail.setTotal(total);
 						detail.setTollCost(tollCost);
 						detail.setTransCost(transCost);
 						detail.setOtherCostBeforeTax(0);
 						detail.setOtherCostAfterTax(otherCostAfterTax);
-						
+
 						detail.setRoyaltyRate(enqItemList.get(j).getRoyaltyRate());
 						detail.setNoOfKm(noOfKm);
 
-
 						if (taxValue > 0) {
 							if (cust.getIsSameState() == 1) {
+
+								detail.setCgstPer(enqItemList.get(j).getCgst());
+								detail.setSgstPer(enqItemList.get(j).getSgst());
 
 								detail.setCgstValue((taxValue / 2));
 								detail.setSgstValue((taxValue / 2));
 
 								detail.setIgstValue(0);
-								//detail.setIgstPer(0);
+								// detail.setIgstPer(0);
 							} else {
 								detail.setIgstValue(taxValue);
+								detail.setIgstPer(enqItemList.get(j).getIgst());
 
 								detail.setCgstValue(0);
 								detail.setSgstValue(0);
 
-							//	detail.setCgstPer(0);
-								//detail.setSgstPer(0);
+								// detail.setCgstPer(0);
+								// detail.setSgstPer(0);
 
 							}
 							quotHeader.setTaxValue(1);
 
-						} /*
-							 * else { detail.setCgstValue(0); detail.setIgstValue(0);
-							 * detail.setSgstValue(0);
-							 * 
-							 * detail.setCgstPer(0); detail.setSgstPer(0); detail.setIgstPer(0); }
-							 */
+						} else {
+							
+							
+							if (cust.getIsSameState() == 1) {
+
+								detail.setCgstPer(enqItemList.get(j).getCgst());
+								detail.setSgstPer(enqItemList.get(j).getSgst());
+
+								detail.setCgstValue(0);
+								detail.setSgstValue(0);
+
+								detail.setIgstValue(0);
+								// detail.setIgstPer(0);
+							} else {
+								detail.setIgstValue(taxValue);
+								detail.setIgstPer(enqItemList.get(j).getIgst());
+
+								detail.setCgstValue(0);
+								detail.setSgstValue(0);
+								detail.setIgstValue(0);
+								// detail.setCgstPer(0);
+								// detail.setSgstPer(0);
+
+							}
+
+						}
 
 						tempQDetailList.add(detail);
 
@@ -508,28 +530,52 @@ System.err.println("Newly added item in quot " +newItemList.get(i).toString());
 					if (taxValue > 0) {
 						if (cust.getIsSameState() == 1) {
 
+							detail.setCgstPer(enqItemList.get(j).getCgst());
+							detail.setSgstPer(enqItemList.get(j).getSgst());
+
 							detail.setCgstValue((taxValue / 2));
-							detail.setIgstValue(0);
-							detail.setIgstPer(0);
 							detail.setSgstValue((taxValue / 2));
+
+							detail.setIgstValue(0);
+							// detail.setIgstPer(0);
 						} else {
 							detail.setIgstValue(taxValue);
+							detail.setIgstPer(enqItemList.get(j).getIgst());
 
 							detail.setCgstValue(0);
 							detail.setSgstValue(0);
 
-							detail.setCgstPer(0);
-							detail.setSgstPer(0);
+							// detail.setCgstPer(0);
+							// detail.setSgstPer(0);
 
 						}
 						quotHeader.setTaxValue(1);
 
-					} /*
-						 * else { detail.setCgstValue(0); detail.setIgstValue(0);
-						 * detail.setSgstValue(0);
-						 * 
-						 * detail.setCgstPer(0); detail.setSgstPer(0); detail.setIgstPer(0); }
-						 */
+					} else {
+
+						if (cust.getIsSameState() == 1) {
+
+							detail.setCgstPer(enqItemList.get(j).getCgst());
+							detail.setSgstPer(enqItemList.get(j).getSgst());
+
+							detail.setCgstValue(0);
+							detail.setSgstValue(0);
+
+							detail.setIgstValue(0);
+							// detail.setIgstPer(0);
+						} else {
+							detail.setIgstValue(taxValue);
+							detail.setIgstPer(enqItemList.get(j).getIgst());
+
+							detail.setCgstValue(0);
+							detail.setSgstValue(0);
+							detail.setIgstValue(0);
+							// detail.setCgstPer(0);
+							// detail.setSgstPer(0);
+
+						}
+
+					}
 
 					detail.setCgstPer(enqItemList.get(j).getCgst());
 					detail.setSgstPer(enqItemList.get(j).getSgst());
@@ -552,7 +598,7 @@ System.err.println("Newly added item in quot " +newItemList.get(i).toString());
 
 					detail.setExDate1(curDate);
 					detail.setExDate2(curDate);
-					
+
 					tempQDetailList.add(detail);
 
 				} // end of if flag=0

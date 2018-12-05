@@ -112,9 +112,19 @@ public class GetItemWithEnq {
 	private float taxValue;//19-11-18
 	private float finalTotal;//19-11-18
 
+private String tempMsg;//temp;
+
 
 	
 	
+	public String getTempMsg() {
+	return tempMsg;
+}
+
+public void setTempMsg(String tempMsg) {
+	this.tempMsg = tempMsg;
+}
+
 	public float getTaxableValue() {
 		return taxableValue;
 	}
@@ -647,8 +657,9 @@ public class GetItemWithEnq {
 				+ ", hsnCode=" + hsnCode + ", uomName=" + uomName + ", plantName=" + plantName + ", enqQty=" + enqQty
 				+ ", enqUomId=" + enqUomId + ", enqUomName=" + enqUomName + ", otherCostAfterTax=" + otherCostAfterTax
 				+ ", transCost=" + transCost + ", otherCost=" + otherCost + ", quotQty=" + quotQty + ", taxableValue="
-				+ taxableValue + ", taxValue=" + taxValue + ", finalTotal=" + finalTotal + ", totalTaxPer="
-				+ totalTaxPer + ", cgst=" + cgst + ", igst=" + igst + ", sgst=" + sgst + ", cess=" + cess + "]";
+				+ taxableValue + ", taxValue=" + taxValue + ", finalTotal=" + finalTotal + ", tempMsg=" + tempMsg
+				+ ", totalTaxPer=" + totalTaxPer + ", cgst=" + cgst + ", igst=" + igst + ", sgst=" + sgst + ", cess="
+				+ cess + "]";
 	}
 
 }

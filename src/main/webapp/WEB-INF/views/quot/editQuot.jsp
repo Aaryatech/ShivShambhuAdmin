@@ -534,9 +534,6 @@ body {
 
 								</div>
 
-
-								<input type="checkbox" name="selAll" id="selAll" /> <label>Select
-									All</label>
 								<div class="card-body card-block"
 									style="overflow: auto; width: 100%;">
 
@@ -841,6 +838,7 @@ body {
 									//alert("length " +data.length);
 									//alert("Order Data " +JSON.stringify(data));
 									//alert("length " +data.length);
+
 									 var dataTable = $('#bootstrap-data-table')
 									.DataTable();
 							 dataTable.clear().draw();
@@ -920,7 +918,10 @@ var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
 				},
 
 				function(data) {
-					alert("length " +data.length);
+					//alert("length " +data.length);
+					
+									alert(data[0].tempMsg)
+
 					//alert("Order Data " +JSON.stringify(data));
 					//alert("length " +data.length);
 					 var dataTable = $('#bootstrap-data-table')
@@ -1229,7 +1230,6 @@ var termTitle=data.termTitle
 			function(data) {
 				//alert("data " +JSON.stringify(data));
 				var len = data.length;
-				
 				 if(tollCost==null || tollCost==""){
 					tollCost=0;
 				 }

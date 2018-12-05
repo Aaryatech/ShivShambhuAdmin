@@ -87,7 +87,7 @@
 								class="table table-striped table-bordered">
 								<thead>
 									<tr>
-										<th style="text-align: center">Sr</th>
+										<th style="text-align: center">Sr.No.</th>
 										<th style="text-align: center">Customer Name</th>
 										<th style="text-align: center">Company Name</th>
 										<th style="text-align: center">Plant Name</th>
