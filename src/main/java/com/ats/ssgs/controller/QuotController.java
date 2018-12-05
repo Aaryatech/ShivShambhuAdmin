@@ -303,7 +303,7 @@ public class QuotController {
 	public String updateQuotationProcess(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
-		try {
+		try { 
 
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String curDate = dateFormat.format(new Date());
