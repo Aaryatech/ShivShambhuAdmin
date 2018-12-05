@@ -494,45 +494,45 @@ body {
 											</div>
 										</c:otherwise>
 									</c:choose>
-										<div class="col-md-2">
+									<div class="col-md-2">
 										<input type="button" id="newItemAdd" name="newItemAdd"
 											class="btn btn-primary" style="width: 100%;"
 											value="Add Items" onclick="getNewItems(0)">
 									</div>
-									
+
 								</div>
 								<div class="form-group"></div>
 								<div class="row" id="newItemAddDiv" style="display: none;">
 
-									
+
 									<div class="col-md-2">Select Item</div>
 									<div class="col-md-4">
-										<select id="new_item_id" name="new_item_id" style="width: 100%;"
-											class="standardSelect" tabindex="1" required
+										<select id="new_item_id" name="new_item_id"
+											style="width: 100%;" class="standardSelect" tabindex="1"
+											required
 											oninvalid="setCustomValidity('Please select item name')">
 											<c:forEach items="${newItemList}" var="newItem">
 												<option value="${newItem.itemId}">${newItem.itemName}</option>
 											</c:forEach>
 										</select>
 									</div>
-									
+
 									<div class="col-md-1">Quantity</div>
 									<div class="col-md-1">
-									<input type="text" id="new_item_qty" name="new_item_qty"
-											value="1" class="form-control"
-											style="width: 100%;"  min="1"
+										<input type="text" id="new_item_qty" name="new_item_qty"
+											value="1" class="form-control" style="width: 100%;" min="1"
 											onkeypress="return allowOnlyNumber(event);">
-									
-										
+
+
 									</div>
 									<div class="col-md-2">
-									<input type="button" id="newItemAdd" name="newItemAdd"
+										<input type="button" id="newItemAdd" name="newItemAdd"
 											class="btn btn-primary" style="width: 100%;"
 											value="Submit Item" onclick="getNewItems(1)">
-											</div>
-																				<div class="col-md-2"></div>
-											
 									</div>
+									<div class="col-md-2"></div>
+
+								</div>
 
 
 								<input type="checkbox" name="selAll" id="selAll" /> <label>Select
@@ -574,8 +574,8 @@ body {
 													After Tax</th>
 
 												<th style="text-align: center" class="col-md-2">Final</th>
-																								<th style="text-align: center" class="col-md-2">Action</th>
-												
+												<th style="text-align: center" class="col-md-2">Action</th>
+
 
 											</tr>
 										</thead>
@@ -586,8 +586,7 @@ body {
 												<tr>
 
 
-													<td class="col-md-1" style="text-align: center">${count.index+1}<input
-														type="checkbox" value="${item.itemId}" name="selectItem"></td>
+													<td class="col-md-1" style="text-align: center">${count.index+1}</td>
 
 
 													<td class="col-md-2" style="text-align: left"><c:out
@@ -606,8 +605,16 @@ body {
 														id="quot_qty${item.itemId}" name="quot_qty${item.itemId}"
 														value="${qty}" class="form-control"></td>
 
+
+													<c:if test="${item.enqQty==0}">
+														<c:set var="uomName" value="${item.uomName}"></c:set>
+													</c:if>
+
+													<c:if test="${item.enqQty > 0}">
+														<c:set var="uomName" value="${item.enqUomName}"></c:set>
+													</c:if>
 													<td class="col-md-1" style="text-align: left"><c:out
-															value="${item.enqUomName}" /></td>
+															value="${uomName}" /></td>
 
 
 													<td class="col-md-2" style="text-align: center"><input
@@ -668,10 +675,11 @@ body {
 														type="text" readonly id="final_amt${item.itemId}"
 														value="${item.finalTotal}" name="final_amt${item.itemId}"
 														class="form-control"></td>
-															<td class="col-md-2" style="text-align: center"><a
-												href="#" onclick="callDelete(${item.itemId},${count.index})"
-												class="action_btn"><i
-													class="fa fa-trash-o" title="Delete"></i></a> </td>
+													<td class="col-md-2" style="text-align: center"><a
+														href="#"
+														onclick="callDelete(${item.itemId},${count.index})"
+														class="action_btn"><i class="fa fa-trash-o"
+															title="Delete"></i></a></td>
 
 
 												</tr>
@@ -837,7 +845,7 @@ body {
 
 							$.each(data,function(i, v) {
 												//alert("hdjfh");
-var quotQty = '<input  type="text"  class="form-control" onkeypress="return allowOnlyNumber(event);" id="quotQty'+v.itemId+'" name="quotQty'+v.itemId+'"  value="'+v.quotQty+'" />'
+var quotQty = '<input  type="text"  class="form-control" onkeypress="return allowOnlyNumber(event);" id="quot_qty'+v.itemId+'" name="quot_qty'+v.itemId+'"  value="'+v.quotQty+'" />'
 var finalAmt = '<input  type="text"   class="form-control"   id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
 var transCost='<input  type="text"  class="form-control" value='+v.transCost+'  onkeypress="return allowOnlyNumber(event);" id="trans_cost'+v.itemId+'" name="trans_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
 var tollCosta='<input  type="text" value='+tollCost+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="toll_cost'+v.itemId+'" name="toll_cost'+v.itemId+'"/>'
@@ -1352,8 +1360,9 @@ var termTitle=data.termTitle
 	
 	function valthisform()
 	{
+	    var okay=true;
+/* 
 	    var checkboxs=document.getElementsByName("selectItem");
-	    var okay=false;
 	    for(var i=0,l=checkboxs.length;i<l;i++)
 	    {
 	        if(checkboxs[i].checked)
@@ -1361,16 +1370,13 @@ var termTitle=data.termTitle
 	            okay=true;
 	            break;
 	        }
-	    }
+	    } */
 	   // alert("Okay " +okay);
 
 	    var quotTerm=document.getElementById("quot_doc_term_id").value;
 	    var payTerm=document.getElementById("pay_term_id").value;
-	    if(okay==false){
-	    	
-	    	alert("please check a checkbox ");
-	    }
-	    else  if(quotTerm<0 || quotTerm=="" || quotTerm==null){
+	  
+	     if(quotTerm<0 || quotTerm=="" || quotTerm==null){
 
 	    	okay=false;
 
