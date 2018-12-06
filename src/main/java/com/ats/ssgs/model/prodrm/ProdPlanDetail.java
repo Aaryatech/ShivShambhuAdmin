@@ -16,8 +16,8 @@ public class ProdPlanDetail {
 	private int status;
 	private int delStatus;
 
-	private int int4;
-	private int int5;
+	private int exInt1;
+	private int exInt2;
 
 	private int boolean1;
 	private int boolean2;
@@ -25,10 +25,11 @@ public class ProdPlanDetail {
 	private int boolean4;
 	private int boolean5;
 
-	private String varchar2;
-	private String varchar3;
-	private String varchar4;
-	private String varchar5;
+	private String exVar1;
+	private String exVar2;
+	private String exVar3;
+	private String exVar4;
+	
 
 	public int getProductionDetailId() {
 		return productionDetailId;
@@ -102,22 +103,7 @@ public class ProdPlanDetail {
 		this.delStatus = delStatus;
 	}
 
-	public int getInt4() {
-		return int4;
-	}
-
-	public void setInt4(int int4) {
-		this.int4 = int4;
-	}
-
-	public int getInt5() {
-		return int5;
-	}
-
-	public void setInt5(int int5) {
-		this.int5 = int5;
-	}
-
+	
 	public int getBoolean1() {
 		return boolean1;
 	}
@@ -158,36 +144,63 @@ public class ProdPlanDetail {
 		this.boolean5 = boolean5;
 	}
 
-	public String getVarchar2() {
-		return varchar2;
+	
+	public int getExInt1() {
+		return exInt1;
 	}
 
-	public void setVarchar2(String varchar2) {
-		this.varchar2 = varchar2;
+	public void setExInt1(int exInt1) {
+		this.exInt1 = exInt1;
 	}
 
-	public String getVarchar3() {
-		return varchar3;
+	public int getExInt2() {
+		return exInt2;
 	}
 
-	public void setVarchar3(String varchar3) {
-		this.varchar3 = varchar3;
+	public void setExInt2(int exInt2) {
+		this.exInt2 = exInt2;
 	}
 
-	public String getVarchar4() {
-		return varchar4;
+	public String getExVar1() {
+		return exVar1;
 	}
 
-	public void setVarchar4(String varchar4) {
-		this.varchar4 = varchar4;
+	public void setExVar1(String exVar1) {
+		this.exVar1 = exVar1;
 	}
 
-	public String getVarchar5() {
-		return varchar5;
+	public String getExVar2() {
+		return exVar2;
 	}
 
-	public void setVarchar5(String varchar5) {
-		this.varchar5 = varchar5;
+	public void setExVar2(String exVar2) {
+		this.exVar2 = exVar2;
+	}
+
+	public String getExVar3() {
+		return exVar3;
+	}
+
+	public void setExVar3(String exVar3) {
+		this.exVar3 = exVar3;
+	}
+
+	public String getExVar4() {
+		return exVar4;
+	}
+
+	public void setExVar4(String exVar4) {
+		this.exVar4 = exVar4;
+	}
+	private String productionBatch;
+	
+	
+	public String getProductionBatch() {
+		return productionBatch;
+	}
+
+	public void setProductionBatch(String productionBatch) {
+		this.productionBatch = productionBatch;
 	}
 
 	@Override
@@ -195,8 +208,9 @@ public class ProdPlanDetail {
 		return "ProdPlanDetail [productionDetailId=" + productionDetailId + ", productionHeaderId=" + productionHeaderId
 				+ ", itemId=" + itemId + ", openingQty=" + openingQty + ", planQty=" + planQty + ", productionQty="
 				+ productionQty + ", rejectedQty=" + rejectedQty + ", status=" + status + ", delStatus=" + delStatus
-				+ ", int4=" + int4 + ", int5=" + int5 + ", boolean1=" + boolean1 + ", boolean2=" + boolean2
-				+ ", boolean3=" + boolean3 + ", boolean4=" + boolean4 + ", boolean5=" + boolean5 + ", varchar2="
-				+ varchar2 + ", varchar3=" + varchar3 + ", varchar4=" + varchar4 + ", varchar5=" + varchar5 + "]";
+				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", boolean1=" + boolean1 + ", boolean2=" + boolean2
+				+ ", boolean3=" + boolean3 + ", boolean4=" + boolean4 + ", boolean5=" + boolean5 + ", exVar1=" + exVar1
+				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exVar4=" + exVar4 + ", productionBatch="
+				+ productionBatch + "]";
 	}
 }

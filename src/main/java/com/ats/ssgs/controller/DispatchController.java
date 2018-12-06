@@ -43,6 +43,9 @@ import com.ats.ssgs.model.DispatchItemList;
 import com.ats.ssgs.model.DispatchItems;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.Plant;
+import com.ats.ssgs.model.order.OrderHeader;
+import com.ats.ssgs.model.prodrm.ProdPlanDetail;
+import com.ats.ssgs.model.prodrm.ProdPlanHeader;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -73,6 +76,9 @@ public class DispatchController {
 
 	RestTemplate rest = new RestTemplate();
 	DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+	
+	DateFormat dateFormatYmd = new SimpleDateFormat("yyyy-MM-dd");
+
     DispatchItemList dispatchItemList=null;
     List<String> allDatesString = new ArrayList<String>();
 
@@ -82,7 +88,8 @@ public class DispatchController {
 		ModelAndView model = null;
 		try {
 
-			model = new ModelAndView("dispatch/dispatchSheet");
+			model = new ModelAndView("dispatch/dis_for_prod");
+			allDatesString=new ArrayList<String>();
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			List<Plant> plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -98,7 +105,7 @@ public class DispatchController {
 			cal.setTime(new Date());
 
 			// Add 7 days
-			cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+7);
+			cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+4);
 
 			// convert to date
 			Date datePlusSeven = cal.getTime();
@@ -666,4 +673,102 @@ public class DispatchController {
 		}
 
 	}
+	
+	
+	
+	//sachin start
+	//showDispatchSheet
+	//submitProd
+	
+	@RequestMapping(value = "/submitProd", method = RequestMethod.POST)
+	public String submitProd(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			
+			int plantId = Integer.parseInt(request.getParameter("plant_id"));
+
+			
+			int index=allDatesString.size();
+			
+			String prodDate=request.getParameter("prod_date");
+			System.err.println("allDatesString index " +index);
+			
+			String curDate=dateFormatYmd.format(new Date());
+			System.err.println("Cur Date " +curDate);
+			
+			ProdPlanHeader planHeader=new  ProdPlanHeader();
+			
+			List<ProdPlanDetail> prodDetList=new ArrayList<>();
+			
+			String NA="NA";
+			
+			System.err.println("dispatchItemList.getItemList().size() " +dispatchItemList.getItemList().size());
+
+			for(int i=0;i<dispatchItemList.getItemList().size();i++) {
+				System.err.println("prod_plan_qty"+index+""+dispatchItemList.getItemList().get(i).getItemId());
+
+				float prodQty=0;
+				try {
+					  prodQty=Float.parseFloat(request.getParameter("prod_plan_qty"+index+""+dispatchItemList.getItemList().get(i).getItemId()));
+
+					
+				}catch (Exception e) {
+					System.err.println("Exce  occured " +e.getMessage());
+				}
+				System.err.println("item id " +dispatchItemList.getItemList().get(i).getItemId());
+				System.err.println("item Name " +dispatchItemList.getItemList().get(i).getItemName());
+				System.err.println("Qty " +prodQty);
+				
+				
+                if(prodQty>0) {
+                	
+				ProdPlanDetail prodDetail=new ProdPlanDetail();
+				
+				prodDetail.setDelStatus(1);
+				prodDetail.setItemId(dispatchItemList.getItemList().get(i).getItemId());
+				
+				prodDetail.setOpeningQty(0);
+				prodDetail.setPlanQty(prodQty);
+				prodDetail.setProductionQty(0);
+				prodDetail.setRejectedQty(0);
+				prodDetail.setStatus(1);
+				prodDetail.setExVar1(NA);
+				prodDetail.setExVar2(NA);
+				prodDetail.setExVar3(NA);
+				prodDetail.setExVar4(NA);
+				prodDetail.setProductionBatch("PROD Batch 1");
+				
+				prodDetList.add(prodDetail);
+                }
+			}
+
+			planHeader.setProdPlanDetailList(prodDetList);
+			
+			planHeader.setDelStatus(1);
+			planHeader.setPlantId(plantId);
+			planHeader.setProductionBatch("PROD Batch 1");
+			planHeader.setProductionDate(DateConvertor.convertToYMD(prodDate));
+			planHeader.setProductionEndDate(DateConvertor.convertToYMD(prodDate));
+			planHeader.setProductionStartDate(DateConvertor.convertToYMD(prodDate));
+			planHeader.setProductionStatus(1);
+			planHeader.setSubPlantId(1);
+			planHeader.setUserId(1);//to be get from session 
+			planHeader.setExVar1(NA);
+			planHeader.setExVar2(NA);
+			planHeader.setExVar3(NA);
+			
+			
+			ProdPlanHeader insertProdPlanRes = rest.postForObject(Constants.url + "saveProdPlanHeaderDetail", planHeader,
+					ProdPlanHeader.class);
+			System.err.println("insertProdPlanRes  " +insertProdPlanRes.toString());
+			
+		}catch (Exception e) {
+			System.err.println("Exce in getting prod qty "+e.getMessage());
+			e.printStackTrace();
+		}
+		return "redirect:/showDispatchSheet";
+		
+	}
+	//Sachin close
 }

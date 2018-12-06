@@ -22,12 +22,13 @@ public class ProdPlanHeader {
 
 	private int userId;
 
-	private int int2;
-	private int int3;
+	private int exInt1;
+	private int exInt2;
 
-	private String varchar1;
-	private String varchar2;
-	private String varchar3;
+	private String exVar1;
+	private String exVar2;
+	private String exVar3;
+
 
 	List<ProdPlanDetail> prodPlanDetailList;
 
@@ -119,44 +120,45 @@ public class ProdPlanHeader {
 		this.userId = userId;
 	}
 
-	public int getInt2() {
-		return int2;
+	
+	public int getExInt1() {
+		return exInt1;
 	}
 
-	public void setInt2(int int2) {
-		this.int2 = int2;
+	public void setExInt1(int exInt1) {
+		this.exInt1 = exInt1;
 	}
 
-	public int getInt3() {
-		return int3;
+	public int getExInt2() {
+		return exInt2;
 	}
 
-	public void setInt3(int int3) {
-		this.int3 = int3;
+	public void setExInt2(int exInt2) {
+		this.exInt2 = exInt2;
 	}
 
-	public String getVarchar1() {
-		return varchar1;
+	public String getExVar1() {
+		return exVar1;
 	}
 
-	public void setVarchar1(String varchar1) {
-		this.varchar1 = varchar1;
+	public void setExVar1(String exVar1) {
+		this.exVar1 = exVar1;
 	}
 
-	public String getVarchar2() {
-		return varchar2;
+	public String getExVar2() {
+		return exVar2;
 	}
 
-	public void setVarchar2(String varchar2) {
-		this.varchar2 = varchar2;
+	public void setExVar2(String exVar2) {
+		this.exVar2 = exVar2;
 	}
 
-	public String getVarchar3() {
-		return varchar3;
+	public String getExVar3() {
+		return exVar3;
 	}
 
-	public void setVarchar3(String varchar3) {
-		this.varchar3 = varchar3;
+	public void setExVar3(String exVar3) {
+		this.exVar3 = exVar3;
 	}
 
 	@Override
@@ -164,9 +166,9 @@ public class ProdPlanHeader {
 		return "ProdPlanHeader [productionHeaderId=" + productionHeaderId + ", productionDate=" + productionDate
 				+ ", productionBatch=" + productionBatch + ", plantId=" + plantId + ", subPlantId=" + subPlantId
 				+ ", productionStatus=" + productionStatus + ", delStatus=" + delStatus + ", productionStartDate="
-				+ productionStartDate + ", productionEndDate=" + productionEndDate + ", userId=" + userId + ", int2="
-				+ int2 + ", int3=" + int3 + ", varchar1=" + varchar1 + ", varchar2=" + varchar2 + ", varchar3="
-				+ varchar3 + ", prodPlanDetailList=" + prodPlanDetailList + "]";
+				+ productionStartDate + ", productionEndDate=" + productionEndDate + ", userId=" + userId + ", exInt1="
+				+ exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
+				+ ", prodPlanDetailList=" + prodPlanDetailList + "]";
 	}
 
 }
