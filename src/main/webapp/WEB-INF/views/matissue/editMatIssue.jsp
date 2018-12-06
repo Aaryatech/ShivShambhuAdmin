@@ -395,7 +395,7 @@
 			var matHeaderId = document.getElementById("matHeaderId").value;
 			var catId = document.getElementById("catId").value;
 
-			alert("Inside add ajax");
+			alert("Inside add ajax"+catId);
 			$
 					.getJSON(
 							'${editInAddMatIssueDetail}',
@@ -454,7 +454,7 @@
 		}
 
 		function callEdit(matDetailId, index) {
-alert("HHHH");
+ 
 			document.getElementById("isEdit").value = "1";
 			$.getJSON('${getMatIssueForEditMatHeader}', {
 				matDetailId : matDetailId,
@@ -463,12 +463,39 @@ alert("HHHH");
 
 			}, function(data) {
 				alert("data" +data);
-				alert(data.catId);
+				alert(data.exInt1);
 				$("#catId").val(data.exInt1);
 				$("#catId").trigger("chosen:updated");
-				document.getElementById("itemName").value = data.itemDesc;
+				document.getElementById("itemName").value = data.itemId;
 				document.getElementById("qty").value = data.quantity;
 				document.getElementById("index").value = index;
+				
+				$.getJSON('${getRawItemByCatId}', {
+
+					catId : data.exInt1,
+					ajax : 'true',
+
+				},
+
+				function(data1) {
+					//alert("hiii");
+					var html;
+					var len = data1.length;
+					var html = '<option value="-1"  >Select Item</option>';
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data1[i].itemId + '">'
+								+ data1[i].itemDesc + '</option>';
+					}
+					//html += '</option>';
+
+					$('#itemName').html(html);
+					//$("#itemName").trigger("chosen:updated");
+					
+					$("#itemName").val(data.itemId);
+					$("#itemName").trigger("chosen:updated");
+
+				});
 
 			});
 
