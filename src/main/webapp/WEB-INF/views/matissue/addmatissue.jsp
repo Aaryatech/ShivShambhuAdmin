@@ -195,7 +195,8 @@
 									<div class="col-md-2">Quantity</div>
 									<div class="col-md-4">
 										<input type="text" id="qty" name="qty" class="form-control"
-											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											autocomplete="off" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 									<div class="col-md-2"></div>
@@ -331,7 +332,7 @@
 
 							function(data) {
 
-								alert("Data " + JSON.stringify(data));
+								//	alert("Data " + JSON.stringify(data));
 
 								var dataTable = $('#bootstrap-data-table')
 										.DataTable();
@@ -381,45 +382,40 @@
 				ajax : 'true',
 
 			}, function(data) {
-				alert("itemId" + data.itemId)
-				alert("Data on edit " + JSON.stringify(data));
-
-				//document.getElementById("itemName").options.selectedIndex=data.itemId;
-
+				alert("data" + data);
+				alert(data.exInt1);
 				$("#catId").val(data.catId);
 				$("#catId").trigger("chosen:updated");
+				document.getElementById("itemName").value = data.itemId;
+				document.getElementById("qty").value = data.quantity;
+				document.getElementById("index").value = index;
 
-				//var catId=data.catId;
-				/* $.getJSON('${getRawItemByCatId}', {
+				$.getJSON('${getRawItemByCatId}', {
 
-					catId : catId,
+					catId : data.catId,
 					ajax : 'true',
 
 				},
 
-				function(data) {
+				function(data1) {
 					//alert("hiii");
 					var html;
-					var len = data.length;
+					var len = data1.length;
 					var html = '<option value="-1"  >Select Item</option>';
 					for (var i = 0; i < len; i++) {
 
-						html += '<option value="' + data[i].itemId + '">'
-								+ data[i].itemDesc + '</option>';
+						html += '<option value="' + data1[i].itemId + '">'
+								+ data1[i].itemDesc + '</option>';
 					}
-					html += '</option>';
+					//html += '</option>';
 
 					$('#itemName').html(html);
+					//$("#itemName").trigger("chosen:updated");
+
+					$("#itemName").val(data.itemId);
 					$("#itemName").trigger("chosen:updated");
 
-				}); 
-				 */
-				$("#itemName").val(data.itemId);
-				$("#itemName").trigger("chosen:updated");
-
-				//document.getElementById("itemName").value = data.itemName;
-				document.getElementById("qty").value = data.quantity;
-				document.getElementById("index").value = index;
+				});
 
 			});
 

@@ -121,28 +121,28 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showMatIssueContractorList"><strong>Material
-										Issue Contractor List</strong></a>
+									href="${pageContext.request.contextPath}/showMatIssueVehicleList"><strong>Material
+										Issue Vehicle List</strong></a>
 							</div>
 
 						</div>
 						<div class="card-body card-block">
 							<form
-								action="${pageContext.request.contextPath}/insertMatIssueContractor"
+								action="${pageContext.request.contextPath}/insertMatIssueVehicle"
 								id="submitForm" method="post">
 
 								<div class="row">
 
-									<div class="col-md-2">Select Contractor*</div>
+									<div class="col-md-2">Select Vehicle*</div>
 
 									<div class="col-md-4">
-										<select id="contr_id" name="contr_id" class="standardSelect"
+										<select id="vehId" name="vehId" class="standardSelect"
 											tabindex="1" required
-											oninvalid="setCustomValidity('Please select Contractor')"
+											oninvalid="setCustomValidity('Please select Vehicle')"
 											onchange="getData()">
 											<option>Select</option>
-											<c:forEach items="${conList}" var="con">
-												<option value="${con.contrId}">${con.contrName}</option>
+											<c:forEach items="${vehList}" var="veh">
+												<option value="${veh.vehicleId}">${veh.vehicleName}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -156,13 +156,22 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Issue No*</div>
+									<div class="col-md-2">Vehicle No*</div>
 									<div class="col-md-4">
-										<input type="text" id="issueNo" name="issueNo" maxlength="10"
+										<input type="text" id="vehNo" name="vehNo" maxlength="10"
 											class="form-control" style="width: 100%;" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter Issue No')"
+											oninvalid="setCustomValidity('Please enter Vehicle No')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											pattern="[0-9]+">
+									</div>
+
+									<div class="col-md-2">Reading*</div>
+									<div class="col-md-4">
+										<input type="text" id="reading" name="reading" maxlength="10"
+											class="form-control" style="width: 100%;" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter correct Reading ')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											pattern="[0-9]+(\.[0-9]{0,2})?%?">
 									</div>
 								</div>
 								<hr>
@@ -174,8 +183,8 @@
 											tabindex="1" onchange="getItemByCatId()">
 
 											<option value="-1">Select</option>
-											<c:forEach items="${vehList}" var="veh">
-												<option value="${veh.vehicleId}">${veh.vehicleName}</option>
+											<c:forEach items="${catList}" var="cat">
+												<option value="${cat.catId}">${cat.catDesc}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -195,7 +204,8 @@
 									<div class="col-md-2">Quantity</div>
 									<div class="col-md-4">
 										<input type="text" id="qty" name="qty" class="form-control"
-											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											autocomplete="off" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 									<div class="col-md-2"></div>
@@ -331,8 +341,6 @@
 
 							function(data) {
 
-								alert("Data " + JSON.stringify(data));
-
 								var dataTable = $('#bootstrap-data-table')
 										.DataTable();
 								dataTable.clear().draw();
@@ -381,49 +389,44 @@
 				ajax : 'true',
 
 			}, function(data) {
-				alert("Data on edit " + JSON.stringify(data));
-
-				//document.getElementById("itemName").options.selectedIndex=data.itemId;
-
+				alert("data" + data);
+				alert(data.exInt1);
 				$("#catId").val(data.catId);
 				$("#catId").trigger("chosen:updated");
+				document.getElementById("itemName").value = data.itemId;
+				document.getElementById("qty").value = data.quantity;
+				document.getElementById("index").value = index;
 
-				//var catId=data.catId;
-				/* $.getJSON('${getRawItemByCatId}', {
+				$.getJSON('${getRawItemByCatId}', {
 
-					catId : catId,
+					catId : data.catId,
 					ajax : 'true',
 
 				},
 
-				function(data) {
+				function(data1) {
 					//alert("hiii");
 					var html;
-					var len = data.length;
+					var len = data1.length;
 					var html = '<option value="-1"  >Select Item</option>';
 					for (var i = 0; i < len; i++) {
 
-						html += '<option value="' + data[i].itemId + '">'
-								+ data[i].itemDesc + '</option>';
+						html += '<option value="' + data1[i].itemId + '">'
+								+ data1[i].itemDesc + '</option>';
 					}
-					html += '</option>';
+					//html += '</option>';
 
 					$('#itemName').html(html);
+					//$("#itemName").trigger("chosen:updated");
+
+					$("#itemName").val(data.itemId);
 					$("#itemName").trigger("chosen:updated");
 
-				}); 
-				 */
-				$("#itemName").val(data.itemId);
-				$("#itemName").trigger("chosen:updated");
-
-				//document.getElementById("itemName").value = data.itemName;
-				document.getElementById("qty").value = data.quantity;
-				document.getElementById("index").value = index;
+				});
 
 			});
 
 		}
-
 		function callDelete(matDetailId, index) {
 
 			alert("hii");

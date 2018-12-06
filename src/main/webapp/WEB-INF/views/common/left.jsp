@@ -211,8 +211,16 @@ html {
 									Issue Contractor List</a></li>
 
 
-						</ul></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddMatIssueVehicle">Add
+									Material Issue Vehicle</a></li>
 
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showMatIssueVehicleList">Material
+									Issue Vehicle List</a></li>
+
+
+						</ul></li>
 
 					<li class="menu-item-has-children dropdown"><a
 						href="${pageContext.request.contextPath}/editMyProfile/1"> <i

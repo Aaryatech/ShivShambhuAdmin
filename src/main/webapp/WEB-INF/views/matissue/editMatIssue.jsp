@@ -212,7 +212,8 @@
 									<div class="col-md-2">Quantity</div>
 									<div class="col-md-4">
 										<input type="text" id="qty" name="qty" class="form-control"
-											style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											autocomplete="off" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 									<div class="col-md-2"></div>
@@ -462,8 +463,6 @@
 				ajax : 'true',
 
 			}, function(data) {
-				alert("data" +data);
-				alert(data.exInt1);
 				$("#catId").val(data.exInt1);
 				$("#catId").trigger("chosen:updated");
 				document.getElementById("itemName").value = data.itemId;
