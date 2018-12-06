@@ -11,9 +11,11 @@
 
 <c:url var="getRawItemByCatId" value="/getRawItemByCatId" />
 
-<c:url var="addMatIssueDetail" value="/addMatIssueDetail" />
+<c:url var="editInAddMatVehicleDetail"
+	value="/editInAddMatVehicleDetail" />
 
-<c:url var="getMatIssueForEdit" value="/getMatIssueForEdit" />
+<c:url var="getIndexForEditMatVehicle"
+	value="/getIndexForEditMatVehicle" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -128,8 +130,9 @@
 						</div>
 						<div class="card-body card-block">
 							<form
-								action="${pageContext.request.contextPath}/insertMatIssueVehicle"
+								action="${pageContext.request.contextPath}/updateMaterialVehicle"
 								id="submitForm" method="post">
+
 
 								<div class="row">
 
@@ -138,11 +141,21 @@
 									<div class="col-md-4">
 										<select id="vehId" name="vehId" class="standardSelect"
 											tabindex="1" required
-											oninvalid="setCustomValidity('Please select Vehicle')"
+											oninvalid="setCustomValidity('Please select vehicle')"
 											onchange="getData()">
 											<option>Select</option>
 											<c:forEach items="${vehList}" var="veh">
-												<option value="${veh.vehicleId}">${veh.vehicleName}</option>
+
+												<c:choose>
+													<c:when test="${veh.vehicleId==editVeh.vehId}">
+														<option value="${veh.vehicleId}" selected>${veh.vehicleName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${veh.vehicleId}">${veh.vehicleName}
+													</c:otherwise>
+												</c:choose>
+
+
 											</c:forEach>
 										</select>
 									</div>
@@ -150,7 +163,8 @@
 									<div class="col-md-2">Date*</div>
 									<div class="col-md-4">
 										<input type="text" id="date" name="date" autocomplete="off"
-											required class="form-control" required style="width: 100%;">
+											value="${editVeh.date}" required class="form-control"
+											required style="width: 100%;">
 									</div>
 								</div>
 								<div class="form-group"></div>
@@ -159,20 +173,26 @@
 									<div class="col-md-2">Vehicle No*</div>
 									<div class="col-md-4">
 										<input type="text" id="vehNo" name="vehNo" maxlength="10"
-											class="form-control" style="width: 100%;" autocomplete="off"
+											value="${editVeh.vehNo}" class="form-control"
+											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Vehicle No')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											pattern="[0-9]+">
 									</div>
 
+									<input type="hidden" value="${editVeh.matVehHeaderId}"
+										name="matVehHeaderId" id="matVehHeaderId">
+
 									<div class="col-md-2">Reading*</div>
 									<div class="col-md-4">
 										<input type="text" id="reading" name="reading" maxlength="10"
-											class="form-control" style="width: 100%;" autocomplete="off"
+											value="${editVeh.reading}" class="form-control"
+											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct Reading ')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											pattern="[0-9]+(\.[0-9]{0,2})?%?">
 									</div>
+
 								</div>
 								<hr>
 								<div class="form-group"></div>
@@ -182,7 +202,7 @@
 										<select id="catId" name="catId" class="standardSelect"
 											tabindex="1" onchange="getItemByCatId()">
 
-											<option value="-1">Select</option>
+											<option>Select</option>
 											<c:forEach items="${catList}" var="cat">
 												<option value="${cat.catId}">${cat.catDesc}</option>
 											</c:forEach>
@@ -193,8 +213,9 @@
 									<div class="col-md-2">Select Item*</div>
 
 									<div class="col-md-4">
-										<select id="itemName" name="itemName" class="standardSelect">
-											<option value="-1">Select</option>
+										<select id="itemName" name="itemName" class="standardSelect"
+											tabindex="1">
+											<option>Select</option>
 
 										</select>
 									</div>
@@ -239,6 +260,70 @@
 												<th style="text-align: center; width: 5%;">Action</th>
 											</tr>
 										</thead>
+
+										<tbody>
+											<c:forEach items="${editVehDetail}" var="matDetail"
+												varStatus="count">
+												<tr>
+
+													<td style="text-align: center">${count.index+1}</td>
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.itemDesc}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.uomName}" /></td>
+
+
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.rate}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.quantity}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.value}" /></td>
+
+
+
+
+													<%-- <td align="right"><input class="form-control"
+														id="itemDesc${matDetail.matDetailId}"
+														placeholder="Term Desc" type="text"
+														name="itemDesc${docDetail.matDetailId}"
+														value="${matDetail.itemDesc}" /></td> --%>
+
+
+
+
+													<%-- <td align="right"><input class="form-control"
+														id="detailSortNo${matDetail.uomName}"
+														placeholder="Sort No" type="text"
+														name="detailSortNo${matDetail.uomName}"
+														value="${matDetail.sortNo}" /></td>
+ --%>
+													<%-- 	 --%>
+
+
+
+
+													<td style="text-align: center"><a href="#"
+														onclick="callEdit(${matDetail.matVehDetailId},${count.index})"><i
+															class="fa fa-edit"></i> <span class="text-muted"></span></a>
+														<a href="#"
+														onclick="callDelete(${matDetail.matVehDetailId},${count.index})"><i
+															class="fa fa fa-trash-o"></i> <span class="text-muted"></span></a></td>
+
+
+
+
+												</tr>
+											</c:forEach>
+										</tbody>
 									</table>
 								</div>
 
@@ -315,18 +400,19 @@
 
 	<script type="text/javascript">
 		function add() {
-			//alert("in add  ");
+			alert("in add  ");
 			var itemName = document.getElementById("itemName").value;
 			var qty = document.getElementById("qty").value;
 			var isEdit = document.getElementById("isEdit").value;
 			var isDelete = document.getElementById("isDelete").value;
 			var index = document.getElementById("index").value;
+			var matVehHeaderId = document.getElementById("matVehHeaderId").value;
 			var catId = document.getElementById("catId").value;
 
-			//alert("Inside add ajax");
+			
 			$
 					.getJSON(
-							'${addMatIssueDetail}',
+							'${editInAddMatVehicleDetail}',
 							{
 
 								isDelete : isDelete,
@@ -334,6 +420,7 @@
 								index : index,
 								itemName : itemName,
 								qty : qty,
+								matVehHeaderId : matVehHeaderId,
 								catId : catId,
 								ajax : 'true',
 
@@ -350,21 +437,21 @@
 												data,
 												function(i, v) {
 
-													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.matDetailId
+													var str = '<a href="#" class="action_btn" onclick="callEdit('
+															+ v.matVehDetailId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.matDetailId
+															+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ v.matVehDetailId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-edit"></i></a>'
+															+ ')"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
-																	v.itemName,
+																	v.itemDesc,
 																	v.uomName,
-																	v.itemRate,
+																	v.rate,
 																	v.quantity,
 																	v.value,
 																	str ])
@@ -372,7 +459,7 @@
 												});
 
 							});
-			//document.getElementById("itemName").options.selectedIndex=0;
+			document.getElementById("itemName").value = "";
 			document.getElementById("qty").value = "";
 			document.getElementById("isDelete").value = 0;
 			document.getElementById("isEdit").value = 0;
@@ -380,26 +467,24 @@
 
 		}
 
-		function callEdit(matDetailId, index) {
-
+		function callEdit(matVehDetailId, index) {
+ 
 			document.getElementById("isEdit").value = "1";
-			$.getJSON('${getMatIssueForEdit}', {
-				matDetailId : matDetailId,
+			$.getJSON('${getIndexForEditMatVehicle}', {
+				matVehDetailId : matVehDetailId,
 				index : index,
 				ajax : 'true',
 
 			}, function(data) {
-				/* 	alert("data" + data);
-					alert(data.exInt1); */
-				$("#catId").val(data.catId);
+				$("#catId").val(data.exInt1);
 				$("#catId").trigger("chosen:updated");
 				document.getElementById("itemName").value = data.itemId;
 				document.getElementById("qty").value = data.quantity;
 				document.getElementById("index").value = index;
-
+				
 				$.getJSON('${getRawItemByCatId}', {
 
-					catId : data.catId,
+					catId : data.exInt1,
 					ajax : 'true',
 
 				},
@@ -418,7 +503,7 @@
 
 					$('#itemName').html(html);
 					//$("#itemName").trigger("chosen:updated");
-
+					
 					$("#itemName").val(data.itemId);
 					$("#itemName").trigger("chosen:updated");
 
@@ -427,14 +512,16 @@
 			});
 
 		}
-		function callDelete(matDetailId, index) {
 
-			//alert("hii");
+		function callDelete(matVehDetailId, index) {
+
+			alert("hii");
+			
 			document.getElementById("isEdit").value = 0;
 			alert("index" + index);
 			$
 					.getJSON(
-							'${addMatIssueDetail}',
+							'${editInAddMatVehicleDetail}',
 							{
 								isDelete : 1,
 								isEdit : 0,
@@ -452,21 +539,21 @@
 												data,
 												function(i, v) {
 
-													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.matDetailId
-															+ ','
-															+ i
-															+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.matDetailId
-															+ ','
-															+ i
-															+ ')"><i class="fa fa-edit"></i></a>'
+													var str = '<a href="#" class="action_btn" onclick="callEdit('
+														+ v.matVehDetailId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+														+ v.matVehDetailId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
-																	v.itemName,
+																	v.itemDesc,
 																	v.uomName,
-																	v.itemRate,
+																	v.rate,
 																	v.quantity,
 																	v.value,
 																	str ])
@@ -476,13 +563,7 @@
 
 		}
 
-		function validate(s) {
-			var rgx = /^[0-9]*\.?[0-9]*$/;
-			return s.match(rgx);
-		}
-		function callAlert(msg) {
-			alert(msg);
-		}
+		
 	</script>
 
 	<script type="text/javascript">

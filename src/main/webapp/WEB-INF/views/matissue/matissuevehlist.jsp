@@ -133,7 +133,7 @@
 
 
 												<td style="text-align: center"><a
-													href="${pageContext.request.contextPath}/editMatIssueCon/${matIssue.matVehHeaderId}"><i
+													href="${pageContext.request.contextPath}/editMatIssueVeh/${matIssue.matVehHeaderId}"><i
 														class="fa fa-edit"></i> <span class="text-muted"></span></a>
 													&nbsp; <a
 													href="${pageContext.request.contextPath}/deleteMatVehicle/${matIssue.matVehHeaderId}"

@@ -30,6 +30,7 @@ import com.ats.ssgs.model.master.Vehicle;
 import com.ats.ssgs.model.mat.Contractor;
 import com.ats.ssgs.model.mat.GetMatIssueDetail;
 import com.ats.ssgs.model.mat.GetMatIssueHeader;
+import com.ats.ssgs.model.mat.GetVehDetail;
 import com.ats.ssgs.model.mat.GetVehHeader;
 import com.ats.ssgs.model.mat.ItemCategory;
 import com.ats.ssgs.model.mat.MatIssueDetail;
@@ -437,6 +438,13 @@ public class MatIssueController {
 				System.out.println("IsDelete" + isDelete);
 				int key = Integer.parseInt(request.getParameter("key"));
 
+				GetMatIssueDetail deleteDetail = editMat.getMatIssueDetailList().get(key);
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("matVehDetailId", deleteDetail.getMatDetailId());
+
+				Info errMsg = rest.postForObject(Constants.url + "deleteMatContraDetail", map, Info.class);
+
 				editMat.getMatIssueDetailList().remove(key);
 
 			} else if (isEdit == 1) {
@@ -786,6 +794,235 @@ public class MatIssueController {
 		}
 
 		return "redirect:/showMatIssueVehicleList";
+	}
+
+	GetVehHeader editVeh;
+
+	@RequestMapping(value = "/editMatIssueVeh/{matVehHeaderId}", method = RequestMethod.GET)
+	public ModelAndView editMatIssueVeh(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int matVehHeaderId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("matissue/editmatveh");
+			Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
+			vehList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
+
+			model.addObject("vehList", vehList);
+
+			ItemCategory[] catArray = rest.getForObject(Constants.url + "getAllItemCategoryList", ItemCategory[].class);
+			catList = new ArrayList<ItemCategory>(Arrays.asList(catArray));
+
+			model.addObject("catList", catList);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("matVehHeaderId", matVehHeaderId);
+			editVeh = rest.postForObject(Constants.url + "getMatIssueVehicleByHeaderId", map, GetVehHeader.class);
+			model.addObject("title", "Edit Material Issue Vehicle");
+			model.addObject("editVeh", editVeh);
+			model.addObject("editVehDetail", editVeh.getVehDetailList());
+
+		} catch (Exception e) {
+			System.err.println("exception In editMatIssueVeh at Mat Contr" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/editInAddMatVehicleDetail", method = RequestMethod.GET)
+	public @ResponseBody List<GetVehDetail> editInAddMatVehicleDetail(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		try {
+
+			int isDelete = Integer.parseInt(request.getParameter("isDelete"));
+
+			int isEdit = Integer.parseInt(request.getParameter("isEdit"));
+
+			if (isDelete == 1) {
+				System.out.println("IsDelete" + isDelete);
+				int key = Integer.parseInt(request.getParameter("key"));
+
+				GetVehDetail delteDetail = editVeh.getVehDetailList().get(key);
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("matVehDetailId", delteDetail.getMatVehDetailId());
+
+				editVeh.getVehDetailList().remove(key);
+				Info errMsg = rest.postForObject(Constants.url + "deleteMatVehDetail", map, Info.class);
+
+			} else if (isEdit == 1) {
+
+				int itemId = Integer.parseInt(request.getParameter("itemName"));
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("itemId", itemId);
+
+				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
+						RawMatItem.class);
+
+				int catId = Integer.parseInt(request.getParameter("catId"));
+				int index = Integer.parseInt(request.getParameter("index"));
+				float quantity = Float.parseFloat(request.getParameter("qty"));
+
+				editVeh.getVehDetailList().get(index).setQuantity(quantity);
+				editVeh.getVehDetailList().get(index)
+						.setValue(editVeh.getVehDetailList().get(index).getRate() * quantity);
+				editVeh.getVehDetailList().get(index).setItemId(itemId);
+				editVeh.getVehDetailList().get(index).setItemDesc(getSingleItem.getItemDesc());
+				editVeh.getVehDetailList().get(index).setExInt1(catId);
+
+			}
+
+			else {
+
+				int matVehHeaderId = Integer.parseInt(request.getParameter("matVehHeaderId"));
+
+				int itemId = Integer.parseInt(request.getParameter("itemName"));
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("itemId", itemId);
+
+				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
+						RawMatItem.class);
+
+				int catId = Integer.parseInt(request.getParameter("catId"));
+				float qty = Float.parseFloat(request.getParameter("qty"));
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+				String curDate = dateFormat.format(new Date());
+
+				GetVehDetail matIssueDetail = new GetVehDetail();
+				matIssueDetail.setDelStatus(1);
+				matIssueDetail.setExBool1(1);
+				matIssueDetail.setExDate1(curDate);
+				matIssueDetail.setExInt1(catId);
+				matIssueDetail.setExInt2(1);
+				matIssueDetail.setExVar1("NA");
+				matIssueDetail.setExVar2("NA");
+				matIssueDetail.setItemCode(getSingleItem.getItemCode());
+				matIssueDetail.setItemDesc(getSingleItem.getItemDesc());
+				matIssueDetail.setRate(getSingleItem.getItemClRate());
+				matIssueDetail.setMatVehHeaderId(matVehHeaderId);
+				matIssueDetail.setQuantity(qty);
+				matIssueDetail.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
+				matIssueDetail.setValue(getSingleItem.getItemClRate() * qty);
+				matIssueDetail.setItemId(itemId);
+
+				Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+				uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+
+				for (int i = 0; i < uomList.size(); i++) {
+					if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
+
+					{
+						matIssueDetail.setUomName(uomList.get(i).getUomName());
+					}
+				}
+				editVeh.getVehDetailList().add(matIssueDetail);
+
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce In temp  getVehDetailList List " + e.getMessage());
+			e.printStackTrace();
+		}
+		System.err.println("getVehDetailList " + editVeh.getVehDetailList().toString());
+
+		return editVeh.getVehDetailList();
+
+	}
+
+	@RequestMapping(value = "/getIndexForEditMatVehicle", method = RequestMethod.GET)
+	public @ResponseBody GetVehDetail getIndexForEditMatVehicle(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		int index = Integer.parseInt(request.getParameter("index"));
+
+		return editVeh.getVehDetailList().get(index);
+
+	}
+
+	@RequestMapping(value = "/updateMaterialVehicle", method = RequestMethod.POST)
+	public String updateMaterialVehicle(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			System.err.println("Inside insert updateMaterialVehicle method");
+
+			int matVehHeaderId = Integer.parseInt(request.getParameter("matVehHeaderId"));
+
+			int vehId = Integer.parseInt(request.getParameter("vehId"));
+			String vehNo = request.getParameter("vehNo");
+			float reading = Float.parseFloat(request.getParameter("reading"));
+
+			String date = request.getParameter("date");
+
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String curDate = dateFormat.format(new Date());
+			MatIssueVehHeader matIssue = new MatIssueVehHeader();
+
+			matIssue.setVehId(vehId);
+			matIssue.setDate(DateConvertor.convertToYMD(date));
+			matIssue.setDelStatus(1);
+			matIssue.setExDate1(curDate);
+			matIssue.setExDate2(curDate);
+			matIssue.setUserId(1);
+			matIssue.setVehNo(vehNo);
+			matIssue.setMatVehHeaderId(matVehHeaderId);
+			matIssue.setReading(reading);
+
+			List<MatIssueVehDetail> detailList = new ArrayList<>();
+			float vehTotal = 0;
+			float vehQtyTotal = 0;
+
+			for (int i = 0; i < editVeh.getVehDetailList().size(); i++) {
+
+				MatIssueVehDetail dDetail = new MatIssueVehDetail();
+
+				dDetail.setDelStatus(editVeh.getVehDetailList().get(i).getDelStatus());
+				dDetail.setMatVehHeaderId(matVehHeaderId);
+
+				dDetail.setItemId(editVeh.getVehDetailList().get(i).getItemId());
+				dDetail.setRate(editVeh.getVehDetailList().get(i).getRate());
+				dDetail.setQuantity(editVeh.getVehDetailList().get(i).getQuantity());
+				dDetail.setUomId(editVeh.getVehDetailList().get(i).getUomId());
+				dDetail.setValue(editVeh.getVehDetailList().get(i).getValue());
+				dDetail.setMatVehDetailId(editVeh.getVehDetailList().get(i).getMatVehDetailId());
+				vehTotal = vehTotal + editVeh.getVehDetailList().get(i).getValue();
+				vehQtyTotal = vehQtyTotal + editVeh.getVehDetailList().get(i).getQuantity();
+
+				detailList.add(dDetail);
+
+			}
+			matIssue.setVehTotal(vehTotal);
+			matIssue.setVehQtyTotal(vehQtyTotal);
+			matIssue.setVehDetailList(detailList);
+
+			System.out.println("detailList" + detailList.size());
+
+			MatIssueVehHeader matIssueInsertRes = rest.postForObject(Constants.url + "saveMatIssueVehicle", matIssue,
+					MatIssueVehHeader.class);
+
+			if (matIssueInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("Exce In updateMaterialVehicle method  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return "redirect:/showAddMatIssueVehicle";
+
 	}
 
 }
