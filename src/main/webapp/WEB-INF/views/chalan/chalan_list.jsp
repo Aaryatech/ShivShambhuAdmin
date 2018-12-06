@@ -438,7 +438,7 @@
 															+ v.chalanId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw"></i></a>'
+															+ ')"><i class="fa fa-times"></i></a>'
  
 												dataTable.row
 														.add(
