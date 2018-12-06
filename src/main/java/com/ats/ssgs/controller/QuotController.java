@@ -303,7 +303,7 @@ public class QuotController {
 	public String updateQuotationProcess(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
-		try { 
+		try {
 
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String curDate = dateFormat.format(new Date());
@@ -333,6 +333,7 @@ public class QuotController {
 			int projId = Integer.parseInt(request.getParameter("proj_id"));
 
 			int noOfTolls = Integer.parseInt(request.getParameter("no_of_tolls"));
+			int is_tax_inc = Integer.parseInt(request.getParameter("is_tax_inc"));
 			Float tollCost = Float.parseFloat(request.getParameter("toll_amt"));
 			Float otherCost = Float.parseFloat(request.getParameter("other_cost"));
 			int quotTermId = Integer.parseInt(request.getParameter("quot_doc_term_id"));
@@ -356,7 +357,7 @@ public class QuotController {
 			quotHeader.setQuotTermId(quotTermId);
 			quotHeader.setNoOfKm(noOfKm);
 			quotHeader.setExDate2(curDate);
-
+			quotHeader.setTaxValue(is_tax_inc);
 			// quotHeader.setCompanyId(companyId);
 
 			List<QuotDetail> quotDetList = quotHeader.getQuotDetailList();
@@ -461,7 +462,7 @@ public class QuotController {
 								// detail.setSgstPer(0);
 
 							}
-							quotHeader.setTaxValue(1);
+							
 
 						} else {
 							
@@ -549,7 +550,7 @@ public class QuotController {
 							// detail.setSgstPer(0);
 
 						}
-						quotHeader.setTaxValue(1);
+						 
 
 					} else {
 

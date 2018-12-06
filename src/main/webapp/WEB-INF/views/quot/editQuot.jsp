@@ -465,11 +465,11 @@ body {
 
 								<div class="form-group"></div>
 								<div class="row">
-
+${quotHeader.taxValue}
 									<div class="col-md-2">Is Tax Included</div>
 
 									<c:choose>
-										<c:when test="${quotHeader.taxValue==0}">
+										<c:when test="${quotHeader.taxValue==1}">
 											<div class="col-md-1">
 												No<input type="radio" checked name="is_tax_inc" id="is_tax_inc"
 													value="1" onchange="changeTaxValue(this.value)">
@@ -483,14 +483,14 @@ body {
 										</c:when>
 										<c:otherwise>
 											<div class="col-md-1">
-												No<input type="radio" checked name="is_tax_inc"
-													id="is_tax_inc" value="1" checked
+												No<input type="radio"   name="is_tax_inc"
+													id="is_tax_inc" value="1" 
 													onchange="changeTaxValue(this.value)">
 											</div>
 
 											<div class="col-md-1">
 												Yes<input type="radio" name="is_tax_inc" id="is_tax_inc"
-													value="0" onchange="changeTaxValue(this.value)">
+													value="0" checked onchange="changeTaxValue(this.value)">
 											</div>
 										</c:otherwise>
 									</c:choose>
