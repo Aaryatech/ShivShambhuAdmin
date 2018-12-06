@@ -515,10 +515,10 @@
 
 		function callDelete(matVehDetailId, index) {
 
-			alert("hii");
+			//alert("hii");
 			
 			document.getElementById("isEdit").value = 0;
-			alert("index" + index);
+			//alert("index" + index);
 			$
 					.getJSON(
 							'${editInAddMatVehicleDetail}',

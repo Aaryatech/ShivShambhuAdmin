@@ -424,15 +424,15 @@
 												data,
 												function(i, v) {
 
-													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.matDetailId
-															+ ','
-															+ i
-															+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.matDetailId
-															+ ','
-															+ i
-															+ ')"><i class="fa fa-edit"></i></a>'
+													var str = '<a href="#" class="action_btn" onclick="callEdit('
+														+ v.matVehDetailId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+														+ v.matVehDetailId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
@@ -525,16 +525,15 @@
 												data,
 												function(i, v) {
 
-													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.matDetailId
-															+ ','
-															+ i
-															+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.matDetailId
-															+ ','
-															+ i
-															+ ')"><i class="fa fa-edit"></i></a>'
-
+													var str = '<a href="#" class="action_btn" onclick="callEdit('
+														+ v.matVehDetailId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+														+ v.matVehDetailId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-trash"></i></a>'
 													dataTable.row.add(
 															[ i + 1,
 																	v.itemDesc,

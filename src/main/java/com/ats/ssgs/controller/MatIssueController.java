@@ -421,33 +421,34 @@ public class MatIssueController {
 
 		try {
 
-			int itemId = Integer.parseInt(request.getParameter("itemName"));
-			int matHeaderId = Integer.parseInt(request.getParameter("matHeaderId"));
-
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-			map.add("itemId", itemId);
-
-			RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map, RawMatItem.class);
-
 			int isDelete = Integer.parseInt(request.getParameter("isDelete"));
 
 			int isEdit = Integer.parseInt(request.getParameter("isEdit"));
 
 			if (isDelete == 1) {
+
 				System.out.println("IsDelete" + isDelete);
 				int key = Integer.parseInt(request.getParameter("key"));
 
 				GetMatIssueDetail deleteDetail = editMat.getMatIssueDetailList().get(key);
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				map = new LinkedMultiValueMap<String, Object>();
 
-				map.add("matVehDetailId", deleteDetail.getMatDetailId());
+				map.add("matDetailId", deleteDetail.getMatDetailId());
 
 				Info errMsg = rest.postForObject(Constants.url + "deleteMatContraDetail", map, Info.class);
 
 				editMat.getMatIssueDetailList().remove(key);
 
 			} else if (isEdit == 1) {
+
+				int itemId = Integer.parseInt(request.getParameter("itemName"));
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("itemId", itemId);
+
+				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
+						RawMatItem.class);
 
 				System.out.println("isedit" + isEdit);
 				int catId = Integer.parseInt(request.getParameter("catId"));
@@ -464,6 +465,16 @@ public class MatIssueController {
 			}
 
 			else {
+
+				int matHeaderId = Integer.parseInt(request.getParameter("matHeaderId"));
+
+				int itemId = Integer.parseInt(request.getParameter("itemName"));
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("itemId", itemId);
+
+				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
+						RawMatItem.class);
 
 				System.out.println("RawMatItem " + getSingleItem.toString());
 				int catId = Integer.parseInt(request.getParameter("catId"));
