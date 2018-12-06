@@ -55,7 +55,18 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+/*
+ * 
+ * <dependency>
 
+	<groupId>com.lowagie</groupId>
+
+	<artifactId>itext</artifactId>
+
+	<version>4.2.2</version>
+
+</dependency>
+ */
 @Controller
 @Scope("session")
 public class DispatchController {
