@@ -174,8 +174,8 @@
 											tabindex="1" onchange="getItemByCatId()">
 
 											<option value="-1">Select</option>
-											<c:forEach items="${catList}" var="cat">
-												<option value="${cat.catId}">${cat.catDesc}</option>
+											<c:forEach items="${vehList}" var="veh">
+												<option value="${veh.vehicleId}">${veh.vehicleName}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -381,7 +381,6 @@
 				ajax : 'true',
 
 			}, function(data) {
-				alert("itemId" + data.itemId)
 				alert("Data on edit " + JSON.stringify(data));
 
 				//document.getElementById("itemName").options.selectedIndex=data.itemId;

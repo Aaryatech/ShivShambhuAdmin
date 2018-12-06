@@ -26,6 +26,7 @@ import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.master.DocTermHeader;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Uom;
+import com.ats.ssgs.model.master.Vehicle;
 import com.ats.ssgs.model.mat.Contractor;
 import com.ats.ssgs.model.mat.GetMatIssueDetail;
 import com.ats.ssgs.model.mat.GetMatIssueHeader;
@@ -42,6 +43,8 @@ public class MatIssueController {
 
 	List<TempMatIssueDetail> tempList = new ArrayList<TempMatIssueDetail>();
 	List<Contractor> conList;
+	List<Vehicle> vehList;
+
 	List<RawMatItem> rawItemList;
 	List<ItemCategory> catList;
 	List<Uom> uomList;
@@ -585,6 +588,38 @@ public class MatIssueController {
 
 		return "redirect:/showAddMatIssueContractor";
 
+	}
+
+	@RequestMapping(value = "/showAddMatIssueVehicle", method = RequestMethod.GET)
+	public ModelAndView showAddMatIssueVehicle(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("matissue/addvehmat");
+			model.addObject("isError", isError);
+			isError = 0;
+			tempList = new ArrayList<TempMatIssueDetail>();
+
+			Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllContractorList", Vehicle[].class);
+			vehList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
+
+			model.addObject("vehList", vehList);
+
+			ItemCategory[] catArray = rest.getForObject(Constants.url + "getAllItemCategoryList", ItemCategory[].class);
+			catList = new ArrayList<ItemCategory>(Arrays.asList(catArray));
+
+			model.addObject("catList", catList);
+
+			model.addObject("title", "Add Material Issue Contractor");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddMatIssueContractor at MatContr" + e.getMessage());
+
+			e.printStackTrace();
+		}
+		return model;
 	}
 
 }
