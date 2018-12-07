@@ -96,7 +96,7 @@ public class GetItemWithEnq {
 	private String uomName;
 	private String plantName;
 	
-	private float enqQty;
+	private float enqQty; 
 	
 	private float enqUomId;
 	
