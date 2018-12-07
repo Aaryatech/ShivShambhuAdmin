@@ -127,7 +127,7 @@
 									<div class="col-md-2">Department Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="deptName" name="deptName"
-											pattern="^[A-Za-z\s]+$" autocomplete="off"
+											pattern="[a-zA-Z][a-zA-Z0-9\s]*" autocomplete="off"
 											oninvalid="setCustomValidity('Please Enter correct Department Name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editDept.deptName}" class="form-control" required
