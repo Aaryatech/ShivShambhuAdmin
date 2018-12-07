@@ -348,15 +348,15 @@
 												data,
 												function(i, v) {
 
-													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.termDetailId
-															+ ','
-															+ i
-															+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.termDetailId
-															+ ','
-															+ i
-															+ ')"><i class="fa fa-edit"></i></a>'
+													var str = '<a href="#" class="action_btn" onclick="callEdit('
+														+ v.matVehDetailId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+														+ v.matVehDetailId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
@@ -418,15 +418,15 @@
 												data,
 												function(i, v) {
 													//	var str = '<input  type="button" value="callEdit" onclick="callEdit('+v.itemId+','+i+')" style="width:30%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:30%;"/> ';
-													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.termDetailId
-															+ ','
-															+ i
-															+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.termDetailId
-															+ ','
-															+ i
-															+ ')"><i class="fa fa-edit"></i></a>'
+													var str = '<a href="#" class="action_btn" onclick="callEdit('
+														+ v.matVehDetailId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+														+ v.matVehDetailId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,

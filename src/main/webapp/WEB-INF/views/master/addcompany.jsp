@@ -411,27 +411,36 @@
 		function getCheck() {
 
 			var gstNo = $("#gst_no").val();
+			var comp_id = document.getElementById("comp_id").value;
 
-			$.getJSON('${getUniqueCompanyCheck}', {
+			$
+					.getJSON(
+							'${getUniqueCompanyCheck}',
+							{
 
-				gstNo : gstNo,
+								gstNo : gstNo,
+								comp_id : comp_id,
 
-				ajax : 'true',
+								ajax : 'true',
 
-			}, function(data) {
-				if (data.error == true) {
-					alert("Company Already Exist");
+							},
+							function(data) {
 
-					document.getElementById("gst_no").value = "";
+								if (comp_id == 0) {
+									if (data.error == true) {
+										alert("Company Already Exist");
 
-					document.getElementById("submitButton").disabled = true;
-				} else {
-					document.getElementById("submitButton").disabled = false;
+										document.getElementById("gst_no").value = "";
 
-				}
-			}
+										document.getElementById("submitButton").disabled = true;
+									} else {
+										document.getElementById("submitButton").disabled = false;
 
-			);
+									}
+								}
+							}
+
+					);
 
 		}
 	</script>

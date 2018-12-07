@@ -122,7 +122,7 @@ public class DocTermController {
 	@RequestMapping(value = "/getDocTermForEdit", method = RequestMethod.GET)
 	public @ResponseBody TempDocDetail getDocTermForEdit(HttpServletRequest request, HttpServletResponse response) {
 
-		int termDetailId = Integer.parseInt(request.getParameter("termDetailId"));
+
 		int index = Integer.parseInt(request.getParameter("index"));
 
 		return tempDocList.get(index);
