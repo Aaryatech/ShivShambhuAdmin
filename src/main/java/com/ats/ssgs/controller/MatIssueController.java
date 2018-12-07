@@ -91,14 +91,6 @@ public class MatIssueController {
 
 		try {
 
-			int itemId = Integer.parseInt(request.getParameter("itemName"));
-
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-			map.add("itemId", itemId);
-
-			RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map, RawMatItem.class);
-
 			int isDelete = Integer.parseInt(request.getParameter("isDelete"));
 
 			int isEdit = Integer.parseInt(request.getParameter("isEdit"));
@@ -112,6 +104,16 @@ public class MatIssueController {
 				tempList.remove(key);
 
 			} else if (isEdit == 1) {
+
+				int itemId = Integer.parseInt(request.getParameter("itemName"));
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("itemId", itemId);
+
+				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
+						RawMatItem.class);
+
 				int catId = Integer.parseInt(request.getParameter("catId"));
 				int index = Integer.parseInt(request.getParameter("index"));
 
@@ -129,6 +131,16 @@ public class MatIssueController {
 			}
 
 			else {
+
+				int itemId = Integer.parseInt(request.getParameter("itemName"));
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("itemId", itemId);
+
+				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
+						RawMatItem.class);
+
 				String catId = request.getParameter("catId");
 
 				float qty = Float.parseFloat(request.getParameter("qty"));

@@ -160,7 +160,7 @@
 									<div class="col-md-4">
 										<input type="text" id="issueNo" name="issueNo" maxlength="10"
 											class="form-control" style="width: 100%;" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter Issue No')"
+											oninvalid="setCustomValidity('Please enter correct Issue No')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											pattern="[0-9]+">
 									</div>
@@ -382,8 +382,8 @@
 				ajax : 'true',
 
 			}, function(data) {
-				alert("data" + data);
-				alert(data.exInt1);
+				//alert("data" + data);
+				//alert(data.exInt1);
 				$("#catId").val(data.catId);
 				$("#catId").trigger("chosen:updated");
 				document.getElementById("itemName").value = data.itemId;
@@ -423,9 +423,9 @@
 
 		function callDelete(matDetailId, index) {
 
-			alert("hii");
+			//alert("hii");
 			document.getElementById("isEdit").value = 0;
-			alert("index" + index);
+			//alert("index" + index);
 			$
 					.getJSON(
 							'${addMatIssueDetail}',
@@ -545,7 +545,7 @@
 					//alert("hiii");
 					var html;
 					var len = data.length;
-					var html = '<option value="-1"  >Select Item</option>';
+					var html = '<option value="-1"  >Select</option>';
 					for (var i = 0; i < len; i++) {
 
 						html += '<option value="' + data[i].itemId + '">'
