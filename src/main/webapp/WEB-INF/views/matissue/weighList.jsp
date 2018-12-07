@@ -78,21 +78,21 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<div class="col-md-2">
+							<div class="col-md-4">
 								<strong>${title}</strong>
 							</div>
-							<div class="col-md-8"></div>
-							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showAddProject"><strong>Add
-										Project </strong></a>
+							<div class="col-md-4"></div>
+							<div class="col-md-4" align="left">
+								<a
+									href="${pageContext.request.contextPath}/showAddMatIssueContractor"><strong>Add
+										Material Issue Contractor </strong></a>
 							</div>
 
 						</div>
 						<div class="card-body card-block">
 							<form
-								action="${pageContext.request.contextPath}/deleteRecordofProject"
+								action="${pageContext.request.contextPath}/deleteRecordofMatIssueList"
 								method="post">
-
 
 								<table id="bootstrap-data-table"
 									class="table table-striped table-bordered">
@@ -100,50 +100,40 @@
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
 												type="checkbox" name="selAll" id="selAll" /> Select All</th>
+											<th style="text-align: center; width: 5%;"">Sr No</th>
+											<th style="text-align: center">Contractor Name</th>
+											<th style="text-align: center">Date</th>
+											<th style="text-align: center">Issue No</th>
 
-											<th style="text-align: center; width: 5%;">Sr No</th>
-											<th style="text-align: center">Plant Name</th>
-											<th style="text-align: center">Customer Name</th>
-											<th style="text-align: center">Project Name</th>
-											<th style="text-align: center">Contact Person Name</th>
-											<th style="text-align: center">Mobile No.</th>
-
-											<th style="text-align: center">Location</th>
-											<th style="text-align: center; width: 5%;">Action</th>
+											<th style="text-align: center">Action</th>
 
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${proList}" var="pro" varStatus="count">
+										<c:forEach items="${matIssueList}" var="matIssue"
+											varStatus="count">
 											<tr>
-												<td><input type="checkbox" class="chk" name="projIds"
-													id="projIds${count.index+1}" value="${pro.projId}" /></td>
+												<td><input type="checkbox" class="chk"
+													name="matHeaderIds" id="matHeaderIds${count.index+1}"
+													value="${matIssue.matHeaderId}" /></td>
+
 												<td style="text-align: center">${count.index+1}</td>
-												<td style="text-align: left"><c:out
-														value="${pro.plantName}" /></td>
 
 												<td style="text-align: left"><c:out
-														value="${pro.custName}" /></td>
-
-
-												<td style="text-align: left"><c:out
-														value="${pro.projName}" /></td>
+														value="${matIssue.contrName}" /></td>
 
 												<td style="text-align: left"><c:out
-														value="${pro.contactPerName}" /></td>
+														value="${matIssue.date}" /></td>
 
+												<td style="text-align: right"><c:out
+														value="${matIssue.issueNo}" /></td>
 
-												<td style="text-align: left"><c:out
-														value="${pro.contactPerMob}" /></td>
-
-												<td style="text-align: left"><c:out
-														value="${pro.location}" /></td>
 
 												<td style="text-align: center"><a
-													href="${pageContext.request.contextPath}/editProject/${pro.projId}"><i
+													href="${pageContext.request.contextPath}/editMatIssueCon/${matIssue.matHeaderId}"><i
 														class="fa fa-edit"></i> <span class="text-muted"></span></a>
 													&nbsp; <a
-													href="${pageContext.request.contextPath}/deleteProject/${pro.projId}"
+													href="${pageContext.request.contextPath}/deleteMatIssueCon/${matIssue.matHeaderId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
 														class="fa fa-trash-o"></i></a></td>
 
@@ -161,8 +151,6 @@
 
 								</div>
 							</form>
-
-
 						</div>
 					</div>
 				</div>
@@ -251,5 +239,6 @@
 											});
 						});
 	</script>
+
 </body>
 </html>
