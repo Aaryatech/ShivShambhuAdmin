@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
-<c:url var="getUniqueCompanyCheck" value="/getUniqueCompanyCheck" />
+<c:url var="getContractrateById" value="/getContractrateById" />
 
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
@@ -138,7 +138,17 @@
 											oninvalid="setCustomValidity('Please select Vehicle')">
 											<option>Select</option>
 											<c:forEach items="${vehList}" var="veh">
-												<option value="${veh.vehicleId}">${veh.vehicleName}</option>
+
+												<c:choose>
+													<c:when test="${veh.vehicleId==editWeigh.vehId}">
+														<option value="${veh.vehicleId}" selected>${veh.vehicleName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${veh.vehicleId}">${veh.vehicleName}
+													</c:otherwise>
+												</c:choose>
+
+
 											</c:forEach>
 										</select>
 									</div>
@@ -150,8 +160,20 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select Poklen')">
 											<option>Select</option>
+
+
 											<c:forEach items="${vehPoklenList}" var="poklen">
-												<option value="${poklen.vehicleId}">${poklen.vehicleName}</option>
+
+												<c:choose>
+													<c:when test="${poklen.vehicleId==editWeigh.poklenId}">
+														<option value="${poklen.vehicleId}" selected>${poklen.vehicleName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${poklen.vehicleId}">${poklen.vehicleName}
+													</c:otherwise>
+												</c:choose>
+
+
 											</c:forEach>
 										</select>
 									</div>
@@ -163,21 +185,30 @@
 
 									<div class="col-md-4">
 										<select id="contr_id" name="contr_id" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select Contractor')"
-											onchange="getData()">
-											<option>Select</option>
+											tabindex="1" onchange="getContractRate()">
+											<option value="-1">Select</option>
 											<c:forEach items="${conList}" var="con">
-												<option value="${con.contrId}">${con.contrName}</option>
+
+												<c:choose>
+													<c:when test="${con.contrId==editWeigh.contraId}">
+														<option value="${con.contrId}" selected>${con.contrName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${con.contrId}">${con.contrName}
+													</c:otherwise>
+												</c:choose>
+
+
 											</c:forEach>
 										</select>
 									</div>
 
-									<div class="col-md-2">Contractor Rate</div>
+									<div class="col-md-2">Contractor Rate*</div>
 									<div class="col-md-4">
 										<input type="text" id="rate" name="rate" class="form-control"
 											autocomplete="off" style="width: 100%;"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											value="${editWeigh.contRate}" readonly
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 
@@ -191,13 +222,15 @@
 									<div class="col-md-4">
 										<input type="text" id="qty" name="qty" class="form-control"
 											autocomplete="off" style="width: 100%;"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											value="${editWeigh.quantity}"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 									<div class="col-md-2">Date*</div>
 									<div class="col-md-4">
 										<input type="text" id="date" name="date" autocomplete="off"
-											required class="form-control" required style="width: 100%;">
+											value="${editWeigh.date}" required class="form-control"
+											required style="width: 100%;">
 									</div>
 
 								</div>
@@ -209,9 +242,8 @@
 									<div class="col-md-4">
 										<input type="text" id="vehKm" name="vehKm"
 											class="form-control" autocomplete="off" style="width: 100%;"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											value="${editComp.compLicence}"
-											onkeypress="return allowOnlyNumber(event);">
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
+											value="${editWeigh.vehKm}">
 									</div>
 
 									<div class="col-md-2">Poklen Kilometer</div>
@@ -219,8 +251,7 @@
 										<input type="text" id="poklenKm" name="poklenKm"
 											class="form-control" autocomplete="off" style="width: 100%;"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											value="${editComp.compLicence}"
-											onkeypress="return allowOnlyNumber(event);">
+											value="${editWeigh.poklenKm}" required>
 									</div>
 								</div>
 
@@ -232,7 +263,7 @@
 										<input type="text" id="photo1" name="photo1"
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please Select photo')"
-											maxlength="10" value="${editComp.compPanNo}"
+											maxlength="10" value="${editWeigh.photo1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -243,7 +274,7 @@
 										<input type="text" id="photo2" name="photo2"
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter CIN no')"
-											maxlength="21" value="${editComp.cinNo}"
+											maxlength="21" value="${editWeigh.photo2}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -261,7 +292,7 @@
 											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter remark')"
 											maxlength="200"
-											onchange="try{setCustomValidity('')}catch(e){}" required>${editComp.compFactAdd}</textarea>
+											onchange="try{setCustomValidity('')}catch(e){}" required>${editWeigh.remark}</textarea>
 									</div>
 
 
@@ -388,39 +419,23 @@
 
 
 	<script type="text/javascript">
-		function getCheck() {
+		function getContractRate() {
+			alert("hiiiii");
+			var contrId = document.getElementById("contr_id").value;
+			alert(contrId);
 
-			var gstNo = $("#gst_no").val();
-			var comp_id = document.getElementById("comp_id").value;
+			$.getJSON('${getContractrateById}', {
 
-			$
-					.getJSON(
-							'${getUniqueCompanyCheck}',
-							{
+				contrId : contrId,
+				ajax : 'true',
 
-								gstNo : gstNo,
-								comp_id : comp_id,
+			},
 
-								ajax : 'true',
+			function(data) {
 
-							},
-							function(data) {
+				document.getElementById("rate").value = data.contrRate;
 
-								if (comp_id == 0) {
-									if (data.error == true) {
-										alert("Company Already Exist");
-
-										document.getElementById("gst_no").value = "";
-
-										document.getElementById("submitButton").disabled = true;
-									} else {
-										document.getElementById("submitButton").disabled = false;
-
-									}
-								}
-							}
-
-					);
+			});
 
 		}
 	</script>

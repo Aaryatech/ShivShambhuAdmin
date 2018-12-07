@@ -192,6 +192,10 @@ html {
 								href="${pageContext.request.contextPath}/showAddWeighing">Add
 									Weighing</a></li>
 
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showWeighingList">Weighing
+									List</a></li>
+
 
 
 
