@@ -115,123 +115,132 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showCompList"><strong>Company
+								<a href="${pageContext.request.contextPath}/showWeighingList"><strong>Weighing
 										List</strong></a>
 							</div>
 
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertCompany"
+							<form action="${pageContext.request.contextPath}/insertWeighing"
 								id="submitForm" method="post">
-								<input type="hidden" name="comp_id" id="comp_id"
-									value="${editComp.companyId}">
+								<input type="hidden" name="weighId" id="weighId"
+									value="${editWeigh.weighId}">
 
 								<div class="row">
 
 
 
-									<div class="col-md-2">Company Name*</div>
-									<div class="col-md-10">
-										<input type="text" id="comp_name" name="comp_name"
-											oninvalid="setCustomValidity('Please enter correct company name')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="^[A-Za-z\s]+$" value="${editComp.compName}"
-											style="width: 50%;" autocomplete="off" class="form-control"
-											required>
+									<div class="col-md-2">Select Vehicle*</div>
 
+									<div class="col-md-4">
+										<select id="vehId" name="vehId" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select Vehicle')">
+											<option>Select</option>
+											<c:forEach items="${vehList}" var="veh">
+												<option value="${veh.vehicleId}">${veh.vehicleName}</option>
+											</c:forEach>
+										</select>
+									</div>
+
+									<div class="col-md-2">Select Poklen*</div>
+
+									<div class="col-md-4">
+										<select id="poklenId" name="poklenId" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select Poklen')">
+											<option>Select</option>
+											<c:forEach items="${vehPoklenList}" var="poklen">
+												<option value="${poklen.vehicleId}">${poklen.vehicleName}</option>
+											</c:forEach>
+										</select>
 									</div>
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
 
-
-
-									<div class="col-md-2">Office Address*</div>
+									<div class="col-md-2">Select Contractor*</div>
 
 									<div class="col-md-4">
-										<textarea id="off_add" name="off_add" class="form-control"
-											style="width: 100%;" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter office address')"
-											maxlength="200"
-											onchange="try{setCustomValidity('')}catch(e){}" required>${editComp.compOfficeAdd}</textarea>
+										<select id="contr_id" name="contr_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select Contractor')"
+											onchange="getData()">
+											<option>Select</option>
+											<c:forEach items="${conList}" var="con">
+												<option value="${con.contrId}">${con.contrName}</option>
+											</c:forEach>
+										</select>
+									</div>
+
+									<div class="col-md-2">Contractor Rate</div>
+									<div class="col-md-4">
+										<input type="text" id="rate" name="rate" class="form-control"
+											autocomplete="off" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											onkeypress="return allowOnlyNumber(event);">
 									</div>
 
 
-									<div class="col-md-2">Company Location(Optional)</div>
-
-									<div class="col-md-4">
-										<textarea id="comp_loc" name="comp_loc" class="form-control"
-											style="width: 100%;" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter location')"
-											maxlength="200"
-											onchange="try{setCustomValidity('')}catch(e){}">${editComp.compLoc}</textarea>
-									</div>
 								</div>
 
 
 								<div class="form-group"></div>
 								<div class="row">
-
-
-									<div class="col-md-2">Factory Address*</div>
-
+									<div class="col-md-2">Quantity</div>
 									<div class="col-md-4">
-										<textarea id="fact_add" name="fact_add" class="form-control"
-											style="width: 100%;" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter factory address')"
-											maxlength="200"
-											onchange="try{setCustomValidity('')}catch(e){}" required>${editComp.compFactAdd}</textarea>
+										<input type="text" id="qty" name="qty" class="form-control"
+											autocomplete="off" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											onkeypress="return allowOnlyNumber(event);">
+									</div>
+									<div class="col-md-2">Date*</div>
+									<div class="col-md-4">
+										<input type="text" id="date" name="date" autocomplete="off"
+											required class="form-control" required style="width: 100%;">
 									</div>
 
 								</div>
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">License No*</div>
+
+									<div class="col-md-2">Vehicle Kilometer</div>
 									<div class="col-md-4">
-										<input type="text" id="lic_no" name="lic_no" required
+										<input type="text" id="vehKm" name="vehKm"
+											class="form-control" autocomplete="off" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											value="${editComp.compLicence}"
+											onkeypress="return allowOnlyNumber(event);">
+									</div>
+
+									<div class="col-md-2">Poklen Kilometer</div>
+									<div class="col-md-4">
+										<input type="text" id="poklenKm" name="poklenKm"
+											class="form-control" autocomplete="off" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											value="${editComp.compLicence}"
+											onkeypress="return allowOnlyNumber(event);">
+									</div>
+								</div>
+
+								<div class="form-group"></div>
+
+								<div class="row">
+									<div class="col-md-2">Add Photo1*</div>
+									<div class="col-md-4">
+										<input type="text" id="photo1" name="photo1"
 											style="width: 100%;" class="form-control" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter License no')"
-											maxlength="20" value="${editComp.compLicence}"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
-									</div>
-
-									<div class="col-md-2">GST No*</div>
-									<div class="col-md-4">
-										<input type="text" id="gst_no" name="gst_no" required
-											onblur="getCheck()" style="width: 100%;" class="form-control"
-											autocomplete="off"
-											oninvalid="setCustomValidity('Please enter GST no')"
-											maxlength="20" value="${editComp.compGstNo}"
-											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
-											onkeydown="upperCaseF(this)"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
-									</div>
-								</div>
-
-								<div class="form-group"></div>
-
-								<div class="row">
-									<div class="col-md-2">PAN No*</div>
-									<div class="col-md-4">
-										<input type="text" id="pan_no" name="pan_no" required
-											style="width: 100%;" class="form-control" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter PAN no')"
+											oninvalid="setCustomValidity('Please Select photo')"
 											maxlength="10" value="${editComp.compPanNo}"
-											pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
-											onkeydown="upperCaseF(this)"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
 									</div>
 
-									<div class="col-md-2">CIN No*</div>
+									<div class="col-md-2">Add Photo2*</div>
 									<div class="col-md-4">
-										<input type="text" id="cin_no" name="cin_no" required
+										<input type="text" id="photo2" name="photo2"
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter CIN no')"
 											maxlength="21" value="${editComp.cinNo}"
@@ -245,59 +254,20 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Mobile No*</div>
-									<div class="col-md-4">
-										<input type="text" id="mob_no" name="mob_no"
-											style="width: 100%;" class="form-control"
-											value="${editComp.contactNo1}" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter correct mob no')"
-											pattern="^[1-9]{1}[0-9]{9}$" maxlength="10"
-											onchange="try{setCustomValidity('')}catch(e){}" required />
-										<span class="error" aria-live="polite"></span>
+									<div class="col-md-2">Remark*</div>
 
-									</div>
-									<div class="col-md-2">Telephone No(Optional)</div>
 									<div class="col-md-4">
-										<input type="text" id="tel_no" name="tel_no" maxlength="10"
-											style="width: 100%;" class="form-control"
-											value="${editComp.contactNo2}" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter tel no')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="^[1-9]{1}[0-9]{9}$" /> <span class="error"
-											aria-live="polite"></span>
-
+										<textarea id="remark" name="remark" class="form-control"
+											style="width: 100%;" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter remark')"
+											maxlength="200"
+											onchange="try{setCustomValidity('')}catch(e){}" required>${editComp.compFactAdd}</textarea>
 									</div>
 
 
 								</div>
 
-								<div class="form-group"></div>
 
-								<div class="row">
-									<div class="col-md-2">Email Id*</div>
-									<div class="col-md-4">
-										<input type="text" id="email" name="email" required
-											style="width: 100%;" class="form-control" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter email')"
-											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-											maxlength="50" value="${editComp.email1}"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
-									</div>
-
-									<div class="col-md-2">FAX No*</div>
-									<div class="col-md-4">
-										<input type="text" id="fax" name="fax" required
-											style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter FAX no')"
-											pattern="/[\+? *[1-9]+]?[0-9 ]+/" maxlength="20"
-											value="${editComp.faxNo1}" autocomplete="off"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
-									</div>
-								</div>
 								<div class="form-group"></div>
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
@@ -391,6 +361,16 @@
 				a.value = a.value.toUpperCase();
 			}, 1);
 		}
+	</script>
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$('input[id$=date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+
+		});
 	</script>
 
 

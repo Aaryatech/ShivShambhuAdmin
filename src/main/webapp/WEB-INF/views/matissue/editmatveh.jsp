@@ -493,7 +493,7 @@
 					//alert("hiii");
 					var html;
 					var len = data1.length;
-					var html = '<option value="-1"  >Select Item</option>';
+					var html = '<option value="-1"  >Select</option>';
 					for (var i = 0; i < len; i++) {
 
 						html += '<option value="' + data1[i].itemId + '">'
@@ -633,7 +633,7 @@
 					//alert("hiii");
 					var html;
 					var len = data.length;
-					var html = '<option value="-1"  >Select Item</option>';
+					var html = '<option value="-1"  >Select</option>';
 					for (var i = 0; i < len; i++) {
 
 						html += '<option value="' + data[i].itemId + '">'

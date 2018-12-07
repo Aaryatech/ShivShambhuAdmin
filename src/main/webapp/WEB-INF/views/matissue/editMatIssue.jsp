@@ -387,7 +387,7 @@
 
 	<script type="text/javascript">
 		function add() {
-			alert("in add  ");
+			//alert("in add  ");
 			var itemName = document.getElementById("itemName").value;
 			var qty = document.getElementById("qty").value;
 			var isEdit = document.getElementById("isEdit").value;
@@ -396,7 +396,7 @@
 			var matHeaderId = document.getElementById("matHeaderId").value;
 			var catId = document.getElementById("catId").value;
 
-			alert("Inside add ajax"+catId);
+			//alert("Inside add ajax"+catId);
 			$
 					.getJSON(
 							'${editInAddMatIssueDetail}',
@@ -480,7 +480,7 @@
 					//alert("hiii");
 					var html;
 					var len = data1.length;
-					var html = '<option value="-1"  >Select Item</option>';
+					var html = '<option value="-1"  >Select</option>';
 					for (var i = 0; i < len; i++) {
 
 						html += '<option value="' + data1[i].itemId + '">'
@@ -502,9 +502,9 @@
 
 		function callDelete(matDetailId, index) {
 
-			alert("hii");
+			//alert("hii");
 			document.getElementById("isEdit").value = 0;
-			alert("index" + index);
+			//alert("index" + index);
 			$
 					.getJSON(
 							'${editInAddMatIssueDetail}',
