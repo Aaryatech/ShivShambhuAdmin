@@ -101,7 +101,7 @@ public class GetItemWithEnq {
 	private float enqUomId;
 	
 	private String enqUomName;
-	
+	 
 	
 	private float otherCostAfterTax;//19-11-18
 	private float transCost;//19-11-18
