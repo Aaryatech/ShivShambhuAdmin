@@ -25,11 +25,14 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Plant;
-import com.ats.ssgs.model.order.GetOrder;
+import com.ats.ssgs.model.prodrm.GetItemDetail;
 import com.ats.ssgs.model.prodrm.GetProdPlanDetail;
 import com.ats.ssgs.model.prodrm.GetProdPlanHeader;
+import com.ats.ssgs.model.prodrm.ItemDetail;
 import com.ats.ssgs.model.prodrm.ProdPlanDetail;
 import com.ats.ssgs.model.prodrm.ProdPlanHeader;
+import com.ats.ssgs.model.prodrm.ReqBomDetail;
+import com.ats.ssgs.model.prodrm.ReqBomHeader;
 
 @Controller
 @Scope("session")
@@ -215,5 +218,243 @@ public class ProdController {
 		return "redirect:/showProdPlanList";
 
 	}
+	List<ItemDetail> rmItemList;
+	@RequestMapping(value = "/showManBOM", method = RequestMethod.GET)
+	public ModelAndView showManBOM(HttpServletRequest request, HttpServletResponse response) {
 
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("prod/man_bom");
+
+			model.addObject("title", "Manual BOM");
+			
+			String itemIdList = new String();
+			//List<String> itemIdList=new ArrayList<>();
+			
+			List<GetProdPlanDetail> proDList = prodHeader.getGetProdPlanDetList();
+			
+			for(GetProdPlanDetail detail: proDList ) {
+				itemIdList=itemIdList.concat(""+detail.getItemId()+",");
+			}
+			//getItemDetailByItemIds
+			itemIdList=itemIdList.substring(0, itemIdList.length()-1);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("delStatus", 1);
+			map.add("itemIdList", itemIdList);
+			System.err.println("itemIdList " +itemIdList);
+
+			ItemDetail[] rmItemArray = rest.postForObject(Constants.url + "getItemDetailByItemIds", map,
+					ItemDetail[].class);
+			rmItemList = new ArrayList<ItemDetail>(Arrays.asList(rmItemArray));
+			
+			System.err.println("rmItemList " +rmItemList.toString());
+			
+			model.addObject("rmItemList", rmItemList);
+			model.addObject("prodHeader", prodHeader);
+
+			model.addObject("isError", isError);
+			isError = 0;
+			
+		}catch (Exception e) {
+			
+			System.err.println("Exce in showManBOM   " +e.getMessage());
+			e.printStackTrace();
+
+		}
+		return model;
+	}
+	
+	//insertManualBOM
+	@RequestMapping(value = "/insertManualBOM", method = RequestMethod.POST)
+	public String insertManualBOM(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			String curDate=dateFormatyy.format(new Date());
+			
+			ReqBomHeader bomHeader=new ReqBomHeader();
+			
+			List<ReqBomDetail> reqBomDetail=new ArrayList<>();
+			
+			String NA="NA";
+			for (int i=0; i<rmItemList.size(); i++) {
+				
+				System.err.println("I " +i);
+				
+				float rmQty = Float.parseFloat(request.getParameter("rmQty"+rmItemList.get(i).getItemDetailId()));
+				System.err.println("string at  "+i+" " +"rmQty"+rmItemList.get(i).getRmName() +"rm qty "+rmQty);
+
+				ReqBomDetail bomDet = new ReqBomDetail();
+				
+				bomDet.setAutoRmReqQty(rmQty);
+				bomDet.setDelStatus(1);
+				bomDet.setExVar1(NA);
+				bomDet.setExVar2(NA);
+				bomDet.setExVar3(NA);
+				bomDet.setItemValue(0);
+				bomDet.setMrnBatch(NA);
+				bomDet.setMrnItemRate(0);
+				bomDet.setRejectedQty(0);
+				bomDet.setReturnQty(0);
+				bomDet.setRmId(rmItemList.get(i).getItemDetailId());
+				bomDet.setRmIssueQty(0);
+				bomDet.setRmReqQty(rmQty);
+				bomDet.setStatus(1);
+				bomDet.setUom(NA);
+				
+				reqBomDetail.add(bomDet);
+				
+			}
+
+			bomHeader.setApprovedDate(curDate);
+			bomHeader.setApprovedUserId(0);
+			bomHeader.setBomReqDate(curDate);
+			bomHeader.setDelStatus(1);
+			bomHeader.setExVar1(NA);
+			bomHeader.setExVar2(NA);
+			bomHeader.setIsManual(1);
+			bomHeader.setPlantId(prodHeader.getPlantId());
+			bomHeader.setProductionDate(DateConvertor.convertToYMD(prodHeader.getProductionDate()));
+			bomHeader.setProductionId(prodHeader.getProductionHeaderId());
+			bomHeader.setSenderUserId(prodHeader.getUserId());
+			bomHeader.setStatus(1);
+			bomHeader.setSubPlantId(prodHeader.getSubPlantId());
+			
+			bomHeader.setReqBomDetailsList(reqBomDetail);
+
+			ReqBomHeader bomInsertRes = rest.postForObject(Constants.url + "saveBomHeaderDetail", bomHeader, ReqBomHeader.class);
+			
+			if(bomInsertRes!=null) {
+				isError=2;
+			}else {
+				isError=1;
+			}
+			
+			System.err.println("bomInsertRes  " + bomInsertRes.toString());
+
+		} catch (Exception e) {
+			
+			System.err.println("Exce in bom Insert Manual BOM Prod  " +e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showManBOM";
+	}
+	
+	List<GetItemDetail> getRmItemList;
+	@RequestMapping(value = "/showBOM", method = RequestMethod.GET)
+	public ModelAndView showBOM(HttpServletRequest request, HttpServletResponse response) {
+//			//get response in session and get to showBom Disp Controller
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("prod/auto_bom");
+
+			model.addObject("title", "Automatic BOM");
+			
+		
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("prodHeaderId", prodHeader.getProductionHeaderId());
+
+			GetItemDetail[] rmItemArray = rest.postForObject(Constants.url + "getItemDetailForBOM", map,
+					GetItemDetail[].class);
+			getRmItemList = new ArrayList<GetItemDetail>(Arrays.asList(rmItemArray));
+			
+			System.err.println("rmItemList " +getRmItemList.toString());
+			
+			model.addObject("rmItemList", getRmItemList);
+			model.addObject("prodHeader", prodHeader);
+
+			model.addObject("isError", isError);
+			isError = 0;
+			
+		}catch (Exception e) {
+			
+			System.err.println("Exce in showBOM   " +e.getMessage());
+			e.printStackTrace();
+
+		}
+		return model;
+	}
+	
+	
+	//insertBOM
+		@RequestMapping(value = "/insertBOM", method = RequestMethod.POST)
+		public String insertBOM(HttpServletRequest request, HttpServletResponse response) {
+
+			try {
+
+				String curDate=dateFormatyy.format(new Date());
+				
+				ReqBomHeader bomHeader=new ReqBomHeader();
+				
+				List<ReqBomDetail> reqBomDetail=new ArrayList<>();
+				
+				String NA="NA";
+				for (int i=0; i<getRmItemList.size(); i++) {
+					
+					System.err.println("I " +i);
+					
+					float rmQty = Float.parseFloat(request.getParameter("rmQty"+getRmItemList.get(i).getItemDetailId()));
+					System.err.println("string at  "+i+" " +"rmQty"+getRmItemList.get(i).getRmName() +"rm qty "+rmQty);
+
+					ReqBomDetail bomDet = new ReqBomDetail();
+					
+					bomDet.setAutoRmReqQty(rmQty);
+					bomDet.setDelStatus(1);
+					bomDet.setExVar1(NA);
+					bomDet.setExVar2(NA);
+					bomDet.setExVar3(NA);
+					bomDet.setItemValue(0);
+					bomDet.setMrnBatch(NA);
+					bomDet.setMrnItemRate(0);
+					bomDet.setRejectedQty(0);
+					bomDet.setReturnQty(0);
+					bomDet.setRmId(getRmItemList.get(i).getItemDetailId());
+					bomDet.setRmIssueQty(0);
+					bomDet.setRmReqQty(rmQty);
+					bomDet.setStatus(1);
+					bomDet.setUom(NA);
+					
+					reqBomDetail.add(bomDet);
+					
+				}
+
+				bomHeader.setApprovedDate(curDate);
+				bomHeader.setApprovedUserId(0);
+				bomHeader.setBomReqDate(curDate);
+				bomHeader.setDelStatus(1);
+				bomHeader.setExVar1(NA);
+				bomHeader.setExVar2(NA);
+				bomHeader.setIsManual(0);
+				bomHeader.setPlantId(prodHeader.getPlantId());
+				bomHeader.setProductionDate(DateConvertor.convertToYMD(prodHeader.getProductionDate()));
+				bomHeader.setProductionId(prodHeader.getProductionHeaderId());
+				bomHeader.setSenderUserId(prodHeader.getUserId());
+				bomHeader.setStatus(1);
+				bomHeader.setSubPlantId(prodHeader.getSubPlantId());
+				
+				bomHeader.setReqBomDetailsList(reqBomDetail);
+
+				ReqBomHeader bomInsertRes = rest.postForObject(Constants.url + "saveBomHeaderDetail", bomHeader, ReqBomHeader.class);
+				
+				if(bomInsertRes!=null) {
+					isError=2;
+				}else {
+					isError=1;
+				}
+				
+				System.err.println("bomInsertRes  " + bomInsertRes.toString());
+
+			} catch (Exception e) {
+				
+				System.err.println("Exce in bom Insert Manual BOM Prod  " +e.getMessage());
+				e.printStackTrace();
+			}
+
+			return "redirect:/showManBOM";
+		}
+	
 }

@@ -762,12 +762,14 @@ public class DispatchController {
 			ProdPlanHeader insertProdPlanRes = rest.postForObject(Constants.url + "saveProdPlanHeaderDetail", planHeader,
 					ProdPlanHeader.class);
 			System.err.println("insertProdPlanRes  " +insertProdPlanRes.toString());
+			//put response in session and get to showBom
+			
 			
 		}catch (Exception e) {
 			System.err.println("Exce in getting prod qty "+e.getMessage());
 			e.printStackTrace();
 		}
-		return "redirect:/showDispatchSheet";
+		return "redirect:/showBOM";
 		
 	}
 	//Sachin close

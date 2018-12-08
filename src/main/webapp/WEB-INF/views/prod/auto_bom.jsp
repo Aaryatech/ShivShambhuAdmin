@@ -164,7 +164,7 @@
 
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/completeProd"
+							<form action="${pageContext.request.contextPath}/insertBOM"
 								method="post">
 
 								<div class="row">
@@ -197,12 +197,6 @@
 
 								</div>
 								<div class="form-group"></div>
-								
-								
-								
-								
-								<input type="hidden" name="item_id" id="item_id" value="0">
-								
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Production Date</div>
@@ -257,42 +251,40 @@
 								<div class="form-group"></div>
 			
 								<div class="card-body card-block">
-									<table id="bootstrap-data-table"
+									<table id="table1"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
 												<th style="text-align: center">Sr.No.</th>
-												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">Unit of Measurement</th>
-												<th style="text-align: center">Plan Quantity</th>
-												<th style="text-align: center">Production Quantity</th>
-												<th style="text-align: center">Rejected Quantity</th>
+												<th style="text-align: center">RM Name</th>
+<!-- 												<th style="text-align: center">Unit of Measurement</th>
+ -->												<th style="text-align: center">Quantity</th>
 											</tr>
 										</thead>
 										<tbody>
-									<c:forEach items="${prodHeader.getProdPlanDetList}" var="prodDetail" varStatus="count">
+									<c:forEach items="${rmItemList}" var="itemDetail" varStatus="count">
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
 
 
 											<td style="text-align: left"><c:out
-													value="${prodDetail.itemName}" /></td>
-											<td style="text-align: center"><c:out
-													value="${prodDetail.uomName}" /></td>
-
+													value="${itemDetail.rmName}" /></td>
+										<%-- 	<td style="text-align: center"><c:out
+													value="${itemDetail.rmName}" /></td>
+ --%>
 												
 										<td style="text-align: center">
-										<input  type="text" readonly class="form-control" value="${prodDetail.planQty}"  id="planQty${prodDetail.productionDetailId}" name="planQty${prodDetail.productionDetailId}" />
+										<input  type="text"  class="form-control" value="${itemDetail.rmQuantity}"  id="rmQty${itemDetail.itemDetailId}" name="rmQty${itemDetail.itemDetailId}" />
 										</td>
 										
-										<td style="text-align: center">
+										<%-- <td style="text-align: center">
 											<input  type="number"   class="form-control"  id="prodQty${prodDetail.productionDetailId}" value="${prodDetail.planQty}" name="prodQty${prodDetail.productionDetailId}"/>
 										</td>
 													
 										<td style="text-align: center">
 											<input  type="text"   class="form-control"  id="rejQty${prodDetail.productionDetailId}" value="0" name="rejQty${prodDetail.productionDetailId}"/>
-										</td>
+										</td> --%>
 													
 										</tr>
 										</c:forEach>
@@ -322,16 +314,7 @@
 
 									</div>
 									
-									<div class="col-md-2">
-										<input type="button" class="btn btn-primary" id="manBomButton" onclick="showManualBOM()" value="Manual BOM">
-
-									</div>
 									
-									
-									<div class="col-md-2">
-										<input type="button" class="btn btn-primary" id="bomButton" onclick="showBOM()" value="Add BOM">
-
-									</div>
 									
 
 								</div>
@@ -404,13 +387,13 @@
 	</script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#bootstrap-data-table').DataTable();
+			$('#table_grid1').DataTable();
 			
 			var status=${prodHeader.productionStatus}
 			
-			if(status==3){
+			if(status==1){
 				alert("Status" +status);
-				 $('#bootstrap-data-table tbody input[type="number"]').prop('readonly', true);			
+				 $('#table_grid1 tbody input[type="number"]').prop('readonly', true);			
 				 }
 		});
 	</script>
@@ -434,11 +417,6 @@
 	function showManualBOM(){
 		
 		window.open("${pageContext.request.contextPath}/showManBOM","_self");
-	}
-	
-	function showBOM(){
-		window.open("${pageContext.request.contextPath}/showBOM","_self");
-
 	}
 	
 	</script>
