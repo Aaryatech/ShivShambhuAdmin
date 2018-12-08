@@ -185,15 +185,15 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showChalanList">
 									Chalan List</a></li>
-									
-									
-									
-									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showProdPlanList">
 									Production Plan List</a></li>
-									
-									
-									
+
+
+
 
 
 
@@ -242,6 +242,18 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showMatIssueVehicleList">Material
 									Issue Vehicle List</a></li>
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showContractReport">Contractorwise
+									Report</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showVehicleReport">Vehiclewise
+									Report</a></li>
+
+
+
 
 
 						</ul></li>

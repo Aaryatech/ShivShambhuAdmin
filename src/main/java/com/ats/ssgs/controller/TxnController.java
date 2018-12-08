@@ -482,4 +482,33 @@ public class TxnController {
 		return "redirect:/showPoklenReadingList";
 	}
 
+	@RequestMapping(value = "/editPReading/{pokId}", method = RequestMethod.GET)
+	public ModelAndView editPReading(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int pokId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("matissue/pokreading");
+			model.addObject("title", "Edit Weighing");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("pokId", pokId);
+
+			PoklenReading editPRead = rest.postForObject(Constants.url + "getPoklenReadingById", map,
+					PoklenReading.class);
+
+			model.addObject("editPRead", editPRead);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editPRead at txn Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
 }

@@ -8,8 +8,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
-<c:url var="getContractrateById" value="/getContractrateById" />
 
+<c:url var="getRawItemByCatId" value="/getRawItemByCatId" />
+
+<c:url var="editInAddMatIssueDetail" value="/editInAddMatIssueDetail" />
+
+<c:url var="getMatIssueForEditMatHeader"
+	value="/getMatIssueForEditMatHeader" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,6 +62,7 @@
 	text-align: left;
 }
 </style>
+
 </head>
 <body>
 
@@ -86,7 +92,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<strong>Data not Submitted</strong>
+								<strong>Data not submitted</strong>
 							</div>
 						</div>
 					</c:when>
@@ -116,193 +122,132 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showPoklenReadingList"><strong>Poklen
-										Reading List</strong></a>
+									href="${pageContext.request.contextPath}/showMatIssueContractorList"><strong>Material
+										Issue Contractor List</strong></a>
 							</div>
 
 						</div>
 						<div class="card-body card-block">
 							<form
-								action="${pageContext.request.contextPath}/insertPoklenReading"
+								action="${pageContext.request.contextPath}/updateMaterialContr"
 								id="submitForm" method="post">
-								<input type="hidden" name="pokId" id="pokId"
-									value="${editPRead.pokId}">
 
-								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Start Date*</div>
-									<div class="col-md-4">
-										<input type="text" id="start_date" name="start_date"
-											autocomplete="off" value="${editPRead.startDate}"
-											oninvalid="setCustomValidity('Please select date')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" required style="width: 100%;">
-									</div>
 
-									<div class="col-md-2">End Date*</div>
+									<div class="col-md-2">Contractor Name*</div>
+
 
 									<div class="col-md-4">
-										<input type="text" id="end_date" name="end_date"
-											autocomplete="off" value="${editPRead.endDate}"
-											oninvalid="setCustomValidity('Please select date')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" required style="width: 100%;">
+										<input type="text" id="contr_id" name="contr_id"
+											value="${editMat.contrName}" class="form-control"
+											style="width: 100%;" autocomplete="off" readonly
+											oninvalid="setCustomValidity('Please enter Issue No')"
+											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 
+
+									<div class="col-md-2">Date*</div>
+									<div class="col-md-4">
+										<input type="text" id="date" name="date" autocomplete="off"
+											value="${editMat.date}" required class="form-control"
+											readonly required style="width: 100%;">
+									</div>
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Poke Type*</div>
-
-									<c:choose>
-										<c:when test="${editPRead.pokType==0}">
-											<div class="col-md-2">
-
-												<input type="radio" name="pokeType" id="pokeType" value="0"
-													checked>Breaking
-
-											</div>
-
-											<div class="col-md-2">
-												<input type="radio" name="pokeType" value="1">
-												Loading
-											</div>
-										</c:when>
-										<c:when test="${editPRead.pokType==1}">
-											<div class="col-md-2">
-
-												<input type="radio" name="pokeType" id="pokeType" value="0">Breaking
-											</div>
-											<div class="col-md-2">
-												<input type="radio" name="pokeType" value="1" checked>
-												Loading
-
-											</div>
-										</c:when>
-										<c:otherwise>
-											<div class="col-md-2">
-												Breaking <input type="radio" checked name="pokeType"
-													id="pokeType" value="0">
-											</div>
-
-											<div class="col-md-2">
-												Loading <input type="radio" name="pokeType" id="pokeType"
-													value="1">
-											</div>
-
-										</c:otherwise>
-									</c:choose>
-
-
-
-									<div class="col-md-2">Shift Type*</div>
-
-									<c:choose>
-										<c:when test="${editPRead.shiftType==0}">
-											<div class="col-md-2">
-
-												<input type="radio" name="sType" id="sType" value="0"
-													checked>Day
-
-											</div>
-
-											<div class="col-md-2">
-												<input type="radio" name="sType" value="1"> Night
-											</div>
-										</c:when>
-										<c:when test="${editPRead.shiftType==1}">
-											<div class="col-md-1">
-
-												<input type="radio" name="sType" id="sType" value="0">Day
-											</div>
-											<div class="col-md-1">
-												<input type="radio" name="sType" value="1" checked>
-												Night
-											</div>
-										</c:when>
-										<c:otherwise>
-											<div class="col-md-1">
-												Day <input type="radio" checked name="sType" id="sType"
-													value="0">
-											</div>
-
-											<div class="col-md-1">
-												Night <input type="radio" name="sType" id="sType" value="1">
-											</div>
-
-										</c:otherwise>
-									</c:choose>
-
-
-
-
-
-
-								</div>
-
-
-
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Start Reading*</div>
+									<div class="col-md-2">Issue No*</div>
 									<div class="col-md-4">
-										<input type="text" id="startReading" name="startReading"
-											class="form-control" autocomplete="off" style="width: 100%;"
-											value="${editPRead.startReading}"
-											oninvalid="setCustomValidity('Please enter correct reading')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
-											onkeypress="return allowOnlyNumber(event);">
-									</div>
-									<div class="col-md-2">End Reading*</div>
-									<div class="col-md-4">
-										<input type="text" id="endReading" name="endReading"
-											class="form-control" autocomplete="off" style="width: 100%;"
-											value="${editPRead.endReading}"
-											oninvalid="setCustomValidity('Please enter correct reading')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
-											onkeypress="return allowOnlyNumber(event);">
-									</div>
-
-								</div>
-
-								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Start Time</div>
-									<div class="col-md-4">
-										<input type="time" id="startTime" name="startTime"
-											class="form-control" autocomplete="off" style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter time')"
+										<input type="text" id="issueNo" name="issueNo" maxlength="10"
+											value="${editMat.issueNo}" class="form-control"
+											style="width: 100%;" autocomplete="off" readonly
+											oninvalid="setCustomValidity('Please enter Issue No')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
-											value="${editPRead.startTime}">
+											pattern="[0-9]+">
 									</div>
 
-									<div class="col-md-2">End Time</div>
-									<div class="col-md-4">
-										<input type="time" id="endTime" name="endTime"
-											class="form-control" autocomplete="off" style="width: 100%;"
-											oninvalid="setCustomValidity('Please enter time')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editPRead.endTime}" required>
-									</div>
+									<input type="hidden" value="${editMat.matHeaderId}"
+										name="matHeaderId" id="matHeaderId">
 								</div>
 
-								<div class="form-group"></div>
+
+								<div class="card-body card-block">
+
+									<table id="bootstrap-data-table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+
+												<th style="text-align: center; width: 5%;">Sr No</th>
+												<th style="text-align: center">Item Name</th>
+												<th style="text-align: center">Measurement of Unit</th>
+												<th style="text-align: center">Item Rate</th>
+												<th style="text-align: center">Item Quantity</th>
+												<th style="text-align: center">Value</th>
+												<th style="text-align: center; width: 5%;">Action</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<c:forEach items="${editMatDetail}" var="matDetail"
+												varStatus="count">
+												<tr>
+
+													<td style="text-align: center">${count.index+1}</td>
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.itemDesc}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.uomName}" /></td>
+
+
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.itemRate}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.quantity}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.value}" /></td>
+
+
+													<td style="text-align: center"><a href="#"
+														onclick="callEdit(${matDetail.matDetailId},${count.index})"><i
+															class="fa fa-edit"></i> <span class="text-muted"></span></a>
+														<a href="#"
+														onclick="callDelete(${matDetail.matDetailId},${count.index})"><i
+															class="fa fa fa-trash-o"></i> <span class="text-muted"></span></a></td>
+
+
+
+
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+
+								<!-- <div class="form-group"></div>
 								<div class="col-lg-4"></div>
-								<div class="col-lg-3">
+								<div class="col-lg-2">
+
 									<input type="submit" class="btn btn-primary" value="Submit"
-										id="submitButton"
-										style="align-content: center; width: 113px; margin-left: 40px;">
+										style="align-content: center; width: 113px; margin-left: 20px;">
 
 								</div>
-								<div class="col-lg-3">
+								<div class="col-lg-2">
+
 									<input type="reset" class="btn btn-primary" value="Clear"
-										style="align-content: center; width: 113px; margin-left: 40px;">
+										style="align-content: center; width: 113px; margin-left: 20px;">
 
 								</div>
+ -->
+
 							</form>
 						</div>
 					</div>
@@ -314,14 +259,13 @@
 		<!-- .animated -->
 	</div>
 	<!-- .content -->
-
 	<!-- .animated -->
 	<!-- .content -->
-
-
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	<!-- Footer -->
+
+
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
@@ -331,7 +275,6 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
-
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables.min.js"></script>
@@ -360,32 +303,6 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
 
 
-	<script>
-		jQuery(document).ready(function() {
-			jQuery(".standardSelect").chosen({
-				disable_search_threshold : 2,
-				no_results_text : "Oops, nothing found!",
-				width : "100%"
-			});
-		});
-	</script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#bootstrap-data-table-export').DataTable();
-		});
-	</script>
-
-
-
-	<script>
-		function upperCaseF(a) {
-			setTimeout(function() {
-				a.value = a.value.toUpperCase();
-			}, 1);
-		}
-	</script>
-
-
 	<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(
@@ -397,20 +314,35 @@
 		});
 	</script>
 
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
-		$(function() {
-			$('input[id$=start_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
+		jQuery(document).ready(function() {
+			jQuery(".standardSelect").chosen({
+				disable_search_threshold : 1,
+				no_results_text : "Oops, nothing found!",
+				width : "100%"
 			});
-			$('input[id$=end_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
-
-			});
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#bootstrap-data-table').DataTable();
 		});
 	</script>
 
 
+
+
+
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$('input[id$=date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+
+		});
+	</script>
 
 </body>
 </html>

@@ -218,17 +218,20 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Quantity</div>
+									<div class="col-md-2">Quantity*</div>
 									<div class="col-md-4">
 										<input type="text" id="qty" name="qty" class="form-control"
 											autocomplete="off" style="width: 100%;"
 											value="${editWeigh.quantity}"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
-											onkeypress="return allowOnlyNumber(event);">
+											oninvalid="setCustomValidity('Please enter correct Quantity')"
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 									<div class="col-md-2">Date*</div>
 									<div class="col-md-4">
 										<input type="text" id="date" name="date" autocomplete="off"
+											oninvalid="setCustomValidity('Please select date')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editWeigh.date}" required class="form-control"
 											required style="width: 100%;">
 									</div>
@@ -238,19 +241,23 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Vehicle Kilometer</div>
+									<div class="col-md-2">Vehicle Kilometer*</div>
 									<div class="col-md-4">
 										<input type="text" id="vehKm" name="vehKm"
 											class="form-control" autocomplete="off" style="width: 100%;"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
+											oninvalid="setCustomValidity('Please enter correct Vehicle Kilometer')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editWeigh.vehKm}">
 									</div>
 
-									<div class="col-md-2">Poklen Kilometer</div>
+									<div class="col-md-2">Poklen Kilometer*</div>
 									<div class="col-md-4">
 										<input type="text" id="poklenKm" name="poklenKm"
 											class="form-control" autocomplete="off" style="width: 100%;"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											oninvalid="setCustomValidity('Please enter correct Vehicle Kilometer')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editWeigh.poklenKm}" required>
 									</div>
 								</div>
@@ -258,23 +265,23 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Add Photo1*</div>
+									<div class="col-md-2">Add Photo1</div>
 									<div class="col-md-4">
 										<input type="text" id="photo1" name="photo1"
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please Select photo')"
-											maxlength="10" value="${editWeigh.photo1}"
+											value="${editWeigh.photo1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
 									</div>
 
-									<div class="col-md-2">Add Photo2*</div>
+									<div class="col-md-2">Add Photo2</div>
 									<div class="col-md-4">
 										<input type="text" id="photo2" name="photo2"
 											style="width: 100%;" class="form-control" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter CIN no')"
-											maxlength="21" value="${editWeigh.photo2}"
+											oninvalid="setCustomValidity('Please enter photo')"
+											value="${editWeigh.photo2}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -420,9 +427,9 @@
 
 	<script type="text/javascript">
 		function getContractRate() {
-			alert("hiiiii");
+			//	alert("hiiiii");
 			var contrId = document.getElementById("contr_id").value;
-			alert(contrId);
+			//	alert(contrId);
 
 			$.getJSON('${getContractrateById}', {
 
