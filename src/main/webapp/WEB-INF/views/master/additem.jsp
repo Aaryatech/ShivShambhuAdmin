@@ -214,7 +214,7 @@
 										<input type="text" id="pmin_stock" name="pmin_stock"
 											autocomplete="off" pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											oninvalid="setCustomValidity('Please enter plan min stock')"
-											onchange="try{setCustomValidity('')}catch(e){}"
+											
 											class="form-control" style="width: 100%;">
 									</div>
 									<div class="col-md-2">Plant Max Stock*</div>
@@ -223,6 +223,8 @@
 										<input type="text" id="pmax_stock" name="pmax_stock"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter plan max stock')"
+											
+											onchange="checkstock()"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;" required>
 									</div>
@@ -232,6 +234,7 @@
 										<input type="text" id="prol_stock" name="prol_stock"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter prol stock')"
+											onchange="checkstockvalue()"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;" required>
 									</div>
@@ -371,5 +374,56 @@
 		});
 	</script>
 
+
+
+
+<script>
+		function checkstock() {
+
+			var min_stock= document.getElementById("pmin_stock").value;
+			var max_stock= document.getElementById("pmax_stock").value;
+			var valid = true;
+
+			if (min_stock == null &&  min_stock< max_stock &&  max_stock == null ) {
+
+				valid = false;
+			} 
+
+			if (valid == true) {
+				/* document.getElementById("igst").value = (parseFloat(sgst) + parseFloat(cgst));
+				document.getElementById("totalTaxPer").value = (parseFloat(sgst) + parseFloat(cgst)); */
+				alert("Enter Minimum Stock and Maximum stock Properly");
+				document.getElementById("pmin_stock").value="";
+			}
+
+		}
+	</script>
+	
+	<script>
+		function checkstockvalue() {
+
+			var min_stock= document.getElementById("pmin_stock").value;
+			var max_stock= document.getElementById("pmax_stock").value;
+			var prol_stock= document.getElementById("prol_stock").value;
+			
+			var valid = true;
+
+			if (min_stock < 0  &&  max_stock < 0  &&  prol_stock < 0 ) {
+
+				valid = false;
+			} 
+
+			if (valid == true) {
+				
+				alert("Please Enter Stock Values  Properly");
+				//document.getElementById("pmin_stock").value="";
+				min_stock="";
+				document.getElementById("pmax_stock").value="";
+				document.getElementById("prol_stock").value=""
+				
+			}
+
+		}
+	</script>
 </body>
 </html>

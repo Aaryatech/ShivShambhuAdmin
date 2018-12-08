@@ -129,7 +129,7 @@
 									<div class="col-md-2">Measurement Unit Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="uomName" name="uomName"
-											pattern="[a-zA-Z][a-zA-Z0-9\s]*" value="${editUom.uomName}"
+											pattern="[a-zA-Z][a-zA-Z]*" value="${editUom.uomName}"
 											class="form-control" onblur="getUomNameCheck()"
 											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct Uom Name')"
@@ -160,7 +160,7 @@
 									<div class="col-md-4">
 										<input type="text" id="uomShortName" name="uomShortName"
 											autocomplete="off" value="${editUom.uomShortName}"
-											class="form-control" pattern="[a-zA-Z][a-zA-Z0-9\s]*"
+											class="form-control" pattern="[a-zA-Z][a-zA-Z]*"
 											oninvalid="setCustomValidity('Please enter Uom Short Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">

@@ -118,7 +118,7 @@
 
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertDept"
-								id="submitForm" method="post">
+								id="submitForm" method="post" >
 
 
 
@@ -127,7 +127,7 @@
 									<div class="col-md-2">Department Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="deptName" name="deptName"
-											pattern="[a-zA-Z][a-zA-Z0-9\s]*" autocomplete="off"
+											pattern="[a-zA-Z][a-zA-Z\s]*" autocomplete="off"
 											oninvalid="setCustomValidity('Please Enter correct Department Name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editDept.deptName}" class="form-control" required
@@ -228,12 +228,7 @@
 
 								</div>
 							</form>
-						</div>
-
-
-
-
-					</div>
+						</div>			</div>
 				</div>
 			</div>
 
@@ -314,11 +309,14 @@
 	<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(
+					if(return confirm('Do you really want to submit the Purchase Order ?')){
+						
+					
 					function() {
 						$("input[type='submit']", this).val("Please Wait...")
 								.attr('disabled', 'disabled');
 						return true;
-					});
+					}});
 		});
 	</script>
 

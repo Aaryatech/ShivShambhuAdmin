@@ -166,7 +166,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Mobile No*</div>
+									<div class="col-md-2">Mobile No.*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="mob_no" name="mob_no" required
@@ -334,13 +334,13 @@
 
 								<div class="row">
 
-									<div class="col-md-2">PIN Code No</div>
+									<!-- <div class="col-md-2">PIN Code No</div>
 									<div class="col-md-4">
 										<input type="text" id="pincode" name="pincode" maxlength="6"
 											class="form-control" style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Pincode')"
 											onchange="try{setCustomValidity('')}catch(e){}">
-									</div>
+									</div> -->
 									<div class="col-md-2">Kilometer</div>
 									<div class="col-md-4">
 										<input type="text" id="km" name="km" class="form-control"
@@ -363,7 +363,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Mobile No</div>
+									<div class="col-md-2">Contact Person Mobile No</div>
 
 									<div class="col-md-4">
 										<input type="text" id="con_per_mob" name="con_per_mob"

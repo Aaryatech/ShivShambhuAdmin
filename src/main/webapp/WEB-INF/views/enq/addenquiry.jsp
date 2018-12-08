@@ -207,7 +207,7 @@
 										</div>
 
 
-										<div class="col-md-2">Unit Of Measure</div>
+										<div class="col-md-2">Unit Of Measurement</div>
 
 										<div class="col-md-4">
 											<select id="uomId" name="uomId" class="standardSelect"

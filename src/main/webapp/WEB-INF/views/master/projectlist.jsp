@@ -141,11 +141,11 @@
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editProject/${pro.projId}"><i
-														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+														class="fa fa-edit" title="Edit"></i> <span class="text-muted"></span></a>
 													&nbsp; <a
 													href="${pageContext.request.contextPath}/deleteProject/${pro.projId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o"></i></a></td>
+														class="fa fa-trash-o" title="Delete"></i></a></td>
 
 											</tr>
 										</c:forEach>

@@ -123,7 +123,7 @@
 						<div class="card-body card-block">
 							<form
 								action="${pageContext.request.contextPath}/insertBankDetail"
-								id="submitForm" method="post">
+								id="submitForm"   onsubmit="return confirm('Do you really want to submit the Purchase Order ?');" method="post">
 
 								<div class="row">
 
@@ -453,6 +453,8 @@
 		$(function() {
 			$('#submitForm').submit(
 					function() {
+						
+						
 						$("input[type='submit']", this).val("Please Wait...")
 								.attr('disabled', 'disabled');
 						return true;
