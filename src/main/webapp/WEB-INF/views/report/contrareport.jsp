@@ -219,6 +219,27 @@
 								</thead>
 
 							</table>
+							<div class="col-md-2"></div>
+
+							<div class="col-md-3">
+
+								<button type="button" class="btn btn-primary"
+									onclick="exportToExcel();" disabled="disabled" id="expExcel"
+									style="align-content: center; width: 200px; margin-left: 80px;">
+									Export To Excel</button>
+							</div>
+
+
+							<div class="col-md-3">
+
+								<button type="button" class="btn btn-primary" onclick="genPdf()"
+									disabled="disabled" id="PDFButton"
+									style="align-content: center; width: 100px; margin-left: 80px;">
+									PDF</button>
+							</div>
+							&nbsp;
+
+
 						</div>
 
 
@@ -350,6 +371,16 @@
 
 								function(data) {
 
+									document.getElementById("expExcel").disabled = false;
+									document.getElementById("PDFButton").disabled = false;
+
+									if (data == "") {
+										alert("No records found !!");
+										document.getElementById("expExcel").disabled = true;
+										document.getElementById("PDFButton").disabled = true;
+
+									}
+
 									//alert("Order Data " +JSON.stringify(data));
 
 									var dataTable = $('#bootstrap-data-table')
@@ -394,102 +425,27 @@
 		}
 	</script>
 
-	<!-- <script type="text/javascript">
-	// on cust change function 
-		function showOrder() {
-			$('#divCheckbox').show();
-			var custId = document.getElementById("cust_name").value;
-			var valid = true;
-			if (custId == null || custId == "") {
-				valid = false;
-				alert("Please Select Customer");
-				
-				$('#po_id').html("-1");
-				$("#po_id").trigger("chosen:updated");
-				
-				var dataTable = $('#bootstrap-data-table')
-				.DataTable();
-		dataTable.clear().draw();
 
-			}
-			else if(custId<0){
-				valid = false;
-				
-				$('#po_id').html("-1");
-				$("#po_id").trigger("chosen:updated");
-				
-				var dataTable = $('#bootstrap-data-table')
-				.DataTable();
-		dataTable.clear().draw();
+	<script type="text/javascript">
+		function exportToExcel() {
 
-			}
-			if (valid == true) {
-
-				$
-						.getJSON(
-								'${getCustInfoByCustId}',
-								{
-									custId : custId,
-									ajax : 'true',
-
-								},
-								function(data) {
-									document.getElementById("custTypeName").value = data.custTypeName;
-									document.getElementById("custMobNo").value = data.custMobNo;
-								});
-
-				$	.getJSON(
-						'${getPOHeaderByCustId}',
-						{
-							custId : custId,
-							ajax : 'true',
-						},
-						function(data) {
-							var html;
-							var len = data.length;
-							//alert("data " +JSON.stringify(data));
-							for (var i = 0; i < len; i++) {
-								var PNo=data[i].poNo+"-"+ data[i].poDate 
-
-								html += '<option value="' + data[i].poId + '">'
-										+PNo+ '</option>';
-
-							}
-							html += '</option>';
-							$('#po_id').html(html);
-							$("#po_id").trigger("chosen:updated");
-						});
-				
-				
-				$	.getJSON(
-						'${getProjectByCustId}',
-						{
-							custId : custId,
-							ajax : 'true',
-						},
-						function(data) {
-							var html;
-							var len = data.length;
-							//alert("data " +JSON.stringify(data));
-							for (var i = 0; i < len; i++) {
-								var projData=data[i].projName+"-"+data[i].address
-
-								html += '<option value="' + data[i].projId + '">'
-										+projData+ '</option>';
-
-							}
-							html += '</option>';
-							$('#proj_id').html(html);
-							$("#proj_id").trigger("chosen:updated");
-						});
-				
-				
-			}// end of if valid= true
-			
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
 		}
-	</script> -->
+	</script>
 
+	<script type="text/javascript">
+		function genPdf() {
+			alert("hiii");
+			var fromDate = document.getElementById("fromDate").value;
+			var toDate = document.getElementById("toDate").value;
 
+			window.open('${pageContext.request.contextPath}/showUserwisePdf/'
+					+ fromDate + '/' + toDate);
+			document.getElementById("expExcel").disabled = true;
+
+		}
+	</script>
 
 
 </body>

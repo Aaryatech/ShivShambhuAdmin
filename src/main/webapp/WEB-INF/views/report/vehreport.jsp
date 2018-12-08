@@ -215,6 +215,25 @@
 								</thead>
 
 							</table>
+							<div class="col-md-2"></div>
+
+							<div class="col-md-3">
+
+								<button type="button" class="btn btn-primary"
+									onclick="exportToExcel();" disabled="disabled" id="expExcel"
+									style="align-content: center; width: 200px; margin-left: 80px;">
+									Export To Excel</button>
+							</div>
+
+
+							<div class="col-md-3">
+
+								<button type="button" class="btn btn-primary" onclick="genPdf()"
+									disabled="disabled" id="PDFButton"
+									style="align-content: center; width: 100px; margin-left: 80px;">
+									PDF</button>
+							</div>
+							&nbsp;
 						</div>
 
 
@@ -346,6 +365,16 @@
 
 								function(data) {
 
+									document.getElementById("expExcel").disabled = false;
+									document.getElementById("PDFButton").disabled = false;
+
+									if (data == "") {
+										alert("No records found !!");
+										document.getElementById("expExcel").disabled = true;
+										document.getElementById("PDFButton").disabled = true;
+
+									}
+
 									//alert("Order Data " +JSON.stringify(data));
 
 									var dataTable = $('#bootstrap-data-table')
@@ -388,6 +417,28 @@
 			window
 					.open("${pageContext.request.contextPath}/vehilceDetailReport/"
 							+ matVehHeaderId);
+
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		function exportToExcel() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
+		}
+	</script>
+
+	<script type="text/javascript">
+		function genPdf() {
+			alert("hiii");
+			var fromDate = document.getElementById("fromDate").value;
+			var toDate = document.getElementById("toDate").value;
+
+			window.open('${pageContext.request.contextPath}/showUserwisePdf/'
+					+ fromDate + '/' + toDate);
+			document.getElementById("expExcel").disabled = true;
 
 		}
 	</script>
