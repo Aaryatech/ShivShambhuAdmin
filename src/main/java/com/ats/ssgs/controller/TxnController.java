@@ -42,6 +42,7 @@ public class TxnController {
 	List<Contractor> conList;
 	List<GetWeighing> weighList;
 	List<Vehicle> vehPoklenList;
+	List<PoklenReading> pReadingList;
 
 	@RequestMapping(value = "/showAddWeighing", method = RequestMethod.GET)
 	public ModelAndView showAddWeighing(HttpServletRequest request, HttpServletResponse response) {
@@ -378,6 +379,7 @@ public class TxnController {
 			pReading.setExInt1(1);
 			pReading.setExInt2(1);
 			pReading.setPokId(pokId);
+
 			pReading.setExVar1("NA");
 			pReading.setExVar2("NA");
 			pReading.setStartTime(startTime);
@@ -403,6 +405,81 @@ public class TxnController {
 		}
 		return "redirect:/showAddPReading";
 
+	}
+
+	@RequestMapping(value = "/showPoklenReadingList", method = RequestMethod.GET)
+	public ModelAndView showPoklenReadingList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("matissue/poklenReadingList");
+
+			model.addObject("title", "Poklen Reading  List");
+			PoklenReading[] weighArray = rest.getForObject(Constants.url + "getAllPoklenReadingList",
+					PoklenReading[].class);
+			pReadingList = new ArrayList<PoklenReading>(Arrays.asList(weighArray));
+
+			model.addObject("pReadingList", pReadingList);
+		} catch (Exception e) {
+
+			System.err.println("exception In showPoklenReadingList at Txn Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/deletePReading/{pokId}", method = RequestMethod.GET)
+	public String deletePReading(HttpServletRequest request, HttpServletResponse response, @PathVariable int pokId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("pokId", pokId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deletePoklenReading", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deletePoklenReading @txncontroller  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showPoklenReadingList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofPReading", method = RequestMethod.POST)
+	public String deleteRecordofPReading(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] pokIds = request.getParameterValues("pokIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < pokIds.length; i++) {
+				sb = sb.append(pokIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("pokIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiPReading", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteMultiPReading @txncontroller  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showPoklenReadingList";
 	}
 
 }

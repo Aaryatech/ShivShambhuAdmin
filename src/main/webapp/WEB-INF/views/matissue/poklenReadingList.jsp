@@ -8,9 +8,6 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
-<c:url var="getContractrateById" value="/getContractrateById" />
-
-
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -57,6 +54,7 @@
 	text-align: left;
 }
 </style>
+
 </head>
 <body>
 
@@ -76,36 +74,6 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-				<c:choose>
-					<c:when test="${isError==1}">
-						<div class="col-sm-12">
-							<div
-								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
-
-								<button type="button" class="close" data-dismiss="alert"
-									aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-								<strong>Data not Submitted</strong>
-							</div>
-						</div>
-					</c:when>
-
-					<c:when test="${isError==2}">
-						<div class="col-sm-12">
-							<div
-								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
-
-								<button type="button" class="close" data-dismiss="alert"
-									aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-								<strong>Data Submitted Successfully</strong>
-							</div>
-						</div>
-					</c:when>
-
-				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -115,117 +83,91 @@
 							</div>
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
-								<a
-									href="${pageContext.request.contextPath}/showPoklenReadingList"><strong>Poklen
-										Reading List</strong></a>
+								<a href="${pageContext.request.contextPath}/showAddPReading"><strong>Add
+										Poklen Reading </strong></a>
 							</div>
 
 						</div>
 						<div class="card-body card-block">
 							<form
-								action="${pageContext.request.contextPath}/insertPoklenReading"
-								id="submitForm" method="post">
-								<input type="hidden" name="pokId" id="pokId"
-									value="${editPoklen.pokId}">
+								action="${pageContext.request.contextPath}/deleteRecordofPReading"
+								method="post">
 
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Start Date*</div>
-									<div class="col-md-4">
-										<input type="text" id="start_date" name="start_date"
-											autocomplete="off" value="${editPro.startDate}"
-											class="form-control" required style="width: 100%;">
-									</div>
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th class="check" style="text-align: center; width: 5%;"><input
+												type="checkbox" name="selAll" id="selAll" /> Select All</th>
+											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center">Start Date</th>
+											<th style="text-align: center">End Date</th>
+											<th style="text-align: center">Poklen Type</th>
+											<th style="text-align: center">Shift Type</th>
+											<th style="text-align: center">Start Reading</th>
+											<th style="text-align: center">End Reading</th>
+											<th style="text-align: center">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${pReadingList}" var="pReading"
+											varStatus="count">
+											<tr>
+												<td><input type="checkbox" class="chk" name="pokIds"
+													id="pokIds${count.index+1}" value="${pReading.pokId}" /></td>
 
-									<div class="col-md-2">End Date*</div>
+												<td style="text-align: center">${count.index+1}</td>
 
-									<div class="col-md-4">
-										<input type="text" id="end_date" name="end_date"
-											autocomplete="off" value="${editPro.endDate}"
-											class="form-control" required style="width: 100%;">
-									</div>
+												<td style="text-align: left"><c:out
+														value="${pReading.startDate}" /></td>
 
-								</div>
-								<div class="form-group"></div>
-								<div class="row">
+												<td style="text-align: left"><c:out
+														value="${pReading.endDate}" /></td>
 
-									<div class="col-md-2">Poke Type*</div>
+												<td style="text-align: left"><c:choose>
+														<c:when test="${pReading.pokType==0}">
+														Breaking
+													</c:when>
+														<c:when test="${pReading.pokType==1}">
+														Loading
+													</c:when>
+													</c:choose></td>
 
-									<div class="col-md-2">
-										Breaking <input type="radio" checked name="pokeType"
-											id="pokeType" value="1">
-									</div>
+												<td style="text-align: left"><c:choose>
+														<c:when test="${pReading.shiftType==0}">
+														Day
+													</c:when>
+														<c:when test="${pReading.shiftType==1}">
+														Night
+													</c:when>
+													</c:choose></td>
 
-									<div class="col-md-2">
-										Loading <input type="radio" name="pokeType" id="pokeType"
-											value="0">
-									</div>
+												<td style="text-align: right"><c:out
+														value="${pReading.startReading}" /></td>
 
-
-									<div class="col-md-2">Shift Type*</div>
-									<div class="col-md-1">
-										Yes <input type="radio" checked name="sType" id="sType"
-											value="1">
-									</div>
-
-									<div class="col-md-1">
-										NO <input type="radio" name="sType" id="sType" value="0">
-									</div>
-
-								</div>
+												<td style="text-align: right"><c:out
+														value="${pReading.startReading}" /></td>
 
 
+												<td style="text-align: center"><a
+													href="${pageContext.request.contextPath}/editPReading/${pReading.pokId}"><i
+														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+													&nbsp; <a
+													href="${pageContext.request.contextPath}/deletePReading/${pReading.pokId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o"></i></a></td>
 
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Start Reading*</div>
-									<div class="col-md-4">
-										<input type="text" id="startReading" name="startReading"
-											class="form-control" autocomplete="off" style="width: 100%;"
-											value="${editWeigh.quantity}"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
-											onkeypress="return allowOnlyNumber(event);">
-									</div>
-									<div class="col-md-2">End Reading*</div>
-									<div class="col-md-4">
-										<input type="text" id="endReading" name="endReading"
-											class="form-control" autocomplete="off" style="width: 100%;"
-											value="${editWeigh.quantity}"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
-											onkeypress="return allowOnlyNumber(event);">
-									</div>
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								<div class="col-lg-1">
 
-								</div>
-
-								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Start Time</div>
-									<div class="col-md-4">
-										<input type="time" id="startTime" name="startTime"
-											class="form-control" autocomplete="off" style="width: 100%;"
-											required value="${editWeigh.vehKm}">
-									</div>
-
-									<div class="col-md-2">End Time</div>
-									<div class="col-md-4">
-										<input type="time" id="endTime" name="endTime"
-											class="form-control" autocomplete="off" style="width: 100%;"
-											value="${editWeigh.poklenKm}" required>
-									</div>
-								</div>
-
-								<div class="form-group"></div>
-								<div class="col-lg-4"></div>
-								<div class="col-lg-3">
-									<input type="submit" class="btn btn-primary" value="Submit"
-										id="submitButton"
+									<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
-								</div>
-								<div class="col-lg-3">
-									<input type="reset" class="btn btn-primary" value="Clear"
-										style="align-content: center; width: 113px; margin-left: 40px;">
 
 								</div>
 							</form>
@@ -239,6 +181,7 @@
 		<!-- .animated -->
 	</div>
 	<!-- .content -->
+
 
 	<!-- .animated -->
 	<!-- .content -->
@@ -300,42 +243,22 @@
 		});
 	</script>
 
-
-
-	<script>
-		function upperCaseF(a) {
-			setTimeout(function() {
-				a.value = a.value.toUpperCase();
-			}, 1);
-		}
-	</script>
-
-
 	<script type="text/javascript">
-		$(function() {
-			$('#submitForm').submit(
-					function() {
-						$("input[type='submit']", this).val("Please Wait...")
-								.attr('disabled', 'disabled');
-						return true;
-					});
-		});
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
+
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
 	</script>
-
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script>
-		$(function() {
-			$('input[id$=start_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
-			});
-			$('input[id$=end_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
-
-			});
-		});
-	</script>
-
-
 
 </body>
 </html>
