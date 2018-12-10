@@ -68,34 +68,6 @@
 }
 </style>
 
-<style>
-.alert {
-	padding: 20px;
-	background-color: red;
-	color: white;
-}
-
-.alert1 {
-	padding: 20px;
-	background-color: green;
-	color: white;
-}
-
-.closebtn {
-	margin-left: 15px;
-	color: white;
-	font-weight: bold;
-	float: right;
-	font-size: 22px;
-	line-height: 20px;
-	cursor: pointer;
-	transition: 0.3s;
-}
-
-.closebtn:hover {
-	color: black;
-}
-</style>
 
 
 </head>
@@ -203,9 +175,10 @@
 								<thead>
 									<tr>
 										<th style="text-align: center">Sr.No.</th>
+										<th style="text-align: center">Date</th>
 										<th style="text-align: center">Vehicle Name</th>
 										<th style="text-align: center">Vehicle No</th>
-										<th style="text-align: center">Date</th>
+
 										<th style="text-align: center">Total</th>
 										<th style="text-align: center">Total Quantity</th>
 										<th style="text-align: center">Reading</th>
@@ -396,9 +369,10 @@
 																.add(
 																		[
 																				i + 1,
+																				v.date,
 																				v.vehicleName,
 																				v.vehNo,
-																				v.date,
+
 																				v.vehTotal,
 																				v.vehQtyTotal,
 																				v.reading,
@@ -433,10 +407,10 @@
 	<script type="text/javascript">
 		function genPdf() {
 			alert("hiii");
-			var fromDate = document.getElementById("fromDate").value;
-			var toDate = document.getElementById("toDate").value;
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
 
-			window.open('${pageContext.request.contextPath}/showUserwisePdf/'
+			window.open('${pageContext.request.contextPath}/showVehwisePdf/'
 					+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 

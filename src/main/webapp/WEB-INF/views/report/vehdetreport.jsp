@@ -223,22 +223,27 @@
 											</c:forEach>
 										</tbody>
 									</table>
+
+									<div class="col-md-2"></div>
+
+									<div class="col-md-3">
+
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
+
+
+									<div class="col-md-3">
+
+										<button type="button" class="btn btn-primary"
+											onclick="genPdf()" id="PDFButton"
+											style="align-content: center; width: 100px; margin-left: 80px;">
+											PDF</button>
+									</div>
+									&nbsp;
 								</div>
-
-								<!-- <div class="form-group"></div>
-								<div class="col-lg-4"></div>
-								<div class="col-lg-2">
-
-									<input type="submit" class="btn btn-primary" value="Submit"
-										style="align-content: center; width: 113px; margin-left: 20px;">
-
-								</div>
-								<div class="col-lg-2">
-
-									<input type="reset" class="btn btn-primary" value="Clear"
-										style="align-content: center; width: 113px; margin-left: 20px;">
-
-								</div> -->
 
 
 							</form>
@@ -347,6 +352,25 @@
 			});
 
 		});
+	</script>
+
+
+	<script type="text/javascript">
+		function exportToExcel() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
+		}
+	</script>
+
+	<script type="text/javascript">
+		function genPdf() {
+			alert("hiii");
+
+			window.open('${pageContext.request.contextPath}/showVehDetailPdf/');
+			document.getElementById("expExcel").disabled = true;
+
+		}
 	</script>
 
 </body>
