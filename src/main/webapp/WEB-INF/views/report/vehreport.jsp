@@ -362,6 +362,8 @@
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.matVehHeaderId
 																+ ','
+																+ v.vehId
+																+ ','
 																+ i
 																+ ')"><i class="fa fa-list"></i></a>'
 
@@ -386,11 +388,11 @@
 
 		}
 
-		function callEdit(matVehHeaderId) {
+		function callEdit(matVehHeaderId, vehId) {
 
 			window
 					.open("${pageContext.request.contextPath}/vehilceDetailReport/"
-							+ matVehHeaderId);
+							+ matVehHeaderId + '/' + vehId);
 
 		}
 	</script>

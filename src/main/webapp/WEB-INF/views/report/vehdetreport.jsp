@@ -182,8 +182,7 @@
 								</div>
 								<div class="card-body card-block">
 
-									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
+									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
 												<th style="text-align: center; width: 5%;">Sr No</th>
@@ -223,6 +222,56 @@
 											</c:forEach>
 										</tbody>
 									</table>
+
+									<table class="table table-striped table-bordered">
+										<thead>
+											<tr>
+
+												<th style="text-align: center; width: 5%;">Sr No</th>
+												<th style="text-align: center">Vehicle Name</th>
+												<th style="text-align: center">Vehicle No</th>
+												<th style="text-align: center">Poklen Name</th>
+												<th style="text-align: center">Poklen No</th>
+												<th style="text-align: center">Quantity</th>
+
+											</tr>
+										</thead>
+
+										<tbody>
+											<c:forEach items="${weighing}" var="weighing"
+												varStatus="count">
+												<tr>
+
+													<td style="text-align: center">${count.index+1}</td>
+
+													<td style="text-align: left"><c:out
+															value="${weighing.vehicleName}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${weighing.vehicleNo}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${weighing.pokeName}" /></td>
+
+
+
+													<td style="text-align: left"><c:out
+															value="${weighing.pokeNo}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${weighing.quantity}" /></td>
+
+
+
+
+
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+
 
 									<div class="col-md-2"></div>
 

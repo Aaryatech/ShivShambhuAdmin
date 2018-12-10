@@ -525,6 +525,108 @@ public class ReportController {
 				table.addCell(cell);
 
 			}
+			PdfPTable table1 = new PdfPTable(6);
+			try {
+				System.out.println("Inside PDF Table1 try");
+				table1.setWidthPercentage(100);
+				table1.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f });
+				Font headFontFirst = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+				Font headFont1Second = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+				headFont1Second.setColor(BaseColor.WHITE);
+				// Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE,
+				// BaseColor.BLUE);
+
+				PdfPCell hcell1 = new PdfPCell();
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				hcell1.setPadding(3);
+				hcell1 = new PdfPCell(new Phrase("Sr.No.", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Vehicle Name", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Vehicle No", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Poklen Name", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Poklen No", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Quantity", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				int index1 = 0;
+				for (GetWeighing work : weighing) {
+					index1++;
+					PdfPCell cell;
+
+					cell = new PdfPCell(new Phrase(String.valueOf(index1), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setPadding(3);
+					cell.setPaddingRight(2);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getVehicleName(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getVehicleNo(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getPokeName(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(work.getPokeNo(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
@@ -545,150 +647,8 @@ public class ReportController {
 
 			document.add(new Paragraph("\n"));
 			document.add(table);
-			int totalPages = writer.getPageNumber();
-
-			System.out.println("Page no " + totalPages);
-
-			document.close();
-
-			if (file != null) {
-
-				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
-
-				if (mimeType == null) {
-
-					mimeType = "application/pdf";
-
-				}
-
-				response.setContentType(mimeType);
-
-				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
-
-				response.setContentLength((int) file.length());
-
-				InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
-
-				try {
-					FileCopyUtils.copy(inputStream, response.getOutputStream());
-				} catch (IOException e) {
-					System.out.println("Excep in Opening a Pdf File");
-					e.printStackTrace();
-				}
-
-			}
-		} catch (DocumentException ex) {
-
-			System.out.println("Pdf Generation Error: " + ex.getMessage());
-
-			ex.printStackTrace();
-		}
-
-		PdfPTable table1 = new PdfPTable(6);
-		try {
-			System.out.println("Inside PDF Table1 try");
-			table1.setWidthPercentage(100);
-			table1.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f });
-			Font headFontFirst = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
-			Font headFont1Second = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
-			headFont1Second.setColor(BaseColor.WHITE);
-			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
-
-			PdfPCell hcell1 = new PdfPCell();
-			hcell1.setBackgroundColor(BaseColor.PINK);
-
-			hcell1.setPadding(3);
-			hcell1 = new PdfPCell(new Phrase("Sr.No.", headFont1Second));
-			hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell1.setBackgroundColor(BaseColor.PINK);
-
-			table1.addCell(hcell1);
-
-			hcell1 = new PdfPCell(new Phrase("Vehicle Name", headFont1Second));
-			hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell1.setBackgroundColor(BaseColor.PINK);
-
-			table1.addCell(hcell1);
-
-			hcell1 = new PdfPCell(new Phrase("Vehicle No", headFont1Second));
-			hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell1.setBackgroundColor(BaseColor.PINK);
-
-			table1.addCell(hcell1);
-
-			hcell1 = new PdfPCell(new Phrase("Poklen Name", headFont1Second));
-			hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell1.setBackgroundColor(BaseColor.PINK);
-
-			table1.addCell(hcell1);
-
-			hcell1 = new PdfPCell(new Phrase("Poklen No", headFont1Second));
-			hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell1.setBackgroundColor(BaseColor.PINK);
-
-			table1.addCell(hcell1);
-
-			hcell1 = new PdfPCell(new Phrase("Quantity", headFont1Second));
-			hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell1.setBackgroundColor(BaseColor.PINK);
-
-			table1.addCell(hcell1);
-
-			table1.addCell(hcell1);
-
-			int index1 = 0;
-			for (GetWeighing work : weighing) {
-				index1++;
-				PdfPCell cell;
-
-				cell = new PdfPCell(new Phrase(String.valueOf(index1), headFontFirst));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				cell.setPadding(3);
-				cell.setPaddingRight(2);
-				table1.addCell(cell);
-
-				cell = new PdfPCell(new Phrase("" + work.getVehicleName(), headFontFirst));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table1.addCell(cell);
-
-				cell = new PdfPCell(new Phrase("" + work.getVehicleNo(), headFontFirst));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table1.addCell(cell);
-
-				cell = new PdfPCell(new Phrase("" + work.getPokeName(), headFontFirst));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table1.addCell(cell);
-
-				cell = new PdfPCell(new Phrase("" + work.getPokeNo(), headFontFirst));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table.addCell(cell);
-
-				cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFontFirst));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table1.addCell(cell);
-
-			}
-			document.open();
-
-			document.add(new Paragraph("\n"));
+			document.add(new Paragraph(" "));
 			document.add(table1);
-
 			int totalPages = writer.getPageNumber();
 
 			System.out.println("Page no " + totalPages);
@@ -721,7 +681,6 @@ public class ReportController {
 				}
 
 			}
-
 		} catch (DocumentException ex) {
 
 			System.out.println("Pdf Generation Error: " + ex.getMessage());
@@ -817,9 +776,9 @@ public class ReportController {
 
 	GetVehHeader editVeh;
 
-	@RequestMapping(value = "/vehilceDetailReport/{matVehHeaderId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/vehilceDetailReport/{matVehHeaderId}/{vehId}", method = RequestMethod.GET)
 	public ModelAndView vehilceDetailReport(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable int matVehHeaderId) {
+			@PathVariable int matVehHeaderId, @PathVariable int vehId) {
 
 		ModelAndView model = null;
 		try {
@@ -833,6 +792,16 @@ public class ReportController {
 			model.addObject("title", "Vehicle Report");
 			model.addObject("editVeh", editVeh);
 			model.addObject("editVehDetail", editVeh.getVehDetailList());
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("vehicleId", vehId);
+
+			GetWeighing[] weighingArray = rest.postForObject(Constants.url + "getWeighByVehicleId", map,
+					GetWeighing[].class);
+			weighing = new ArrayList<GetWeighing>(Arrays.asList(weighingArray));
+
+			model.addObject("weighing", weighing);
 
 		} catch (Exception e) {
 			System.err.println("exception In vehilceDetailReport at Mat Contr" + e.getMessage());
@@ -978,6 +947,7 @@ public class ReportController {
 				table.addCell(cell);
 
 			}
+
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
@@ -1159,6 +1129,109 @@ public class ReportController {
 				table.addCell(cell);
 
 			}
+
+			PdfPTable table1 = new PdfPTable(6);
+			try {
+				System.out.println("Inside PDF Table1 try");
+				table1.setWidthPercentage(100);
+				table1.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f });
+				Font headFontFirst = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+				Font headFont1Second = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+				headFont1Second.setColor(BaseColor.WHITE);
+				// Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE,
+				// BaseColor.BLUE);
+
+				PdfPCell hcell1 = new PdfPCell();
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				hcell1.setPadding(3);
+				hcell1 = new PdfPCell(new Phrase("Sr.No.", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Vehicle Name", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Vehicle No", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Poklen Name", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Poklen No", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Quantity", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				int index1 = 0;
+				for (GetWeighing work : weighing) {
+					index1++;
+					PdfPCell cell;
+
+					cell = new PdfPCell(new Phrase(String.valueOf(index1), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setPadding(3);
+					cell.setPaddingRight(2);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getVehicleName(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getVehicleNo(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getPokeName(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(work.getPokeNo(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
@@ -1179,6 +1252,8 @@ public class ReportController {
 
 			document.add(new Paragraph("\n"));
 			document.add(table);
+			document.add(new Paragraph(" "));
+			document.add(table1);
 
 			int totalPages = writer.getPageNumber();
 
