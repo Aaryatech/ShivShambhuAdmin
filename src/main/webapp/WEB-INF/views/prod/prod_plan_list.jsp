@@ -314,7 +314,7 @@
 	// onclick of submit to search order 
 		function showProdHeader() {
 		
-		alert("Hi View Prod Plans  ");
+		//alert("Hi View Prod Plans  ");
 	
 			var plantId = document.getElementById("plant_id").value;
 			 var fromDate=document.getElementById("from_date").value;
@@ -361,7 +361,7 @@
 									.DataTable();
 							dataTable.clear().draw();
 							
-							alert("Data " +JSON.stringify(data));
+							//alert("Data " +JSON.stringify(data));
 
 							$.each(data,function(i, v) {
 												//alert("hdjfh");

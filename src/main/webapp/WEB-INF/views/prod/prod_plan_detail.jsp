@@ -272,28 +272,20 @@
 										<tbody>
 									<c:forEach items="${prodHeader.getProdPlanDetList}" var="prodDetail" varStatus="count">
 										<tr>
-
 											<td style="text-align: center">${count.index+1}</td>
-
-
 											<td style="text-align: left"><c:out
 													value="${prodDetail.itemName}" /></td>
 											<td style="text-align: center"><c:out
 													value="${prodDetail.uomName}" /></td>
-
-												
 										<td style="text-align: center">
 										<input  type="text" readonly class="form-control" value="${prodDetail.planQty}"  id="planQty${prodDetail.productionDetailId}" name="planQty${prodDetail.productionDetailId}" />
 										</td>
-										
 										<td style="text-align: center">
-											<input  type="number"   class="form-control"  id="prodQty${prodDetail.productionDetailId}" value="${prodDetail.planQty}" name="prodQty${prodDetail.productionDetailId}"/>
+											<input  type="number"   class="form-control"  id="prodQty${prodDetail.productionDetailId}" value="${prodDetail.planQty}" onkeypress="return allowOnlyNumber(event);" name="prodQty${prodDetail.productionDetailId}"/>
 										</td>
-													
 										<td style="text-align: center">
-											<input  type="text"   class="form-control"  id="rejQty${prodDetail.productionDetailId}" value="0" name="rejQty${prodDetail.productionDetailId}"/>
+											<input  type="text"   class="form-control"  id="rejQty${prodDetail.productionDetailId}" value="0" onkeypress="return allowOnlyNumber(event);" name="rejQty${prodDetail.productionDetailId}"/>
 										</td>
-													
 										</tr>
 										</c:forEach>
 
@@ -441,6 +433,41 @@
 
 	}
 	
+	</script>
+	
+	<script type="text/javascript">
+
+	function allowOnlyNumber(evt){
+	    var charCode = (evt.which) ? evt.which : event.keyCode
+	    if (charCode == 46){
+	        var inputValue = $("#floor").val();
+	        var count = (inputValue.match(/'.'/g) || []).length;
+	        
+	        if(count<1){
+	            if (inputValue.indexOf('.') < 1){
+	                return true;
+	            }
+	            return false;
+	        }else{
+	            return false;
+	        }
+	    }
+	    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+	        return false;
+	    }
+	    return true;
+	}
+	
+	</script>
+	<script type="text/javascript">
+	 function allowOnlyNumber1(evt){
+		 var valid=true;
+	  var charCode = (evt.which) ? evt.which : event.keyCode
+	  if (charCode > 31 && charCode==46 && (charCode < 48 || charCode > 57)){
+		  valid=false;
+	  }
+	  return valid;
+	} 
 	</script>
 
 
