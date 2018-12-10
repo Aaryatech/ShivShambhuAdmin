@@ -127,6 +127,7 @@ public class ProdController {
 			System.err.println("Exce in Ajax /getProdHeadersBetDate  " + e.getMessage());
 			e.printStackTrace();
 		}
+		
 		return prodHeadList;
 	}
 
