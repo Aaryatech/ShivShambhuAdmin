@@ -264,7 +264,7 @@ public class QuotController {
 	public @ResponseBody List<GetItemWithEnq> getItemsAndEnqItemList(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		/*MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
 		int enqHeadId = Integer.parseInt(request.getParameter("enqHeadId"));
@@ -277,8 +277,8 @@ public class QuotController {
 		itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
 
 		System.err.println("Ajax Item list for km onchange  List " + itemList.toString());
-
-		return itemList;
+*/
+		return enqItemList;
 
 	}
 

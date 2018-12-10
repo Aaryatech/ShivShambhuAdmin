@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -339,7 +340,7 @@ public class ProdController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showManBOM";
+		return "redirect:/showProdPlanList";
 	}
 	
 	List<GetItemDetail> getRmItemList;
@@ -347,6 +348,33 @@ public class ProdController {
 	public ModelAndView showBOM(HttpServletRequest request, HttpServletResponse response) {
 //			//get response in session and get to showBom Disp Controller
 
+		
+		if(prodHeader==null) {
+			
+			System.err.println("prodHeader==null" );
+			
+			HttpSession session=request.getSession();
+			
+			
+			
+			
+			ProdPlanHeader insertHeader=(ProdPlanHeader) session.getAttribute("prodHeader");
+			
+			
+			MultiValueMap<String, Object>   map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("prodHeaderId", insertHeader.getProductionHeaderId());
+			prodHeader = rest.postForObject(Constants.url + "getProdPlanDetail", map, GetProdPlanHeader.class);
+
+			prodHeader.setProductionDate(DateConvertor.convertToDMY(prodHeader.getProductionDate()));
+			prodHeader.setProductionStartDate(DateConvertor.convertToDMY(prodHeader.getProductionStartDate()));
+			prodHeader.setProductionEndDate(DateConvertor.convertToDMY(prodHeader.getProductionEndDate()));
+
+			
+			System.err.println("prodHeader from session  " +prodHeader.toString() );
+
+			
+		}
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("prod/auto_bom");
@@ -447,6 +475,12 @@ public class ProdController {
 				}
 				
 				System.err.println("bomInsertRes  " + bomInsertRes.toString());
+				
+				
+				prodHeader=null;
+				HttpSession session=request.getSession();
+				
+				session.removeAttribute("prodHeader");				
 
 			} catch (Exception e) {
 				
@@ -454,7 +488,7 @@ public class ProdController {
 				e.printStackTrace();
 			}
 
-			return "redirect:/showManBOM";
+			return "redirect:/showProdPlanList";
 		}
 	
 }

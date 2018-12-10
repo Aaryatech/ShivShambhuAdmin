@@ -25,6 +25,7 @@ import java.util.stream.LongStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -764,7 +765,14 @@ public class DispatchController {
 			System.err.println("insertProdPlanRes  " +insertProdPlanRes.toString());
 			//put response in session and get to showBom
 			
+			insertProdPlanRes.setProductionDate(DateConvertor.convertToDMY(insertProdPlanRes.getProductionDate()));
+			insertProdPlanRes.setProductionStartDate(DateConvertor.convertToDMY(insertProdPlanRes.getProductionStartDate()));
+			insertProdPlanRes.setProductionEndDate(DateConvertor.convertToDMY(insertProdPlanRes.getProductionEndDate()));
+			System.err.println("prodHeader for session  " +insertProdPlanRes.toString() );
+
 			
+			HttpSession session=request.getSession();
+			session.setAttribute("prodHeader", insertProdPlanRes);
 		}catch (Exception e) {
 			System.err.println("Exce in getting prod qty "+e.getMessage());
 			e.printStackTrace();

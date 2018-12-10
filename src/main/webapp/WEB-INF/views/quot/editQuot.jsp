@@ -465,32 +465,31 @@ body {
 
 								<div class="form-group"></div>
 								<div class="row">
-${quotHeader.taxValue}
 									<div class="col-md-2">Is Tax Included</div>
 
 									<c:choose>
-										<c:when test="${quotHeader.taxValue==1}">
+										<c:when test="${quotHeader.taxValue>0}">
 											<div class="col-md-1">
 												No<input type="radio" checked name="is_tax_inc" id="is_tax_inc"
-													value="1" onchange="changeTaxValue(this.value)">
+													value="1" onchange="calcAll()">
 											</div>
 
 											<div class="col-md-1">
 												Yes<input  type="radio" name="is_tax_inc"
 													id="is_tax_inc" value="0"
-													onchange="changeTaxValue(this.value)">
+													onchange="calcAll()">
 											</div>
 										</c:when>
 										<c:otherwise>
 											<div class="col-md-1">
 												No<input type="radio"   name="is_tax_inc"
 													id="is_tax_inc" value="1" 
-													onchange="changeTaxValue(this.value)">
+													onchange="calcAll()">
 											</div>
 
 											<div class="col-md-1">
 												Yes<input type="radio" name="is_tax_inc" id="is_tax_inc"
-													value="0" checked onchange="changeTaxValue(this.value)">
+													value="0" checked onchange="calcAll()">
 											</div>
 										</c:otherwise>
 									</c:choose>
@@ -655,7 +654,7 @@ ${quotHeader.taxValue}
 
 
 													<td class="col-md-2" style="text-align: right" width="100%"><input
-														type="text" readonly id="tax_amt${item.itemId}"
+														type="text" readonly id='tax_amt${item.itemId}'
 														value="${item.taxValue}" name="tax_amt${item.itemId}"
 														class="form-control"></td>
 
@@ -818,6 +817,9 @@ ${quotHeader.taxValue}
 			if(quotQty<0 || quotQty==0){
 				valid=false;
 				alert("please enter valid quotation quantity ");
+			}else if(itenmId=="" || itemId==null){
+				valid=false;
+				alert("please select item ");
 			}
 				if(valid==true){
 				
@@ -920,9 +922,9 @@ var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
 				function(data) {
 					//alert("length " +data.length);
 					
-									alert(data[0].tempMsg)
+									//alert(data[0].tempMsg)
 
-					//alert("Order Data " +JSON.stringify(data));
+					//alert("Order Data " +JSON.stringify(data[0].totalTaxPer));
 					//alert("length " +data.length);
 					 var dataTable = $('#bootstrap-data-table')
 					.DataTable();
@@ -1066,7 +1068,8 @@ var termTitle=data.termTitle
 
 	<script type="text/javascript">
 		
-		function changeTaxValue(value){
+		function changeTaxValue1(value1){
+			//alert("Inside changeTaxValue " +value1);
 			calcAll();
 		}
 		</script>
@@ -1080,7 +1083,7 @@ var termTitle=data.termTitle
 			
 		}
 		</script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		
 		function toggle() {
 			  checkboxes = document.getElementsByName('selectItem');
@@ -1089,12 +1092,13 @@ var termTitle=data.termTitle
 			  }
 			  }
 				  
-		</script>
+		</script> -->
 	<script type="text/javascript">
 		
 		function callsetKM(){
 			
 			var x=${quotHeader.noOfKm};
+			//alert("No of km " +x);
 			if(x==0){
 				
 				setKM(1);
@@ -1138,47 +1142,14 @@ var termTitle=data.termTitle
 
 
 
-	<script type="text/javascript">
-
-        $(document).ready(function(){
-
-            $('input[type="checkbox"]').click(function(){
-
-                if($(this).prop("checked") == true){
-
-                   // alert("Checkbox is checked.");
-
-                }
-
-                else if($(this).prop("checked") == false){
-
-                    // alert("Checkbox is unchecked.");
-
-                }
-
-            });
-            
-            
-            
-
-        });
-
-    </script>
-
-
+	
 	<!--  CalcAll function onchange of KM  -->
 
 	<script type="text/javascript">
 		function calcAll() {
 			//alert("in call ");
-			var isTaxInc;
-			if (document.getElementById('is_tax_inc').checked) {
-				isTaxInc = document.getElementById('is_tax_inc').value;
-				}
-			else{
-				isTaxInc=0;
-			}
-			//alert("isTaxInc " +isTaxInc);
+				
+		//	alert("isTaxInc2 " +isTaxInc);
 			
 			var otherCostHeader= document.getElementById("other_cost").value;
 			var tollCost= document.getElementById("toll_amt").value;
@@ -1212,8 +1183,6 @@ var termTitle=data.termTitle
 
  			}
 			 
-			 
-	//alert("Valid " +valid);
 			 if(valid==true){
 
 		 var plantId=${quotHeader.plantIds};
@@ -1236,16 +1205,19 @@ var termTitle=data.termTitle
 				 
 				 for (var i = 0; i < len; i++) {
 					 var frRate=parseFloat(data[i].freightRate);
-					 var transCost=frRate*km;
+					 var transCost=frRate * km;
 					 var itemRate=parseFloat(data[i].itemRate1);
 					 var royRate=parseFloat(data[i].royaltyRate);
 					 var taxPer=parseFloat(data[i].totalTaxPer);
-					 
+						//alert("data[i].royaltyRate" +data[i].royaltyRate);
+						 //alert("taxPerfdfdvdv" +isTaxInc);
+						 var isTaxInc = $("input[name=is_tax_inc]:checked").val()
+				//alert("isTaxInc Yes No Per Item  " +isTaxInc);
 					 if(isTaxInc==0){
 						 taxPer=0;
 					 }
-					// alert("transCost" +transCost);
-					
+					// alert("TAx pes" +taxPer);
+
 					document.getElementById("trans_cost"+data[i].itemId).value=transCost.toFixed(2);
 					document.getElementById("toll_cost"+data[i].itemId).value=tollCost;
 					document.getElementById("other_cost"+data[i].itemId).value=otherCostHeader;
@@ -1257,12 +1229,13 @@ var termTitle=data.termTitle
 					 }
 					 
 					 var taxableAmt=parseFloat(itemRate)+parseFloat(tollCost)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
-					// alert("taxabelAmt " +taxableAmt); 
+					//alert("taxabelAmt " +taxableAmt); 
 					 document.getElementById("taxable_amt"+data[i].itemId).value=taxableAmt;
 
 					 var taxAmt=(taxableAmt*taxPer)/100;
 					 document.getElementById("tax_amt"+data[i].itemId).value=taxAmt;
-					 
+						//alert("taxAmt " +taxAmt); 
+
 					var otherCostAfterTax= document.getElementById("oth_cost_aft_tax"+data[i].itemId).value;
 					 
 					 if(otherCostAfterTax==null || otherCostAfterTax==""){
@@ -1281,8 +1254,9 @@ var termTitle=data.termTitle
 </script>
 	<script type="text/javascript">
 	function itemCalc(itemId,fRate,itemRate,royRate,taxPer){
+		//alert("itemCalc taxPer 1" +taxPer)
 	//alert("Hi");
-	var isTaxInc;
+	/* var isTaxInc;
 			if (document.getElementById('is_tax_inc').checked) {
 				isTaxInc = document.getElementById('is_tax_inc').value;
 				}
@@ -1291,7 +1265,12 @@ var termTitle=data.termTitle
 			}
 			 if(isTaxInc==0){
 				 taxPer=0;
-			 }
+			 } */
+			 
+		 var isTaxInc = $("input[name=is_tax_inc]:checked").val()
+				 if(isTaxInc==0){
+					 taxPer=0;
+				 }
 	var tollCost =document.getElementById("toll_cost"+itemId).value;
 	var transCost =document.getElementById("trans_cost"+itemId).value;
 	var otherCost= document.getElementById("other_cost"+itemId).value;
@@ -1437,6 +1416,35 @@ var termTitle=data.termTitle
 	  return valid;
 	} 
 	</script>
+	
+<!-- 	<script type="text/javascript">
+
+        $(document).ready(function(){
+
+            $('input[type="checkbox"]').click(function(){
+
+                if($(this).prop("checked") == true){
+
+                   // alert("Checkbox is checked.");
+
+                }
+
+                else if($(this).prop("checked") == false){
+
+                    // alert("Checkbox is unchecked.");
+
+                }
+
+            });
+            
+            
+            
+
+        });
+
+    </script> -->
+
+	
 	<!-- <script type="text/javascript">
 		function getData() {
 			var plantId = document.getElementById("plant_id").value;

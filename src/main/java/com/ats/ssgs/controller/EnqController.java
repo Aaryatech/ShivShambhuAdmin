@@ -489,17 +489,17 @@ public class EnqController {
 
 			quotHeader.setQuotNo(docs.getDocPrefix() + "" + docs.getSrNo());
 
-			quotHeader.setQuotTaxableAmt(0);
-			quotHeader.setQuotTaxAmt(0);
+			quotHeader.setQuotTaxableAmt(0.0f);
+			quotHeader.setQuotTaxAmt(0.0f);
 			quotHeader.setQuotTermId(0);
-			quotHeader.setQuotTotal(0);
-			quotHeader.setQuotValue(0);
+			quotHeader.setQuotTotal(0.0f);
+			quotHeader.setQuotValue(0.0f);
 			quotHeader.setStatus(0);
-			quotHeader.setTaxableValue(0);
+			quotHeader.setTaxableValue(0.0f);
 
-			quotHeader.setTaxValue(0);
-			quotHeader.setTollCost(0);
-			quotHeader.setTransportCost(0);
+			quotHeader.setTaxValue(1.0f);
+			quotHeader.setTollCost(0.0f);
+			quotHeader.setTransportCost(0.0f);
 
 			quotHeader.setTransportTermId(0);
 			quotHeader.setTransportTerms("NA");
