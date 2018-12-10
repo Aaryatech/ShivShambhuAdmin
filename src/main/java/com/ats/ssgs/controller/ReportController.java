@@ -38,6 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.ExportToExcel;
+import com.ats.ssgs.model.master.GetPoklenReading;
 import com.ats.ssgs.model.master.GetWeighing;
 import com.ats.ssgs.model.mat.Contractor;
 import com.ats.ssgs.model.mat.GetMatIssueDetail;
@@ -1295,6 +1296,85 @@ public class ReportController {
 
 		}
 
+	}
+
+	@RequestMapping(value = "/showPoklenReport", method = RequestMethod.GET)
+	public ModelAndView showPoklenReport(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("report/poklenreport");
+
+			model.addObject("title", "Poklenwise Report");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showPoklenReport at Txn Contr" + e.getMessage());
+
+			e.printStackTrace();
+		}
+
+		return model;
+
+	}
+
+	List<GetPoklenReading> pokList = new ArrayList<>();
+
+	@RequestMapping(value = "/getPokReportBetDate", method = RequestMethod.GET)
+	public @ResponseBody List<GetPoklenReading> getPoklenReportBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		System.err.println(" in getPoklenReportBetDate");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+
+		GetPoklenReading[] pokeListArray = rest.postForObject(Constants.url + "getPokReadingListBetweenDate", map,
+				GetPoklenReading[].class);
+		pokList = new ArrayList<GetPoklenReading>(Arrays.asList(pokeListArray));
+
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+
+		rowData.add("Sr. No");
+		rowData.add("Date");
+		rowData.add("Contractor Name");
+		rowData.add("Issue No");
+
+		rowData.add("Total");
+		rowData.add("Total Quantity");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		int cnt = 1;
+		for (int i = 0; i < getMatList.size(); i++) {
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			cnt = cnt + i;
+			rowData.add("" + (i + 1));
+			rowData.add("" + getMatList.get(i).getDate());
+			rowData.add("" + getMatList.get(i).getContrName());
+			rowData.add("" + getMatList.get(i).getIssueNo());
+
+			rowData.add("" + getMatList.get(i).getTotal());
+			rowData.add("" + getMatList.get(i).getQtyTotal());
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "GetPoklenReading");
+
+		return pokList;
 	}
 
 }

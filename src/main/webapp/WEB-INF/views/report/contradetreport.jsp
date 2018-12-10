@@ -120,12 +120,12 @@
 								<strong>${title}</strong>
 							</div>
 							<div class="col-md-4"></div>
-							<div class="col-md-4" align="left">
+							<%-- <div class="col-md-4" align="left">
 								<a
 									href="${pageContext.request.contextPath}/showMatIssueContractorList"><strong>Material
 										Issue Contractor List</strong></a>
 							</div>
-
+ --%>
 						</div>
 						<div class="card-body card-block">
 							<form
