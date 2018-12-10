@@ -18,12 +18,14 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ats.ssgs.common.ExportToExcel;
 
+@Controller
 public class ExportExcelController {
 
 	/*
@@ -34,7 +36,7 @@ public class ExportExcelController {
 	List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 	@RequestMapping(value = "/exportToExcel", method = RequestMethod.GET)
-	@ResponseBody
+
 	public void downloadSpreadsheet(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		XSSFWorkbook wb = null;
 		HttpSession session = request.getSession();

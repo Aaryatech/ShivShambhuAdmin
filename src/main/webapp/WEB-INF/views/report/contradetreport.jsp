@@ -173,8 +173,7 @@
 
 								<div class="card-body card-block">
 
-									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
+									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
 
@@ -184,7 +183,7 @@
 												<th style="text-align: center">Item Rate</th>
 												<th style="text-align: center">Item Quantity</th>
 												<th style="text-align: center">Value</th>
-												<th style="text-align: center; width: 5%;">Action</th>
+
 											</tr>
 										</thead>
 
@@ -216,12 +215,53 @@
 															value="${matDetail.value}" /></td>
 
 
-													<td style="text-align: center"><a href="#"
-														onclick="callEdit(${matDetail.matDetailId},${count.index})"><i
-															class="fa fa-edit"></i> <span class="text-muted"></span></a>
-														<a href="#"
-														onclick="callDelete(${matDetail.matDetailId},${count.index})"><i
-															class="fa fa fa-trash-o"></i> <span class="text-muted"></span></a></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+
+
+
+									<table class="table table-striped table-bordered">
+										<thead>
+											<tr>
+
+												<th style="text-align: center; width: 5%;">Sr No</th>
+												<th style="text-align: center">Vehicle Name</th>
+												<th style="text-align: center">Vehicle No</th>
+												<th style="text-align: center">Poklen Name</th>
+												<th style="text-align: center">Poklen No</th>
+												<th style="text-align: center">Quantity</th>
+
+											</tr>
+										</thead>
+
+										<tbody>
+											<c:forEach items="${weighing}" var="weighing"
+												varStatus="count">
+												<tr>
+
+													<td style="text-align: center">${count.index+1}</td>
+
+													<td style="text-align: left"><c:out
+															value="${weighing.vehicleName}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${weighing.vehicleNo}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${weighing.pokeName}" /></td>
+
+
+
+													<td style="text-align: left"><c:out
+															value="${weighing.pokeNo}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${weighing.quantity}" /></td>
+
 
 
 
@@ -230,23 +270,28 @@
 											</c:forEach>
 										</tbody>
 									</table>
+
+
+									<div class="col-md-2"></div>
+
+									<div class="col-md-3">
+
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
+
+
+									<div class="col-md-3">
+
+										<button type="button" class="btn btn-primary"
+											onclick="genPdf()" id="PDFButton"
+											style="align-content: center; width: 100px; margin-left: 80px;">
+											PDF</button>
+									</div>
+									&nbsp;
 								</div>
-
-								<!-- <div class="form-group"></div>
-								<div class="col-lg-4"></div>
-								<div class="col-lg-2">
-
-									<input type="submit" class="btn btn-primary" value="Submit"
-										style="align-content: center; width: 113px; margin-left: 20px;">
-
-								</div>
-								<div class="col-lg-2">
-
-									<input type="reset" class="btn btn-primary" value="Clear"
-										style="align-content: center; width: 113px; margin-left: 20px;">
-
-								</div>
- -->
 
 							</form>
 						</div>
@@ -329,6 +374,12 @@
 		});
 	</script>
 
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#bootstrap-data-table1').DataTable();
+		});
+	</script>
+
 
 
 
@@ -342,6 +393,26 @@
 			});
 
 		});
+	</script>
+
+
+	<script type="text/javascript">
+		function exportToExcel() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
+		}
+	</script>
+
+	<script type="text/javascript">
+		function genPdf() {
+			alert("hiii");
+
+			window
+					.open('${pageContext.request.contextPath}/showContraDetailPdf/');
+			document.getElementById("expExcel").disabled = true;
+
+		}
 	</script>
 
 </body>

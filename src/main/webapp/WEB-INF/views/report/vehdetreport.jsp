@@ -182,8 +182,7 @@
 								</div>
 								<div class="card-body card-block">
 
-									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
+									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
 												<th style="text-align: center; width: 5%;">Sr No</th>
@@ -223,22 +222,77 @@
 											</c:forEach>
 										</tbody>
 									</table>
+
+									<table class="table table-striped table-bordered">
+										<thead>
+											<tr>
+
+												<th style="text-align: center; width: 5%;">Sr No</th>
+												<th style="text-align: center">Vehicle Name</th>
+												<th style="text-align: center">Vehicle No</th>
+												<th style="text-align: center">Poklen Name</th>
+												<th style="text-align: center">Poklen No</th>
+												<th style="text-align: center">Quantity</th>
+
+											</tr>
+										</thead>
+
+										<tbody>
+											<c:forEach items="${weighing}" var="weighing"
+												varStatus="count">
+												<tr>
+
+													<td style="text-align: center">${count.index+1}</td>
+
+													<td style="text-align: left"><c:out
+															value="${weighing.vehicleName}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${weighing.vehicleNo}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${weighing.pokeName}" /></td>
+
+
+
+													<td style="text-align: left"><c:out
+															value="${weighing.pokeNo}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${weighing.quantity}" /></td>
+
+
+
+
+
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+
+
+									<div class="col-md-2"></div>
+
+									<div class="col-md-3">
+
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
+
+
+									<div class="col-md-3">
+
+										<button type="button" class="btn btn-primary"
+											onclick="genPdf()" id="PDFButton"
+											style="align-content: center; width: 100px; margin-left: 80px;">
+											PDF</button>
+									</div>
+									&nbsp;
 								</div>
-
-								<!-- <div class="form-group"></div>
-								<div class="col-lg-4"></div>
-								<div class="col-lg-2">
-
-									<input type="submit" class="btn btn-primary" value="Submit"
-										style="align-content: center; width: 113px; margin-left: 20px;">
-
-								</div>
-								<div class="col-lg-2">
-
-									<input type="reset" class="btn btn-primary" value="Clear"
-										style="align-content: center; width: 113px; margin-left: 20px;">
-
-								</div> -->
 
 
 							</form>
@@ -347,6 +401,25 @@
 			});
 
 		});
+	</script>
+
+
+	<script type="text/javascript">
+		function exportToExcel() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
+		}
+	</script>
+
+	<script type="text/javascript">
+		function genPdf() {
+			alert("hiii");
+
+			window.open('${pageContext.request.contextPath}/showVehDetailPdf/');
+			document.getElementById("expExcel").disabled = true;
+
+		}
 	</script>
 
 </body>

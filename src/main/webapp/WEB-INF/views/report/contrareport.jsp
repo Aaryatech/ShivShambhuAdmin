@@ -209,9 +209,10 @@
 								<thead>
 									<tr>
 										<th style="text-align: center">Sr.No.</th>
+										<th style="text-align: center">Date</th>
 										<th style="text-align: center">Contractor Name</th>
 										<th style="text-align: center">Issue No</th>
-										<th style="text-align: center">Date</th>
+
 										<th style="text-align: center">Total</th>
 										<th style="text-align: center">Total Quantity</th>
 										<th style="text-align: center">Action</th>
@@ -395,6 +396,8 @@
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.matHeaderId
 																+ ','
+																+ v.contrId
+																+ ','
 																+ i
 																+ ')"><i class="fa fa-list"></i></a>'
 
@@ -402,9 +405,9 @@
 																.add(
 																		[
 																				i + 1,
+																				v.date,
 																				v.contrName,
 																				v.issueNo,
-																				v.date,
 																				v.total,
 																				v.qtyTotal,
 																				acButton ])
@@ -413,14 +416,14 @@
 
 								});
 
-			}//end of if valid ==true
+			}
 
 		}
-		function callEdit(matHeaderId) {
+		function callEdit(matHeaderId, contrId) {
 
 			window
 					.open("${pageContext.request.contextPath}/contractorDetailReport/"
-							+ matHeaderId);
+							+ matHeaderId + '/' + contrId);
 
 		}
 	</script>
@@ -437,11 +440,12 @@
 	<script type="text/javascript">
 		function genPdf() {
 			alert("hiii");
-			var fromDate = document.getElementById("fromDate").value;
-			var toDate = document.getElementById("toDate").value;
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
 
-			window.open('${pageContext.request.contextPath}/showUserwisePdf/'
-					+ fromDate + '/' + toDate);
+			window
+					.open('${pageContext.request.contextPath}/showContractorwisePdf/'
+							+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 
 		}

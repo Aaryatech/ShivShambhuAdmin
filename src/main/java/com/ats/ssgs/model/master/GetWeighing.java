@@ -50,7 +50,9 @@ public class GetWeighing {
 	private int exBool2;
 
 	private String vehicleName;
+	private String vehicleNo;
 	private String pokeName;
+	private String pokeNo;
 	private String contrName;
 
 	public int getWeighId() {
@@ -269,6 +271,22 @@ public class GetWeighing {
 		this.contrName = contrName;
 	}
 
+	public String getVehicleNo() {
+		return vehicleNo;
+	}
+
+	public void setVehicleNo(String vehicleNo) {
+		this.vehicleNo = vehicleNo;
+	}
+
+	public String getPokeNo() {
+		return pokeNo;
+	}
+
+	public void setPokeNo(String pokeNo) {
+		this.pokeNo = pokeNo;
+	}
+
 	@Override
 	public String toString() {
 		return "GetWeighing [weighId=" + weighId + ", vehId=" + vehId + ", poklenId=" + poklenId + ", contraId="
@@ -277,7 +295,8 @@ public class GetWeighing {
 				+ ", poklenKm=" + poklenKm + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2
 				+ ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
 				+ ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2
-				+ ", vehicleName=" + vehicleName + ", pokeName=" + pokeName + ", contrName=" + contrName + "]";
+				+ ", vehicleName=" + vehicleName + ", vehicleNo=" + vehicleNo + ", pokeName=" + pokeName + ", pokeNo="
+				+ pokeNo + ", contrName=" + contrName + "]";
 	}
 
 }
