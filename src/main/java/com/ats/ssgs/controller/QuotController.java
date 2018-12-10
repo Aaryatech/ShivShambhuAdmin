@@ -743,4 +743,39 @@ public class QuotController {
 		}
 		return "redirect:/showQuotations";
 	}
+	
+	//Deletall done by harsha
+	
+	
+		@RequestMapping(value = "/deleteRecordofQuatation", method = RequestMethod.POST)
+		public String deleteRecordofCompany(HttpServletRequest request, HttpServletResponse response) {
+			try {
+
+				String[] quotIds = request.getParameterValues("quotIds");
+				System.out.println("id are"+quotIds);
+
+				StringBuilder sb = new StringBuilder();
+
+				for (int i = 0; i < quotIds.length; i++) {
+					sb = sb.append(quotIds[i] + ",");
+
+				}
+				String items = sb.toString();
+				items = items.substring(0, items.length() - 1);
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("quotIds", items);
+
+				Info errMsg = rest.postForObject(Constants.url + "deleteMultiQuot", map, Info.class);
+
+				System.err.println("inside method");
+			} catch (Exception e) {
+
+				System.err.println("Exception in /deleteRecordofQuota @MastContr  " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return "redirect:/showQuotations";
+		}
 }

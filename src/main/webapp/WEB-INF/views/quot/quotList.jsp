@@ -81,62 +81,76 @@
 							<strong>${title}</strong>
 						</div>
 						<div class="card-body card-block">
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofQuatation"
+								method="post">
 
 
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
-										<th style="text-align: center">Sr.No.</th>
-										<th style="text-align: center">Customer Name</th>
-										<th style="text-align: center">Company Name</th>
-										<th style="text-align: center">Plant Name</th>
-										<th style="text-align: center">Quotation Date</th>
-										<th style="text-align: center">Quotation No</th>
-										<th style="text-align: center">Employee Name</th>
-										<th style="text-align: center">Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									<c:forEach items="${quotList}" var="quot" varStatus="count">
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
 										<tr>
+											<th class="check" style="text-align: center; width: 5%;"><input
+												type="checkbox" name="selAll" id="selAll" /> Select All</th>
+											<th style="text-align: center">Sr.No.</th>
+											<th style="text-align: center">Customer Name</th>
+											<th style="text-align: center">Company Name</th>
+											<th style="text-align: center">Plant Name</th>
+											<th style="text-align: center">Quotation Date</th>
+											<th style="text-align: center">Quotation No</th>
+											<th style="text-align: center">Employee Name</th>
+											<th style="text-align: center">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${quotList}" var="quot" varStatus="count">
+											<tr>
+												<td><input type="checkbox" class="chk" name="quotIds"
+													id="quotIds${count.index+1}" value="${quot.quotHeadId}" /></td>
 
-											<td style="text-align: center">${count.index+1}</td>
+												<td style="text-align: center">${count.index+1}</td>
 
 
-											<td style="text-align: left"><c:out
-													value="${quot.custName}" /></td>
-											<td style="text-align: center">${quot.compName}</td>
+												<td style="text-align: left"><c:out
+														value="${quot.custName}" /></td>
+												<td style="text-align: center">${quot.compName}</td>
 
-											<td style="text-align: left"><c:out
-													value="${quot.plantName}" /></td>
-											<td style="text-align: center">${quot.quotDate}</td>
-											<td style="text-align: center">${quot.quotNo}</td>
-											<td style="text-align: center">${quot.usrName}</td>
+												<td style="text-align: left"><c:out
+														value="${quot.plantName}" /></td>
+												<td style="text-align: center">${quot.quotDate}</td>
+												<td style="text-align: center">${quot.quotNo}</td>
+												<td style="text-align: center">${quot.usrName}</td>
 
 
-											<td  >
-											
-														<a
-												href="${pageContext.request.contextPath}/editQuot/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
-													class="fa fa-edit" title="Edit"></i> <span class="text-muted"></span></a>
-												  <c:choose>
-														<c:when test="${quot.status!=2}"><a
-												href="${pageContext.request.contextPath}/deleteQuot/${quot.quotHeadId}"
-												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o" title="Delete"></i></a> 
-													
-														<a href="${pageContext.request.contextPath}/addPo/${quot.quotHeadId}"><i
-													class="fa fa-list" title="Create PO"></i> </a>
+												<td><a
+													href="${pageContext.request.contextPath}/editQuot/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
+														class="fa fa-edit" title="Edit"></i> <span
+														class="text-muted"></span></a> <c:choose>
+														<c:when test="${quot.status!=2}">
+															<a
+																href="${pageContext.request.contextPath}/deleteQuot/${quot.quotHeadId}"
+																onClick="return confirm('Are you sure want to delete this record');"><i
+																class="fa fa-trash-o" title="Delete"></i></a>
+
+															<a
+																href="${pageContext.request.contextPath}/addPo/${quot.quotHeadId}"><i
+																class="fa fa-list" title="Create PO"></i> </a>
 														</c:when>
 													</c:choose>
-													 
+											</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+								<div class="col-lg-1">
 
-										</tr>
-									</c:forEach>
-								</tbody>
-							</table>
+									<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
 
+
+								</div>
+							</form>
 
 						</div>
 					</div>
@@ -256,6 +270,24 @@
 	
 	</script>
  -->
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
+
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
+	</script>
+
 
 </body>
 </html>

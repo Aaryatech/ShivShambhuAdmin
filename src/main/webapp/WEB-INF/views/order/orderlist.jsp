@@ -175,7 +175,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="">Plant</option>
+											<option value="">Select</option>
 
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
@@ -188,7 +188,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
-
+								<option value="">Select</option>
 										</select>
 									</div>
 
@@ -463,11 +463,11 @@
 														+ v.orderId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+														+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 														+ v.orderId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-trash"></i></a>'
+														+ ')"><i class="fa fa-trash" title="Delete"></i></a>'
  
 												dataTable.row
 														.add(

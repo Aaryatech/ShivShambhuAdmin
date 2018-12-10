@@ -348,7 +348,7 @@
 		function getHsnCodeCheck() {
 
 			var hsnCode = $("#hsnCode").val();
-			alert(hsnCode);
+			//alert(hsnCode);
 
 			$.getJSON('${getUniqueTaxCheck}', {
 

@@ -183,7 +183,7 @@
 											</c:forEach>
 										</select>
 									</div>
-									<div class="col-md-2">Select Customer</div>
+									<div class="col-md-2">Customer</div>
 									<div class="col-md-4">
 										<select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required
@@ -200,7 +200,7 @@
 
 									<div class="col-md-2">Select Project</div>
 
-									<div class="col-md-10">
+									<div class="col-md-4">
 										<select id="proj_id" name="proj_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select project')"
@@ -238,7 +238,7 @@
 											<span class="error" aria-live="polite"></span>
 										</div>
 
-										<div class="col-md-2">Customer Mobile No</div>
+										<div class="col-md-2">Customer Mobile No.</div>
 
 										<div class="col-md-4">
 											<input type="text" readonly id="custMobNo" name="custMobNo"
@@ -290,7 +290,7 @@
 
 									<div class="col-md-2">Select Purchase Order</div>
 
-									<div class="col-md-10">
+									<div class="col-md-4">
 										<select id="po_id" name="po_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select po ')"
@@ -591,8 +591,7 @@
 		function getPoDetailItem() {
 			var poId=document.getElementById("po_id").value;
 			
-			alert("Po Id " +poId);
-			
+		
 			var valid=true;
 			
 			if(poId==-1 || poId=="" || poId==null){

@@ -160,7 +160,7 @@
 									<div class="col-md-2">Customer Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="cust_name" name="cust_name"
-											pattern="^[A-Za-z\s]+$" class="form-control" required
+											pattern="^[A-Za-z\s]+$" class="form-control" maxlength="50" required
 											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
@@ -194,11 +194,10 @@
 									<div class="col-md-2">Email</div>
 
 									<div class="col-md-4">
-										<input type="text" id="email" name="email"
+										<input type="email" id="email" name="email"
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct email')"
-											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-											maxlength="50" autocomplete="off"
+										maxlength="50" autocomplete="off"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -270,6 +269,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="dob" name="dob" class="form-control"
+										onchange="checkDOB()"
 											autocomplete="off" style="width: 100%;">
 									</div>
 
@@ -334,13 +334,7 @@
 
 								<div class="row">
 
-									<!-- <div class="col-md-2">PIN Code No</div>
-									<div class="col-md-4">
-										<input type="text" id="pincode" name="pincode" maxlength="6"
-											class="form-control" style="width: 100%;" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter Pincode')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-									</div> -->
+									
 									<div class="col-md-2">Kilometer</div>
 									<div class="col-md-4">
 										<input type="text" id="km" name="km" class="form-control"
@@ -610,7 +604,30 @@
 						return true;
 					});
 		});
+		
+		
+		 function  checkDOB() {
+		        //In javascript
+		        var dateEntered = document.getElementById("dob").value; 
+		        // In JQuery
+		        var dateEntered = $("#dob").val();
+		     
+		        var date = dateEntered.substring(0, 2);
+		        var month = dateEntered.substring(3, 5);
+		        var year = dateEntered.substring(6, 10);
+		     
+		        var dateToCompare = new Date(year, month - 1, date);
+		        var currentDate = new Date();
+		     
+		        if (dateToCompare > currentDate) {
+		            alert("Please enter DOB less than Current Date ");
+		            document.getElementById('dob').value="";
+		        }
+		        
+		    }
+
 	</script>
+	
 
 </body>
 </html>

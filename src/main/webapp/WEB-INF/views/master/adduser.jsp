@@ -239,13 +239,14 @@
 								<div class="row">
 									<div class="col-md-2">Date of Birth*</div>
 									<div class="col-md-4">
-										<input type="text" id="usrDob" name="usrDob"
+										<input type="text" id="usrDob" name="usrDob" required
 											autocomplete="off" value="${editUser.usrDob}"
-											class="form-control"
+											class="form-control" onchange="checkDOB()"
 											oninvalid="setCustomValidity('Please select Date')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
+
 									<div class="col-md-2">Sort No(Optional)</div>
 									<div class="col-md-4">
 										<input type="text" id="sortNo" name="sortNo"
@@ -260,14 +261,13 @@
 								<div class="row">
 									<div class="col-md-2">User Email*</div>
 									<div class="col-md-4">
-										<input type="text" autocomplete="off" id="usrEmail"
+										<input type="email" autocomplete="off" id="usrEmail"
 											name="usrEmail" value="${editUser.usrEmail}"
-											class="form-control"
-											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-											maxlength="50"
+											class="form-control" maxlength="50"
 											oninvalid="setCustomValidity('Please enter correct email')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;" required>
+										<!-- 	pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"	 -->
 									</div>
 									<div class="col-md-2">User Password*</div>
 									<div class="col-md-4">
@@ -475,5 +475,30 @@
 					});
 		});
 	</script>
+
+
+	<script type="text/javascript">
+		function checkDOB() {
+			//In javascript
+			var dateEntered = document.getElementById("usrDob").value;
+			// In JQuery
+			var dateEntered = $("#usrDob").val();
+
+			var date = dateEntered.substring(0, 2);
+			var month = dateEntered.substring(3, 5);
+			var year = dateEntered.substring(6, 10);
+
+			var dateToCompare = new Date(year, month - 1, date);
+			var currentDate = new Date();
+
+			if (dateToCompare > currentDate) {
+				alert("Please enter DOB less than Current Date ");
+				document.getElementById('usrDob').value = "";
+			}
+
+		}
+	</script>
+
+
 </body>
 </html>

@@ -199,14 +199,14 @@
 								<div class="row">
 									<div class="col-md-2">Email Id*</div>
 									<div class="col-md-4">
-										<input type="text" id="email" name="email" required
+										<input type="email" id="email" name="email" required
 											autocomplete="off" style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct email')"
 											maxlength="50" value="${editPlant.plantEmail1}"
-											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+											
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
-
+<!-- pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" -->
 									</div>
 
 									<div class="col-md-2">FAX No*</div>

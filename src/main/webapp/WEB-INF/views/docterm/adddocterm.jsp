@@ -207,7 +207,7 @@
 										<thead>
 											<tr>
 
-												<th style="text-align: center; width: 5%;">Sr No</th>
+												<th style="text-align: center; width: 5%;">Sr. No.</th>
 												<th style="text-align: center">Terms And Conditions</th>
 												<th style="text-align: center">Sort No</th>
 												<th style="text-align: center; width: 5%;">Action</th>

@@ -193,7 +193,7 @@
 								<div class="row">
 									<div class="col-md-2">Start Date*</div>
 									<div class="col-md-4">
-										<input type="date" id="start_date" name="start_date"
+										<input type="text" id="start_date" name="start_date"
 											autocomplete="off" value="${editPro.startDate}"
 											class="form-control" required style="width: 100%;">
 									</div>
@@ -201,9 +201,10 @@
 									<div class="col-md-2">End Date*</div>
 
 									<div class="col-md-4">
-										<input type="date" id="end_date" name="end_date"
+										<input type="text" id="end_date" name="end_date"
 											autocomplete="off" value="${editPro.endDate}"
-											class="form-control" required style="width: 100%;">
+											onchange="checkDate()" class="form-control" required
+											style="width: 100%;">
 									</div>
 
 								</div>
@@ -438,7 +439,38 @@
 
 		}
 	</script>
+	<script type="text/javascript">
+		function checkDate() {
+			//In javascript
+			var dateEntered = document.getElementById("start_date").value;
 
+			// In JQuery
+			var dateEntered = $("#start_date").val();
+			var Entered1 = $("#end_date").val();
+
+			alert("ed is " + Entered1);
+			alert("sd is " + dateEntered);
+
+			/*    var date = dateEntered.substring(0, 2);
+			   var month = dateEntered.substring(3, 5);
+			   var year = dateEntered.substring(6, 10);
+			   
+			   var date1 = dateEntered1.substring(0, 2);
+			   var month1 = dateEntered1.substring(3, 5);
+			   var year1 = dateEntered1.substring(6, 10);
+			
+			   var dateToCompare = new Date(year, month - 1, date);
+			   var dateToCompare1 = new Date(year1, month1 - 1, date1); */
+
+			//var currentDate = new Date();
+			if (dateEntered > Entered1) {
+				alert("Please enter start date less than end Date ");
+				document.getElementById("start_date").value = "";
+				document.getElementById("end_date").value = "";
+			}
+
+		}
+	</script>
 
 </body>
 </html>

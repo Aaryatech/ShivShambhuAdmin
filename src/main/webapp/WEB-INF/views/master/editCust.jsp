@@ -350,7 +350,7 @@
 
 								<div class="form-group"></div>
 
-								<div class="row">
+								<%-- <div class="row">
 
 									<div class="col-md-2">PIN Code No</div>
 									<div class="col-md-4">
@@ -368,7 +368,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-								</div>
+								</div> --%>
 
 								<div class="form-group"></div>
 								<div class="row">

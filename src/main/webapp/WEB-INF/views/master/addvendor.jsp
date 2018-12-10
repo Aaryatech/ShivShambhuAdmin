@@ -187,11 +187,11 @@
 									<div class="col-md-2">Email Id*</div>
 
 									<div class="col-md-4">
-										<input type="text" id="vendEmail1" name="vendEmail1"
+										<input type="email" id="vendEmail1" name="vendEmail1"
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct email')"
 											maxlength="50" value="${editVend.vendEmail1}"
-											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+											
 											onchange="try{setCustomValidity('')}catch(e){}" required />
 										<span class="error" aria-live="polite"></span>
 

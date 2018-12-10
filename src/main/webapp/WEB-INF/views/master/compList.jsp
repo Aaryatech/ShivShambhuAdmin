@@ -104,7 +104,7 @@
 											<th style="text-align: center">Company Name</th>
 											<th style="text-align: center">Company Address</th>
 
-											<th style="text-align: center">Mobile. No.</th>
+											<th style="text-align: center">Mobile No.</th>
 
 											<th style="text-align: center; width: 5%;">Action</th>
 

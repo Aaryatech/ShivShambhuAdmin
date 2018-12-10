@@ -133,6 +133,7 @@
 									<div class="col-md-2">Company Name*</div>
 									<div class="col-md-10">
 										<input type="text" id="comp_name" name="comp_name"
+										maxlength="50"
 											oninvalid="setCustomValidity('Please enter correct company name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="^[A-Za-z\s]+$" value="${editComp.compName}"
@@ -204,7 +205,7 @@
 											onblur="getCheck()" style="width: 100%;" class="form-control"
 											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter GST no')"
-											maxlength="20" value="${editComp.compGstNo}"
+											 value="${editComp.compGstNo}"
 											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
 											onkeydown="upperCaseF(this)"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
@@ -221,7 +222,7 @@
 										<input type="text" id="pan_no" name="pan_no" required
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter PAN no')"
-											maxlength="10" value="${editComp.compPanNo}"
+											 value="${editComp.compPanNo}"
 											pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
 											onkeydown="upperCaseF(this)"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
@@ -234,7 +235,7 @@
 										<input type="text" id="cin_no" name="cin_no" required
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter CIN no')"
-											maxlength="21" value="${editComp.cinNo}"
+											pattern= "\d{21}" value="${editComp.cinNo}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -276,10 +277,10 @@
 								<div class="row">
 									<div class="col-md-2">Email Id*</div>
 									<div class="col-md-4">
-										<input type="text" id="email" name="email" required
+										<input type="email" id="email" name="email" required
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter email')"
-											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+											
 											maxlength="50" value="${editComp.email1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
