@@ -97,7 +97,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertTax"
-								method="post">
+								method="post" id="submitForm">
 
 
 								<input type="hidden" name="taxId" id="taxId"
@@ -374,7 +374,16 @@
 		}
 	</script>
 
-
+<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
 
 
 </body>

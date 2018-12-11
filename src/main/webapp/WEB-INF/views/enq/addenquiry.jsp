@@ -319,11 +319,11 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Enquiry Remark</div>
+									<div class="col-md-2">Enquiry Remark(optional)</div>
 
 									<div class="col-md-4">
 										<input type="text" id="enq_remark" name="enq_remark"
-											class="form-control" style="width: 100%;" value="-" required>
+											class="form-control" style="width: 100%;" value="-">
 									</div>
 
 									<div class="col-md-4">

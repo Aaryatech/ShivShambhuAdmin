@@ -54,7 +54,7 @@ public class PaymentController {
 
 			EnqGenFact[] custTypeArray = rest.getForObject(Constants.url + "getAllEGFList", EnqGenFact[].class);
 			enqGenFactList = new ArrayList<EnqGenFact>(Arrays.asList(custTypeArray));
-
+			model.addObject("message", message);
 			model.addObject("enqGenFactList", enqGenFactList);
 
 			model.addObject("title", "Add Enquiry Source");
@@ -70,6 +70,8 @@ public class PaymentController {
 		return model;
 
 	}
+	
+	String message = "";
 
 	@RequestMapping(value = "/insertEnqGenFact", method = RequestMethod.POST)
 	public String insertEnqGenFact(HttpServletRequest request, HttpServletResponse response) {
@@ -92,12 +94,21 @@ public class PaymentController {
 			enqGenFact.setDelStatus(1);
 			enqGenFact.setEnqGenBy(enqGenBy);
 			enqGenFact.setEnqGenId(enqGenId);
-
+/*
 			EnqGenFact enqInsertRes = rest.postForObject(Constants.url + "saveEnqGenFact", enqGenFact,
 					EnqGenFact.class);
 			if (enqInsertRes.getEnqGenId() != 0) {
 				isError = 2;
 			} else {
+				isError = 1;
+			}*/
+			
+			Info enqInsertRes = rest.postForObject(Constants.url + "saveEnqGenFact", enqGenFact, Info.class);
+			if (enqInsertRes.isError() != true) {
+				isError = 2;
+				message = enqInsertRes.getMessage();
+			} else {
+				message = enqInsertRes.getMessage();
 				isError = 1;
 			}
 
@@ -176,6 +187,7 @@ public class PaymentController {
 			custTypeList = new ArrayList<CustType>(Arrays.asList(custTypeArray));
 			model.addObject("isError", isError);
 			isError = 0;
+			model.addObject("message1", message1);
 			model.addObject("custTypeList", custTypeList);
 
 			model.addObject("title", "Add Customer Type Name");
@@ -192,6 +204,7 @@ public class PaymentController {
 
 	}
 
+	String message1 = "";
 	@RequestMapping(value = "/insertCustType", method = RequestMethod.POST)
 	public String insertCustType(HttpServletRequest request, HttpServletResponse response) {
 
@@ -212,11 +225,21 @@ public class PaymentController {
 			custType.setCustTypeId(custTypeId);
 			custType.setCustTypeName(custTypeName);
 			custType.setDelStatus(1);
-
+/*
 			CustType custTermInsertRes = rest.postForObject(Constants.url + "saveCustType", custType, CustType.class);
 			if (custTermInsertRes.getCustTypeId() != 0) {
 				isError = 2;
 			} else {
+				isError = 1;
+			}
+			*/
+			
+			Info deptInsertRes = rest.postForObject(Constants.url + "saveCustType", custType, Info.class);
+			if (deptInsertRes.isError() != true) {
+				isError = 2;
+				message = deptInsertRes.getMessage();
+			} else {
+				message = deptInsertRes.getMessage();
 				isError = 1;
 			}
 

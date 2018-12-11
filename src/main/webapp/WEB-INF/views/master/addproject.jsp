@@ -92,7 +92,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertProject"
-								method="post">
+								id="abc" method="post">
 
 								<div class="row">
 
@@ -238,7 +238,7 @@
 									<div class="col-md-2">Kilometer*</div>
 									<div class="col-md-4">
 										<input type="text" id="km" name="km" class="form-control"
-											pattern="[0-9]+" style="width: 100%;" value="${editPro.km}"
+											pattern="\d+(\.\d{1,2})?"  style="width: 100%;" value="${editPro.km}"
 											maxlength="10"
 											oninvalid="setCustomValidity('Please enter correct kilometer')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
@@ -448,8 +448,8 @@
 			var dateEntered = $("#start_date").val();
 			var Entered1 = $("#end_date").val();
 
-			alert("ed is " + Entered1);
-			alert("sd is " + dateEntered);
+			/* alert("ed is " + Entered1);
+			alert("sd is " + dateEntered); */
 
 			/*    var date = dateEntered.substring(0, 2);
 			   var month = dateEntered.substring(3, 5);
@@ -471,6 +471,17 @@
 
 		}
 	</script>
-
+	<script type="text/javascript">
+		$(function() {
+			$('#abc').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
+	
+	
 </body>
 </html>

@@ -90,7 +90,7 @@
 								
 								<div class="row">
 
-									<div class="col-md-2"> PO No.</div>
+									<div class="col-md-2"> Purchase Order No.</div>
 
 									<div class="col-md-4">
 										<input type="text" id="poNo" name="poNo"
@@ -120,7 +120,7 @@
 							 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">PO Date</div>
+									<div class="col-md-2">Purchase Order Date</div>
 									<div class="col-md-4">
 										<input type="text" id="poDate" name="poDate"
 											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
@@ -142,14 +142,14 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-								<div class="col-md-2">PO Validity Date </div>
+								<div class="col-md-2">Purchase Order  Validity Date </div>
 									<div class="col-md-4">
 										<input type="text" id="poValidityDate" name="poValidityDate"
 											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
 											value="${todayDate}">
 									</div>
 									
-									<div class="col-md-2">Delivery</div>
+									<div class="col-md-2">Delivery Location</div>
 									<div class="col-md-4">
 										<input type="text" id="delivery" name="delivery"
 											  class="form-control"

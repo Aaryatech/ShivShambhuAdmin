@@ -223,7 +223,7 @@
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter PAN no')"
 											 value="${editComp.compPanNo}"
-											pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
+											pattern="[A-Z]{5}\d{4}[A-Z]{1}"
 											onkeydown="upperCaseF(this)"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -280,7 +280,6 @@
 										<input type="email" id="email" name="email" required
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter email')"
-											
 											maxlength="50" value="${editComp.email1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -394,8 +393,7 @@
 		}
 	</script>
 
-
-	<script type="text/javascript">
+<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(
 					function() {
@@ -405,6 +403,8 @@
 					});
 		});
 	</script>
+
+
 
 
 

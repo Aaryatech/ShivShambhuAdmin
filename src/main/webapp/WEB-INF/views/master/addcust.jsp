@@ -351,8 +351,8 @@
 									<div class="col-md-2">Contact Person Name</div>
 									<div class="col-md-4">
 										<input type="text" id="cont_per_name" name="cont_per_name"
-											class="form-control" style="width: 100%;"
-											pattern="^[A-Za-z\s]+$" autocomplete="off"
+											class="form-control" style="width: 100%;" 
+											pattern="^[A-Za-z\s]+$"  maxlength="50" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>

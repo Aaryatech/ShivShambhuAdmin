@@ -88,7 +88,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertItem"
-								method="post">
+								method="post" id="submitForm">
 
 								<div class="row">
 
@@ -238,7 +238,7 @@
 											oninvalid="setCustomValidity('Please enter prol stock')"
 											onkeypress="return allowOnlyNumber(event);"
 											onchange="checkstockvalue()"
-											onchange="checkstock()"
+										
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;" required>
 									</div>
@@ -386,7 +386,8 @@
 
 			var min_stock= document.getElementById("pmin_stock").value;
 			var max_stock= document.getElementById("pmax_stock").value;
-			
+			/* alert( "min stk is"+min_stock);
+			alert( "max stk is"+max_stock); */
 			var valid = true;
 
 			if (  min_stock > max_stock  ) {
@@ -428,5 +429,16 @@
 		}
 	</script>
 	
+	
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
 </body>
 </html>
