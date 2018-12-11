@@ -209,12 +209,13 @@
 								<thead>
 									<tr>
 										<th style="text-align: center">Sr.No.</th>
-										<th style="text-align: center">Date</th>
-										<th style="text-align: center">Contractor Name</th>
-										<th style="text-align: center">Issue No</th>
 
-										<th style="text-align: center">Total</th>
-										<th style="text-align: center">Total Quantity</th>
+										<th style="text-align: center">Contractor Name</th>
+
+
+										<th style="text-align: center">Total Consumption</th>
+										<th style="text-align: center">Total Qty</th>
+										<th style="text-align: center">Total Weighing Qty</th>
 										<th style="text-align: center">Action</th>
 									</tr>
 								</thead>
@@ -405,11 +406,10 @@
 																.add(
 																		[
 																				i + 1,
-																				v.date,
 																				v.contrName,
-																				v.issueNo,
 																				v.total,
 																				v.qtyTotal,
+																				v.weighContrQty,
 																				acButton ])
 																.draw();
 													});
@@ -420,10 +420,17 @@
 
 		}
 		function callEdit(matHeaderId, contrId) {
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
 
 			window
 					.open("${pageContext.request.contextPath}/contractorDetailReport/"
-							+ matHeaderId + '/' + contrId);
+							+ matHeaderId
+							+ '/'
+							+ contrId
+							+ '/'
+							+ fromDate
+							+ '/' + toDate);
 
 		}
 	</script>

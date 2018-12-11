@@ -132,7 +132,30 @@
 								action="${pageContext.request.contextPath}/updateMaterialContr"
 								id="submitForm" method="post">
 
+
 								<div class="row">
+
+									<div class="col-md-2">From Date</div>
+
+
+									<div class="col-md-4">
+										<input type="text" id="fromDate" name="fromDate"
+											value="${fromDate}" class="form-control" style="width: 100%;"
+											autocomplete="off" readonly
+											oninvalid="setCustomValidity('Please enter Issue No')"
+											onchange="try{setCustomValidity('')}catch(e){}" required>
+									</div>
+
+
+									<div class="col-md-2">To Date</div>
+									<div class="col-md-4">
+										<input type="text" id="toDate" name="toDate"
+											autocomplete="off" value="${toDate}" required
+											class="form-control" readonly required style="width: 100%;">
+									</div>
+								</div>
+
+								<%--  <div class="row">
 
 									<div class="col-md-2">Contractor Name*</div>
 
@@ -152,19 +175,19 @@
 											value="${editMat.date}" required class="form-control"
 											readonly required style="width: 100%;">
 									</div>
-								</div>
+								</div>  --%>
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Issue No*</div>
-									<div class="col-md-4">
+
+									<%-- 	<div class="col-md-2">Issue No*</div> <div class="col-md-4">
 										<input type="text" id="issueNo" name="issueNo" maxlength="10"
 											value="${editMat.issueNo}" class="form-control"
 											style="width: 100%;" autocomplete="off" readonly
 											oninvalid="setCustomValidity('Please enter Issue No')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											pattern="[0-9]+">
-									</div>
+									</div> --%>
 
 									<input type="hidden" value="${editMat.matHeaderId}"
 										name="matHeaderId" id="matHeaderId">
@@ -178,6 +201,7 @@
 											<tr>
 
 												<th style="text-align: center; width: 5%;">Sr No</th>
+												<th style="text-align: center">Date</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">Measurement of Unit</th>
 												<th style="text-align: center">Item Rate</th>
@@ -193,6 +217,10 @@
 												<tr>
 
 													<td style="text-align: center">${count.index+1}</td>
+
+													<td style="text-align: left"><c:out
+															value="${editMat.date}" /></td>
+
 
 													<td style="text-align: left"><c:out
 															value="${matDetail.itemDesc}" /></td>
@@ -216,22 +244,38 @@
 
 
 												</tr>
+
 											</c:forEach>
+
 										</tbody>
 									</table>
 
 
+									<div class="form-group"></div>
+									<div class="row">
+
+										<div class="col-md-8"></div>
+										<div class="col-md-1">Total</div>
+										<div class="col-md-3">
+											<input type="text" value="${editMat.total}"
+												class="form-control" style="width: 100%;" autocomplete="off"
+												readonly>
+										</div>
+									</div>
+									&nbsp;&nbsp;&nbsp;
 
 									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
 
 												<th style="text-align: center; width: 5%;">Sr No</th>
+												<th style="text-align: center">Date</th>
+												<th style="text-align: center">Quantity</th>
 												<th style="text-align: center">Vehicle Name</th>
 												<th style="text-align: center">Vehicle No</th>
 												<th style="text-align: center">Poklen Name</th>
 												<th style="text-align: center">Poklen No</th>
-												<th style="text-align: center">Quantity</th>
+
 
 											</tr>
 										</thead>
@@ -242,6 +286,12 @@
 												<tr>
 
 													<td style="text-align: center">${count.index+1}</td>
+													<td style="text-align: left"><c:out
+															value="${editMat.date}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${weighing.quantity}" /></td>
+
 
 													<td style="text-align: left"><c:out
 															value="${weighing.vehicleName}" /></td>
@@ -249,22 +299,11 @@
 													<td style="text-align: left"><c:out
 															value="${weighing.vehicleNo}" /></td>
 
-
 													<td style="text-align: left"><c:out
 															value="${weighing.pokeName}" /></td>
 
-
-
 													<td style="text-align: left"><c:out
 															value="${weighing.pokeNo}" /></td>
-
-
-													<td style="text-align: left"><c:out
-															value="${weighing.quantity}" /></td>
-
-
-
-
 
 												</tr>
 											</c:forEach>
@@ -281,8 +320,6 @@
 											style="align-content: center; width: 200px; margin-left: 80px;">
 											Export To Excel</button>
 									</div>
-
-
 									<div class="col-md-3">
 
 										<button type="button" class="btn btn-primary"
@@ -292,7 +329,6 @@
 									</div>
 									&nbsp;
 								</div>
-
 							</form>
 						</div>
 					</div>
@@ -407,9 +443,11 @@
 	<script type="text/javascript">
 		function genPdf() {
 			alert("hiii");
-
+			var fromDate = document.getElementById("fromDate").value;
+			var toDate = document.getElementById("toDate").value;
 			window
-					.open('${pageContext.request.contextPath}/showContraDetailPdf/');
+					.open('${pageContext.request.contextPath}/showContraDetailPdf/'
+							+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 
 		}

@@ -113,8 +113,9 @@
 										<c:forEach items="${pReadingList}" var="pReading"
 											varStatus="count">
 											<tr>
-												<td><input type="checkbox" class="chk" name="pokIds"
-													id="pokIds${count.index+1}" value="${pReading.pokId}" /></td>
+												<td><input type="checkbox" class="chk"
+													name="readingIds" id="readingIds${count.index+1}"
+													value="${pReading.readingId}" /></td>
 
 												<td style="text-align: center">${count.index+1}</td>
 
@@ -150,10 +151,10 @@
 
 
 												<td style="text-align: center"><a
-													href="${pageContext.request.contextPath}/editPReading/${pReading.pokId}"><i
+													href="${pageContext.request.contextPath}/editPReading/${pReading.readingId}"><i
 														class="fa fa-edit"></i> <span class="text-muted"></span></a>
 													&nbsp; <a
-													href="${pageContext.request.contextPath}/deletePReading/${pReading.pokId}"
+													href="${pageContext.request.contextPath}/deletePReading/${pReading.readingId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
 														class="fa fa-trash-o"></i></a></td>
 

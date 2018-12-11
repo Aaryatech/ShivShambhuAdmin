@@ -125,8 +125,8 @@
 							<form
 								action="${pageContext.request.contextPath}/insertPoklenReading"
 								id="submitForm" method="post">
-								<input type="hidden" name="pokId" id="pokId"
-									value="${editPRead.pokId}">
+								<input type="hidden" name="readingId" id="readingId"
+									value="${editPRead.readingId}">
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -142,7 +142,7 @@
 											<c:forEach items="${vehPoklenList}" var="poklen">
 
 												<c:choose>
-													<c:when test="${poklen.vehicleId==editWeigh.poklenId}">
+													<c:when test="${poklen.vehicleId==editPRead.poklenId}">
 														<option value="${poklen.vehicleId}" selected>${poklen.vehicleName}</option>
 													</c:when>
 													<c:otherwise>
