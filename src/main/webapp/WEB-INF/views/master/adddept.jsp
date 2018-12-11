@@ -88,7 +88,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<strong>Department Name Already Exist</strong>
+								<strong>${message}</strong>
 							</div>
 						</div>
 					</c:when>
@@ -102,7 +102,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<strong>Date Submitted Successfully</strong>
+								<strong>${message}</strong>
 							</div>
 						</div>
 					</c:when>
@@ -118,7 +118,7 @@
 
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertDept"
-								id="submitForm" method="post" >
+								id="submitForm" method="post">
 
 
 
@@ -228,7 +228,8 @@
 
 								</div>
 							</form>
-						</div>			</div>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -306,7 +307,7 @@
 		});
 	</script>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(
 					if(return confirm('Do you really want to submit the Purchase Order ?')){
@@ -318,7 +319,7 @@
 						return true;
 					}});
 		});
-	</script>
+	</script> -->
 
 	<script type="text/javascript">
 		$(document)

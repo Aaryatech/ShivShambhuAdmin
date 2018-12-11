@@ -1663,6 +1663,8 @@ public class MasterController {
 			model = new ModelAndView("master/adddept");
 			model.addObject("isError", isError);
 			isError = 0;
+
+			model.addObject("message", message);
 			Dept[] deptArray = rest.getForObject(Constants.url + "getAllDeptList", Dept[].class);
 			deptList = new ArrayList<Dept>(Arrays.asList(deptArray));
 
@@ -1680,6 +1682,8 @@ public class MasterController {
 		return model;
 
 	}
+
+	String message = "";
 
 	@RequestMapping(value = "/insertDept", method = RequestMethod.POST)
 	public String insertDept(HttpServletRequest request, HttpServletResponse response) {
@@ -1724,11 +1728,12 @@ public class MasterController {
 				dept.setSortNo(0);
 			}
 
-			Dept deptInsertRes = rest.postForObject(Constants.url + "saveDept", dept, Dept.class);
-			if (deptInsertRes.getDeptId() != 0) {
+			Info deptInsertRes = rest.postForObject(Constants.url + "saveDept", dept, Info.class);
+			if (deptInsertRes.isError() != true) {
 				isError = 2;
-
+				message = deptInsertRes.getMessage();
 			} else {
+				message = deptInsertRes.getMessage();
 				isError = 1;
 			}
 

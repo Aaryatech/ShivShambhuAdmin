@@ -325,6 +325,15 @@ public class TxnController {
 			model.addObject("isError", isError);
 			isError = 0;
 			model.addObject("title", "Add Poklen Reading");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("vehicleType", 3);
+
+			Vehicle[] vehPoklenArray = rest.postForObject(Constants.url + "getVehListByVehicleType", map,
+					Vehicle[].class);
+			vehPoklenList = new ArrayList<Vehicle>(Arrays.asList(vehPoklenArray));
+
+			model.addObject("vehPoklenList", vehPoklenList);
 
 		} catch (Exception e) {
 

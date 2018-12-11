@@ -130,6 +130,35 @@
 
 								<div class="form-group"></div>
 								<div class="row">
+									<div class="col-md-2">Select Poklen*</div>
+
+									<div class="col-md-4">
+										<select id="poklenId" name="poklenId" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select Poklen')">
+											<option>Select</option>
+
+
+											<c:forEach items="${vehPoklenList}" var="poklen">
+
+												<c:choose>
+													<c:when test="${poklen.vehicleId==editWeigh.poklenId}">
+														<option value="${poklen.vehicleId}" selected>${poklen.vehicleName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${poklen.vehicleId}">${poklen.vehicleName}
+													</c:otherwise>
+												</c:choose>
+
+
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+
+
+								<div class="form-group"></div>
+								<div class="row">
 									<div class="col-md-2">Start Date*</div>
 									<div class="col-md-4">
 										<input type="text" id="start_date" name="start_date"
@@ -235,12 +264,7 @@
 									</c:choose>
 
 
-
-
-
-
 								</div>
-
 
 
 								<div class="form-group"></div>
