@@ -339,7 +339,7 @@
 		
 			if(fromDate > toDate){
 				valid = false;
-				alert("from date greater than todate ");
+				alert("from date can not be greater than to date ");
 			}
 			if(valid==true){
 			

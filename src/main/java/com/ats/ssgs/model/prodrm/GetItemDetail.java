@@ -1,95 +1,106 @@
 package com.ats.ssgs.model.prodrm;
 
+
+
 public class GetItemDetail {
+
 
 	private int itemDetailId;
 
-	private int itemId;
-
+	private int fgItemId;
+	
+	private int rmId;
+	private int rmUomId;
+	
+	private String rmItemCode;
 	private String rmName;
-
-	private float noOfPiecesPerItem;
-
-	private float rmQty;
-
-	private float rmWeight;
-
 	private String rmUomName;
+	
+	private float rmQty;
+	
+	private float itemRmQty;
 
-	private float rmQuantity;
+	public float getItemRmQty() {
+		return itemRmQty;
+	}
+	public void setItemRmQty(float itemRmQty) {
+		this.itemRmQty = itemRmQty;
+	}
 
+	private int	catId;
+	private String catDesc;
+	
 	public int getItemDetailId() {
 		return itemDetailId;
 	}
-
 	public void setItemDetailId(int itemDetailId) {
 		this.itemDetailId = itemDetailId;
 	}
-
-	public int getItemId() {
-		return itemId;
+	public int getFgItemId() {
+		return fgItemId;
 	}
-
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
+	public void setFgItemId(int fgItemId) {
+		this.fgItemId = fgItemId;
 	}
-
-	public String getRmName() {
-		return rmName;
+	public int getRmId() {
+		return rmId;
 	}
-
-	public void setRmName(String rmName) {
-		this.rmName = rmName;
+	public void setRmId(int rmId) {
+		this.rmId = rmId;
 	}
-
 	
-
-	public float getNoOfPiecesPerItem() {
-		return noOfPiecesPerItem;
+	public int getRmUomId() {
+		return rmUomId;
 	}
-
-	public void setNoOfPiecesPerItem(float noOfPiecesPerItem) {
-		this.noOfPiecesPerItem = noOfPiecesPerItem;
+	public void setRmUomId(int rmUomId) {
+		this.rmUomId = rmUomId;
 	}
-
 	public float getRmQty() {
 		return rmQty;
 	}
-
 	public void setRmQty(float rmQty) {
 		this.rmQty = rmQty;
 	}
-
-	public float getRmWeight() {
-		return rmWeight;
+	public String getRmItemCode() {
+		return rmItemCode;
 	}
-
-	public void setRmWeight(float rmWeight) {
-		this.rmWeight = rmWeight;
+	public void setRmItemCode(String rmItemCode) {
+		this.rmItemCode = rmItemCode;
 	}
-
-
+	public String getRmName() {
+		return rmName;
+	}
+	public void setRmName(String rmName) {
+		this.rmName = rmName;
+	}
 	public String getRmUomName() {
 		return rmUomName;
 	}
-
 	public void setRmUomName(String rmUomName) {
 		this.rmUomName = rmUomName;
 	}
-
-	public float getRmQuantity() {
-		return rmQuantity;
+	public int getCatId() {
+		return catId;
 	}
-
-	public void setRmQuantity(float rmQuantity) {
-		this.rmQuantity = rmQuantity;
+	public void setCatId(int catId) {
+		this.catId = catId;
 	}
-
+	public String getCatDesc() {
+		return catDesc;
+	}
+	public void setCatDesc(String catDesc) {
+		this.catDesc = catDesc;
+	}
+	
 	@Override
 	public String toString() {
-		return "GetItemDetail [itemDetailId=" + itemDetailId + ", itemId=" + itemId + ", rmName=" + rmName
-				+ ", noOfPiecesPerItem=" + noOfPiecesPerItem + ", rmQty=" + rmQty + ", rmWeight=" + rmWeight
-				+ ", rmUomName=" + rmUomName + ", rmQuantity=" + rmQuantity + "]";
+		return "GetItemDetail [itemDetailId=" + itemDetailId + ", fgItemId=" + fgItemId + ", rmId=" + rmId
+				+ ", rmUomId=" + rmUomId + ", rmItemCode=" + rmItemCode + ", rmName=" + rmName + ", rmUomName="
+				+ rmUomName + ", rmQty=" + rmQty + ", itemRmQty=" + itemRmQty + ", catId=" + catId + ", catDesc="
+				+ catDesc + "]";
 	}
+	
+	
 
+	
 }

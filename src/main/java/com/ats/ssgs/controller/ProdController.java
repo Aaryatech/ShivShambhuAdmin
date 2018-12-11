@@ -220,7 +220,7 @@ public class ProdController {
 		return "redirect:/showProdPlanList";
 
 	}
-	List<ItemDetail> rmItemList;
+	//List<ItemDetail> rmItemList;
 	@RequestMapping(value = "/showManBOM", method = RequestMethod.GET)
 	public ModelAndView showManBOM(HttpServletRequest request, HttpServletResponse response) {
 
@@ -230,7 +230,7 @@ public class ProdController {
 
 			model.addObject("title", "Manual BOM");
 			
-			String itemIdList = new String();
+			/*String itemIdList = new String();
 			//List<String> itemIdList=new ArrayList<>();
 			
 			List<GetProdPlanDetail> proDList = prodHeader.getGetProdPlanDetList();
@@ -245,14 +245,26 @@ public class ProdController {
 			map.add("delStatus", 1);
 			map.add("itemIdList", itemIdList);
 			System.err.println("itemIdList " +itemIdList);
-
-			ItemDetail[] rmItemArray = rest.postForObject(Constants.url + "getItemDetailByItemIds", map,
+*/
+			/*ItemDetail[] rmItemArray = rest.postForObject(Constants.url + "getItemDetailByItemIds", map,
 					ItemDetail[].class);
 			rmItemList = new ArrayList<ItemDetail>(Arrays.asList(rmItemArray));
 			
 			System.err.println("rmItemList " +rmItemList.toString());
 			
-			model.addObject("rmItemList", rmItemList);
+			model.addObject("rmItemList", rmItemList);*/
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("prodHeaderId", prodHeader.getProductionHeaderId());
+
+			GetItemDetail[] rmItemArray = rest.postForObject(Constants.url + "getItemDetailForBOM", map,
+					GetItemDetail[].class);
+			getRmItemList = new ArrayList<GetItemDetail>(Arrays.asList(rmItemArray));
+			
+			System.err.println("rmItemList " +getRmItemList.toString());
+			
+			model.addObject("rmItemList", getRmItemList);
 			model.addObject("prodHeader", prodHeader);
 
 			model.addObject("isError", isError);
@@ -280,12 +292,12 @@ public class ProdController {
 			List<ReqBomDetail> reqBomDetail=new ArrayList<>();
 			
 			String NA="NA";
-			for (int i=0; i<rmItemList.size(); i++) {
+			for (int i=0; i<getRmItemList.size(); i++) {
 				
 				System.err.println("I " +i);
 				
-				float rmQty = Float.parseFloat(request.getParameter("rmQty"+rmItemList.get(i).getItemDetailId()));
-				System.err.println("string at  "+i+" " +"rmQty"+rmItemList.get(i).getRmName() +"rm qty "+rmQty);
+				float rmQty = Float.parseFloat(request.getParameter("rmQty"+getRmItemList.get(i).getItemDetailId()));
+				System.err.println("string at  "+i+" " +"rmQty"+getRmItemList.get(i).getRmName() +"rm qty "+rmQty);
 
 				ReqBomDetail bomDet = new ReqBomDetail();
 				
@@ -299,11 +311,11 @@ public class ProdController {
 				bomDet.setMrnItemRate(0);
 				bomDet.setRejectedQty(0);
 				bomDet.setReturnQty(0);
-				bomDet.setRmId(rmItemList.get(i).getItemDetailId());
+				bomDet.setRmId(getRmItemList.get(i).getRmId());
 				bomDet.setRmIssueQty(0);
 				bomDet.setRmReqQty(rmQty);
 				bomDet.setStatus(1);
-				bomDet.setUom(NA);
+				bomDet.setUom(getRmItemList.get(i).getRmUomName());
 				
 				reqBomDetail.add(bomDet);
 				
@@ -428,6 +440,7 @@ public class ProdController {
 					
 					float rmQty = Float.parseFloat(request.getParameter("rmQty"+getRmItemList.get(i).getItemDetailId()));
 					System.err.println("string at  "+i+" " +"rmQty"+getRmItemList.get(i).getRmName() +"rm qty "+rmQty);
+					float rmEditQty = Float.parseFloat(request.getParameter("rmEditQty"+getRmItemList.get(i).getItemDetailId()));
 
 					ReqBomDetail bomDet = new ReqBomDetail();
 					
@@ -441,11 +454,11 @@ public class ProdController {
 					bomDet.setMrnItemRate(0);
 					bomDet.setRejectedQty(0);
 					bomDet.setReturnQty(0);
-					bomDet.setRmId(getRmItemList.get(i).getItemDetailId());
+					bomDet.setRmId(getRmItemList.get(i).getRmId());
 					bomDet.setRmIssueQty(0);
-					bomDet.setRmReqQty(rmQty);
+					bomDet.setRmReqQty(rmEditQty);
 					bomDet.setStatus(1);
-					bomDet.setUom(NA);
+					bomDet.setUom(getRmItemList.get(i).getRmUomName());
 					
 					reqBomDetail.add(bomDet);
 					

@@ -258,8 +258,10 @@
 												<th style="text-align: center">Sr.No.</th>
 												<th style="text-align: center">RM Name</th>
 <!-- 												<th style="text-align: center">Unit of Measurement</th>
- -->												<th style="text-align: center">Quantity</th>
+ -->												<th style="text-align: center">RM Quantity</th>
+ <th style="text-align: center">Edited RM Quantity</th>
 											</tr>
+											
 										</thead>
 										<tbody>
 									<c:forEach items="${rmItemList}" var="itemDetail" varStatus="count">
@@ -275,7 +277,11 @@
  --%>
 												
 										<td style="text-align: center">
-										<input  type="text"  class="form-control" value="${itemDetail.rmQuantity}"  id="rmQty${itemDetail.itemDetailId}" name="rmQty${itemDetail.itemDetailId}" />
+										<input  type="text"  class="form-control" readonly value="${itemDetail.itemRmQty}"  id="rmQty${itemDetail.itemDetailId}" name="rmQty${itemDetail.itemDetailId}" />
+										</td>
+										
+										<td style="text-align: center">
+										<input  type="text"  class="form-control" value="${itemDetail.itemRmQty}"  id="rmEditQty${itemDetail.itemDetailId}" name="rmEditQty${itemDetail.itemDetailId}" />
 										</td>
 										
 										<%-- <td style="text-align: center">
