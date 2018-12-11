@@ -31,6 +31,10 @@ import com.ats.ssgs.model.master.GetDocTermHeader;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.TempDocDetail;
 
+
+
+
+
 @Controller
 public class DocTermController {
 	RestTemplate rest = new RestTemplate();
