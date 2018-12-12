@@ -141,33 +141,77 @@ public class MatIssueController {
 				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
 						RawMatItem.class);
 
-				String catId = request.getParameter("catId");
+				if (tempList.size() > 0) {
+					int flag = 0;
+					for (int i = 0; i < tempList.size(); i++) {
+						tempList.get(i).setIsDuplicate(0);
+						if (tempList.get(i).getItemId() == itemId) {
+							tempList.get(i).setIsDuplicate(1);
+							flag = 1;
 
-				float qty = Float.parseFloat(request.getParameter("qty"));
-				TempMatIssueDetail temp = new TempMatIssueDetail();
-				temp.setItemName(getSingleItem.getItemDesc());
-				temp.setItemId(getSingleItem.getItemId());
-				temp.setQuantity(qty);
-				temp.setItemRate(getSingleItem.getItemClRate());
+						} // end of if item exist
 
-				temp.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
-				temp.setCatId(Integer.parseInt(catId));
+					} // end of for
+					if (flag == 0) {
 
-				Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
-				uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+						String catId = request.getParameter("catId");
 
-				for (int i = 0; i < uomList.size(); i++) {
-					if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
-						;
-					{
-						temp.setUomName(uomList.get(i).getUomName());
+						float qty = Float.parseFloat(request.getParameter("qty"));
+						TempMatIssueDetail temp = new TempMatIssueDetail();
+						temp.setItemName(getSingleItem.getItemDesc());
+						temp.setItemId(getSingleItem.getItemId());
+						temp.setQuantity(qty);
+						temp.setItemRate(getSingleItem.getItemClRate());
+
+						temp.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
+						temp.setCatId(Integer.parseInt(catId));
+						Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+						uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+
+						for (int i = 0; i < uomList.size(); i++) {
+							if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
+								;
+							{
+								temp.setUomName(uomList.get(i).getUomName());
+							}
+						}
+
+						temp.setValue(getSingleItem.getItemClRate() * qty);
+						tempList.add(temp);
+
 					}
+
+					System.out.println("Inside Add Raw Material");
+
+				} else {
+
+					String catId = request.getParameter("catId");
+
+					float qty = Float.parseFloat(request.getParameter("qty"));
+					TempMatIssueDetail temp = new TempMatIssueDetail();
+					temp.setItemName(getSingleItem.getItemDesc());
+					temp.setItemId(getSingleItem.getItemId());
+					temp.setQuantity(qty);
+					temp.setItemRate(getSingleItem.getItemClRate());
+
+					temp.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
+					temp.setCatId(Integer.parseInt(catId));
+					Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+					uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+
+					for (int i = 0; i < uomList.size(); i++) {
+						if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
+							;
+						{
+							temp.setUomName(uomList.get(i).getUomName());
+						}
+					}
+
+					temp.setValue(getSingleItem.getItemClRate() * qty);
+					tempList.add(temp);
+
 				}
 
-				temp.setValue(getSingleItem.getItemClRate() * qty);
-				tempList.add(temp);
-
-				System.out.println("Inside Add Raw Material");
 			}
 
 		} catch (Exception e) {

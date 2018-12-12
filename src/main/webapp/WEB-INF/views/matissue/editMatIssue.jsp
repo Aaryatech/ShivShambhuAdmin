@@ -171,7 +171,7 @@
 									<div class="col-md-2">Issue No*</div>
 									<div class="col-md-4">
 										<input type="text" id="issueNo" name="issueNo" maxlength="10"
-											value="${editMat.issueNo}" class="form-control"
+											value="${editMat.issueNo}" class="form-control" readonly
 											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Issue No')"
 											onchange="try{setCustomValidity('')}catch(e){}" required

@@ -173,7 +173,7 @@
 									<div class="col-md-2">Vehicle No*</div>
 									<div class="col-md-4">
 										<input type="text" id="vehNo" name="vehNo" maxlength="10"
-											value="${editVeh.vehNo}" class="form-control"
+											value="${editVeh.vehNo}" class="form-control" readonly
 											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Vehicle No')"
 											onchange="try{setCustomValidity('')}catch(e){}" required

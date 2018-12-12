@@ -20,6 +20,8 @@ public class TempMatIssueDetail {
 
 	private int catId;
 
+	private int isDuplicate;
+
 	public int getMatDetailId() {
 		return matDetailId;
 	}
@@ -92,11 +94,19 @@ public class TempMatIssueDetail {
 		this.catId = catId;
 	}
 
+	public int getIsDuplicate() {
+		return isDuplicate;
+	}
+
+	public void setIsDuplicate(int isDuplicate) {
+		this.isDuplicate = isDuplicate;
+	}
+
 	@Override
 	public String toString() {
 		return "TempMatIssueDetail [matDetailId=" + matDetailId + ", itemId=" + itemId + ", itemName=" + itemName
 				+ ", itemRate=" + itemRate + ", quantity=" + quantity + ", value=" + value + ", uomId=" + uomId
-				+ ", uomName=" + uomName + ", catId=" + catId + "]";
+				+ ", uomName=" + uomName + ", catId=" + catId + ", isDuplicate=" + isDuplicate + "]";
 	}
 
 }
