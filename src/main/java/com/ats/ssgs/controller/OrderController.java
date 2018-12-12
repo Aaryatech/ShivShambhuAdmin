@@ -173,7 +173,7 @@ public class OrderController {
 			 * ordHeader.setOrderTotal(itemTotal); ordHeader.setOtherCostAfterTax(0);
 			 * ordHeader.setTaxableValue(itemTotal); ordHeader.setTaxValue(0)
 			 */;
-
+			 
 			TempOrdDetail detail = new TempOrdDetail();
 			tempOrdDetail = new ArrayList<>();
 

@@ -356,6 +356,9 @@
 								function(data) {
 									
 									//alert("Order Data " +JSON.stringify(data));
+									if(data == null || data==""){
+										alert("No records found");
+									}
 									
 									 var dataTable = $('#bootstrap-data-table')
 									.DataTable();
@@ -422,7 +425,6 @@
 		}
 	
 	function viewProdDetail(prodHeaderId){
-		
 		
 		document.getElementById("prodHeaderId").value=prodHeaderId;
 		var form=document.getElementById("prodHeadForm");
