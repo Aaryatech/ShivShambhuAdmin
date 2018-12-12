@@ -9,7 +9,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
-<c:url var="getProdHeadReport" value="/getProdHeadReport" />
+
+<c:url var="getRMHeadReport" value="/getRMHeadReport" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -150,7 +151,7 @@
 						<div class="card-body card-block">
 							<form id="prodHeadForm" method="post">
 								<div class="row">
-									<input type="hidden" name="itemId" id="itemId"
+									<input type="hidden" name="rmId" id="rmId"
 										value="0" />
 
 									<div class="col-md-2">Plant</div>
@@ -207,9 +208,9 @@
 										<thead>
 											<tr>
 												<th style="text-align: center">Sr.No.</th>
-												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">Plan Quantity</th>
-												<th style="text-align: center">Production Quantity</th>
+												<th style="text-align: center">RM Name</th>
+												<th style="text-align: center">Requested Quantity</th>
+												<th style="text-align: center">Issue Quantity</th>
 												<th style="text-align: center">Action</th>
 											</tr>
 										</thead>
@@ -342,7 +343,7 @@
 			
 				$
 						.getJSON(
-								'${getProdHeadReport}',
+								'${getRMHeadReport}',
 								{
 									plantId : plantId,
 									fromDate : fromDate,
@@ -352,7 +353,9 @@
 
 								function(data) {
 									
-									//alert("Order Data " +JSON.stringify(data));
+									if(data==null || data==""){
+										alert("No records found");
+									}
 									
 									 var dataTable = $('#bootstrap-data-table')
 									.DataTable();
@@ -365,24 +368,20 @@
 //var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
 //var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
 //var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
-										 var acButton = '<a href="#" class="action_btn" onclick="viewProdDetail('
-														+ v.itemId
+										 var acButton = '<a href="#" class="action_btn" onclick="viewRMDetail('
+														+ v.rmId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-list"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="viewRMHeaderDetail('
-														+ v.itemId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-times"></i></a>'
+														+ ')"><i class="fa fa-list"></i></a>'
 														
  
 												dataTable.row
 														.add(
 																[
 																		i + 1,
-																		v.itemName,
-																		v.planQty,
-																		v.productionQty,
+																		v.itemDesc,
+																		v.rmReqQty,
+																		v.rmIssueQty,
 																		acButton
 																		 ])
 														.draw();
@@ -394,27 +393,18 @@
 						
 		}
 	
-	function viewProdDetail(itemId){
-		document.getElementById("itemId").value=itemId;
+	function viewRMDetail(rmId){
+		document.getElementById("rmId").value=rmId;
 		var form=document.getElementById("prodHeadForm");
 		
-		form.action=("getProdReportDetail");
+		form.action=("getRMReportDetail");
 		
 		form.submit();
 		
-	}
+		
 		//window.open("${pageContext.request.contextPath}/editOrder/"+orderId);
 		
-		function viewRMHeaderDetail(itemId){
-			document.getElementById("itemId").value=itemId;
-
-			var form=document.getElementById("prodHeadForm");
-			
-			form.action=("getFgItemWiseRMReport");
-			
-			form.submit();
-		}
-		
+	}
 	</script>
 
 	<!-- <script type="text/javascript">
