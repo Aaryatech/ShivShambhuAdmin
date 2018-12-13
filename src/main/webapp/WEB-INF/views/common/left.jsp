@@ -166,6 +166,9 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showAddEnquiry">Add
 									Enquiry</a></li>
+									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showEnqList">
+									Enquiry List</a></li>
 
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showQuotations">View

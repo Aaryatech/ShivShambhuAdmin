@@ -27,6 +27,7 @@ import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.enq.EnqDetail;
 import com.ats.ssgs.model.enq.EnqGenFact;
 import com.ats.ssgs.model.enq.EnqHeader;
+import com.ats.ssgs.model.enq.GetEnqHeader;
 import com.ats.ssgs.model.enq.TempEnqItem;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.Document;
@@ -35,6 +36,7 @@ import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Uom;
+import com.ats.ssgs.model.quot.GetQuotHeads;
 import com.ats.ssgs.model.quot.QuotDetail;
 import com.ats.ssgs.model.quot.QuotHeader;
 
@@ -98,6 +100,76 @@ public class EnqController {
 
 		return model;
 	}
+	
+	
+	@RequestMapping(value = "/showEnqList", method = RequestMethod.GET)
+	public ModelAndView showQuotations(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("enq/enqList");
+
+			model.addObject("title", "Enquiry List");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("statusList", "0,1");
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			
+			System.out.println("plant is"+plantList);
+
+			model.addObject("plantList", plantList);
+
+
+		} catch (Exception e) {
+			System.err.println("Exce in /showQ" + e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+	
+	
+	
+	
+
+	List<GetEnqHeader> getEnqList = new ArrayList<>();
+
+	@RequestMapping(value = "/getEnqListBetDate", method = RequestMethod.GET)
+	public @ResponseBody List<GetEnqHeader> getOrderListBetDate(HttpServletRequest request, HttpServletResponse response) {
+
+		
+		
+		System.err.println(" in enq");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		int custId = Integer.parseInt(request.getParameter("custId"));
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+		
+		System.out.println("values are"+plantId +custId + fromDate +toDate);
+
+		map.add("plantId", plantId);
+		map.add("custId", custId);
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		//map.add("status", 0);
+
+		GetEnqHeader[] ordHeadArray = rest.postForObject(Constants.url + "getEnqListByPlantIdAndCustId", map,GetEnqHeader[].class);
+		getEnqList  = new ArrayList<GetEnqHeader>(Arrays.asList(ordHeadArray));
+
+		return getEnqList;
+	}
+	
+	
+	
+	
+
+	
 
 	// Ajax call
 	@RequestMapping(value = "/getItemsByPlantId", method = RequestMethod.GET)
@@ -568,6 +640,42 @@ public class EnqController {
 
 		return "redirect:/showAddEnquiry";
 
+	}
+	
+	
+	@RequestMapping(value = "/deleteRecordofEnq", method = RequestMethod.POST)
+	public String deleteRecordofQuotations(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			
+			System.out.println("Hello            oooooooooooo");
+			String[] quotIds = request.getParameterValues("selectEnqToDelete");
+			System.out.println("id are"+quotIds );
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < quotIds .length; i++) {
+				sb = sb.append(quotIds [i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+			
+			System.err.println("enqIds"+items.toString());
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("enqIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiEnq", map, Info.class);
+			System.err.println("inside method /deleteRecordofQuotations");
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofQuotations @OrderController  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showQuotationsCustWise";
 	}
 
 }

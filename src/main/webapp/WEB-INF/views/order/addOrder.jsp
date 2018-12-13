@@ -103,6 +103,15 @@
 }
 </style>
 
+<style type="text/css">
+.right {
+	text-align: right;
+}
+
+.left {
+	text-align: left;
+}
+</style>
 
 </head>
 <body>
@@ -313,7 +322,7 @@
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
 								
 								<div class="card-body card-block">
-									<table id="bootstrap-data-table"
+									<table id="bootstrap-data-table1"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
@@ -372,8 +381,7 @@
 	<!-- Footer -->
 
 
-
-	<script
+<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/popper.min.js"></script>
@@ -407,6 +415,7 @@
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
+		
 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({
@@ -418,7 +427,7 @@
 	</script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#bootstrap-data-table').DataTable();
+			$('#bootstrap-data-table1').DataTable();
 		});
 	</script>
 
@@ -481,7 +490,7 @@
 					//$("#po_id").trigger("chosen:updated");
 				
 					
-					var dataTable = $('#bootstrap-data-table')
+					var dataTable = $('#bootstrap-data-table1')
 					.DataTable();
 			dataTable.clear().draw();
 			
@@ -506,7 +515,7 @@
 				$('#po_id').html("-1");
 				$("#po_id").trigger("chosen:updated");
 				
-				var dataTable = $('#bootstrap-data-table')
+				var dataTable = $('#bootstrap-data-table1')
 				.DataTable();
 		dataTable.clear().draw();
 
@@ -517,7 +526,7 @@
 				$('#po_id').html("-1");
 				$("#po_id").trigger("chosen:updated");
 				
-				var dataTable = $('#bootstrap-data-table')
+				var dataTable = $('#bootstrap-data-table1')
 				.DataTable();
 		dataTable.clear().draw();
 
@@ -620,7 +629,7 @@
 
 								function(data) {
 									
-									var dataTable = $('#bootstrap-data-table')
+									var dataTable = $('#bootstrap-data-table1')
 									.DataTable();
 							dataTable.clear().draw();
 
@@ -808,7 +817,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 								},
 
 								function(data) {
-									var dataTable = $('#bootstrap-data-table')
+									var dataTable = $('#bootstrap-data-table1')
 											.DataTable();
 									dataTable.clear().draw();
 
@@ -897,7 +906,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 							},
 
 							function(data) {
-								var dataTable = $('#bootstrap-data-table')
+								var dataTable = $('#bootstrap-data-table1')
 										.DataTable();
 								dataTable.clear().draw();
 								$
@@ -944,7 +953,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 
 	<!-- <script type="text/javascript">
 		$(document).ready(function() {
-			var dataTable = $('#bootstrap-data-table').DataTable();
+			var dataTable = $('#bootstrap-data-table1').DataTable();
 				columnDefs : [ {
 					targets : [ 1,2],
 					className : "right"
@@ -953,5 +962,18 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 		});
 	</script> -->
 
+
+<script type="text/javascript">
+		$(document).ready(function() {
+			$('#bootstrap-data-table1').DataTable({
+				columnDefs : [ {
+					targets : [ 3,4,5,6,7 ],
+					className : "right"
+				}, ]
+
+			});
+
+		});
+	</script>
 </body>
 </html>
