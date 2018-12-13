@@ -202,7 +202,7 @@
 
 								<div class="card-body card-block">
 
-									<table id="bootstrap-data-table"
+									<table id="bootstrap-data-table1"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
@@ -339,7 +339,7 @@
 							},
 
 							function(data) {
-								var dataTable = $('#bootstrap-data-table')
+								var dataTable = $('#bootstrap-data-table1')
 										.DataTable();
 								dataTable.clear().draw();
 
@@ -410,7 +410,7 @@
 							},
 
 							function(data) {
-								var dataTable = $('#bootstrap-data-table')
+								var dataTable = $('#bootstrap-data-table1')
 										.DataTable();
 								dataTable.clear().draw();
 								$
@@ -448,16 +448,7 @@
 		}
 	</script>
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			var dataTable = $('#bootstrap-data-table').DataTable();
-			columnDefs: [ {
-				targets : [ 1, 2 ,],
-				className : "right"
-			}, ]
 
-		});
-	</script>
 	<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(
@@ -468,6 +459,23 @@
 					});
 		});
 	</script>
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#bootstrap-data-table1').DataTable({
+				columnDefs : [ {
+					targets : [ 2 ],
+					className : "right"
+				}, ]
+
+			});
+
+		});
+	</script>
+
+
+
 
 </body>
 </html>
