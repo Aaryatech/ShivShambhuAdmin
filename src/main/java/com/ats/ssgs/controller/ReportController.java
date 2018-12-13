@@ -833,6 +833,78 @@ public class ReportController {
 
 			model.addObject("weighing", weighing);
 
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No");
+			rowData.add("Date");
+			rowData.add("Item Name");
+			rowData.add("Measurement of unit");
+			rowData.add("Item Rate");
+
+			rowData.add("Item Quantity");
+			rowData.add("Total Value");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+			int cnt = 1;
+			for (int i = 0; i < editVeh.getVehDetailList().size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				cnt = cnt + i;
+				rowData.add("" + (i + 1));
+				rowData.add("" + editVeh.getDate());
+				rowData.add("" + editVeh.getVehDetailList().get(i).getItemCode());
+				rowData.add("" + editVeh.getVehDetailList().get(i).getUomName());
+				rowData.add("" + editVeh.getVehDetailList().get(i).getRate());
+				rowData.add("" + editVeh.getVehDetailList().get(i).getQuantity());
+				rowData.add("" + editVeh.getVehDetailList().get(i).getValue());
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "GetVehHeader");
+
+			List<ExportToExcel> exportToExcelList1 = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel1 = new ExportToExcel();
+			List<String> rowData1 = new ArrayList<String>();
+
+			rowData1.add("Sr. No");
+			rowData1.add("Date");
+			rowData1.add("Quantity");
+			rowData1.add("Contractor Name");
+			rowData1.add("Poklen Name");
+			rowData1.add("poklen No");
+
+			expoExcel1.setRowData(rowData1);
+			exportToExcelList1.add(expoExcel1);
+			int cnt2 = 1;
+			for (int i = 0; i < weighing.size(); i++) {
+				expoExcel1 = new ExportToExcel();
+				rowData1 = new ArrayList<String>();
+				cnt2 = cnt2 + i;
+				rowData1.add("" + (i + 1));
+				rowData1.add("" + editVeh.getDate());
+				rowData1.add("" + weighing.get(i).getQuantity());
+				rowData1.add("" + weighing.get(i).getContrName());
+				rowData1.add("" + weighing.get(i).getVehicleName());
+				rowData1.add("" + weighing.get(i).getVehicleNo());
+
+				expoExcel1.setRowData(rowData1);
+				exportToExcelList1.add(expoExcel1);
+
+			}
+
+			session.setAttribute("exportToExcelList1", exportToExcelList1);
+			session.setAttribute("excelName1", "GetWeighing");
+
 		} catch (Exception e) {
 			System.err.println("exception In vehilceDetailReport at Mat Contr" + e.getMessage());
 			e.printStackTrace();
@@ -1526,10 +1598,10 @@ public class ReportController {
 			exportToExcelList1.add(expoExcel1);
 			int cnt1 = 1;
 			for (int i = 0; i < readingList.size(); i++) {
-				expoExcel = new ExportToExcel();
-				rowData = new ArrayList<String>();
+				expoExcel1 = new ExportToExcel();
+				rowData1 = new ArrayList<String>();
 				cnt1 = cnt1 + i;
-				rowData.add("" + (i + 1));
+				rowData1.add("" + (i + 1));
 
 				rowData1.add("" + readingList.get(i).getStartDate());
 				rowData1.add("" + readingList.get(i).getEndDate());
@@ -1543,9 +1615,8 @@ public class ReportController {
 
 			}
 
-			HttpSession session1 = request.getSession();
-			session1.setAttribute("exportToExcelList1", exportToExcelList1);
-			session1.setAttribute("excelName", "GetPoklenReading");
+			session.setAttribute("exportExcelList1", exportToExcelList1);
+			session.setAttribute("excelName1", "GetPoklenReading");
 
 			List<ExportToExcel> exportToExcelList2 = new ArrayList<ExportToExcel>();
 
@@ -1555,7 +1626,6 @@ public class ReportController {
 			rowData2.add("Sr. No");
 			rowData2.add("Quantity");
 			rowData2.add("Contractor Name");
-
 			rowData2.add("Poklen Name");
 			rowData2.add("poklen No");
 
@@ -1570,7 +1640,6 @@ public class ReportController {
 
 				rowData2.add("" + weighing.get(i).getQuantity());
 				rowData2.add("" + weighing.get(i).getContrName());
-
 				rowData2.add("" + weighing.get(i).getVehicleName());
 				rowData2.add("" + weighing.get(i).getVehicleNo());
 
@@ -1579,9 +1648,8 @@ public class ReportController {
 
 			}
 
-			HttpSession session2 = request.getSession();
-			session2.setAttribute("exportExcelList2", exportToExcelList2);
-			session2.setAttribute("excelName", "GetWeighing");
+			session.setAttribute("exportExcelList2", exportToExcelList2);
+			session.setAttribute("excelName2", "GetWeighing");
 
 		} catch (Exception e) {
 			System.err.println("exception In poklenDetailReport at Mat Contr" + e.getMessage());

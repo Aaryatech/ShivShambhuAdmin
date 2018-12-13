@@ -207,6 +207,7 @@
 											onclick="exportToExcel();" id="expExcel"
 											style="align-content: center; width: 200px; margin-left: 80px;">
 											Export To Excel</button>
+										&nbsp;
 									</div>
 
 									&nbsp;&nbsp;&nbsp;
@@ -222,7 +223,8 @@
 										</div>
 									</div>
 									&nbsp;&nbsp;&nbsp; --%>
-
+									<div class="form-group"></div>
+									<div class="row"></div>
 
 									<table class="table table-striped table-bordered">
 										<thead>
@@ -265,11 +267,12 @@
 									<div class="col-md-3">
 
 										<button type="button" class="btn btn-primary"
-											onclick="exportToExcel2();" id="expExcel1"
+											onclick="exportToExcel1();" id="expExcel1"
 											style="align-content: center; width: 200px; margin-left: 80px;">
 											Export To Excel</button>
+										&nbsp;
 									</div>
-									&nbsp;&nbsp;&nbsp;
+
 
 									<table class="table table-striped table-bordered">
 										<thead>
@@ -278,7 +281,6 @@
 												<th style="text-align: center; width: 5%;">Sr No</th>
 												<th style="text-align: center">Start Date</th>
 												<th style="text-align: center">End Date</th>
-
 												<th style="text-align: center">Start Time</th>
 												<th style="text-align: center">End Time</th>
 												<th style="text-align: center">Poklen Name</th>
@@ -327,7 +329,7 @@
 									<div class="col-md-3">
 
 										<button type="button" class="btn btn-primary"
-											onclick="exportToExcel1();" id="expExcel1"
+											onclick="exportToExcel2();" id="expExcel2"
 											style="align-content: center; width: 200px; margin-left: 80px;">
 											Export To Excel</button>
 									</div>
@@ -462,13 +464,13 @@
 
 		function exportToExcel1() {
 
-			window.open("${pageContext.request.contextPath}/exportToExcel1");
+			window.open("${pageContext.request.contextPath}/exportToExcel2");
 			document.getElementById("expExcel1").disabled = true;
 		}
 
 		function exportToExcel2() {
 
-			window.open("${pageContext.request.contextPath}/exportToExcel2");
+			window.open("${pageContext.request.contextPath}/exportToExcel1");
 			document.getElementById("expExcel2").disabled = true;
 		}
 	</script>

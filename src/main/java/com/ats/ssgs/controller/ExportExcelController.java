@@ -97,7 +97,7 @@ public class ExportExcelController {
 		try {
 
 			exportToExcelList1 = (List) session.getAttribute("exportExcelList1");
-			System.out.println("Excel List :" + exportToExcelList.toString());
+			System.out.println("Excel List :" + exportToExcelList1.toString());
 
 			String excelName = (String) session.getAttribute("excelName");
 			wb = createWorkbook1();
@@ -115,7 +115,7 @@ public class ExportExcelController {
 			}
 		}
 		session.removeAttribute("exportExcelList1");
-		System.out.println("Session List" + session.getAttribute("exportExcelList"));
+		System.out.println("Session List" + session.getAttribute("exportExcelList1"));
 	}
 
 	private XSSFWorkbook createWorkbook1() throws IOException {
@@ -149,9 +149,9 @@ public class ExportExcelController {
 		try {
 
 			exportToExcelList2 = (List) session.getAttribute("exportExcelList2");
-			System.out.println("Excel List :" + exportToExcelList.toString());
+			System.out.println("Excel List2 :" + exportToExcelList2.toString());
 
-			String excelName = (String) session.getAttribute("excelName");
+			String excelName = (String) session.getAttribute("excelName2");
 			wb = createWorkbook2();
 
 			response.setContentType("application/vnd.ms-excel");

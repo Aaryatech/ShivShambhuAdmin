@@ -258,6 +258,15 @@
 										</div>
 									</div>
 									&nbsp;&nbsp;&nbsp;
+									<div class="col-md-3">
+
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+										&nbsp;
+									</div>
+
 
 
 									<table class="table table-striped table-bordered">
@@ -317,14 +326,16 @@
 
 									<div class="col-md-2"></div>
 
+
+
 									<div class="col-md-3">
 
 										<button type="button" class="btn btn-primary"
-											onclick="exportToExcel();" id="expExcel"
+											onclick="exportToExcel1();" id="expExcel1"
 											style="align-content: center; width: 200px; margin-left: 80px;">
 											Export To Excel</button>
-									</div>
 
+									</div>
 
 									<div class="col-md-3">
 
@@ -451,6 +462,11 @@
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");
 			document.getElementById("expExcel").disabled = true;
+		}
+		function exportToExcel1() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel1");
+			document.getElementById("expExcel1").disabled = true;
 		}
 	</script>
 
