@@ -9,7 +9,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>RTO Login</title>
+<title>Shiv Admin Login</title>
 <meta name="description" content="Web Panel Login">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -39,20 +39,9 @@
 	rel='stylesheet' type='text/css'>
 
 </head>
-
 <body class="bg-dark">
 
-
-
-	<div align="right" style="margin-right: 15px;">
-
-		<a href="?lang=en" style="color: #fff;"> English | </a> <a
-			href="?lang=mr" style="color: #fff;"> मराठी</a>
-
-	</div>
-
-
-
+	<div align="right" style="margin-right: 15px;"></div>
 
 	<div class="sufee-login d-flex align-content-center flex-wrap"
 		style="position: absolute; top: 35%; left: 50%; width: 30em; height: 18em; margin-top: -9em; margin-left: -15em;">
@@ -80,7 +69,7 @@
 											<i class="fa fa-user"></i>
 										</div>
 										<input type="text" id="username" name="username"
-											placeholder="User Name" class="form-control"
+											maxlength="10" placeholder="User Name" class="form-control"
 											autocomplete="off">
 									</div>
 								</div>

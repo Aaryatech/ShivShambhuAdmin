@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -25,6 +26,7 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.master.DocTermHeader;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Uom;
 import com.ats.ssgs.model.master.Vehicle;
 import com.ats.ssgs.model.mat.Contractor;
@@ -268,6 +270,8 @@ public class MatIssueController {
 	public String insertMatIssueContractor(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
 
 			System.err.println("Inside insert insertMatIssueContractor method");
 
@@ -297,7 +301,7 @@ public class MatIssueController {
 			matIssue.setExInt1(1);
 			matIssue.setExInt2(1);
 			matIssue.setExInt3(1);
-			matIssue.setUserId(1);
+			matIssue.setUserId(login.getUser().getUserId());
 
 			matIssue.setIssueNo(issueNo);
 			matIssue.setQtyTotal(0);
@@ -705,6 +709,9 @@ public class MatIssueController {
 
 		try {
 
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
+
 			System.err.println("Inside insert insertMatIssueVehicle method");
 
 			int vehId = Integer.parseInt(request.getParameter("vehId"));
@@ -726,7 +733,7 @@ public class MatIssueController {
 			matIssue.setExInt1(1);
 			matIssue.setExInt2(1);
 			matIssue.setExInt3(1);
-			matIssue.setUserId(1);
+			matIssue.setUserId(login.getUser().getUserId());
 
 			matIssue.setVehNo(vehNo);
 			matIssue.setReading(reading);
