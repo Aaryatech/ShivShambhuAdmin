@@ -451,7 +451,7 @@
 		}
 		function exportToExcel1() {
 
-			window.open("${pageContext.request.contextPath}/exportToExcel2");
+			window.open("${pageContext.request.contextPath}/exportToExcel1");
 			document.getElementById("expExcel1").disabled = true;
 		}
 	</script>

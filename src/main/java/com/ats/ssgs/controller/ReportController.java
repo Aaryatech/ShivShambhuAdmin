@@ -222,6 +222,40 @@ public class ReportController {
 			session.setAttribute("exportExcelList", exportToExcelList);
 			session.setAttribute("excelName", "GetMatIssueHeader");
 
+			List<ExportToExcel> exportToExcelList1 = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel1 = new ExportToExcel();
+			List<String> rowData1 = new ArrayList<String>();
+
+			rowData1.add("Sr. No");
+			rowData1.add("Date");
+			rowData1.add("Quantity");
+			rowData1.add("Contractor Name");
+			rowData1.add("Vehicle Name");
+			rowData1.add("Vehicle No");
+
+			expoExcel1.setRowData(rowData1);
+			exportToExcelList1.add(expoExcel1);
+			int cnt2 = 1;
+			for (int i = 0; i < weighing.size(); i++) {
+				expoExcel1 = new ExportToExcel();
+				rowData1 = new ArrayList<String>();
+				cnt2 = cnt2 + i;
+				rowData1.add("" + (i + 1));
+				rowData1.add("" + editMat.getDate());
+				rowData1.add("" + weighing.get(i).getQuantity());
+				rowData1.add("" + weighing.get(i).getContrName());
+				rowData1.add("" + weighing.get(i).getVehicleName());
+				rowData1.add("" + weighing.get(i).getVehicleNo());
+
+				expoExcel1.setRowData(rowData1);
+				exportToExcelList1.add(expoExcel1);
+
+			}
+
+			session.setAttribute("exportExcelList1", exportToExcelList1);
+			session.setAttribute("excelName1", "GetWeighing");
+
 		} catch (Exception e) {
 			System.err.println("exception In contractorDetailReport at Mat Contr" + e.getMessage());
 			e.printStackTrace();
@@ -880,8 +914,8 @@ public class ReportController {
 			rowData1.add("Date");
 			rowData1.add("Quantity");
 			rowData1.add("Contractor Name");
-			rowData1.add("Poklen Name");
-			rowData1.add("poklen No");
+			rowData1.add("Vehicle Name");
+			rowData1.add("Vehicle No");
 
 			expoExcel1.setRowData(rowData1);
 			exportToExcelList1.add(expoExcel1);
@@ -902,7 +936,7 @@ public class ReportController {
 
 			}
 
-			session.setAttribute("exportToExcelList1", exportToExcelList1);
+			session.setAttribute("exportExcelList1", exportToExcelList1);
 			session.setAttribute("excelName1", "GetWeighing");
 
 		} catch (Exception e) {
