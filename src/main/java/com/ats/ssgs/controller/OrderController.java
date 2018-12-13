@@ -617,11 +617,11 @@ detail.setOrderDetId(orderDetId);
 		
 		
 		
-		@RequestMapping(value = "/deleteRecordOfOrder", method = RequestMethod.POST)
+		@RequestMapping(value = "/deleteRecordofOrders", method = RequestMethod.POST)
 		public String deleteRecordofCompany(HttpServletRequest request, HttpServletResponse response) {
 			try {
 
-				String[] orderIds = request.getParameterValues("orderId");
+				String[] orderIds = request.getParameterValues("selectOrderToDelete");
 				System.out.println("id are"+orderIds);
 
 				StringBuilder sb = new StringBuilder();
@@ -632,21 +632,22 @@ detail.setOrderDetId(orderDetId);
 				}
 				String items = sb.toString();
 				items = items.substring(0, items.length() - 1);
+				
+				System.err.println("orderIds "+items.toString());
 
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("orderIds", items);
 
 				Info errMsg = rest.postForObject(Constants.url + "deleteMultiOrder", map, Info.class);
-
-				System.err.println("inside method");
+				System.err.println("inside method /deleteRecordofOrders");
 			} catch (Exception e) {
 
-				System.err.println("Exception in /deleteRecordofQuota @MastContr  " + e.getMessage());
+				System.err.println("Exception in /deleteRecordofOrders @OrderController  " + e.getMessage());
 				e.printStackTrace();
 			}
 
-			return "redirect:/showQuotations";
+			return "redirect:/showOrderList";
 		}
 
 }

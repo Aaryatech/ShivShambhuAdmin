@@ -170,6 +170,10 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showQuotations">View
 									Quotations</a></li>
+									
+									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showQuotationsCustWise">View
+									Quotations Serially</a></li>
 
 
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a

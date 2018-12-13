@@ -152,18 +152,18 @@
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
+					<form
+								action="${pageContext.request.contextPath}/deleteRecordofOrders"
+								method="post">
 						<div class="card-header">
 							<div class="col-md-2">
 								<strong>${title}</strong>
 							</div>
-							<%-- <div class="col-md-8"></div>
-							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
-										Customer</strong></a>
-							</div> --%>
 							
 
 						</div>
+						
+						
 						<div class="card-body card-block">
 							
 								<div class="row">
@@ -228,13 +228,14 @@
 								</div>
 								
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-								
+								<input
+												type="checkbox" name="selAll" id="selAll" /> Select All
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-											<th style="text-align: center">Select</th>
+											<th style="text-align: center"></th>
 												<th style="text-align: center">Sr.No.</th>
 												<th style="text-align: center">Order No</th>
 												<th style="text-align: center">Order Date</th>
@@ -248,10 +249,17 @@
 									</table>
 								</div>
 
-								
+									<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+						</form>
+					</div>
+					
 
 						</div>
-					</div>
+						
+					
 				</div>
 			</div>
 
@@ -317,6 +325,15 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#bootstrap-data-table').DataTable();
+			
+			$("#selAll")
+			.click(
+					function() {
+						$(
+								'#bootstrap-data-table tbody input[type="checkbox"]')
+								.prop('checked',
+										this.checked);
+					});
 		});
 	</script>
 
@@ -468,7 +485,7 @@
 														+ i
 														+ ')"><i class="fa fa-trash" title="Delete"></i></a>'
 														
-														 chBox = '<input  type="checkbox" name="selChalanItem" id='+v.orderId+' class="check"  value='+v.orderId+'/>'
+														 chBox = '<input  type="checkbox" class="chk" name="selectOrderToDelete" id='+v.orderId+' class="check"  value='+v.orderId+'>'
 
 												}else{
 													//alert("status>0 " +v.orderNo)

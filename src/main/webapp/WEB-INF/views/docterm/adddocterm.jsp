@@ -250,7 +250,7 @@
 	<!-- Footer -->
 
 
-
+////////////////
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
 	<script
@@ -285,6 +285,9 @@
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
+		
+		
+		//////////////
 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({

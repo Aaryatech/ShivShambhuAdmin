@@ -1,6 +1,7 @@
 package com.ats.ssgs.controller;
 
 import java.text.DateFormat;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,6 +31,7 @@ import com.ats.ssgs.model.master.PaymentTerm;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.master.User;
+import com.ats.ssgs.model.order.GetOrder;
 import com.ats.ssgs.model.quot.GetItemWithEnq;
 import com.ats.ssgs.model.quot.GetQuotHeads;
 import com.ats.ssgs.model.quot.QuotDetail;
@@ -79,6 +81,66 @@ public class QuotController {
 
 	}
 
+	
+
+	@RequestMapping(value = "/showQuotationsCustWise", method = RequestMethod.GET)
+	public ModelAndView showQuotationsCustWise(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("quot/quotListNew");
+
+			model.addObject("title", "Quotation List CustomerWise");
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			
+			System.out.println("plant is"+plantList);
+
+			model.addObject("plantList", plantList);
+
+		} catch (Exception e) {
+			System.err.println("Exce in /showQuotations" + e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+
+	
+	List<GetQuotHeads> getQuotList = new ArrayList<>();
+
+	@RequestMapping(value = "/getQuotListBetDate", method = RequestMethod.GET)
+	public @ResponseBody List<GetQuotHeads> getOrderListBetDate(HttpServletRequest request, HttpServletResponse response) {
+
+		System.err.println(" in getTempQuotHeader");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		int custId = Integer.parseInt(request.getParameter("custId"));
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+		
+		System.out.println("values are"+plantId +custId + fromDate +toDate);
+
+		map.add("plantId", plantId);
+		map.add("custId", custId);
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		//map.add("status", 0);
+
+		GetQuotHeads[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustId", map,GetQuotHeads[].class);
+		getQuotList  = new ArrayList<GetQuotHeads>(Arrays.asList(ordHeadArray));
+
+		return getQuotList;
+	}
+	
+	
+	
+	
+	
+	
 	// editQuot
 	List<GetItemWithEnq> newItemList;// items that are not in quotation ie enquiry but in m_item table
 
@@ -778,4 +840,41 @@ public class QuotController {
 
 			return "redirect:/showQuotations";
 		}
+		
+		
+		@RequestMapping(value = "/deleteRecordofQuotations", method = RequestMethod.POST)
+		public String deleteRecordofQuotations(HttpServletRequest request, HttpServletResponse response) {
+			try {
+
+				
+				System.out.println("Hello            oooooooooooo");
+				String[] quotIds = request.getParameterValues("selectQuatationToDelete");
+				System.out.println("id are"+quotIds );
+
+				StringBuilder sb = new StringBuilder();
+
+				for (int i = 0; i < quotIds .length; i++) {
+					sb = sb.append(quotIds [i] + ",");
+
+				}
+				String items = sb.toString();
+				items = items.substring(0, items.length() - 1);
+				
+				System.err.println("quotIds"+items.toString());
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("quotIds", items);
+
+				Info errMsg = rest.postForObject(Constants.url + "deleteMultiQuot", map, Info.class);
+				System.err.println("inside method /deleteRecordofQuotations");
+			} catch (Exception e) {
+
+				System.err.println("Exception in /deleteRecordofQuotations @OrderController  " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return "redirect:/showQuotationsCustWise";
+		}
+
 }

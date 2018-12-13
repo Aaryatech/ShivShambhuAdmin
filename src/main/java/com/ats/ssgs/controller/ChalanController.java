@@ -813,4 +813,39 @@ System.err.println("Exce in update Chalan ");
 		return "redirect:/showChalanList";
 		
 	}
+	
+
+	@RequestMapping(value = "/deleteRecordofChalan", method = RequestMethod.POST)
+	public String deleteRecordofCompany(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] chalanIds = request.getParameterValues("selectChalanToDelete");
+			System.out.println("ch ids are"+chalanIds);
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < chalanIds.length; i++) {
+				sb = sb.append(chalanIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("chalanIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiChalan", map, Info.class);
+
+			System.err.println("inside method");
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofQuota @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showQuotations";
+	}
+	
+	
 }
