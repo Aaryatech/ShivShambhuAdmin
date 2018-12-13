@@ -199,7 +199,15 @@ body {
 }
 </style>
 
+<style type="text/css">
+.right {
+	text-align: right;
+}
 
+.left {
+	text-align: left;
+}
+</style>
 </head>
 <body>
 
@@ -321,7 +329,7 @@ body {
 
 									<div class="col-md-2">Select Project</div>
 
-									<div class="col-md-10">
+									<div class="col-md-4">
 										<select id="proj_id" name="proj_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select project')"
@@ -344,15 +352,10 @@ body {
 
 										</select>
 									</div>
-								</div>
-								
-									<div class="form-group"></div>
 									
-								<div class="row">
-
 									<div class="col-md-2">Select Order</div>
 
-									<div class="col-md-10">
+									<div class="col-md-4">
 										<select id="order_id" name="order_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select order')"
@@ -364,13 +367,13 @@ body {
 											</c:forEach> --%>
 										</select>
 									</div>
-									</div>
-									<div class="form-group"></div>
 									
-									<div class="row">
-
-										
-										</div>
+									
+									
+								</div>
+						
+									
+									<div class="row"></div>
 								<div class="form-group"></div>
 								
 									<div id="myModal" class="modal">
@@ -1311,6 +1314,18 @@ function allowOnlyNumber1(evt)
 			
 		});
 	</script> -->
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
+	
+	
 	<script type="text/javascript">
 function toggle() {
 			  checkboxes = document.getElementsByName('selChalanItem');

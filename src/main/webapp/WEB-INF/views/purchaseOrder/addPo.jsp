@@ -142,7 +142,7 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-								<div class="col-md-2">Purchase Order  Validity Date </div>
+								<div class="col-md-2">Purchase Order Validity Date </div>
 									<div class="col-md-4">
 										<input type="text" id="poValidityDate" name="poValidityDate"
 											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"

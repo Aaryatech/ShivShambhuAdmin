@@ -195,7 +195,18 @@
 									</div>
 
 								</div>
+								<!-- <div class="form-group"></div>
+								
+								<div class="row">
+
+									
+								</div> -->
+								
+								
 								<div class="form-group"></div>
+								
+								
+								
 								<div class="row">
 
 									<div class="col-md-2">Select Project</div>
@@ -219,6 +230,18 @@
 											</c:choose>
 											
 											</c:forEach>
+
+										</select>
+									</div>
+									
+									<div class="col-md-2">Select Purchase Order</div>
+
+									<div class="col-md-4">
+										<select id="po_id" name="po_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select po ')"
+											onchange="getPoDetailItem()">
+											<option value="-1">Select</option>
 
 										</select>
 									</div>
@@ -286,20 +309,6 @@
 								
 
 								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Select Purchase Order</div>
-
-									<div class="col-md-4">
-										<select id="po_id" name="po_id" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select po ')"
-											onchange="getPoDetailItem()">
-											<option value="-1">Select</option>
-
-										</select>
-									</div>
-								</div>
 								
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
 								

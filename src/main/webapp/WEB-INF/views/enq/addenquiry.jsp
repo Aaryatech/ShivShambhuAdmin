@@ -66,6 +66,9 @@
 .left {
 	text-align: left;
 }
+.center {
+	text-align: center;
+}
 </style>
 
 </head>
@@ -789,16 +792,25 @@
 		
 		</script>
 
-	<!-- <script type="text/javascript">
+	<script type="text/javascript">
 		$(document).ready(function() {
 			var dataTable = $('#bootstrap-data-table').DataTable();
 				columnDefs : [ {
-					targets : [ 1,2],
+					targets : [3],
 					className : "right"
+					
 				}, ]
+			columnDefs : [ {
+				targets : [2],
+				className : "center"
+				
+			}, ]
 			
 		});
-	</script> -->
+	</script>
+	
+	
+	
 
 </body>
 </html>

@@ -439,7 +439,7 @@ detail.setOrderDetId(orderDetId);
 		map.add("custId", custId);
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
-		map.add("status", 0);
+		//map.add("status", 0);
 
 		GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getOrderListBetDate", map, GetOrder[].class);
 		getOrdList = new ArrayList<GetOrder>(Arrays.asList(ordHeadArray));
@@ -614,5 +614,39 @@ detail.setOrderDetId(orderDetId);
 			return "redirect:/showOrderList";
 		}
 
+		
+		
+		
+		@RequestMapping(value = "/deleteRecordOfOrder", method = RequestMethod.POST)
+		public String deleteRecordofCompany(HttpServletRequest request, HttpServletResponse response) {
+			try {
+
+				String[] orderIds = request.getParameterValues("orderId");
+				System.out.println("id are"+orderIds);
+
+				StringBuilder sb = new StringBuilder();
+
+				for (int i = 0; i < orderIds.length; i++) {
+					sb = sb.append(orderIds[i] + ",");
+
+				}
+				String items = sb.toString();
+				items = items.substring(0, items.length() - 1);
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("orderIds", items);
+
+				Info errMsg = rest.postForObject(Constants.url + "deleteMultiOrder", map, Info.class);
+
+				System.err.println("inside method");
+			} catch (Exception e) {
+
+				System.err.println("Exception in /deleteRecordofQuota @MastContr  " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return "redirect:/showQuotations";
+		}
 
 }
