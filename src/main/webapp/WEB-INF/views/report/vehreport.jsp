@@ -175,14 +175,12 @@
 								<thead>
 									<tr>
 										<th style="text-align: center">Sr.No.</th>
-										<th style="text-align: center">Date</th>
+
 										<th style="text-align: center">Vehicle Name</th>
 										<th style="text-align: center">Vehicle No</th>
-
-										<th style="text-align: center">Total</th>
-										<th style="text-align: center">Total Quantity</th>
-										<th style="text-align: center">Reading</th>
-
+										<th style="text-align: center">Total Consumption</th>
+										<th style="text-align: center">Total Qty</th>
+										<th style="text-align: center">Total Weighing Qty</th>
 										<th style="text-align: center">Action</th>
 									</tr>
 								</thead>
@@ -371,13 +369,11 @@
 																.add(
 																		[
 																				i + 1,
-																				v.date,
 																				v.vehicleName,
 																				v.vehNo,
-
 																				v.vehTotal,
 																				v.vehQtyTotal,
-																				v.reading,
+																				v.weighContrQty,
 																				acButton ])
 																.draw();
 													});
@@ -389,10 +385,17 @@
 		}
 
 		function callEdit(matVehHeaderId, vehId) {
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
 
 			window
 					.open("${pageContext.request.contextPath}/vehilceDetailReport/"
-							+ matVehHeaderId + '/' + vehId);
+							+ matVehHeaderId
+							+ '/'
+							+ vehId
+							+ '/'
+							+ fromDate
+							+ '/' + toDate);
 
 		}
 	</script>

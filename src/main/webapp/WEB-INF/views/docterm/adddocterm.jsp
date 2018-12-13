@@ -294,12 +294,12 @@
 			});
 		});
 	</script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(document).ready(function() {
 			$('#bootstrap-data-table').DataTable();
 		});
 	</script>
-
+ -->
 
 
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -349,14 +349,14 @@
 												function(i, v) {
 
 													var str = '<a href="#" class="action_btn" onclick="callEdit('
-														+ v.matVehDetailId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-														+ v.matVehDetailId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-trash"></i></a>'
+															+ v.matVehDetailId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ v.matVehDetailId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
@@ -419,14 +419,14 @@
 												function(i, v) {
 													//	var str = '<input  type="button" value="callEdit" onclick="callEdit('+v.itemId+','+i+')" style="width:30%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:30%;"/> ';
 													var str = '<a href="#" class="action_btn" onclick="callEdit('
-														+ v.matVehDetailId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-														+ v.matVehDetailId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-trash"></i></a>'
+															+ v.matVehDetailId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ v.matVehDetailId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
@@ -452,7 +452,7 @@
 		$(document).ready(function() {
 			var dataTable = $('#bootstrap-data-table').DataTable();
 			columnDefs: [ {
-				targets : [ 2 ],
+				targets : [ 1, 2 ,],
 				className : "right"
 			}, ]
 

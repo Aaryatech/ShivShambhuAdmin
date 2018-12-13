@@ -11,10 +11,11 @@
 
 <c:url var="getRawItemByCatId" value="/getRawItemByCatId" />
 
-<c:url var="editInAddMatIssueDetail" value="/editInAddMatIssueDetail" />
+<c:url var="editInAddMatVehicleDetail"
+	value="/editInAddMatVehicleDetail" />
 
-<c:url var="getMatIssueForEditMatHeader"
-	value="/getMatIssueForEditMatHeader" />
+<c:url var="getIndexForEditMatVehicle"
+	value="/getIndexForEditMatVehicle" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -122,17 +123,15 @@
 							<div class="col-md-4"></div>
 							<%-- <div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showMatIssueContractorList"><strong>Material
-										Issue Contractor List</strong></a>
+									href="${pageContext.request.contextPath}/showMatIssueVehicleList"><strong>Material
+										Issue Vehicle List</strong></a>
 							</div>
  --%>
 						</div>
 						<div class="card-body card-block">
 							<form
-								action="${pageContext.request.contextPath}/updateMaterialContr"
+								action="${pageContext.request.contextPath}/updateMaterialVehicle"
 								id="submitForm" method="post">
-
-
 								<div class="row">
 
 									<div class="col-md-2">From Date</div>
@@ -155,128 +154,86 @@
 									</div>
 								</div>
 
-								<%--  <div class="row">
-
-									<div class="col-md-2">Contractor Name*</div>
-
-
-									<div class="col-md-4">
-										<input type="text" id="contr_id" name="contr_id"
-											value="${editMat.contrName}" class="form-control"
-											style="width: 100%;" autocomplete="off" readonly
-											oninvalid="setCustomValidity('Please enter Issue No')"
-											onchange="try{setCustomValidity('')}catch(e){}" required>
-									</div>
-
-
-									<div class="col-md-2">Date*</div>
-									<div class="col-md-4">
-										<input type="text" id="date" name="date" autocomplete="off"
-											value="${editMat.date}" required class="form-control"
-											readonly required style="width: 100%;">
-									</div>
-								</div>  --%>
-								<div class="form-group"></div>
-								<div class="row">
-
-
-									<%-- 	<div class="col-md-2">Issue No*</div> <div class="col-md-4">
-										<input type="text" id="issueNo" name="issueNo" maxlength="10"
-											value="${editMat.issueNo}" class="form-control"
-											style="width: 100%;" autocomplete="off" readonly
-											oninvalid="setCustomValidity('Please enter Issue No')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											pattern="[0-9]+">
-									</div> --%>
-
-									<input type="hidden" value="${editMat.matHeaderId}"
-										name="matHeaderId" id="matHeaderId">
-								</div>
-
 
 								<div class="card-body card-block">
 
 									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
-
 												<th style="text-align: center; width: 5%;">Sr No</th>
-												<th style="text-align: center">Date</th>
+
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">Measurement of Unit</th>
 												<th style="text-align: center">Item Rate</th>
 												<th style="text-align: center">Item Quantity</th>
 												<th style="text-align: center">Value</th>
-
 											</tr>
 										</thead>
 
 										<tbody>
-											<c:forEach items="${editMatDetail}" var="matDetail"
+											<c:forEach items="${detailList}" var="matDetail"
 												varStatus="count">
 												<tr>
 
 													<td style="text-align: center">${count.index+1}</td>
-
-													<td style="text-align: left"><c:out
-															value="${editMat.date}" /></td>
 
 
 													<td style="text-align: left"><c:out
 															value="${matDetail.itemDesc}" /></td>
 
 
-													<td style="text-align: left"><c:out
+													<td style="text-align: center"><c:out
 															value="${matDetail.uomName}" /></td>
 
+													<td style="text-align: right"><c:out
+															value="${matDetail.rate}" /></td>
 
 
-													<td style="text-align: left"><c:out
-															value="${matDetail.itemRate}" /></td>
-
-
-													<td style="text-align: left"><c:out
+													<td style="text-align: right"><c:out
 															value="${matDetail.quantity}" /></td>
 
 
-													<td style="text-align: left"><c:out
+													<td style="text-align: right"><c:out
 															value="${matDetail.value}" /></td>
-
-
 												</tr>
-
 											</c:forEach>
-
 										</tbody>
 									</table>
+									<div class="col-md-2"></div>
 
+									<div class="col-md-3">
 
-									<div class="form-group"></div>
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
+
+									&nbsp;&nbsp;&nbsp;
+									<%-- <div class="form-group"></div>
 									<div class="row">
 
 										<div class="col-md-8"></div>
 										<div class="col-md-1">Total</div>
 										<div class="col-md-3">
-											<input type="text" value="${editMat.total}"
+											<input type="text" value="${editVeh.vehTotal}"
 												class="form-control" style="width: 100%;" autocomplete="off"
 												readonly>
 										</div>
 									</div>
-									&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp; --%>
+
 
 									<table class="table table-striped table-bordered">
 										<thead>
 											<tr>
 
 												<th style="text-align: center; width: 5%;">Sr No</th>
-												<th style="text-align: center">Date</th>
+
 												<th style="text-align: center">Quantity</th>
-												<th style="text-align: center">Vehicle Name</th>
-												<th style="text-align: center">Vehicle No</th>
+												<th style="text-align: center">Contractor Name</th>
 												<th style="text-align: center">Poklen Name</th>
 												<th style="text-align: center">Poklen No</th>
-
-
 											</tr>
 										</thead>
 
@@ -286,11 +243,11 @@
 												<tr>
 
 													<td style="text-align: center">${count.index+1}</td>
-													<td style="text-align: left"><c:out
-															value="${editMat.date}" /></td>
+													<td style="text-align: right"><c:out
+															value="${weighing.quantity}" /></td>
 
 													<td style="text-align: left"><c:out
-															value="${weighing.quantity}" /></td>
+															value="${weighing.contrName}" /></td>
 
 
 													<td style="text-align: left"><c:out
@@ -299,11 +256,65 @@
 													<td style="text-align: left"><c:out
 															value="${weighing.vehicleNo}" /></td>
 
-													<td style="text-align: left"><c:out
-															value="${weighing.pokeName}" /></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+									<div class="col-md-2"></div>
+
+									<div class="col-md-3">
+
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel2();" id="expExcel1"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
+									&nbsp;&nbsp;&nbsp;
+
+									<table class="table table-striped table-bordered">
+										<thead>
+											<tr>
+
+												<th style="text-align: center; width: 5%;">Sr No</th>
+												<th style="text-align: center">Start Date</th>
+												<th style="text-align: center">End Date</th>
+
+												<th style="text-align: center">Start Time</th>
+												<th style="text-align: center">End Time</th>
+												<th style="text-align: center">Poklen Name</th>
+												<th style="text-align: center">Poklen No</th>
+
+
+
+											</tr>
+										</thead>
+
+										<tbody>
+											<c:forEach items="${readingList}" var="reading"
+												varStatus="count">
+												<tr>
+
+													<td style="text-align: center">${count.index+1}</td>
 
 													<td style="text-align: left"><c:out
-															value="${weighing.pokeNo}" /></td>
+															value="${reading.startDate}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${reading.endDate}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${reading.startTime}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${reading.endTime}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${reading.vehicleName}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${reading.vehNo}" /></td>
+
 
 												</tr>
 											</c:forEach>
@@ -316,10 +327,12 @@
 									<div class="col-md-3">
 
 										<button type="button" class="btn btn-primary"
-											onclick="exportToExcel();" id="expExcel"
+											onclick="exportToExcel1();" id="expExcel1"
 											style="align-content: center; width: 200px; margin-left: 80px;">
 											Export To Excel</button>
 									</div>
+
+
 									<div class="col-md-3">
 
 										<button type="button" class="btn btn-primary"
@@ -329,6 +342,8 @@
 									</div>
 									&nbsp;
 								</div>
+
+
 							</form>
 						</div>
 					</div>
@@ -384,6 +399,18 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
 
 
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var dataTable = $('#bootstrap-data-table').DataTable();
+			columnDefs: [ {
+				targets : [ 2 ],
+				className : "right"
+			}, ]
+
+		});
+	</script>
 	<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(
@@ -410,12 +437,6 @@
 		});
 	</script>
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#bootstrap-data-table1').DataTable();
-		});
-	</script>
-
 
 
 
@@ -438,6 +459,18 @@
 			window.open("${pageContext.request.contextPath}/exportToExcel");
 			document.getElementById("expExcel").disabled = true;
 		}
+
+		function exportToExcel1() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel1");
+			document.getElementById("expExcel1").disabled = true;
+		}
+
+		function exportToExcel2() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel2");
+			document.getElementById("expExcel2").disabled = true;
+		}
 	</script>
 
 	<script type="text/javascript">
@@ -445,8 +478,9 @@
 			alert("hiii");
 			var fromDate = document.getElementById("fromDate").value;
 			var toDate = document.getElementById("toDate").value;
+
 			window
-					.open('${pageContext.request.contextPath}/showContraDetailPdf/'
+					.open('${pageContext.request.contextPath}/showPoklenDetailPdf/'
 							+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 

@@ -129,7 +129,7 @@
 						<div class="card-body card-block">
 							<form
 								action="${pageContext.request.contextPath}/insertMatIssueVehicle"
-								id="submitForm" method="post">
+								id="submitForm" onsubmit="disableSubmitButton()" method="post">
 
 								<div class="row">
 
@@ -247,6 +247,7 @@
 								<div class="col-lg-2">
 
 									<input type="submit" class="btn btn-primary" value="Submit"
+										id="submitButton" disabled
 										style="align-content: center; width: 113px; margin-left: 20px;">
 
 								</div>
@@ -350,15 +351,19 @@
 												data,
 												function(i, v) {
 
+													if (v.isDuplicate == 1) {
+														alert("Item Already Added");
+													}
+
 													var str = '<a href="#" class="action_btn" onclick="callEdit('
-														+ v.matVehDetailId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-														+ v.matVehDetailId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-trash"></i></a>'
+															+ v.matVehDetailId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ v.matVehDetailId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-trash"></i></a>'
 													dataTable.row.add(
 															[ i + 1,
 																	v.itemName,
@@ -376,6 +381,7 @@
 			document.getElementById("isDelete").value = 0;
 			document.getElementById("isEdit").value = 0;
 			document.getElementById("index").value = 0;
+			document.getElementById("submitButton").disabled = false;
 
 		}
 
@@ -443,6 +449,9 @@
 							},
 
 							function(data) {
+								if (data == null || data == "") {
+									document.getElementById("submitButton").disabled = true;
+								}
 								var dataTable = $('#bootstrap-data-table')
 										.DataTable();
 								dataTable.clear().draw();
@@ -452,14 +461,14 @@
 												function(i, v) {
 
 													var str = '<a href="#" class="action_btn" onclick="callEdit('
-														+ v.matVehDetailId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-														+ v.matVehDetailId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-trash"></i></a>'
+															+ v.matVehDetailId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ v.matVehDetailId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
@@ -495,14 +504,18 @@
 		});
 	</script>
 	<script type="text/javascript">
-		$(function() {
+		/* $(function() {
 			$('#submitForm').submit(
 					function() {
 						$("input[type='submit']", this).val("Please Wait...")
 								.attr('disabled', 'disabled');
 						return true;
 					});
-		});
+		}); */
+		function disableSubmitButton() {
+			document.getElementById('submitButton').innerHTML = 'Please Wait';
+			document.getElementById("submitButton").disabled = true;
+		}
 	</script>
 
 	<script>

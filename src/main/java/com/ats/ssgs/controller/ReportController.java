@@ -43,8 +43,11 @@ import com.ats.ssgs.model.master.GetWeighing;
 import com.ats.ssgs.model.mat.Contractor;
 import com.ats.ssgs.model.mat.GetMatIssueDetail;
 import com.ats.ssgs.model.mat.GetMatIssueHeader;
+import com.ats.ssgs.model.mat.GetMatIssueReport;
 import com.ats.ssgs.model.mat.GetVehDetail;
 import com.ats.ssgs.model.mat.GetVehHeader;
+import com.ats.ssgs.model.mat.GetVehReport;
+import com.ats.ssgs.model.mat.PoklenReport;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -90,10 +93,11 @@ public class ReportController {
 
 	}
 
-	List<GetMatIssueHeader> getMatList = new ArrayList<>();
+	// List<GetMatIssueHeader> getMatList = new ArrayList<>();
+	List<GetMatIssueReport> getList = new ArrayList<>();
 
 	@RequestMapping(value = "/getContraReportBetDate", method = RequestMethod.GET)
-	public @ResponseBody List<GetMatIssueHeader> getContraReportBetDate(HttpServletRequest request,
+	public @ResponseBody List<GetMatIssueReport> getContraReportBetDate(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		System.err.println(" in getContraReportBetDate");
@@ -105,36 +109,34 @@ public class ReportController {
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
 
-		GetMatIssueHeader[] ordHeadArray = rest.postForObject(Constants.url + "getContractorBetweenDate", map,
-				GetMatIssueHeader[].class);
-		getMatList = new ArrayList<GetMatIssueHeader>(Arrays.asList(ordHeadArray));
+		GetMatIssueReport[] ordHeadArray = rest.postForObject(Constants.url + "getContractorBetweenDate", map,
+				GetMatIssueReport[].class);
+		getList = new ArrayList<GetMatIssueReport>(Arrays.asList(ordHeadArray));
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		ExportToExcel expoExcel = new ExportToExcel();
 		List<String> rowData = new ArrayList<String>();
 
 		rowData.add("Sr. No");
-		rowData.add("Date");
 		rowData.add("Contractor Name");
-		rowData.add("Issue No");
+		rowData.add("Total consumption");
+		rowData.add("Total Qty");
 
-		rowData.add("Total");
-		rowData.add("Total Quantity");
+		rowData.add("Total Weighin Qty");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 		int cnt = 1;
-		for (int i = 0; i < getMatList.size(); i++) {
+		for (int i = 0; i < getList.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 			cnt = cnt + i;
 			rowData.add("" + (i + 1));
-			rowData.add("" + getMatList.get(i).getDate());
-			rowData.add("" + getMatList.get(i).getContrName());
-			rowData.add("" + getMatList.get(i).getIssueNo());
 
-			rowData.add("" + getMatList.get(i).getTotal());
-			rowData.add("" + getMatList.get(i).getQtyTotal());
+			rowData.add("" + getList.get(i).getContrName());
+			rowData.add("" + getList.get(i).getTotal());
+			rowData.add("" + getList.get(i).getQtyTotal());
+			rowData.add("" + getList.get(i).getWeighContrQty());
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -145,15 +147,16 @@ public class ReportController {
 		session.setAttribute("exportExcelList", exportToExcelList);
 		session.setAttribute("excelName", "GetMatIssueHeader");
 
-		return getMatList;
+		return getList;
 	}
 
 	GetMatIssueHeader editMat;
 	List<GetWeighing> weighing;
 
-	@RequestMapping(value = "/contractorDetailReport/{matHeaderId}/{contrId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/contractorDetailReport/{matHeaderId}/{contrId}/{fromDate}/{toDate}", method = RequestMethod.GET)
 	public ModelAndView contractorDetailReport(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable int matHeaderId, @PathVariable int contrId) {
+			@PathVariable int matHeaderId, @PathVariable int contrId, @PathVariable String fromDate,
+			@PathVariable String toDate) {
 
 		ModelAndView model = null;
 		try {
@@ -176,6 +179,8 @@ public class ReportController {
 			weighing = new ArrayList<GetWeighing>(Arrays.asList(weighingArray));
 
 			model.addObject("weighing", weighing);
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
 
 			System.out.println("=========" + weighing.toString());
 
@@ -185,6 +190,7 @@ public class ReportController {
 			List<String> rowData = new ArrayList<String>();
 
 			rowData.add("Sr. No");
+			rowData.add("Date");
 			rowData.add("Item Name");
 			rowData.add("Measurement of unit");
 			rowData.add("Item Rate");
@@ -200,6 +206,7 @@ public class ReportController {
 				rowData = new ArrayList<String>();
 				cnt = cnt + i;
 				rowData.add("" + (i + 1));
+				rowData.add("" + editMat.getDate());
 				rowData.add("" + editMat.getMatIssueDetailList().get(i).getItemCode());
 				rowData.add("" + editMat.getMatIssueDetailList().get(i).getUomName());
 				rowData.add("" + editMat.getMatIssueDetailList().get(i).getItemRate());
@@ -248,11 +255,11 @@ public class ReportController {
 			e.printStackTrace();
 		}
 
-		PdfPTable table = new PdfPTable(6);
+		PdfPTable table = new PdfPTable(5);
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f });
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -268,25 +275,13 @@ public class ReportController {
 
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(new Phrase("Date", headFont1));
-			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell.setBackgroundColor(BaseColor.PINK);
-
-			table.addCell(hcell);
-
 			hcell = new PdfPCell(new Phrase("Contractor Name", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(new Phrase("Issue No.", headFont1));
-			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell.setBackgroundColor(BaseColor.PINK);
-
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("Total", headFont1));
+			hcell = new PdfPCell(new Phrase("Total Consumption", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
@@ -296,9 +291,13 @@ public class ReportController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("Total Weighing Quantity", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
 
+			table.addCell(hcell);
 			int index = 0;
-			for (GetMatIssueHeader work : getMatList) {
+			for (GetMatIssueReport work : getList) {
 				index++;
 				PdfPCell cell;
 
@@ -309,23 +308,9 @@ public class ReportController {
 				cell.setPaddingRight(2);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getDate(), headFont));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table.addCell(cell);
-
 				cell = new PdfPCell(new Phrase("" + work.getContrName(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table.addCell(cell);
-
-				cell = new PdfPCell(new Phrase("" + work.getIssueNo(), headFont));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
@@ -338,6 +323,13 @@ public class ReportController {
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getQtyTotal(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getWeighContrQty(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
@@ -405,9 +397,9 @@ public class ReportController {
 
 	}
 
-	@RequestMapping(value = "/showContraDetailPdf", method = RequestMethod.GET)
-	public void showContraDetailPdf(HttpServletRequest request, HttpServletResponse response)
-			throws FileNotFoundException {
+	@RequestMapping(value = "/showContraDetailPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
+	public void showContraDetailPdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showContraDetailPdf");
 		Document document = new Document(PageSize.A4);
@@ -429,11 +421,11 @@ public class ReportController {
 			e.printStackTrace();
 		}
 
-		PdfPTable table = new PdfPTable(6);
+		PdfPTable table = new PdfPTable(7);
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f });
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -444,6 +436,12 @@ public class ReportController {
 
 			hcell.setPadding(3);
 			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Date", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
@@ -490,6 +488,13 @@ public class ReportController {
 				cell.setPaddingRight(2);
 				table.addCell(cell);
 
+				cell = new PdfPCell(new Phrase("" + editMat.getDate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
 				cell = new PdfPCell(new Phrase("" + work.getItemDesc(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -526,11 +531,11 @@ public class ReportController {
 				table.addCell(cell);
 
 			}
-			PdfPTable table1 = new PdfPTable(6);
+			PdfPTable table1 = new PdfPTable(7);
 			try {
 				System.out.println("Inside PDF Table1 try");
 				table1.setWidthPercentage(100);
-				table1.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f });
+				table1.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f, 3.2f });
 				Font headFontFirst = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 				Font headFont1Second = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 				headFont1Second.setColor(BaseColor.WHITE);
@@ -542,6 +547,18 @@ public class ReportController {
 
 				hcell1.setPadding(3);
 				hcell1 = new PdfPCell(new Phrase("Sr.No.", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Date", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Quantity", headFont1Second));
 				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 				hcell1.setBackgroundColor(BaseColor.PINK);
 
@@ -571,12 +588,6 @@ public class ReportController {
 
 				table1.addCell(hcell1);
 
-				hcell1 = new PdfPCell(new Phrase("Quantity", headFont1Second));
-				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-				hcell1.setBackgroundColor(BaseColor.PINK);
-
-				table1.addCell(hcell1);
-
 				int index1 = 0;
 				for (GetWeighing work : weighing) {
 					index1++;
@@ -587,6 +598,20 @@ public class ReportController {
 					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					cell.setPadding(3);
 					cell.setPaddingRight(2);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + editMat.getDate(), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
 					table1.addCell(cell);
 
 					cell = new PdfPCell(new Phrase("" + work.getVehicleName(), headFontFirst));
@@ -617,13 +642,6 @@ public class ReportController {
 					cell.setPadding(3);
 					table1.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFontFirst));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-					cell.setPaddingRight(2);
-					cell.setPadding(3);
-					table1.addCell(cell);
-
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -640,14 +658,24 @@ public class ReportController {
 
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			Paragraph p1 = new Paragraph(
-					"Contractor Name: " + editMat.getContrName() + "   Issue No: " + editMat.getIssueNo(), headFont);
 
-			p1.setAlignment(Element.ALIGN_LEFT);
+			Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			p1.setAlignment(Element.ALIGN_CENTER);
 			document.add(p1);
+			/*
+			 * Paragraph p1 = new Paragraph( "Contractor Name: " + editMat.getContrName() +
+			 * "   Issue No: " + editMat.getIssueNo(), headFont);
+			 * 
+			 * p1.setAlignment(Element.ALIGN_LEFT); document.add(p1);
+			 */
 
 			document.add(new Paragraph("\n"));
 			document.add(table);
+			document.add(new Paragraph(" "));
+			Paragraph p2 = new Paragraph("Total: " + editMat.getTotal(), headFont);
+
+			p2.setAlignment(Element.ALIGN_RIGHT);
+			document.add(p2);
 			document.add(new Paragraph(" "));
 			document.add(table1);
 			int totalPages = writer.getPageNumber();
@@ -716,10 +744,10 @@ public class ReportController {
 
 	}
 
-	List<GetVehHeader> getVehList = new ArrayList<>();
+	List<GetVehReport> getVehList = new ArrayList<>();
 
 	@RequestMapping(value = "/getVehicleReportBetDate", method = RequestMethod.GET)
-	public @ResponseBody List<GetVehHeader> getVehicleReportBetDate(HttpServletRequest request,
+	public @ResponseBody List<GetVehReport> getVehicleReportBetDate(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		System.err.println(" in getVehicleReportBetDate");
@@ -731,9 +759,9 @@ public class ReportController {
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
 
-		GetVehHeader[] ordHeadArray = rest.postForObject(Constants.url + "getVehicleBetweenDate", map,
-				GetVehHeader[].class);
-		getVehList = new ArrayList<GetVehHeader>(Arrays.asList(ordHeadArray));
+		GetVehReport[] ordHeadArray = rest.postForObject(Constants.url + "getVehicleBetweenDate", map,
+				GetVehReport[].class);
+		getVehList = new ArrayList<GetVehReport>(Arrays.asList(ordHeadArray));
 
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
@@ -741,12 +769,11 @@ public class ReportController {
 		List<String> rowData = new ArrayList<String>();
 
 		rowData.add("Sr. No");
-		rowData.add("Date");
 		rowData.add("Vehicle Name");
 		rowData.add("Vehicle No");
-
-		rowData.add("Total");
-		rowData.add("Total Quantity");
+		rowData.add("Total Consumption");
+		rowData.add("Total Qty");
+		rowData.add("Total Weighing Qty");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -756,12 +783,11 @@ public class ReportController {
 			rowData = new ArrayList<String>();
 			cnt = cnt + i;
 			rowData.add("" + (i + 1));
-			rowData.add("" + getVehList.get(i).getDate());
 			rowData.add("" + getVehList.get(i).getVehicleName());
 			rowData.add("" + getVehList.get(i).getVehNo());
-
 			rowData.add("" + getVehList.get(i).getVehTotal());
 			rowData.add("" + getVehList.get(i).getVehQtyTotal());
+			rowData.add("" + getVehList.get(i).getWeighContrQty());
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -770,16 +796,17 @@ public class ReportController {
 
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
-		session.setAttribute("excelName", "GetVehHeader");
+		session.setAttribute("excelName", "GetVehReport");
 
 		return getVehList;
 	}
 
 	GetVehHeader editVeh;
 
-	@RequestMapping(value = "/vehilceDetailReport/{matVehHeaderId}/{vehId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/vehilceDetailReport/{matVehHeaderId}/{vehId}/{fromDate}/{toDate}", method = RequestMethod.GET)
 	public ModelAndView vehilceDetailReport(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable int matVehHeaderId, @PathVariable int vehId) {
+			@PathVariable int matVehHeaderId, @PathVariable int vehId, @PathVariable String fromDate,
+			@PathVariable String toDate) {
 
 		ModelAndView model = null;
 		try {
@@ -793,6 +820,8 @@ public class ReportController {
 			model.addObject("title", "Vehicle Report");
 			model.addObject("editVeh", editVeh);
 			model.addObject("editVehDetail", editVeh.getVehDetailList());
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
 
 			map = new LinkedMultiValueMap<String, Object>();
 
@@ -837,11 +866,11 @@ public class ReportController {
 			e.printStackTrace();
 		}
 
-		PdfPTable table = new PdfPTable(7);
+		PdfPTable table = new PdfPTable(6);
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f, 3.2f });
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -852,12 +881,6 @@ public class ReportController {
 
 			hcell.setPadding(3);
 			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
-			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell.setBackgroundColor(BaseColor.PINK);
-
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("Date", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
@@ -875,26 +898,23 @@ public class ReportController {
 
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(new Phrase("Total", headFont1));
+			hcell = new PdfPCell(new Phrase("Total Consumption", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
-			hcell = new PdfPCell(new Phrase("Total Quantity", headFont1));
+
+			hcell = new PdfPCell(new Phrase("Total Qty", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
 
-			table.addCell(hcell);
-			hcell = new PdfPCell(new Phrase("Reading", headFont1));
+			hcell = new PdfPCell(new Phrase("Total Weighing Qty", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
 
 			int index = 0;
-			for (GetVehHeader work : getVehList) {
+			for (GetVehReport work : getVehList) {
 				index++;
 				PdfPCell cell;
 
@@ -903,13 +923,6 @@ public class ReportController {
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPadding(3);
 				cell.setPaddingRight(2);
-				table.addCell(cell);
-
-				cell = new PdfPCell(new Phrase("" + work.getDate(), headFont));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getVehicleName(), headFont));
@@ -940,7 +953,7 @@ public class ReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getReading(), headFont));
+				cell = new PdfPCell(new Phrase("" + work.getWeighContrQty(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
@@ -1009,11 +1022,581 @@ public class ReportController {
 
 	}
 
-	@RequestMapping(value = "/showVehDetailPdf", method = RequestMethod.GET)
-	public void showVehDetailPdf(HttpServletRequest request, HttpServletResponse response)
-			throws FileNotFoundException {
+	@RequestMapping(value = "/showVehDetailPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
+	public void showVehDetailPdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showVehDetailPdf");
+		Document document = new Document(PageSize.A4);
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+
+		System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		String FILE_PATH = Constants.REPORT_SAVE;
+		File file = new File(FILE_PATH);
+
+		PdfWriter writer = null;
+
+		FileOutputStream out = new FileOutputStream(FILE_PATH);
+		try {
+			writer = PdfWriter.getInstance(document, out);
+		} catch (DocumentException e) {
+
+			e.printStackTrace();
+		}
+
+		PdfPTable table = new PdfPTable(7);
+		try {
+			System.out.println("Inside PDF Table try");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f, 3.2f });
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			headFont1.setColor(BaseColor.WHITE);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+
+			PdfPCell hcell = new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			hcell.setPadding(3);
+			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Date", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Item Name", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Measurement of Unit", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Item Rate", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Item Quantity", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("Total Value", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			int index = 0;
+			for (GetVehDetail work : editVeh.getVehDetailList()) {
+				index++;
+				PdfPCell cell;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPadding(3);
+				cell.setPaddingRight(2);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + editVeh.getDate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getItemDesc(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getUomName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getRate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getValue(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+			}
+
+			PdfPTable table1 = new PdfPTable(7);
+			try {
+				System.out.println("Inside PDF Table1 try");
+				table1.setWidthPercentage(100);
+				table1.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f, 3.2f });
+				Font headFontFirst = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+				Font headFont1Second = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+				headFont1Second.setColor(BaseColor.WHITE);
+				// Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE,
+				// BaseColor.BLUE);
+
+				PdfPCell hcell1 = new PdfPCell();
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				hcell1.setPadding(3);
+				hcell1 = new PdfPCell(new Phrase("Sr.No.", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Date", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Quantity", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Vehicle Name", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Vehicle No", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Poklen Name", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Poklen No", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
+				int index1 = 0;
+				for (GetWeighing work : weighing) {
+					index1++;
+					PdfPCell cell;
+
+					cell = new PdfPCell(new Phrase(String.valueOf(index1), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setPadding(3);
+					cell.setPaddingRight(2);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + editVeh.getDate(), headFont));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getVehicleName(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getVehicleNo(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getPokeName(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(work.getPokeNo(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			document.open();
+			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
+			name.setAlignment(Element.ALIGN_CENTER);
+			document.add(name);
+			document.add(new Paragraph(" "));
+			Paragraph company = new Paragraph("Vehiclewise Item Report\n", f);
+			company.setAlignment(Element.ALIGN_CENTER);
+			document.add(company);
+			document.add(new Paragraph(" "));
+
+			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new Date());
+
+			Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			p1.setAlignment(Element.ALIGN_CENTER);
+			document.add(p1);
+			/*
+			 * Paragraph p1 = new Paragraph( "Vehicle Name: " + editVeh.getVehicleName() +
+			 * "   Vehicle No: " + editVeh.getVehNo(), headFont);
+			 * 
+			 * p1.setAlignment(Element.ALIGN_LEFT); document.add(p1);
+			 */
+
+			document.add(new Paragraph("\n"));
+			document.add(table);
+
+			Paragraph p2 = new Paragraph("Total: " + editVeh.getVehTotal(), headFont);
+
+			p2.setAlignment(Element.ALIGN_RIGHT);
+			document.add(p2);
+			document.add(new Paragraph(" "));
+			document.add(table1);
+
+			int totalPages = writer.getPageNumber();
+
+			System.out.println("Page no " + totalPages);
+
+			document.close();
+
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+				try {
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
+					e.printStackTrace();
+				}
+			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error: " + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+
+	}
+
+	@RequestMapping(value = "/showPoklenReport", method = RequestMethod.GET)
+	public ModelAndView showPoklenReport(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("report/poklenreport");
+
+			model.addObject("title", "Poklenwise Report");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showPoklenReport at Txn Contr" + e.getMessage());
+
+			e.printStackTrace();
+		}
+
+		return model;
+
+	}
+
+	List<PoklenReport> getPoklenList = new ArrayList<>();
+
+	@RequestMapping(value = "/getPoklenReportBetDate", method = RequestMethod.GET)
+	public @ResponseBody List<PoklenReport> getPoklenReportBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		System.err.println(" in getPoklenReportBetDate");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+
+		PoklenReport[] ordHeadArray = rest.postForObject(Constants.url + "getPoklenReportBetweenDate", map,
+				PoklenReport[].class);
+		getPoklenList = new ArrayList<PoklenReport>(Arrays.asList(ordHeadArray));
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+
+		rowData.add("Sr. No");
+		rowData.add("Vehicle Name");
+		rowData.add("Vehicle No");
+		rowData.add("Total Consumption");
+		rowData.add("Total Breaking Hrs");
+		rowData.add("Total Loading Hrs");
+		rowData.add("Total Weighing Qty");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		int cnt = 1;
+		for (int i = 0; i < getPoklenList.size(); i++) {
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			cnt = cnt + i;
+			rowData.add("" + (i + 1));
+
+			rowData.add("" + getPoklenList.get(i).getVehicleName());
+			rowData.add("" + getPoklenList.get(i).getVehNo());
+			rowData.add("" + getPoklenList.get(i).getTotalConsumption());
+			rowData.add("" + getPoklenList.get(i).getTotalBreakingHr());
+			rowData.add("" + getPoklenList.get(i).getTotalLoadingHr());
+			rowData.add("" + getPoklenList.get(i).getTotalQtyLoad());
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "PoklenReport");
+
+		return getPoklenList;
+	}
+
+	List<GetPoklenReading> readingList;
+	List<GetVehDetail> detailList;
+
+	@RequestMapping(value = "/poklenDetailReport/{vehicleId}/{fromDate}/{toDate}", method = RequestMethod.GET)
+	public ModelAndView poklenDetailReport(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int vehicleId, @PathVariable String fromDate, @PathVariable String toDate) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("report/poklendetReport");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("vehicleId", vehicleId);
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("vehicleId", vehicleId);
+
+			GetVehDetail[] vehArray = rest.postForObject(Constants.url + "getMatIssueVehicleByVehicleId", map,
+					GetVehDetail[].class);
+			detailList = new ArrayList<GetVehDetail>(Arrays.asList(vehArray));
+
+			model.addObject("detailList", detailList);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("vehicleId", vehicleId);
+
+			GetWeighing[] weighingArray = rest.postForObject(Constants.url + "getWeighByVehicleId", map,
+					GetWeighing[].class);
+			weighing = new ArrayList<GetWeighing>(Arrays.asList(weighingArray));
+
+			model.addObject("weighing", weighing);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("poklenId", vehicleId);
+			GetPoklenReading[] readingArray = rest.postForObject(Constants.url + "getByPoklenId", map,
+					GetPoklenReading[].class);
+			readingList = new ArrayList<GetPoklenReading>(Arrays.asList(readingArray));
+
+			model.addObject("readingList", readingList);
+
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No");
+
+			rowData.add("Item Name");
+			rowData.add("Measurement of unit");
+			rowData.add("Item Rate");
+
+			rowData.add("Item Quantity");
+			rowData.add("Total Value");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+			int cnt = 1;
+			for (int i = 0; i < detailList.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				cnt = cnt + i;
+				rowData.add("" + (i + 1));
+				rowData.add("" + detailList.get(i).getItemCode());
+				rowData.add("" + detailList.get(i).getUomName());
+				rowData.add("" + detailList.get(i).getRate());
+				rowData.add("" + detailList.get(i).getQuantity());
+				rowData.add("" + detailList.get(i).getValue());
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "GetVehDetail");
+
+			List<ExportToExcel> exportToExcelList1 = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel1 = new ExportToExcel();
+			List<String> rowData1 = new ArrayList<String>();
+
+			rowData1.add("Sr. No");
+			rowData1.add("Start Date");
+			rowData1.add("End Date");
+			rowData1.add("Start Time");
+			rowData1.add("End Time");
+			rowData1.add("Poklen Name");
+			rowData1.add("poklen No");
+
+			expoExcel1.setRowData(rowData1);
+			exportToExcelList1.add(expoExcel1);
+			int cnt1 = 1;
+			for (int i = 0; i < readingList.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				cnt1 = cnt1 + i;
+				rowData.add("" + (i + 1));
+
+				rowData1.add("" + readingList.get(i).getStartDate());
+				rowData1.add("" + readingList.get(i).getEndDate());
+				rowData1.add("" + readingList.get(i).getStartTime());
+				rowData1.add("" + readingList.get(i).getEndTime());
+				rowData1.add("" + readingList.get(i).getVehicleName());
+				rowData1.add("" + readingList.get(i).getVehNo());
+
+				expoExcel1.setRowData(rowData1);
+				exportToExcelList1.add(expoExcel1);
+
+			}
+
+			HttpSession session1 = request.getSession();
+			session1.setAttribute("exportToExcelList1", exportToExcelList1);
+			session1.setAttribute("excelName", "GetPoklenReading");
+
+			List<ExportToExcel> exportToExcelList2 = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel2 = new ExportToExcel();
+			List<String> rowData2 = new ArrayList<String>();
+
+			rowData2.add("Sr. No");
+			rowData2.add("Quantity");
+			rowData2.add("Contractor Name");
+
+			rowData2.add("Poklen Name");
+			rowData2.add("poklen No");
+
+			expoExcel2.setRowData(rowData2);
+			exportToExcelList2.add(expoExcel2);
+			int cnt2 = 1;
+			for (int i = 0; i < weighing.size(); i++) {
+				expoExcel2 = new ExportToExcel();
+				rowData2 = new ArrayList<String>();
+				cnt2 = cnt2 + i;
+				rowData2.add("" + (i + 1));
+
+				rowData2.add("" + weighing.get(i).getQuantity());
+				rowData2.add("" + weighing.get(i).getContrName());
+
+				rowData2.add("" + weighing.get(i).getVehicleName());
+				rowData2.add("" + weighing.get(i).getVehicleNo());
+
+				expoExcel2.setRowData(rowData2);
+				exportToExcelList2.add(expoExcel2);
+
+			}
+
+			HttpSession session2 = request.getSession();
+			session2.setAttribute("exportExcelList2", exportToExcelList2);
+			session2.setAttribute("excelName", "GetWeighing");
+
+		} catch (Exception e) {
+			System.err.println("exception In poklenDetailReport at Mat Contr" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/showPoklenDetailPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
+	public void showPoklenDetailPdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+		BufferedOutputStream outStream = null;
+		System.out.println("Inside Pdf showPoklenDetailPdf");
 		Document document = new Document(PageSize.A4);
 
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -1083,7 +1666,7 @@ public class ReportController {
 			table.addCell(hcell);
 
 			int index = 0;
-			for (GetVehDetail work : editVeh.getVehDetailList()) {
+			for (GetVehDetail work : detailList) {
 				index++;
 				PdfPCell cell;
 
@@ -1131,11 +1714,11 @@ public class ReportController {
 
 			}
 
-			PdfPTable table1 = new PdfPTable(6);
+			PdfPTable table1 = new PdfPTable(5);
 			try {
 				System.out.println("Inside PDF Table1 try");
 				table1.setWidthPercentage(100);
-				table1.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f });
+				table1.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f });
 				Font headFontFirst = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 				Font headFont1Second = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 				headFont1Second.setColor(BaseColor.WHITE);
@@ -1152,13 +1735,13 @@ public class ReportController {
 
 				table1.addCell(hcell1);
 
-				hcell1 = new PdfPCell(new Phrase("Vehicle Name", headFont1Second));
+				hcell1 = new PdfPCell(new Phrase("Quantity", headFont1Second));
 				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 				hcell1.setBackgroundColor(BaseColor.PINK);
 
 				table1.addCell(hcell1);
 
-				hcell1 = new PdfPCell(new Phrase("Vehicle No", headFont1Second));
+				hcell1 = new PdfPCell(new Phrase("Contractor Name", headFont1Second));
 				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 				hcell1.setBackgroundColor(BaseColor.PINK);
 
@@ -1176,12 +1759,6 @@ public class ReportController {
 
 				table1.addCell(hcell1);
 
-				hcell1 = new PdfPCell(new Phrase("Quantity", headFont1Second));
-				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-				hcell1.setBackgroundColor(BaseColor.PINK);
-
-				table1.addCell(hcell1);
-
 				int index1 = 0;
 				for (GetWeighing work : weighing) {
 					index1++;
@@ -1194,16 +1771,16 @@ public class ReportController {
 					cell.setPaddingRight(2);
 					table1.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("" + work.getVehicleName(), headFontFirst));
+					cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFontFirst));
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					cell.setPaddingRight(2);
 					cell.setPadding(3);
 					table1.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("" + work.getVehicleNo(), headFontFirst));
+					cell = new PdfPCell(new Phrase("" + work.getContrName(), headFontFirst));
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					cell.setPaddingRight(2);
 					cell.setPadding(3);
 					table1.addCell(cell);
@@ -1222,12 +1799,121 @@ public class ReportController {
 					cell.setPadding(3);
 					table1.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFontFirst));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			PdfPTable table2 = new PdfPTable(7);
+			try {
+				System.out.println("Inside PDF Table1 try");
+				table2.setWidthPercentage(100);
+				table2.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 4.2f, 3.2f, 3.2f });
+				Font headFontFirst = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+				Font headFont1Second = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+				headFont1Second.setColor(BaseColor.WHITE);
+				// Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE,
+				// BaseColor.BLUE);
+
+				PdfPCell hcell1 = new PdfPCell();
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				hcell1.setPadding(3);
+				hcell1 = new PdfPCell(new Phrase("Sr.No.", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table2.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Start Date", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table2.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("End Date", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table2.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Start Time", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table2.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("End Time", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table2.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Poklen Name", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table2.addCell(hcell1);
+
+				hcell1 = new PdfPCell(new Phrase("Poklen No", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table2.addCell(hcell1);
+
+				int index1 = 0;
+				for (GetPoklenReading work : readingList) {
+					index1++;
+					PdfPCell cell;
+
+					cell = new PdfPCell(new Phrase(String.valueOf(index1), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					cell.setPadding(3);
+					cell.setPaddingRight(2);
+					table2.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getStartDate(), headFontFirst));
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					cell.setPaddingRight(2);
 					cell.setPadding(3);
-					table1.addCell(cell);
+					table2.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getEndDate(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table2.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getStartTime(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table2.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(work.getEndTime(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table2.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getVehicleName(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table2.addCell(cell);
+
+					cell = new PdfPCell(new Phrase(work.getVehNo(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table2.addCell(cell);
 
 				}
 			} catch (Exception e) {
@@ -1238,23 +1924,26 @@ public class ReportController {
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			Paragraph company = new Paragraph("Vehiclewise Item Report\n", f);
+			Paragraph company = new Paragraph("Poklenwise Item Report\n", f);
 			company.setAlignment(Element.ALIGN_CENTER);
 			document.add(company);
 			document.add(new Paragraph(" "));
 
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			Paragraph p1 = new Paragraph(
-					"Vehicle Name: " + editVeh.getVehicleName() + "   Vehicle No: " + editVeh.getVehNo(), headFont);
 
-			p1.setAlignment(Element.ALIGN_LEFT);
+			Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			p1.setAlignment(Element.ALIGN_CENTER);
 			document.add(p1);
 
 			document.add(new Paragraph("\n"));
 			document.add(table);
+
 			document.add(new Paragraph(" "));
 			document.add(table1);
+
+			document.add(new Paragraph(" "));
+			document.add(table2);
 
 			int totalPages = writer.getPageNumber();
 
@@ -1297,84 +1986,4 @@ public class ReportController {
 		}
 
 	}
-
-	@RequestMapping(value = "/showPoklenReport", method = RequestMethod.GET)
-	public ModelAndView showPoklenReport(HttpServletRequest request, HttpServletResponse response) {
-
-		ModelAndView model = null;
-		try {
-			model = new ModelAndView("report/poklenreport");
-
-			model.addObject("title", "Poklenwise Report");
-
-		} catch (Exception e) {
-
-			System.err.println("exception In showPoklenReport at Txn Contr" + e.getMessage());
-
-			e.printStackTrace();
-		}
-
-		return model;
-
-	}
-
-	List<GetPoklenReading> pokList = new ArrayList<>();
-
-	@RequestMapping(value = "/getPokReportBetDate", method = RequestMethod.GET)
-	public @ResponseBody List<GetPoklenReading> getPoklenReportBetDate(HttpServletRequest request,
-			HttpServletResponse response) {
-
-		System.err.println(" in getPoklenReportBetDate");
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-		String fromDate = request.getParameter("fromDate");
-		String toDate = request.getParameter("toDate");
-
-		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
-		map.add("toDate", DateConvertor.convertToYMD(toDate));
-
-		GetPoklenReading[] pokeListArray = rest.postForObject(Constants.url + "getPokReadingListBetweenDate", map,
-				GetPoklenReading[].class);
-		pokList = new ArrayList<GetPoklenReading>(Arrays.asList(pokeListArray));
-
-		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
-
-		ExportToExcel expoExcel = new ExportToExcel();
-		List<String> rowData = new ArrayList<String>();
-
-		rowData.add("Sr. No");
-		rowData.add("Date");
-		rowData.add("Contractor Name");
-		rowData.add("Issue No");
-
-		rowData.add("Total");
-		rowData.add("Total Quantity");
-
-		expoExcel.setRowData(rowData);
-		exportToExcelList.add(expoExcel);
-		int cnt = 1;
-		for (int i = 0; i < getMatList.size(); i++) {
-			expoExcel = new ExportToExcel();
-			rowData = new ArrayList<String>();
-			cnt = cnt + i;
-			rowData.add("" + (i + 1));
-			rowData.add("" + getMatList.get(i).getDate());
-			rowData.add("" + getMatList.get(i).getContrName());
-			rowData.add("" + getMatList.get(i).getIssueNo());
-
-			rowData.add("" + getMatList.get(i).getTotal());
-			rowData.add("" + getMatList.get(i).getQtyTotal());
-
-			expoExcel.setRowData(rowData);
-			exportToExcelList.add(expoExcel);
-
-		}
-
-		HttpSession session = request.getSession();
-		session.setAttribute("exportExcelList", exportToExcelList);
-		session.setAttribute("excelName", "GetPoklenReading");
-
-		return pokList;
-	}
-
 }

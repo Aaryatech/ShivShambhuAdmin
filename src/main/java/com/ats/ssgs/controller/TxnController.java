@@ -354,15 +354,16 @@ public class TxnController {
 
 			System.err.println("Inside insertPoklenReading method");
 
-			int pokId = 0;
+			int readingId = 0;
 			try {
-				pokId = Integer.parseInt(request.getParameter("pokId"));
+				readingId = Integer.parseInt(request.getParameter("readingId"));
 			} catch (Exception e) {
-				pokId = 0;
+				readingId = 0;
 			}
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			String curDate = dateFormat.format(new Date());
+			int poklenId = Integer.parseInt(request.getParameter("poklenId"));
 
 			int pokeType = Integer.parseInt(request.getParameter("pokeType"));
 
@@ -387,7 +388,7 @@ public class TxnController {
 			pReading.setExDate1(curDate);
 			pReading.setExInt1(1);
 			pReading.setExInt2(1);
-			pReading.setPokId(pokId);
+			pReading.setPoklenId(poklenId);
 
 			pReading.setExVar1("NA");
 			pReading.setExVar2("NA");
@@ -396,6 +397,7 @@ public class TxnController {
 			pReading.setStartDate(DateConvertor.convertToYMD(startDate));
 			pReading.setShiftType(sType);
 			pReading.setPokType(pokeType);
+			pReading.setReadingId(readingId);
 
 			PoklenReading prInsertRes = rest.postForObject(Constants.url + "savePoklenReading", pReading,
 					PoklenReading.class);
@@ -441,14 +443,15 @@ public class TxnController {
 
 	}
 
-	@RequestMapping(value = "/deletePReading/{pokId}", method = RequestMethod.GET)
-	public String deletePReading(HttpServletRequest request, HttpServletResponse response, @PathVariable int pokId) {
+	@RequestMapping(value = "/deletePReading/{readingId}", method = RequestMethod.GET)
+	public String deletePReading(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int readingId) {
 
 		try {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("pokId", pokId);
+			map.add("readingId", readingId);
 
 			Info errMsg = rest.postForObject(Constants.url + "deletePoklenReading", map, Info.class);
 
@@ -465,12 +468,12 @@ public class TxnController {
 	public String deleteRecordofPReading(HttpServletRequest request, HttpServletResponse response) {
 		try {
 
-			String[] pokIds = request.getParameterValues("pokIds");
+			String[] readingIds = request.getParameterValues("readingIds");
 
 			StringBuilder sb = new StringBuilder();
 
-			for (int i = 0; i < pokIds.length; i++) {
-				sb = sb.append(pokIds[i] + ",");
+			for (int i = 0; i < readingIds.length; i++) {
+				sb = sb.append(readingIds[i] + ",");
 
 			}
 			String items = sb.toString();
@@ -478,7 +481,7 @@ public class TxnController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("pokIds", items);
+			map.add("readingIds", items);
 
 			Info errMsg = rest.postForObject(Constants.url + "deleteMultiPReading", map, Info.class);
 
@@ -491,18 +494,28 @@ public class TxnController {
 		return "redirect:/showPoklenReadingList";
 	}
 
-	@RequestMapping(value = "/editPReading/{pokId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/editPReading/{readingId}", method = RequestMethod.GET)
 	public ModelAndView editPReading(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable int pokId) {
+			@PathVariable int readingId) {
 
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("matissue/pokreading");
-			model.addObject("title", "Edit Weighing");
+			model.addObject("title", "Edit Poklen Reading");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("pokId", pokId);
+			map.add("vehicleType", 3);
+
+			Vehicle[] vehPoklenArray = rest.postForObject(Constants.url + "getVehListByVehicleType", map,
+					Vehicle[].class);
+			vehPoklenList = new ArrayList<Vehicle>(Arrays.asList(vehPoklenArray));
+
+			model.addObject("vehPoklenList", vehPoklenList);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("readingId", readingId);
 
 			PoklenReading editPRead = rest.postForObject(Constants.url + "getPoklenReadingById", map,
 					PoklenReading.class);

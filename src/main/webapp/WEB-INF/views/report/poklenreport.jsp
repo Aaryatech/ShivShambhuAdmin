@@ -10,7 +10,7 @@
 <title>Shiv Admin</title>
 
 
-<c:url var="getPokReportBetDate" value="/getPokReportBetDate" />
+<c:url var="getPoklenReportBetDate" value="/getPoklenReportBetDate" />
 
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
@@ -60,34 +60,7 @@
 }
 </style>
 
-<style>
-.alert {
-	padding: 20px;
-	background-color: red;
-	color: white;
-}
 
-.alert1 {
-	padding: 20px;
-	background-color: green;
-	color: white;
-}
-
-.closebtn {
-	margin-left: 15px;
-	color: white;
-	font-weight: bold;
-	float: right;
-	font-size: 22px;
-	line-height: 20px;
-	cursor: pointer;
-	transition: 0.3s;
-}
-
-.closebtn:hover {
-	color: black;
-}
-</style>
 
 
 </head>
@@ -195,12 +168,12 @@
 								<thead>
 									<tr>
 										<th style="text-align: center">Sr.No.</th>
-										<th style="text-align: center">Start Date</th>
-										<th style="text-align: center">End Date</th>
-										<th style="text-align: center">Poklen Name</th>
-
-										<th style="text-align: center">Poklen No</th>
-
+										<th style="text-align: center">Vehicle Name</th>
+										<th style="text-align: center">Vehicle No</th>
+										<th style="text-align: center">Total Consumption</th>
+										<th style="text-align: center">Total Breaking Hrs</th>
+										<th style="text-align: center">Total Loading Hrs</th>
+										<th style="text-align: center">Total Weighing Qty</th>
 										<th style="text-align: center">Action</th>
 									</tr>
 								</thead>
@@ -348,7 +321,7 @@
 
 				$
 						.getJSON(
-								'${getPokReportBetDate}',
+								'${getPoklenReportBetDate}',
 								{
 
 									fromDate : fromDate,
@@ -380,22 +353,20 @@
 													function(i, v) {
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.matHeaderId
+																+ v.vehicleId
 																+ ','
-																+ v.contrId
-																+ ','
-																+ i
 																+ ')"><i class="fa fa-list"></i></a>'
 
 														dataTable.row
 																.add(
 																		[
 																				i + 1,
-																				v.date,
-																				v.contrName,
-																				v.issueNo,
-																				v.total,
-																				v.qtyTotal,
+																				v.vehicleName,
+																				v.vehNo,
+																				v.totalConsumption,
+																				v.totalBreakingHr,
+																				v.totalLoadingHr,
+																				v.totalQtyLoad,
 																				acButton ])
 																.draw();
 													});
@@ -405,11 +376,14 @@
 			}
 
 		}
-		function callEdit(matHeaderId, contrId) {
+		function callEdit(vehicleId ) {
+
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
 
 			window
-					.open("${pageContext.request.contextPath}/contractorDetailReport/"
-							+ matHeaderId + '/' + contrId);
+					.open("${pageContext.request.contextPath}/poklenDetailReport/"
+							+ vehicleId + '/' + fromDate + '/' + toDate);
 
 		}
 	</script>

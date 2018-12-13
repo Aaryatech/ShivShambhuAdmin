@@ -339,7 +339,7 @@
 		
 			if(fromDate > toDate){
 				valid = false;
-				alert("from date greater than todate ");
+				alert("from date can not be greater than to date ");
 			}
 			if(valid==true){
 			
@@ -356,6 +356,9 @@
 								function(data) {
 									
 									//alert("Order Data " +JSON.stringify(data));
+									if(data == null || data==""){
+										alert("No records found");
+									}
 									
 									 var dataTable = $('#bootstrap-data-table')
 									.DataTable();
@@ -422,7 +425,6 @@
 		}
 	
 	function viewProdDetail(prodHeaderId){
-		
 		
 		document.getElementById("prodHeaderId").value=prodHeaderId;
 		var form=document.getElementById("prodHeadForm");

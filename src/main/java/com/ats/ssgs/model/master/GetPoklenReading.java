@@ -2,7 +2,9 @@ package com.ats.ssgs.model.master;
 
 public class GetPoklenReading {
 
-	private int pokId;
+	private int readingId;
+
+	private int poklenId;
 
 	private String startDate;
 
@@ -37,12 +39,20 @@ public class GetPoklenReading {
 	private String vehNo;
 	private String vehicleName;
 
-	public int getPokId() {
-		return pokId;
+	public int getReadingId() {
+		return readingId;
 	}
 
-	public void setPokId(int pokId) {
-		this.pokId = pokId;
+	public void setReadingId(int readingId) {
+		this.readingId = readingId;
+	}
+
+	public int getPoklenId() {
+		return poklenId;
+	}
+
+	public void setPoklenId(int poklenId) {
+		this.poklenId = poklenId;
 	}
 
 	public String getStartDate() {
@@ -183,11 +193,12 @@ public class GetPoklenReading {
 
 	@Override
 	public String toString() {
-		return "GetPoklenReading [pokId=" + pokId + ", startDate=" + startDate + ", endDate=" + endDate + ", pokType="
-				+ pokType + ", shiftType=" + shiftType + ", startReading=" + startReading + ", endReading=" + endReading
-				+ ", startTime=" + startTime + ", endTime=" + endTime + ", delStatus=" + delStatus + ", exInt1="
-				+ exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exDate1=" + exDate1
-				+ ", exBool1=" + exBool1 + ", vehNo=" + vehNo + ", vehicleName=" + vehicleName + "]";
+		return "GetPoklenReading [readingId=" + readingId + ", poklenId=" + poklenId + ", startDate=" + startDate
+				+ ", endDate=" + endDate + ", pokType=" + pokType + ", shiftType=" + shiftType + ", startReading="
+				+ startReading + ", endReading=" + endReading + ", startTime=" + startTime + ", endTime=" + endTime
+				+ ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
+				+ ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", exBool1=" + exBool1 + ", vehNo=" + vehNo
+				+ ", vehicleName=" + vehicleName + "]";
 	}
 
 }

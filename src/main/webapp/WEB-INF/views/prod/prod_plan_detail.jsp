@@ -308,23 +308,24 @@
 								<!-- 	<div class="col-md-2">Other Cost After Tax</div>
 
 									<div class="col-md-3">845</div> -->
-
-									<div class="col-md-2">
-										<input type="submit" class="btn btn-primary" value="Submit">
-
-									</div>
 									
+										<c:if test="${prodHeader.productionStatus==2}">
+									<div class="col-md-2">
+										<input type="submit" class="btn btn-primary" value="Complete Production">
+									</div>
+								</c:if>
+									<c:if test="${prodHeader.productionStatus!=3}">
 									<div class="col-md-2">
 										<input type="button" class="btn btn-primary" id="manBomButton" onclick="showManualBOM()" value="Manual BOM">
-
 									</div>
-									
+									</c:if>
+									<c:if test="${prodHeader.productionStatus==1}">
 									
 									<div class="col-md-2">
 										<input type="button" class="btn btn-primary" id="bomButton" onclick="showBOM()" value="Add BOM">
 
 									</div>
-									
+									</c:if>
 
 								</div>
 

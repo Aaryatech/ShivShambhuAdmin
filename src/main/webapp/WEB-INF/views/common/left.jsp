@@ -191,6 +191,16 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showProdPlanList">
 									Production Plan List</a></li>
+									
+									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showProdHeadReport">
+									Production Report</a></li>
+									
+										<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showRMHeadReport">
+									Raw Material Report</a></li>
+									
+									
 
 
 

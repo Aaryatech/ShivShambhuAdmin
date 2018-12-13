@@ -164,10 +164,9 @@
 
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertBOM"
-								method="post">
+								<form id="prodHeadForm" method="post">
 
-								<div class="row">
+						<%-- 		<div class="row">
 
 									<div class="col-md-2">Plant</div>
 
@@ -176,7 +175,7 @@
 									<input type="text" readonly value="${prodHeader.plantName}"
 												style="width: 100%;" class="form-control"> <span
 												class="error" aria-live="polite"></span>
-										<%-- <select id="plant_id" name="plant_id" class="standardSelect"
+										<select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
@@ -185,7 +184,7 @@
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
 											</c:forEach>
-										</select> --%>
+										</select>
 									</div>
 									<div class="col-md-2">Production ID</div>
 									<div class="col-md-4">
@@ -197,6 +196,12 @@
 
 								</div>
 								<div class="form-group"></div>
+								
+								
+								
+								
+								<input type="hidden" name="item_id" id="item_id" value="0">
+								
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Production Date</div>
@@ -224,74 +229,71 @@
 											style="width: 100%;" class="form-control"
 											value="${prodHeader.productionEndDate}"> <span class="error"
 											aria-live="polite"></span>
-									</div>
+									</div> --%>
 									
 								
-								<c:if test="${prodHeader.productionStatus==1}">
-									<c:set var="status" value="Planned"></c:set>
-								</c:if>
-								
-								<c:if test="${prodHeader.productionStatus==2}">
-									<c:set var="status" value="Started"></c:set>
-								</c:if>
-								
-								<c:if test="${prodHeader.productionStatus==3}">
-									<c:set var="status" value="Completed"></c:set>
-								</c:if>
-									<div class="col-md-2">Production Status</div>
-									<div class="col-md-4">
-										<input type="text" readonly id="ord_no" name="ord_no"
-											style="width: 100%;" class="form-control"
-											value="${status}"> <span
-											class="error" aria-live="polite"></span>
-									</div>
-
-								</div>
-
+							
 								<div class="form-group"></div>
-			
+			<input type="hidden" name="rmId" id="rmId"
+										value="0" />
+										
+											<input type="hidden" name=plant_id id="plant_id"
+										value="${plantId}" />
+										
+										
+											
+										
+										
+											<input type="hidden" name="from_date" id="from_date"
+										value="${$fromDate}" />
+										
+											<input type="hidden" name="to_date" id="to_date"
+										value="${$toDate}" />
+										
+										
 								<div class="card-body card-block">
-									<table id="table1"
+									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
 												<th style="text-align: center">Sr.No.</th>
 												<th style="text-align: center">RM Name</th>
-<!-- 												<th style="text-align: center">Unit of Measurement</th>
- -->												<th style="text-align: center">RM Quantity</th>
- <th style="text-align: center">Edited RM Quantity</th>
+												<th style="text-align: center">Unit of Measurement</th>
+												<th style="text-align: center">Requested Quantity</th>
+												<th style="text-align: center">Issued Quantity</th>
 											</tr>
-											
 										</thead>
 										<tbody>
-									<c:forEach items="${rmItemList}" var="itemDetail" varStatus="count">
+									<c:forEach items="${fgItemwiseReport}" var="rmDReport" varStatus="count">
 										<tr>
-
 											<td style="text-align: center">${count.index+1}</td>
-
-
 											<td style="text-align: left"><c:out
-													value="${itemDetail.rmName}" /></td>
-										<%-- 	<td style="text-align: center"><c:out
-													value="${itemDetail.rmName}" /></td>
- --%>
+													value="${rmDReport.itemDesc}" /></td>
+											<td style="text-align: left"><c:out
+													value="${rmDReport.uomName}" /></td>
+													
+													
+											<td style="text-align: right"><c:out
+													value="${rmDReport.rmReqQty}" /></td>
+													
+									
+													<td style="text-align: right"><c:out
+													value="${rmDReport.rmIssueQty}" /></td>
+											
+													<td> <input type="button" class="btn btn-primary" id="bomButton" onclick="viewRMDetail(${rmDReport.rmId})" value="Detail">
+													</td>
 												
-										<td style="text-align: center">
-										<input  type="text"  class="form-control" readonly value="${itemDetail.itemRmQty}"  id="rmQty${itemDetail.itemDetailId}" name="rmQty${itemDetail.itemDetailId}" />
-										</td>
-										
-										<td style="text-align: center">
-										<input  type="text"  class="form-control" value="${itemDetail.itemRmQty}"  id="rmEditQty${itemDetail.itemDetailId}" name="rmEditQty${itemDetail.itemDetailId}" />
-										</td>
-										
+													
+													
 										<%-- <td style="text-align: center">
-											<input  type="number"   class="form-control"  id="prodQty${prodDetail.productionDetailId}" value="${prodDetail.planQty}" name="prodQty${prodDetail.productionDetailId}"/>
+										<input  type="text" readonly class="form-control" value="${prodDetailReport.planQty}"  id="planQty${prodDetail.productionDetailId}" name="planQty${prodDetail.productionDetailId}" />
 										</td>
-													
 										<td style="text-align: center">
-											<input  type="text"   class="form-control"  id="rejQty${prodDetail.productionDetailId}" value="0" name="rejQty${prodDetail.productionDetailId}"/>
+											<input  type="number"   class="form-control"  id="prodQty${prodDetailReport.productionDetailId}" value="${prodDetail.planQty}" onkeypress="return allowOnlyNumber(event);" name="prodQty${prodDetail.productionDetailId}"/>
+										</td>
+										<td style="text-align: center">
+											<input  type="text"   class="form-control"  id="rejQty${prodDetail.productionDetailId}" value="0" onkeypress="return allowOnlyNumber(event);" name="rejQty${prodDetail.productionDetailId}"/>
 										</td> --%>
-													
 										</tr>
 										</c:forEach>
 
@@ -309,22 +311,26 @@
 
 								</div> -->
 								<div class="form-group"></div>
-								<div class="row">
-
-								<!-- 	<div class="col-md-2">Other Cost After Tax</div>
-
-									<div class="col-md-3">845</div> -->
-
+								<!-- <div class="row">
 									<div class="col-md-2">
 										<input type="submit" class="btn btn-primary" value="Submit">
 
 									</div>
 									
+									<div class="col-md-2">
+										<input type="button" class="btn btn-primary" id="manBomButton" onclick="showManualBOM()" value="Manual BOM">
+
+									</div>
 									
+									
+									<div class="col-md-2">
+										<input type="button" class="btn btn-primary" id="bomButton" onclick="showBOM()" value="Add BOM">
+
+									</div>
 									
 
 								</div>
-
+ -->
 							</form>
 						</div>
 					</div>
@@ -393,13 +399,13 @@
 	</script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#table_grid1').DataTable();
+			$('#bootstrap-data-table').DataTable();
 			
 			var status=${prodHeader.productionStatus}
 			
-			if(status==1){
+			if(status==3){
 				alert("Status" +status);
-				 $('#table_grid1 tbody input[type="number"]').prop('readonly', true);			
+				 $('#bootstrap-data-table tbody input[type="number"]').prop('readonly', true);			
 				 }
 		});
 	</script>
@@ -420,11 +426,54 @@
 	</script>
 	
 	<script type="text/javascript">
-	function showManualBOM(){
+	function viewRMDetail(rmId){
+		document.getElementById("rmId").value=rmId;
+		var form=document.getElementById("prodHeadForm");
 		
-		window.open("${pageContext.request.contextPath}/showManBOM","_self");
+		form.action=("getRMReportDetail");
+		
+		form.submit();
+		
+		
+		//window.open("${pageContext.request.contextPath}/editOrder/"+orderId);
+		
 	}
 	
+	</script>
+	
+	<script type="text/javascript">
+
+	function allowOnlyNumber(evt){
+	    var charCode = (evt.which) ? evt.which : event.keyCode
+	    if (charCode == 46){
+	        var inputValue = $("#floor").val();
+	        var count = (inputValue.match(/'.'/g) || []).length;
+	        
+	        if(count<1){
+	            if (inputValue.indexOf('.') < 1){
+	                return true;
+	            }
+	            return false;
+	        }else{
+	            return false;
+	        }
+	    }
+	    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+	        return false;
+	    }
+	    return true;
+	}
+	
+	</script>
+	<script type="text/javascript">
+	 function allowOnlyNumber1(evt){
+		 var valid=true;
+	  var charCode = (evt.which) ? evt.which : event.keyCode
+	  if (charCode > 31 && charCode==46 && (charCode < 48 || charCode > 57)){
+		  valid=false;
+	  }
+	  return valid;
+	} 
 	</script>
 
 
