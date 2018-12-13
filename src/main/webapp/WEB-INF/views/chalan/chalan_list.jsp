@@ -208,6 +208,7 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
+												<th style="text-align: center">Select</th>
 												<th style="text-align: center">Sr.No.</th>
 												<th style="text-align: center">Chalan No</th>
 												<th style="text-align: center">Chalan Date</th>
@@ -397,10 +398,7 @@
 							dataTable.clear().draw();
 
 							$.each(data,function(i, v) {
-												//alert("hdjfh");
-//var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-//var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
-//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
+												
 										 var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 												+ v.chalanId
 												+ ','
@@ -414,10 +412,13 @@
 															+ ','
 															+ i
 															+ ')"><i class="fa fa-times"></i></a>'
+															
+															 chBox = '<input  type="checkbox" name="selChalanItem" id='+v.chalanId+' class="check"  value='+v.chalanId+'/>'
+
  
 												dataTable.row
 														.add(
-																[
+																[chBox,
 																		i + 1,
 																		v.chalanNo,
 																		v.chalanDate,
@@ -449,101 +450,26 @@ function callClose(chalanId){
 	}
 	</script>
 	
-		<!-- <script type="text/javascript">
-	// on cust change function 
-		function showOrder() {
-			$('#divCheckbox').show();
-			var custId = document.getElementById("cust_name").value;
-			var valid = true;
-			if (custId == null || custId == "") {
-				valid = false;
-				alert("Please Select Customer");
-				
-				$('#po_id').html("-1");
-				$("#po_id").trigger("chosen:updated");
-				
-				var dataTable = $('#bootstrap-data-table')
-				.DataTable();
-		dataTable.clear().draw();
-
-			}
-			else if(custId<0){
-				valid = false;
-				
-				$('#po_id').html("-1");
-				$("#po_id").trigger("chosen:updated");
-				
-				var dataTable = $('#bootstrap-data-table')
-				.DataTable();
-		dataTable.clear().draw();
-
-			}
-			if (valid == true) {
-
-				$
-						.getJSON(
-								'${getCustInfoByCustId}',
-								{
-									custId : custId,
-									ajax : 'true',
-
-								},
-								function(data) {
-									document.getElementById("custTypeName").value = data.custTypeName;
-									document.getElementById("custMobNo").value = data.custMobNo;
-								});
-
-				$	.getJSON(
-						'${getPOHeaderByCustId}',
-						{
-							custId : custId,
-							ajax : 'true',
-						},
-						function(data) {
-							var html;
-							var len = data.length;
-							//alert("data " +JSON.stringify(data));
-							for (var i = 0; i < len; i++) {
-								var PNo=data[i].poNo+"-"+ data[i].poDate 
-
-								html += '<option value="' + data[i].poId + '">'
-										+PNo+ '</option>';
-
-							}
-							html += '</option>';
-							$('#po_id').html(html);
-							$("#po_id").trigger("chosen:updated");
-						});
-				
-				
-				$	.getJSON(
-						'${getProjectByCustId}',
-						{
-							custId : custId,
-							ajax : 'true',
-						},
-						function(data) {
-							var html;
-							var len = data.length;
-							//alert("data " +JSON.stringify(data));
-							for (var i = 0; i < len; i++) {
-								var projData=data[i].projName+"-"+data[i].address
-
-								html += '<option value="' + data[i].projId + '">'
-										+projData+ '</option>';
-
-							}
-							html += '</option>';
-							$('#proj_id').html(html);
-							$("#proj_id").trigger("chosen:updated");
-						});
-				
-				
-			}// end of if valid= true
-			
-		}
-	</script> -->
+</script>
 	
+		
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
+
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
+	</script>
+		
 
 
 
