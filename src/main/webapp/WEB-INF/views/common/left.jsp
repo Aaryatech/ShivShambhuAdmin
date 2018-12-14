@@ -193,7 +193,9 @@ html {
 								href="${pageContext.request.contextPath}/showChalanList">
 									Chalan List</a></li>
 
-
+            	<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showDispatchSheet">
+								Add	Production Plan</a></li>
 
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showProdPlanList">
