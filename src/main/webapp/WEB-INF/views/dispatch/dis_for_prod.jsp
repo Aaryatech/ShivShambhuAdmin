@@ -329,7 +329,7 @@
 											        	
 										        		 tr.append($('<td></td>').html('<input type=text  readonly min=0 max=30  id="date'+index+''+v.itemId+'" name="date'+index+''+v.itemId+'" style="text-align:right;" class=form-control value="0.0" />'));
 										        	}
-													tr.append($('<td></td>').html('<input type=text  onkeypress="return allowOnlyNumber(event);"  min=1  id="prod_plan_qty'+colCount+''+v.itemId+'" name="prod_plan_qty'+colCount+''+v.itemId+'" style="text-align:right;" class=form-control value='+v.itemId+' />'));
+													tr.append($('<td></td>').html('<input type=text  onkeypress="return allowOnlyNumber(event);"  min=1  id="prod_plan_qty'+colCount+''+v.itemId+'" name="prod_plan_qty'+colCount+''+v.itemId+'" style="text-align:right;" class=form-control value='0' />'));
 												  	$('#table1').append(tr);
 												});
 								
