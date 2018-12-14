@@ -241,14 +241,11 @@
 										value="${plantId}" />
 										
 										
-											
-										
-										
 											<input type="hidden" name="from_date" id="from_date"
-										value="${$fromDate}" />
+										value="${fromDate}" />
 										
 											<input type="hidden" name="to_date" id="to_date"
-										value="${$toDate}" />
+										value="${toDate}" />
 										
 										
 								<div class="card-body card-block">

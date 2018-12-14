@@ -402,6 +402,8 @@
 							dataTable.clear().draw();
 
 							$.each(data,function(i, v) {
+								
+								if(v.status==0){
 												
 										 var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 												+ v.chalanId
@@ -418,6 +420,25 @@
 															+ ')"><i class="fa fa-times"></i></a>'
 															
 															 chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
+								}else{
+									
+									var acButton = '<a href="#" class="action_btn" onclick="callEdit1('
+										+ v.chalanId
+										+ ','
+										+ i
+										+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete1('
+												+ v.chalanId
+												+ ','
+												+ i
+												+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose1('
+													+ v.chalanId
+													+ ','
+													+ i
+													+ ')"><i class="fa fa-times"></i></a>'
+									
+									chBox=""
+									
+								}
 
  
 												dataTable.row
