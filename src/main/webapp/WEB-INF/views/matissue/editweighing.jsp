@@ -274,8 +274,9 @@
 											oninvalid="setCustomValidity('Please Select photo')" readonly
 											src="${weighImageUrl}${editWeigh.photo1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
+											class="error" aria-live="polite"></span> <img
+											src="${weighImageUrl}${editWeigh.photo1}" alt="l" height="42"
+											width="42">
 									</div>
 
 									<div class="col-md-2">Add Photo2*</div>
