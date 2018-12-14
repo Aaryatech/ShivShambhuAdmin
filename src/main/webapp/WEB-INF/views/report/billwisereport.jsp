@@ -299,7 +299,7 @@
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			alert(compId);
+			//alert(compId);
 
 			var valid = true;
 
@@ -310,7 +310,7 @@
 
 			var plantId = document.getElementById("plantId").value;
 
-			alert("plantId" + plantId);
+			//alert("plantId" + plantId);
 			var valid = true;
 			if (plantId == null || plantId == "") {
 				valid = false;
@@ -465,7 +465,7 @@
 
 	<script type="text/javascript">
 		function genPdf() {
-			alert("hiii");
+			//alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
