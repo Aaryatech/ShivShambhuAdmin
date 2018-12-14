@@ -275,6 +275,18 @@ html {
 
 
 
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showBillwiseReport">Billwise
+									Report</a></li>
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showCustomerwiseReport">Customerwise
+									Bill Report</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showTaxwiseReport">Taxwise
+									Bill Report</a></li>
 
 
 						</ul></li>

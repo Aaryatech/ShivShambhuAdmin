@@ -10,8 +10,7 @@
 <title>Shiv Admin</title>
 
 
-<c:url var="getPlantByCompId" value="/getPlantByCompId" />
-<c:url var="getBillListBetweenDate" value="/getBillListBetweenDate" />
+<c:url var="getCustListBetweenDate" value="/getCustListBetweenDate" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -118,33 +117,38 @@
 
 							<div class="row">
 
-								<div class="col-md-2">Select Company</div>
+								<div class="col-md-2">Select Customer</div>
 
 								<div class="col-md-4">
-									<select id="compId" name="compId" class="standardSelect"
-										tabindex="1" required
+									<select id="custId" name="custId" class="standardSelect"
+										multiple tabindex="1" required
 										oninvalid="setCustomValidity('Please select company')"
 										onchange="getData()">
 										<option value="">Select</option>
 										<option value="0">All</option>
 
-										<c:forEach items="${compList}" var="comp">
-											<option value="${comp.companyId}">${comp.compName}</option>
+										<c:forEach items="${custList}" var="cust">
+											<option value="${cust.custId}">${cust.custName}</option>
 										</c:forEach>
 
 
 									</select>
 								</div>
-								<div class="col-md-2">Select Plant</div>
+								<div class="col-md-2">Select Plant*</div>
+
 								<div class="col-md-4">
 									<select id="plantId" name="plantId" class="standardSelect"
-										tabindex="1" required
-										oninvalid="setCustomValidity('Please select plant')">
+										multiple tabindex="1" required onchange="getData()">
+										<option value="">Select</option>
 
+										<option value="0">All</option>
+										<c:forEach items="${plantList}" var="plant">
 
+											<option value="${plant.plantId}">${plant.plantName}</option>
+
+										</c:forEach>
 									</select>
 								</div>
-
 							</div>
 
 
@@ -165,13 +169,15 @@
 									class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th style="text-align: center; width: 5%;">Sr No</th>
-											<th style="text-align: center">Bill Date</th>
-											<th style="text-align: center">Bill No</th>
+											<th style="text-align: center; width: 5%;">Sr No.</th>
+											<th style="text-align: center">Customer GST No.</th>
+											<!--<th style="text-align: center">Bill No</th> -->
 											<th style="text-align: center">Customer Name</th>
-											<th style="text-align: center">Project Name</th>
-											<th style="text-align: center">Tax Amount</th>
+											<th style="text-align: center">CGST</th>
+											<th style="text-align: center">IGST</th>
+											<th style="text-align: center">SGST</th>
 											<th style="text-align: center">Taxable Amount</th>
+											<th style="text-align: center">Tax Amount</th>
 											<th style="text-align: center">Total Amount</th>
 
 										</tr>
@@ -295,15 +301,15 @@
 
 			alert("Hi View Orders  ");
 
-			var compId = document.getElementById("compId").value;
+			var custId = document.getElementById("custId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			alert(compId);
+			alert(custId);
 
 			var valid = true;
 
-			if (compId == null || compId == "") {
+			if (custId == null || custId == "") {
 				valid = false;
 				alert("Please select company");
 			}
@@ -340,8 +346,8 @@
 			}
 			if (valid == true) {
 
-				$.getJSON('${getBillListBetweenDate}', {
-					companyId : compId,
+				$.getJSON('${getCustListBetweenDate}', {
+					custId : custId,
 					plantId : plantId,
 					fromDate : fromDate,
 					toDate : toDate,
@@ -366,12 +372,10 @@
 
 					$.each(data, function(i, v) {
 
-						dataTable.row.add(
-								[ i + 1, v.billDate, v.billNo, v.custName,
-										v.projName, v.taxAmt, v.taxableAmt,
-										v.totalAmt
+						dataTable.row.add([ i + 1,v.custGstNo, v.custName,v.cgst,v.igst,v.sgst
+						v.taxAmt, v.taxableAmt, v.totalAmt
 
-								]).draw();
+						]).draw();
 					});
 
 				});
@@ -379,17 +383,13 @@
 			}//end of if valid ==true
 
 		}
+		function callEdit(custId) {
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
 
-		function callEdit(weighId) {
-
-			window.open("${pageContext.request.contextPath}/editWeighing/"
-					+ weighId);
-
-		}
-
-		function callDelete(weighId) {
-			window.open("${pageContext.request.contextPath}/deleteWeighing/"
-					+ weighId);
+			window
+					.open("${pageContext.request.contextPath}/showCustBillDetailReport/"
+							+ custId + '/' + fromDate + '/' + toDate);
 
 		}
 	</script>
@@ -411,49 +411,7 @@
 											});
 						});
 	</script>
-	<script type="text/javascript">
-		// on plant change function 
-		function getData() {
-			var compId = document.getElementById("compId").value;
-			var valid = true;
 
-			if (compId == null || compId == "") {
-				valid = false;
-				alert("Please select company");
-			}
-
-			if (valid == true) {
-
-				$.getJSON('${getPlantByCompId}', {
-					compId : compId,
-					ajax : 'true',
-				},
-
-				function(data) {
-					var html;
-					var len = data.length;
-
-					var html = '<option selected value="0">All</option>';
-
-					for (var i = 0; i < len; i++) {
-
-						html += '<option value="' + data[i].plantId + '">'
-								+ data[i].plantName + '</option>';
-
-					}
-					html += '</option>';
-
-					$('#plantId').html(html);
-					$("#plantId").trigger("chosen:updated");
-
-					var dataTable = $('#bootstrap-data-table').DataTable();
-					dataTable.clear().draw();
-
-				});
-			}//end of if
-
-		}
-	</script>
 
 	<script type="text/javascript">
 		function exportToExcel() {
@@ -469,7 +427,7 @@
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			window.open('${pageContext.request.contextPath}/showBillwisePdf/'
+			window.open('${pageContext.request.contextPath}/showCustwisePdf/'
 					+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 
