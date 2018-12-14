@@ -5,12 +5,14 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -18,12 +20,15 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
+import com.ats.ssgs.common.VpsImageUpload;
 import com.ats.ssgs.model.master.GetWeighing;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.PoklenReading;
@@ -31,6 +36,7 @@ import com.ats.ssgs.model.master.Vehicle;
 import com.ats.ssgs.model.master.Weighing;
 import com.ats.ssgs.model.mat.Contractor;
 import com.ats.ssgs.model.mat.RawMatItem;
+import com.ats.ssgs.model.quot.GetQuotHeads;
 
 @Controller
 @Scope("session")
@@ -79,6 +85,8 @@ public class TxnController {
 
 			model.addObject("conList", conList);
 
+			model.addObject("weighImageUrl", Constants.IMAGE_FOLDER);
+
 		} catch (Exception e) {
 
 			System.err.println("exception In showAddWeighing at TxnController Contr" + e.getMessage());
@@ -92,9 +100,14 @@ public class TxnController {
 	}
 
 	@RequestMapping(value = "/insertWeighing", method = RequestMethod.POST)
-	public String insertWeighing(HttpServletRequest request, HttpServletResponse response) {
+	public String insertWeighing(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("imgInp") List<MultipartFile> file, @RequestParam("imgInp1") List<MultipartFile> file1) {
 
 		try {
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+			DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date now = new Date();
+			Calendar cal = Calendar.getInstance();
 
 			System.err.println("Inside insertWeighing method");
 
@@ -104,7 +117,6 @@ public class TxnController {
 			} catch (Exception e) {
 				weighId = 0;
 			}
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			String curDate = dateFormat.format(new Date());
 
@@ -121,6 +133,49 @@ public class TxnController {
 			float contRate = Float.parseFloat(request.getParameter("rate"));
 			String date = request.getParameter("date");
 			String remark = request.getParameter("remark");
+
+			System.out.println("Previous Image1" + file.get(0).getOriginalFilename());
+			System.out.println("Previous Image2" + file1.get(0).getOriginalFilename());
+			String prevImage2 = null;
+			String prevImage1 = null;
+			try {
+				if (!file.get(0).getOriginalFilename().equalsIgnoreCase("")) {
+					VpsImageUpload imgUpload = new VpsImageUpload();
+
+					// String tStamp = dateFormat.format(cal.getTime());
+					String tStamp = "" + System.currentTimeMillis();
+					String extension = FilenameUtils.getExtension(file.get(0).getOriginalFilename());
+
+					// String prevImage1 = new String();
+					prevImage1 = tStamp + "_1." + extension;
+					imgUpload.saveUploadedFiles(file.get(0), Constants.CAT_FILE_TYPE, prevImage1);
+
+					System.out.println("prevImage1" + prevImage1);
+				}
+			} catch (Exception e) {
+				System.err.println("Exc in uploading WorkType Imag " + e.getMessage());
+				e.printStackTrace();
+
+			}
+			try {
+
+				if (!file1.get(0).getOriginalFilename().equalsIgnoreCase("")) {
+					VpsImageUpload imgUpload = new VpsImageUpload();
+
+					// String tStamp = dateFormat.format(cal.getTime());
+					String tStamp = "" + System.currentTimeMillis();
+					String extension = FilenameUtils.getExtension(file1.get(0).getOriginalFilename());
+
+					prevImage2 = tStamp + "_2." + extension;
+					imgUpload.saveUploadedFiles(file1.get(0), Constants.CAT_FILE_TYPE, prevImage2);
+					System.out.println("prevImage2" + prevImage2);
+
+				}
+			} catch (Exception e) {
+				System.err.println("Exc in uploading WorkType Imag " + e.getMessage());
+				e.printStackTrace();
+
+			}
 
 			Weighing weigh = new Weighing();
 			weigh.setContraId(contraId);
@@ -147,8 +202,8 @@ public class TxnController {
 			weigh.setWeighId(weighId);
 
 			try {
-				weigh.setPhoto1(request.getParameter("photo1"));
-				weigh.setPhoto2(request.getParameter("photo2"));
+				weigh.setPhoto1(prevImage1);
+				weigh.setPhoto2(prevImage2);
 
 			} catch (Exception e) {
 				weigh.setPhoto1("NA");
@@ -203,8 +258,9 @@ public class TxnController {
 
 		ModelAndView model = null;
 		try {
-			model = new ModelAndView("matissue/addweighing");
+			model = new ModelAndView("matissue/editweighing");
 			model.addObject("title", "Edit Weighing");
+			model.addObject("weighImageUrl", Constants.IMAGE_FOLDER);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -237,6 +293,8 @@ public class TxnController {
 			Weighing editWeigh = rest.postForObject(Constants.url + "getWeighingById", map, Weighing.class);
 
 			model.addObject("editWeigh", editWeigh);
+
+			System.out.println(editWeigh.toString());
 
 		} catch (Exception e) {
 
@@ -296,7 +354,7 @@ public class TxnController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showWeighingList";
+		return "redirect:/showWeighList";
 	}
 
 	// Ajax call
@@ -531,6 +589,66 @@ public class TxnController {
 		}
 
 		return model;
+	}
+
+	@RequestMapping(value = "/showWeighList", method = RequestMethod.GET)
+	public ModelAndView showWeighList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("matissue/weighinglist");
+
+			model.addObject("title", "Weighing List");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("vehicleType", 1);
+
+			Vehicle[] vehArray = rest.postForObject(Constants.url + "getVehListByVehicleType", map, Vehicle[].class);
+			vehList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
+
+			model.addObject("vehList", vehList);
+
+			Contractor[] conArray = rest.getForObject(Constants.url + "getAllContractorList", Contractor[].class);
+			conList = new ArrayList<Contractor>(Arrays.asList(conArray));
+
+			model.addObject("conList", conList);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showWeighList at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/getWeighListBetDate", method = RequestMethod.GET)
+	public @ResponseBody List<GetWeighing> getWeighListBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		System.err.println(" in getWeighListBetDate");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int vehId = Integer.parseInt(request.getParameter("vehId"));
+		int contrId = Integer.parseInt(request.getParameter("contrId"));
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+
+		map.add("vehicleId", vehId);
+		map.add("contrId", contrId);
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		// map.add("status", 0);
+
+		GetWeighing[] ordHeadArray = rest.postForObject(Constants.url + "getWeighListBetweenDate", map,
+				GetWeighing[].class);
+		weighList = new ArrayList<GetWeighing>(Arrays.asList(ordHeadArray));
+
+		return weighList;
 	}
 
 }

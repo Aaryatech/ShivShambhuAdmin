@@ -267,18 +267,18 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Add Photo1*</div>
+									<div class="col-md-2">Add Photo1</div>
 									<div class="col-md-4">
 										<input type="file" id="imgInp" name="imgInp"
 											style="width: 100%;" class="form-control" autocomplete="off"
-											oninvalid="setCustomValidity('Please Select photo')"
-											value="${editWeigh.photo1}"
+											oninvalid="setCustomValidity('Please Select photo')" readonly
+											src="${weighImageUrl}${editWeigh.photo1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
 									</div>
 
-									<div class="col-md-2">Add Photo2</div>
+									<div class="col-md-2">Add Photo2*</div>
 									<div class="col-md-4">
 										<input type="file" id="imgInp1" name="imgInp1"
 											style="width: 100%;" class="form-control" autocomplete="off"

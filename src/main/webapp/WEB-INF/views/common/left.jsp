@@ -166,15 +166,15 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showAddEnquiry">Add
 									Enquiry</a></li>
-									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showEnqList">
 									Enquiry List</a></li>
 
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showQuotations">View
 									Quotations</a></li>
-									
-									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showQuotationsCustWise">View
 									Quotations Serially</a></li>
 
@@ -198,16 +198,16 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showProdPlanList">
 									Production Plan List</a></li>
-									
-									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showProdHeadReport">
 									Production Report</a></li>
-									
-										<li class="active"><i class="fa fa-puzzle-piece"></i><a
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showRMHeadReport">
 									Raw Material Report</a></li>
-									
-									
+
+
 
 
 
@@ -219,7 +219,7 @@ html {
 									Weighing</a></li>
 
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showWeighingList">Weighing
+								href="${pageContext.request.contextPath}/showWeighList">Weighing
 									List</a></li>
 
 
