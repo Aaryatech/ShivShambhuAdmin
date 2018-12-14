@@ -308,7 +308,7 @@
 									        
 									        	for (index = 0; index < listDate.length; ++index) {
 									        	
-									        		 tr.insertCell(k+index).outerHTML = "<th  align='right'><input type='date' id=from_date"+index+" name=from_date"+index+" required	style=width: 100%; onchange=onDateChange("+index+","+index+") class='form-control' value="+listDate[index]+" ><a href=# onclick=onDateChange("+index+","+colCount+")> <i class='fa fa-trash-o'></i></a></th>";
+									        		 tr.insertCell(k+index).outerHTML = "<th  align='right'><input type='date' id=from_date"+index+" name=from_date"+index+" required	style=width: 100%; onchange=onDateChange("+index+","+index+") class='form-control' value="+listDate[index]+" ><a href=# onclick=onDateChange("+index+","+colCount+")> <i class=''></i></a></th>";
 									        	}
 									       
 									      tr.insertCell(k+listDate.length).outerHTML = "<th align='center'>Plan Quantity</th>"
@@ -329,7 +329,7 @@
 											        	
 										        		 tr.append($('<td></td>').html('<input type=text  readonly min=0 max=30  id="date'+index+''+v.itemId+'" name="date'+index+''+v.itemId+'" style="text-align:right;" class=form-control value="0.0" />'));
 										        	}
-													tr.append($('<td></td>').html('<input type=text  onkeypress="return allowOnlyNumber(event);"  min=1  id="prod_plan_qty'+colCount+''+v.itemId+'" name="prod_plan_qty'+colCount+''+v.itemId+'" style="text-align:right;" class=form-control value='0' />'));
+													tr.append($('<td></td>').html('<input type=text  onkeypress="return allowOnlyNumber(event);"  min=1  id="prod_plan_qty'+colCount+''+v.itemId+'" name="prod_plan_qty'+colCount+''+v.itemId+'" style="text-align:right;" class=form-control value=0 />'));
 												  	$('#table1').append(tr);
 												});
 								
