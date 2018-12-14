@@ -66,6 +66,21 @@ public class BillController {
 
 	RestTemplate rest = new RestTemplate();
 	List<GetItemsForBill> billItems;
+	
+	
+	/*<dependency>
+    <groupId>net.sourceforge.cssparser</groupId>
+    <artifactId>cssparser</artifactId>
+    <version>0.9.4</version>
+</dependency>
+
+<dependency>
+   <groupId>org.zefer.pd4ml</groupId>
+    <artifactId>pd4ml</artifactId>
+    <version>370fx2</version>
+  </dependency>*/
+	
+	
 
 	@RequestMapping(value = "/showBill", method = RequestMethod.GET)
 	public ModelAndView showBill(HttpServletRequest request, HttpServletResponse response) {
