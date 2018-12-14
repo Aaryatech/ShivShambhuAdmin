@@ -372,7 +372,7 @@
 
 					$.each(data, function(i, v) {
 
-						dataTable.row.add([ i + 1,v.custGstNo, v.custName,v.cgst,v.igst,v.sgst
+						dataTable.row.add([ i + 1,v.custGstNo, v.custName,v.cgst,v.igst,v.sgst,
 						v.taxAmt, v.taxableAmt, v.totalAmt
 
 						]).draw();

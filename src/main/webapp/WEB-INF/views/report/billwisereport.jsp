@@ -293,7 +293,7 @@
 		// onclick of submit to search order 
 		function showQuot() {
 
-			alert("Hi View Orders  ");
+			//alert("Hi View Orders  ");
 
 			var compId = document.getElementById("compId").value;
 			var fromDate = document.getElementById("from_date").value;

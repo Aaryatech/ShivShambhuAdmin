@@ -74,34 +74,7 @@
 }
 </style>
 
-<style>
-.alert {
-	padding: 20px;
-	background-color: red;
-	color: white;
-}
 
-.alert1 {
-	padding: 20px;
-	background-color: green;
-	color: white;
-}
-
-.closebtn {
-	margin-left: 15px;
-	color: white;
-	font-weight: bold;
-	float: right;
-	font-size: 22px;
-	line-height: 20px;
-	cursor: pointer;
-	transition: 0.3s;
-}
-
-.closebtn:hover {
-	color: black;
-}
-</style>
 
 
 </head>
@@ -124,30 +97,7 @@
 
 			<div class="row">
 
-				<c:choose>
-					<c:when test="${isError==1}">
-
-						<div class="alert">
-
-							<span class="closebtn"
-								onclick="this.parentElement.style.display='none';">&times;</span>
-							<strong>Failed !</strong> Data not submitted !!
-						</div>
-
-					</c:when>
-
-					<c:when test="${isError==2}">
-
-						<div class="alert1">
-
-							<span class="closebtn"
-								onclick="this.parentElement.style.display='none';">&times;</span>
-							<strong>Success</strong> Data Submitted !!
-						</div>
-
-					</c:when>
-
-				</c:choose>
+			
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -339,7 +289,7 @@
 		// onclick of submit to search order 
 		function showReport() {
 
-			alert("Hi View Report  ");
+			//alert("Hi View Report  ");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
@@ -446,7 +396,7 @@
 
 	<script type="text/javascript">
 		function genPdf() {
-			alert("hiii");
+			//alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
