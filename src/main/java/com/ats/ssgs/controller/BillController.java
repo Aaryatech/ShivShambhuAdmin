@@ -66,21 +66,6 @@ public class BillController {
 
 	RestTemplate rest = new RestTemplate();
 	List<GetItemsForBill> billItems;
-	
-	
-	/*<dependency>
-    <groupId>net.sourceforge.cssparser</groupId>
-    <artifactId>cssparser</artifactId>
-    <version>0.9.4</version>
-</dependency>
-
-<dependency>
-   <groupId>org.zefer.pd4ml</groupId>
-    <artifactId>pd4ml</artifactId>
-    <version>370fx2</version>
-  </dependency>*/
-	
-	
 
 	@RequestMapping(value = "/showBill", method = RequestMethod.GET)
 	public ModelAndView showBill(HttpServletRequest request, HttpServletResponse response) {
@@ -442,9 +427,11 @@ public class BillController {
 				map.add("docCode", doc.getDocCode());
 
 				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
-				
+				System.out.println(chalanDetailList.toString());
 				map = new LinkedMultiValueMap<String, Object>();
-				map.add("chalanDetailId",chalanDetailList);
+				String idList = chalanDetailList.toString();
+				String chList = idList.substring(1, idList.length() - 1).replace(", ", ",");
+				map.add("chalanDetailId",chList);
 
 				Info updateChalanStatus = rest.postForObject(Constants.url + "updateChalanStatus", map, Info.class);
 

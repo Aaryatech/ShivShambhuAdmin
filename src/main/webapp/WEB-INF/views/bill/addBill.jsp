@@ -62,7 +62,23 @@
 	text-align: left;
 }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.buttonload {
+    background-color: white; /* Green background */
+    border: none; /* Remove borders */
+    color: #ec268f; /* White text */
+    padding: 12px 15px; /* Some padding */
+    font-size: 13px; /* Set a font-size */
+    display:none;
+}
 
+/* Add a right margin to each icon */
+.fa {
+    margin-left: -12px;
+    margin-right: 8px;
+}
+</style>
 </head>
 <body>
 
@@ -301,9 +317,11 @@
 											value="-"> <span class="error"
 											aria-live="polite"></span>
 									</div>
-									<div class="col-md-2">
+									<div class="col-md-3">
 										<input type="button"  onclick="getChalanItems()" class="btn btn-primary" value="Search">
-
+<button class="buttonload" id="loader">
+                                   <i class="fa fa-spinner fa-spin"></i>Loading
+                                   </button>
 									</div>
 									<!-- <div class="col-md-2">Cost Segment</div>
 
@@ -314,7 +332,7 @@
 										</div> -->
 									
 									</div>
-								
+
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
 								
 								<div class="card-body card-block">
@@ -441,10 +459,10 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#bootstrap-data-table').DataTable();
-			
-			 $("#selChalanItem").click(function () {
+		
+			/*  $("#selChalanItem").click(function () {
 	              $('#table_grid1-data-table tbody input[type="checkbox"]').prop('checked', this.checked);
-	          });
+	          }); */
 			 
 		});
 	</script>
@@ -823,7 +841,7 @@ $
 	<script type="text/javascript">
 	function getChalanItems(){
 		var chalanId = document.getElementById("chalan_id").value;
-
+		$('#loader').show();
 		$.getJSON('${getItemsForBill}', {
 			 
 			  chalanId : JSON.stringify(chalanId),
@@ -856,7 +874,9 @@ $
 
 		var index=i+1;
 		dataTable.row.add([ index,v.itemName,v.itemUom,v.orderRate+""+rate+""+isTaxIncluding,chalanQty,taxableAmt,discPer,discAmt,taxPer,taxAmt,total]).draw();
-	    });
+		$('#loader').hide();
+			
+			});
 		});
 		}
 	</script>
