@@ -153,6 +153,21 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showAddEnqGenFact">Add
 									Enquiry Source</a></li>
+									
+									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddContractor"> Add Contractor
+									</a></li>
+									
+									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddVehicle"> Add Vehicle
+									</a></li>
+									
+									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddSubplant"> Add Subplant
+									</a></li>
+									
+									
+									
 
 						</ul></li>
 
