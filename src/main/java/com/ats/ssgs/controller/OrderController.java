@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,7 @@ import com.ats.ssgs.model.PoHeader;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.order.GetOrder;
@@ -282,6 +284,10 @@ detail.setOrderDetId(orderDetId);
 			ordHeader.setProjId(projId);
 
 			float headerTotal = 0;
+			
+
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
 
 			for (int i = 0; i < tempOrdDetail.size(); i++) {
 
@@ -310,6 +316,8 @@ detail.setOrderDetId(orderDetId);
 			}
 			ordHeader.setOrderValue(headerTotal);
 			ordHeader.setTotal(headerTotal);
+			ordHeader.setExInt1(login.getUser().getUserId());
+			
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("docCode", 3);

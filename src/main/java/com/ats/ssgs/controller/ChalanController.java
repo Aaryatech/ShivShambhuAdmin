@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -36,6 +37,7 @@ import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
+import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.master.User;
@@ -350,6 +352,10 @@ public class ChalanController {
 			map.add("docCode", 5);
 			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
 			
+			
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
+			
 			chHeader.setChalanNo(doc.getDocPrefix()+""+doc.getSrNo());
 			
 			chHeader.setChalanDate(DateConvertor.convertToYMD(chalanDate));
@@ -375,6 +381,7 @@ public class ChalanController {
 			chHeader.setVehTimeOut(outTime);
 			chHeader.setChalanDate(DateConvertor.convertToYMD(chalanDate));
 			chHeader.setCostSegment(costSegment);
+			chHeader.setExVar1(String.valueOf(login.getUser().getUserId()));
 			
 			
 			ChalanHeader chHeadInserRes = rest.postForObject(Constants.url + "saveChalanHeaderDetail", chHeader,

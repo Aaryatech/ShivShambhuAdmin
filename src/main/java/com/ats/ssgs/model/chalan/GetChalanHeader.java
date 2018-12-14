@@ -51,6 +51,8 @@ private int chalanId;
 	
 	private String costSegment;
 	
+	private String userName;
+	
 	
 	//extra data
 	
@@ -266,6 +268,14 @@ private int chalanId;
 		this.driverName = driverName;
 	}
 	
+	
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	@Override
 	public String toString() {
 		return "GetChalanHeader [chalanId=" + chalanId + ", chalanNo=" + chalanNo + ", status=" + status
