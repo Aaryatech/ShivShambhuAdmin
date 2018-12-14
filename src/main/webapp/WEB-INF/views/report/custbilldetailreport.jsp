@@ -177,122 +177,51 @@
 										<thead>
 											<tr>
 												<th style="text-align: center; width: 5%;">Sr No</th>
-												<th style="text-align: center">Date</th>
-												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">Measurement of Unit</th>
-												<th style="text-align: center">Item Rate</th>
-												<th style="text-align: center">Item Quantity</th>
-												<th style="text-align: center">Value</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											<c:forEach items="${editVehDetail}" var="matDetail"
-												varStatus="count">
-												<tr>
-
-													<td style="text-align: center">${count.index+1}</td>
-													<td style="text-align: left"><c:out
-															value="${editVeh.date}" /></td>
-
-													<td style="text-align: left"><c:out
-															value="${matDetail.itemDesc}" /></td>
-
-
-													<td style="text-align: left"><c:out
-															value="${matDetail.uomName}" /></td>
-
-													<td style="text-align: left"><c:out
-															value="${matDetail.rate}" /></td>
-
-
-													<td style="text-align: left"><c:out
-															value="${matDetail.quantity}" /></td>
-
-
-													<td style="text-align: left"><c:out
-															value="${matDetail.value}" /></td>
-												</tr>
-											</c:forEach>
-										</tbody>
-									</table>
-
-									<div class="form-group"></div>
-									<div class="row">
-
-										<div class="col-md-8"></div>
-										<div class="col-md-1">Total</div>
-										<div class="col-md-3">
-											<input type="text" value="${editVeh.vehTotal}"
-												class="form-control" style="width: 100%;" autocomplete="off"
-												readonly>
-										</div>
-									</div>
-									&nbsp;&nbsp;&nbsp;
-									<div class="col-md-3">
-
-										<button type="button" class="btn btn-primary"
-											onclick="exportToExcel();" id="expExcel"
-											style="align-content: center; width: 200px; margin-left: 80px;">
-											Export To Excel</button>
-										&nbsp;
-									</div>
-
-
-
-									<table class="table table-striped table-bordered">
-										<thead>
-											<tr>
-
-												<th style="text-align: center; width: 5%;">Sr No</th>
-												<th style="text-align: center">Date</th>
-												<th style="text-align: center">Quantity</th>
-												<th style="text-align: center">Contractor Name</th>
-												<th style="text-align: center">Vehicle Name</th>
-												<th style="text-align: center">Vehicle No</th>
-
-
+												<th style="text-align: center">Bill Date</th>
+												<th style="text-align: center">Bill No</th>
+												<th style="text-align: center">Customer Name</th>
+												<th style="text-align: center">Project Name</th>
+												<th style="text-align: center">Tax Amount</th>
+												<th style="text-align: center">Taxable Amount</th>
+												<th style="text-align: center">Total Amount</th>
 
 											</tr>
 										</thead>
 
 										<tbody>
-											<c:forEach items="${weighing}" var="weighing"
-												varStatus="count">
+											<c:forEach items="${billList}" var="bill" varStatus="count">
 												<tr>
 
 													<td style="text-align: center">${count.index+1}</td>
+													<td style="text-align: left"><c:out
+															value="${bill.billDate}" /></td>
 
 													<td style="text-align: left"><c:out
-															value="${editVeh.date}" /></td>
-
-													<td style="text-align: left"><c:out
-															value="${weighing.quantity}" /></td>
-
-													<td style="text-align: left"><c:out
-															value="${weighing.contrName}" /></td>
+															value="${bill.billNo}" /></td>
 
 
 													<td style="text-align: left"><c:out
-															value="${weighing.vehicleName}" /></td>
+															value="${bill.custName}" /></td>
 
 													<td style="text-align: left"><c:out
-															value="${weighing.vehicleNo}" /></td>
-
-
-													<%-- 	<td style="text-align: left"><c:out
-															value="${weighing.pokeName}" /></td>
-
+															value="${bill.projName}" /></td>
 
 
 													<td style="text-align: left"><c:out
-															value="${weighing.pokeNo}" /></td> --%>
+															value="${bill.taxAmt}" /></td>
 
 
+													<td style="text-align: left"><c:out
+															value="${bill.taxableAmt}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${bill.totalAmt}" /></td>
 												</tr>
 											</c:forEach>
 										</tbody>
 									</table>
+
+
 
 
 									<div class="col-md-2"></div>
@@ -302,7 +231,7 @@
 									<div class="col-md-3">
 
 										<button type="button" class="btn btn-primary"
-											onclick="exportToExcel1();" id="expExcel1"
+											onclick="exportToExcel();" id="expExcel"
 											style="align-content: center; width: 200px; margin-left: 80px;">
 											Export To Excel</button>
 
@@ -434,20 +363,15 @@
 			window.open("${pageContext.request.contextPath}/exportToExcel");
 			document.getElementById("expExcel").disabled = true;
 		}
-		function exportToExcel1() {
-
-			window.open("${pageContext.request.contextPath}/exportToExcel1");
-			document.getElementById("expExcel1").disabled = true;
-		}
 	</script>
 
 	<script type="text/javascript">
 		function genPdf() {
-			alert("hiii");
+			//alert("hiii");
 			var fromDate = document.getElementById("fromDate").value;
 			var toDate = document.getElementById("toDate").value;
 
-			window.open('${pageContext.request.contextPath}/showVehDetailPdf/'
+			window.open('${pageContext.request.contextPath}/showBillwisePdf/'
 					+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 

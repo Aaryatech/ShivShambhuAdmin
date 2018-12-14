@@ -293,7 +293,7 @@
 		// onclick of submit to search order 
 		function showQuot() {
 
-			alert("Hi View Orders  ");
+			//alert("Hi View Orders  ");
 
 			var compId = document.getElementById("compId").value;
 			var fromDate = document.getElementById("from_date").value;
@@ -351,7 +351,15 @@
 
 				function(data) {
 
-					alert("Order Data " + JSON.stringify(data));
+					document.getElementById("expExcel").disabled = false;
+					document.getElementById("PDFButton").disabled = false;
+
+					if (data == "") {
+						alert("No records found !!");
+						document.getElementById("expExcel").disabled = true;
+						document.getElementById("PDFButton").disabled = true;
+
+					}
 
 					var dataTable = $('#bootstrap-data-table').DataTable();
 					dataTable.clear().draw();
@@ -461,9 +469,8 @@
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			window
-					.open('${pageContext.request.contextPath}/showContractorwisePdf/'
-							+ fromDate + '/' + toDate);
+			window.open('${pageContext.request.contextPath}/showBillwisePdf/'
+					+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 
 		}

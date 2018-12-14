@@ -83,36 +83,7 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-				<c:choose>
-					<c:when test="${isError==1}">
-						<div class="col-sm-12">
-							<div
-								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
-
-								<button type="button" class="close" data-dismiss="alert"
-									aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-								<strong>Data not submitted</strong>
-							</div>
-						</div>
-					</c:when>
-
-					<c:when test="${isError==2}">
-						<div class="col-sm-12">
-							<div
-								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
-
-								<button type="button" class="close" data-dismiss="alert"
-									aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-								<strong>Data Submitted Successfully</strong>
-							</div>
-						</div>
-					</c:when>
-
-				</c:choose>
+				
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -477,7 +448,7 @@
 
 	<script type="text/javascript">
 		function genPdf() {
-			alert("hiii");
+			//alert("hiii");
 			var fromDate = document.getElementById("fromDate").value;
 			var toDate = document.getElementById("toDate").value;
 

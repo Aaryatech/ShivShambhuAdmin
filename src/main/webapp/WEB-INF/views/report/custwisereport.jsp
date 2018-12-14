@@ -10,16 +10,7 @@
 <title>Shiv Admin</title>
 
 
-<c:url var="getVehicleReportBetDate" value="/getVehicleReportBetDate" />
-<%-- 
-
-
-<c:url var="getPoDetailForOrderByPoId"
-	value="/getPoDetailForOrderByPoId" />
-	
-<c:url var="getTempOrderHeader"
-	value="/getTempOrderHeader" /> --%>
-
+<c:url var="getCustListBetweenDate" value="/getCustListBetweenDate" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,6 +61,7 @@
 
 
 
+
 </head>
 <body>
 
@@ -90,7 +82,6 @@
 
 			<div class="row">
 
-			
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -98,14 +89,8 @@
 							<div class="col-md-4">
 								<strong>${title}</strong>
 							</div>
-							<%-- <div class="col-md-8"></div>
-							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
-										Customer</strong></a>
-							</div> --%>
-
-
 						</div>
+
 						<div class="card-body card-block">
 
 							<div class="form-group"></div>
@@ -128,6 +113,43 @@
 
 							</div>
 
+							<div class="form-group"></div>
+
+							<div class="row">
+
+								<div class="col-md-2">Select Customer</div>
+
+								<div class="col-md-4">
+									<select id="custId" name="custId" class="standardSelect"
+										multiple tabindex="1" required
+										oninvalid="setCustomValidity('Please select company')"
+										onchange="getData()">
+										<option value="">Select</option>
+										<option value="0">All</option>
+
+										<c:forEach items="${custList}" var="cust">
+											<option value="${cust.custId}">${cust.custName}</option>
+										</c:forEach>
+
+
+									</select>
+								</div>
+								<div class="col-md-2">Select Plant*</div>
+
+								<div class="col-md-4">
+									<select id="plantId" name="plantId" class="standardSelect"
+										multiple tabindex="1" required onchange="getData()">
+										<option value="">Select</option>
+
+										<option value="0">All</option>
+										<c:forEach items="${plantList}" var="plant">
+
+											<option value="${plant.plantId}">${plant.plantName}</option>
+
+										</c:forEach>
+									</select>
+								</div>
+							</div>
 
 
 							<div class="form-group"></div>
@@ -135,67 +157,68 @@
 								<div class="col-md-6"></div>
 								<div class="col-md-2">
 									<input type="button" class="btn btn-primary"
-										onclick="showReport()" value="Submit">
+										onclick="showQuot()" value="Submit">
 								</div>
 							</div>
 
 
 							<div class="form-group"></div>
 
-						</div>
+							<div class="card-body card-block">
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<th style="text-align: center; width: 5%;">Sr No.</th>
+											<!-- 	<th style="text-align: center">Bill Date</th>
+											<th style="text-align: center">Bill No</th> -->
+											<th style="text-align: center">Customer Name</th>
+											<th style="text-align: center">Mobile No</th>
 
-						<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
+											<th style="text-align: center">Tax Amount</th>
+											<th style="text-align: center">Taxable Amount</th>
+											<th style="text-align: center">Total Amount</th>
+											<th style="text-align: center">Action</th>
 
-						<div class="card-body card-block">
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
-										<th style="text-align: center">Sr.No.</th>
+										</tr>
+									</thead>
 
-										<th style="text-align: center">Vehicle Name</th>
-										<th style="text-align: center">Vehicle No</th>
-										<th style="text-align: center">Total Consumption</th>
-										<th style="text-align: center">Total Qty</th>
-										<th style="text-align: center">Total Weighing Qty</th>
-										<th style="text-align: center">Action</th>
-									</tr>
-								</thead>
+								</table>
+								<div class="col-md-2"></div>
 
-							</table>
-							<div class="col-md-2"></div>
+								<div class="col-md-3">
 
-							<div class="col-md-3">
+									<button type="button" class="btn btn-primary"
+										onclick="exportToExcel();" disabled="disabled" id="expExcel"
+										style="align-content: center; width: 200px; margin-left: 80px;">
+										Export To Excel</button>
+								</div>
 
-								<button type="button" class="btn btn-primary"
-									onclick="exportToExcel();" disabled="disabled" id="expExcel"
-									style="align-content: center; width: 200px; margin-left: 80px;">
-									Export To Excel</button>
+
+								<div class="col-md-3">
+
+									<button type="button" class="btn btn-primary"
+										onclick="genPdf()" disabled="disabled" id="PDFButton"
+										style="align-content: center; width: 100px; margin-left: 80px;">
+										PDF</button>
+								</div>
+								&nbsp;
+
 							</div>
 
 
-							<div class="col-md-3">
-
-								<button type="button" class="btn btn-primary" onclick="genPdf()"
-									disabled="disabled" id="PDFButton"
-									style="align-content: center; width: 100px; margin-left: 80px;">
-									PDF</button>
-							</div>
-							&nbsp;
 						</div>
-
 
 
 					</div>
 				</div>
+
 			</div>
 		</div>
-
 
 	</div>
 	<!-- .animated -->
 	<!-- .content -->
-
 
 	<!-- .animated -->
 	<!-- .content -->
@@ -250,11 +273,7 @@
 			});
 		});
 	</script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#bootstrap-data-table').DataTable();
-		});
-	</script>
+
 
 
 
@@ -275,17 +294,43 @@
 
 
 
+
 	<script type="text/javascript">
 		// onclick of submit to search order 
-		function showReport() {
+		function showQuot() {
 
-			//alert("Hi View Report  ");
+			//alert("Hi View Orders  ");
+
+			var custId = document.getElementById("custId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
+			//alert(custId);
+
 			var valid = true;
 
-			if (fromDate == null || fromDate == "") {
+			if (custId == null || custId == "") {
+				valid = false;
+				alert("Please select company");
+			}
+
+			var plantId = document.getElementById("plantId").value;
+
+			//alert("plantId" + plantId);
+			var valid = true;
+			if (plantId == null || plantId == "") {
+				valid = false;
+				alert("Please Select Plant");
+
+				var dataTable = $('#bootstrap-data-table').DataTable();
+				dataTable.clear().draw();
+
+			} else if (plantId < 0) {
+				valid = false;
+
+			}
+
+			else if (fromDate == null || fromDate == "") {
 				valid = false;
 				alert("Please select from date");
 			}
@@ -303,12 +348,14 @@
 
 				$
 						.getJSON(
-								'${getVehicleReportBetDate}',
+								'${getCustListBetweenDate}',
 								{
-
+									custId : custId,
+									plantId : plantId,
 									fromDate : fromDate,
 									toDate : toDate,
 									ajax : 'true',
+
 								},
 
 								function(data) {
@@ -323,8 +370,6 @@
 
 									}
 
-									//alert("Order Data " +JSON.stringify(data));
-
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();
 									dataTable.clear().draw();
@@ -335,9 +380,7 @@
 													function(i, v) {
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.matVehHeaderId
-																+ ','
-																+ v.vehId
+																+ v.custId
 																+ ','
 																+ i
 																+ ')"><i class="fa fa-list"></i></a>'
@@ -346,12 +389,15 @@
 																.add(
 																		[
 																				i + 1,
-																				v.vehicleName,
-																				v.vehNo,
-																				v.vehTotal,
-																				v.vehQtyTotal,
-																				v.weighContrQty,
-																				acButton ])
+																				v.custName,
+																				v.custMobNo,
+
+																				v.taxAmt,
+																				v.taxableAmt,
+																				v.totalAmt,
+																				acButton
+
+																		])
 																.draw();
 													});
 
@@ -360,21 +406,33 @@
 			}//end of if valid ==true
 
 		}
-
-		function callEdit(matVehHeaderId, vehId) {
+		function callEdit(custId) {
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
 			window
-					.open("${pageContext.request.contextPath}/vehilceDetailReport/"
-							+ matVehHeaderId
-							+ '/'
-							+ vehId
-							+ '/'
-							+ fromDate
-							+ '/' + toDate);
+					.open("${pageContext.request.contextPath}/showCustBillDetailReport/"
+							+ custId + '/' + fromDate + '/' + toDate);
 
 		}
+	</script>
+
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table').DataTable();
+
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
 	</script>
 
 
@@ -388,20 +446,16 @@
 
 	<script type="text/javascript">
 		function genPdf() {
-			alert("hiii");
+			//alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			window.open('${pageContext.request.contextPath}/showVehwisePdf/'
+			window.open('${pageContext.request.contextPath}/showCustwisePdf/'
 					+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 
 		}
 	</script>
-
-
-
-
 
 
 </body>
