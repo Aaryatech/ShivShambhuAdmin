@@ -648,7 +648,7 @@ public class EnqController {
 		try {
 
 			
-			System.out.println("Hello            oooooooooooo");
+			System.out.println("Hellooooooooooooo");
 			String[] quotIds = request.getParameterValues("selectEnqToDelete");
 			System.out.println("id are"+quotIds );
 
@@ -675,7 +675,7 @@ public class EnqController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showQuotationsCustWise";
+		return "redirect:/showEnqList";
 	}
 
 }
