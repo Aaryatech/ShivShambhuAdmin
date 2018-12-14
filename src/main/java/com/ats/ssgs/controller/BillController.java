@@ -418,9 +418,7 @@ public class BillController {
 					BillHeader.class);
 
 			if (insertBillHeadRes != null) {
-
 				//isError = 2;
-
 				map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("srNo", doc.getSrNo() + 1);
