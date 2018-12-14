@@ -365,7 +365,7 @@ public class ChalanController {
 			chHeader.setDriverId(driverId);
 			chHeader.setExDate1(curDate);
 			chHeader.setExFloat1(0);
-			chHeader.setExVar1("save time-" +dateFormat.format(cal.getTime().getTime()));
+			//chHeader.setExVar1("save time-" +dateFormat.format(cal.getTime().getTime()));
 			chHeader.setInKm(0);
 			chHeader.setOrderId(orderId);
 			chHeader.setOrderNo(getOrder.getOrderNo());
@@ -382,10 +382,12 @@ public class ChalanController {
 			chHeader.setChalanDate(DateConvertor.convertToYMD(chalanDate));
 			chHeader.setCostSegment(costSegment);
 			chHeader.setExVar1(String.valueOf(login.getUser().getUserId()));
+			chHeader.setExInt1(1);//delStatus
 			
 			
 			ChalanHeader chHeadInserRes = rest.postForObject(Constants.url + "saveChalanHeaderDetail", chHeader,
 					ChalanHeader.class);
+			System.err.println("chHeadInserRes " +chHeadInserRes.toString());
 
 			if (chHeadInserRes != null) {
 
@@ -445,7 +447,7 @@ public class ChalanController {
 		System.err.println("plantId for getChalanListByPlant  " +plantId);
 
 		map.add("plantId", plantId);
-		map.add("chalanStatus", 0);
+		//map.add("chalanStatus", 0);
 		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByPlantAndStatus", map,
 				GetChalanHeader[].class);
 		
@@ -456,7 +458,7 @@ public class ChalanController {
 			chalanHeadList.get(i).setChalanDate(DateConvertor.convertToDMY(chalanHeadList.get(i).getChalanDate()));
 		}
 				
-				System.err.println("Ajax chalanHeadList " + chalanHeadList.toString());
+				System.err.println("Ajax chalanHeadList /getChalanListByPlant " + chalanHeadList.toString());
 
 		
 				return chalanHeadList ;
