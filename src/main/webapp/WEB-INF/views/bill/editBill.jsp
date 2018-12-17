@@ -950,67 +950,80 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 		});
 	</script> -->
 <script type="text/javascript">
-	
-	function calculation(key,itemId){
-		var orderRate=parseFloat(document.getElementById("orderRate"+key+''+itemId).value);alert(orderRate+"orderRate");
-		var chalanQty=parseFloat(document.getElementById("chalanQty"+key+''+itemId).value); //alert(chalanQty+"chalanQty");
-		var discPer=parseFloat(document.getElementById("discPer"+key+''+itemId).value); //alert(discPer+"discPer");
-		var taxPer=parseFloat(document.getElementById("taxPer"+key+''+itemId).value); //alert(taxPer+"taxPer");
-        var isTaxIncluding=document.getElementById("isTaxIncluding"+key+''+itemId).value; //alert(isTaxIncluding+"isTaxIncluding");
-        
-        if(isTaxIncluding==0)
-        	{
-        	  var taxableAmt=(orderRate*chalanQty);
-        	  //alert("taxableAmt"+taxableAmt);
-        	 document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
-        	  var taxAmt=((taxableAmt*taxPer)/100);
-        	  //alert("taxAmt"+taxAmt);
-         	 document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt.toFixed(2);
-         	 if(discPer>0){
-         	   var discAmt=((taxableAmt*discPer)/100); //alert("discAmt"+discAmt);
-          	  document.getElementById("discAmt"+key+''+itemId).innerHTML=discAmt.toFixed(2);
 
-         	  var total=((taxableAmt-discAmt)+taxAmt);//alert(total+"total");
-         	 document.getElementById("total"+key+''+itemId).innerHTML=total.toFixed(2);
+function calculation(key,itemId){
+	var orderRate=parseFloat(document.getElementById("orderRate"+key+''+itemId).value); //alert(orderRate+"orderRate");
+	var chalanQty=parseFloat(document.getElementById("chalanQty"+key+''+itemId).value); //alert(chalanQty+"chalanQty");
+	var discPer=parseFloat(document.getElementById("discPer"+key+''+itemId).value); //alert(discPer+"discPer");
+	var taxPer=parseFloat(document.getElementById("taxPer"+key+''+itemId).value); //alert(taxPer+"taxPer");
+    var isTaxIncluding=document.getElementById("isTaxIncluding"+key+''+itemId).value; //alert(isTaxIncluding+"isTaxIncluding");
+    
+    if(isTaxIncluding==0)
+    	{
+    	  var taxableAmt=(orderRate*chalanQty);
+    	  //alert("taxableAmt"+taxableAmt);
+    	
+    	 
+     	 if(discPer>0){
+     	  var discAmt=((taxableAmt*discPer)/100); //alert("discAmt"+discAmt);
+      	  document.getElementById("discAmt"+key+''+itemId).innerHTML=discAmt.toFixed(2);
+     	 
+     	 taxableAmt=taxableAmt-discAmt;
+     	 var taxAmt=((taxableAmt*taxPer)/100);
+     	 var total=(taxableAmt+taxAmt);//alert(total+"total");
+ 
+    	 document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt.toFixed(2);
+    	 
+     	 document.getElementById("total"+key+''+itemId).innerHTML=total.toFixed(2);
+     	 document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
+     	 }
+     	 else
+     		 {
+     		  var discAmt=0.0;
+     		 document.getElementById("discAmt"+key+''+itemId).innerHTML=discAmt.toFixed(2);
+     		 var taxAmt=((taxableAmt*taxPer)/100);
+     		 var total=(taxableAmt+taxAmt);//alert("total"+total);
+     		 document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt.toFixed(2);
+     		 document.getElementById("total"+key+''+itemId).innerHTML=total.toFixed(2);
+     		 document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
+     		 }
+     	  
+     	 
+
+    	}else
+    		{
+    		//alert((orderRate+100)+"Order Rate");alert((100 + taxPer));
+    		var baseRate = ((orderRate * 100) / (100 + taxPer));
+    		 //alert("baseRate"+baseRate);
+    		 var taxableAmt=(baseRate*chalanQty);//alert("taxableAmt"+taxableAmt);
+        
+        	 
+         	 if(discPer>0){
+         	   var discAmt=((taxableAmt*discPer)/100);
+         	  document.getElementById("discAmt"+key+''+itemId).innerHTML=discAmt.toFixed(2);
+         	 
+         	  taxableAmt=taxableAmt-discAmt;
+         	  var taxAmt=((taxableAmt*taxPer)/100);
+         	  var total=(taxableAmt+taxAmt);//alert("total"+total);
+        	  document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt.toFixed(2);
+         	  document.getElementById("total"+key+''+itemId).innerHTML=total.toFixed(2);
+        	  document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
          	 }
          	 else
          		 {
          		  var discAmt=0.0;
          		 document.getElementById("discAmt"+key+''+itemId).innerHTML=discAmt.toFixed(2);
+         		 var taxAmt=((taxableAmt*taxPer)/100);
          		 var total=(taxableAmt+taxAmt);//alert("total"+total);
          		 document.getElementById("total"+key+''+itemId).innerHTML=total.toFixed(2);
+         		  document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
          		 }
          	  
+         	 // document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt;
          	 
 
-        	}else
-        		{
-        		//alert((orderRate+100)+"Order Rate");alert((100 + taxPer));
-        		var baseRate = ((orderRate * 100) / (100 + taxPer));
-        		 //alert("baseRate"+baseRate);
-        		 var taxableAmt=(baseRate*chalanQty);//alert("taxableAmt"+taxableAmt);
-            	  document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
-            	  var taxAmt=((orderRate*chalanQty)-taxableAmt);//alert("taxAmt"+taxAmt);
-             	  document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt.toFixed(2);
-             	 if(discPer>0){
-             	   var discAmt=((taxableAmt*discPer)/100);//alert("discAmt"+discAmt);
-             	  document.getElementById("discAmt"+key+''+itemId).innerHTML=discAmt.toFixed(2);
-             	   var total=((taxableAmt-discAmt)+taxAmt);//alert("total"+total);
-             	  document.getElementById("total"+key+''+itemId).innerHTML=total.toFixed(2);
-             	 }
-             	 else
-             		 {
-             		  var discAmt=0.0;
-             		 document.getElementById("discAmt"+key+''+itemId).innerHTML=discAmt.toFixed(2);
-             		 var total=(taxableAmt+taxAmt);//alert("total"+total);
-             		 document.getElementById("total"+key+''+itemId).innerHTML=total.toFixed(2);
-             		 }
-             	  
-             	 // document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt;
-             	 
-
-        		}
-	}
+    		}
+}
 	
 	</script>
 </body>

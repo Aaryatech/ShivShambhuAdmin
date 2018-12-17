@@ -46,6 +46,23 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.buttonload {
+    background-color: white; /* Green background */
+    border: none; /* Remove borders */
+    color: #ec268f; /* White text */
+    padding: 12px 15px; /* Some padding */
+    font-size: 13px; /* Set a font-size */
+    display:none;
+}
+
+/* Add a right margin to each icon */
+.fa {
+    margin-left: -12px;
+    margin-right: 8px;
+}
+</style>
 	</head>
 <body>
 
@@ -82,7 +99,7 @@
 
 									<div class="col-md-1">Plant</div>
 
-									<div class="col-md-3">
+									<div class="col-md-2">
 										<select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required>
 											<option value="">Select Plant</option>
@@ -106,9 +123,11 @@
 											value="${toDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
-										<div class="col-md-1">
+										<div class="col-md-3">
 										<input type="button" class="btn btn-primary" id="searchButton" value="Search"  onclick="searchItem()" >
-
+<button class="buttonload" id="loader">
+                                   <i class="fa fa-spinner fa-spin"></i>Loading
+                                   </button>
 									</div>
 								</div>
 								
@@ -132,7 +151,7 @@
 								<div class="form-group"></div>
 								<div class="row">
 								<div class="col-md-2">
-								<input type="button" id="pdf" value="PDF" class="btn btn-primary"
+							 	<input type="button" id="pdf" value="PDF" class="btn btn-primary"
 													onclick="genPdf()" disabled/>
 													</div>
 														<div class="col-md-4"></div>
@@ -247,13 +266,14 @@
 			
 			 
 		
-		
+			
 		
 			  $('#table1 td').remove();
 			$('#table1 th').remove();
 			var isValid = validate();
 
 			if (isValid) {
+				$('#loader').show();
 				var plantId = $("#plant_id").val();
 				var startDate = reformatDateString($("#from_date").val());
 				var endDate=reformatDateString($("#to_date").val());
@@ -271,7 +291,7 @@
 				    dateMove.setDate(dateMove.getDate()+1);
 				};
 			 
-		        alert(listDate);
+		      
 				$.getJSON('${getItemList}',{
 					
 					                plantId : plantId,
@@ -282,7 +302,7 @@
 
 								},
 								function(data) {
-
+									$('#loader').hide();
 									$('#table1 td').remove();
 									$('#table1 th').remove();
 									if (data == "") {
@@ -597,14 +617,13 @@
 
 			}else
 				{
-				
-				
+							
 				var d1 = fromDate.split("-");
 				var d2 = toDate.split("-");
 
 				d1 = d1[2].concat(d1[1], d1[0]);
 				d2 = d2[2].concat(d2[1], d2[0]);
-
+			
 				if (parseInt(d1) > parseInt(d2)) {
 					isValid = false;
 				    alert("From Date must be less than To Date!!");

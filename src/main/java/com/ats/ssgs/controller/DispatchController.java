@@ -106,7 +106,7 @@ public class DispatchController {
 			cal.setTime(new Date());
 
 			// Add 7 days
-			cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+4);
+			cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH)+3);
 
 			// convert to date
 			Date datePlusSeven = cal.getTime();
@@ -134,7 +134,7 @@ public class DispatchController {
 	public @ResponseBody DispatchItemList getItemList(HttpServletRequest request, HttpServletResponse response) throws ParseException {
 
 		 dispatchItemList=new DispatchItemList();
-		
+		  allDatesString=new ArrayList<String>();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
@@ -176,7 +176,7 @@ public class DispatchController {
 		map.add("plantId", plantId);
 
 		map.add("date", allDatesString.get(i));
-
+		System.err.println("allDatesString.get(i)"+allDatesString.get(i));
 		DispatchItems[] dispatchItems = rest.postForObject(Constants.url + "getDispatchList", map, DispatchItems[].class);
 		List<DispatchItems> dispatchItemsList = new ArrayList<DispatchItems>(Arrays.asList(dispatchItems));
 		
@@ -415,7 +415,8 @@ public class DispatchController {
 				cell.setPadding(3);
 				//cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
 				table.addCell(cell);
-				
+			
+				int flag1=0;
 				for(int j=0;j<allDatesString.size();j++)
 				{
 					float qty=0;
@@ -423,6 +424,7 @@ public class DispatchController {
 					{
 						if(dispatchItemList.getItemList().get(i).getItemId()==dispatchItemList.getDate1().get(k).getItemId())
 						{
+							flag1=1;
 							qty=dispatchItemList.getDate1().get(k).getRemQty();
 							hcell = new PdfPCell(new Phrase(""+qty, headFont));
 							//hcell.setBackgroundColor(BaseColor.PINK);
@@ -433,6 +435,14 @@ public class DispatchController {
 					}
 					break;
 				}
+				if(flag1==0)
+				{
+					hcell = new PdfPCell(new Phrase("0", headFont));
+					//hcell.setBackgroundColor(BaseColor.PINK);
+					hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(hcell);
+				}
+				int flag2=0;
 				for(int j=0;j<allDatesString.size();j++)
 				{
 					float qty=0;
@@ -440,6 +450,7 @@ public class DispatchController {
 					{
 						if(dispatchItemList.getItemList().get(i).getItemId()==dispatchItemList.getDate2().get(k).getItemId())
 						{
+							flag2=1;
 							qty=dispatchItemList.getDate2().get(k).getRemQty();
 							hcell = new PdfPCell(new Phrase(""+qty, headFont));
 							//hcell.setBackgroundColor(BaseColor.PINK);
@@ -450,6 +461,14 @@ public class DispatchController {
 					}
 					break;
 				}
+				if(flag2==0)
+				{
+					hcell = new PdfPCell(new Phrase("0", headFont));
+					//hcell.setBackgroundColor(BaseColor.PINK);
+					hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(hcell);
+				}
+				int flag3=0;
 				for(int j=0;j<allDatesString.size();j++)
 				{
 					float qty=0;
@@ -457,6 +476,7 @@ public class DispatchController {
 					{
 						if(dispatchItemList.getItemList().get(i).getItemId()==dispatchItemList.getDate3().get(k).getItemId())
 						{
+							flag3=1;
 							qty=dispatchItemList.getDate3().get(k).getRemQty();
 							hcell = new PdfPCell(new Phrase(""+qty, headFont));
 							//hcell.setBackgroundColor(BaseColor.PINK);
@@ -467,6 +487,14 @@ public class DispatchController {
 					}
 					break;
 				}
+				if(flag3==0)
+				{
+					hcell = new PdfPCell(new Phrase("0", headFont));
+					//hcell.setBackgroundColor(BaseColor.PINK);
+					hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(hcell);
+				}
+				int flag4=0;
 				for(int j=0;j<allDatesString.size();j++)
 				{
 					float qty=0;
@@ -474,6 +502,7 @@ public class DispatchController {
 					{
 						if(dispatchItemList.getItemList().get(i).getItemId()==dispatchItemList.getDate4().get(k).getItemId())
 						{
+							flag4=1;
 							qty=dispatchItemList.getDate4().get(k).getRemQty();
 							hcell = new PdfPCell(new Phrase(""+qty, headFont));
 							//hcell.setBackgroundColor(BaseColor.PINK);
@@ -484,143 +513,15 @@ public class DispatchController {
 					}
 					break;
 				}
-			}
-		/*	for (int i = 0; i < subCatAList.size(); i++) {
-                int flag=0;
-				for (int j = 0; j < itemsList.size(); j++) {
-					
-					if (subCatAList.get(i).getSubCatId() == itemsList.get(j).getItemGrp2()) {
-						
-						for (int k = 0; k < moneyOutList.size(); k++) {
-                            if(moneyOutList.get(k).getItemId()==itemsList.get(j).getId()) {
-                            
-							index++;
-							if(flag==0)
-                            {
-							PdfPCell cell;
-							
-							cell = new PdfPCell(new Phrase(String.valueOf(""), headFont));
-							cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-							cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-							cell.setPadding(3);
-							cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-							table.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(subCatAList.get(i).getSubCatName(), headFont1));
-							cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-							cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-							cell.setPaddingRight(2);
-							cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-							cell.setPadding(3);
-							table.addCell(cell);
-                        	
-							cell = new PdfPCell(new Phrase("", headFont));
-							cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-							cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-							cell.setPaddingRight(2);
-							cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-							cell.setPadding(3);
-							table.addCell(cell);
-							
-							cell = new PdfPCell(new Phrase("", headFont));
-							cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-							cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-							cell.setPaddingRight(2);
-							cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-							cell.setPadding(3);
-							table.addCell(cell);
-							
-							
-							flag=1;
-                            }
-							// FooterTable footerEvent = new FooterTable(table);
-							// writer.setPageEvent(footerEvent);
-							PdfPCell cell;
-							cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
-							cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-							cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-							cell.setPadding(4);
-							table.addCell(cell);
-
-							cell = new PdfPCell(new Phrase(moneyOutList.get(k).getItemName(), headFont));
-							cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-							cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-							cell.setPaddingRight(2);
-							cell.setPadding(4);
-							table.addCell(cell);
-							cell = new PdfPCell(
-									new Phrase(String.valueOf(moneyOutList.get(k).getCurOpeQty()), headFont));
-							cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-							cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-							cell.setPaddingRight(2);
-							cell.setPadding(4);
-							table.addCell(cell);
-
-							int currentQty = (int) (Math.round(moneyOutList.get(k).getCurOpeQty()));
-							int production1Qty = (moneyOutList.get(k).getPlanQty() - currentQty);
-							int production2Qty = (moneyOutList.get(k).getOrderQty() - production1Qty);
-							if (pdfPlanHeader.getIsPlanned() == 0) {
-								cell = new PdfPCell(
-										new Phrase(String.valueOf(moneyOutList.get(k).getOrderQty()), headFont));
-								cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-								cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-								cell.setPaddingRight(2);
-								cell.setPadding(4);
-								table.addCell(cell);
-							} else if (pdfPlanHeader.getIsPlanned() == 1) {
-								cell = new PdfPCell(
-										new Phrase(String.valueOf(moneyOutList.get(k).getPlanQty()), headFont));
-								cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-								cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-								cell.setPaddingRight(2);
-								cell.setPadding(4);
-								table.addCell(cell);
-								cell = new PdfPCell(new Phrase(String.valueOf(production1Qty), headFont));
-								cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-								cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-								cell.setPaddingRight(2);
-								cell.setPadding(4);
-								table.addCell(cell);
-							} else if (pdfPlanHeader.getIsPlanned() == 2) {
-								cell = new PdfPCell(
-										new Phrase(String.valueOf(moneyOutList.get(k).getPlanQty()), headFont));
-								cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-								cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-								cell.setPaddingRight(2);
-								cell.setPadding(4);
-								table.addCell(cell);
-								cell = new PdfPCell(new Phrase(String.valueOf(production1Qty), headFont));
-								cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-								cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-								cell.setPaddingRight(2);
-								cell.setPadding(4);
-								table.addCell(cell);
-								cell = new PdfPCell(
-										new Phrase(String.valueOf(moneyOutList.get(k).getOrderQty()), headFont));
-								cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-								cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-								cell.setPaddingRight(2);
-								cell.setPadding(4);
-								table.addCell(cell);
-								cell = new PdfPCell(new Phrase(String.valueOf(production2Qty), headFont));
-								cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-								cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-								cell.setPaddingRight(2);
-								cell.setPadding(4);
-								table.addCell(cell);
-							}
-							cell = new PdfPCell(new Phrase("", headFont));
-							cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-							cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-							cell.setPaddingRight(2);
-							cell.setPadding(4);
-							table.addCell(cell);
-						}
-                         
-						}
-					}
+				if(flag4==0)
+				{
+					hcell = new PdfPCell(new Phrase("0", headFont));
+					//hcell.setBackgroundColor(BaseColor.PINK);
+					hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					table.addCell(hcell);
 				}
-			}*/
+			}
+	
 			
 			document.open();
 			Paragraph company = new Paragraph("Shiv Shambhu\n", f);

@@ -139,8 +139,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertBill"
-							id="addBill"
-								method="post">
+							id="addBill" onsubmit="validate()"	method="post">
 
 <div class="row">
 	<div class="col-md-2">Select Company*</div>
@@ -345,8 +344,8 @@
 												<th style="text-align: center">UOM</th>
 												<th style="text-align: center">Rate</th>
 												<th style="text-align: center">Qty</th>
+													<th style="text-align: center">Disc %</th>
 												<th style="text-align: center">Taxable Amt</th>
-												<th style="text-align: center">Disc %</th>
 												<th style="text-align: center">Disc Amt</th>
 												<th style="text-align: center">Tax %</th>
 												<th style="text-align: center">Tax Amt</th>
@@ -469,78 +468,57 @@
 	
 	<script type="text/javascript">
 	
-	function validateForm()
+	function validate()
 	{
 	    var okay=true;
-	
+	    var companyId=document.getElementById("companyId").value;
 	    var plantId=document.getElementById("plant_id").value;
 	    var custId=document.getElementById("cust_name").value;
-		var orderId=document.getElementById("order_id").value;
+	    var projId=document.getElementById("proj_id").value;
+	    var poId=document.getElementById("po_id").value;
+		var chalanId=document.getElementById("chalan_id").value;
 		
-		 var driverId=document.getElementById("driver_id").value;
-		 var vehId=document.getElementById("veh_id").value;
 		
-		 var chalanDate=document.getElementById("chalan_date").value;
-		 var costSegment=document.getElementById("cost_segment").value;
-		 var outTime=document.getElementById("out_time").value;
-		 var outKm=document.getElementById("out_km").value;
-		 var chalanRemark =document.getElementById("chalan_remark").value;
+		 var billDate=document.getElementById("bill_date").value;
+		 //var costSegment=document.getElementById("cost_segment").value;
+		var billRemark =document.getElementById("bill_remark").value;
 
-	 
+		  if(companyId<0 || companyId=="" || companyId==null){
+		    	okay=false;
+		    	alert("Please select company");
+		    }  else
 	      if(plantId<0 || plantId=="" || plantId==null){
 	    	okay=false;
-	    	alert("Please select plant name");
+	    	alert("Please select plant");
 	    }
 	    else if(custId<0 || custId=="" || custId==null){
 	    	okay=false;
 	    	alert("Please select customer ");
 	    }
-	      
-	    else if(orderId<0 || orderId=="" || orderId==null){
+	    else if(projId<0 || projId=="" || projId==null){
 	    	okay=false;
-	    	alert("Please select order ");
+	    	alert("Please select project ");
 	    }
-	      
-	    else if(driverId<0 || driverId=="" || driverId==null){
+	    else if(poId<0 || poId=="" || poId==null){
 	    	okay=false;
-	    	alert("Please select driver ");
+	    	alert("Please select PO ");
 	    }
-	      
-	    else if(vehId<0 || vehId=="" || vehId==null){
+	  
+	    else if(chalanId<0 || chalanId=="" || chalanId==null){
 	    	okay=false;
-	    	alert("Please select vehicle ");
+	    	alert("Please select chalan ");
 	    }
-	      
-	      
-	    else if(chalanDate<0 || chalanDate=="" || chalanDate==null){
+	  
+	    else if(billDate<0 || billDate=="" || billDate==null){
 	    	okay=false;
-	    	alert("Please select chalan date ");
+	    	alert("Please select bill date ");
 	    }
-	      
-	    else if(costSegment<0 || costSegment=="" || costSegment==null){
+	 
+	    else if(billRemark<0 || billRemark=="" || billRemark==null){
 	    	okay=false;
-	    	alert("Please enter cost segment ");
+	    	alert("Please enter bill remark ");
 	    }
-	      
-	    else if(outTime<0 || outTime=="" || outTime==null){
-	    	okay=false;
-	    	alert("Please select out time ");
-	    }
-	      
-	    else if(outKm<0 || outKm=="" || outKm==null){
-	    	okay=false;
-	    	alert("Please enter out kilometer ");
-	    }
-	    else if(chalanRemark<0 || chalanRemark=="" || chalanRemark==null){
-	    	okay=false;
-	    	alert("Please enter chalan remark ");
-	    }
-	      
-	    else if(okay){
-
-	    	var form=document.getElementById("insertChalan");
-	    	form.submit();
-	    }
+	    return okay;
 	   
 	}
 	</script>
@@ -683,7 +661,7 @@ function onCompanyChange(companyId) {
 <script type="text/javascript">
 function getChalansByPo(poId)
 {
-	alert(poId);
+	
 $
 .getJSON(
 		'${getChalansByPO}',
@@ -841,6 +819,9 @@ $
 	<script type="text/javascript">
 	function getChalanItems(){
 		var chalanId = document.getElementById("chalan_id").value;
+		var isValid = validate();
+
+		if (isValid) {
 		$('#loader').show();
 		$.getJSON('${getItemsForBill}', {
 			 
@@ -863,7 +844,7 @@ $
 
 		var chalanQty = '<input  type="text" value="0.0"  oninput="calculation('+i+','+v.itemId+')"   class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var discPer = '<input  type="text" value="0.0" oninput="calculation('+i+','+v.itemId+')" class="form-control"  id="discPer'+i+''+v.itemId+'" name="discPer'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
-		var taxPer = '<input  type="text" value="'+(v.cgstPer+v.sgstPer)+'" oninput="calculation('+i+','+v.itemId+')" class="form-control"  id="taxPer'+i+''+v.itemId+'" name="taxPer'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
+		var taxPer = '<input  type="text" readonly value="'+(v.cgstPer+v.sgstPer)+'" oninput="calculation('+i+','+v.itemId+')" class="form-control"  id="taxPer'+i+''+v.itemId+'" name="taxPer'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var rate = '<input  type="hidden" value="'+v.orderRate+'" class="form-control"  id="orderRate'+i+''+v.itemId+'" name="orderRate'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var isTaxIncluding = '<input  type="hidden" value="'+v.isTaxIncluding+'" class="form-control"  id="isTaxIncluding'+i+''+v.itemId+'" name="isTaxIncluding'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 
@@ -873,11 +854,12 @@ $
 		var taxableAmt = '<p id="taxableAmt'+i+''+v.itemId+'">0.0</p>'
 
 		var index=i+1;
-		dataTable.row.add([ index,v.itemName,v.itemUom,v.orderRate+""+rate+""+isTaxIncluding,chalanQty,taxableAmt,discPer,discAmt,taxPer,taxAmt,total]).draw();
+		dataTable.row.add([ index,v.itemName,v.itemUom,v.orderRate+""+rate+""+isTaxIncluding,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
 		$('#loader').hide();
 			
 			});
 		});
+		}
 		}
 	</script>
 	
@@ -997,23 +979,30 @@ $
         	{
         	  var taxableAmt=(orderRate*chalanQty);
         	  //alert("taxableAmt"+taxableAmt);
-        	 document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
-        	  var taxAmt=((taxableAmt*taxPer)/100);
-        	  //alert("taxAmt"+taxAmt);
-         	 document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt.toFixed(2);
+        	
+        	 
          	 if(discPer>0){
-         	   var discAmt=((taxableAmt*discPer)/100); //alert("discAmt"+discAmt);
+         	  var discAmt=((taxableAmt*discPer)/100); //alert("discAmt"+discAmt);
           	  document.getElementById("discAmt"+key+''+itemId).innerHTML=discAmt.toFixed(2);
-
-         	  var total=((taxableAmt-discAmt)+taxAmt);//alert(total+"total");
+         	 
+         	 taxableAmt=taxableAmt-discAmt;
+         	 var taxAmt=((taxableAmt*taxPer)/100);
+         	 var total=(taxableAmt+taxAmt);//alert(total+"total");
+     
+        	 document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt.toFixed(2);
+        	 
          	 document.getElementById("total"+key+''+itemId).innerHTML=total.toFixed(2);
+         	 document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
          	 }
          	 else
          		 {
          		  var discAmt=0.0;
          		 document.getElementById("discAmt"+key+''+itemId).innerHTML=discAmt.toFixed(2);
+         		 var taxAmt=((taxableAmt*taxPer)/100);
          		 var total=(taxableAmt+taxAmt);//alert("total"+total);
+         		 document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt.toFixed(2);
          		 document.getElementById("total"+key+''+itemId).innerHTML=total.toFixed(2);
+         		 document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
          		 }
          	  
          	 
@@ -1024,21 +1013,27 @@ $
         		var baseRate = ((orderRate * 100) / (100 + taxPer));
         		 //alert("baseRate"+baseRate);
         		 var taxableAmt=(baseRate*chalanQty);//alert("taxableAmt"+taxableAmt);
-            	  document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
-            	  var taxAmt=((orderRate*chalanQty)-taxableAmt);//alert("taxAmt"+taxAmt);
-             	  document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt.toFixed(2);
+            
+            	 
              	 if(discPer>0){
-             	   var discAmt=((taxableAmt*discPer)/100);//alert("discAmt"+discAmt);
+             	   var discAmt=((taxableAmt*discPer)/100);
              	  document.getElementById("discAmt"+key+''+itemId).innerHTML=discAmt.toFixed(2);
-             	   var total=((taxableAmt-discAmt)+taxAmt);//alert("total"+total);
+             	 
+             	  taxableAmt=taxableAmt-discAmt;
+             	  var taxAmt=((taxableAmt*taxPer)/100);
+             	  var total=(taxableAmt+taxAmt);//alert("total"+total);
+            	  document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt.toFixed(2);
              	  document.getElementById("total"+key+''+itemId).innerHTML=total.toFixed(2);
+            	  document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
              	 }
              	 else
              		 {
              		  var discAmt=0.0;
              		 document.getElementById("discAmt"+key+''+itemId).innerHTML=discAmt.toFixed(2);
+             		 var taxAmt=((taxableAmt*taxPer)/100);
              		 var total=(taxableAmt+taxAmt);//alert("total"+total);
              		 document.getElementById("total"+key+''+itemId).innerHTML=total.toFixed(2);
+             		  document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
              		 }
              	  
              	 // document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt;

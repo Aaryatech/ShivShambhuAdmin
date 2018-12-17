@@ -224,10 +224,6 @@
 		}
 		function searchItem() {
 			
-			 
-		
-		
-		
 			  $('#table1 td').remove();
 			$('#table1 th').remove();
 			var isValid = validate();
@@ -278,7 +274,7 @@
 									        
 									        	for (index = 0; index < listDate.length; ++index) {
 									        	
-									        		 tr.insertCell(k+index).outerHTML = "<th><input type='date' id=from_date"+index+" name=from_date"+index+" required	style=width: 100%; onchange=onDateChange("+index+","+index+") class='form-control' value="+listDate[index]+" ><a href=# onclick=onDateChange("+index+","+colCount+")> <i class='fa fa-trash-o'></i></a></th>";
+									        		 tr.insertCell(k+index).outerHTML = "<th><input type='date' id=from_date"+index+" name=from_date"+index+" required	style=width: 100%; onchange=onDateChange("+index+","+index+") class='form-control' value="+listDate[index]+" ><a href=# onclick=onDateChange("+index+","+colCount+")></a></th>";
 									        	}
 									       
 									      tr.insertCell(k+listDate.length).outerHTML = "<th align='right'>Plan_Qty</th>"

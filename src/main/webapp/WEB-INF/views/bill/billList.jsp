@@ -105,6 +105,23 @@
 </style>
 
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+.buttonload {
+    background-color: white; /* Green background */
+    border: none; /* Remove borders */
+    color: #ec268f; /* White text */
+    padding: 12px 15px; /* Some padding */
+    font-size: 13px; /* Set a font-size */
+    display:none;
+}
+
+/* Add a right margin to each icon */
+.fa {
+    margin-left: -12px;
+    margin-right: 8px;
+}
+</style>
 </head>
 <body>
 
@@ -217,8 +234,11 @@
 								<div class="form-group"></div>
 								<div class="row">
 								<div class="col-md-6"></div>
-									<div class="col-md-2">
+									<div class="col-md-3">
 										<input type="button" class="btn btn-primary"  onclick="showBill()" value="Submit">
+									<button class="buttonload" id="loader">
+                                   <i class="fa fa-spinner fa-spin"></i>Loading
+                                   </button>
 									</div>
 								</div>
 								
@@ -439,7 +459,7 @@
 				alert("from date greater than todate ");
 			}
 			if(valid==true){
-			
+				$('#loader').show();
 				$
 						.getJSON(
 								'${getBillListBetDate}',
@@ -452,7 +472,7 @@
 								},
 
 								function(data) {
-									
+									$('#loader').hide();
 									//alert("Order Data " +JSON.stringify(data));
 									
 									 var dataTable = $('#bootstrap-data-table')
@@ -465,7 +485,7 @@
 var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v.billHeadId+' class="chk"  value='+v.billHeadId+'/>'
 //var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
 //var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
-										 var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+										 var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
 														+ v.billHeadId
 														+ ','
 														+ i
@@ -600,7 +620,7 @@ function billPdf()
 //checkedVals=checkedVals.slice(0,- 1);alert(checkedVals);
 checkedVals=checkedVals.join(",");
 var str2 = checkedVals.replace('/',"");
-		alert(str2);
+	
 if(checkedVals=="")
 	{
 	alert("Please Select Bill")
