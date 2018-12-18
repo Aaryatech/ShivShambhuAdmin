@@ -119,52 +119,64 @@
 							<strong>${title}</strong>
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertContractor"
+							<form action="${pageContext.request.contextPath}/insertSubplant"
 								id="submitForm" method="post">
 
 
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Contractor Name*</div>
+									<div class="col-md-2">Subplant Name*</div>
 									<div class="col-md-4">
-										<input type="text" id="conName" name="conName"
+										<input type="text" id="spName" name="spName"
 											maxlength="60"
-											pattern="[a-zA-Z][a-zA-Z]*" value="${editCon.contrName}"
+											pattern="[a-zA-Z][a-zA-Z]*" value="${editSP.subplantName}"
 											class="form-control" onblur="getUomNameCheck()"
 											autocomplete="off"
-											oninvalid="setCustomValidity('Please enter correct Contractor Name')"
+											oninvalid="setCustomValidity('Please enter correct Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Mobile No.</div>
-
+									<div class="col-md-2">Subplant Location*</div>
 									<div class="col-md-4">
-										<input type="text" id="mobNo" name="mobNo"
-											value="${editCon.contrMob}" class="form-control"
-											style="width: 100%;" autocomplete="off" maxlength="10"
-											pattern="^[1-9]{1}[0-9]{9}$"
-											oninvalid="setCustomValidity('Please enter Mobile No')"
-											onchange="try{setCustomValidity('')}catch(e){}">
+										<input type="text" id="spLoc" name="spLoc"
+											maxlength="60"
+											pattern="[a-zA-Z][a-zA-Z]*" value="${editSP.location}"
+											class="form-control" onblur="getUomNameCheck()"
+											autocomplete="off"
+											oninvalid="setCustomValidity('Please enter correct Location')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											style="width: 100%;">
 									</div>
 
-									<input type="hidden" id="contrId" name="contrId"
-										value="${editCon.contrId}">
+
+									<input type="hidden" id="spId" name="spId"
+										value="${editSP.subplantId}">
 
 								</div>
 								<div class="form-group"></div>
 
 
 								<div class="row">
-									<div class="col-md-2">Contractor Rate*</div>
+									<div class="col-md-2">Select Plant*</div>
+
 									<div class="col-md-4">
-										<input type="text" id="contrRate" name="contrRate"
-											autocomplete="off" value="${editCon.contrRate}"
-											class="form-control" 
-											oninvalid="setCustomValidity('Please enter Rate')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
+										<select id="plant_id" name="plant_id" class="standardSelect"
+											tabindex="1" required onchange="getData()">
+											<option value="-1">Select</option>
+											<c:forEach items="${plantList}" var="plant">
+												<c:choose>
+													<c:when test="${plant.plantId==editSP.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}">${plant.plantName}
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</select>
 									</div>
 									<div class="col-lg-2"></div>
 
@@ -193,7 +205,7 @@
 						<div class="card-body card-block">
 
 							<form
-								action="${pageContext.request.contextPath}/deleteRecordofCon"
+								action="${pageContext.request.contextPath}/deleteRecordofSP"
 								method="post">
 
 								<table id="bootstrap-data-table"
@@ -205,40 +217,39 @@
 												type="checkbox" name="selAll" id="selAll" />Select All</th>
 
 											<th style="text-align: center; width: 5%;">Sr No</th>
-											<th style="text-align: center">Contractor Name</th>
-											<th style="text-align: center">Mobile No.</th>
-											<th style="text-align: center">Rate</th>
+											<th style="text-align: center">SubPlant Name</th>
+											<th style="text-align: center">Location</th>
+											
 
 											<th style="text-align: center; width: 5%;">Action</th>
 
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${conList}" var="con" varStatus="count">
+										<c:forEach items="${spList}" var="sp" varStatus="count">
 											<tr>
 
-												<td><input type="checkbox" class="chk" name="contrIds"
-													id="contrIds${count.index+1}" value="${con.contrId}" /></td>
+												<td><input type="checkbox" class="chk" name="spIds"
+													id="spIds${count.index+1}" value="${sp.subplantId}" /></td>
 
 												<td style="text-align: center">${count.index+1}</td>
 
 
 												<td style="text-align: left"><c:out
-														value="${con.contrName}" /></td>
+														value="${sp.subplantName}" /></td>
 
 												<td style="text-align: left"><c:out
-														value="${con.contrMob}" /></td>
+														value="${sp.location}" /></td>
 
 
-												<td style="text-align: right"><c:out
-														value="${con.contrRate}" /></td>
+												
 
 
 												<td style="text-align: center"><a
-													href="${pageContext.request.contextPath}/editCon/${con.contrId}"><i
+													href="${pageContext.request.contextPath}/editSP/${sp.subplantId}"><i
 														class="fa fa-edit"></i> <span class="text-muted"></span></a>
 													&nbsp; <a
-													href="${pageContext.request.contextPath}/deleteCon/${con.contrId}"
+													href="${pageContext.request.contextPath}/deleteSP/${sp.subplantId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
 														class="fa fa-trash-o"></i></a></td>
 

@@ -119,54 +119,177 @@
 							<strong>${title}</strong>
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertContractor"
-								id="submitForm" method="post">
+							<form action="${pageContext.request.contextPath}/insertVehicle"
+								id="submitForm" method="post" enctype="multipart/form-data">
 
 
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Contractor Name*</div>
+									<div class="col-md-2">Vehicle Name*</div>
 									<div class="col-md-4">
-										<input type="text" id="conName" name="conName"
+										<input type="text" id="vehName" name="vehName"
 											maxlength="60"
-											pattern="[a-zA-Z][a-zA-Z]*" value="${editCon.contrName}"
+											pattern="[a-zA-Z][a-zA-Z]*" value="${editVeh.vehicleName}"
 											class="form-control" onblur="getUomNameCheck()"
 											autocomplete="off"
-											oninvalid="setCustomValidity('Please enter correct Contractor Name')"
+											oninvalid="setCustomValidity('Please enter correct Vehicle  Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Mobile No.</div>
+									<div class="col-md-2">Company Name</div>
 
 									<div class="col-md-4">
-										<input type="text" id="mobNo" name="mobNo"
-											value="${editCon.contrMob}" class="form-control"
-											style="width: 100%;" autocomplete="off" maxlength="10"
-											pattern="^[1-9]{1}[0-9]{9}$"
-											oninvalid="setCustomValidity('Please enter Mobile No')"
+										<input type="text" id="compName" name="compName"
+											value="${editVeh.vehCompName}" class="form-control"
+											style="width: 100%;" autocomplete="off" 
+											maxlength="60"
+											pattern="[a-zA-Z][a-zA-Z]*" 
+											oninvalid="setCustomValidity('Please enter Vehicle Company)"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<input type="hidden" id="contrId" name="contrId"
-										value="${editCon.contrId}">
+									<input type="hidden" id="vehId" name="vehId"
+										value="${editVeh.vehicleId}">
+										
+										
 
 								</div>
 								<div class="form-group"></div>
 
 
 								<div class="row">
-									<div class="col-md-2">Contractor Rate*</div>
+									<div class="col-md-2"> Load Capacity*</div>
 									<div class="col-md-4">
-										<input type="text" id="contrRate" name="contrRate"
-											autocomplete="off" value="${editCon.contrRate}"
+										<input type="text" id="loadCapacity" name="loadCapacity"
+											autocomplete="off" value="${editVeh.loadCapacity}"
 											class="form-control" 
-											oninvalid="setCustomValidity('Please enter Rate')"
+											oninvalid="setCustomValidity('Please enter load capacity of Vehicle')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
-									<div class="col-lg-2"></div>
+									
+									
+									<div class="col-md-2">Select UOM*</div>
+
+									<div class="col-md-4">
+										<select id="plant_id" name="plant_id" class="standardSelect"
+											tabindex="1" required onchange="getData()">
+											<option value="-1">Select</option>
+											<c:forEach items="${uomList}" var="ulist">
+												<c:choose>
+													<c:when test="${ulist.uomId==editVeh.uomId}">
+														<option value="${ulist.uomId}" selected>${ulist.uomName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${ulist.uomId}">${ulist.uomName}
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+
+<div class="form-group"></div>
+
+
+								<div class="row">
+									<div class="col-md-2"> Vehicle Number*</div>
+									<div class="col-md-4">
+										<input type="text" id="vehNum" name="vehNum"
+											autocomplete="off" value="${editVeh.vehNo}"
+											class="form-control" 
+											oninvalid="setCustomValidity('Please enter load capacity of Vehicle')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											style="width: 100%;">
+									</div>
+									</div>
+									
+									
+<div class="form-group"></div>
+
+
+<div class="row">
+									<div class="col-md-2">Vehicle Document 1*</div>
+									<div class="col-md-4">
+										<input type="file" id="doc1" name="doc1"
+											
+											 value="${editVeh. vehDoc1}"
+											class="form-control" 
+											
+											oninvalid="setCustomValidity('Please Select a Document')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											style="width: 100%;">
+											<a href="${vehImgPath}${editVeh.vehDoc1}">Doc 1</a>
+									</div>
+
+								<input type="hidden" id="doc11" name="doc11"
+										value="${editVeh.vehDoc1}">
+							    <input type="hidden" id="doc12" name="doc12"
+										value="${editVeh.vehDoc2}">
+								
+								<input type="hidden" id="doc13" name="doc13"
+										value="${editVeh.vehDoc3}">
+										
+								<input type="hidden" id="doc14" name="doc14"
+										value="${editVeh.vehDoc4}">
+										
+										
+									<div class="col-md-2">Vehicle Document 2*</div>
+									<div class="col-md-4">
+										<input type="file" id="doc2" name="doc2"
+											
+											 value="${editVeh. vehDoc2}"
+											class="form-control" 
+											
+											oninvalid="setCustomValidity('Please Select a Document')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											style="width: 100%;">
+									</div>
+
+
+									
+								</div>
+								<div class="form-group"></div>
+								
+							<div class="row">
+									
+									<div class="col-md-2">Vehicle Document 3*</div>
+									<div class="col-md-4">
+										<input type="file" id="doc3" name="doc3"
+											
+											 value="${editVeh. vehDoc3}"
+											class="form-control" 
+											
+											oninvalid="setCustomValidity('Please Select a Document')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											style="width: 100%;">
+									</div>
+									
+									<div class="col-md-2">Vehicle Document 4*</div>
+									<div class="col-md-4">
+										<input type="file" id="doc4" name="doc4"
+											
+											 value="${editVeh. vehDoc4}"
+											class="form-control" 
+											
+											oninvalid="setCustomValidity('Please Select a Document')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											style="width: 100%;">
+									</div>
+
+									
+								</div>
+								<div class="form-group"></div>
+								
+								
+								
+
+								<div class="row">
+
+<div class="col-lg-2"></div>
 
 									<div class="col-lg-2">
 
@@ -182,8 +305,7 @@
 
 
 									</div>
-
-								</div>
+									</div>
 
 							</form>
 						</div>
@@ -193,7 +315,7 @@
 						<div class="card-body card-block">
 
 							<form
-								action="${pageContext.request.contextPath}/deleteRecordofCon"
+								action="${pageContext.request.contextPath}/deleteRecordofVeh"
 								method="post">
 
 								<table id="bootstrap-data-table"
@@ -205,40 +327,42 @@
 												type="checkbox" name="selAll" id="selAll" />Select All</th>
 
 											<th style="text-align: center; width: 5%;">Sr No</th>
-											<th style="text-align: center">Contractor Name</th>
-											<th style="text-align: center">Mobile No.</th>
-											<th style="text-align: center">Rate</th>
+											<th style="text-align: center">Vehicle Name</th>
+											<th style="text-align: center">Vehicle Number</th>
+											<th style="text-align: center">Company No.</th>
+											<th style="text-align: center">LoadCapacity</th>
 
 											<th style="text-align: center; width: 5%;">Action</th>
 
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${conList}" var="con" varStatus="count">
+										<c:forEach items="${vehList}" var="veh" varStatus="count">
 											<tr>
 
-												<td><input type="checkbox" class="chk" name="contrIds"
-													id="contrIds${count.index+1}" value="${con.contrId}" /></td>
+												<td><input type="checkbox" class="chk" name="vehIds"
+													id="vehIds${count.index+1}" value="${veh.vehicleId}" /></td>
 
 												<td style="text-align: center">${count.index+1}</td>
 
 
 												<td style="text-align: left"><c:out
-														value="${con.contrName}" /></td>
-
+														value="${veh.vehicleName}" /></td>
 												<td style="text-align: left"><c:out
-														value="${con.contrMob}" /></td>
+														value="${veh.vehNo}" /></td>
 
 
 												<td style="text-align: right"><c:out
-														value="${con.contrRate}" /></td>
-
-
+														value="${veh.vehCompName}" /></td>
+														
+															<td style="text-align: right"><c:out
+														value="${veh.loadCapacity}" /></td>
+													
 												<td style="text-align: center"><a
-													href="${pageContext.request.contextPath}/editCon/${con.contrId}"><i
+													href="${pageContext.request.contextPath}/editVeh/${veh.vehicleId}"><i
 														class="fa fa-edit"></i> <span class="text-muted"></span></a>
 													&nbsp; <a
-													href="${pageContext.request.contextPath}/deleteCon/${con.contrId}"
+													href="${pageContext.request.contextPath}/deleteVeh/${veh.vehicleId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
 														class="fa fa-trash-o"></i></a></td>
 

@@ -163,7 +163,7 @@ html {
 									</a></li>
 									
 									<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddSubplant"> Add Subplant
+								href="${pageContext.request.contextPath}/showAddSP"> Add Subplant
 									</a></li>
 									
 									
