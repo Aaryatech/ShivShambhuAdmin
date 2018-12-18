@@ -115,7 +115,7 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showWeighingList"><strong>Weighing
+								<a href="${pageContext.request.contextPath}/showWeighList"><strong>Weighing
 										List</strong></a>
 							</div>
 

@@ -116,6 +116,11 @@
 							<div class="col-md-4">
 								<strong>${title}</strong>
 							</div>
+							<div class="col-md-4"></div>
+							<div class="col-md-4" align="left">
+								<a href="${pageContext.request.contextPath}/showAddWeighing"><strong>Add
+										Weighing </strong></a>
+							</div>
 						</div>
 						<form
 							action="${pageContext.request.contextPath}/deleteRecordofWeigh"

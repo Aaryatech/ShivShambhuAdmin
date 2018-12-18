@@ -240,6 +240,10 @@ html {
 								href="${pageContext.request.contextPath}/showWeighList">Weighing
 									List</a></li>
 
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showWeighingList">All
+									Weighing List</a></li>
+
 
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showAddPReading">Add
