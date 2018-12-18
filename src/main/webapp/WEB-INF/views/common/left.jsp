@@ -153,21 +153,21 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showAddEnqGenFact">Add
 									Enquiry Source</a></li>
-									
-									<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddContractor"> Add Contractor
-									</a></li>
-									
-									<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddVehicle"> Add Vehicle
-									</a></li>
-									
-									<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddSP"> Add Subplant
-									</a></li>
-									
-									
-									
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddContractor">
+									Add Contractor </a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddVehicle">
+									Add Vehicle </a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showAddSP"> Add
+									Subplant </a></li>
+
+
+
 
 						</ul></li>
 
@@ -208,13 +208,12 @@ html {
 								href="${pageContext.request.contextPath}/showChalanList">
 									Chalan List</a></li>
 
-            	<li class="active"><i class="fa fa-puzzle-piece"></i><a
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showDispatchSheet">
-								Order Dispatch</a></li>
-	<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showBill">
-								Add Bill</a></li>
-						 	<li class="active"><i class="fa fa-puzzle-piece"></i><a
+									Order Dispatch</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showBill"> Add Bill</a></li>
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showProdPlanList">
 									Production Plan List</a></li>
 
@@ -305,6 +304,11 @@ html {
 
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showTaxwiseReport">Taxwise
+									Bill Report</a></li>
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showItemwiseReport">Itemwise
 									Bill Report</a></li>
 
 
