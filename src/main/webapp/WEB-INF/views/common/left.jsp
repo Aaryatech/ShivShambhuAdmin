@@ -318,6 +318,35 @@ html {
 
 						</ul></li>
 
+
+					<li class="menu-item-has-children dropdown"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="true"> <i
+							class="menu-icon fa fa-table"></i>Marketing Report
+					</a>
+						<ul class="sub-menu children dropdown-menu ">
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showQuotationPendingReport">Quotation
+									Pending Report</a></li>
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showPoPendingReport">PO
+									Pending Report</a></li>
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showChalanPendingReport">Chalan
+									Pending Report</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showBillPendingReport">Bill
+									Pending Report</a></li>
+
+
+						</ul></li>
 					<li class="menu-item-has-children dropdown"><a
 						href="${pageContext.request.contextPath}/editMyProfile/1"> <i
 							class="menu-icon fa fa-table"></i> My Profile

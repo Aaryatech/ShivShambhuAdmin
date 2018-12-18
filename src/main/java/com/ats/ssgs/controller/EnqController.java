@@ -465,6 +465,7 @@ public class EnqController {
 			enqHead.setExVar1("NA");
 			enqHead.setExVar2("NA");
 			enqHead.setExVar3("NA");
+			enqHead.setExInt1(1);
 
 			enqHead.setPlantId(plantId);
 			enqHead.setQuotId(0);

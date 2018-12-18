@@ -238,7 +238,7 @@
 	<!-- .content -->
 
 	<!-- .animated -->
-	<!-- .content -->
+	<!-- .content --> 
 
 
 	<!-- Footer -->

@@ -2014,7 +2014,7 @@ public class MasterController {
 			user.setCompanyId(companyId);
 			user.setDelStatus(1);
 			user.setDeviceToken("NA");
-			user.setDeptId(deptId);
+			user.setDeptId(1);
 			user.setExDate1(curDate);
 			user.setExDate2(curDate);
 			user.setExInt1(0);

@@ -378,6 +378,8 @@ public class ProdController {
 
 			map.add("prodHeaderId", insertHeader.getProductionHeaderId());
 			prodHeader = rest.postForObject(Constants.url + "getProdPlanDetail", map, GetProdPlanHeader.class);
+			
+			System.err.println("prodHeader " +prodHeader.toString());
 
 			prodHeader.setProductionDate(DateConvertor.convertToDMY(prodHeader.getProductionDate()));
 			prodHeader.setProductionStartDate(DateConvertor.convertToDMY(prodHeader.getProductionStartDate()));

@@ -154,7 +154,7 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Select Department*</div>
+								<%-- 	<div class="col-md-2">Select Department*</div>
 
 									<div class="col-md-4">
 										<select id="dept_id" name="dept_id" class="standardSelect"
@@ -174,7 +174,7 @@
 											</c:forEach>
 										</select>
 									</div>
-
+ --%>
 									<%-- 
 									<div class="col-md-2">Select Plant*</div>
 
