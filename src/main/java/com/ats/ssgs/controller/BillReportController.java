@@ -812,4 +812,31 @@ public class BillReportController {
 		return model;
 
 	}
+
+	@RequestMapping(value = "/showItemwiseReport", method = RequestMethod.GET)
+	public ModelAndView showItemwiseReport(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("report/itemwisebillreport");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			model.addObject("title", "Itemwisewise Report");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showItemwiseReport at billreport Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
 }
