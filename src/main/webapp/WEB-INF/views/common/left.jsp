@@ -295,27 +295,6 @@ html {
 								href="${pageContext.request.contextPath}/showPoklenReport">Poklenwise
 									Report</a></li>
 
-
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showBillwiseReport">Billwise
-									Report</a></li>
-
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showCustomerwiseReport">Customerwise
-									Bill Report</a></li>
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showTaxwiseReport">Taxwise
-									Bill Report</a></li>
-
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showItemwiseReport">Itemwise
-									Bill Report</a></li>
-
-
 						</ul></li>
 
 
@@ -344,6 +323,35 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showBillPendingReport">Bill
 									Pending Report</a></li>
+
+						</ul></li>
+
+
+					<li class="menu-item-has-children dropdown"><a href="#"
+						class="dropdown-toggle" data-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="true"> <i
+							class="menu-icon fa fa-table"></i>Bill Report
+					</a>
+						<ul class="sub-menu children dropdown-menu ">
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showBillwiseReport">Billwise
+									Report</a></li>
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showCustomerwiseReport">Customerwise
+									Bill Report</a></li>
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showTaxwiseReport">Taxwise
+									Bill Report</a></li>
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showItemwiseReport">Itemwise
+									Bill Report</a></li>
 
 
 						</ul></li>
