@@ -170,14 +170,15 @@
 									<thead>
 										<tr>
 											<th style="text-align: center; width: 5%;">Sr No.</th>
+
+											<th style="text-align: center">Bill No</th>
 											<th style="text-align: center">Customer GST No.</th>
-											<!--<th style="text-align: center">Bill No</th> -->
 											<th style="text-align: center">Customer Name</th>
 											<th style="text-align: center">CGST</th>
-											<th style="text-align: center">IGST</th>
 											<th style="text-align: center">SGST</th>
-											<th style="text-align: center">Taxable Amount</th>
+											<th style="text-align: center">IGST</th>
 											<th style="text-align: center">Tax Amount</th>
+											<th style="text-align: center">Taxable Amount</th>
 											<th style="text-align: center">Total Amount</th>
 
 										</tr>
@@ -299,24 +300,24 @@
 		// onclick of submit to search order 
 		function showQuot() {
 
-			alert("Hi View Orders  ");
+			//alert("Hi View Orders  ");
 
 			var custId = document.getElementById("custId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			alert(custId);
+			//alert(custId);
 
 			var valid = true;
 
 			if (custId == null || custId == "") {
 				valid = false;
-				alert("Please select company");
+				alert("Please select customer");
 			}
 
 			var plantId = document.getElementById("plantId").value;
 
-			alert("plantId" + plantId);
+			//alert("plantId" + plantId);
 			var valid = true;
 			if (plantId == null || plantId == "") {
 				valid = false;
@@ -372,10 +373,12 @@
 
 					$.each(data, function(i, v) {
 
-						dataTable.row.add([ i + 1,v.custGstNo, v.custName,v.cgst,v.igst,v.sgst,
-						v.taxAmt, v.taxableAmt, v.totalAmt
+						dataTable.row.add(
+								[ i + 1, v.billNo, v.custGstNo, v.custName,
+										v.cgstAmt, v.sgstAmt,v.igstAmt, 
+										v.taxableAmt, v.taxAmt, v.totalAmt
 
-						]).draw();
+								]).draw();
 					});
 
 				});
@@ -386,10 +389,20 @@
 		function callEdit(custId) {
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+			var plantId = document.getElementById("plantId").value;
+			var custId = document.getElementById("custId").value;
 
 			window
 					.open("${pageContext.request.contextPath}/showCustBillDetailReport/"
-							+ custId + '/' + fromDate + '/' + toDate + '/' + plantId);
+							+ custId
+							+ '/'
+							+ fromDate
+							+ '/'
+							+ toDate
+							+ '/'
+							+ plantId);
 
 		}
 	</script>
@@ -426,9 +439,11 @@
 			alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
+			var plantId = document.getElementById("plantId").value;
+			var custId = document.getElementById("custId").value;
 
 			window.open('${pageContext.request.contextPath}/showTaxwisePdf/'
-					+ custId + '/' + fromDate + '/' + toDate + '/' + plantId);
+					+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 
 		}

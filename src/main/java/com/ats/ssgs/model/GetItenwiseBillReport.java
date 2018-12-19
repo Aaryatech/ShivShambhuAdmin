@@ -1,5 +1,6 @@
 package com.ats.ssgs.model;
 
+
 public class GetItenwiseBillReport {
 
 	
@@ -7,16 +8,7 @@ public class GetItenwiseBillReport {
 
 	private String itemName;
 	
-	public int getItem_id() {
-		return item_id;
-	}
-
-
-	public void setItem_id(int item_id) {
-		this.item_id = item_id;
-	}
-
-
+	
 	private String itemCode;
 	
 	private float qty;
@@ -53,9 +45,16 @@ public class GetItenwiseBillReport {
 	
 	private int delStatus;
 	
-	
-	
-	
+	public int getItem_id() {
+		return item_id;
+	}
+
+
+	public void setItem_id(int item_id) {
+		this.item_id = item_id;
+	}
+
+
 
 	public String getItemName() {
 		return itemName;
