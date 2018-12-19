@@ -37,6 +37,7 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.GetBillReport;
+import com.ats.ssgs.model.GetDatewiseReport;
 import com.ats.ssgs.model.GetItemsForBill;
 import com.ats.ssgs.model.GetItenwiseBillReport;
 import com.ats.ssgs.model.TaxWiseBill;
@@ -117,9 +118,78 @@ public class BillReportController {
 
 	}
 
-	@RequestMapping(value = "/showDateBillDetailReport/{custId}/{fromDate}/{toDate}", method = RequestMethod.GET)
+	List<GetDatewiseReport> dateBillList;
+
+	@RequestMapping(value = "/getDatewiseBillList", method = RequestMethod.GET)
+	public @ResponseBody List<GetDatewiseReport> getDatewiseBillList(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		System.err.println(" in getDatewiseBillList");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		String custId = request.getParameter("custId");
+		String plantId = request.getParameter("plantId");
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+
+		map.add("plantId", plantId);
+		map.add("custId", custId);
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+
+		GetDatewiseReport[] ordHeadArray = rest.postForObject(Constants.url + "getDatewiseBillReport", map,
+				GetDatewiseReport[].class);
+		dateBillList = new ArrayList<GetDatewiseReport>(Arrays.asList(ordHeadArray));
+
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+
+		rowData.add("Sr. No");
+		rowData.add("Bill Date");
+		rowData.add("CGST");
+		rowData.add("IGST");
+		rowData.add("SGST");
+		rowData.add("Tax Amount");
+		rowData.add("Taxable Amount");
+		rowData.add("Total Amount");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		int cnt = 1;
+		for (int i = 0; i < dateBillList.size(); i++) {
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			cnt = cnt + i;
+			rowData.add("" + (i + 1));
+
+			rowData.add("" + dateBillList.get(i).getBillDate());
+
+			rowData.add("" + dateBillList.get(i).getCgstAmt());
+			rowData.add("" + dateBillList.get(i).getIgstAmt());
+			rowData.add("" + dateBillList.get(i).getSgstAmt());
+			rowData.add("" + dateBillList.get(i).getTaxAmt());
+			rowData.add("" + dateBillList.get(i).getTaxableAmt());
+			rowData.add("" + dateBillList.get(i).getTotalAmt());
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "GetBillReport");
+
+		return dateBillList;
+	}
+
+	@RequestMapping(value = "/showDateBillDetailReport/{billHeadId}/{billDate}/{fromDate}/{toDate}", method = RequestMethod.GET)
 	public ModelAndView showDateBillDetailReport(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable int custId, @PathVariable String fromDate, @PathVariable String toDate) {
+			@PathVariable int billHeadId, @PathVariable String billDate, @PathVariable String fromDate,
+			@PathVariable String toDate) {
 
 		ModelAndView model = null;
 		try {
@@ -128,12 +198,13 @@ public class BillReportController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("custId", custId);
-			GetBillReport[] ordHeadArray = rest.postForObject(Constants.url + "getBillDetailByCustId", map,
-					GetBillReport[].class);
-			billList = new ArrayList<GetBillReport>(Arrays.asList(ordHeadArray));
+			map.add("billDate", DateConvertor.convertToYMD(billDate));
+			map.add("billHeadId", billHeadId);
+			GetDatewiseReport[] ordHeadArray = rest.postForObject(Constants.url + "getDatewiseDetailBillReport", map,
+					GetDatewiseReport[].class);
+			dateBillList = new ArrayList<GetDatewiseReport>(Arrays.asList(ordHeadArray));
 
-			model.addObject("billList", billList);
+			model.addObject("dateBillList", dateBillList);
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
@@ -146,7 +217,9 @@ public class BillReportController {
 			rowData.add("Bill Date");
 			rowData.add("Bill No");
 			rowData.add("Customer Name");
-			rowData.add("Project Name");
+			rowData.add("CGST");
+			rowData.add("IGST");
+			rowData.add("SGST");
 			rowData.add("Tax Amount");
 			rowData.add("Taxable Amount");
 			rowData.add("Total Amount");
@@ -154,19 +227,21 @@ public class BillReportController {
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 			int cnt = 1;
-			for (int i = 0; i < billList.size(); i++) {
+			for (int i = 0; i < dateBillList.size(); i++) {
 				expoExcel = new ExportToExcel();
 				rowData = new ArrayList<String>();
 				cnt = cnt + i;
 				rowData.add("" + (i + 1));
 
-				rowData.add("" + billList.get(i).getBillDate());
-				rowData.add("" + billList.get(i).getBillNo());
-				rowData.add("" + billList.get(i).getCustName());
-				rowData.add("" + billList.get(i).getProjName());
-				rowData.add("" + billList.get(i).getTaxAmt());
-				rowData.add("" + billList.get(i).getTaxableAmt());
-				rowData.add("" + billList.get(i).getTotalAmt());
+				rowData.add("" + dateBillList.get(i).getBillDate());
+				rowData.add("" + dateBillList.get(i).getBillNo());
+				rowData.add("" + dateBillList.get(i).getCustName());
+				rowData.add("" + dateBillList.get(i).getCgstAmt());
+				rowData.add("" + dateBillList.get(i).getIgstAmt());
+				rowData.add("" + dateBillList.get(i).getSgstAmt());
+				rowData.add("" + dateBillList.get(i).getTaxAmt());
+				rowData.add("" + dateBillList.get(i).getTaxableAmt());
+				rowData.add("" + dateBillList.get(i).getTotalAmt());
 
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
@@ -175,7 +250,7 @@ public class BillReportController {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("exportExcelList", exportToExcelList);
-			session.setAttribute("excelName", "GetBillReport");
+			session.setAttribute("excelName", "GetDatewiseReport");
 
 		} catch (Exception e) {
 			System.err.println("exception In contractorDetailReport at Mat Contr" + e.getMessage());
@@ -1017,9 +1092,9 @@ public class BillReportController {
 			@PathVariable("plantId") int plantId, HttpServletRequest request, HttpServletResponse response)
 			throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
-		
+
 		System.out.println("Inside Pdf showTaxwisePdf");
-		
+
 		Document document = new Document(PageSize.A4);
 
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
@@ -1345,7 +1420,6 @@ public class BillReportController {
 			rowData.add("" + taxList.get(i).getTaxAmt());
 			rowData.add("" + taxList.get(i).getTaxableAmt());
 			rowData.add("" + taxList.get(i).getTotalAmt());
-		
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -1363,9 +1437,8 @@ public class BillReportController {
 	// PDF for tax
 
 	@RequestMapping(value = "/showTaxwisePdf/{fromDate}/{toDate}", method = RequestMethod.GET)
-	public void showTaxwisePdf( @PathVariable("fromDate") String fromDate,
-			@PathVariable("toDate") String toDate, HttpServletRequest request,
-		HttpServletResponse response) throws FileNotFoundException {
+	public void showTaxwisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showTaxwisePdf");
 		Document document = new Document(PageSize.A4);
@@ -1391,7 +1464,7 @@ public class BillReportController {
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] {0.4f, 0.7f, 1.2f, 1.2f, 0.6f, 0.6f, 0.6f, 1.0f, 0.8f ,0.8f});
+			table.setWidths(new float[] { 0.4f, 0.7f, 1.2f, 1.2f, 0.6f, 0.6f, 0.6f, 1.0f, 0.8f, 0.8f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -1412,21 +1485,19 @@ public class BillReportController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
 
 			hcell = new PdfPCell(new Phrase("Customer Name", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
+
 			hcell = new PdfPCell(new Phrase("GST No.", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
 
-			
 			hcell = new PdfPCell(new Phrase("CGST ", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
@@ -1438,32 +1509,31 @@ public class BillReportController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
+
 			hcell = new PdfPCell(new Phrase("IGST ", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
+
 			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
+
 			table.addCell(hcell);
-			
+
 			hcell = new PdfPCell(new Phrase("Tax Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
+
 			hcell = new PdfPCell(new Phrase("Total Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
-			
+
 			int index = 0;
 			for (TaxWiseBill work : taxList) {
 				index++;
@@ -1482,14 +1552,13 @@ public class BillReportController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getCustName(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
 
 				cell = new PdfPCell(new Phrase("" + work.getCustGstNo(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1498,8 +1567,6 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				
-				
 				cell = new PdfPCell(new Phrase("" + work.getCgstAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -1541,8 +1608,6 @@ public class BillReportController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-
-				
 
 			}
 			document.open();
@@ -1604,39 +1669,32 @@ public class BillReportController {
 		}
 
 	}
-	
-	
+
 	// ************************************Monthwise****************************************
 
-		@RequestMapping(value = "/showMonthwiseReport", method = RequestMethod.GET)
-		public ModelAndView showMonthwiseReport(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/showMonthwiseReport", method = RequestMethod.GET)
+	public ModelAndView showMonthwiseReport(HttpServletRequest request, HttpServletResponse response) {
 
-			ModelAndView model = null;
-			try {
+		ModelAndView model = null;
+		try {
 
-				model = new ModelAndView("report/monthwisebillreport");
+			model = new ModelAndView("report/monthwisebillreport");
 
-				Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
-				plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
-				model.addObject("plantList", plantList);
+			model.addObject("plantList", plantList);
 
-				model.addObject("title", "Monthwise Bill Report");
+			model.addObject("title", "Monthwise Bill Report");
 
-			} catch (Exception e) {
+		} catch (Exception e) {
 
-				System.err.println("exception In showMonthwiseBillReport at billreport Contr" + e.getMessage());
+			System.err.println("exception In showMonthwiseBillReport at billreport Contr" + e.getMessage());
 
-				e.printStackTrace();
+			e.printStackTrace();
 
-			}
-
-			return model;
 		}
+
+		return model;
+	}
 }
-		
-		
-		
-		
-		
-		

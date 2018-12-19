@@ -180,7 +180,7 @@
 												<th style="text-align: center">Bill Date</th>
 												<th style="text-align: center">Bill No</th>
 												<th style="text-align: center">Customer Name</th>
-												<th style="text-align: center">Mobile No</th>
+
 												<th style="text-align: center">CGST</th>
 												<th style="text-align: center">SGST</th>
 												<th style="text-align: center">IGST</th>
@@ -192,7 +192,8 @@
 										</thead>
 
 										<tbody>
-											<c:forEach items="${billList}" var="bill" varStatus="count">
+											<c:forEach items="${dateBillList}" var="bill"
+												varStatus="count">
 												<tr>
 
 													<td style="text-align: center">${count.index+1}</td>
@@ -207,7 +208,13 @@
 															value="${bill.custName}" /></td>
 
 													<td style="text-align: left"><c:out
-															value="${bill.projName}" /></td>
+															value="${bill.cgstAmt}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${bill.igstAmt}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${bill.sgstAmt}" /></td>
 
 
 													<td style="text-align: left"><c:out
@@ -223,8 +230,6 @@
 											</c:forEach>
 										</tbody>
 									</table>
-
-
 
 
 									<div class="col-md-2"></div>

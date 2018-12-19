@@ -12,6 +12,9 @@
 
 <c:url var="getCustomerByPlantId" value="/getCustomerByPlantId" />
 
+
+<c:url var="getDatewiseBillList" value="/getDatewiseBillList" />
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -292,13 +295,13 @@
 		// onclick of submit to search order 
 		function showQuot() {
 
-			//alert("Hi View Orders  ");
+			alert("Hi View Orders  ");
 
 			var custId = document.getElementById("custId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			//alert(custId);
+			alert(custId);
 
 			var valid = true;
 
@@ -309,7 +312,7 @@
 
 			var plantId = document.getElementById("plantId").value;
 
-			//alert("plantId" + plantId);
+			alert("plantId" + plantId);
 			var valid = true;
 			if (plantId == null || plantId == "") {
 				valid = false;
@@ -341,7 +344,7 @@
 
 				$
 						.getJSON(
-								'${getCustListBetweenDate}',
+								'${getDatewiseBillList}',
 								{
 									custId : custId,
 									plantId : plantId,
@@ -373,7 +376,9 @@
 													function(i, v) {
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.custId
+																+ v.billHeadId
+																+ ','
+																+ v.billDate
 																+ ','
 																+ i
 																+ ')"><i class="fa fa-list"></i></a>'
@@ -382,9 +387,10 @@
 																.add(
 																		[
 																				i + 1,
-																				v.custName,
-																				v.custMobNo,
-
+																				v.billDate,
+																				v.cgstAmt,
+																				v.sgstAmt,
+																				v.igstAmt,
 																				v.taxAmt,
 																				v.taxableAmt,
 																				v.totalAmt,
@@ -399,13 +405,18 @@
 			}//end of if valid ==true
 
 		}
-		function callEdit(custId) {
+		function callEdit(billHeadId, billDate) {
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
 			window
-					.open("${pageContext.request.contextPath}/showCustBillDetailReport/"
-							+ custId + '/' + fromDate + '/' + toDate);
+					.open("${pageContext.request.contextPath}/showDateBillDetailReport/"
+							+ billHeadId
+							+ '/'
+							+ billDate
+							+ '/'
+							+ fromDate
+							+ '/' + toDate);
 
 		}
 	</script>
