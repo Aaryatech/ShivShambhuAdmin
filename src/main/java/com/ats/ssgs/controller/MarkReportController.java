@@ -206,7 +206,7 @@ public class MarkReportController {
 	// getPoPendingReport
 
 	@RequestMapping(value = "/getEnqListPendingPoBetweenDate", method = RequestMethod.GET)
-	public @ResponseBody List<GetEnqReport> getEnqListPendingPoBetweenDate(HttpServletRequest request,
+	public @ResponseBody List<GetQuotReport> getEnqListPendingPoBetweenDate(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		System.err.println(" in getEnqListBetweenDate");
@@ -238,8 +238,7 @@ public class MarkReportController {
 		GetQuotReport[] ordHeadArray = rest.postForObject(Constants.url + "getPoPendingReport", map,
 				GetQuotReport[].class);
 		quotList = new ArrayList<GetQuotReport>(Arrays.asList(ordHeadArray));
-
-		System.out.println(enqList.toString());
+		System.out.println("quotList" + quotList.toString());
 
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
@@ -249,6 +248,8 @@ public class MarkReportController {
 		rowData.add("Sr. No");
 		rowData.add("Enq Date");
 		rowData.add("Enq No");
+		rowData.add("Quot Date");
+		rowData.add("Quot No");
 		rowData.add("Customer Name");
 
 		rowData.add("Customer Mobile No.");
@@ -263,9 +264,11 @@ public class MarkReportController {
 			cnt = cnt + i;
 			rowData.add("" + (i + 1));
 
+			rowData.add("" + quotList.get(i).getEnqDate());
+			rowData.add("" + quotList.get(i).getEnqNo());
 			rowData.add("" + quotList.get(i).getQuotDate());
 			rowData.add("" + quotList.get(i).getQuotNo());
-			rowData.add("" + enqList.get(i).getCustName());
+			rowData.add("" + quotList.get(i).getCustName());
 			rowData.add("" + quotList.get(i).getCustMobNo());
 			rowData.add("" + quotList.get(i).getPlantName());
 
@@ -278,7 +281,7 @@ public class MarkReportController {
 		session.setAttribute("exportExcelList", exportToExcelList);
 		session.setAttribute("excelName", "GetQuotReport");
 
-		return enqList;
+		return quotList;
 	}
 
 	@RequestMapping(value = "/showQuotationPendingPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
@@ -367,14 +370,14 @@ public class MarkReportController {
 
 				cell = new PdfPCell(new Phrase("" + work.getEnqDate(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getEnqNo(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
@@ -388,14 +391,14 @@ public class MarkReportController {
 
 				cell = new PdfPCell(new Phrase("" + work.getCustMobNo(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getPlantName(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
@@ -485,11 +488,11 @@ public class MarkReportController {
 			e.printStackTrace();
 		}
 
-		PdfPTable table = new PdfPTable(6);
+		PdfPTable table = new PdfPTable(8);
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -512,6 +515,18 @@ public class MarkReportController {
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("Enq No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Quot Date", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Quot No.", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
@@ -544,16 +559,30 @@ public class MarkReportController {
 				cell.setPaddingRight(2);
 				table.addCell(cell);
 
+				cell = new PdfPCell(new Phrase("" + work.getEnqDate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getEnqNo(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
 				cell = new PdfPCell(new Phrase("" + work.getQuotDate(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getQuotNo(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
@@ -574,7 +603,7 @@ public class MarkReportController {
 
 				cell = new PdfPCell(new Phrase("" + work.getPlantName(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
@@ -822,14 +851,14 @@ public class MarkReportController {
 
 				cell = new PdfPCell(new Phrase("" + work.getOrderDate(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getOrderNo(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
@@ -843,14 +872,14 @@ public class MarkReportController {
 
 				cell = new PdfPCell(new Phrase("" + work.getCustMobNo(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getItemName(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
@@ -936,11 +965,11 @@ public class MarkReportController {
 
 			model.addObject("custList", custList);
 
-			model.addObject("title", "Chalan Pending Report");
+			model.addObject("title", "Bill Pending Report");
 
 		} catch (Exception e) {
 
-			System.err.println("exception In showChalanPendingReport at markreport Contr" + e.getMessage());
+			System.err.println("exception In showBillPendingReport at markreport Contr" + e.getMessage());
 
 			e.printStackTrace();
 
@@ -1121,28 +1150,28 @@ public class MarkReportController {
 
 				cell = new PdfPCell(new Phrase("" + work.getOrderDate(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getOrderNo(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getChalanDate(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getChalanNo(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
@@ -1156,14 +1185,14 @@ public class MarkReportController {
 
 				cell = new PdfPCell(new Phrase("" + work.getCustMobNo(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getItemName(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);

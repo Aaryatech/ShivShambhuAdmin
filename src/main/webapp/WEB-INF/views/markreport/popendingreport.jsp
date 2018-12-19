@@ -23,6 +23,7 @@
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
 
+
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/assets/css/normalize.css">
 <link rel="stylesheet"
@@ -154,6 +155,8 @@
 											<th style="text-align: center; width: 5%;">Sr No.</th>
 											<th style="text-align: center">Enq Date</th>
 											<th style="text-align: center">Enq No</th>
+											<th style="text-align: center">Quot Date</th>
+											<th style="text-align: center">Quot No</th>
 											<th style="text-align: center">Customer Name</th>
 											<th style="text-align: center">Mobile No</th>
 											<th style="text-align: center">Plant Name</th>
@@ -327,6 +330,8 @@
 
 				function(data) {
 
+					alert(data);
+
 					document.getElementById("expExcel").disabled = false;
 					document.getElementById("PDFButton").disabled = false;
 
@@ -343,8 +348,9 @@
 					$.each(data, function(i, v) {
 
 						dataTable.row.add(
-								[ i + 1, v.enqDate, v.enqNo, v.custName,
-										v.custMobNo, v.plantName
+								[ i + 1, v.enqDate, v.enqNo, v.quotDate,
+										v.quotNo, v.custName, v.custMobNo,
+										v.plantName
 
 								]).draw();
 					});
