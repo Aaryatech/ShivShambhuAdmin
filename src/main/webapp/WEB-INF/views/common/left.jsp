@@ -352,9 +352,14 @@ html {
 							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showItemwiseReport">Itemwise
 									Bill Report</a></li>
-									
-									<li class="active"><i class="fa fa-puzzle-piece"></i><a
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
 								href="${pageContext.request.contextPath}/showMonthwiseReport">Monthwise
+									Bill Report</a></li>
+
+
+							<li class="active"><i class="fa fa-puzzle-piece"></i><a
+								href="${pageContext.request.contextPath}/showDatewiseBillReport">Datewise
 									Bill Report</a></li>
 
 
