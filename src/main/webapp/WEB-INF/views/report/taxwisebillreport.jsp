@@ -10,7 +10,7 @@
 <title>Shiv Admin</title>
 
 
-<c:url var="getCustListBetweenDate" value="/getCustListBetweenDate" />
+<c:url var="getTaxListBetweenDate" value="/getTaxListBetweenDate" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -346,7 +346,7 @@
 			}
 			if (valid == true) {
 
-				$.getJSON('${getCustListBetweenDate}', {
+				$.getJSON('${getTaxListBetweenDate}', {
 					custId : custId,
 					plantId : plantId,
 					fromDate : fromDate,
@@ -389,7 +389,7 @@
 
 			window
 					.open("${pageContext.request.contextPath}/showCustBillDetailReport/"
-							+ custId + '/' + fromDate + '/' + toDate);
+							+ custId + '/' + fromDate + '/' + toDate + '/' + plantId);
 
 		}
 	</script>
@@ -427,8 +427,8 @@
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			window.open('${pageContext.request.contextPath}/showCustwisePdf/'
-					+ fromDate + '/' + toDate);
+			window.open('${pageContext.request.contextPath}/showTaxwisePdf/'
+					+ custId + '/' + fromDate + '/' + toDate + '/' + plantId);
 			document.getElementById("expExcel").disabled = true;
 
 		}

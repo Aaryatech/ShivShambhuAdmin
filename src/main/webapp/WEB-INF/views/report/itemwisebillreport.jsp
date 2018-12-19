@@ -11,7 +11,7 @@
 
 
 <c:url var="getPlantByCompId" value="/getPlantByCompId" />
-<c:url var="getBillListBetweenDate" value="/getBillListBetweenDate" />
+<c:url var="getItemListBetweenDate" value="/getItemListBetweenDate" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -159,8 +159,8 @@
 											<th style="text-align: center">Total Taxable Amount</th>
 											<th style="text-align: center">Total Amount</th>
 											<th style="text-align: center">CGST</th>
-											<th style="text-align: center">IGST</th>
 											<th style="text-align: center">SGST</th>
+											<th style="text-align: center">IGST</th>
 
 
 										</tr>
@@ -284,20 +284,14 @@
 
 			//alert("Hi View Orders  ");
 
-			var compId = document.getElementById("compId").value;
+			var plantId = document.getElementById("plantId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
 			//alert(compId);
 
-			var valid = true;
 
-			if (compId == null || compId == "") {
-				valid = false;
-				alert("Please select company");
-			}
-
-			var plantId = document.getElementById("plantId").value;
+			//var plantId = document.getElementById("plantId").value;
 
 			//alert("plantId" + plantId);
 			var valid = true;
@@ -329,8 +323,8 @@
 			}
 			if (valid == true) {
 
-				$.getJSON('${getBillListBetweenDate}', {
-					companyId : compId,
+				$.getJSON('${getItemListBetweenDate}', {
+					
 					plantId : plantId,
 					fromDate : fromDate,
 					toDate : toDate,
@@ -356,9 +350,9 @@
 					$.each(data, function(i, v) {
 
 						dataTable.row.add(
-								[ i + 1, v.billDate, v.billNo, v.custName,
-										v.projName, v.taxAmt, v.taxableAmt,
-										v.totalAmt
+								[ i + 1, v.itemCode, v.itemName, v.taxAmt,
+										v. taxableAmt, v.taxableAmt,v.cgstAmt,
+										v.sgstAmt,v.sgstAmt
 
 								]).draw();
 					});
@@ -457,9 +451,10 @@
 			//alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
+			var plantId = document.getElementById("plantId").value;
 
-			window.open('${pageContext.request.contextPath}/showBillwisePdf/'
-					+ fromDate + '/' + toDate);
+			window.open('${pageContext.request.contextPath}/showItemwisePdf/'
+					+ fromDate + '/' + toDate +'/' + plantId);
 			document.getElementById("expExcel").disabled = true;
 
 		}
