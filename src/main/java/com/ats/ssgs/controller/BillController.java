@@ -1,6 +1,7 @@
 package com.ats.ssgs.controller;
 
 import java.awt.Dimension;
+
 import java.awt.Insets;
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,7 +18,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +72,17 @@ import com.ats.ssgs.model.order.OrderHeader;
 @Controller
 @Scope("session")
 public class BillController {
+
+	/*
+	 * <dependency> <groupId>javax.mail</groupId>
+	 * <artifactId>javax.mail-api</artifactId> <version>1.5.5</version>
+	 * </dependency> <dependency> <groupId>javax.mail</groupId>
+	 * <artifactId>mail</artifactId> <version>1.4.7</version> </dependency>
+	 * 
+	 * <dependency> <groupId>org.springframework</groupId>
+	 * <artifactId>spring-context-support</artifactId>
+	 * <version>${org.springframework-version}</version> </dependency>
+	 */
 
 	RestTemplate rest = new RestTemplate();
 	List<GetItemsForBill> billItems;
@@ -413,7 +433,59 @@ public class BillController {
 			BillHeader insertBillHeadRes = rest.postForObject(Constants.url + "saveBills", billHeader,
 					BillHeader.class);
 
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("custId", custId);
+			Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
+
+			System.out.println("Send To Email Address" + editCust.getCustEmail());
+
 			if (insertBillHeadRes != null) {
+
+				final String emailSMTPserver = "smtp.gmail.com";
+				final String emailSMTPPort = "587";
+				final String mailStoreType = "imaps";
+				final String username = "atsinfosoft@gmail.com";
+				final String password = "atsinfosoft@123";
+
+				System.out.println("username" + username);
+				System.out.println("password" + password);
+
+				Properties props = new Properties();
+				props.put("mail.smtp.host", "smtp.gmail.com");
+				props.put("mail.smtp.socketFactory.port", "465");
+				props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+				props.put("mail.smtp.auth", "true");
+				props.put("mail.smtp.port", "587");
+
+				Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(username, password);
+					}
+				});
+
+				try {
+					Store mailStore = session.getStore(mailStoreType);
+					mailStore.connect(emailSMTPserver, username, password);
+
+					String mes = " Hello Sir";
+
+					String address = editCust.getCustEmail();
+
+					String subject = "  ";
+
+					String filename = "/home/lenovo/Desktop/Report.pdf";
+
+					Message mimeMessage = new MimeMessage(session);
+					mimeMessage.setFrom(new InternetAddress(username));
+					mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
+					mimeMessage.setSubject(subject);
+					mimeMessage.setText(mes);
+					mimeMessage.setFileName(filename);
+					Transport.send(mimeMessage);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
 				// isError = 2;
 				map = new LinkedMultiValueMap<String, Object>();
 
@@ -630,7 +702,7 @@ public class BillController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("billHeadId", billHeadId);
 			billHeader = rest.postForObject(Constants.url + "getBillHeaderByBillHeadId", map, BillHeader.class);
-	
+
 			float totalTaxable = 0.0f;
 			float totalTaxAmt = 0.0f;
 			float grandTotalAmt = 0.0f;
@@ -788,8 +860,8 @@ public class BillController {
 				// isError = 2;
 
 				map = new LinkedMultiValueMap<String, Object>();
-			
-				map.add("chalanDetailId",  billHeader.getChallanId());
+
+				map.add("chalanDetailId", billHeader.getChallanId());
 
 				Info updateChalanStatus = rest.postForObject(Constants.url + "updateChalanStatus", map, Info.class);
 
@@ -872,7 +944,10 @@ public class BillController {
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		File f = new File("/home/ats-12/bill.pdf");
+		// File f = new File("/home/ats-12/bill.pdf");
+
+		File f = new File("/home/lenovo/Desktop/bill.pdf");
+
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
 
@@ -891,7 +966,7 @@ public class BillController {
 		String appPath = context.getRealPath("");
 		String filename = "ordermemo221.pdf";
 		// String filePath = "/report.pdf";
-		String filePath = "/home/ats-12/bill.pdf";
+		String filePath = "/home/lenovo/Desktop/bill.pdf";
 		// String filePath =
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
