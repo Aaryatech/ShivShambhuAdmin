@@ -238,8 +238,29 @@ public class MatIssueController {
 
 		RawMatItem[] itemArray = rest.postForObject(Constants.url + "getRawItemListByCatId", map, RawMatItem[].class);
 		rawItemList = new ArrayList<RawMatItem>(Arrays.asList(itemArray));
+		
+		if(!rawItemList.isEmpty()) {
+			
+			System.err.println("rmi Item List  by cat id " +rawItemList.toString());
+		}
 
 		return rawItemList;
+
+	}
+	
+	@RequestMapping(value = "/getOneRmItem", method = RequestMethod.GET)
+	public @ResponseBody RawMatItem getRawItemByRmId(HttpServletRequest request, HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		RawMatItem rmItemm=null;
+		int rmId = Integer.parseInt(request.getParameter("rmId"));
+
+		for(int i=0;i<rawItemList.size();i++) {
+			if(rmId==rawItemList.get(i).getItemId())
+				rmItemm= rawItemList.get(i);
+			break;
+		}
+		return rmItemm;
 
 	}
 
