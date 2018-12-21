@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,10 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
@@ -24,6 +29,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
+import com.ats.ssgs.model.ModuleJson;
 import com.ats.ssgs.model.master.LoginResUser;
 
 /**
@@ -96,10 +102,27 @@ public class HomeController {
 
 					map = new LinkedMultiValueMap<String, Object>();
 					int userId = userObj.getUser().getUserId();
-					map.add("usrId", userId);
+					map.add("userId", userId);
 					System.out.println("user data" + userResponse.toString());
 
+					try {
+						ParameterizedTypeReference<List<ModuleJson>> typeRef = new ParameterizedTypeReference<List<ModuleJson>>() {
+						};
+						ResponseEntity<List<ModuleJson>> responseEntity = restTemplate.exchange(
+								Constants.url + "getRoleJson", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+						List<ModuleJson> newModuleList = responseEntity.getBody();
+						System.err.println("new Module List " + newModuleList.toString());
+
+						session.setAttribute("newModuleList", newModuleList);
+						session.setAttribute("sessionModuleId", 0);
+						session.setAttribute("sessionSubModuleId", 0);
+
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 					return mav;
+
 				} else {
 
 					mav = new ModelAndView("login");

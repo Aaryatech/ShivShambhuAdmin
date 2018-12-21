@@ -1,3 +1,6 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
 <style>
@@ -39,140 +42,50 @@ html {
 
 					<!--                     <h3 class="menu-title">UI elements</h3>/.menu-title
  -->
-					<li class="menu-item-has-children dropdown"><a href="#"
-						class="dropdown-toggle" data-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="true"> <i
-							class="menu-icon fa fa-table"></i> Masters
-					</a>
-						<ul class="sub-menu children dropdown-menu ">
 
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddCompany">Add
-									Company</a></li>
+					<c:forEach items="${sessionScope.newModuleList}"
+						var="allModuleList" varStatus="count">
 
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showCompList">
-									Company List</a></li>
+						<c:choose>
+							<c:when
+								test="${allModuleList.moduleId==sessionScope.sessionModuleId}">
+								<li class="active">
+							</c:when>
 
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddDept">Add
-									Department</a></li>
+							<c:otherwise>
+								<li>
+							</c:otherwise>
+						</c:choose>
+						<li class="menu-item-has-children dropdown"><a href="#"
+							class="dropdown-toggle" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="true"> <i
+								class="menu-icon fa fa-table"></i> <c:out
+									value="${allModuleList.moduleName}" />
+						</a>
+							<ul class="sub-menu children dropdown-menu ">
+								<c:forEach items="${allModuleList.subModuleJsonList}"
+									var="allSubModuleList">
 
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddPlant">Add
-									Plant</a></li>
+									<li class="active"><i class="fa fa-puzzle-piece"></i> <c:choose>
+											<c:when
+												test="${allSubModuleList.subModuleId==sessionScope.sessionSubModuleId}">
+												<li class="active">
+											</c:when>
+											<c:otherwise>
+												<li>
+											</c:otherwise>
+										</c:choose> <a
+										onclick="selectSubMod(${allSubModuleList.subModuleId},${allSubModuleList.moduleId})"
+										href="${pageContext.request.contextPath}/<c:out value="${allSubModuleList.subModuleMapping}" />"><c:out
+												value="${allSubModuleList.subModulName}" /></a></li>
 
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showPlantList">
-									Plant List</a></li>
+								</c:forEach>
 
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddUser">Add
-									User</a></li>
-
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showUserList"> User
-									List</a></li>
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddCustType">Add
-									Customer Type</a></li>
-
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddCustomer">Add
-									Customer</a></li>
+							</ul></li>
+					</c:forEach>
 
 
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showCustList">
-									Customer List</a></li>
-
-
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddProject">Add
-									Project</a></li>
-
-
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showProjectList">
-									Project List</a></li>
-
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddUom">Add
-									Measurement Unit</a></li>
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddTax">Add Tax</a></li>
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showTaxList"> Tax
-									List</a></li>
-
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddItem">Add
-									Item</a></li>
-
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showItemList"> Item
-									List</a></li>
-
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddDocTerm">Add
-									Terms & Conditions</a></li>
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showDocTermList">
-									Terms & Conditions List</a></li>
-
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddPaymentTerm">Add
-									Payment Term</a></li>
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddBankDetail">Add
-									Bank Detail</a></li>
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddVendor">Add
-									Vendor</a></li>
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showVendorList">
-									Vendor List</a></li>
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddEnqGenFact">Add
-									Enquiry Source</a></li>
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddContractor">
-									Add Contractor </a></li>
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddVehicle">
-									Add Vehicle </a></li>
-
-							<li class="active"><i class="fa fa-puzzle-piece"></i><a
-								href="${pageContext.request.contextPath}/showAddSP"> Add
-									Subplant </a></li>
-
-
-
-
-						</ul></li>
-
-
-					<li class="menu-item-has-children dropdown"><a href="#"
+					<%-- <li class="menu-item-has-children dropdown"><a href="#"
 						class="dropdown-toggle" data-toggle="dropdown"
 						aria-haspopup="true" aria-expanded="true"> <i
 							class="menu-icon fa fa-table"></i> Transaction
@@ -367,7 +280,7 @@ html {
 					<li class="menu-item-has-children dropdown"><a
 						href="${pageContext.request.contextPath}/editMyProfile/1"> <i
 							class="menu-icon fa fa-table"></i> My Profile
-					</a></li>
+					</a></li> --%>
 
 
 
@@ -383,7 +296,7 @@ html {
 					class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
 					aria-expanded="true"> <i class="menu-icon fa fa-table"></i> <spring:message
 							code="label.userProfile" /> --%>
-					</a>
+
 					<%-- 	 --%>
 				</ul>
 
