@@ -98,8 +98,8 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" /> Select All</th>
-											<th style="text-align: center; width: 5%;">Sr No</th>
+												type="checkbox" name="selAll" id="selAll" /></th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Start Date</th>
 											<th style="text-align: center">End Date</th>
 											<th style="text-align: center">Poklen Type</th>

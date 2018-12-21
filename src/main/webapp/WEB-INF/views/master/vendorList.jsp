@@ -101,9 +101,9 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" /> Select All</th>
+												type="checkbox" name="selAll" id="selAll" /></th>
 
-											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Vendor Name</th>
 											<th style="text-align: center">Plant Name</th>
 											<th style="text-align: center">Mobile No</th>

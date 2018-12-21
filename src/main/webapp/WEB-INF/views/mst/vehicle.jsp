@@ -8,13 +8,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
-
-
-
-
 <c:url var="getUniqueUomNameCheck" value="/getUniqueUomNameCheck" />
-
-
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -128,8 +122,7 @@
 								<div class="row">
 									<div class="col-md-2">Vehicle Name*</div>
 									<div class="col-md-4">
-										<input type="text" id="vehName" name="vehName"
-											maxlength="60"
+										<input type="text" id="vehName" name="vehName" maxlength="60"
 											pattern="[a-zA-Z][a-zA-Z]*" value="${editVeh.vehicleName}"
 											class="form-control" onblur="getUomNameCheck()"
 											autocomplete="off"
@@ -143,34 +136,33 @@
 									<div class="col-md-4">
 										<input type="text" id="compName" name="compName"
 											value="${editVeh.vehCompName}" class="form-control"
-											style="width: 100%;" autocomplete="off" 
-											maxlength="60"
-											pattern="[a-zA-Z][a-zA-Z]*" 
+											style="width: 100%;" autocomplete="off" maxlength="60"
+											pattern="[a-zA-Z][a-zA-Z]*"
 											oninvalid="setCustomValidity('Please enter Vehicle Company)"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
 									<input type="hidden" id="vehId" name="vehId"
 										value="${editVeh.vehicleId}">
-										
-										
+
+
 
 								</div>
 								<div class="form-group"></div>
 
 
 								<div class="row">
-									<div class="col-md-2"> Load Capacity*</div>
+									<div class="col-md-2">Load Capacity*</div>
 									<div class="col-md-4">
 										<input type="text" id="loadCapacity" name="loadCapacity"
 											autocomplete="off" value="${editVeh.loadCapacity}"
-											class="form-control" 
+											class="form-control"
 											oninvalid="setCustomValidity('Please enter load capacity of Vehicle')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
-									
-									
+
+
 									<div class="col-md-2">Select UOM*</div>
 
 									<div class="col-md-4">
@@ -192,104 +184,83 @@
 									</div>
 								</div>
 
-<div class="form-group"></div>
+								<div class="form-group"></div>
 
 
 								<div class="row">
-									<div class="col-md-2"> Vehicle Number*</div>
+									<div class="col-md-2">Vehicle Number*</div>
 									<div class="col-md-4">
 										<input type="text" id="vehNum" name="vehNum"
 											autocomplete="off" value="${editVeh.vehNo}"
-											class="form-control" 
+											class="form-control"
 											oninvalid="setCustomValidity('Please enter load capacity of Vehicle')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
-									</div>
-									
-									
-<div class="form-group"></div>
+								</div>
 
 
-<div class="row">
+								<div class="form-group"></div>
+
+
+								<div class="row">
 									<div class="col-md-2">Vehicle Document 1*</div>
 									<div class="col-md-4">
 										<input type="file" id="doc1" name="doc1"
-											
-											 value="${editVeh. vehDoc1}"
-											class="form-control" 
-											
+											value="${editVeh. vehDoc1}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
-											<a href="${vehImgPath}${editVeh.vehDoc1}">Doc 1</a>
+											style="width: 100%;"> <a
+											href="${vehImgPath}${editVeh.vehDoc1}">Doc 1</a>
 									</div>
 
-								<input type="hidden" id="doc11" name="doc11"
-										value="${editVeh.vehDoc1}">
-							    <input type="hidden" id="doc12" name="doc12"
-										value="${editVeh.vehDoc2}">
-								
-								<input type="hidden" id="doc13" name="doc13"
-										value="${editVeh.vehDoc3}">
-										
-								<input type="hidden" id="doc14" name="doc14"
-										value="${editVeh.vehDoc4}">
-										
-										
+									<input type="hidden" id="doc11" name="doc11"
+										value="${editVeh.vehDoc1}"> <input type="hidden"
+										id="doc12" name="doc12" value="${editVeh.vehDoc2}"> <input
+										type="hidden" id="doc13" name="doc13"
+										value="${editVeh.vehDoc3}"> <input type="hidden"
+										id="doc14" name="doc14" value="${editVeh.vehDoc4}">
+
+
 									<div class="col-md-2">Vehicle Document 2*</div>
 									<div class="col-md-4">
 										<input type="file" id="doc2" name="doc2"
-											
-											 value="${editVeh. vehDoc2}"
-											class="form-control" 
-											
+											value="${editVeh. vehDoc2}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
 
 
-									
+
 								</div>
 								<div class="form-group"></div>
-								
-							<div class="row">
-									
-									<div class="col-md-2">Vehicle Document 3*</div>
-									<div class="col-md-4">
-										<input type="file" id="doc3" name="doc3"
-											
-											 value="${editVeh. vehDoc3}"
-											class="form-control" 
-											
-											oninvalid="setCustomValidity('Please Select a Document')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
-									</div>
-									
-									<div class="col-md-2">Vehicle Document 4*</div>
-									<div class="col-md-4">
-										<input type="file" id="doc4" name="doc4"
-											
-											 value="${editVeh. vehDoc4}"
-											class="form-control" 
-											
-											oninvalid="setCustomValidity('Please Select a Document')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
-									</div>
-
-									
-								</div>
-								<div class="form-group"></div>
-								
-								
-								
 
 								<div class="row">
 
-<div class="col-lg-2"></div>
+									<div class="col-md-2">Vehicle Document 3*</div>
+									<div class="col-md-4">
+										<input type="file" id="doc3" name="doc3"
+											value="${editVeh. vehDoc3}" class="form-control"
+											oninvalid="setCustomValidity('Please Select a Document')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											style="width: 100%;">
+									</div>
+
+									<div class="col-md-2">Vehicle Document 4*</div>
+									<div class="col-md-4">
+										<input type="file" id="doc4" name="doc4"
+											value="${editVeh. vehDoc4}" class="form-control"
+											oninvalid="setCustomValidity('Please Select a Document')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											style="width: 100%;">
+									</div>
+								</div>
+								<div class="form-group"></div>
+
+								<div class="row">
+
+									<div class="col-lg-2"></div>
 
 									<div class="col-lg-2">
 
@@ -297,21 +268,13 @@
 											id="submitButton"
 											style="align-content: center; width: 113px; margin-left: 40px;">
 									</div>
-
 									<div class="col-lg-2">
-
 										<input type="reset" class="btn btn-primary" value="Clear"
 											style="align-content: center; width: 113px; margin-left: 40px;">
-
-
 									</div>
-									</div>
-
+								</div>
 							</form>
 						</div>
-
-
-
 						<div class="card-body card-block">
 
 							<form
@@ -354,10 +317,10 @@
 
 												<td style="text-align: right"><c:out
 														value="${veh.vehCompName}" /></td>
-														
-															<td style="text-align: right"><c:out
+
+												<td style="text-align: right"><c:out
 														value="${veh.loadCapacity}" /></td>
-													
+
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editVeh/${veh.vehicleId}"><i
 														class="fa fa-edit"></i> <span class="text-muted"></span></a>

@@ -127,7 +127,7 @@
 									<div class="col-md-4">
 										<input type="text" id="item_name" name="item_name"
 											class="form-control" required style="width: 100%;"
-											pattern="^[A-Za-z\s]+$" autocomplete="off"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter item name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -215,8 +215,6 @@
 											autocomplete="off" pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											onkeypress="return allowOnlyNumber(event);"
 											oninvalid="setCustomValidity('Please enter plan min stock')"
-											
-											
 											class="form-control" style="width: 100%;">
 									</div>
 									<div class="col-md-2">Plant Max Stock*</div>
@@ -238,7 +236,6 @@
 											oninvalid="setCustomValidity('Please enter prol stock')"
 											onkeypress="return allowOnlyNumber(event);"
 											onchange="checkstockvalue()"
-										
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;" required>
 									</div>
@@ -381,7 +378,7 @@
 
 
 
-<script>
+	<script>
 		function checkstock() {
 
 			var min_stock= document.getElementById("pmin_stock").value;
@@ -404,8 +401,8 @@
 
 		}
 	</script>
-	
-	 <script>
+
+	<script>
 		
 		function allowOnlyNumber(evt){
 		    var charCode = (evt.which) ? evt.which : event.keyCode
@@ -428,8 +425,8 @@
 		    return true;
 		}
 	</script>
-	
-	
+
+
 	<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(

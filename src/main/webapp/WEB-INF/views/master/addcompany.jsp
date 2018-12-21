@@ -133,12 +133,11 @@
 									<div class="col-md-2">Company Name*</div>
 									<div class="col-md-10">
 										<input type="text" id="comp_name" name="comp_name"
-										maxlength="50"
+											maxlength="50"
 											oninvalid="setCustomValidity('Please enter correct company name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="^[A-Za-z\s]+$" value="${editComp.compName}"
-											style="width: 50%;" autocomplete="off" class="form-control"
-											required>
+											value="${editComp.compName}" style="width: 50%;"
+											autocomplete="off" class="form-control" required>
 
 									</div>
 								</div>
@@ -205,7 +204,7 @@
 											onblur="getCheck()" style="width: 100%;" class="form-control"
 											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter GST no')"
-											 value="${editComp.compGstNo}"
+											value="${editComp.compGstNo}"
 											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
 											onkeydown="upperCaseF(this)"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
@@ -222,8 +221,7 @@
 										<input type="text" id="pan_no" name="pan_no" required
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter PAN no')"
-											 value="${editComp.compPanNo}"
-											pattern="[A-Z]{5}\d{4}[A-Z]{1}"
+											value="${editComp.compPanNo}" pattern="[A-Z]{5}\d{4}[A-Z]{1}"
 											onkeydown="upperCaseF(this)"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
@@ -235,7 +233,7 @@
 										<input type="text" id="cin_no" name="cin_no" required
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter CIN no')"
-											pattern= "\d{21}" value="${editComp.cinNo}"
+											value="${editComp.cinNo}" maxlength="21"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -291,8 +289,7 @@
 										<input type="text" id="fax" name="fax" required
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter FAX no')"
-											pattern="/[\+? *[1-9]+]?[0-9 ]+/" maxlength="20"
-											value="${editComp.faxNo1}" autocomplete="off"
+											maxlength="20" value="${editComp.faxNo1}" autocomplete="off"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -393,7 +390,7 @@
 		}
 	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(
 					function() {

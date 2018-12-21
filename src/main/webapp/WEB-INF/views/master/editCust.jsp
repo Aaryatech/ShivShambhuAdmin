@@ -146,7 +146,6 @@
 										<input type="text" id="cust_name" name="cust_name"
 											autocomplete="off" value="${editCust.custName}"
 											class="form-control" required style="width: 100%;"
-											pattern="^[A-Za-z\s]+$"
 											oninvalid="setCustomValidity('Please enter correct customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>

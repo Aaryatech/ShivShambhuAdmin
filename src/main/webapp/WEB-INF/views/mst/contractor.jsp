@@ -119,7 +119,8 @@
 							<strong>${title}</strong>
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertContractor"
+							<form
+								action="${pageContext.request.contextPath}/insertContractor"
 								id="submitForm" method="post">
 
 
@@ -128,11 +129,9 @@
 								<div class="row">
 									<div class="col-md-2">Contractor Name*</div>
 									<div class="col-md-4">
-										<input type="text" id="conName" name="conName"
-											maxlength="60"
-											pattern="[a-zA-Z][a-zA-Z]*" value="${editCon.contrName}"
-											class="form-control" onblur="getUomNameCheck()"
-											autocomplete="off"
+										<input type="text" id="conName" name="conName" maxlength="60"
+											value="${editCon.contrName}" class="form-control"
+											onblur="getUomNameCheck()" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct Contractor Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
@@ -161,7 +160,7 @@
 									<div class="col-md-4">
 										<input type="text" id="contrRate" name="contrRate"
 											autocomplete="off" value="${editCon.contrRate}"
-											class="form-control" 
+											class="form-control"
 											oninvalid="setCustomValidity('Please enter Rate')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
@@ -202,9 +201,9 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" />Select All</th>
+												type="checkbox" name="selAll" id="selAll" /></th>
 
-											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Contractor Name</th>
 											<th style="text-align: center">Mobile No.</th>
 											<th style="text-align: center">Rate</th>

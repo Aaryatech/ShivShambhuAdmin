@@ -108,9 +108,9 @@
 
 											<th style="text-align: center">Mobile No</th>
 											<th style="text-align: center">User Email</th>
-											<th style="text-align: center">Department Name</th>
+											<th style="text-align: center">Department</th>
 											<!-- 	<th style="text-align: center">Plant Name</th> -->
-											<th style="text-align: center">Company Name</th>
+											<th style="text-align: center">Company</th>
 											<th style="text-align: center; width: 5%;">Action</th>
 										</tr>
 									</thead>
@@ -147,8 +147,8 @@
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editUser/${user.userId}"><i
-														class="fa fa-edit" title="Edit"></i> <span class="text-muted"></span></a>
-													&nbsp; <a
+														class="fa fa-edit" title="Edit"></i> <span
+														class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deleteUser/${user.userId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
 														class="fa fa-trash-o" title="Delete"></i></a></td>
