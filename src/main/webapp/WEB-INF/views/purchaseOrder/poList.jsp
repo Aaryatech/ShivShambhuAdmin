@@ -72,57 +72,59 @@
 
 	<div class="content mt-3">
 		<div class="animated fadeIn">
-  
+
 			<div class="row">
- 
+
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
 							<strong>${title}</strong>
 						</div>
 						<div class="card-body card-block">
-						
-						<form action="${pageContext.request.contextPath}/getPoList"
-								  method="get">
-								
-						<div class="form-group"></div>
+
+							<form action="${pageContext.request.contextPath}/getPoList"
+								method="get">
+
+								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">From Date </div>
+									<div class="col-md-2">From Date</div>
 									<div class="col-md-3">
 										<input type="text" id="fromDate" name="fromDate"
-											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
-											value="${fromDate}" required> 
+											class="form-control"
+											style="height: 32px; padding-bottom: 12px; font-size: 15px;"
+											value="${fromDate}" required>
 									</div>
 									<div class="col-md-2">Payment Term</div>
 
 									<div class="col-md-3">
 										<input type="text" id="toDate" name="toDate"
-											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
-											value="${toDate}"  required>
+											class="form-control"
+											style="height: 32px; padding-bottom: 12px; font-size: 15px;"
+											value="${toDate}" required>
 									</div>
- 
+
 								</div>
-								
+
 								<div class="form-group"></div>
 								<div class="row">
-						<div class="col-md-12" style="text-align: center">
-						 
-						<button type="submit" style="height:35px;width:80px">Submit</button>
-						</div>
-						</div>
-						
-						</form>
- 
+									<div class="col-md-12" style="text-align: center">
+
+										<button type="submit" style="height: 35px; width: 80px">Submit</button>
+									</div>
+								</div>
+
+							</form>
+
 							<table id="bootstrap-data-table"
 								class="table table-striped table-bordered">
 								<thead>
 									<tr>
-										<th style="text-align: center">Sr</th>
-										<th style="text-align: center">Po No</th>  
+										<th style="text-align: center">Sr.</th>
+										<th style="text-align: center">Po No</th>
 										<th style="text-align: center">Purchase Order Date</th>
-										<th style="text-align: center">Customer Name</th> 
+										<th style="text-align: center">Customer Name</th>
 										<th style="text-align: center">Plant Name</th>
-										<th style="text-align: center">Quotation No</th> 
+										<th style="text-align: center">Quotation No</th>
 
 										<th style="text-align: center">Action</th>
 									</tr>
@@ -132,25 +134,23 @@
 										<tr>
 
 											<td style="text-align: center">${count.index+1}</td>
- 											<td style="text-align: left">${poList.poNo}</td>
+											<td style="text-align: left">${poList.poNo}</td>
 											<td style="text-align: left">${poList.poDate}</td>
 											<td style="text-align: left"><c:out
-													value="${poList.custName}" /></td> 
+													value="${poList.custName}" /></td>
 
 											<td style="text-align: left"><c:out
 													value="${poList.plantName}" /></td>
-											<td style="text-align: center">${poList.quatationNo}</td> 
+											<td style="text-align: center">${poList.quatationNo}</td>
 
 
-											<td  > 	<a
+											<td><a
 												href="${pageContext.request.contextPath}/editPo/${poList.poId}"><i
-													class="fa fa-edit" title="Edit"></i> <span class="text-muted"></span></a>
-												  <a
+													class="fa fa-edit" title="Edit"></i> <span
+													class="text-muted"></span></a> <a
 												href="${pageContext.request.contextPath}/deletePurchaseOrder/${poList.poId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o" title="Delete"></i></a> 
-													 
-
+													class="fa fa-trash-o" title="Delete"></i></a>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -213,18 +213,18 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
 
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
-	$(function() {
-		 
-		$('input[id$=fromDate]').datepicker({
-			dateFormat : 'dd-mm-yy'
+		$(function() {
+
+			$('input[id$=fromDate]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+			$('input[id$=toDate]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+
 		});
-		$('input[id$=toDate]').datepicker({
-			dateFormat : 'dd-mm-yy'
-		});
-		
-	});
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({
 				disable_search_threshold : 2,

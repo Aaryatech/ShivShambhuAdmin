@@ -156,7 +156,7 @@
 									class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th style="text-align: center; width: 5%;">Sr No.</th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Order Date</th>
 											<th style="text-align: center">Order No</th>
 											<th style="text-align: center">Chalan Date</th>

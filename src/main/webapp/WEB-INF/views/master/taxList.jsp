@@ -129,7 +129,7 @@
 												<td style="text-align: left"><c:out
 														value="${tax.taxName}" /></td>
 
-												<td style="text-align: left"><c:out
+												<td style="text-align: right"><c:out
 														value="${tax.hsnCode}" /></td>
 
 												<td style="text-align: right"><c:out

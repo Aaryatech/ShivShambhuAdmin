@@ -151,9 +151,11 @@
 								class="table table-striped table-bordered">
 								<thead>
 									<tr>
-										<th style="text-align: center">Sr.No.</th>
+										<th style="text-align: center">Sr.</th>
 
 										<th style="text-align: center">Vehicle Name</th>
+			
+			
 										<th style="text-align: center">Vehicle No</th>
 										<th style="text-align: center">Total Consumption</th>
 										<th style="text-align: center">Total Qty</th>

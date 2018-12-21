@@ -158,7 +158,7 @@
 								class="table table-striped table-bordered">
 								<thead>
 									<tr>
-										<th style="text-align: center">Sr.No.</th>
+										<th style="text-align: center">Sr.</th>
 
 										<th style="text-align: center">Contractor Name</th>
 

@@ -91,8 +91,8 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" /> Select All</th>
-											<th style="text-align: center">Sr.No.</th>
+												type="checkbox" name="selAll" id="selAll" /></th>
+											<th style="text-align: center">Sr.</th>
 											<th style="text-align: center">Customer Name</th>
 											<th style="text-align: center">Company Name</th>
 											<th style="text-align: center">Plant Name</th>
@@ -125,14 +125,12 @@
 												<td><a
 													href="${pageContext.request.contextPath}/editQuot/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
 														class="fa fa-edit" title="Edit"></i> <span
-														class="text-muted"></span></a> 
-														<a
-																href="${pageContext.request.contextPath}/deleteQuot/${quot.quotHeadId}"
-																onClick="return confirm('Are you sure want to delete this record');"><i
-																class="fa fa-trash-o" title="Delete"></i></a>
-														<c:choose>
+														class="text-muted"></span></a> <a
+													href="${pageContext.request.contextPath}/deleteQuot/${quot.quotHeadId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o" title="Delete"></i></a> <c:choose>
 														<c:when test="${quot.status==1}">
-															
+
 															<a
 																href="${pageContext.request.contextPath}/addPo/${quot.quotHeadId}"><i
 																class="fa fa-list" title="Create PO"></i> </a>

@@ -200,7 +200,7 @@
 										<thead>
 											<tr>
 
-												<th style="text-align: center; width: 5%;">Sr No</th>
+												<th style="text-align: center; width: 5%;">Sr.</th>
 												<th style="text-align: center">Date</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">Measurement of Unit</th>

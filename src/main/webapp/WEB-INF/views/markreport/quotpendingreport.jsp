@@ -153,7 +153,7 @@
 									class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th style="text-align: center; width: 5%;">Sr No.</th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Enq Date</th>
 											<th style="text-align: center">Enq No</th>
 											<th style="text-align: center">Customer Name</th>
