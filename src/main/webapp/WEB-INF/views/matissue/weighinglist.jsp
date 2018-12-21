@@ -200,7 +200,7 @@
 
 
 
-								<input type="checkbox" name="selAll" id="selAll" /> Select All
+								<input type="checkbox" name="selAll" id="selAll" />
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
@@ -238,7 +238,7 @@
 	<!-- .content -->
 
 	<!-- .animated -->
-	<!-- .content --> 
+	<!-- .content -->
 
 
 	<!-- Footer -->

@@ -180,8 +180,8 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" />Select All</th>
-											<th style="text-align: center; width: 5%;">Sr No</th>
+												type="checkbox" name="selAll" id="selAll" /></th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Department Name</th>
 											<th style="text-align: center">Sort No</th>
 
@@ -369,7 +369,7 @@
 
 		}
 	</script>
-		
+
 	<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(

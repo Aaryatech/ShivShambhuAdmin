@@ -135,7 +135,7 @@
 									<div class="col-md-3">Enquiry Source*</div>
 									<div class="col-md-4">
 										<input type="text" id="enqGenBy" name="enqGenBy"
-											autocomplete="off" pattern="^[A-Za-z\s]+$"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct enquiry source')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editEnqGen.enqGenBy}" class="form-control" required
@@ -167,8 +167,8 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" />Select All</th>
-											<th style="text-align: center; width: 5%;">Sr No</th>
+												type="checkbox" name="selAll" id="selAll" /></th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Enquiry Source</th>
 											<th style="text-align: center; width: 5%;">Action</th>
 										</tr>

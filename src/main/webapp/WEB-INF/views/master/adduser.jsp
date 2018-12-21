@@ -154,7 +154,7 @@
 										</select>
 									</div>
 
-								<%-- 	<div class="col-md-2">Select Department*</div>
+									<%-- 	<div class="col-md-2">Select Department*</div>
 
 									<div class="col-md-4">
 										<select id="dept_id" name="dept_id" class="standardSelect"
@@ -214,7 +214,7 @@
 									<div class="col-md-2">User Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="usrName" name="usrName"
-											autocomplete="off" pattern="^[A-Za-z\s]+$"  maxlength="60"
+											autocomplete="off" maxlength="60"
 											oninvalid="setCustomValidity('Please enter correct user name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											value="${editUser.usrName}" class="form-control"

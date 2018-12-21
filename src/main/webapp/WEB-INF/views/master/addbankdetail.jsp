@@ -123,7 +123,9 @@
 						<div class="card-body card-block">
 							<form
 								action="${pageContext.request.contextPath}/insertBankDetail"
-								id="submitForm"   onsubmit="return confirm('Do you really want to submit the Purchase Order ?');" method="post">
+								id="submitForm"
+								onsubmit="return confirm('Do you really want to submit the Purchase Order ?');"
+								method="post">
 
 								<div class="row">
 
@@ -214,7 +216,7 @@
 									<div class="col-md-2">Bank Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="bankName" name="bankName"
-											pattern="^[A-Za-z\s]+$" autocomplete="off"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct Bank Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											value="${editBankDetail.bankName}" class="form-control"
@@ -293,8 +295,8 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" />Select All</th>
-											<th style="text-align: center; width: 5%;">Sr No</th>
+												type="checkbox" name="selAll" id="selAll" /></th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 
 											<th style="text-align: center">Company Name</th>
 											<th style="text-align: center">Bank Name</th>
@@ -453,8 +455,7 @@
 		$(function() {
 			$('#submitForm').submit(
 					function() {
-						
-						
+
 						$("input[type='submit']", this).val("Please Wait...")
 								.attr('disabled', 'disabled');
 						return true;

@@ -131,7 +131,7 @@
 									<div class="col-md-3">Customer Type Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="custTypeName" name="custTypeName"
-											autocomplete="off" pattern="^[A-Za-z\s]+$"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please Enter Cust Type Name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editCustType.custTypeName}" class="form-control"
@@ -172,9 +172,9 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" />Select All</th>
+												type="checkbox" name="selAll" id="selAll" /></th>
 
-											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Customer Type Name</th>
 
 											<th style="text-align: center; width: 5%;">Action</th>

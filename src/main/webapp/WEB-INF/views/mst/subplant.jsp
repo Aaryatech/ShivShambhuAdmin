@@ -128,11 +128,9 @@
 								<div class="row">
 									<div class="col-md-2">Subplant Name*</div>
 									<div class="col-md-4">
-										<input type="text" id="spName" name="spName"
-											maxlength="60"
-											pattern="[a-zA-Z][a-zA-Z]*" value="${editSP.subplantName}"
-											class="form-control" onblur="getUomNameCheck()"
-											autocomplete="off"
+										<input type="text" id="spName" name="spName" maxlength="60"
+											value="${editSP.subplantName}" class="form-control"
+											onblur="getUomNameCheck()" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
@@ -140,8 +138,7 @@
 
 									<div class="col-md-2">Subplant Location*</div>
 									<div class="col-md-4">
-										<input type="text" id="spLoc" name="spLoc"
-											maxlength="60"
+										<input type="text" id="spLoc" name="spLoc" maxlength="60"
 											pattern="[a-zA-Z][a-zA-Z]*" value="${editSP.location}"
 											class="form-control" onblur="getUomNameCheck()"
 											autocomplete="off"
@@ -214,12 +211,12 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" />Select All</th>
+												type="checkbox" name="selAll" id="selAll" /></th>
 
-											<th style="text-align: center; width: 5%;">Sr No</th>
-											<th style="text-align: center">SubPlant Name</th>
+											<th style="text-align: center; width: 5%;">Sr</th>
+											<th style="text-align: center">Sub Plant Name</th>
 											<th style="text-align: center">Location</th>
-											
+
 
 											<th style="text-align: center; width: 5%;">Action</th>
 
@@ -242,7 +239,7 @@
 														value="${sp.location}" /></td>
 
 
-												
+
 
 
 												<td style="text-align: center"><a

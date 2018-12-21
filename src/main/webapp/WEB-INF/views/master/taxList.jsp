@@ -100,9 +100,9 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" /> Select All</th>
+												type="checkbox" name="selAll" id="selAll" /></th>
 
-											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Tax Name</th>
 											<th style="text-align: center">HSN Code</th>
 											<th style="text-align: center">CGST</th>
@@ -148,8 +148,8 @@
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editTax/${tax.taxId}"><i
-														class="fa fa-edit" title="Edit"></i> <span class="text-muted"></span></a>
-													&nbsp; <a
+														class="fa fa-edit" title="Edit"></i> <span
+														class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deleteTax/${tax.taxId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
 														class="fa fa-trash-o" title="Delete"></i></a></td>

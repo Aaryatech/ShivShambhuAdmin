@@ -156,7 +156,7 @@
 											autocomplete="off" onblur="getCheck()"
 											oninvalid="setCustomValidity('Please enter correct plant name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="^[A-Za-z\s]+$" value="${editPlant.plantName}"
+											value="${editPlant.plantName}" maxlength="100"
 											class="form-control" required style="width: 100%;">
 									</div>
 

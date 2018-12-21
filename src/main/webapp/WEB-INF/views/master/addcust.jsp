@@ -160,7 +160,7 @@
 									<div class="col-md-2">Customer Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="cust_name" name="cust_name"
-											pattern="^[A-Za-z\s]+$" class="form-control" maxlength="50" required
+											class="form-control" maxlength="50" required
 											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
@@ -185,8 +185,7 @@
 									<div class="col-md-2">Reference Name</div>
 									<div class="col-md-4">
 										<input type="text" id="ref_name" name="ref_name"
-											pattern="^[A-Za-z\s]+$" class="form-control"
-											autocomplete="off" style="width: 100%;"
+											class="form-control" autocomplete="off" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter correct refrence name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -197,7 +196,7 @@
 										<input type="email" id="email" name="email"
 											style="width: 100%;" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct email')"
-										maxlength="50" autocomplete="off"
+											maxlength="50" autocomplete="off"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 
@@ -269,8 +268,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="dob" name="dob" class="form-control"
-										onchange="checkDOB()"
-											autocomplete="off" style="width: 100%;">
+											onchange="checkDOB()" autocomplete="off" style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">Customer Code</div>
@@ -334,7 +332,7 @@
 
 								<div class="row">
 
-									
+
 									<div class="col-md-2">Kilometer</div>
 									<div class="col-md-4">
 										<input type="text" id="km" name="km" class="form-control"
@@ -351,8 +349,8 @@
 									<div class="col-md-2">Contact Person Name</div>
 									<div class="col-md-4">
 										<input type="text" id="cont_per_name" name="cont_per_name"
-											class="form-control" style="width: 100%;" 
-											pattern="^[A-Za-z\s]+$"  maxlength="50" autocomplete="off"
+											class="form-control" style="width: 100%;"
+											pattern="^[A-Za-z\s]+$" maxlength="50" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -604,30 +602,28 @@
 						return true;
 					});
 		});
-		
-		
-		 function  checkDOB() {
-		        //In javascript
-		        var dateEntered = document.getElementById("dob").value; 
-		        // In JQuery
-		        var dateEntered = $("#dob").val();
-		     
-		        var date = dateEntered.substring(0, 2);
-		        var month = dateEntered.substring(3, 5);
-		        var year = dateEntered.substring(6, 10);
-		     
-		        var dateToCompare = new Date(year, month - 1, date);
-		        var currentDate = new Date();
-		     
-		        if (dateToCompare > currentDate) {
-		            alert("Please enter DOB less than Current Date ");
-		            document.getElementById('dob').value="";
-		        }
-		        
-		    }
 
+		function checkDOB() {
+			//In javascript
+			var dateEntered = document.getElementById("dob").value;
+			// In JQuery
+			var dateEntered = $("#dob").val();
+
+			var date = dateEntered.substring(0, 2);
+			var month = dateEntered.substring(3, 5);
+			var year = dateEntered.substring(6, 10);
+
+			var dateToCompare = new Date(year, month - 1, date);
+			var currentDate = new Date();
+
+			if (dateToCompare > currentDate) {
+				alert("Please enter DOB less than Current Date ");
+				document.getElementById('dob').value = "";
+			}
+
+		}
 	</script>
-	
+
 
 </body>
 </html>

@@ -170,7 +170,7 @@
 									<div class="col-md-2">Project Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="proj_name" name="proj_name"
-											autocomplete="off" pattern="^[A-Za-z\s]+$"
+											autocomplete="off" maxlength="100"
 											oninvalid="setCustomValidity('Please enter project name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editPro.projName}" class="form-control" required
@@ -238,8 +238,8 @@
 									<div class="col-md-2">Kilometer*</div>
 									<div class="col-md-4">
 										<input type="text" id="km" name="km" class="form-control"
-											pattern="\d+(\.\d{1,2})?"  style="width: 100%;" value="${editPro.km}"
-											maxlength="10"
+											pattern="\d+(\.\d{1,2})?" style="width: 100%;"
+											value="${editPro.km}" maxlength="10"
 											oninvalid="setCustomValidity('Please enter correct kilometer')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
@@ -481,7 +481,7 @@
 					});
 		});
 	</script>
-	
-	
+
+
 </body>
 </html>

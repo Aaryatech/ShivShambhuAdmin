@@ -111,7 +111,7 @@
 											oninvalid="setCustomValidity('Please enter correct Tax Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											value="${editTax.taxName}" class="form-control"
-											maxlength="25" pattern="^[A-Za-z\s]+$" style="width: 100%;">
+											maxlength="25" style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">HSN Code*</div>
@@ -374,7 +374,7 @@
 		}
 	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(
 					function() {
