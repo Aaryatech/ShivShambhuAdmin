@@ -9,8 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
-
 <c:url var="getCustomerByPlantId" value="/getCustomerByPlantId" />
+
+<c:url var="getMonthWiseListBetweenDate"
+	value="/getMonthWiseListBetweenDate" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -341,7 +343,7 @@
 
 				$
 						.getJSON(
-								'${getCustListBetweenDate}',
+								'${getMonthWiseListBetweenDate}',
 								{
 									custId : custId,
 									plantId : plantId,
@@ -372,8 +374,10 @@
 													data,
 													function(i, v) {
 
-														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.custId
+														var acButton = '<a href="#" class="action_btn" onclick="callDetail('
+																+ v.monthNo
+																+ ','
+																+ v.year
 																+ ','
 																+ i
 																+ ')"><i class="fa fa-list"></i></a>'
@@ -382,9 +386,10 @@
 																.add(
 																		[
 																				i + 1,
-																				v.custName,
-																				v.custMobNo,
-
+																				v.month,
+																				v.cgstAmt,
+																				v.sgstAmt,
+																				v.igstAmt,
 																				v.taxAmt,
 																				v.taxableAmt,
 																				v.totalAmt,
@@ -399,13 +404,13 @@
 			}//end of if valid ==true
 
 		}
-		function callEdit(custId) {
+		function callDetail(monthNo,year){
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
 			window
-					.open("${pageContext.request.contextPath}/showCustBillDetailReport/"
-							+ custId + '/' + fromDate + '/' + toDate);
+					.open("${pageContext.request.contextPath}/showDatewiseBillReport1/"
+							+ monthNo + '/' + year);
 
 		}
 	</script>
@@ -443,7 +448,7 @@
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			window.open('${pageContext.request.contextPath}/showCustwisePdf/'
+			window.open('${pageContext.request.contextPath}/showMonthwisePdf/'
 					+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 

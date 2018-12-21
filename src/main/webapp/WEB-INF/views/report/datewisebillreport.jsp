@@ -103,14 +103,14 @@
 								<div class="col-md-4">
 									<input type="text" autocomplete="off" id="from_date"
 										name="from_date" required style="width: 100%;"
-										class="form-control" value="${fromDate}"> <span
+										class="form-control" value="${firstDate}"> <span
 										class="error" aria-live="polite"></span>
 								</div>
 								<div class="col-md-2">To Date</div>
 								<div class="col-md-4">
 									<input type="text" autocomplete="off" id="to_date"
 										name="to_date" style="width: 100%;" class="form-control"
-										value="${toDate}"> <span class="error"
+										value="${endDate}"> <span class="error"
 										aria-live="polite"></span>
 								</div>
 
@@ -374,12 +374,12 @@
 											.each(
 													data,
 													function(i, v) {
-
+ 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.billHeadId
-																+ ','
+																+ ',/'
 																+ v.billDate
-																+ ','
+																+ '/,'
 																+ i
 																+ ')"><i class="fa fa-list"></i></a>'
 
@@ -408,15 +408,16 @@
 		function callEdit(billHeadId, billDate) {
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
+			
+			alert("Bill Head id is"+billDate);
+			alert("date is"+billDate);
 
 			window
 					.open("${pageContext.request.contextPath}/showDateBillDetailReport/"
-							+ billHeadId
-							+ '/'
-							+ billDate
-							+ '/'
-							+ fromDate
-							+ '/' + toDate);
+							+ billHeadId  
+							+  billDate +  '/' +fromDate
+							+ '/' 
+							+ toDate);
 
 		}
 	</script>
@@ -454,7 +455,7 @@
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			window.open('${pageContext.request.contextPath}/showCustwisePdf/'
+			window.open('${pageContext.request.contextPath}/showDateWisePdf/'
 					+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 
