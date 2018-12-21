@@ -211,10 +211,10 @@
 															value="${bill.cgstAmt}" /></td>
 
 													<td style="text-align: left"><c:out
-															value="${bill.igstAmt}" /></td>
+															value="${bill.sgstAmt}" /></td>
 
 													<td style="text-align: left"><c:out
-															value="${bill.sgstAmt}" /></td>
+															value="${bill.igstAmt}" /></td>
 
 
 													<td style="text-align: left"><c:out
@@ -379,7 +379,7 @@
 			var fromDate = document.getElementById("fromDate").value;
 			var toDate = document.getElementById("toDate").value;
 
-			window.open('${pageContext.request.contextPath}/showBillwisePdf/'
+			window.open('${pageContext.request.contextPath}/showDatewiseDetailPdf/'
 					+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 
