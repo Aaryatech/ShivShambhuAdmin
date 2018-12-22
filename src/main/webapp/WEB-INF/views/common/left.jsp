@@ -36,9 +36,9 @@ html {
 			<div id="main-menu" class="main-menu collapse navbar-collapse">
 				<ul class="nav navbar-nav"
 					style="max-height: calc(100vh - 9rem); overflow-y: auto;">
-					<li><a href="${pageContext.request.contextPath}/home"> <i
+					<%-- <li><a href="${pageContext.request.contextPath}/home"> <i
 							class="menu-icon fa fa-dashboard"></i> Dashboard
-					</a></li>
+					</a></li> --%>
 
 					<!--                     <h3 class="menu-title">UI elements</h3>/.menu-title
  -->

@@ -433,11 +433,7 @@
 																+ v.weighId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-																+ v.weighId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-trash" title="Delete"></i></a>'
+																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>'
 
 														chBox = '<input  type="checkbox" class="chk" name="weighIds" id='+v.weighId+' class="check"  value='+v.weighId+'>'
 

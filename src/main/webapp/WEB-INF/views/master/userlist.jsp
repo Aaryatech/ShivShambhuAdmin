@@ -101,14 +101,13 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" /> Select All</th>
+												type="checkbox" name="selAll" id="selAll" /></th>
 
-											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">User Name</th>
 
 											<th style="text-align: center">Mobile No</th>
 											<th style="text-align: center">User Email</th>
-											<th style="text-align: center">Department</th>
 											<!-- 	<th style="text-align: center">Plant Name</th> -->
 											<th style="text-align: center">Company</th>
 											<th style="text-align: center; width: 5%;">Action</th>
@@ -130,11 +129,6 @@
 												<td style="text-align: left"><c:out
 														value="${user.usrEmail}" /></td>
 
-
-
-
-												<td style="text-align: left"><c:out
-														value="${user.deptName}" /></td>
 
 												<%-- 	<td style="text-align: left"><c:out
 														value="${user.plantName}" /></td> --%>

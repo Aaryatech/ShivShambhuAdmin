@@ -305,7 +305,6 @@ public class MasterController {
 				taxId = 0;
 			}
 
-			// float cess = Float.parseFloat(request.getParameter("cess"));
 			float cgst = Float.parseFloat(request.getParameter("cgst"));
 			float igst = Float.parseFloat(request.getParameter("igst"));
 			float sgst = Float.parseFloat(request.getParameter("sgst"));
@@ -341,12 +340,17 @@ public class MasterController {
 
 			try {
 				tax.setSortNo(Integer.parseInt(request.getParameter("sortNo")));
-				tax.setCess(Float.parseFloat(request.getParameter("cess")));
 
 			} catch (Exception e) {
 				tax.setSortNo(0);
-				tax.setCess(0);
 
+			}
+
+			try {
+				tax.setCess(Float.parseFloat(request.getParameter("cess")));
+
+			} catch (Exception e) {
+				tax.setCess(0);
 			}
 
 			// saveTax
@@ -1992,7 +1996,7 @@ public class MasterController {
 				userId = 0;
 			}
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			int deptId = Integer.parseInt(request.getParameter("dept_id"));
+			// int deptId = Integer.parseInt(request.getParameter("dept_id"));
 			// int plantId = Integer.parseInt(request.getParameter("plant_id"));
 
 			int companyId = Integer.parseInt(request.getParameter("company_id"));
