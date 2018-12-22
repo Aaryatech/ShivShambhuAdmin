@@ -180,7 +180,8 @@
 														class="fa fa-trash-o" title="Delete"></i></a>
 														
 														&nbsp; <a
-										href="${pageContext.request.contextPath}/addItemDetail/${item.itemId}/${item.itemName}/${item.itemCode}">Add Item Detail</a></td>
+										href="${pageContext.request.contextPath}/addItemDetail/${item.itemId}/${item.itemName}/${item.itemCode}"><i
+														class="fa fa-list" title="Detail"></i></a></td>
 														
 													
 											</tr>

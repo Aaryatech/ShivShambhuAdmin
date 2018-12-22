@@ -128,7 +128,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form
-								action="${pageContext.request.contextPath}/insertItemDetail"
+								action="${pageContext.request.contextPath}/updateItemDetail"
 								id="submitForm" onsubmit="disableSubmitButton()" method="post">
 
 								
@@ -188,13 +188,13 @@
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 									
-								 <div class="col-md-2">UOM*</div>
+									<!-- <div class="col-md-2">UOM*</div>
 									<div class="col-md-4">
 									<input type="text" id="uom" name="uom" class="form-control"
 											autocomplete="off" style="width: 100%;"
 											value="kg" readonly>	
 									</div>
-								
+									 -->
 									
 								</div>
 								
@@ -249,6 +249,48 @@
 												<th style="text-align: center; width: 5%;">Action</th>
 											</tr>
 										</thead>
+										
+										<tbody>
+											<c:forEach items="${editItemDetail}" var="itemDetail"
+												varStatus="count">
+												<tr>
+
+													<td style="text-align: center">${count.index+1}</td>
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.rmName}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.uomName}" /></td>
+
+
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.qty}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.category}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${matDetail.value}" /></td>
+
+
+													<td style="text-align: center"><a href="#"
+														onclick="callEdit(${matDetail.matDetailId},${count.index})"><i
+															class="fa fa-edit"></i> <span class="text-muted"></span></a>
+														<a href="#"
+														onclick="callDelete(${matDetail.matDetailId},${count.index})"><i
+															class="fa fa fa-trash-o"></i> <span class="text-muted"></span></a></td>
+
+
+
+
+												</tr>
+											</c:forEach>
+										</tbody>
 									</table>
 								</div>
 

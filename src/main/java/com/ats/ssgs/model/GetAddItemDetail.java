@@ -1,17 +1,46 @@
 package com.ats.ssgs.model;
 
 public class GetAddItemDetail {
+	private int itemDetailId;
 	
+	private int itemId;
+	
+	private int rmId;
 	
 	private int isDuplicate;
 	
-	private String itemName;
+	private String rmName;
 	
-	private String uom;
 	
 	private float qty;
 	
 	private String categoryName;
+	
+	private int uomId;
+
+	private String uomName;
+
+	private int catId;
+
+	
+	
+	
+
+	public int getItemDetailId() {
+		return itemDetailId;
+	}
+
+	public void setItemDetailId(int itemDetailId) {
+		this.itemDetailId = itemDetailId;
+	}
+
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
 
 	public int getIsDuplicate() {
 		return isDuplicate;
@@ -21,20 +50,13 @@ public class GetAddItemDetail {
 		this.isDuplicate = isDuplicate;
 	}
 
-	public String getItemName() {
-		return itemName;
+	
+	public String getRmName() {
+		return rmName;
 	}
 
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	}
-
-	public String getUom() {
-		return uom;
-	}
-
-	public void setUom(String uom) {
-		this.uom = uom;
+	public void setRmName(String rmName) {
+		this.rmName = rmName;
 	}
 
 	public float getQty() {
@@ -53,17 +75,52 @@ public class GetAddItemDetail {
 		this.categoryName = categoryName;
 	}
 
+	public int getUomId() {
+		return uomId;
+	}
+
+	public void setUomId(int uomId) {
+		this.uomId = uomId;
+	}
+
+	public String getUomName() {
+		return uomName;
+	}
+
+	public void setUomName(String uomName) {
+		this.uomName = uomName;
+	}
+
+	public int getCatId() {
+		return catId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
+	
+	
+	public int getRmId() {
+		return rmId;
+	}
+
+	public void setRmId(int rmId) {
+		this.rmId = rmId;
+	}
+
 	@Override
 	public String toString() {
-		return "GetAddItemDetail [isDuplicate=" + isDuplicate + ", itemName=" + itemName + ", uom=" + uom + ", qty="
-				+ qty + ", categoryName=" + categoryName + ", getIsDuplicate()=" + getIsDuplicate() + ", getItemName()="
-				+ getItemName() + ", getUom()=" + getUom() + ", getQty()=" + getQty() + ", getCategoryName()="
-				+ getCategoryName() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+		return "GetAddItemDetail [itemDetailId=" + itemDetailId + ", itemId=" + itemId + ", rmId=" + rmId
+				+ ", isDuplicate=" + isDuplicate + ", rmName=" + rmName + ", qty=" + qty + ", categoryName="
+				+ categoryName + ", uomId=" + uomId + ", uomName=" + uomName + ", catId=" + catId
+				+ ", getItemDetailId()=" + getItemDetailId() + ", getItemId()=" + getItemId() + ", getIsDuplicate()="
+				+ getIsDuplicate() + ", getRmName()=" + getRmName() + ", getQty()=" + getQty() + ", getCategoryName()="
+				+ getCategoryName() + ", getUomId()=" + getUomId() + ", getUomName()=" + getUomName() + ", getCatId()="
+				+ getCatId() + ", getRmId()=" + getRmId() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
-	
-	
-	
-	
 
+	
+	
 }

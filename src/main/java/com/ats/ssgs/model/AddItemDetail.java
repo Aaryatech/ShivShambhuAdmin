@@ -1,38 +1,36 @@
 package com.ats.ssgs.model;
 
 public class AddItemDetail {
-	
+
 	private int itemDetailId;
-	
+
 	private int itemId;
-	
+
 	private int rmType;
-	
+
 	private int rmId;
-	
+
 	private String rmName;
-	
+
 	private int rmUomId;
-	
+
 	private float rmQty;
-	
+
 	private float rmWeight;
-	
+
 	private float noPiecesPerItem;
-	
+
 	private int delStatus;
-	
+
 	private int int1;
-	
+
 	private int int2;
-	
+
 	private String varchar1;
-	
+
 	private int boll1;
-	
+
 	private int boll2;
-	
-	
 
 	public int getItemDetailId() {
 		return itemDetailId;
@@ -161,17 +159,5 @@ public class AddItemDetail {
 				+ ", noPiecesPerItem=" + noPiecesPerItem + ", delStatus=" + delStatus + ", int1=" + int1 + ", int2="
 				+ int2 + ", varchar1=" + varchar1 + ", boll1=" + boll1 + ", boll2=" + boll2 + "]";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }
