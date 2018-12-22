@@ -25,7 +25,7 @@
 	
 <c:url var="getTempOrderHeader"
 	value="/getTempOrderHeader" /> --%>
-	
+
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -76,31 +76,30 @@
 
 <style>
 .alert {
-    padding: 20px;
-    background-color: red;
-    color: white;
-    
+	padding: 20px;
+	background-color: red;
+	color: white;
 }
+
 .alert1 {
-    padding: 20px;
-    background-color: green;
-    color: white;
-    
+	padding: 20px;
+	background-color: green;
+	color: white;
 }
 
 .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: black;
+	color: black;
 }
 </style>
 
@@ -124,48 +123,48 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-			
-			<c:choose>
-							<c:when test="${isError==1}">
-							
-							<div class="alert">
-							
+
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Failed !</strong>     Data not submitted  !!
-				</div>
-							
-							</c:when>
-							
-							<c:when test="${isError==2}">
-							
-							<div class="alert1">
-							
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Success</strong>     Data Submitted !!
-				</div>
-							
-							</c:when>
-							
-							</c:choose>
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
-					<form
-								action="${pageContext.request.contextPath}/deleteRecordofEnq"
-								method="post">
-						<div class="card-header">
-							<div class="col-md-4">
-								<strong>${title}</strong>
-							</div>
-							
+						<form
+							action="${pageContext.request.contextPath}/deleteRecordofEnq"
+							method="post">
+							<div class="card-header">
+								<div class="col-md-4">
+									<strong>${title}</strong>
+								</div>
 
-						</div>
-						
-						
-						<div class="card-body card-block">
-							
+
+							</div>
+
+
+							<div class="card-body card-block">
+
 								<div class="row">
 
 									<div class="col-md-2">Select Plant</div>
@@ -188,76 +187,77 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
-								<option value="">Select</option>
+											<option value="">Select</option>
 										</select>
 									</div>
 
 								</div>
 								<div class="form-group"></div>
-								
+
 								<div class="row">
 									<div class="col-md-2">From Date</div>
 									<div class="col-md-4">
-										<input type="text" autocomplete="off" id="from_date" name="from_date" required
-											style="width: 100%;" class="form-control"
-											value="${fromDate}"> <span class="error"
-											aria-live="polite"></span>
+										<input type="text" autocomplete="off" id="from_date"
+											name="from_date" required style="width: 100%;"
+											class="form-control" value="${fromDate}"> <span
+											class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-2">To Date</div>
 									<div class="col-md-4">
-										<input type="text" autocomplete="off"  id="to_date" name="to_date"
-											style="width: 100%;" class="form-control"
-											value="${toDate}"> <span
-											class="error" aria-live="polite"></span>
+										<input type="text" autocomplete="off" id="to_date"
+											name="to_date" style="width: 100%;" class="form-control"
+											value="${toDate}"> <span class="error"
+											aria-live="polite"></span>
 									</div>
 
 								</div>
 
-								
+
 								<div class="form-group"></div>
 								<div class="row">
-								<div class="col-md-6"></div>
+									<div class="col-md-6"></div>
 									<div class="col-md-2">
-										<input type="button" class="btn btn-primary"  onclick="showQuot()" value="Submit">
+										<input type="button" class="btn btn-primary"
+											onclick="showQuot()" value="Submit">
 									</div>
 								</div>
-								
+
 
 								<div class="form-group"></div>
-								
+
 								<input type="checkbox" name="selAll" id="selAll" /> Select All
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-											<th style="text-align: center"></th>
-													<th style="text-align: center">Sr.No.</th>
-										<th style="text-align: center">Enquiry Generated By</th>
-										<th style="text-align: center">Enquiry No</th>
-										<th style="text-align: center">Enquiry Date</th>
-											<th style="text-align: center">Action</th>
+												<th style="text-align: center"></th>
+												<th style="text-align: center">Sr.No.</th>
+												<th style="text-align: center">Enquiry Generated By</th>
+												<th style="text-align: center">Enquiry No</th>
+												<th style="text-align: center">Enquiry Date</th>
+												<!-- <th style="text-align: center">Action</th> -->
 											</tr>
 										</thead>
 
 									</table>
 								</div>
 
-									<input type="submit" class="btn btn-primary" value="Delete"
-										id="deleteId"
-										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
-										style="align-content: center; width: 113px; margin-left: 40px;">
-										</div>
-									
+								<input type="submit" class="btn btn-primary" value="Delete"
+									id="deleteId"
+									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+									style="align-content: center; width: 113px; margin-left: 40px;">
+							</div>
+
 						</form>
 					</div>
-						</div>
-					
 				</div>
-			</div>
 
+			</div>
 		</div>
-		<!-- .animated -->
+
+	</div>
+	<!-- .animated -->
 	<!-- .content -->
 
 	<!-- .animated -->
@@ -314,18 +314,20 @@
 		});
 	</script>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#bootstrap-data-table').DataTable();
-			
-			$("#selAll")
-			.click(
-					function() {
-						$(
-								'#bootstrap-data-table tbody input[type="checkbox"]')
-								.prop('checked',
-										this.checked);
-					});
-		});
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table').DataTable();
+
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
 	</script>
 
 
@@ -336,7 +338,7 @@
 			$('input[id$=from_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-			
+
 			$('input[id$=to_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
@@ -345,9 +347,8 @@
 	</script>
 
 	<script type="text/javascript">
-	
-	// on plant change function 
-		function getData() { 
+		// on plant change function 
+		function getData() {
 			var plantId = document.getElementById("plant_id").value;
 			var valid = true;
 
@@ -383,9 +384,8 @@
 					$('#po_id').html("-1");
 					$("#po_id").trigger("chosen:updated");
 					 */
-					var dataTable = $('#bootstrap-data-table')
-					.DataTable();
-			dataTable.clear().draw();
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
 
 				});
 			}//end of if
@@ -396,54 +396,52 @@
 
 
 	<script type="text/javascript">
-	// onclick of submit to search order 
+		// onclick of submit to search order 
 		function showQuot() {
-		
-		//alert("Hi View Orders  ");
-	
+
+			//alert("Hi View Orders  ");
+
 			var plantId = document.getElementById("plant_id").value;
-			 var fromDate=document.getElementById("from_date").value;
-			 var toDate=document.getElementById("to_date").value;
-			 
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
 			var valid = true;
 
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
-			}			
-			
+			}
+
 			var custId = document.getElementById("cust_name").value;
 			var valid = true;
 			if (custId == null || custId == "") {
 				valid = false;
 				alert("Please Select Customer");
-				
-				var dataTable = $('#bootstrap-data-table')
-				.DataTable();
+
+				var dataTable = $('#bootstrap-data-table').DataTable();
 				dataTable.clear().draw();
 
-			}
-			else if(custId<0){
+			} else if (custId < 0) {
 				valid = false;
 
 			}
-			
+
 			else if (fromDate == null || fromDate == "") {
-					valid = false;
-					alert("Please select from date");
-				}			
-			 
+				valid = false;
+				alert("Please select from date");
+			}
+
 			else if (toDate == null || toDate == "") {
 				valid = false;
 				alert("Please select to date");
-			}			
-		
-			if(fromDate > toDate){
+			}
+
+			if (fromDate > toDate) {
 				valid = false;
 				alert("from date greater than todate ");
 			}
-			if(valid==true){
-			
+			if (valid == true) {
+
 				$
 						.getJSON(
 								'${getEnqListBetDate}',
@@ -456,62 +454,61 @@
 								},
 
 								function(data) {
-									
+
 									//alert("Order Data " +JSON.stringify(data));
-									
-									 var dataTable = $('#bootstrap-data-table')
-									.DataTable();
-							dataTable.clear().draw();
 
-							$.each(data,function(i, v) {
-								var chBox;
-												
-										 var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-														+ v.enqHeadId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-														+ v.enqHeadId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-trash" title="Delete"></i></a>'
-														
-														 chBox = '<input  type="checkbox" class="chk" name="selectEnqToDelete" id='+v.enqHeadId+' class="check"  value='+v.enqHeadId+'>'
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
 
-												 
-														
-												dataTable.row
-														.add(
-																[chBox,
-																		i + 1,
-																		v.enqGenBy,
-																		v.enqNo,
-																		v.enqDate,
-																		acButton
-																		 ])
-														.draw();
-											}); 
-						
-								});	
-				
-}//end of if valid ==true
-						
+									$
+											.each(
+													data,
+													function(i, v) {
+														var chBox;
+
+														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																+ v.enqHeadId
+																+ ','
+																+ i
+																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+																+ v.enqHeadId
+																+ ','
+																+ i
+																+ ')"><i class="fa fa-trash" title="Delete"></i></a>'
+
+														chBox = '<input  type="checkbox" class="chk" name="selectEnqToDelete" id='+v.enqHeadId+' class="check"  value='+v.enqHeadId+'>'
+
+														dataTable.row
+																.add(
+																		[
+																				chBox,
+																				i + 1,
+																				v.enqGenBy,
+																				v.enqNo,
+																				v.enqDate, ])
+																.draw();
+													});
+
+								});
+
+			}//end of if valid ==true
+
 		}
-	
-	function callEdit(enqHeadId){
-		
-		window.open("${pageContext.request.contextPath}/editOrder/"+enqHeadId);
-		
-	}
-	
-function callDelete(orderId){
-	
-		
-		
-	}
+
+		function callEdit(enqHeadId) {
+
+			window.open("${pageContext.request.contextPath}/editOrder/"
+					+ enqHeadId);
+
+		}
+
+		function callDelete(orderId) {
+
+		}
 	</script>
-	
-		
+
+
 	<script type="text/javascript">
 		$(document)
 				.ready(
@@ -528,7 +525,7 @@ function callDelete(orderId){
 											});
 						});
 	</script>
-		
+
 
 
 </body>
