@@ -144,7 +144,7 @@
 								<div class="card-body card-block" style="overflow: scroll;  width: 72vw;">
 									<table id="table1"
 										class="table table-striped table-bordered"  style="table-layout: none; width:100%">
-										<thead>
+			 							<thead>
 											<tr>
 											<th>Sr.No.</th>
 											<th>Item Name</th>
