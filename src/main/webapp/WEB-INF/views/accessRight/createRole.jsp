@@ -299,7 +299,7 @@
 												</c:forEach>
 											</tbody>
 										</table>
-										<table class="table table-bordered table-striped fill-head "
+								<%-- 		<table class="table table-bordered table-striped fill-head "
 											style="width: 70%" id="table_grid">
 											<thead>
 												<tr>
@@ -653,7 +653,7 @@
 																		</c:when>
 																	</c:choose>
 
-																	<%-- <c:choose>
+																	<c:choose>
 														<c:when test="${allSubModuleList.editReject==1}">
 
 															<td><input type="checkbox" name="select_to_assign"
@@ -680,7 +680,7 @@
 
 
 														</c:when>
-													</c:choose> --%>
+													</c:choose>
 																</tr>
 															</c:when>
 														</c:choose>
@@ -690,7 +690,7 @@
 
 												</c:forEach>
 											</tbody>
-										</table>
+										</table> --%>
 									</div>
 								</div>
 
