@@ -115,12 +115,7 @@
 								<strong>${title}</strong>
 							</div>
 							<div class="col-md-4"></div>
-							<div class="col-md-4" align="left">
 
-								<a href="${pageContext.request.contextPath}/showRoleList"><strong>Role
-										List</strong></a>
-
-							</div>
 						</div>
 						<div class="card-body card-block">
 							<form id="validation-form" action="submitAssignedRole"
@@ -128,7 +123,7 @@
 
 								<div class="box-content">
 
-									<div class="col-md-2">Employee Name</div>
+									<div class="col-md-2">Select User</div>
 									<div class="col-md-4" style="text-align: center">
 										<input type="text" name="empName" id="empName"
 											class="form-control" required data-rule-required="true"

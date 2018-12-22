@@ -132,7 +132,6 @@ public class TxnController {
 
 			float contRate = Float.parseFloat(request.getParameter("rate"));
 			String date = request.getParameter("date");
-			String remark = request.getParameter("remark");
 
 			System.out.println("Previous Image1" + file.get(0).getOriginalFilename());
 			System.out.println("Previous Image2" + file1.get(0).getOriginalFilename());
@@ -196,17 +195,24 @@ public class TxnController {
 			weigh.setPoklenKm(poklenKm);
 			weigh.setVehKm(vehKm);
 			weigh.setQuantity(qty);
-			weigh.setRemark(remark);
 			weigh.setVehId(vehId);
 			weigh.setUserId(1);
 			weigh.setWeighId(weighId);
+			weigh.setPhoto1(prevImage1);
 
 			try {
-				weigh.setPhoto1(prevImage1);
+				weigh.setRemark(request.getParameter("remark"));
+
+			} catch (Exception e) {
+				weigh.setRemark("NA");
+			}
+
+			try {
+
 				weigh.setPhoto2(prevImage2);
 
 			} catch (Exception e) {
-				weigh.setPhoto1("NA");
+
 				weigh.setPhoto2("NA");
 			}
 

@@ -207,7 +207,7 @@
 										<thead>
 											<tr>
 												<th style="text-align: center"></th>
-												<th style="text-align: center; width: 5%;">Sr No</th>
+												<th style="text-align: center; width: 5%;">Sr.</th>
 												<th style="text-align: center">Vehicle Name</th>
 												<th style="text-align: center">Poklen Name</th>
 												<th style="text-align: center">Contractor Name</th>

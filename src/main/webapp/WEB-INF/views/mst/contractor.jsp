@@ -118,6 +118,7 @@
 						<div class="card-header">
 							<strong>${title}</strong>
 						</div>
+
 						<div class="card-body card-block">
 							<form
 								action="${pageContext.request.contextPath}/insertContractor"
@@ -137,7 +138,7 @@
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Mobile No.</div>
+									<div class="col-md-2">Mobile No.*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="mobNo" name="mobNo"

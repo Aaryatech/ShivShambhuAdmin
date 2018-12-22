@@ -139,7 +139,7 @@
 									<div class="col-md-2">Date*</div>
 
 									<div class="col-md-4">
-										<input type="text" id="date" name="date" class="form-control"
+										<input type="text" id="date" name="date" class="form-control" autocomplete="off"
 											value="${editPayTerm.date}" style="width: 100%;" required>
 									</div>
 

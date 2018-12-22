@@ -294,14 +294,14 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Remark*</div>
+									<div class="col-md-2">Remark</div>
 
 									<div class="col-md-4">
 										<textarea id="remark" name="remark" class="form-control"
 											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter remark')"
 											maxlength="200"
-											onchange="try{setCustomValidity('')}catch(e){}" required>${editWeigh.remark}</textarea>
+											onchange="try{setCustomValidity('')}catch(e){}">${editWeigh.remark}</textarea>
 									</div>
 
 

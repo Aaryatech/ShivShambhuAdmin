@@ -110,6 +110,12 @@
 								<strong>${title}</strong>
 							</div>
 							<div class="col-md-4"></div>
+							<div class="col-md-4" align="left">
+
+								<a href="${pageContext.request.contextPath}/showRoleList"><strong>Role
+										List</strong></a>
+
+							</div>
 						</div>
 						<div class="card-body card-block">
 							<form id="validation-form"

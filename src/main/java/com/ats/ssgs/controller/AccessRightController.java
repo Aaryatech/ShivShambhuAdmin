@@ -62,7 +62,7 @@ public class AccessRightController {
 					AccessRightModuleList.class);
 			System.out.println("Access List " + accessRightModuleList.toString());
 			model.addObject("allModuleList", accessRightModuleList.getAccessRightModuleList());
-			model.addObject("title", "Access Right");
+			model.addObject("title", "Create Role");
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -314,7 +314,7 @@ public class AccessRightController {
 		Constants.mainAct = 22;
 		Constants.subAct = 107;
 		try {
-			model.addObject("title", "Access Right");
+			model.addObject("title", "Assign Role");
 
 			accessRightModuleList = rest.getForObject(Constants.url + "getAllModuleAndSubModule",
 					AccessRightModuleList.class);

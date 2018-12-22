@@ -123,9 +123,7 @@
 						<div class="card-body card-block">
 							<form
 								action="${pageContext.request.contextPath}/insertBankDetail"
-								id="submitForm"
-								onsubmit="return confirm('Do you really want to submit the Purchase Order ?');"
-								method="post">
+								id="submitForm" method="post">
 
 								<div class="row">
 

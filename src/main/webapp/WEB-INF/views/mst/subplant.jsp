@@ -126,15 +126,29 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Subplant Name*</div>
+
+									<div class="col-md-2">Select Plant*</div>
+
 									<div class="col-md-4">
-										<input type="text" id="spName" name="spName" maxlength="60"
-											value="${editSP.subplantName}" class="form-control"
-											onblur="getUomNameCheck()" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter correct Name')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
+										<select id="plant_id" name="plant_id" class="standardSelect"
+											tabindex="1" required onchange="getData()">
+											<option value="-1">Select</option>
+											<c:forEach items="${plantList}" var="plant">
+												<c:choose>
+													<c:when test="${plant.plantId==editSP.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}">${plant.plantName}
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</select>
 									</div>
+
+
+
 
 									<div class="col-md-2">Subplant Location*</div>
 									<div class="col-md-4">
@@ -156,25 +170,17 @@
 
 
 								<div class="row">
-									<div class="col-md-2">Select Plant*</div>
-
+									<div class="col-md-2">Subplant Name*</div>
 									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
-											tabindex="1" required onchange="getData()">
-											<option value="-1">Select</option>
-											<c:forEach items="${plantList}" var="plant">
-												<c:choose>
-													<c:when test="${plant.plantId==editSP.plantId}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
-													</c:otherwise>
-												</c:choose>
-
-											</c:forEach>
-										</select>
+										<input type="text" id="spName" name="spName" maxlength="60"
+											value="${editSP.subplantName}" class="form-control"
+											onblur="getUomNameCheck()" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter correct Name')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											style="width: 100%;">
 									</div>
+
+
 									<div class="col-lg-2"></div>
 
 									<div class="col-lg-2">
