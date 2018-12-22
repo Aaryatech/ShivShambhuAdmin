@@ -333,7 +333,7 @@
 												<th style="text-align: center">Remaining Qty</th>
 												<th style="text-align: center">PO Rate</th>
 												<th style="text-align: center">Order Qty</th>
-													<th style="text-align: center">Item Total</th>
+												<th style="text-align: center">Item Total</th>
 											</tr>
 										</thead>
 
@@ -973,7 +973,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 
 			});
 
-		});
+		);}
 	</script>
 </body>
 </html>
