@@ -65,7 +65,7 @@ public class QuotController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("statusList", "0,1");
+			map.add("statusList", "0");
 
 			GetQuotHeads[] quotArray = rest.postForObject(Constants.url + "getQuotHeaders", map, GetQuotHeads[].class);
 			quotList = new ArrayList<GetQuotHeads>(Arrays.asList(quotArray));
@@ -81,7 +81,33 @@ public class QuotController {
 
 	}
 
-	
+	@RequestMapping(value = "/showQuotations1", method = RequestMethod.GET)
+	public ModelAndView showQuotations1(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("quot/quotList");
+
+			model.addObject("title", "Quotation List");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("statusList", "1");
+
+			GetQuotHeads[] quotArray = rest.postForObject(Constants.url + "getQuotHeaders", map, GetQuotHeads[].class);
+			quotList = new ArrayList<GetQuotHeads>(Arrays.asList(quotArray));
+			System.err.println("quotList" + quotList.toString());
+
+			model.addObject("quotList", quotList);
+
+		} catch (Exception e) {
+			System.err.println("Exce in /showQuotations" + e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+
+	}
 
 	@RequestMapping(value = "/showQuotationsCustWise", method = RequestMethod.GET)
 	public ModelAndView showQuotationsCustWise(HttpServletRequest request, HttpServletResponse response) {
@@ -94,8 +120,8 @@ public class QuotController {
 			model.addObject("title", "Quotation List CustomerWise");
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
-			
-			System.out.println("plant is"+plantList);
+
+			System.out.println("plant is" + plantList);
 
 			model.addObject("plantList", plantList);
 
@@ -107,11 +133,11 @@ public class QuotController {
 
 	}
 
-	
 	List<GetQuotHeads> getQuotList = new ArrayList<>();
 
 	@RequestMapping(value = "/getQuotListBetDate", method = RequestMethod.GET)
-	public @ResponseBody List<GetQuotHeads> getOrderListBetDate(HttpServletRequest request, HttpServletResponse response) {
+	public @ResponseBody List<GetQuotHeads> getOrderListBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
 
 		System.err.println(" in getTempQuotHeader");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -121,26 +147,22 @@ public class QuotController {
 
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
-		
-		System.out.println("values are"+plantId +custId + fromDate +toDate);
+
+		System.out.println("values are" + plantId + custId + fromDate + toDate);
 
 		map.add("plantId", plantId);
 		map.add("custId", custId);
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
-		//map.add("status", 0);
+		// map.add("status", 0);
 
-		GetQuotHeads[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustId", map,GetQuotHeads[].class);
-		getQuotList  = new ArrayList<GetQuotHeads>(Arrays.asList(ordHeadArray));
+		GetQuotHeads[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustId", map,
+				GetQuotHeads[].class);
+		getQuotList = new ArrayList<GetQuotHeads>(Arrays.asList(ordHeadArray));
 
 		return getQuotList;
 	}
-	
-	
-	
-	
-	
-	
+
 	// editQuot
 	List<GetItemWithEnq> newItemList;// items that are not in quotation ie enquiry but in m_item table
 
@@ -326,20 +348,22 @@ public class QuotController {
 	public @ResponseBody List<GetItemWithEnq> getItemsAndEnqItemList(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		/*MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-		int plantId = Integer.parseInt(request.getParameter("plantId"));
-		int enqHeadId = Integer.parseInt(request.getParameter("enqHeadId"));
-
-		map.add("plantId", plantId);
-		map.add("enqHeadId", enqHeadId);
-
-		GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map,
-				GetItemWithEnq[].class);
-		itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
-
-		System.err.println("Ajax Item list for km onchange  List " + itemList.toString());
-*/
+		/*
+		 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
+		 * Object>();
+		 * 
+		 * int plantId = Integer.parseInt(request.getParameter("plantId")); int
+		 * enqHeadId = Integer.parseInt(request.getParameter("enqHeadId"));
+		 * 
+		 * map.add("plantId", plantId); map.add("enqHeadId", enqHeadId);
+		 * 
+		 * GetItemWithEnq[] itemArray = rest.postForObject(Constants.url +
+		 * "getItemsAndEnqItemList", map, GetItemWithEnq[].class); itemList = new
+		 * ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
+		 * 
+		 * System.err.println("Ajax Item list for km onchange  List " +
+		 * itemList.toString());
+		 */
 		return enqItemList;
 
 	}
@@ -524,11 +548,9 @@ public class QuotController {
 								// detail.setSgstPer(0);
 
 							}
-							
 
 						} else {
-							
-							
+
 							if (cust.getIsSameState() == 1) {
 
 								detail.setCgstPer(enqItemList.get(j).getCgst());
@@ -612,7 +634,6 @@ public class QuotController {
 							// detail.setSgstPer(0);
 
 						}
-						 
 
 					} else {
 
@@ -805,76 +826,73 @@ public class QuotController {
 		}
 		return "redirect:/showQuotations";
 	}
-	
-	//Deletall done by harsha
-	
-	
-		@RequestMapping(value = "/deleteRecordofQuatation", method = RequestMethod.POST)
-		public String deleteRecordofCompany(HttpServletRequest request, HttpServletResponse response) {
-			try {
 
-				String[] quotIds = request.getParameterValues("quotIds");
-				System.out.println("id are"+quotIds);
+	// Deletall done by harsha
 
-				StringBuilder sb = new StringBuilder();
+	@RequestMapping(value = "/deleteRecordofQuatation", method = RequestMethod.POST)
+	public String deleteRecordofCompany(HttpServletRequest request, HttpServletResponse response) {
+		try {
 
-				for (int i = 0; i < quotIds.length; i++) {
-					sb = sb.append(quotIds[i] + ",");
+			String[] quotIds = request.getParameterValues("quotIds");
+			System.out.println("id are" + quotIds);
 
-				}
-				String items = sb.toString();
-				items = items.substring(0, items.length() - 1);
+			StringBuilder sb = new StringBuilder();
 
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			for (int i = 0; i < quotIds.length; i++) {
+				sb = sb.append(quotIds[i] + ",");
 
-				map.add("quotIds", items);
-
-				Info errMsg = rest.postForObject(Constants.url + "deleteMultiQuot", map, Info.class);
-
-				System.err.println("inside method");
-			} catch (Exception e) {
-
-				System.err.println("Exception in /deleteRecordofQuota @MastContr  " + e.getMessage());
-				e.printStackTrace();
 			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
 
-			return "redirect:/showQuotations";
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("quotIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiQuot", map, Info.class);
+
+			System.err.println("inside method");
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofQuota @MastContr  " + e.getMessage());
+			e.printStackTrace();
 		}
-		
-		
-		@RequestMapping(value = "/deleteRecordofQuotations", method = RequestMethod.POST)
-		public String deleteRecordofQuotations(HttpServletRequest request, HttpServletResponse response) {
-			try {
 
-				
-				System.out.println("Hello            oooooooooooo");
-				String[] quotIds = request.getParameterValues("selectQuatationToDelete");
-				System.out.println("id are"+quotIds );
+		return "redirect:/showQuotations";
+	}
 
-				StringBuilder sb = new StringBuilder();
+	@RequestMapping(value = "/deleteRecordofQuotations", method = RequestMethod.POST)
+	public String deleteRecordofQuotations(HttpServletRequest request, HttpServletResponse response) {
+		try {
 
-				for (int i = 0; i < quotIds .length; i++) {
-					sb = sb.append(quotIds [i] + ",");
+			System.out.println("Hello            oooooooooooo");
+			String[] quotIds = request.getParameterValues("selectQuatationToDelete");
+			System.out.println("id are" + quotIds);
 
-				}
-				String items = sb.toString();
-				items = items.substring(0, items.length() - 1);
-				
-				System.err.println("quotIds"+items.toString());
+			StringBuilder sb = new StringBuilder();
 
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			for (int i = 0; i < quotIds.length; i++) {
+				sb = sb.append(quotIds[i] + ",");
 
-				map.add("quotIds", items);
-
-				Info errMsg = rest.postForObject(Constants.url + "deleteMultiQuot", map, Info.class);
-				System.err.println("inside method /deleteRecordofQuotations");
-			} catch (Exception e) {
-
-				System.err.println("Exception in /deleteRecordofQuotations @OrderController  " + e.getMessage());
-				e.printStackTrace();
 			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
 
-			return "redirect:/showQuotationsCustWise";
+			System.err.println("quotIds" + items.toString());
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("quotIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiQuot", map, Info.class);
+			System.err.println("inside method /deleteRecordofQuotations");
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofQuotations @OrderController  " + e.getMessage());
+			e.printStackTrace();
 		}
+
+		return "redirect:/showQuotationsCustWise";
+	}
 
 }

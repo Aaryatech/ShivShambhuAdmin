@@ -447,12 +447,14 @@
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.quotHeadId
 																+ ','
-																+ i
-																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-																+ v.quotHeadId
+																+ v.plantId
+																+ ','
+																+ v.custId
+																+ ','
+																+ v.enqHeadId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-trash" title="Delete"></i></a>'
+																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>'
 
 														chBox = '<input  type="checkbox" class="chk" name="selectQuatationToDelete" id='+v.quotHeadId+' class="check"  value='+v.quotHeadId+'>'
 
@@ -476,14 +478,11 @@
 
 		}
 
-		function callEdit(quotHeadId) {
+		function callEdit(quotHeadId, plantId, custId, enqHeadId) {
 
-			window.open("${pageContext.request.contextPath}/editOrder/"
-					+ quotHeadId);
-
-		}
-
-		function callDelete(orderId) {
+			window.open("${pageContext.request.contextPath}/editQuot/"
+					+ quotHeadId + '/' + plantId + '/' + custId + '/'
+					+ enqHeadId);
 
 		}
 	</script>
