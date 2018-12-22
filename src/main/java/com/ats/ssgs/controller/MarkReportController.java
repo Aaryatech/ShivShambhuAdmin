@@ -1210,7 +1210,7 @@ public class MarkReportController {
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			Paragraph company = new Paragraph("Chalan Pending Report\n", f);
+			Paragraph company = new Paragraph("Bill Pending Report\n", f);
 			company.setAlignment(Element.ALIGN_CENTER);
 			document.add(company);
 			document.add(new Paragraph(" "));

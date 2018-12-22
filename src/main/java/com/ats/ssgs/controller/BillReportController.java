@@ -445,10 +445,10 @@ public class BillReportController {
 		}
 
 	}
-	
-	
-	//detailDatewise
+
+	// detailDatewise
 	List<GetDateWiseDetailBill> dateBillDetailList;
+
 	@RequestMapping(value = "/showDateBillDetailReport/{billHeadId}/{billDate}/{fromDate}/{toDate}", method = RequestMethod.GET)
 	public ModelAndView showDateBillDetailReport(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable int billHeadId, @PathVariable String billDate, @PathVariable String fromDate,
@@ -463,11 +463,11 @@ public class BillReportController {
 
 			map.add("billDate", DateConvertor.convertToYMD(billDate));
 
-			GetDateWiseDetailBill [] ordHeadArray = rest.postForObject(Constants.url + "getDatewiseDetailBillReport", map,
-					GetDateWiseDetailBill [].class);
-			dateBillDetailList = new ArrayList<GetDateWiseDetailBill >(Arrays.asList(ordHeadArray));
+			GetDateWiseDetailBill[] ordHeadArray = rest.postForObject(Constants.url + "getDatewiseDetailBillReport",
+					map, GetDateWiseDetailBill[].class);
+			dateBillDetailList = new ArrayList<GetDateWiseDetailBill>(Arrays.asList(ordHeadArray));
 
-			System.out.println("DatebillDetailList" +dateBillDetailList.toString());
+			System.out.println("DatebillDetailList" + dateBillDetailList.toString());
 
 			model.addObject("dateBillList", dateBillDetailList);
 			model.addObject("fromDate", fromDate);
@@ -502,11 +502,11 @@ public class BillReportController {
 				rowData.add("" + dateBillDetailList.get(i).getBillNo());
 				rowData.add("" + dateBillDetailList.get(i).getCustName());
 				rowData.add("" + dateBillDetailList.get(i).getCgstAmt());
-				rowData.add("" +dateBillDetailList.get(i).getIgstAmt());
+				rowData.add("" + dateBillDetailList.get(i).getIgstAmt());
 				rowData.add("" + dateBillDetailList.get(i).getSgstAmt());
-				rowData.add("" +dateBillDetailList.get(i).getTaxAmt());
+				rowData.add("" + dateBillDetailList.get(i).getTaxAmt());
 				rowData.add("" + dateBillDetailList.get(i).getTaxableAmt());
-				rowData.add("" +dateBillDetailList.get(i).getTotalAmt());
+				rowData.add("" + dateBillDetailList.get(i).getTotalAmt());
 
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
@@ -527,9 +527,8 @@ public class BillReportController {
 	}
 
 	@RequestMapping(value = "/showDatewiseDetailPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
-	public void showDatewiseDetailPdf(@PathVariable("fromDate") String fromDate,
-			@PathVariable("toDate") String toDate, HttpServletRequest request, HttpServletResponse response)
-			throws FileNotFoundException {
+	public void showDatewiseDetailPdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showDateWiseDetailllwisePdf");
 		Document document = new Document(PageSize.A4);
@@ -623,7 +622,7 @@ public class BillReportController {
 
 			table.addCell(hcell);
 			int index = 0;
-			for (GetDateWiseDetailBill  work :dateBillDetailList) {
+			for (GetDateWiseDetailBill work : dateBillDetailList) {
 				index++;
 				PdfPCell cell;
 
@@ -1213,7 +1212,7 @@ public class BillReportController {
 		return billList;
 	}
 
-	@RequestMapping(value = "/showCustwisePdf/{fromDate}/{toDate}/{plantId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/showCustwisePdf/{fromDate}/{toDate}", method = RequestMethod.GET)
 	public void showCustwisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
 			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
@@ -1349,7 +1348,7 @@ public class BillReportController {
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			Paragraph company = new Paragraph("Customerwise Report\n", f);
+			Paragraph company = new Paragraph("Customerwise Bill Report\n", f);
 			company.setAlignment(Element.ALIGN_CENTER);
 			document.add(company);
 			document.add(new Paragraph(" "));
@@ -2553,9 +2552,5 @@ public class BillReportController {
 		}
 
 	}
-	
-	
-	
-
 
 }

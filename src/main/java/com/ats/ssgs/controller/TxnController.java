@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.VpsImageUpload;
+import com.ats.ssgs.model.master.GetPoklenReading;
 import com.ats.ssgs.model.master.GetWeighing;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.PoklenReading;
@@ -49,6 +50,7 @@ public class TxnController {
 	List<GetWeighing> weighList;
 	List<Vehicle> vehPoklenList;
 	List<PoklenReading> pReadingList;
+	List<GetPoklenReading> pReading;
 
 	@RequestMapping(value = "/showAddWeighing", method = RequestMethod.GET)
 	public ModelAndView showAddWeighing(HttpServletRequest request, HttpServletResponse response) {
@@ -434,23 +436,21 @@ public class TxnController {
 			int sType = Integer.parseInt(request.getParameter("sType"));
 
 			float startReading = Float.parseFloat(request.getParameter("startReading"));
-			float endReading = Float.parseFloat(request.getParameter("endReading"));
+			// float endReading = Float.parseFloat(request.getParameter("endReading"));
 
 			String startDate = request.getParameter("start_date");
 
-			String endDate = request.getParameter("end_date");
+			// String endDate = request.getParameter("end_date");
 			String startTime = request.getParameter("startTime");
-			String endTime = request.getParameter("endTime");
+			// String endTime = request.getParameter("endTime");
 
 			PoklenReading pReading = new PoklenReading();
 
 			pReading.setDelStatus(1);
-			pReading.setEndDate(DateConvertor.convertToYMD(endDate));
-			pReading.setEndReading(endReading);
-			pReading.setEndTime(endTime);
+
 			pReading.setExBool1(1);
 			pReading.setExDate1(curDate);
-			pReading.setExInt1(1);
+
 			pReading.setExInt2(1);
 			pReading.setPoklenId(poklenId);
 
@@ -462,6 +462,22 @@ public class TxnController {
 			pReading.setShiftType(sType);
 			pReading.setPokType(pokeType);
 			pReading.setReadingId(readingId);
+
+			if (readingId != 0) {
+				pReading.setExInt1(2);
+			} else {
+				pReading.setExInt1(1);
+			}
+
+			try {
+				pReading.setEndDate(DateConvertor.convertToYMD(request.getParameter("end_date")));
+				pReading.setEndReading(Float.parseFloat(request.getParameter("endReading")));
+				pReading.setEndTime(request.getParameter("endTime"));
+			} catch (Exception e) {
+				pReading.setEndDate(curDate);
+				pReading.setEndReading(0);
+				pReading.setEndTime("00:00:00");
+			}
 
 			PoklenReading prInsertRes = rest.postForObject(Constants.url + "savePoklenReading", pReading,
 					PoklenReading.class);
@@ -490,14 +506,60 @@ public class TxnController {
 			model = new ModelAndView("matissue/poklenReadingList");
 
 			model.addObject("title", "Poklen Reading  List");
-			PoklenReading[] weighArray = rest.getForObject(Constants.url + "getAllPoklenReadingList",
-					PoklenReading[].class);
-			pReadingList = new ArrayList<PoklenReading>(Arrays.asList(weighArray));
-
-			model.addObject("pReadingList", pReadingList);
 		} catch (Exception e) {
 
 			System.err.println("exception In showPoklenReadingList at Txn Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/getPoklenListBetDate", method = RequestMethod.GET)
+	public @ResponseBody List<GetPoklenReading> getPoklenListBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		System.err.println(" in getWeighListBetDate");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		// map.add("status", 0);
+
+		GetPoklenReading[] ordHeadArray = rest.postForObject(Constants.url + "getPokReadingListBetweenDate", map,
+				GetPoklenReading[].class);
+		pReading = new ArrayList<GetPoklenReading>(Arrays.asList(ordHeadArray));
+
+		return pReading;
+	}
+
+	@RequestMapping(value = "/showPendingPoklenReadingList", method = RequestMethod.GET)
+	public ModelAndView showPendingPoklenReadingList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("matissue/pendingReadingList");
+
+			model.addObject("title", "Pending Poklen Reading  List");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("status", 2);
+
+			GetPoklenReading[] weighArray = rest.postForObject(Constants.url + "getPokleByStatus", map,
+					GetPoklenReading[].class);
+			pReading = new ArrayList<GetPoklenReading>(Arrays.asList(weighArray));
+
+			model.addObject("pReadingList", pReading);
+		} catch (Exception e) {
+
+			System.err.println("exception In showPendingPoklenReadingList at Txn Contr" + e.getMessage());
 
 			e.printStackTrace();
 
@@ -564,7 +626,7 @@ public class TxnController {
 
 		ModelAndView model = null;
 		try {
-			model = new ModelAndView("matissue/pokreading");
+			model = new ModelAndView("matissue/editPokReading");
 			model.addObject("title", "Edit Poklen Reading");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
