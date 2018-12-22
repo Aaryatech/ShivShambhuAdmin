@@ -62,6 +62,15 @@
     margin-left: -12px;
     margin-right: 8px;
 }
+ ::-webkit-scrollbar{
+        height: 10px;
+        width: 6px;
+        background:#868e96;
+    }
+    ::-webkit-scrollbar-thumb:horizontal{
+        background: #000;
+        border-radius: 10px;
+    }
 </style>
 	</head>
 <body>
