@@ -297,7 +297,7 @@
 		// onclick of submit to search order 
 		function showReport() {
 
-		//	alert("Hi View Report  ");
+			//	alert("Hi View Report  ");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
@@ -376,7 +376,7 @@
 			}
 
 		}
-		function callEdit(vehicleId ) {
+		function callEdit(vehicleId) {
 
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
@@ -403,9 +403,8 @@
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			window
-					.open('${pageContext.request.contextPath}/showContractorwisePdf/'
-							+ fromDate + '/' + toDate);
+			window.open('${pageContext.request.contextPath}/showPoklenwisePdf/'
+					+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 
 		}

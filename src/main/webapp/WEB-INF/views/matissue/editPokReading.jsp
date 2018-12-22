@@ -110,51 +110,26 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<div class="col-md-2">
+							<div class="col-md-4">
 								<strong>${title}</strong>
 							</div>
-							<div class="col-md-8"></div>
-							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showWeighList"><strong>Weighing
-										List</strong></a>
+							<div class="col-md-4"></div>
+							<div class="col-md-4" align="left">
+								<a
+									href="${pageContext.request.contextPath}/showPoklenReadingList"><strong>Poklen
+										Reading List</strong></a>
 							</div>
 
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertWeighing"
-								id="submitForm" method="post" enctype="multipart/form-data">
-								<input type="hidden" name="weighId" id="weighId"
-									value="${editWeigh.weighId}">
+							<form
+								action="${pageContext.request.contextPath}/insertPoklenReading"
+								id="submitForm" method="post">
+								<input type="hidden" name="readingId" id="readingId"
+									value="${editPRead.readingId}">
 
+								<div class="form-group"></div>
 								<div class="row">
-
-									<input type="hidden" id="url" value='${weighImageUrl}' /> <input
-										type="hidden" name="prevImage1" id="prevImage1"> <input
-										type="hidden" name="prevImage2" id="prevImage2">
-
-									<div class="col-md-2">Select Vehicle*</div>
-
-									<div class="col-md-4">
-										<select id="vehId" name="vehId" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select Vehicle')">
-											<option>Select</option>
-											<c:forEach items="${vehList}" var="veh">
-
-												<c:choose>
-													<c:when test="${veh.vehicleId==editWeigh.vehId}">
-														<option value="${veh.vehicleId}" selected>${veh.vehicleName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${veh.vehicleId}">${veh.vehicleName}
-													</c:otherwise>
-												</c:choose>
-
-
-											</c:forEach>
-										</select>
-									</div>
-
 									<div class="col-md-2">Select Poklen*</div>
 
 									<div class="col-md-4">
@@ -167,7 +142,7 @@
 											<c:forEach items="${vehPoklenList}" var="poklen">
 
 												<c:choose>
-													<c:when test="${poklen.vehicleId==editWeigh.poklenId}">
+													<c:when test="${poklen.vehicleId==editPRead.poklenId}">
 														<option value="${poklen.vehicleId}" selected>${poklen.vehicleName}</option>
 													</c:when>
 													<c:otherwise>
@@ -180,133 +155,166 @@
 										</select>
 									</div>
 								</div>
+
+
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Start Date*</div>
+									<div class="col-md-4">
+										<input type="text" id="start_date" name="start_date"
+											autocomplete="off" value="${editPRead.startDate}"
+											oninvalid="setCustomValidity('Please select date')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											class="form-control" required style="width: 100%;">
+									</div>
+
+									<div class="col-md-2">End Date*</div>
+
+									<div class="col-md-4">
+										<input type="text" id="end_date" name="end_date" required
+											autocomplete="off" value="${editPRead.endDate}"
+											onchange="checkDate()"
+											oninvalid="setCustomValidity('Please select date')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											class="form-control" style="width: 100%;">
+									</div>
+
+								</div>
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Select Contractor*</div>
+									<div class="col-md-2">Poke Type*</div>
 
+									<c:choose>
+										<c:when test="${editPRead.pokType==0}">
+											<div class="col-md-2">
+
+												<input type="radio" name="pokeType" id="pokeType" value="0"
+													checked>Breaking
+
+											</div>
+
+											<div class="col-md-2">
+												<input type="radio" name="pokeType" value="1">
+												Loading
+											</div>
+										</c:when>
+										<c:when test="${editPRead.pokType==1}">
+											<div class="col-md-2">
+
+												<input type="radio" name="pokeType" id="pokeType" value="0">Breaking
+											</div>
+											<div class="col-md-2">
+												<input type="radio" name="pokeType" value="1" checked>
+												Loading
+
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="col-md-2">
+												Breaking <input type="radio" checked name="pokeType"
+													id="pokeType" value="0">
+											</div>
+
+											<div class="col-md-2">
+												Loading <input type="radio" name="pokeType" id="pokeType"
+													value="1">
+											</div>
+
+										</c:otherwise>
+									</c:choose>
+
+
+
+									<div class="col-md-2">Shift Type*</div>
+
+									<c:choose>
+										<c:when test="${editPRead.shiftType==0}">
+											<div class="col-md-2">
+
+												<input type="radio" name="sType" id="sType" value="0"
+													checked>Day
+
+											</div>
+
+											<div class="col-md-2">
+												<input type="radio" name="sType" value="1"> Night
+											</div>
+										</c:when>
+										<c:when test="${editPRead.shiftType==1}">
+											<div class="col-md-1">
+
+												<input type="radio" name="sType" id="sType" value="0">Day
+											</div>
+											<div class="col-md-1">
+												<input type="radio" name="sType" value="1" checked>
+												Night
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="col-md-1">
+												Day <input type="radio" checked name="sType" id="sType"
+													value="0">
+											</div>
+
+											<div class="col-md-1">
+												Night <input type="radio" name="sType" id="sType" value="1">
+											</div>
+
+										</c:otherwise>
+									</c:choose>
+
+
+								</div>
+
+
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Start Reading*</div>
 									<div class="col-md-4">
-										<select id="contr_id" name="contr_id" class="standardSelect"
-											tabindex="1" onchange="getContractRate()">
-											<option value="-1">Select</option>
-											<c:forEach items="${conList}" var="con">
-
-												<c:choose>
-													<c:when test="${con.contrId==editWeigh.contraId}">
-														<option value="${con.contrId}" selected>${con.contrName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${con.contrId}">${con.contrName}
-													</c:otherwise>
-												</c:choose>
-
-
-											</c:forEach>
-										</select>
+										<input type="text" id="startReading" name="startReading"
+											class="form-control" autocomplete="off" style="width: 100%;"
+											value="${editPRead.startReading}"
+											oninvalid="setCustomValidity('Please enter correct reading')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
+											onkeypress="return allowOnlyNumber(event);">
 									</div>
-
-									<div class="col-md-2">Contractor Rate*</div>
+									<div class="col-md-2">End Reading*</div>
 									<div class="col-md-4">
-										<input type="text" id="rate" name="rate" class="form-control"
+										<input type="text" id="endReading" name="endReading" required
+											value="${editPRead.endReading}" class="form-control"
 											autocomplete="off" style="width: 100%;"
+											onchange="checkReading()"
+											oninvalid="setCustomValidity('Please enter correct reading')"
+											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											value="${editWeigh.contRate}" readonly
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 
-
 								</div>
-
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Quantity*</div>
+
+									<div class="col-md-2">Start Time*</div>
 									<div class="col-md-4">
-										<input type="text" id="qty" name="qty" class="form-control"
+										<input type="time" id="startTime" name="startTime"
+											class="form-control" autocomplete="off" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter time')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											value="${editPRead.startTime}">
+									</div>
+
+									<div class="col-md-2">End Time*</div>
+									<div class="col-md-4">
+										<input type="time" id="endTime" name="endTime" required
+											value="${editPRead.endTime}" class="form-control"
 											autocomplete="off" style="width: 100%;"
-											value="${editWeigh.quantity}"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
-											oninvalid="setCustomValidity('Please enter correct Quantity')"
+											oninvalid="setCustomValidity('Please enter endtime')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
-									<div class="col-md-2">Date*</div>
-									<div class="col-md-4">
-										<input type="text" id="date" name="date" autocomplete="off"
-											oninvalid="setCustomValidity('Please select date')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editWeigh.date}" required class="form-control"
-											required style="width: 100%;">
-									</div>
-
 								</div>
-
-								<div class="form-group"></div>
-								<div class="row">
-
-									<div class="col-md-2">Vehicle Kilometer*</div>
-									<div class="col-md-4">
-										<input type="text" id="vehKm" name="vehKm"
-											class="form-control" autocomplete="off" style="width: 100%;"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
-											oninvalid="setCustomValidity('Please enter correct Vehicle Kilometer')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editWeigh.vehKm}">
-									</div>
-
-									<div class="col-md-2">Poklen Kilometer*</div>
-									<div class="col-md-4">
-										<input type="text" id="poklenKm" name="poklenKm"
-											class="form-control" autocomplete="off" style="width: 100%;"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											oninvalid="setCustomValidity('Please enter correct Vehicle Kilometer')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editWeigh.poklenKm}" required>
-									</div>
-								</div>
-
-								<div class="form-group"></div>
-
-								<div class="row">
-									<div class="col-md-2">Add Photo1*</div>
-									<div class="col-md-4">
-										<input type="file" id="imgInp" name="imgInp"
-											style="width: 100%;" class="form-control" autocomplete="off"
-											oninvalid="setCustomValidity('Please Select photo')"
-											value="${editWeigh.photo1}"  required
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
-									</div>
-
-									<div class="col-md-2">Add Photo2</div>
-									<div class="col-md-4">
-										<input type="file" id="imgInp1" name="imgInp1"
-											style="width: 100%;" class="form-control" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter photo')"
-											value="${editWeigh.photo2}"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
-									</div>
-								</div>
-
-								<div class="form-group"></div>
-
-								<div class="row">
-
-									<div class="col-md-2">Remark</div>
-
-									<div class="col-md-4">
-										<textarea id="remark" name="remark" class="form-control"
-											style="width: 100%;" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter remark')"
-											maxlength="200"
-											onchange="try{setCustomValidity('')}catch(e){}">${editWeigh.remark}</textarea>
-									</div>
-
-
-								</div>
-
 
 								<div class="form-group"></div>
 								<div class="col-lg-4"></div>
@@ -403,16 +411,6 @@
 		}
 	</script>
 
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script>
-		$(function() {
-			$('input[id$=date]').datepicker({
-				dateFormat : 'dd-mm-yy'
-			});
-
-		});
-	</script>
-
 
 	<script type="text/javascript">
 		$(function() {
@@ -425,65 +423,56 @@
 		});
 	</script>
 
-
-
-	<script type="text/javascript">
-		function getContractRate() {
-			//	alert("hiiiii");
-			var contrId = document.getElementById("contr_id").value;
-			//	alert(contrId);
-
-			$.getJSON('${getContractrateById}', {
-
-				contrId : contrId,
-				ajax : 'true',
-
-			},
-
-			function(data) {
-
-				document.getElementById("rate").value = data.contrRate;
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$('input[id$=start_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+			$('input[id$=end_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
 
 			});
-
-		}
-	</script>
-
-	<script type="text/javascript">
-		function readURL(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-
-				reader.onload = function(e) {
-					$('#image1').attr('src', e.target.result);
-				}
-
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
-
-		$("#imgInp").change(function() {
-			readURL(this);
 		});
 	</script>
 
 	<script type="text/javascript">
-		function readURL(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
+		function checkDate() {
+			//In javascript
+			var start_date = document.getElementById("start_date").value;
+			var end_date = document.getElementById("end_date").value;
+			// In JQuery
 
-				reader.onload = function(e) {
-					$('#image2').attr('src', e.target.result);
-				}
+			if (start_date > end_date) {
+				alert("Please enter startdate less than end Date ");
+				document.getElementById('start_date').value = "";
+				document.getElementById('end_date').value = "";
 
-				reader.readAsDataURL(input.files[0]);
 			}
-		}
 
-		$("#imgInp1").change(function() {
-			readURL(this);
-		});
+		}
 	</script>
+
+
+
+
+	<script type="text/javascript">
+		function checkReading() {
+			//In javascript
+			var startReading = document.getElementById("startReading").value;
+			var endReading = document.getElementById("endReading").value;
+			// In JQuery
+
+			if (startReading > endReading) {
+				alert("Please enter correct Start Reading  ");
+				document.getElementById('startReading').value = "";
+				document.getElementById('endReading').value = "";
+
+			}
+
+		}
+	</script>
+
 
 </body>
 </html>

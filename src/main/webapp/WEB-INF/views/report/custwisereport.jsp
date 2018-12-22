@@ -117,14 +117,13 @@
 
 							<div class="row">
 
-								<div class="col-md-2">Select Customer</div>
+
+								<div class="col-md-2">Select Customer*</div>
 
 								<div class="col-md-4">
 									<select id="custId" name="custId" class="standardSelect"
-										multiple tabindex="1" required
-										oninvalid="setCustomValidity('Please select company')"
-										onchange="getData()">
-										<option value="">Select</option>
+										tabindex="1" multiple="multiple" required
+										oninvalid="setCustomValidity('Please select Challan')">
 										<option value="0">All</option>
 
 										<c:forEach items="${custList}" var="cust">
@@ -134,23 +133,24 @@
 
 									</select>
 								</div>
+
 								<div class="col-md-2">Select Plant*</div>
 
 								<div class="col-md-4">
 									<select id="plantId" name="plantId" class="standardSelect"
-										multiple tabindex="1" required onchange="getData()">
-										<option value="">Select</option>
-
+										tabindex="1" multiple="multiple" required
+										oninvalid="setCustomValidity('Please select Challan')">
 										<option value="0">All</option>
 										<c:forEach items="${plantList}" var="plant">
 
 											<option value="${plant.plantId}">${plant.plantName}</option>
 
 										</c:forEach>
+
+
 									</select>
 								</div>
 							</div>
-
 
 							<div class="form-group"></div>
 							<div class="row">
@@ -230,6 +230,7 @@
 
 
 
+
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
 	<script
@@ -264,6 +265,7 @@
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
+
 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({

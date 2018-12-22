@@ -8,6 +8,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+
+<c:url var="getCustByPlantId" value="/getCustByPlantId" />
+<c:url var="getPoklenListBetDate" value="/getPoklenListBetDate" />
+
+
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -55,6 +61,9 @@
 }
 </style>
 
+
+
+
 </head>
 <body>
 
@@ -75,115 +84,121 @@
 
 			<div class="row">
 
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
+							<span class="closebtn"
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
+							<span class="closebtn"
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
+
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
 							<div class="col-md-4">
 								<strong>${title}</strong>
 							</div>
-							<div class="col-md-4"></div>
-							<div class="col-md-4" align="left">
+							<div class="col-md-5"></div>
+							<div class="col-md-3" align="left">
 								<a href="${pageContext.request.contextPath}/showAddPReading"><strong>Add
 										Poklen Reading </strong></a>
 							</div>
-
 						</div>
-						<div class="card-body card-block">
-							<form
-								action="${pageContext.request.contextPath}/deleteRecordofPReading"
-								method="post">
+						<form
+							action="${pageContext.request.contextPath}/deleteRecordofPReading"
+							method="post">
 
-								<table id="bootstrap-data-table"
-									class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" /></th>
-											<th style="text-align: center; width: 5%;">Sr.</th>
-											<th style="text-align: center">Start Date</th>
-											<th style="text-align: center">End Date</th>
-											<th style="text-align: center">Poklen Type</th>
-											<th style="text-align: center">Shift Type</th>
-											<th style="text-align: center">Start Reading</th>
-											<th style="text-align: center">End Reading</th>
-											<th style="text-align: center">Action</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach items="${pReadingList}" var="pReading"
-											varStatus="count">
-											<tr>
-												<td><input type="checkbox" class="chk"
-													name="readingIds" id="readingIds${count.index+1}"
-													value="${pReading.readingId}" /></td>
+							<div class="card-body card-block">
 
-												<td style="text-align: center">${count.index+1}</td>
+								<div class="form-group"></div>
 
-												<td style="text-align: left"><c:out
-														value="${pReading.startDate}" /></td>
-
-												<td style="text-align: left"><c:out
-														value="${pReading.endDate}" /></td>
-
-												<td style="text-align: left"><c:choose>
-														<c:when test="${pReading.pokType==0}">
-														Breaking
-													</c:when>
-														<c:when test="${pReading.pokType==1}">
-														Loading
-													</c:when>
-													</c:choose></td>
-
-												<td style="text-align: left"><c:choose>
-														<c:when test="${pReading.shiftType==0}">
-														Day
-													</c:when>
-														<c:when test="${pReading.shiftType==1}">
-														Night
-													</c:when>
-													</c:choose></td>
-
-												<td style="text-align: right"><c:out
-														value="${pReading.startReading}" /></td>
-
-												<td style="text-align: right"><c:out
-														value="${pReading.startReading}" /></td>
-
-
-												<td style="text-align: center"><a
-													href="${pageContext.request.contextPath}/editPReading/${pReading.readingId}"><i
-														class="fa fa-edit"></i> <span class="text-muted"></span></a>
-													&nbsp; <a
-													href="${pageContext.request.contextPath}/deletePReading/${pReading.readingId}"
-													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o"></i></a></td>
-
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-								<div class="col-lg-1">
-
-									<input type="submit" class="btn btn-primary" value="Delete"
-										id="deleteId"
-										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
-										style="align-content: center; width: 113px; margin-left: 40px;">
-
+								<div class="row">
+									<div class="col-md-2">From Date</div>
+									<div class="col-md-4">
+										<input type="text" autocomplete="off" id="from_date"
+											name="from_date" required style="width: 100%;"
+											class="form-control" value="${fromDate}"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+									<div class="col-md-2">To Date</div>
+									<div class="col-md-4">
+										<input type="text" autocomplete="off" id="to_date"
+											name="to_date" style="width: 100%;" class="form-control"
+											value="${toDate}"> <span class="error"
+											aria-live="polite"></span>
+									</div>
 
 								</div>
-							</form>
-						</div>
+
+
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-6"></div>
+									<div class="col-md-2">
+										<input type="button" class="btn btn-primary"
+											onclick="showQuot()" value="Submit">
+									</div>
+								</div>
+
+
+								<div class="form-group"></div>
+
+
+
+
+								<input type="checkbox" name="selAll" id="selAll" />
+								<div class="card-body card-block">
+									<table id="bootstrap-data-table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th class="check" style="text-align: center; width: 5%;"><input
+													type="checkbox" name="selAll" id="selAll" /></th>
+												<th style="text-align: center; width: 5%;">Sr.</th>
+												<th style="text-align: center">Start Date</th>
+												<th style="text-align: center">End Date</th>
+												<th style="text-align: center">Poklen Type</th>
+												<th style="text-align: center">Shift Type</th>
+												<th style="text-align: center">Start Reading</th>
+												<th style="text-align: center">End Reading</th>
+												<th style="text-align: center">Action</th>
+											</tr>
+										</thead>
+
+									</table>
+								</div>
+
+								<input type="submit" class="btn btn-primary" value="Delete"
+									id="deleteId"
+									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+									style="align-content: center; width: 113px; margin-left: 40px;">
+							</div>
+
+						</form>
 					</div>
 				</div>
+
 			</div>
-
-
 		</div>
-		<!-- .animated -->
+
 	</div>
-	<!-- .content -->
-
-
 	<!-- .animated -->
 	<!-- .content -->
 
@@ -200,7 +215,6 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
-
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables.min.js"></script>
@@ -227,28 +241,146 @@
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
-
-
 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({
-				disable_search_threshold : 2,
+				disable_search_threshold : 1,
 				no_results_text : "Oops, nothing found!",
 				width : "100%"
 			});
 		});
 	</script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#bootstrap-data-table-export').DataTable();
+
+
+
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$('input[id$=from_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+
+			$('input[id$=to_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+
 		});
 	</script>
+
+
+
+
+
+	<script type="text/javascript">
+		// onclick of submit to search order 
+		function showQuot() {
+
+			alert("Hi View Orders  ");
+
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
+			var valid = true;
+
+			if (fromDate == null || fromDate == "") {
+				valid = false;
+				alert("Please select from date");
+			}
+
+			else if (toDate == null || toDate == "") {
+				valid = false;
+				alert("Please select to date");
+			}
+
+			if (fromDate > toDate) {
+				valid = false;
+				alert("from date greater than todate ");
+			}
+			if (valid == true) {
+
+				$
+						.getJSON(
+								'${getPoklenListBetDate}',
+								{
+									fromDate : fromDate,
+									toDate : toDate,
+									ajax : 'true',
+								},
+
+								function(data) {
+
+									//alert("Order Data " + JSON.stringify(data));
+
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
+
+									$
+											.each(
+													data,
+													function(i, v) {
+														var chBox;
+
+														var pokType1;
+														if (v.pokType == 0) {
+															pokType1 = "Breaking";
+														} else if (v.pokType == 1) {
+															pokType1 = "Loading";
+														}
+														var shiftType1;
+
+														if (v.shiftType == 0) {
+															shiftType1 = "Day";
+														} else if (v.shiftType == 1) {
+															shiftType1 = "Night";
+														}
+
+														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																+ v.readingId
+																+ ','
+																+ i
+																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>'
+
+														chBox = '<input  type="checkbox" class="chk" name="readingIds" id='+v.readingId+' class="check"  value='+v.readingId+'>'
+
+														//var chBox='<input type="checkbox" id="orderId" class="chk" name="quotIds" value='+v.orderId+'/>'
+														dataTable.row
+																.add(
+																		[
+																				chBox,
+																				i + 1,
+																				v.startDate,
+																				v.endDate,
+																				pokType1,
+																				shiftType1,
+																				v.startReading,
+																				v.endReading,
+
+																				acButton ])
+																.draw();
+													});
+
+								});
+
+			}//end of if valid ==true
+
+		}
+
+		function callEdit(readingId) {
+
+			window.open("${pageContext.request.contextPath}/editPReading/"
+					+ readingId);
+
+		}
+	</script>
+
 
 	<script type="text/javascript">
 		$(document)
 				.ready(
 						function() {
-							$('#bootstrap-data-table-export').DataTable();
+							$('#bootstrap-data-table').DataTable();
 
 							$("#selAll")
 									.click(
@@ -260,6 +392,8 @@
 											});
 						});
 	</script>
+
+
 
 </body>
 </html>

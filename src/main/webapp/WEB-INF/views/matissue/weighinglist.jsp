@@ -116,8 +116,8 @@
 							<div class="col-md-4">
 								<strong>${title}</strong>
 							</div>
-							<div class="col-md-4"></div>
-							<div class="col-md-4" align="left">
+							<div class="col-md-5"></div>
+							<div class="col-md-3" align="left">
 								<a href="${pageContext.request.contextPath}/showAddWeighing"><strong>Add
 										Weighing </strong></a>
 							</div>

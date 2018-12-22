@@ -172,7 +172,8 @@
 
 									<div class="col-md-4">
 										<input type="text" id="end_date" name="end_date"
-											autocomplete="off" value="${editPRead.endDate}"
+											onchange="checkDate()" autocomplete="off"
+											value="${editPRead.endDate}"
 											oninvalid="setCustomValidity('Please select date')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" required style="width: 100%;">
@@ -283,7 +284,7 @@
 									<div class="col-md-4">
 										<input type="text" id="endReading" name="endReading"
 											class="form-control" autocomplete="off" style="width: 100%;"
-											value="${editPRead.endReading}"
+											value="${editPRead.endReading}" onchange="checkReading()"
 											oninvalid="setCustomValidity('Please enter correct reading')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
@@ -434,7 +435,42 @@
 		});
 	</script>
 
+	<script type="text/javascript">
+		function checkDate() {
+			//In javascript
+			var start_date = document.getElementById("start_date").value;
+			var end_date = document.getElementById("end_date").value;
+			// In JQuery
 
+			if (start_date > end_date) {
+				alert("Please enter startdate less than end Date ");
+				document.getElementById('start_date').value = "";
+				document.getElementById('end_date').value = "";
+
+			}
+
+		}
+	</script>
+
+
+
+
+	<script type="text/javascript">
+		function checkReading() {
+			//In javascript
+			var startReading = document.getElementById("startReading").value;
+			var endReading = document.getElementById("endReading").value;
+			// In JQuery
+
+			if (startReading > endReading) {
+				alert("Please enter correct Start Reading  ");
+				document.getElementById('startReading').value = "";
+				document.getElementById('endReading').value = "";
+
+			}
+
+		}
+	</script>
 
 </body>
 </html>
