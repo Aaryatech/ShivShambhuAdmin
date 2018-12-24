@@ -109,7 +109,13 @@ contentType="text/html; charset=ISO8859_1"%>
   </tr>
 
       </table>
-      
+       <c:set var = "tAmt" value = "0"/>
+  <c:set var = "totalQty" value = "0"/>
+  <c:set var = "taxableAmt" value = "0"/>
+   <c:set var = "totalAmt" value = "0"/>
+    <c:set var = "totalCgst" value = "0"/>
+      <c:set var = "totalSgst" value = "0"/>
+      <c:set var = "totalDisc" value = "0"/>
       <table width="100%" border="0"  cellpadding="0" cellspacing="0" style="border-right:1px solid #313131">
   <tr>
     <td rowspan="2"  width="2%"  style="border-bottom:1px solid #313131; border-top:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">No.</td>
@@ -142,12 +148,6 @@ contentType="text/html; charset=ISO8859_1"%>
  
   </tr>
  
-  <c:set var = "totalQty" value = "0"/>
-  <c:set var = "taxableAmt" value = "0"/>
-   <c:set var = "totalAmt" value = "0"/>
-    <c:set var = "totalCgst" value = "0"/>
-      <c:set var = "totalSgst" value = "0"/>
-      <c:set var = "totalDisc" value = "0"/>
     <c:forEach items="${billHeaderRes.getBillDetails}" var="billDetails" varStatus="count">
      <tr>
     <td  style="border-left:1px solid #313131; padding:3px 5px;color:#000; font-size:10px;">${count.index+1}</td>
@@ -165,10 +165,10 @@ contentType="text/html; charset=ISO8859_1"%>
     <td align="right" style="border-left:1px solid #313131; padding:3px 4px;color:#000; font-size:10px;"><fmt:formatNumber type="number"
 								maxFractionDigits="2" minFractionDigits="2" value="${billDetails.taxableAmt}"/></td>
     <td align="right" style="border-left:1px solid #313131; padding:3px 4px;color:#000;font-size:10px;"><fmt:formatNumber type="number"
-								maxFractionDigits="2" minFractionDigits="2" value="${billDetails.taxableAmt}"/></td>
-								 <c:set var = "taxableAmt" value = "${taxableAmt+billDetails.taxableAmt}"/>
-								   <c:set var = "totalAmt" value = "${totalAmt+billDetails.totalAmt}"/>
-    <td align="right" style="border-left:1px solid #313131; padding:3px 5px;color:#000; font-size:10px;"><fmt:formatNumber type="number"
+								maxFractionDigits="2" minFractionDigits="2" value="${billDetails.cgstPer}"/></td>
+							 	 <c:set var = "taxableAmt" value = "${taxableAmt+billDetails.taxableAmt}"/> 
+								 
+   <td align="right" style="border-left:1px solid #313131; padding:3px 5px;color:#000; font-size:10px;"><fmt:formatNumber type="number"
 								maxFractionDigits="2" minFractionDigits="2" value="${billDetails.cgstAmt}"/></td>
     <td align="right" style="border-left:1px solid #313131; padding:3px 5px;color:#000; font-size:10px;"><fmt:formatNumber type="number"
 								maxFractionDigits="2" minFractionDigits="2" value="${billDetails.sgstPer}"/></td>
@@ -180,9 +180,10 @@ contentType="text/html; charset=ISO8859_1"%>
 	<td align="right" style="border-left:1px solid #313131; padding:3px 5px;color:#000;font-size:10px;"><fmt:formatNumber type="number"
 								maxFractionDigits="2" minFractionDigits="2" value="${billDetails.discAmt}"/></td>
 	<td align="right" style="border-left:1px solid #313131; padding:3px 5px;color:#000;font-size:10px;"><fmt:formatNumber type="number"
-								maxFractionDigits="2" minFractionDigits="2" value="${billDetails.totalAmt}"/></td>							
+								maxFractionDigits="2" minFractionDigits="2" value="${billDetails.totalAmt}" var="t" /> ${t} </td>							
 						 <c:set var = "totalSgst" value = "${totalSgst+billDetails.sgstAmt}"/> 
 						  <c:set var = "totalDisc" value = "${totalDisc+billDetails.discAmt}"/> 
+								  <c:set var = "tAmt" value = "${tAmt+billDetails.totalAmt}"/>
 								
 	 		  
   </tr>
@@ -250,7 +251,7 @@ contentType="text/html; charset=ISO8859_1"%>
 								maxFractionDigits="2" minFractionDigits="2" value="${totalDisc}"/></b></td>
    
 	<td align="right" style="border-top:1px solid #313131;border-left:1px solid #313131;border-bottom:1px solid #313131; padding:4px;color:#000; font-size:12px;"><b><fmt:formatNumber type="number"
-								maxFractionDigits="2" minFractionDigits="2" value="${totalAmt-totalDisc}"/></b></td>
+								maxFractionDigits="2" minFractionDigits="2" value="${tAmt-totalDisc}"/></b></td>
 	  				
   </tr>  
   <%--  <tr>
@@ -271,14 +272,14 @@ contentType="text/html; charset=ISO8859_1"%>
   <table width="100%" border="0"  cellpadding="0" cellspacing="0" style="border-right:1px solid #313131;border-left:1px solid #313131;">
   
  
-    
+<%--     
   <tr>
   <fmt:formatNumber type="number"	maxFractionDigits="2" minFractionDigits="2" value="${totalCgst+totalSgst}" var="wtax"/>
   
     <td colspan="8" width="60%" style=" padding:8px;color:#000; font-size:12px;">Tax Amt(in words):
      <p style="color:#000; font-size:12px; text-align:left;margin:0px;"><b>${currency.convertToIndianCurrency(wtax)}</b></p>
 </td>
-<fmt:formatNumber type="number"	maxFractionDigits="2" minFractionDigits="2" value="${totalAmt-totalDisc}" var="wtotal"/>
+<fmt:formatNumber type="number"	maxFractionDigits="2" minFractionDigits="2" value="${tAmt-totalDisc}" var="wtotal"/>
     <td colspan="4" width="40%" rowspan="2" style="padding:8px;color:#000;border-left:1px solid #313131; font-size:12px;">Amt.Chargeble (in words): <p style="color:#000; font-size:12px; text-align:left;margin:0px;">
    <b> ${currency.convertToIndianCurrency(wtotal)}</b></p>
     </td>
@@ -287,16 +288,16 @@ contentType="text/html; charset=ISO8859_1"%>
     <tr>
     <td colspan="4" width="25%"  style="text-align:center; border-top:1px solid #313131; padding:8px;color:#000; font-size:12px;"></td>
       <td colspan="4" width="25%"  style="text-align:center; border-top:1px solid #313131; padding:8px;color:#000; font-size:12px;"></td>
-         </tr>
+         </tr> --%>
   
     
   <tr>
-    <td colspan="8" width="60%"  style="border-top:1px solid #313131; padding:8px;color:#000; font-size:13px;">
+    <td colspan="8" width="60%"  style=" padding:8px;color:#000; font-size:13px;">
 Company's VAT TIN: <br />
 Company's CST No:<br />
 Company's PAN: ${billHeaderRes.compPanNo}
 </td>
-    <td colspan="4" width="60%" style="border-top:1px solid #313131;border-left:1px solid #313131;  padding:8px;color:#000;font-size:15px;">     
+    <td colspan="4" width="60%" style="border-left:1px solid #313131;  padding:8px;color:#000;font-size:15px;">     
     <p style="color:#000; font-size:13px; text-align:left;margin:0px;">
     Company's Bank Details:<br />
 Bank Name:  ${billHeaderRes.bankDetail.bankName}<br />

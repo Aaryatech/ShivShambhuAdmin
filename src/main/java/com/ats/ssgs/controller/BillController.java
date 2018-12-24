@@ -185,13 +185,22 @@ public class BillController {
 		String[] chalanId = request.getParameterValues("chalanId");
 		System.err.println(chalanId[0]);
 		/*
-		 * List<String> chalanIdList = new ArrayList<String>(Arrays.asList(chalanId));
-		 * List<Integer> cId=new ArrayList<>(); for(int i=0;i<chalanIdList.size();i++)
-		 * {System.err.println(chalanIdList.get(i));
-		 * cId.add(Integer.parseInt(chalanIdList.get(i))); }
-		 * System.err.println(cId.toString());
-		 */
-		map.add("chalanId", 5);
+		  List<String> chalanIdList = new ArrayList<String>(Arrays.asList(chalanId));
+		 List<Integer> cId=new ArrayList<>(); for(int i=0;i<chalanIdList.size();i++)
+		  {System.err.println(chalanIdList.get(i));
+		  cId.add(Integer.parseInt(chalanIdList.get(i))); }
+		  System.err.println(cId.toString());*/
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i <  chalanId.length; i++) {
+			sb = sb.append( chalanId[i] + ",");
+
+		}
+		String items = sb.toString();
+		items = items.substring(0, items.length() - 1);
+		 
+		map.add("chalanId",items);
 
 		GetItemsForBill[] chArray = rest.postForObject(Constants.url + "getItemsForBill", map, GetItemsForBill[].class);
 
@@ -945,9 +954,9 @@ public class BillController {
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		// File f = new File("/home/ats-12/bill.pdf");
+		//File f = new File("/home/ats-11/bill.pdf");
 
-		File f = new File("/home/lenovo/Desktop/bill.pdf");
+		 File f = new File("/opt/tomcat-latest/webapps/uploads/shivreport.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -967,8 +976,8 @@ public class BillController {
 		String appPath = context.getRealPath("");
 		String filename = "ordermemo221.pdf";
 		// String filePath = "/report.pdf";
-		String filePath = "/home/lenovo/Desktop/bill.pdf";
-		// String filePath =
+		 String filePath = "/opt/tomcat-latest/webapps/uploads/shivreport.pdf";
+		 // String filePath ="home/ats-11/bill.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file
