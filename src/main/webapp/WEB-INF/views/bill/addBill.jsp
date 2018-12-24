@@ -343,6 +343,7 @@
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
 												<th style="text-align: center">Rate</th>
+												<th style="text-align: center">Chalan Qty</th>
 												<th style="text-align: center">Qty</th>
 													<th style="text-align: center">Disc %</th>
 												<th style="text-align: center">Taxable Amt</th>
@@ -825,7 +826,7 @@ $
 		$('#loader').show();
 		$.getJSON('${getItemsForBill}', {
 			 
-			  chalanId : JSON.stringify(chalanId),
+			  chalanId : chalanId,
 					ajax : 'true',
 
 				},
@@ -854,7 +855,7 @@ $
 		var taxableAmt = '<p id="taxableAmt'+i+''+v.itemId+'">0.0</p>'
 
 		var index=i+1;
-		dataTable.row.add([ index,v.itemName,v.itemUom,v.orderRate+""+rate+""+isTaxIncluding,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
+		dataTable.row.add([ index,v.itemName,v.itemUom,v.orderRate+""+rate+""+isTaxIncluding,v.itemQty,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
 		$('#loader').hide();
 			
 			});

@@ -165,7 +165,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/showRmcOrdList"
-								method="post">
+								method="get">
 
 								<div class="row">
 									<input type="hidden" name="itemId" id="itemId"
@@ -188,22 +188,22 @@
 
 									<div class="col-md-1">From</div>
 									<div class="col-md-2">
-										<input type="text" autocomplete="off" id="from_date" readonly
+										<input type="text" autocomplete="off" id="from_date" 
 											name="from_date" required style="width: 100%;"
 											class="form-control" value="${fromDate}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-1">To</div>
 									<div class="col-md-2">
-										<input type="text" autocomplete="off" id="to_date" readonly
+										<input type="text" autocomplete="off" id="to_date" 
 											name="to_date" style="width: 100%;" class="form-control"
 											value="${toDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
 
 									<div class="col-md-1">
-										<input type="button" class="btn btn-primary"
-											onclick="showProdReport()" value="Submit">
+										<input type="submit" class="btn btn-primary"
+											 value="Submit">
 									</div>
 
 								</div>
@@ -377,7 +377,7 @@
 			var status=${prodHeader.productionStatus}
 			
 			if(status==3){
-				alert("Status" +status);
+				//alert("Status" +status);
 				 $('#bootstrap-data-table tbody input[type="number"]').prop('readonly', true);			
 				 }
 		});
@@ -387,18 +387,18 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$('input[id$=ord_date]').datepicker({
+			$('input[id$=from_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 			
-			$('input[id$=del_date]').datepicker({
+			$('input[id$=to_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 
 		});
 	</script>
 	
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 	function showManualBOM(){
 		
 		window.open("${pageContext.request.contextPath}/showManBOM","_self");
@@ -409,7 +409,7 @@
 
 	}
 	
-	</script>
+	</script> -->
 	
 	<script type="text/javascript">
 

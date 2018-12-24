@@ -58,7 +58,7 @@ public class RmcController {
 			} else {
 				fromDate = request.getParameter("from_date");
 				toDate = request.getParameter("to_date");
-				plantId = Integer.parseInt(request.getParameter("plantId"));
+				plantId = Integer.parseInt(request.getParameter("plant_id"));
 				System.out.println("inside Else ");
 
 				System.out.println("fromDate " + fromDate);
