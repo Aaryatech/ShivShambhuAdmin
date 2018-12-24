@@ -413,10 +413,11 @@
 
 			}, function(data) {
 				//alert("data" + data);
-				//alert(data.exInt1);
+				alert(data.qty);
 				$("#catId").val(data.catId);
 				$("#catId").trigger("chosen:updated");
 				document.getElementById("rmName").value = data.itemId;
+				
 				document.getElementById("qty").value = data.qty;
 				document.getElementById("uom").value = data.uom;
 				

@@ -11,7 +11,7 @@
 
 <c:url var="getRawItemByCatId" value="/getRawItemByCatId" />
 
-<c:url var="addTempItemDetail" value="/addTempItemDetail" />
+<c:url var="addItemDetailInExisting" value="/addItemDetailInExisting" />
 
 <c:url var="getItemDetailForEdit" value="/getItemDetailForEdit" />
 
@@ -188,13 +188,13 @@
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 									
-									<!-- <div class="col-md-2">UOM*</div>
+									 <div class="col-md-2">UOM*</div>
 									<div class="col-md-4">
 									<input type="text" id="uom" name="uom" class="form-control"
 											autocomplete="off" style="width: 100%;"
 											value="kg" readonly>	
 									</div>
-									 -->
+									
 									
 								</div>
 								
@@ -258,31 +258,31 @@
 													<td style="text-align: center">${count.index+1}</td>
 
 													<td style="text-align: left"><c:out
-															value="${matDetail.rmName}" /></td>
+															value="${itemDetail.rmName}" /></td>
 
 
 													<td style="text-align: left"><c:out
-															value="${matDetail.uomName}" /></td>
+															value="${itemDetail.uomName}" /></td>
 
 
 
 													<td style="text-align: left"><c:out
-															value="${matDetail.qty}" /></td>
+															value="${itemDetail.rmQty}" /></td>
 
 
 													<td style="text-align: left"><c:out
-															value="${matDetail.category}" /></td>
+															value="${itemDetail.catDesc}" /></td>
 
 
-													<td style="text-align: left"><c:out
-															value="${matDetail.value}" /></td>
+													<%-- <td style="text-align: left"><c:out
+															value="${itemDetail.value}" /></td> --%>
 
 
 													<td style="text-align: center"><a href="#"
-														onclick="callEdit(${matDetail.matDetailId},${count.index})"><i
+														onclick="callEdit(${itemDetail.itemDetailId},${count.index})"><i
 															class="fa fa-edit"></i> <span class="text-muted"></span></a>
 														<a href="#"
-														onclick="callDelete(${matDetail.matDetailId},${count.index})"><i
+														onclick="callDelete(${itemDetail.itemDetailId},${count.index})"><i
 															class="fa fa fa-trash-o"></i> <span class="text-muted"></span></a></td>
 
 
@@ -382,7 +382,7 @@
 			//alert("Inside add ajax");
 			$
 					.getJSON(
-							'${addTempItemDetail}',
+							'${addItemDetailInExisting}',
 							{
 								
 								isDelete : isDelete,
