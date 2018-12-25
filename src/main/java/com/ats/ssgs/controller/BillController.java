@@ -2,7 +2,6 @@ package com.ats.ssgs.controller;
 
 import java.awt.Dimension;
 
-
 import java.awt.Insets;
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,12 +62,14 @@ import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.order.GetOrder;
 import com.ats.ssgs.model.order.GetOrderDetail;
 import com.ats.ssgs.model.order.OrderDetail;
 import com.ats.ssgs.model.order.OrderHeader;
+import com.ats.ssgs.model.rec.PayRecoveryHead;
 
 @Controller
 @Scope("session")
@@ -185,22 +186,23 @@ public class BillController {
 		String[] chalanId = request.getParameterValues("chalanId");
 		System.err.println(chalanId[0]);
 		/*
-		  List<String> chalanIdList = new ArrayList<String>(Arrays.asList(chalanId));
-		 List<Integer> cId=new ArrayList<>(); for(int i=0;i<chalanIdList.size();i++)
-		  {System.err.println(chalanIdList.get(i));
-		  cId.add(Integer.parseInt(chalanIdList.get(i))); }
-		  System.err.println(cId.toString());*/
+		 * List<String> chalanIdList = new ArrayList<String>(Arrays.asList(chalanId));
+		 * List<Integer> cId=new ArrayList<>(); for(int i=0;i<chalanIdList.size();i++)
+		 * {System.err.println(chalanIdList.get(i));
+		 * cId.add(Integer.parseInt(chalanIdList.get(i))); }
+		 * System.err.println(cId.toString());
+		 */
 
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i <  chalanId.length; i++) {
-			sb = sb.append( chalanId[i] + ",");
+		for (int i = 0; i < chalanId.length; i++) {
+			sb = sb.append(chalanId[i] + ",");
 
 		}
 		String items = sb.toString();
 		items = items.substring(0, items.length() - 1);
-		 
-		map.add("chalanId",items);
+
+		map.add("chalanId", items);
 
 		GetItemsForBill[] chArray = rest.postForObject(Constants.url + "getItemsForBill", map, GetItemsForBill[].class);
 
@@ -214,6 +216,9 @@ public class BillController {
 
 		ModelAndView model = null;
 		try {
+
+			HttpSession httpSession = request.getSession();
+			LoginResUser login = (LoginResUser) httpSession.getAttribute("UserDetail");
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String curDate = dateFormat.format(new Date());
 			List<Integer> chalanDetailList = new ArrayList<Integer>();
@@ -451,50 +456,96 @@ public class BillController {
 
 			if (insertBillHeadRes != null) {
 
-				final String emailSMTPserver = "smtp.gmail.com";
-				final String emailSMTPPort = "587";
-				final String mailStoreType = "imaps";
-				final String username = "atsinfosoft@gmail.com";
-				final String password = "atsinfosoft@123";
+				PayRecoveryHead payRecoveryHead = new PayRecoveryHead();
 
-				System.out.println("username" + username);
-				System.out.println("password" + password);
+				payRecoveryHead.setBillNo(billNo);
+				payRecoveryHead.setBillTotal(grandTotalAmt);
+				payRecoveryHead.setBillDate(DateConvertor.convertToYMD(billDate));
+				payRecoveryHead.setCustId(custId);
+				payRecoveryHead.setDelStatus(1);
+				payRecoveryHead.setExBool1(1);
+				payRecoveryHead.setUserId(login.getUser().getUserId());
+				payRecoveryHead.setExBool2(1);
+				payRecoveryHead.setStatus(0);
+				payRecoveryHead.setRemark("NA");
+				payRecoveryHead.setPendingAmt(grandTotalAmt);
+				payRecoveryHead.setBillHeadId(insertBillHeadRes.getBillHeadId());
 
-				Properties props = new Properties();
-				props.put("mail.smtp.host", "smtp.gmail.com");
-				props.put("mail.smtp.socketFactory.port", "465");
-				props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-				props.put("mail.smtp.auth", "true");
-				props.put("mail.smtp.port", "587");
+				payRecoveryHead.setExDate1(curDate);
+				payRecoveryHead.setExInt1(0);
+				payRecoveryHead.setExInt2(0);
+				payRecoveryHead.setExInt3(0);
+				payRecoveryHead.setExVarchar1("NA");
+				payRecoveryHead.setExVarchar2("NA");
+				payRecoveryHead.setPaidAmt(0);
 
-				Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(username, password);
-					}
-				});
+				MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
 
-				try {
-					Store mailStore = session.getStore(mailStoreType);
-					mailStore.connect(emailSMTPserver, username, password);
+				map2.add("custId", custId);
 
-					String mes = " Hello Sir";
+				Cust cust = rest.postForObject(Constants.url + "getCustByCustId", map2, Cust.class);
 
-					String address = editCust.getCustEmail();
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				Calendar c = Calendar.getInstance();
+				Calendar c1 = Calendar.getInstance();
 
-					String subject = "  ";
+				c.setTime(sdf.parse(billDate));
+				c1.setTime(sdf.parse(billDate));
 
-					String filename = "/home/lenovo/Desktop/Report.pdf";
+				System.out.println("cust credit days" + cust.getCreaditDays());
 
-					Message mimeMessage = new MimeMessage(session);
-					mimeMessage.setFrom(new InternetAddress(username));
-					mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
-					mimeMessage.setSubject(subject);
-					mimeMessage.setText(mes);
-					mimeMessage.setFileName(filename);
-					Transport.send(mimeMessage);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				c.add(Calendar.DAY_OF_MONTH, (int) cust.getCreaditDays());
+				c1.add(Calendar.DAY_OF_MONTH, (int) (cust.getCreaditDays() - 5));
+				String creaditDate2 = sdf.format(c.getTimeInMillis());
+
+				String creaditDate1 = sdf.format(c1.getTimeInMillis());
+
+				payRecoveryHead.setCreditDate2(DateConvertor.convertToYMD(creaditDate2));
+				System.out.println("creaditDate2" + creaditDate2);
+
+				payRecoveryHead.setCreditDate3(DateConvertor.convertToYMD(creaditDate1));
+				payRecoveryHead.setCreditDate1(DateConvertor.convertToYMD(creaditDate1));
+
+				PayRecoveryHead insertHeadRes = rest.postForObject(Constants.url + "savePaymentRecoveryHeader",
+						payRecoveryHead, PayRecoveryHead.class);
+				System.out.println(insertHeadRes.toString());
+
+				/*
+				 * final String emailSMTPserver = "smtp.gmail.com"; final String emailSMTPPort =
+				 * "587"; final String mailStoreType = "imaps"; final String username =
+				 * "atsinfosoft@gmail.com"; final String password = "atsinfosoft@123";
+				 * 
+				 * System.out.println("username" + username); System.out.println("password" +
+				 * password);
+				 * 
+				 * Properties props = new Properties(); props.put("mail.smtp.host",
+				 * "smtp.gmail.com"); props.put("mail.smtp.socketFactory.port", "465");
+				 * props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+				 * props.put("mail.smtp.auth", "true"); props.put("mail.smtp.port", "587");
+				 * 
+				 * Session session = Session.getDefaultInstance(props, new
+				 * javax.mail.Authenticator() { protected PasswordAuthentication
+				 * getPasswordAuthentication() { return new PasswordAuthentication(username,
+				 * password); } });
+				 * 
+				 * try { Store mailStore = session.getStore(mailStoreType);
+				 * mailStore.connect(emailSMTPserver, username, password);
+				 * 
+				 * String mes = " Hello Sir";
+				 * 
+				 * String address = editCust.getCustEmail();
+				 * 
+				 * String subject = "  ";
+				 * 
+				 * String filename = "/home/lenovo/Desktop/Report.pdf";
+				 * 
+				 * Message mimeMessage = new MimeMessage(session); mimeMessage.setFrom(new
+				 * InternetAddress(username));
+				 * mimeMessage.setRecipients(Message.RecipientType.TO,
+				 * InternetAddress.parse(address)); mimeMessage.setSubject(subject);
+				 * mimeMessage.setText(mes); mimeMessage.setFileName(filename);
+				 * Transport.send(mimeMessage); } catch (Exception e) { e.printStackTrace(); }
+				 */
 
 				// isError = 2;
 				map = new LinkedMultiValueMap<String, Object>();
@@ -954,9 +1005,9 @@ public class BillController {
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		//File f = new File("/home/ats-11/bill.pdf");
+		// File f = new File("/home/ats-11/bill.pdf");
 
-		 File f = new File("/opt/tomcat-latest/webapps/uploads/shivreport.pdf");
+		File f = new File("/opt/tomcat-latest/webapps/uploads/shivreport.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -976,8 +1027,8 @@ public class BillController {
 		String appPath = context.getRealPath("");
 		String filename = "ordermemo221.pdf";
 		// String filePath = "/report.pdf";
-		 String filePath = "/opt/tomcat-latest/webapps/uploads/shivreport.pdf";
-		 // String filePath ="home/ats-11/bill.pdf";
+		String filePath = "/opt/tomcat-latest/webapps/uploads/shivreport.pdf";
+		// String filePath ="home/ats-11/bill.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file
