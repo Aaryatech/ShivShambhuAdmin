@@ -262,55 +262,38 @@ public class PayRecController {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			String curDate = dateFormat.format(new Date());
-			PayRecoveryHead payRec = new PayRecoveryHead();
+			
+			editRec.setCreditDate2(DateConvertor.convertToYMD(creditDate2));
+			editRec.setBillDate(DateConvertor.convertToYMD(editRec.getBillDate()));
+			editRec.setCreditDate1(DateConvertor.convertToYMD(editRec.getCreditDate1()));
 
-			payRec.setPayHeadId(payHeadId);
-			payRec.setCreditDate2(DateConvertor.convertToYMD(creditDate2));
-
-			payRec.setBillNo(editRec.getBillNo());
-			payRec.setBillDate(DateConvertor.convertToYMD(editRec.getBillDate()));
-			payRec.setBillHeadId(editRec.getBillHeadId());
-			payRec.setCreditDate1(DateConvertor.convertToYMD(editRec.getCreditDate1()));
-
-			payRec.setCreditDate3(DateConvertor.convertToYMD(editRec.getCreditDate3()));
-			payRec.setCustId(editRec.getCustId());
-			payRec.setDelStatus(1);
+			editRec.setCreditDate3(DateConvertor.convertToYMD(editRec.getCreditDate3()));
 
 			List<PayRecoveryDetail> detailList = new ArrayList<>();
 			float paidAmt1 = 0;
 
 			for (int i = 0; i < editRec.getPayRecoveryDetailList().size(); i++) {
 
-				PayRecoveryDetail dDetail = new PayRecoveryDetail();
 
-				dDetail.setDelStatus(1);
-				dDetail.setPayHeadId(payHeadId);
-				dDetail.setExBool1(0);
-				dDetail.setExDate1(curDate);
-				dDetail.setExInt1(0);
-				dDetail.setExInt2(0);
-				dDetail.setExVarchar1("NA");
-				dDetail.setExVarchar2("NA");
+				editRec.getPayRecoveryDetailList().get(i).setPayHeadId(payHeadId);
 
-				dDetail.setPayHeadId(payHeadId);
-				dDetail.setPaymentDate(editRec.getPayRecoveryDetailList().get(i).getPaymentDate());
-				dDetail.setTxNo(editRec.getPayRecoveryDetailList().get(i).getTxNo());
-				dDetail.setTypeTx(editRec.getPayRecoveryDetailList().get(i).getTypeTx());
+				editRec.getPayRecoveryDetailList().get(i).setPaymentDate(
+						DateConvertor.convertToYMD(editRec.getPayRecoveryDetailList().get(i).getPaymentDate()));
+				editRec.getPayRecoveryDetailList().get(i).setTxNo(editRec.getPayRecoveryDetailList().get(i).getTxNo());
+				editRec.getPayRecoveryDetailList().get(i).setTypeTx(editRec.getPayRecoveryDetailList().get(i).getTypeTx());
 
 				paidAmt1 = paidAmt1 + editRec.getPayRecoveryDetailList().get(i).getPaidAmt();
-				dDetail.setPaidAmt(paidAmt1);
-
-				detailList.add(dDetail);
+				editRec.getPayRecoveryDetailList().get(i).setPaidAmt(paidAmt1);
 
 			}
-			payRec.setPaidAmt(paidAmt1);
-			payRec.setPayRecoveryDetailList(detailList);
+			editRec.setPaidAmt(paidAmt1);
+			editRec.setPayRecoveryDetailList(editRec.getPayRecoveryDetailList());
 
-			System.out.println("payRec" + payRec.toString());
+			System.out.println("payRec" + editRec.toString());
 
 			System.out.println("detailList" + detailList.size());
 
-			PayRecoveryHead matIssueInsertRes = rest.postForObject(Constants.url + "savePaymentRecovery", payRec,
+			PayRecoveryHead matIssueInsertRes = rest.postForObject(Constants.url + "savePaymentRecovery", editRec,
 					PayRecoveryHead.class);
 
 			if (matIssueInsertRes != null) {

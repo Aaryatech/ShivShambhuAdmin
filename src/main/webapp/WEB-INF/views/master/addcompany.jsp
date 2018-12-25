@@ -131,14 +131,23 @@
 
 
 									<div class="col-md-2">Company Name*</div>
-									<div class="col-md-10">
+									<div class="col-md-4">
 										<input type="text" id="comp_name" name="comp_name"
 											maxlength="50"
 											oninvalid="setCustomValidity('Please enter correct company name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editComp.compName}" style="width: 50%;"
+											value="${editComp.compName}" style="width: 100%;"
 											autocomplete="off" class="form-control" required>
 
+									</div>
+										<div class="col-md-2">Location(Optional)</div>
+
+									<div class="col-md-4">
+										<textarea id="comp_loc" name="comp_loc" class="form-control"
+											style="width: 100%;" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter location')"
+											maxlength="200"
+											onchange="try{setCustomValidity('')}catch(e){}">${editComp.compLoc}</textarea>
 									</div>
 								</div>
 								<div class="form-group"></div>
@@ -157,22 +166,6 @@
 									</div>
 
 
-									<div class="col-md-2">Company Location(Optional)</div>
-
-									<div class="col-md-4">
-										<textarea id="comp_loc" name="comp_loc" class="form-control"
-											style="width: 100%;" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter location')"
-											maxlength="200"
-											onchange="try{setCustomValidity('')}catch(e){}">${editComp.compLoc}</textarea>
-									</div>
-								</div>
-
-
-								<div class="form-group"></div>
-								<div class="row">
-
-
 									<div class="col-md-2">Factory Address*</div>
 
 									<div class="col-md-4">
@@ -183,7 +176,9 @@
 											onchange="try{setCustomValidity('')}catch(e){}" required>${editComp.compFactAdd}</textarea>
 									</div>
 
+								
 								</div>
+
 
 								<div class="form-group"></div>
 								<div class="row">

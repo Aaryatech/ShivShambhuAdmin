@@ -211,6 +211,39 @@ public class BillController {
 		return billItems;
 	}
 
+	//sachin
+		@RequestMapping(value = "/getItemsForRmcBill", method = RequestMethod.GET)
+		public @ResponseBody List<GetItemsForBill> getItemsForRmcBill(HttpServletRequest request,
+				HttpServletResponse response) {
+			System.err.println("HI");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			String[] chalanId = request.getParameterValues("chalanId");
+			System.err.println(chalanId[0]);
+			/*
+			  List<String> chalanIdList = new ArrayList<String>(Arrays.asList(chalanId));
+			 List<Integer> cId=new ArrayList<>(); for(int i=0;i<chalanIdList.size();i++)
+			  {System.err.println(chalanIdList.get(i));
+			  cId.add(Integer.parseInt(chalanIdList.get(i))); }
+			  System.err.println(cId.toString());*/
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i <  chalanId.length; i++) {
+				sb = sb.append( chalanId[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+			 
+			map.add("chalanId",items);
+
+			GetItemsForBill[] chArray = rest.postForObject(Constants.url + "getItemsForRmcBill", map, GetItemsForBill[].class);
+
+			billItems = new ArrayList<GetItemsForBill>(Arrays.asList(chArray));
+			System.err.println(billItems.toString());
+			return billItems;
+		}
+
 	@RequestMapping(value = "/insertBill", method = RequestMethod.POST)
 	public String insertBill(HttpServletRequest request, HttpServletResponse response) {
 

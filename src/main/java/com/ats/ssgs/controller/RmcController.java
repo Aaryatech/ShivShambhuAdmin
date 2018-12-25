@@ -4,16 +4,19 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
@@ -21,7 +24,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
+import com.ats.ssgs.model.chalan.ChalanHeader;
+import com.ats.ssgs.model.master.Company;
+import com.ats.ssgs.model.master.Document;
+import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
+import com.ats.ssgs.model.master.User;
+import com.ats.ssgs.model.master.Vehicle;
 import com.ats.ssgs.model.rmc.GetRmcOrders;
 
 @Controller
@@ -92,5 +101,121 @@ public class RmcController {
 
 		return model;
 	}
+	List<Vehicle> vehicleList;
+	List<User> usrList;
+	GetRmcOrders rmcOrd;
+	@RequestMapping(value = "/showAddRmcChalan/{key}", method = RequestMethod.GET)
+	public ModelAndView showAddChalan(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int key) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("chalan/generate_chalan_rmc");
+
+	/*		Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);*/
+
+			Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
+			vehicleList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
+
+			model.addObject("vehicleList", vehicleList);
+
+			User[] usrArray = rest.getForObject(Constants.url + "getAllUserList", User[].class);
+			usrList = new ArrayList<User>(Arrays.asList(usrArray));
+
+			model.addObject("usrList", usrList);
+
+			model.addObject("title", "Add Chalan");
+			//model.addObject("orderId", orderId);
+			
+			
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar cal = Calendar.getInstance();
+
+			String curDate = dateFormat.format(new Date());
+			
+			model.addObject("curDate" ,curDate);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("docCode", 5);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			model.addObject("doc", doc
+					);
+			rmcOrd=new GetRmcOrders();
+			rmcOrd=rmcOrdList.get(key);
+			 
+			System.err.println("rmcOrd " +rmcOrd);
+			
+			model.addObject("rmcOrd", rmcOrd);
+
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddChalan at Chalan Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+	
+	@RequestMapping(value = "/showBillRmc", method = RequestMethod.GET)
+	public ModelAndView showBill(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("bill/add_rmc_bill");
+
+			/*
+			 * Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList",
+			 * Plant[].class); List<Plant> plantList = new
+			 * ArrayList<Plant>(Arrays.asList(plantArray));
+			 * 
+			 * model.addObject("plantList", plantList);
+			 */DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar cal = Calendar.getInstance();
+
+			String curDate = dateFormat.format(new Date());
+
+			model.addObject("curDate", curDate);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("docCode", 6);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			model.addObject("doc", doc);
+
+			/*Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
+			List<Company> compList = new ArrayList<Company>(Arrays.asList(compArray));
+
+			model.addObject("compList", compList);*/
+			
+			HttpSession session = request.getSession();
+			ChalanHeader chalan = (ChalanHeader) session.getAttribute("chalanRes");
+			
+			
+			model.addObject("chalan",chalan);
+			model.addObject("rmcOrd", rmcOrd);
+			
+			session.removeAttribute("chalanRes");
+			
+			model.addObject("title", "Add Bill");
+		} catch (Exception e) {
+
+			System.err.println("" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
 
 }

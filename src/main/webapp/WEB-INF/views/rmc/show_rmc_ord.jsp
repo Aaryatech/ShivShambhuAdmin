@@ -255,15 +255,9 @@
 													value="${orderDet.remOrdQty}" /></td>
 													
 													
-										<%-- <td style="text-align: center">
-										<input  type="text" readonly class="form-control" value="${prodDetail.planQty}"  id="planQty${prodDetail.productionDetailId}" name="planQty${prodDetail.productionDetailId}" />
-										</td>
-										<td style="text-align: center">
-											<input  type="number"   class="form-control"  id="prodQty${prodDetail.productionDetailId}" value="${prodDetail.planQty}" onkeypress="return allowOnlyNumber(event);" name="prodQty${prodDetail.productionDetailId}"/>
-										</td>
-										<td style="text-align: center">
-											<input  type="text"   class="form-control"  id="rejQty${prodDetail.productionDetailId}" value="0" onkeypress="return allowOnlyNumber(event);" name="rejQty${prodDetail.productionDetailId}"/>
-										</td> --%>
+											<td style="text-align: center;"><a href="#" class="action_btn" onclick="callEdit(${orderDet.orderDetId})"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callChalanPage(${orderDet.orderDetId},${orderDet.orderId},${count.index})"><i class="fa fa-list"  title="Chalan"></i></a></td>
+													
+										
 										</tr>
 										</c:forEach>
 
@@ -271,38 +265,9 @@
 								</div>
 								<div class="form-group"></div>
 
-								<!-- <div class="row">
-
-									<div class="col-md-2">Taxable Value</div>
-									<div class="col-md-4">1444</div>
-
-									<div class="col-md-2">Tax Value</div>
-									<div class="col-md-4">88.36</div>
-
-								</div> -->
+								
 								<div class="form-group"></div>
-								<%-- <div class="row">
-
-									
-										<c:if test="${prodHeader.productionStatus==2}">
-									<div class="col-md-2">
-										<input type="submit" class="btn btn-primary" value="Complete Production">
-									</div>
-								</c:if>
-									<c:if test="${prodHeader.productionStatus!=3}">
-									<div class="col-md-2">
-										<input type="button" class="btn btn-primary" id="manBomButton" onclick="showManualBOM()" value="Manual BOM">
-									</div>
-									</c:if>
-									<c:if test="${prodHeader.productionStatus==1}">
-									
-									<div class="col-md-2">
-										<input type="button" class="btn btn-primary" id="bomButton" onclick="showBOM()" value="Add BOM">
-
-									</div>
-									</c:if>
-
-								</div> --%>
+					
 
 							</form>
 						</div>
@@ -374,15 +339,26 @@
 		$(document).ready(function() {
 			$('#bootstrap-data-table').DataTable();
 			
-			var status=${prodHeader.productionStatus}
-			
-			if(status==3){
-				//alert("Status" +status);
-				 $('#bootstrap-data-table tbody input[type="number"]').prop('readonly', true);			
-				 }
 		});
-	</script>
 
+		function callEdit(orderId) {
+
+			window.open("${pageContext.request.contextPath}/editOrder/"
+					+ orderId);
+
+		}
+
+
+		}
+	</script>
+<script type="text/javascript">
+
+function callChalanPage(orderId,orderDetId,key) {
+	alert("jkdhfj");
+	window.open('${pageContext.request.contextPath}/showAddRmcChalan/'+key);
+}
+	
+</script>
 
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
