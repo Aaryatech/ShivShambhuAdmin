@@ -977,7 +977,7 @@ function allowOnlyNumber1(evt)
 												data,
 												function(i, v) {
 													//var checkB = '<input  type="checkbox" name="selChalanItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-		var chalanQty = '<input  type="text" value="0"  class="form-control"  id="chalanQty'+v.itemId+'" name="chalanQty'+v.itemId+'" oninput="setChalanItem(this.value,'+v.itemId+','+v.poId+','+v.poDetailId+','+v.remOrdQty+','+v.orderDetId+','+v.orderId+','+i+','+v.uomId+',/'+v.itemName+'/)" onkeypress="return allowOnlyNumber(event);"/>'
+		var chalanQty = '<input  type="text" value="0"  class="form-control"  id="chalanQty'+v.itemId+'" name="chalanQty'+v.itemId+'" oninput="setChalanItem(this.value,'+v.itemId+','+v.poId+','+v.poDetailId+','+v.remOrdQty+','+v.orderDetId+','+v.orderId+','+i+','+v.uomId+',/'+v.itemName+'/,/'+v.uomName+'/)" onkeypress="return allowOnlyNumber(event);"/>'
 													//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
 													var index=i+1;
 													dataTable.row
@@ -1015,7 +1015,7 @@ function allowOnlyNumber1(evt)
 	    return true;
 	}
 	
-	function setChalanItem(chalanQty,itemId,poId,poDetailId,remOrdQty,orderDetId,orderId,index,uomId,itemName){
+	function setChalanItem(chalanQty,itemId,poId,poDetailId,remOrdQty,orderDetId,orderId,index,uomId,itemName,uomName){
 		//alert("Item Id" +itemId + "poId" +poId+ "detail PO Id " +poDetailId + "rem Ord Qty  " +remOrdQty );
 		var isValid=true;
 		
@@ -1045,6 +1045,7 @@ function allowOnlyNumber1(evt)
 					index : index,
 					uomId : uomId,
 					itemName :itemName,
+					uomName : uomName,
 					
 					ajax : 'true',
 				},

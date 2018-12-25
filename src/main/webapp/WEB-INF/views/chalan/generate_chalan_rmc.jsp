@@ -998,6 +998,7 @@ var no=1;
 	
 		 }
 		itemName='/'+itemName+'/';
+		uomName='/'+uomName+'/';
 		setChalanItem(remOrdQty,itemId,poId,poDetailId,remOrdQty,orderDetId,orderId,0,uomId,itemName,uomName);
 		showChalnItems();
 		}
@@ -1032,7 +1033,7 @@ var no=1;
 	
 	function setChalanItem(chalanQty,itemId,poId,poDetailId,remOrdQty,orderDetId,orderId,index,uomId,itemName,uomName){
 		//alert("Item Id" +itemId + "poId" +poId+ "detail PO Id " +poDetailId + "rem Ord Qty  " +remOrdQty );
-		alert("in  setChalanItem");
+		//alert("in  setChalanItem");
 		var isValid=true;
 		
 		if(remOrdQty<chalanQty){
