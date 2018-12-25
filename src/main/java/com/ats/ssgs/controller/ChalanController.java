@@ -181,6 +181,12 @@ public class ChalanController {
  		 
  		String itemName=request.getParameter("itemName");
  		int uomId=Integer.parseInt(request.getParameter("uomId"));
+ 		String uomName="Na";
+ 		try {
+ 		 uomName=request.getParameter("uomName");
+ 		}catch (Exception e) {
+ 			uomName="set";
+		}
  	
  		if(itemName!=null) {
  			
@@ -203,7 +209,7 @@ public class ChalanController {
 			
 			chItem.setItemName(itemName);
 			chItem.setUomId(uomId);
-			
+			chItem.setUomName(uomName);
 			chItem.setIndex(index);
 			
 			tempChItemList.add(chItem);
@@ -220,7 +226,8 @@ public class ChalanController {
 				chItem.setPoDetailId(poDetailId);
 				chItem.setPoId(poId);
 				chItem.setRemOrdQty(remOrdQty);
-				
+				chItem.setUomName(uomName);
+
 				chItem.setItemName(itemName);
 				chItem.setUomId(uomId);
 				
@@ -242,7 +249,8 @@ public class ChalanController {
 				
 				chItem.setItemName(itemName);
 				chItem.setUomId(uomId);
-				
+				chItem.setUomName(uomName);
+
 				chItem.setIndex(index);
 				
 				tempChItemList.add(chItem);
@@ -287,8 +295,8 @@ public class ChalanController {
 
 			map.add("orderId", tempChItemList.get(0).getOrderId());
 			 GetOrder getOrder = rest.postForObject(Constants.url + "getOrderHeaderById", map, GetOrder.class);
+			 
 
-			
 			System.err.println("Inside insert insertEnq method");
 
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
@@ -334,7 +342,7 @@ public class ChalanController {
 				chDetail.setItemWidthPlant(width);
 				chDetail.setItemWidthSite(0);
 				chDetail.setStatus(0);
-				chDetail.setItemTotalPlant(5);
+				chDetail.setItemTotalPlant(tempChItemList.get(i).getChalanQty());
 				
 				chDetail.setOrderDetailId(tempChItemList.get(i).getOrderDetId());
 				chDetailList.add(chDetail);
@@ -364,7 +372,6 @@ public class ChalanController {
 			chHeader.setCustId(custId);
 			chHeader.setDriverId(driverId);
 			chHeader.setExDate1(curDate);
-			chHeader.setExFloat1(0);
 			//chHeader.setExVar1("save time-" +dateFormat.format(cal.getTime().getTime()));
 			chHeader.setInKm(0);
 			chHeader.setOrderId(orderId);
@@ -381,12 +388,16 @@ public class ChalanController {
 			chHeader.setVehTimeOut(outTime);
 			chHeader.setChalanDate(DateConvertor.convertToYMD(chalanDate));
 			chHeader.setCostSegment(costSegment);
-			chHeader.setExVar1(String.valueOf(login.getUser().getUserId()));
+			
+			chHeader.setExVar1(String.valueOf(login.getUser().getUserId()));//userId
 			chHeader.setExInt1(1);//delStatus
-			
-			
+			chHeader.setExFloat1(0);//isClosed 
+
 			ChalanHeader chHeadInserRes = rest.postForObject(Constants.url + "saveChalanHeaderDetail", chHeader,
 					ChalanHeader.class);
+			
+			 session.setAttribute("chalanRes",chHeadInserRes);
+
 			System.err.println("chHeadInserRes " +chHeadInserRes.toString());
 
 			if (chHeadInserRes != null) {
@@ -406,8 +417,15 @@ public class ChalanController {
 			
 			e.printStackTrace();
 		}
+		try {
+		int isRmcPage = Integer.parseInt(request.getParameter("isRmcPage"));
 		
-		return "redirect:/showAddChalan";
+		}catch (Exception e) {
+			System.err.println("I catch Is Rmc page ");
+			return "redirect:/showAddChalan";
+		}
+
+		return "redirect:/showBillRmc";
 	
 	}
 	
@@ -556,6 +574,7 @@ public class ChalanController {
 			chHeader.setOrderId(orderId);
 			
 			chHeader.setStatus(1);
+			chHeader.setExFloat1(1);//set to 1 while close
 		
 			List<ChalanDetail> chalanDList=new ArrayList<>();
 			
@@ -792,8 +811,7 @@ public class ChalanController {
 			chHeader.setCustId(custId);
 			chHeader.setDriverId(driverId);
 			chHeader.setExDate1(curDate);
-			chHeader.setExFloat1(0);
-			chHeader.setExVar1("save time-");
+			
 			chHeader.setInKm(0);
 			chHeader.setOrderId(orderId);
 			chHeader.setOrderNo(request.getParameter("orderNo"));
@@ -809,6 +827,14 @@ public class ChalanController {
 			chHeader.setVehTimeOut(outTime);
 			chHeader.setChalanDate(DateConvertor.convertToYMD(chalanDate));
 			chHeader.setCostSegment(costSegment);
+			
+			chHeader.setExInt1(1);//delStatus
+			chHeader.setExFloat1(0);//isClosed yes-1/no-0
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
+			
+			chHeader.setExVar1(String.valueOf(login.getUser().getUserId()));//userId
+
 			
 			
 			ChalanHeader chUpdateResponse = rest.postForObject(Constants.url + "saveChalanHeaderDetail", chHeader,

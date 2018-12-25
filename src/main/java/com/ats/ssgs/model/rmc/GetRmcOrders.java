@@ -89,6 +89,50 @@ public class GetRmcOrders {
 	 private String projPerName;
 	 
 	 private String usrName;
+	 
+	 private int uomId;
+
+		private String uomName;
+		
+		private int companyId;
+
+		private String compName;
+		
+
+		
+		
+		public int getCompanyId() {
+			return companyId;
+		}
+
+		public void setCompanyId(int companyId) {
+			this.companyId = companyId;
+		}
+
+		public String getCompName() {
+			return compName;
+		}
+
+		public void setCompName(String compName) {
+			this.compName = compName;
+		}
+
+		
+		public int getUomId() {
+			return uomId;
+		}
+
+		public void setUomId(int uomId) {
+			this.uomId = uomId;
+		}
+
+		public String getUomName() {
+			return uomName;
+		}
+
+		public void setUomName(String uomName) {
+			this.uomName = uomName;
+		}
 
 	public int getOrderDetId() {
 		return orderDetId;
@@ -433,7 +477,8 @@ public class GetRmcOrders {
 				+ ", custName=" + custName + ", custMobNo=" + custMobNo + ", contactPerName=" + contactPerName
 				+ ", contactPerMob=" + contactPerMob + ", itemName=" + itemName + ", itemCode=" + itemCode
 				+ ", plantName=" + plantName + ", poNo=" + poNo + ", projName=" + projName + ", projPerMob="
-				+ projPerMob + ", projPerName=" + projPerName + ", usrName=" + usrName + "]";
+				+ projPerMob + ", projPerName=" + projPerName + ", usrName=" + usrName + ", uomId=" + uomId
+				+ ", uomName=" + uomName + ", companyId=" + companyId + ", compName=" + compName + "]";
 	}
 
 }
