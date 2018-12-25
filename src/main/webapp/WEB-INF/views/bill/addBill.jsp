@@ -178,6 +178,27 @@
 										</select>
 									</div>
 									</div>	<div class="form-group"></div>
+									
+									
+									<div class="row">
+									<div class="col-md-2">Bill Date</div>
+									<div class="col-md-4">
+										<input type="text" autocomplete="off"  id="bill_date" name="bill_date" required
+											style="width: 100%;" class="form-control"
+											value="${curDate}"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+									<div class="col-md-2">Bill No</div>
+									<div class="col-md-4">
+										<input type="text" readonly id="bill_no" name="bill_no"
+											style="width: 100%;" class="form-control"
+											value="${doc.docPrefix}-${doc.srNo}"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+
+								</div>
+
+									<div class="form-group"></div>
 							<div class="row">
 							
 									<div class="col-md-2">Customer</div>
@@ -288,25 +309,7 @@
 										
 										</div>						
 								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Bill Date</div>
-									<div class="col-md-4">
-										<input type="text" autocomplete="off"  id="bill_date" name="bill_date" required
-											style="width: 100%;" class="form-control"
-											value="${curDate}"> <span class="error"
-											aria-live="polite"></span>
-									</div>
-									<div class="col-md-2">Bill No</div>
-									<div class="col-md-4">
-										<input type="text" readonly id="bill_no" name="bill_no"
-											style="width: 100%;" class="form-control"
-											value="${doc.docPrefix}-${doc.srNo}"> <span
-											class="error" aria-live="polite"></span>
-									</div>
-
-								</div>
-
-									<div class="form-group"></div>
+								
 								<div class="row">
 									<div class="col-md-2">Remark</div>
 

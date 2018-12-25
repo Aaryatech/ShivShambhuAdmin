@@ -161,6 +161,7 @@
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
 											<option value="">Select</option>
+											<option value="0">All</option>
 										</select>
 									</div>
 
@@ -169,45 +170,41 @@
 
 								<div class="row">
 									<div class="col-md-2">From Date</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<input type="text" autocomplete="off" id="from_date"
 											name="from_date" required style="width: 100%;"
 											class="form-control" value="${fromDate}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
-									<div class="col-md-2">To Date</div>
-									<div class="col-md-4">
+									<div class="col-md-1">To Date</div>
+									<div class="col-md-3">
 										<input type="text" autocomplete="off" id="to_date"
 											name="to_date" style="width: 100%;" class="form-control"
 											value="${toDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
-
-								</div>
-
-
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-6"></div>
+									
+									<div class="col-md-1"></div>
 									<div class="col-md-2">
 										<input type="button" class="btn btn-primary"
 											onclick="showQuot()" value="Submit">
 									</div>
+
 								</div>
+
+
+								
 
 
 								<div class="form-group"></div>
 
-
-
-
-								<input type="checkbox" name="selAll" id="selAll" />
+								
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center"></th>
+												<th style="text-align: center"><input type="checkbox" name="selAll" id="selAll" /></th>
 												<th style="text-align: center">Sr.</th>
 												<th style="text-align: center">Company Name</th>
 												<th style="text-align: center">Quotation No</th>
@@ -226,9 +223,9 @@
 									style="align-content: center; width: 113px; margin-left: 40px;">
 							</div>
 
-						</form>
+						</form><!-- form -->
 					</div>
-				</div>
+				</div> 
 
 			</div>
 		</div>
@@ -344,8 +341,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option selected value="-1"  >Select</option>';
-
+					var html = '<option selected value="0"  >All</option>';
 					for (var i = 0; i < len; i++) {
 
 						html += '<option value="' + data[i].custId + '">'
@@ -443,7 +439,7 @@
 													data,
 													function(i, v) {
 														var chBox;
-
+															
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.quotHeadId
 																+ ','

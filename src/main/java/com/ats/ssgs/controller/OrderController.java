@@ -451,6 +451,8 @@ detail.setOrderDetId(orderDetId);
 
 		GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getOrderListBetDate", map, GetOrder[].class);
 		getOrdList = new ArrayList<GetOrder>(Arrays.asList(ordHeadArray));
+		
+		System.out.println("order list is"+getOrdList.toString() );
 
 		return getOrdList;
 	}

@@ -151,17 +151,19 @@
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
-						<form
+					<form
 							action="${pageContext.request.contextPath}/deleteRecordofOrders"
 							method="post">
-							<div class="card-header">
-								<div class="col-md-2">
-									<strong>${title}</strong>
-								</div>
+					
 
-
+						<div class="card-header">
+							<div class="col-md-2">
+								<strong>${title}</strong>
 							</div>
 
+
+						</div>
+						
 
 							<div class="card-body card-block">
 
@@ -225,34 +227,38 @@
 
 								<div class="form-group"></div>
 
-							</div>
 
-							<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-							<input type="checkbox" name="selAll" id="selAll" /> Select All
-							<div class="card-body card-block">
-								<table id="bootstrap-data-table"
-									class="table table-striped table-bordered">
-									<thead>
-										<tr>
-											<th style="text-align: center"></th>
-											<th style="text-align: center">Sr.</th>
-											<th style="text-align: center">Order No</th>
-											<th style="text-align: center">Order Date</th>
-											<th style="text-align: center">Delivery Date</th>
-											<th style="text-align: center">Customer Name</th>
-											<!-- 												<th style="text-align: center">Status</th>
+
+								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
+								
+								<div class="card-body card-block">
+									<table id="bootstrap-data-table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+												<th style="text-align: center"><input type="checkbox" name="selAll" id="selAll" /> Select All</th>
+												<th style="text-align: center">Sr.</th>
+												<th style="text-align: center">Order No</th>
+												<th style="text-align: center">Order Date</th>
+												<th style="text-align: center">Delivery Date</th>
+												<th style="text-align: center">Customer Name</th>
+												<th style="text-align: center">Customer Mobile No</th>
+												<th style="text-align: center">Status</th>
+												<!-- 												<th style="text-align: center">Status</th>
  -->
-											<th style="text-align: center">Action</th>
-										</tr>
-									</thead>
+												<th style="text-align: center">Action</th>
+											</tr>
+										</thead>
 
-								</table>
+									</table>
+								</div>
+
+								<input type="submit" class="btn btn-primary" value="Delete"
+									id="deleteId"
+									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+									style="align-content: center; width: 113px; margin-left: 40px;">
+
 							</div>
-
-							<input type="submit" class="btn btn-primary" value="Delete"
-								id="deleteId"
-								onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
-								style="align-content: center; width: 113px; margin-left: 40px;">
 						</form>
 					</div>
 
@@ -376,7 +382,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option selected value="-1"  >Select</option>';
+					var html = '<option selected value="0"  >All</option>';
 
 					for (var i = 0; i < len; i++) {
 
@@ -475,6 +481,13 @@
 													data,
 													function(i, v) {
 														var chBox;
+														var status1;
+														if (v.status == 0) {
+															status1 = "Pending";
+														} else if (v.status == 1) {
+															status1 = "Completed";
+														}
+
 														if (v.status == 0) {
 															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																	+ v.orderId
@@ -504,6 +517,8 @@
 																				v.orderDate,
 																				v.deliveryDate,
 																				v.custName,
+																				v.custMobNo,
+																				status1,
 																				acButton ])
 																.draw();
 													});

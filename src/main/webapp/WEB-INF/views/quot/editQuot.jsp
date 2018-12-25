@@ -60,7 +60,7 @@ body {
 /* The Close Button */
 .close {
 	color: #aaaaaa;
-	float: right;
+	float: left;
 	font-size: 28px;
 	font-weight: bold;
 }
@@ -694,14 +694,14 @@ body {
 
 										<div class="col-md-2">Remark</div>
 
-										<div class="col-md-8">
+										<div class="col-md-4">
 											<input type="text" id="quot_remark" name="quot_remark"
 												class="form-control" style="width: 100%;" value="${quotHeader.otherRemark1}" required>
 										</div>
 
 										<div class="col-md-1">
 											<input type="button" class="btn btn-primary"
-												onclick="valthisform()" value="Submit">
+												onclick="valthisform()" value="Generate Quotation">
 
 										</div>
 

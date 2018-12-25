@@ -56,10 +56,18 @@ public class GetEnqHeader {
 
 	
 	private String custName;
+	
+	private String custMobNo;
 
 	private String plantName;
 
 	private String enqGenBy;
+	
+	private String quotNo;
+	
+	private String quotDate;	
+	
+	
 
 	public int getEnqHeadId() {
 		return enqHeadId;
@@ -277,6 +285,34 @@ public class GetEnqHeader {
 	public void setEnqGenBy(String enqGenBy) {
 		this.enqGenBy = enqGenBy;
 	}
+	
+	
+
+	public String getCustMobNo() {
+		return custMobNo;
+	}
+
+	public void setCustMobNo(String custMobNo) {
+		this.custMobNo = custMobNo;
+	}
+
+	
+	
+	public String getQuotNo() {
+		return quotNo;
+	}
+
+	public void setQuotNo(String quotNo) {
+		this.quotNo = quotNo;
+	}
+
+	public String getQuotDate() {
+		return quotDate;
+	}
+
+	public void setQuotDate(String quotDate) {
+		this.quotDate = quotDate;
+	}
 
 	@Override
 	public String toString() {
@@ -286,8 +322,23 @@ public class GetEnqHeader {
 				+ quotId + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1
 				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2
 				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", enqGenId=" + enqGenId
-				+ ", enqHRemark=" + enqHRemark + ", enqDetailList=" + ", custName=" + custName
-				+ ", plantName=" + plantName + ", enqGenBy=" + enqGenBy + "]";
+				+ ", enqHRemark=" + enqHRemark + ", custName=" + custName + ", custMobNo=" + custMobNo + ", plantName="
+				+ plantName + ", enqGenBy=" + enqGenBy + ", quotNo=" + quotNo + ", quotDate=" + quotDate
+				+ ", getEnqHeadId()=" + getEnqHeadId() + ", getEnqNo()=" + getEnqNo() + ", getEnqUsrId()="
+				+ getEnqUsrId() + ", getEnqDate()=" + getEnqDate() + ", getCustId()=" + getCustId()
+				+ ", getEnqDateTime()=" + getEnqDateTime() + ", getEnqPriority()=" + getEnqPriority()
+				+ ", getEnqStatus()=" + getEnqStatus() + ", getPlantId()=" + getPlantId() + ", getEnqUsrId2()="
+				+ getEnqUsrId2() + ", getQuotId()=" + getQuotId() + ", getExInt1()=" + getExInt1() + ", getExInt2()="
+				+ getExInt2() + ", getExInt3()=" + getExInt3() + ", getExVar1()=" + getExVar1() + ", getExVar2()="
+				+ getExVar2() + ", getExVar3()=" + getExVar3() + ", getExDate1()=" + getExDate1() + ", getExDate2()="
+				+ getExDate2() + ", getExBool1()=" + getExBool1() + ", getExBool2()=" + getExBool2() + ", getExBool3()="
+				+ getExBool3() + ", getEnqGenId()=" + getEnqGenId() + ", getEnqHRemark()=" + getEnqHRemark()
+				+ ", getCustName()=" + getCustName() + ", getPlantName()=" + getPlantName() + ", getEnqGenBy()="
+				+ getEnqGenBy() + ", getCustMobNo()=" + getCustMobNo() + ", getQuotNo()=" + getQuotNo()
+				+ ", getQuotDate()=" + getQuotDate() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
 
+	
+	
 }

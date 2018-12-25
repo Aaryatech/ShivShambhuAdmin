@@ -124,7 +124,7 @@
 
 												<td><a
 													href="${pageContext.request.contextPath}/editQuot/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
-														class="fa fa-edit" title="Edit"></i> <span
+														class="fa fa-edit" title="Generate Quotation"></i> <span
 														class="text-muted"></span></a> <a
 													href="${pageContext.request.contextPath}/deleteQuot/${quot.quotHeadId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i

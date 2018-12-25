@@ -61,11 +61,11 @@ public class QuotController {
 
 			model = new ModelAndView("quot/quotList");
 
-			model.addObject("title", "Quotation List");
+			model.addObject("title", "Generate Quotation");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("statusList", "0");
+			map.add("statusList", "0,1");
 
 			GetQuotHeads[] quotArray = rest.postForObject(Constants.url + "getQuotHeaders", map, GetQuotHeads[].class);
 			quotList = new ArrayList<GetQuotHeads>(Arrays.asList(quotArray));
@@ -89,7 +89,7 @@ public class QuotController {
 
 			model = new ModelAndView("quot/quotList");
 
-			model.addObject("title", "Quotation List");
+			model.addObject("title", "Add Customer P.O.");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
