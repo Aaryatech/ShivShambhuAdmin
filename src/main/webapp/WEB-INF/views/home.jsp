@@ -76,6 +76,242 @@
 	<!-- Header-->
 
 
+	<div class="content mt-3">
+		<div class="animated fadeIn">
+
+			<div class="row">
+
+				<div class="col-xs-12 col-sm-12">
+
+					<div class="col-xs-12 col-sm-12">
+
+
+
+
+						<div class="col-sm-6 col-lg-4" style="cursor: pointer;">
+							<div class="card text-white bg-flat-color-2">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 50px;">${dashBoard.totalEnq}</span>
+
+									</h4>
+									<p style="font-size: 18px; font-weight: bold; color: white;">
+										<font color="white">Total No of Enquiry</font>
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+
+
+
+						<div class="col-sm-6 col-lg-4" style="cursor: pointer;">
+
+							<div class="card text-white bg-flat-color-2">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 50px;">${dashBoard.totalQuotPending}</span>
+									</h4>
+									<p style="font-size: 18px; font-weight: bold; color: white;">
+										<font color="white">Pending Quotations</font>
+									</p>
+
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-sm-6 col-lg-4" style="cursor: pointer;">
+
+							<div class="card text-white bg-flat-color-2">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 50px;">${dashBoard.totalQuotGenerated}</span>
+
+									</h4>
+									<p style="font-size: 18px; font-weight: bold; color: white;">
+										<font color="white">Generated Quotations</font>
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+
+					<div class="col-xs-12 col-sm-12">
+
+						<div class="col-sm-6 col-lg-4" style="cursor: pointer;">
+							<div class="card text-white bg-flat-color-3">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 50px;">${dashBoard.totalPoPending}</span>
+
+									</h4>
+									<p style="font-size: 18px; font-weight: bold; color: white;">
+										<font color="white">Total Pending Po</font>
+									</p>
+
+
+								</div>
+							</div>
+
+						</div>
+
+
+						<div class="col-sm-6 col-lg-4" style="cursor: pointer;">
+
+							<div class="card text-white bg-flat-color-3">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 50px;">${dashBoard.totalOrderAmount}</span>
+
+									</h4>
+									<p style="font-size: 18px; font-weight: bold; color: white;">
+										<font color="white">Total Order Amount</font>
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+
+
+
+						<div class="col-sm-6 col-lg-4" style="cursor: pointer;">
+
+							<div class="card text-white bg-flat-color-3">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 50px;">${dashBoard.totalBillAmount}</span>
+
+									</h4>
+									<p style="font-size: 18px; font-weight: bold; color: white;">
+										<font color="white">Total Bill Amount</font>
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col-sm-6 col-lg-4" style="cursor: pointer;">
+
+							<div class="card text-white bg-flat-color-2">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 50px;">${dashBoard.totalTaxBillAmt}</span>
+
+									</h4>
+									<p style="font-size: 18px; font-weight: bold; color: white;">
+										<font color="white">Total Tax Bill Amount</font>
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+
+
+
+
+						<div class="col-sm-6 col-lg-4" style="cursor: pointer;">
+
+							<div class="card text-white bg-flat-color-2">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 50px;">${dashBoard.totalTaxableBillAmt}</span>
+
+									</h4>
+									<p style="font-size: 18px; font-weight: bold; color: white;">
+										<font color="white">Total Taxable Bill Amount</font>
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+
+
+
+
+
+						<div class="col-sm-6 col-lg-4" style="cursor: pointer;">
+
+							<div class="card text-white bg-flat-color-2">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 50px;">${dashBoard.paymentRecPaid}</span>
+
+									</h4>
+									<p style="font-size: 18px; font-weight: bold; color: white;">
+										<font color="white">Total Amount recovery</font>
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+
+
+
+
+
+
+						<div class="col-sm-6 col-lg-4" style="cursor: pointer;">
+
+							<div class="card text-white bg-flat-color-3">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 50px;">${dashBoard.paymentRecOutstandingPending}</span>
+
+									</h4>
+									<p style="font-size: 18px; font-weight: bold; color: white;">
+										<font color="white">Total Outstanding Amount</font>
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+
+
+
+
+
+
+
+					</div>
+
+
+
+
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 

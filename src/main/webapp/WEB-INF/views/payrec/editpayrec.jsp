@@ -160,7 +160,7 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Follow Up Date</div>
+									<div class="col-md-2">Credit Start Date</div>
 
 									<div class="col-md-2">
 										<input type="text" id="creditDate1" name="creditDate1"
@@ -168,10 +168,39 @@
 											class="form-control" readonly required style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Next FU Date*</div>
+									<div class="col-md-2">Credit Date</div>
+
+									<div class="col-md-2">
+										<input type="text" id="creditDate3" name="creditDate3"
+											autocomplete="off" value="${editRec.creditDate3}" required
+											class="form-control" readonly required style="width: 100%;">
+									</div>
+
+
+									<div class="col-md-2">Follow Up Date*</div>
 									<div class="col-md-2">
 										<input type="text" id="creditDate2" name="creditDate2"
 											autocomplete="off" value="${editRec.creditDate2}"
+											class="form-control" required style="width: 100%;">
+									</div>
+								</div>
+
+								<div class="form-group"></div>
+								<div class="row">
+
+
+
+									<div class="col-md-2">Bill Total*</div>
+									<div class="col-md-2">
+										<input type="text" id="billTotal" name="billTotal"
+											autocomplete="off" value="${editRec.billTotal}" readonly
+											class="form-control" required style="width: 100%;">
+									</div>
+
+									<div class="col-md-2">Paid Amount*</div>
+									<div class="col-md-2">
+										<input type="text" id="paidAmt1" name="paidAmt1"
+											autocomplete="off" value="${editRec.paidAmt}" readonly
 											class="form-control" required style="width: 100%;">
 									</div>
 
@@ -210,28 +239,25 @@
 									</div>
 								</div>
 
+
+
 								<div class="form-group"></div>
-								<div class="row" id="hide_div">
+								<div class="row">
+
 									<div class="col-md-2">Transction No*</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<input type="text" id="txNo" name="txNo" class="form-control"
 											autocomplete="off" style="width: 100%;"
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 
-
-								</div>
-
-
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Payment Date*</div>
-									<div class="col-md-4">
+									<div class="col-md-1">Payment Date*</div>
+									<div class="col-md-3">
 										<input type="text" id="paymentDate" name="paymentDate"
 											required class="form-control" autocomplete="off"
 											style="width: 100%;">
 									</div>
-									<div class="col-md-2"></div>
+									<div class="col-md-1"></div>
 									<div class="col-md-2">
 										<input type="button" value="Add" class="btn btn-primary"
 											style="align-content: center; width: 113px;" onclick="add()" />
@@ -374,9 +400,9 @@
 			var payHeadId = document.getElementById("payHeadId").value;
 			var paymentDate = document.getElementById("paymentDate").value;
 			
-			
+		
 
-			alert("Inside add ajax");
+			alert("Inside add ajax"+paidAmt);
 			$
 					.getJSON(
 							'${editInAddPayRec}',
@@ -562,7 +588,7 @@
 
 		});
 	</script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 function hideDiv(type){
 	  
 	  
@@ -575,7 +601,7 @@ function hideDiv(type){
 
 		} 
 	}
-</script>
+</script> -->
 
 
 
