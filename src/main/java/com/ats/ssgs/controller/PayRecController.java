@@ -293,7 +293,8 @@ public class PayRecController {
 				dDetail.setExVarchar2("NA");
 
 				dDetail.setPayHeadId(payHeadId);
-				dDetail.setPaymentDate(editRec.getPayRecoveryDetailList().get(i).getPaymentDate());
+				dDetail.setPaymentDate(
+						DateConvertor.convertToYMD(editRec.getPayRecoveryDetailList().get(i).getPaymentDate()));
 				dDetail.setTxNo(editRec.getPayRecoveryDetailList().get(i).getTxNo());
 				dDetail.setTypeTx(editRec.getPayRecoveryDetailList().get(i).getTypeTx());
 
