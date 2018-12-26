@@ -731,6 +731,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 
 			}
 			//alert("total " +tot);
+			tot=tot.toFixed(2);
 			document.getElementById("ordTotal").innerHTML=tot;
 		});
 		}
