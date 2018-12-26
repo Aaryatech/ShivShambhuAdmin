@@ -477,8 +477,7 @@
 		function callEdit(quotHeadId, plantId, custId, enqHeadId) {
 
 			window.open("${pageContext.request.contextPath}/editQuot/"
-					+ quotHeadId + '/' + plantId + '/' + custId + '/'
-					+ enqHeadId);
+					+ quotHeadId + '/' + plantId + '/' + custId + '/'+ enqHeadId);
 
 		}
 	</script>

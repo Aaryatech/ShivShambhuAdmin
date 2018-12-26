@@ -32,6 +32,8 @@ import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
+import com.ats.ssgs.model.master.User;
+import com.ats.ssgs.model.master.Vehicle;
 import com.ats.ssgs.model.order.GetOrder;
 import com.ats.ssgs.model.order.GetOrderDetail;
 import com.ats.ssgs.model.order.GetPoForOrder;
@@ -45,6 +47,10 @@ import com.ats.ssgs.model.quot.QuotHeader;
 @Scope("session")
 public class OrderController {
 
+	
+	
+	List<Vehicle> vehicleList;
+	List<User> usrList;
 	List<Plant> plantList;
 
 	List<Cust> custList;
@@ -166,6 +172,8 @@ public class OrderController {
 		float orderRate = Float.parseFloat(request.getParameter("poRate"));
 		
 		int orderDetId =Integer.parseInt(request.getParameter("orderDetId"));
+		
+		itemTotal=Math.round(itemTotal);
 		if (tempOrdDetail == null) {
 			System.err.println("Ord Head =null ");
 			/*
@@ -574,7 +582,8 @@ detail.setOrderDetId(orderDetId);
 
 					orDetail.setPoDetailId(ordDetailList.get(i).getPoDetailId());
 					orDetail.setPoId(poId);
-					orDetail.setRemOrdQty((orDetail.getRemOrdQty()-orDetail.getOrderQty()));
+					//orDetail.setRemOrdQty((orDetail.getRemOrdQty()-orDetail.getOrderQty()));
+					orDetail.setRemOrdQty(orDetail.getOrderQty());
 					orDetail.setTotal(itemTotal);
 					orDetail.setOrderId(ordDetailList.get(i).getOrderId());
 					orDetail.setStatus(ordDetailList.get(i).getStatus());
@@ -659,5 +668,169 @@ detail.setOrderDetId(orderDetId);
 
 			return "redirect:/showOrderList";
 		}
+		
+		//*********************Pending Order*******************************
 
+		@RequestMapping(value = "/showPendingOrderList", method = RequestMethod.GET)
+		public ModelAndView showPendingOrderList(HttpServletRequest request, HttpServletResponse response) {
+
+			ModelAndView model = null;
+			try {
+
+				model = new ModelAndView("order/pendingOrder");
+
+				model.addObject("title", "Pending Order List");
+
+				Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+				plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+				model.addObject("plantList", plantList);
+
+				String fromDate = null, toDate = null;
+
+				if (request.getParameter("fromDate") == null || request.getParameter("fromDate") == "") {
+
+					System.err.println("onload call  ");
+
+					Calendar date = Calendar.getInstance();
+					date.set(Calendar.DAY_OF_MONTH, 1);
+
+					Date firstDate = date.getTime();
+
+					DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+					fromDate = dateFormat.format(firstDate);
+
+					toDate = dateFormat.format(new Date());
+					System.err.println("cu Date  " + fromDate + "todays date   " + toDate);
+
+				} else {
+
+					System.err.println("After page load call");
+					fromDate = request.getParameter("fromDate");
+					toDate = request.getParameter("toDate");
+
+				}
+
+				// getOrderListBetDate
+
+				model.addObject("fromDate", fromDate);
+				model.addObject("toDate", toDate);
+
+			} catch (Exception e) {
+
+				System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
+
+				e.printStackTrace();
+
+			}
+
+			return model;
+		}
+
+		
+		
+		@RequestMapping(value = "/getOrderPendingListBetDate", method = RequestMethod.GET)
+		public @ResponseBody List<GetOrder> getOrderPendingListBetDate(HttpServletRequest request, HttpServletResponse response) {
+
+			System.err.println(" in getTempOrderHeader");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			int plantId = Integer.parseInt(request.getParameter("plantId"));
+			int custId = Integer.parseInt(request.getParameter("custId"));
+
+			String fromDate = request.getParameter("fromDate");
+			String toDate = request.getParameter("toDate");
+
+			map.add("plantId", plantId);
+			map.add("custId", custId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			//map.add("status", 0);
+
+			GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getPendingOrderListBetDate", map, GetOrder[].class);
+			getOrdList = new ArrayList<GetOrder>(Arrays.asList(ordHeadArray));
+			
+			System.out.println("order list is"+getOrdList.toString() );
+
+			return getOrdList;
+		}
+		
+		@RequestMapping(value = "/showGenerateChalanForPendingOrder", method = RequestMethod.POST)
+		public ModelAndView showGenerateChalan1(HttpServletRequest request, HttpServletResponse response) {
+
+			ModelAndView model = null;
+			try {
+
+				model = new ModelAndView("chalan/generateChalan1");
+
+				model.addObject("title", "Add Order");
+				
+			int id=Integer.parseInt(request.getParameter("orderId"));
+				int key=Integer.parseInt(request.getParameter("key")); 
+				
+				
+				System.out.println("detail are"+id +key);
+				
+				
+				
+
+
+				Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+				plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+				model.addObject("plantList", plantList);
+
+				Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
+				vehicleList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
+
+				model.addObject("vehicleList", vehicleList);
+
+				User[] usrArray = rest.getForObject(Constants.url + "getAllUserList", User[].class);
+				usrList = new ArrayList<User>(Arrays.asList(usrArray));
+
+				model.addObject("usrList", usrList);
+
+				model.addObject("title", "Add Chalan");
+				
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map.add("docCode", 3);
+
+				Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+
+				model.addObject("doc", doc);
+				
+				System.out.println("eee:"+getOrdList.get(key).toString());
+				
+				model.addObject("custName",getOrdList.get(key).getCustName());
+				model.addObject("plantName",getOrdList.get(key).getPlantName());
+				model.addObject("projName",getOrdList.get(key).getProjName());
+				model.addObject("orderNo",getOrdList.get(key).getOrderNo());
+				model.addObject("custId",getOrdList.get(key).getCustId());
+				model.addObject("plantId",getOrdList.get(key).getPlantId());
+				model.addObject("projId",getOrdList.get(key).getProjId());
+				model.addObject("orderId",getOrdList.get(key).getOrderId());
+				
+				DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+				Calendar cal = Calendar.getInstance();
+
+				String curDate = dateFormat.format(new Date());
+				
+				model.addObject("curDate" ,curDate);
+
+			} catch (Exception e) {
+
+				System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
+
+				e.printStackTrace();
+
+			}
+
+			return model;
+				
+		}
+		
+
+		
+		
 }

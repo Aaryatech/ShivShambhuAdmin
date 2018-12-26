@@ -883,4 +883,60 @@ System.err.println("Exce in update Chalan ");
 	}
 	
 	
+	
+
+	@RequestMapping(value = "/showOpenChalanList", method = RequestMethod.GET)
+	public ModelAndView showOpenChalanList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("chalan/openChalan");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+			
+			model.addObject("title", "Open Chalan List");
+			
+			
+		}
+		catch (Exception e) {
+			System.err.println("Exce in /showChalanList   " +e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+		
+	}
+	
+	
+	@RequestMapping(value = "/getOpenChalanListByPlant", method = RequestMethod.GET)
+	public @ResponseBody List<GetChalanHeader> getOpenChalanListByPlant(HttpServletRequest request, HttpServletResponse response) {
+		List<GetChalanHeader> chalanHeadList;
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		System.err.println("plantId for getChalanListByPlant  " +plantId);
+
+		map.add("plantId", plantId);
+		//map.add("chalanStatus", 0);
+		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getOpenChalanHeadersByPlantAndStatus", map,
+				GetChalanHeader[].class);
+		
+		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
+		
+		for(int i=0;i<chalanHeadList.size();i++) {
+			
+			chalanHeadList.get(i).setChalanDate(DateConvertor.convertToDMY(chalanHeadList.get(i).getChalanDate()));
+		}
+				System.out.println("open chalan "+chalanHeadList.toString() );
+				System.err.println("Ajax chalanHeadList /getChalanListByPlant " + chalanHeadList.toString());
+
+		
+				return chalanHeadList ;
+	}
+	
+	
+	
+	
 }

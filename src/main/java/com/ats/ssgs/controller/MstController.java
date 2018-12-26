@@ -547,6 +547,11 @@ public class MstController {
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
+			
+			/*VehicleType[] vehArray = rest.getForObject(Constants.url + "getAllVehicleType", VehicleType[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));*/
+
+			model.addObject("plantList", plantList);
 
 
 		} catch (Exception e) {

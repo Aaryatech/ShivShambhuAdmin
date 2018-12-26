@@ -161,6 +161,8 @@ public class EnqController {
 
 		GetEnqHeader[] ordHeadArray = rest.postForObject(Constants.url + "getEnqListByPlantIdAndCustId", map,GetEnqHeader[].class);
 		getEnqList  = new ArrayList<GetEnqHeader>(Arrays.asList(ordHeadArray));
+		
+		System.out.println("enq list is"+getEnqList.toString());
 
 		return getEnqList;
 	}

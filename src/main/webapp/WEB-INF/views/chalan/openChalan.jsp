@@ -10,8 +10,7 @@
 <title>Shiv Admin</title>
 
 
-<c:url var="getCustByPlantId" value="/getCustByPlantId" />
-<c:url var="getEnqListBetDate" value="/getEnqListBetDate" />
+<c:url var="getChalanListByPlant" value="/getChalanListByPlant" />
 <%-- 
 
 <c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
@@ -25,7 +24,7 @@
 	
 <c:url var="getTempOrderHeader"
 	value="/getTempOrderHeader" /> --%>
-
+	
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -76,30 +75,31 @@
 
 <style>
 .alert {
-	padding: 20px;
-	background-color: red;
-	color: white;
+    padding: 20px;
+    background-color: red;
+    color: white;
+    
 }
-
 .alert1 {
-	padding: 20px;
-	background-color: green;
-	color: white;
+    padding: 20px;
+    background-color: green;
+    color: white;
+    
 }
 
 .closebtn {
-	margin-left: 15px;
-	color: white;
-	font-weight: bold;
-	float: right;
-	font-size: 22px;
-	line-height: 20px;
-	cursor: pointer;
-	transition: 0.3s;
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .closebtn:hover {
-	color: black;
+    color: black;
 }
 </style>
 
@@ -123,48 +123,47 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-
-				<c:choose>
-					<c:when test="${isError==1}">
-
-						<div class="alert">
-
+			
+			<c:choose>
+							<c:when test="${isError==1}">
+							
+							<div class="alert">
+							
 							<span class="closebtn"
-								onclick="this.parentElement.style.display='none';">&times;</span>
-							<strong>Failed !</strong> Data not submitted !!
-						</div>
-
-					</c:when>
-
-					<c:when test="${isError==2}">
-
-						<div class="alert1">
-
+						onclick="this.parentElement.style.display='none';">&times;</span>
+					<strong>Failed !</strong>     Data not submitted  !!
+				</div>
+							
+							</c:when>
+							
+							<c:when test="${isError==2}">
+							
+							<div class="alert1">
+							
 							<span class="closebtn"
-								onclick="this.parentElement.style.display='none';">&times;</span>
-							<strong>Success</strong> Data Submitted !!
-						</div>
-
-					</c:when>
-
-				</c:choose>
+						onclick="this.parentElement.style.display='none';">&times;</span>
+					<strong>Success</strong>     Data Submitted !!
+				</div>
+							
+							</c:when>
+							
+							</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
-						<form
-							action="${pageContext.request.contextPath}/deleteRecordofEnq"
-							method="post">
-							<div class="card-header">
-								<div class="col-md-4">
-									<strong>${title}</strong>
-								</div>
-
-
+					<form
+								action="${pageContext.request.contextPath}/deleteRecordofChalan"
+								method="post">
+						<div class="card-header">
+							<div class="col-md-2">
+								<strong>${title}</strong>
 							</div>
+							
+							
 
-
-							<div class="card-body card-block">
-
+						</div>
+						<div class="card-body card-block">
+							
 								<div class="row">
 
 									<div class="col-md-2">Select Plant</div>
@@ -174,91 +173,74 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="">Select</option>
+											<option value="">Select Plant</option>
 
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
 											</c:forEach>
 										</select>
 									</div>
-									<div class="col-md-2">Select Customer</div>
-									<div class="col-md-4">
-										<select id="cust_name" name="cust_name" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select customer')"
-											onchange="getCustInfo()">
-											
-										</select>
-									</div>
-
-								</div>
-								<div class="form-group"></div>
-
-								<div class="row">
-									<div class="col-md-2">From Date</div>
-									<div class="col-md-3">
-										<input type="text" autocomplete="off" id="from_date"
-											name="from_date" required style="width: 100%;"
-											class="form-control" value="${fromDate}"> <span
-											class="error" aria-live="polite"></span>
-									</div>
-									<div class="col-md-1">To Date</div>
-									<div class="col-md-3">
-										<input type="text" autocomplete="off" id="to_date"
-											name="to_date" style="width: 100%;" class="form-control"
-											value="${toDate}"> <span class="error"
-											aria-live="polite"></span>
-									</div>
-									<div class="col-md-1"></div>
+									
 									<div class="col-md-2">
-										<input type="button" class="btn btn-primary"
-											onclick="showQuot()" value="Submit">
-
+										<input type="button" class="btn btn-primary"  onclick="showChalan()" value="Submit">
+									</div>
 								</div>
-
-
 								
 
-								<div class="form-group"></div>
+								<!-- 
+								<div class="row">
+								<div class="col-md-6"></div>
+									<div class="col-md-2">
+										<input type="button" class="btn btn-primary"  onclick="showChalan()" value="Submit">
+									</div>
+								</div>
+								 -->
 
+								<div class="form-group"></div>
+								
+								</div>
+								
+								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
 								
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center"><input type="checkbox" name="selAll" id="selAll" /> Select All</th>
-												<th style="text-align: center">No.</th>
-												<th style="text-align: center">Enquiry No</th>
-												<th style="text-align: center">Enquiry Date</th>
-													<th style="text-align: center">Quotation No</th>
-													<th style="text-align: center">Quotation Date</th>
+												<th style="text-align: center"><input
+												type="checkbox" name="selAll" id="selAll" /> Select All</th>
+												<th style="text-align: center">Sr.No.</th>
+												<th style="text-align: center">Chalan No</th>
+												<th style="text-align: center">Chalan Date</th>
 												<th style="text-align: center">Customer Name</th>
-												<th style="text-align: center">Customer Mobile No.</th>
-												<th style="text-align: center">Status</th>
-												<!-- <th style="text-align: center">Action</th> -->
+												<th style="text-align: center">Project Name</th>
+												<th style="text-align: center">Vehicle No</th>
+												<th style="text-align: center">Driver Name</th>
+												
+<!-- 												<th style="text-align: center">Status</th>
+ -->												<th style="text-align: center">Action</th>
 											</tr>
 										</thead>
 
 									</table>
 								</div>
 
-								<input type="submit" class="btn btn-primary" value="Delete"
-									id="deleteId"
-									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
-									style="align-content: center; width: 113px; margin-left: 40px;">
-							</div>
-</div>
-						</form>
+							<input type="submit" class="btn btn-primary" value="Delete"
+										id="deleteId"
+										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+										style="align-content: center; width: 113px; margin-left: 40px;">
+						</form>	
+
+						</div>
 					</div>
 				</div>
-
 			</div>
-		</div>
 
-	</div>
-	<!-- .animated -->
+
+		</div>
+		<!-- .animated -->
 	<!-- .content -->
+
 
 	<!-- .animated -->
 	<!-- .content -->
@@ -314,20 +296,9 @@
 		});
 	</script>
 	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$('#bootstrap-data-table').DataTable();
-
-							$("#selAll")
-									.click(
-											function() {
-												$(
-														'#bootstrap-data-table tbody input[type="checkbox"]')
-														.prop('checked',
-																this.checked);
-											});
-						});
+		$(document).ready(function() {
+			$('#bootstrap-data-table').DataTable();
+		});
 	</script>
 
 
@@ -338,7 +309,7 @@
 			$('input[id$=from_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-
+			
 			$('input[id$=to_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
@@ -347,8 +318,9 @@
 	</script>
 
 	<script type="text/javascript">
-		// on plant change function 
-		function getData() {
+	
+	// on plant change function 
+		function getData() { 
 			var plantId = document.getElementById("plant_id").value;
 			var valid = true;
 
@@ -367,7 +339,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option selected value="0"  >All</option>';
+					var html = '<option selected value="-1"  >Select</option>';
 
 					for (var i = 0; i < len; i++) {
 
@@ -384,8 +356,9 @@
 					$('#po_id').html("-1");
 					$("#po_id").trigger("chosen:updated");
 					 */
-					var dataTable = $('#bootstrap-data-table').DataTable();
-					dataTable.clear().draw();
+					var dataTable = $('#bootstrap-data-table')
+					.DataTable();
+			dataTable.clear().draw();
 
 				});
 			}//end of if
@@ -396,135 +369,115 @@
 
 
 	<script type="text/javascript">
-		// onclick of submit to search order 
-		function showQuot() {
-
-			//alert("Hi View Orders  ");
-
+	// onclick of submit to search order 
+		function showChalan() {
+		
+		//alert("Hi View showChalan  ");
+	
 			var plantId = document.getElementById("plant_id").value;
-			var fromDate = document.getElementById("from_date").value;
-			var toDate = document.getElementById("to_date").value;
-
 			var valid = true;
 
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
-			}
-
-			var custId = document.getElementById("cust_name").value;
-			var valid = true;
-			if (custId == null || custId == "") {
-				valid = false;
-				alert("Please Select Customer");
-
-				var dataTable = $('#bootstrap-data-table').DataTable();
-				dataTable.clear().draw();
-
-			} else if (custId < 0) {
-				valid = false;
-
-			}
-
-			else if (fromDate == null || fromDate == "") {
-				valid = false;
-				alert("Please select from date");
-			}
-
-			else if (toDate == null || toDate == "") {
-				valid = false;
-				alert("Please select to date");
-			}
-
-			if (fromDate > toDate) {
-				valid = false;
-				alert("from date greater than todate ");
-			}
-			if (valid == true) {
-
+			}			
+			
+			
+			if(valid==true){
+			
 				$
 						.getJSON(
-								'${getEnqListBetDate}',
+								'${getChalanListByPlant}',
 								{
 									plantId : plantId,
-									custId : custId,
-									fromDate : fromDate,
-									toDate : toDate,
 									ajax : 'true',
 								},
 
 								function(data) {
+									
+									//alert("Order Data " +JSON.stringify(data));
+									var chBox;
+									 var dataTable = $('#bootstrap-data-table')
+									.DataTable();
+							dataTable.clear().draw();
 
-									alert("Order Data " +JSON.stringify(data));
-
-									var dataTable = $('#bootstrap-data-table')
-											.DataTable();
-									dataTable.clear().draw();
-
-									$
-											.each(
-													data,
-													function(i, v) {
-														var chBox;
-														var status1;
-														if (v.enqStatus == 0) {
-															status1 = "Enquiry Generated";
-														} else if (v.enqStatus == 1) {
-															status1= "Quotation Generated";
-														}
-														else{
+							$.each(data,function(i, v) {
+								
+								if(v.status==0){
+												
+										 var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+												+ v.chalanId
+												+ ','
+												+ i
+												+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+														+ v.chalanId
+														+ ','
+														+ i
+														+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose('
+															+ v.chalanId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-times"></i></a>'
 															
-															status1 = "PO Generated";
-														}
-														
+															 chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
+								}else{
+									
+									var acButton = '<a href="#" class="action_btn" onclick="callEdit1('
+										+ v.chalanId
+										+ ','
+										+ i
+										+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete1('
+												+ v.chalanId
+												+ ','
+												+ i
+												+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose1('
+													+ v.chalanId
+													+ ','
+													+ i
+													+ ')"><i class="fa fa-times"></i></a>'
+									
+									chBox=""
+									
+								}
 
-														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.enqHeadId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-																+ v.enqHeadId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-trash" title="Delete"></i></a>'
-
-														chBox = '<input  type="checkbox" class="chk" name="selectEnqToDelete" id='+v.enqHeadId+' class="check"  value='+v.enqHeadId+'>'
-
-														dataTable.row
-																.add(
-																		[
-																				chBox,
-																				i + 1,
-																				v.enqNo,
-																				v.enqDate,
-																				v.quotNo,
-																				v.quotDate,
-																				v.custName,
-																				v.custMobNo,
-																				status1
+ 
+												dataTable.row
+														.add(
+																[chBox,
+																		i + 1,
+																		v.chalanNo,
+																		v.chalanDate,
+																		v.custName,
+																		v.projName,
+																		v.vehNo,
+																		v.driverName,
+																		acButton
 																		 ])
-																.draw();
-													});
-
-								});
-
-			}//end of if valid ==true
-
+														.draw();
+											}); 
+						
+								});	
+				
+}//end of if valid ==true
+						
 		}
-
-		function callEdit(enqHeadId) {
-
-			window.open("${pageContext.request.contextPath}/editOrder/"
-					+ enqHeadId);
-
-		}
-
-		function callDelete(orderId) {
-
-		}
+	
+	function callEdit(chalanId){
+		
+		window.open("${pageContext.request.contextPath}/editChalan/"+chalanId);
+		
+	}
+	
+function callClose(chalanId){
+		
+		window.open("${pageContext.request.contextPath}/closeChalan/"+chalanId);
+		
+	}
 	</script>
-
-
+	
+</script>
+	
+		
 	<script type="text/javascript">
 		$(document)
 				.ready(
@@ -541,13 +494,9 @@
 											});
 						});
 	</script>
+		
 
 
 
 </body>
 </html>
-
-
-
-<!-- SELECT h.*,c.cust_name,c.cust_mob_no,p.plant_name,e.enq_gen_by,t.quot_no,t.quot_date FROM  t_enq_header h ,m_customer c,t_quot_header t,m_plant p,enq_gen_fact e WHERE c.cust_id=h.cust_id AND p.plant_id=h.plant_id AND e.enq_gen_id=h.enq_gen_id AND h.quot_id=t.quot_head_id AND h.plant_id=51 
-		AND h.enq_date BETWEEN '2018-01-01' AND '2018-12-31' AND h.ex_int1=1 -->

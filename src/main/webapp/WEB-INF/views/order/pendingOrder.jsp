@@ -11,7 +11,8 @@
 
 
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
-<c:url var="getEnqListBetDate" value="/getEnqListBetDate" />
+<c:url var="getOrderPendingListBetDate"
+	value="/getOrderPendingListBetDate" />
 <%-- 
 
 <c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
@@ -152,10 +153,12 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<form
-							action="${pageContext.request.contextPath}/deleteRecordofEnq"
-							method="post">
+							action="${pageContext.request.contextPath}/deleteRecordofOrders"
+							method="post" id="ordListForm">
+
+
 							<div class="card-header">
-								<div class="col-md-4">
+								<div class="col-md-2">
 									<strong>${title}</strong>
 								</div>
 
@@ -187,56 +190,82 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
-											
+											<option value="">Select</option>
 										</select>
 									</div>
 
 								</div>
 								<div class="form-group"></div>
+<div class="row">
 
+									
+									<div class="col-md-2"></div>
+
+									<div class="col-md-4">
+										<input type="hidden" id="key" name="key" style="width: 100%;" class="form-control">
+									</div>
+									<div class="col-md-2"></div>
+
+									<div class="col-md-4">
+										<input type="hidden" id="orderId" name="orderId" required 
+											style="width: 100%;" class="form-control"  maxlength="10"
+											> <span class="error"
+											aria-live="polite"></span>
+									</div>
+								</div>
+									<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">From Date</div>
-									<div class="col-md-3">
+									<div class="col-md-4">
 										<input type="text" autocomplete="off" id="from_date"
 											name="from_date" required style="width: 100%;"
 											class="form-control" value="${fromDate}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
-									<div class="col-md-1">To Date</div>
-									<div class="col-md-3">
+									<div class="col-md-2">To Date</div>
+									<div class="col-md-4">
 										<input type="text" autocomplete="off" id="to_date"
 											name="to_date" style="width: 100%;" class="form-control"
 											value="${toDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
-									<div class="col-md-1"></div>
-									<div class="col-md-2">
-										<input type="button" class="btn btn-primary"
-											onclick="showQuot()" value="Submit">
 
 								</div>
 
 
-								
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-6"></div>
+									<div class="col-md-2">
+										<input type="button" class="btn btn-primary"
+											onclick="showOrder()" value="Submit">
+									</div>
+								</div>
+
 
 								<div class="form-group"></div>
 
-								
+
+
+								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center"><input type="checkbox" name="selAll" id="selAll" /> Select All</th>
-												<th style="text-align: center">No.</th>
-												<th style="text-align: center">Enquiry No</th>
-												<th style="text-align: center">Enquiry Date</th>
-													<th style="text-align: center">Quotation No</th>
-													<th style="text-align: center">Quotation Date</th>
+												<th style="text-align: center"><input type="checkbox"
+													name="selAll" id="selAll" /> Select All</th>
+												<th style="text-align: center">Sr.</th>
+												<th style="text-align: center">Order No</th>
+												<th style="text-align: center">Order Date</th>
+												<th style="text-align: center">Delivery Date</th>
 												<th style="text-align: center">Customer Name</th>
-												<th style="text-align: center">Customer Mobile No.</th>
-												<th style="text-align: center">Status</th>
-												<!-- <th style="text-align: center">Action</th> -->
+												<th style="text-align: center">Customer Mobile No</th>
+												
+												<!-- 												<th style="text-align: center">Status</th>
+ -->
+												<th style="text-align: center">Action</th>
 											</tr>
 										</thead>
 
@@ -247,18 +276,23 @@
 									id="deleteId"
 									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 									style="align-content: center; width: 113px; margin-left: 40px;">
+
 							</div>
-</div>
 						</form>
 					</div>
+
+
 				</div>
+
 
 			</div>
 		</div>
 
+
 	</div>
 	<!-- .animated -->
 	<!-- .content -->
+
 
 	<!-- .animated -->
 	<!-- .content -->
@@ -397,7 +431,7 @@
 
 	<script type="text/javascript">
 		// onclick of submit to search order 
-		function showQuot() {
+		function showOrder() {
 
 			//alert("Hi View Orders  ");
 
@@ -444,7 +478,7 @@
 
 				$
 						.getJSON(
-								'${getEnqListBetDate}',
+								'${getOrderPendingListBetDate}',
 								{
 									plantId : plantId,
 									custId : custId,
@@ -455,7 +489,7 @@
 
 								function(data) {
 
-									alert("Order Data " +JSON.stringify(data));
+									//alert("Order Data " +JSON.stringify(data));
 
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();
@@ -466,43 +500,46 @@
 													data,
 													function(i, v) {
 														var chBox;
-														var status1;
-														if (v.enqStatus == 0) {
-															status1 = "Enquiry Generated";
-														} else if (v.enqStatus == 1) {
-															status1= "Quotation Generated";
-														}
-														else{
-															
-															status1 = "PO Generated";
-														}
 														
 
-														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.enqHeadId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-																+ v.enqHeadId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-trash" title="Delete"></i></a>'
+														if (v.status == 0) {
+															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																	+ v.orderId
+																	+ ','
+																	+ i
+																	+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+																	+ v.orderId
+																	+ ','
+																	+ i
+																	+ ')"><i class="fa fa-trash" title="Delete"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDetail('
+																	+ v.orderId
+																	+ ','
+																	+ i
+																	+ ')"><i class="fa fa-list"  title="Generate Chalan"></i></a>'
+	
+														
 
-														chBox = '<input  type="checkbox" class="chk" name="selectEnqToDelete" id='+v.enqHeadId+' class="check"  value='+v.enqHeadId+'>'
+															chBox = '<input  type="checkbox" class="chk" name="selectOrderToDelete" id='+v.orderId+' class="check"  value='+v.orderId+'>'
 
+														} else {
+															//alert("status>0 " +v.orderNo)
+															chBox = '-'
+															var acButton = '<a href="#" class="action_btn" ><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"><i class="fa fa-trash" title="Delete"></i></a>'
+														}
+
+														//var chBox='<input type="checkbox" id="orderId" class="chk" name="quotIds" value='+v.orderId+'/>'
 														dataTable.row
 																.add(
 																		[
 																				chBox,
 																				i + 1,
-																				v.enqNo,
-																				v.enqDate,
-																				v.quotNo,
-																				v.quotDate,
+																				v.orderNo,
+																				v.orderDate,
+																				v.deliveryDate,
 																				v.custName,
 																				v.custMobNo,
-																				status1
-																		 ])
+																				
+																				acButton ])
 																.draw();
 													});
 
@@ -512,14 +549,27 @@
 
 		}
 
-		function callEdit(enqHeadId) {
+		function callEdit(orderId) {
 
 			window.open("${pageContext.request.contextPath}/editOrder/"
-					+ enqHeadId);
+					+ orderId);
 
 		}
+		
+		
+		
+		function callDetail(orderId,key){
+			//alert("Hello"+orderId +"key " +key);
+			document.getElementById("key").value=key;
+			document.getElementById("orderId").value=orderId;
+		
+			var form = document.getElementById("ordListForm");
+			form.action=("showGenerateChalanForPendingOrder");
+			form.submit();
+			
+		}
 
-		function callDelete(orderId) {
+		function callDelete(orderId,key) {
 
 		}
 	</script>
@@ -546,8 +596,3 @@
 
 </body>
 </html>
-
-
-
-<!-- SELECT h.*,c.cust_name,c.cust_mob_no,p.plant_name,e.enq_gen_by,t.quot_no,t.quot_date FROM  t_enq_header h ,m_customer c,t_quot_header t,m_plant p,enq_gen_fact e WHERE c.cust_id=h.cust_id AND p.plant_id=h.plant_id AND e.enq_gen_id=h.enq_gen_id AND h.quot_id=t.quot_head_id AND h.plant_id=51 
-		AND h.enq_date BETWEEN '2018-01-01' AND '2018-12-31' AND h.ex_int1=1 -->

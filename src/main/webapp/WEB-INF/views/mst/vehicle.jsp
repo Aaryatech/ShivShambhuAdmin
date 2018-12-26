@@ -197,6 +197,27 @@
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
+									
+									<div class="col-md-2">Select Vehicle Type*</div>
+
+									<div class="col-md-4">
+										<select id="plant_id" name="plant_id" class="standardSelect"
+											tabindex="1" required onchange="getData()">
+											<option value="-1">Select</option>
+											<c:forEach items="${uomList}" var="ulist">
+												<c:choose>
+													<c:when test="${ulist.uomId==editVeh.uomId}">
+														<option value="${ulist.uomId}" selected>${ulist.uomName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${ulist.uomId}">${ulist.uomName}
+													</c:otherwise>
+												</c:choose>
+
+											</c:forEach>
+										</select>
+									</div>
+									
 								</div>
 
 
