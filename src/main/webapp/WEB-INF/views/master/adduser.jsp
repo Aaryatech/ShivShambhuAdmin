@@ -154,7 +154,7 @@
 										</select>
 									</div>
 
-									<%-- 	<div class="col-md-2">Select Department*</div>
+										<div class="col-md-2">Select Department*</div>
 
 									<div class="col-md-4">
 										<select id="dept_id" name="dept_id" class="standardSelect"
@@ -164,7 +164,7 @@
 
 												<c:choose>
 													<c:when test="${dept.deptId==editUser.deptId}">
-														<option value="${dept.deptId}" selected>${dept.deptName}</option>
+														<option selected value="${dept.deptId}" selected>${dept.deptName}</option>
 													</c:when>
 													<c:otherwise>
 														<option value="${dept.deptId}">${dept.deptName}
@@ -174,7 +174,7 @@
 											</c:forEach>
 										</select>
 									</div>
- --%>
+
 									<%-- 
 									<div class="col-md-2">Select Plant*</div>
 

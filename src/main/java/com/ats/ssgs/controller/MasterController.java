@@ -1996,7 +1996,7 @@ public class MasterController {
 				userId = 0;
 			}
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			// int deptId = Integer.parseInt(request.getParameter("dept_id"));
+			 int deptId = Integer.parseInt(request.getParameter("dept_id"));
 			// int plantId = Integer.parseInt(request.getParameter("plant_id"));
 
 			int companyId = Integer.parseInt(request.getParameter("company_id"));
@@ -2018,7 +2018,7 @@ public class MasterController {
 			user.setCompanyId(companyId);
 			user.setDelStatus(1);
 			user.setDeviceToken("NA");
-			user.setDeptId(1);
+			user.setDeptId(deptId);
 			user.setExDate1(curDate);
 			user.setExDate2(curDate);
 			user.setExInt1(0);

@@ -135,6 +135,13 @@ public class RmcController {
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Calendar cal = Calendar.getInstance();
 
+			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+
+			System.out.println(sdf.format(cal.getTime()));
+
+			String curTime = sdf.format(cal.getTime());
+
+			model.addObject("curTime", curTime);
 			String curDate = dateFormat.format(new Date());
 			
 			model.addObject("curDate" ,curDate);
