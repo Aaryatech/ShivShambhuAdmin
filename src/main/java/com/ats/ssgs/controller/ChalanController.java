@@ -184,6 +184,8 @@ public class ChalanController {
  		String uomName="Na";
  		try {
  		 uomName=request.getParameter("uomName");
+ 		uomName=uomName.substring(1, uomName.length()-1);
+
  		}catch (Exception e) {
  			uomName="set";
 		}

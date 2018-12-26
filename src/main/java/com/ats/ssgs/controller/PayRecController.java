@@ -24,14 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.master.Info;
-import com.ats.ssgs.model.master.Uom;
-import com.ats.ssgs.model.mat.Contractor;
-import com.ats.ssgs.model.mat.GetMatIssueDetail;
-import com.ats.ssgs.model.mat.GetMatIssueHeader;
-import com.ats.ssgs.model.mat.ItemCategory;
-import com.ats.ssgs.model.mat.MatIssueDetail;
-import com.ats.ssgs.model.mat.MatIssueHeader;
-import com.ats.ssgs.model.mat.RawMatItem;
 import com.ats.ssgs.model.rec.GetPayRecoveryHead;
 import com.ats.ssgs.model.rec.PayRecoveryDetail;
 import com.ats.ssgs.model.rec.PayRecoveryHead;
@@ -52,6 +44,12 @@ public class PayRecController {
 			model = new ModelAndView("payrec/payreclist");
 
 			model.addObject("title", "Payment Recovery List");
+
+			GetPayRecoveryHead[] recHeadArray = rest.getForObject(Constants.url + "getPayRecoveryByStatus",
+					GetPayRecoveryHead[].class);
+			recList = new ArrayList<GetPayRecoveryHead>(Arrays.asList(recHeadArray));
+			model.addObject("recList", recList);
+
 		} catch (Exception e) {
 
 			System.err.println("exception In showPaymentRecoveryList at Txn Contr" + e.getMessage());
@@ -190,7 +188,7 @@ public class PayRecController {
 
 				editRec.getPayRecoveryDetailList().get(index).setTxNo(txNo);
 				editRec.getPayRecoveryDetailList().get(index).setTypeTx(typeTx);
-				editRec.getPayRecoveryDetailList().get(index).setPaymentDate(paymentDate);
+				editRec.getPayRecoveryDetailList().get(index).setPaymentDate(DateConvertor.convertToDMY(paymentDate));
 				editRec.getPayRecoveryDetailList().get(index).setPaidAmt(paidAmt);
 
 			}
@@ -217,7 +215,7 @@ public class PayRecController {
 				detail.setExVarchar2("NA");
 				detail.setPaidAmt(paidAmt);
 				detail.setPayHeadId(payHeadId);
-				detail.setPaymentDate(DateConvertor.convertToYMD(paymentDate));
+				detail.setPaymentDate(paymentDate);
 				detail.setTypeTx(typeTx);
 
 				try {
@@ -262,42 +260,49 @@ public class PayRecController {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			String curDate = dateFormat.format(new Date());
-			
+
 			editRec.setCreditDate2(DateConvertor.convertToYMD(creditDate2));
 			editRec.setBillDate(DateConvertor.convertToYMD(editRec.getBillDate()));
 			editRec.setCreditDate1(DateConvertor.convertToYMD(editRec.getCreditDate1()));
 
 			editRec.setCreditDate3(DateConvertor.convertToYMD(editRec.getCreditDate3()));
 
-			List<PayRecoveryDetail> detailList = new ArrayList<>();
 			float paidAmt1 = 0;
 
 			for (int i = 0; i < editRec.getPayRecoveryDetailList().size(); i++) {
-
 
 				editRec.getPayRecoveryDetailList().get(i).setPayHeadId(payHeadId);
 
 				editRec.getPayRecoveryDetailList().get(i).setPaymentDate(
 						DateConvertor.convertToYMD(editRec.getPayRecoveryDetailList().get(i).getPaymentDate()));
 				editRec.getPayRecoveryDetailList().get(i).setTxNo(editRec.getPayRecoveryDetailList().get(i).getTxNo());
-				editRec.getPayRecoveryDetailList().get(i).setTypeTx(editRec.getPayRecoveryDetailList().get(i).getTypeTx());
+				editRec.getPayRecoveryDetailList().get(i)
+						.setTypeTx(editRec.getPayRecoveryDetailList().get(i).getTypeTx());
 
 				paidAmt1 = paidAmt1 + editRec.getPayRecoveryDetailList().get(i).getPaidAmt();
-				editRec.getPayRecoveryDetailList().get(i).setPaidAmt(paidAmt1);
 
 			}
+			float billTotal = editRec.getBillTotal();
 			editRec.setPaidAmt(paidAmt1);
+			editRec.setPendingAmt(billTotal - paidAmt1);
 			editRec.setPayRecoveryDetailList(editRec.getPayRecoveryDetailList());
 
 			System.out.println("payRec" + editRec.toString());
-
-			System.out.println("detailList" + detailList.size());
 
 			PayRecoveryHead matIssueInsertRes = rest.postForObject(Constants.url + "savePaymentRecovery", editRec,
 					PayRecoveryHead.class);
 
 			if (matIssueInsertRes != null) {
 				isError = 2;
+
+				if (matIssueInsertRes.getPendingAmt() == 0) {
+
+					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+					map.add("payHeadId", matIssueInsertRes.getPayHeadId());
+
+					Info updateStatus = rest.postForObject(Constants.url + "updatePayRecStatus", map, Info.class);
+
+				}
 			} else {
 				isError = 1;
 			}

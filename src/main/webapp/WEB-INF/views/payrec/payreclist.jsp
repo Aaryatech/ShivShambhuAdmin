@@ -93,10 +93,7 @@
 								<strong>${title}</strong>
 							</div>
 							<div class="col-md-5"></div>
-							<div class="col-md-3" align="left">
-								<a href="${pageContext.request.contextPath}/showAddPReading"><strong>Add
-										Poklen Reading </strong></a>
-							</div>
+
 						</div>
 						<form
 							action="${pageContext.request.contextPath}/deleteRecordofPayRec"
@@ -105,35 +102,54 @@
 							<div class="card-body card-block">
 
 								<div class="form-group"></div>
-
 								<div class="row">
-									<div class="col-md-2">From Date</div>
+
+									<div class="col-md-2">Select Date*</div>
+
 									<div class="col-md-4">
+										<select id="txType" name="txType" class="standardSelect"
+											onchange="hideDiv(this.value)" tabindex="1">
+
+											<option value="0">All</option>
+											<option value="1">Follow up Date</option>
+
+										</select>
+									</div>
+								</div>
+
+
+
+								<div class="form-group"></div>
+
+								<div class="row" id="hide_div" style="visibility: hidden">
+									<div class="col-md-2">From Date</div>
+									<div class="col-md-3">
 										<input type="text" autocomplete="off" id="from_date"
 											name="from_date" required style="width: 100%;"
 											class="form-control" value="${fromDate}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-2">To Date</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<input type="text" autocomplete="off" id="to_date"
 											name="to_date" style="width: 100%;" class="form-control"
 											value="${toDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
-
-								</div>
-
-
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-6"></div>
 									<div class="col-md-2">
 										<input type="button" class="btn btn-primary"
 											onclick="showQuot()" value="Submit">
 									</div>
+
 								</div>
 
+
+							<!-- 	<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-6"></div>
+									
+								</div>
+ -->
 
 								<div class="form-group"></div>
 
@@ -153,14 +169,71 @@
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Bill No</th>
 												<th style="text-align: center">Bill Date</th>
+												<th style="text-align: center">Credit Start Date</th>
 												<th style="text-align: center">Follow up Date</th>
-												<th style="text-align: center">Next FU Date</th>
 												<th style="text-align: center">Paid Amount</th>
 												<th style="text-align: center">Pending Amount</th>
 												<th style="text-align: center">Status</th>
 												<th style="text-align: center">Action</th>
 											</tr>
 										</thead>
+
+
+										<tbody>
+											<c:forEach items="${recList}" var="rec" varStatus="count">
+												<tr>
+													<td><input type="checkbox" class="chk"
+														name="payHeadIds" id="payHeadIds${count.index+1}"
+														value="${rec.payHeadId}" /></td>
+
+													<td style="text-align: center">${count.index+1}</td>
+
+													<td style="text-align: left"><c:out
+															value="${rec.custName}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${rec.billNo}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${rec.billDate}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${rec.creditDate1}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${rec.creditDate2}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${rec.paidAmt}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${rec.pendingAmt}" /></td>
+
+
+													<td style="text-align: left"><c:choose>
+															<c:when test="${rec.status==0}">
+													Pending
+													</c:when>
+															<c:when test="${rec.status==1}">
+													Done
+													</c:when>
+														</c:choose></td>
+
+
+													<td style="text-align: center"><a href="#"
+														onclick="callEdit(${rec.payHeadId},${count.index})"><i
+															class="fa fa-edit"></i> <span class="text-muted"></span></a>
+													</td>
+
+
+
+
+												</tr>
+											</c:forEach>
+										</tbody>
 
 									</table>
 								</div>
@@ -364,6 +437,18 @@
 																this.checked);
 											});
 						});
+	</script>
+	<script type="text/javascript">
+		function hideDiv(type) {
+
+			if (type == 0) {
+
+				document.getElementById("hide_div").style = "display:none"
+			} else {
+				document.getElementById("hide_div").style = "visible"
+
+			}
+		}
 	</script>
 
 
