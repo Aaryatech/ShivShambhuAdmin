@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
+import com.ats.ssgs.model.GetQuotHeader;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.DocTermHeader;
 import com.ats.ssgs.model.master.Info;
@@ -133,10 +134,10 @@ public class QuotController {
 
 	}
 
-	List<GetQuotHeads> getQuotList = new ArrayList<>();
+	List<GetQuotHeader> getQuotList = new ArrayList<>();
 
 	@RequestMapping(value = "/getQuotListBetDate", method = RequestMethod.GET)
-	public @ResponseBody List<GetQuotHeads> getOrderListBetDate(HttpServletRequest request,
+	public @ResponseBody List<GetQuotHeader> getOrderListBetDate(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		System.err.println(" in getTempQuotHeader");
@@ -156,13 +157,12 @@ public class QuotController {
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
 		// map.add("status", 0);
 
-		GetQuotHeads[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustId", map,
-				GetQuotHeads[].class);
-		getQuotList = new ArrayList<GetQuotHeads>(Arrays.asList(ordHeadArray));
+		GetQuotHeader[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustId", map,
+				GetQuotHeader[].class);
+		getQuotList = new ArrayList<GetQuotHeader>(Arrays.asList(ordHeadArray));
 
-		
-		System.out.println("quot list data "+getQuotList.toString());
-		
+		System.out.println("quot list data " + getQuotList.toString());
+
 		return getQuotList;
 	}
 
@@ -170,10 +170,6 @@ public class QuotController {
 	List<GetItemWithEnq> newItemList;// items that are not in quotation ie enquiry but in m_item table
 
 	List<GetItemWithEnq> enqItemList;
-
-	
-	
-	
 
 	@RequestMapping(value = "/editQuotation/{quotHeadId}/plantId}/{custId}/{enqHeadId}", method = RequestMethod.GET)
 	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotHeadId,
@@ -220,8 +216,7 @@ public class QuotController {
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("plantId", plantId);
-			
-			
+
 			Cust[] custArray = rest.postForObject(Constants.url + "getCustListByPlant", map, Cust[].class);
 			custList = new ArrayList<Cust>(Arrays.asList(custArray));
 			model.addObject("custList", custList);
@@ -231,15 +226,15 @@ public class QuotController {
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 			model.addObject("plantList", plantList);
-			
-			// System.err.println("Plant List " + plantList.toString());
 
-			
+			// System.err.println("Plant List " + plantList.toString());
 
 			model.addObject("plantId", plantId);
 			model.addObject("custId", custId);
-			/*model.addObject("custName", custName);
-			model.addObject("plantName",plantName);*/
+			/*
+			 * model.addObject("custName", custName);
+			 * model.addObject("plantName",plantName);
+			 */
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("custId", custId);
 			Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);

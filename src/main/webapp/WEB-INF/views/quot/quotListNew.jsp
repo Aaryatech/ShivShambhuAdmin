@@ -122,19 +122,21 @@
 
 				</c:choose>
 
+
+
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
+
+						<div class="card-header">
+							<div class="col-md-4">
+								<strong>${title}</strong>
+							</div>
+
+
+						</div>
 						<form
 							action="${pageContext.request.contextPath}/deleteRecordofQuotations"
 							method="post">
-							<div class="card-header">
-								<div class="col-md-4">
-									<strong>${title}</strong>
-								</div>
-
-
-							</div>
-
 
 							<div class="card-body card-block">
 
@@ -147,10 +149,16 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="">Select</option>
-
+											<option value="0">All</option>
 											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+												<c:choose>
+													<c:when test="${plant.plantId==plantId1}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}">${plant.plantName}
+													</c:otherwise>
+												</c:choose>
 											</c:forEach>
 										</select>
 									</div>
@@ -161,10 +169,22 @@
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
 											<option value="">Select</option>
-											<option value="0">All</option>
 										</select>
 									</div>
 
+									<!-- <div class="col-md-1">Status</div>
+									<div class="col-md-2">
+										<select id="statusList" name="statusList"
+											class="standardSelect" tabindex="1" required
+											oninvalid="setCustomValidity('Please select customer')">
+											<option value="">Select</option>
+											<option value="-1">All</option>
+											<option value="0">Quotation Pending</option>
+											<option value="1">Quotation Generated</option>
+											<option value="2">PO Generated</option>
+										</select>
+									</div>
+ -->
 								</div>
 								<div class="form-group"></div>
 
@@ -183,7 +203,7 @@
 											value="${toDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
-									
+
 									<div class="col-md-1"></div>
 									<div class="col-md-2">
 										<input type="button" class="btn btn-primary"
@@ -194,13 +214,14 @@
 
 								<div class="form-group"></div>
 
-								
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center"><input type="checkbox" name="selAll" id="selAll" /></th>
+												<th style="text-align: center"><input type="checkbox"
+													name="selAll" id="selAll" /></th>
 												<th style="text-align: center">Sr.</th>
 												<th style="text-align: center">Company Name</th>
 												<th style="text-align: center">Quotation No</th>
@@ -210,6 +231,38 @@
 											</tr>
 										</thead>
 
+
+										<c:forEach items="${getQuotList}" var="quot" varStatus="count">
+											<tr>
+												<td><input type="checkbox" class="chk"
+													name="quotHeadIds" id="quotHeadIds${count.index+1}"
+													value="${quot.quotHeadId}" /></td>
+												<td style="text-align: center">${count.index+1}</td>
+
+
+												<td style="text-align: center"><c:out
+														value="${quot.compName}" /></td>
+
+												<td style="text-align: center"><c:out
+														value="${quot.quotNo}" /></td>
+
+												<td style="text-align: center"><c:out
+														value="${quot.quotDate}" /></td>
+
+
+												<td style="text-align: center"><c:out
+														value="${quot.usrName}" /></td>
+
+												<td style="text-align: center"><c:out
+														value="${quot.usrName}" /></td>
+
+
+											</tr>
+										</c:forEach>
+
+
+
+
 									</table>
 								</div>
 
@@ -218,10 +271,12 @@
 									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 									style="align-content: center; width: 113px; margin-left: 40px;">
 							</div>
+						</form>
 
-						</form><!-- form -->
+						<!-- form -->
 					</div>
-				</div> 
+				</div>
+
 
 			</div>
 		</div>
@@ -435,7 +490,7 @@
 													data,
 													function(i, v) {
 														var chBox;
-															
+
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.quotHeadId
 																+ ','
@@ -471,10 +526,10 @@
 		}
 
 		function callEdit(quotHeadId, plantId, custId, enqHeadId) {
-			
 
 			window.open("${pageContext.request.contextPath}/editQuotation/"
-					+ quotHeadId + '/' + plantId + '/' + custId + '/'+ enqHeadId);
+					+ quotHeadId + '/' + plantId + '/' + custId + '/'
+					+ enqHeadId);
 
 		}
 	</script>
