@@ -26,6 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.PoHeader;
+import com.ats.ssgs.model.chalan.GetChalanDetail;
+import com.ats.ssgs.model.chalan.GetChalanHeader;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.Info;
@@ -773,7 +775,18 @@ detail.setOrderDetId(orderDetId);
 				System.out.println("detail are"+id +key);
 				
 				
+				DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+				Calendar cal = Calendar.getInstance();
+
+				String curDate = dateFormat.format(new Date());
 				
+				model.addObject("curDate" ,curDate);
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("docCode", 5);
+				Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+				model.addObject("doc", doc);
+
 
 
 				Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
@@ -793,12 +806,12 @@ detail.setOrderDetId(orderDetId);
 
 				model.addObject("title", "Add Chalan");
 				
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			
 				map.add("docCode", 3);
 
-				Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+				Document doc1 = rest.postForObject(Constants.url + "getDocument", map, Document.class);
 
-				model.addObject("doc", doc);
+				model.addObject("doc", doc1);
 				
 				System.out.println("eee:"+getOrdList.get(key).toString());
 				
@@ -811,10 +824,7 @@ detail.setOrderDetId(orderDetId);
 				model.addObject("projId",getOrdList.get(key).getProjId());
 				model.addObject("orderId",getOrdList.get(key).getOrderId());
 				
-				DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-				Calendar cal = Calendar.getInstance();
-
-				String curDate = dateFormat.format(new Date());
+				
 				
 				model.addObject("curDate" ,curDate);
 
@@ -829,8 +839,59 @@ detail.setOrderDetId(orderDetId);
 			return model;
 				
 		}
-		
+		List<Project> projList1;
+		List<GetChalanDetail> chDetailList;
+		@RequestMapping(value = "/closeOpenChalan/{chalanId}", method = RequestMethod.GET)
+		public ModelAndView closeChalan(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
 
+			ModelAndView model = null;
+			try {
+
+				model = new ModelAndView("chalan/chalan_edit");
+
+				GetChalanHeader editChalan = new GetChalanHeader();
+				/*
+				 * for(int i=0;i<getOrdList.size();i++) {
+				 * 
+				 * if(getOrdList.get(i).getOrderId()==orderId) { editOrder=new GetOrder();
+				 * editOrder=getOrdList.get(i); break; } }
+				 */
+				MultiValueMap<String, Object>
+
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("chalanId", chalanId);
+				editChalan = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
+				editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate()));
+
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("custId", editChalan.getCustId());
+				Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
+				projList1 = new ArrayList<Project>(Arrays.asList(projArray));
+
+				model.addObject("projList", projList1);
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				
+				map.add("chalanId", chalanId);
+				GetChalanDetail[] chDetailArray = rest.postForObject(Constants.url + "getGetChalanDetailByChalanId", map,
+						GetChalanDetail[].class);
+				chDetailList = new ArrayList<GetChalanDetail>(Arrays.asList(chDetailArray));
+
+				model.addObject("chDetailList", chDetailList);
+
+				model.addObject("editChalan", editChalan);
+
+				model.addObject("title", "Close Chalan");
+
+			} catch (Exception e) {
+				System.err.println("Exce in edit Chalan " + e.getMessage());
+				e.printStackTrace();
+			}
+			
+			return model;
+		}
 		
 		
 }

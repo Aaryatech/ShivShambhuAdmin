@@ -232,10 +232,10 @@ body {
 
 														<option selected value="${cust.custId}">${cust.custName}</option>
 													</c:when>
-													<%-- <c:otherwise>
+													<c:otherwise>
 														<option value="${cust.custId}">${cust.custName}</option>
 
-													</c:otherwise> --%>
+													</c:otherwise>
 												</c:choose>
 
 											</c:forEach>

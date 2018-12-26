@@ -29,11 +29,6 @@ public class GetQuotHeads {
 	
 	
 
-	
-	
-	
-	
-
 	public int getEnqHeadId() {
 		return enqHeadId;
 	}

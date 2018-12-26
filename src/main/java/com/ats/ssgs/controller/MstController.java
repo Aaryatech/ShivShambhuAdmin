@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.VpsImageUpload;
+import com.ats.ssgs.model.VehicleType;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Subplant;
@@ -41,6 +42,9 @@ public class MstController {
 	private ArrayList<Subplant> spList;
 	private ArrayList<Contractor> conList;
 	private ArrayList<Plant> plantList;
+	private ArrayList<VehicleType> vtypeList;
+	
+	
 	RestTemplate rest = new RestTemplate();
 	int isError = 0;
 
@@ -241,6 +245,12 @@ public class MstController {
 
 			model.addObject("vehList", vehList);
 			
+			
+			VehicleType[] vehTypeArray = rest.getForObject(Constants.url + "getAllVehicleTypeList", VehicleType[].class);
+			vtypeList = new ArrayList<VehicleType>(Arrays.asList(vehTypeArray));
+
+			model.addObject("vtypeList", vtypeList);
+			
 			Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
 			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
 			model.addObject("uomList", uomList);
@@ -282,6 +292,7 @@ public class MstController {
 			String curDate = dateFormat.format(new Date());
 			String VehName = request.getParameter("vehName");
 			String company = request.getParameter("compName");
+			String vehType=request.getParameter("vehType");
 			int uom = Integer.parseInt(request.getParameter("plant_id"));
 			float l_capacity = Float.parseFloat(request.getParameter("loadCapacity"));
 			String vehNum=request.getParameter("vehNum");
@@ -376,6 +387,7 @@ public class MstController {
 
 			Vehicle veh = new Vehicle();
 			veh.setVehicleId(vehId1);
+			veh.setVehicleType(Integer.parseInt(vehType));
 			veh.setVehicleName(VehName);
 			veh.setVehCompName(company);
 			veh.setLoadCapacity(l_capacity);
@@ -439,6 +451,10 @@ public class MstController {
 
 			model.addObject("vehList", vehList );
 
+			
+			VehicleType[] vehTypeArray = rest.getForObject(Constants.url + "getAllVehicleTypeList", VehicleType[].class);
+			vtypeList = new ArrayList<VehicleType>(Arrays.asList(vehTypeArray));
+			model.addObject("vtypeList", vtypeList );
 			
 			Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
 			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));

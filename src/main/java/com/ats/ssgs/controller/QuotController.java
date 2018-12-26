@@ -160,6 +160,9 @@ public class QuotController {
 				GetQuotHeads[].class);
 		getQuotList = new ArrayList<GetQuotHeads>(Arrays.asList(ordHeadArray));
 
+		
+		System.out.println("quot list data "+getQuotList.toString());
+		
 		return getQuotList;
 	}
 
@@ -168,8 +171,12 @@ public class QuotController {
 
 	List<GetItemWithEnq> enqItemList;
 
-	@RequestMapping(value = "/editQuot/{quotId}/{plantId}/{custId}/{enqHeadId}", method = RequestMethod.GET)
-	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotId,
+	
+	
+	
+
+	@RequestMapping(value = "/editQuotation/{quotHeadId}/plantId}/{custId}/{enqHeadId}", method = RequestMethod.GET)
+	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotHeadId,
 			@PathVariable int plantId, @PathVariable int custId, @PathVariable int enqHeadId) {
 
 		ModelAndView model = null;
@@ -213,6 +220,8 @@ public class QuotController {
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("plantId", plantId);
+			
+			
 			Cust[] custArray = rest.postForObject(Constants.url + "getCustListByPlant", map, Cust[].class);
 			custList = new ArrayList<Cust>(Arrays.asList(custArray));
 			model.addObject("custList", custList);
@@ -221,13 +230,16 @@ public class QuotController {
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			model.addObject("plantList", plantList);
+			
 			// System.err.println("Plant List " + plantList.toString());
 
-			model.addObject("plantList", plantList);
+			
 
 			model.addObject("plantId", plantId);
 			model.addObject("custId", custId);
-
+			/*model.addObject("custName", custName);
+			model.addObject("plantName",plantName);*/
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("custId", custId);
 			Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
@@ -251,7 +263,7 @@ public class QuotController {
 			model.addObject("docTermList", docTermList);
 
 			map = new LinkedMultiValueMap<String, Object>();
-			map.add("quotHeadId", quotId);
+			map.add("quotHeadId", quotHeadId);
 
 			QuotHeader quotHeader = rest.postForObject(Constants.url + "getQuotHeaderByQuotHeadId", map,
 					QuotHeader.class);

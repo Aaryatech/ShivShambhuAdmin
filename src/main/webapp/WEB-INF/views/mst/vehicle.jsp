@@ -190,7 +190,7 @@
 								<div class="row">
 									<div class="col-md-2">Vehicle Number*</div>
 									<div class="col-md-4">
-										<input type="text" id="vehNum" name="vehNum"
+										<input type="text" id="vehNum" name="vehNum" 
 											autocomplete="off" value="${editVeh.vehNo}"
 											class="form-control"
 											oninvalid="setCustomValidity('Please enter load capacity of Vehicle')"
@@ -198,26 +198,26 @@
 											style="width: 100%;">
 									</div>
 									
+									
 									<div class="col-md-2">Select Vehicle Type*</div>
 
 									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
+										<select id="vehType" name="vehType"  class="standardSelect"
 											tabindex="1" required onchange="getData()">
 											<option value="-1">Select</option>
-											<c:forEach items="${uomList}" var="ulist">
+											<c:forEach items="${vtypeList}" var="vtlist">
 												<c:choose>
-													<c:when test="${ulist.uomId==editVeh.uomId}">
-														<option value="${ulist.uomId}" selected>${ulist.uomName}</option>
+													<c:when test="${vtlist.vehTypeId==editVeh.vehicleType}">
+														<option value="${vtlist.vehTypeId}" selected>${vtlist.vehTypeName}</option>
 													</c:when>
 													<c:otherwise>
-														<option value="${ulist.uomId}">${ulist.uomName}
+														<option value="${vtlist.vehTypeId}">${vtlist.vehTypeName}
 													</c:otherwise>
 												</c:choose>
 
 											</c:forEach>
 										</select>
 									</div>
-									
 								</div>
 
 
@@ -225,12 +225,12 @@
 
 
 								<div class="row">
-									<div class="col-md-2">Vehicle Document 1*</div>
+									<div class="col-md-2">Vehicle Document 1</div>
 									<div class="col-md-4">
 										<input type="file" id="doc1" name="doc1"
 											value="${editVeh. vehDoc1}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
+											onchange="try{setCustomValidity('')}catch(e){}" 
 											style="width: 100%;"> <a
 											href="${vehImgPath}${editVeh.vehDoc1}">Doc 1</a>
 									</div>
@@ -243,12 +243,12 @@
 										id="doc14" name="doc14" value="${editVeh.vehDoc4}">
 
 
-									<div class="col-md-2">Vehicle Document 2*</div>
+									<div class="col-md-2">Vehicle Document 2</div>
 									<div class="col-md-4">
 										<input type="file" id="doc2" name="doc2"
 											value="${editVeh. vehDoc2}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
+											onchange="try{setCustomValidity('')}catch(e){}" 
 											style="width: 100%;">
 									</div>
 
@@ -259,21 +259,21 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Vehicle Document 3*</div>
+									<div class="col-md-2">Vehicle Document 3</div>
 									<div class="col-md-4">
 										<input type="file" id="doc3" name="doc3"
 											value="${editVeh. vehDoc3}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
+											onchange="try{setCustomValidity('')}catch(e){}" 
 											style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Vehicle Document 4*</div>
+									<div class="col-md-2">Vehicle Document 4</div>
 									<div class="col-md-4">
 										<input type="file" id="doc4" name="doc4"
 											value="${editVeh. vehDoc4}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
+											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
 								</div>
@@ -313,7 +313,8 @@
 											<th style="text-align: center; width: 5%;">Sr No</th>
 											<th style="text-align: center">Vehicle Name</th>
 											<th style="text-align: center">Vehicle Number</th>
-											<th style="text-align: center">Company No.</th>
+											<th style="text-align: center">Company Name</th>
+											
 											<th style="text-align: center">LoadCapacity</th>
 
 											<th style="text-align: center; width: 5%;">Action</th>
@@ -338,6 +339,9 @@
 
 												<td style="text-align: right"><c:out
 														value="${veh.vehCompName}" /></td>
+														
+														
+														
 
 												<td style="text-align: right"><c:out
 														value="${veh.loadCapacity}" /></td>

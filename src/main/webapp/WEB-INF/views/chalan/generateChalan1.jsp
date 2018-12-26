@@ -209,7 +209,7 @@ body {
 }
 </style>
 </head>
-<body>
+<body onload="showOrderItemPopup(${orderId})">
 
 
 	<!-- Left Panel -->
@@ -272,7 +272,7 @@ body {
 							id="insertChalan"
 								method="post">
 
-								<%-- <div class="row">
+								<div class="row">
 
 									<div class="col-md-2">Select Plant</div>
 
@@ -280,26 +280,22 @@ body {
 										<select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
-											onchange="getData()" readonly>
-											<option value="-1">Select</option>
-
-											<c:forEach items="${plantList}" var="plant">
-												<option value="${plantId}">${plantName}</option>
-											</c:forEach>
+											>
+											<option selected value="${plantId}">${plantName}</option>
+											
 										</select>
 									</div>
 									<div class="col-md-2">Customer</div>
 									<div class="col-md-4">
-										<select id="cust_name" name="cust_name" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select customer')"
-											onchange="getCustInfo()">
+									<select id="cust_id" name="cust_id" class="standardSelect"
+											tabindex="1" required>
+										<option selected value="${custId}">${custName}</option>
 
 										</select>
 									</div>
 
 								</div>
-								<div class="form-group"></div> --%>
+								<div class="form-group"></div>
 								
 								
 								<div id="divCheckbox" style="display: none;">
@@ -325,59 +321,7 @@ body {
 									</div>
 								</div>
 								<div class="form-group"></div>
-								
-								
-								
-								
-									
-									<div class="row">
-
-										<div class="col-md-2">Plant</div>
-
-										<div class="col-md-4">
-											<input type="text" id="custTypeName" name="custTypeName" value="${plantName}" 
-												readonly required style="width: 100%;" class="form-control">
-											<span class="error" aria-live="polite"></span>
-										</div>
-
-										<div class="col-md-2">Customer</div>
-
-										<div class="col-md-4">
-											<input type="text" readonly id="custMobNo" name="custMobNo" value="${custName}"
-												style="width: 100%;" class="form-control"> <span
-												class="error" aria-live="polite"></span>
-										</div>
-
-									</div>
-								
-								<div class="form-group"></div>
-								
-								
-									
-								<div id="divCheckbox" style="display: none;">
-									<div class="form-group"></div>
-									<div class="row">
-
-										<div class="col-md-2">Project</div>
-
-										<div class="col-md-4">
-											<input type="text" id="custTypeName" name="custTypeName" value="${projName}"
-												readonly required style="width: 100%;" class="form-control">
-											<span class="error" aria-live="polite"></span>
-										</div>
-
-										<div class="col-md-2">Order</div>
-
-										<div class="col-md-4">
-											<input type="text" readonly id="custMobNo" name="custMobNo" value="${orderNo}"
-												style="width: 100%;" class="form-control"> <span
-												class="error" aria-live="polite"></span>
-										</div>
-
-									</div>
-								</div>
-								<div class="form-group"></div>
-							<%-- 	<div class="row">
+								<div class="row">
 
 									<div class="col-md-2">Select Project</div>
 
@@ -387,9 +331,8 @@ body {
 											oninvalid="setCustomValidity('Please select project')"
 										
 											onchange="getOrderHeaders()">
-												<option selected value="-1">Select All</option>
-
-											<c:forEach items="${projList}" var="proj">
+												<option selected value="${projId}">${projName}</option>
+											<%-- <c:forEach items="${projList}" var="proj">
 											
 											<c:choose>
 											<c:when test="${quotHeader.projId==proj.projId}">
@@ -400,7 +343,7 @@ body {
 											</c:otherwise>
 											</c:choose>
 											
-											</c:forEach>
+											</c:forEach> --%>
 
 										</select>
 									</div>
@@ -412,17 +355,17 @@ body {
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select order')"
 											onchange="showOrderItemPopup(this.value)">
-											<option value="-1">Select</option>
+										<option selected value="${orderId}">${orderNo}</option>
 
-											<c:forEach items="${plantList}" var="plant">
+											<%-- <c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
-											</c:forEach>
+											</c:forEach> --%>
 										</select>
 									</div>
 									
 									
 									
-								</div> --%>
+								</div>
 						
 									
 									<div class="row"></div>
@@ -1029,7 +972,7 @@ function allowOnlyNumber1(evt)
 												data,
 												function(i, v) {
 													//var checkB = '<input  type="checkbox" name="selChalanItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-		var chalanQty = '<input  type="text" value="0"  class="form-control"  id="chalanQty'+v.itemId+'" name="chalanQty'+v.itemId+'" oninput="setChalanItem(this.value,'+v.itemId+','+v.poId+','+v.poDetailId+','+v.remOrdQty+','+v.orderDetId+','+v.orderId+','+i+','+v.uomId+',/'+v.itemName+'/)" onkeypress="return allowOnlyNumber(event);"/>'
+		var chalanQty = '<input  type="text" value="0"  class="form-control"  id="chalanQty'+v.itemId+'" name="chalanQty'+v.itemId+'" oninput="setChalanItem(this.value,'+v.itemId+','+v.poId+','+v.poDetailId+','+v.remOrdQty+','+v.orderDetId+','+v.orderId+','+i+','+v.uomId+',/'+v.itemName+'/,/'+v.uomName+'/)" onkeypress="return allowOnlyNumber(event);"/>'
 													//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
 													var index=i+1;
 													dataTable.row
@@ -1067,7 +1010,7 @@ function allowOnlyNumber1(evt)
 	    return true;
 	}
 	
-	function setChalanItem(chalanQty,itemId,poId,poDetailId,remOrdQty,orderDetId,orderId,index,uomId,itemName){
+	function setChalanItem(chalanQty,itemId,poId,poDetailId,remOrdQty,orderDetId,orderId,index,uomId,itemName,uomName){
 		//alert("Item Id" +itemId + "poId" +poId+ "detail PO Id " +poDetailId + "rem Ord Qty  " +remOrdQty );
 		var isValid=true;
 		
@@ -1097,6 +1040,7 @@ function allowOnlyNumber1(evt)
 					index : index,
 					uomId : uomId,
 					itemName :itemName,
+					uomName : uomName,
 					
 					ajax : 'true',
 				},

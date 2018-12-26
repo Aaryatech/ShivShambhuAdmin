@@ -192,10 +192,6 @@
 
 								</div>
 
-
-								
-
-
 								<div class="form-group"></div>
 
 								
@@ -475,8 +471,9 @@
 		}
 
 		function callEdit(quotHeadId, plantId, custId, enqHeadId) {
+			
 
-			window.open("${pageContext.request.contextPath}/editQuot/"
+			window.open("${pageContext.request.contextPath}/editQuotation/"
 					+ quotHeadId + '/' + plantId + '/' + custId + '/'+ enqHeadId);
 
 		}
