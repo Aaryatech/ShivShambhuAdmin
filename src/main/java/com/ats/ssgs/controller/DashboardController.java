@@ -206,15 +206,18 @@ public class DashboardController {
 			model.addObject("plantList", plantList);
 
 			model.addObject("plantId1", plantId);
+			model.addObject("status", 0);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("plantId", plantId);
+			map.add("custId", 0);
 			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			map.add("statusList", 0);
 
-			GetQuotHeader[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListDashById", map,
-					GetQuotHeader[].class);
+			GetQuotHeader[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustIdAndStatus",
+					map, GetQuotHeader[].class);
 			getQuotList = new ArrayList<GetQuotHeader>(Arrays.asList(ordHeadArray));
 
 			System.out.println("quot list data " + getQuotList.toString());
@@ -249,14 +252,17 @@ public class DashboardController {
 
 			model.addObject("plantId1", plantId);
 
+			model.addObject("status", 1);
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("plantId", plantId);
+			map.add("custId", 0);
 			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 			map.add("toDate", DateConvertor.convertToYMD(toDate));
-
-			GetQuotHeader[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListDashByStatus1", map,
-					GetQuotHeader[].class);
+			map.add("statusList", 1);
+			GetQuotHeader[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustIdAndStatus",
+					map, GetQuotHeader[].class);
 			getQuotList = new ArrayList<GetQuotHeader>(Arrays.asList(ordHeadArray));
 
 			System.out.println("quot list data " + getQuotList.toString());

@@ -149,7 +149,20 @@ public class QuotController {
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
 
+		String[] statusList = request.getParameterValues("statusList");
+
 		System.out.println("values are" + plantId + custId + fromDate + toDate);
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < statusList.length; i++) {
+			sb = sb.append(statusList[i] + ",");
+
+		}
+		String items = sb.toString();
+		items = items.substring(0, items.length() - 1);
+
+		map.add("statusList", items);
 
 		map.add("plantId", plantId);
 		map.add("custId", custId);
@@ -157,7 +170,7 @@ public class QuotController {
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
 		// map.add("status", 0);
 
-		GetQuotHeader[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustId", map,
+		GetQuotHeader[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustIdAndStatus", map,
 				GetQuotHeader[].class);
 		getQuotList = new ArrayList<GetQuotHeader>(Arrays.asList(ordHeadArray));
 

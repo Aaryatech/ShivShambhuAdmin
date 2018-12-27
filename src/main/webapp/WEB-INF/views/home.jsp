@@ -50,20 +50,18 @@
 
 <style type="text/css">
 .bg-overlay {
- /*   background: linear-gradient(rgb(186, 178, 132), rgba(155, 208, 52, 0.4)),   url(/ssgs/resources/images/stone.jpeg), url("${pageContext.request.contextPath}/resources/images/stone.jpeg");
+	/*   background: linear-gradient(rgb(186, 178, 132), rgba(155, 208, 52, 0.4)),   url(/ssgs/resources/images/stone.jpeg), url("${pageContext.request.contextPath}/resources/images/stone.jpeg");
   background-repeat: no-repeat; */
-    background-size: cover;
-    background-position: center center;
-    color: #fff;
-    height:auto;
-  
-   
+	background-size: cover;
+	background-position: center center;
+	color: #fff;
+	height: auto;
 }
 /* .card{
 background-color: transparent;
 
 } */
-</style> 
+</style>
 </head>
 
 
@@ -98,13 +96,58 @@ background-color: transparent;
 
 				<div class="col-xs-12 col-sm-12">
 
+
+
+
+
+					<div class="form-group"></div>
+
+					<div class="row">
+						<div class="col-md-2">From Date*</div>
+						<div class="col-md-2">
+							<input type="text" autocomplete="off" id="from_date"
+								name="from_date" required style="width: 100%;"
+								class="form-control" value="${fromDate}"> <span
+								class="error" aria-live="polite"></span>
+						</div>
+						<div class="col-md-1">To Date*</div>
+						<div class="col-md-2">
+							<input type="text" autocomplete="off" id="to_date" name="to_date"
+								style="width: 100%;" class="form-control" value="${toDate}">
+							<span class="error" aria-live="polite"></span>
+						</div>
+
+						<div class="col-md-2">Select Plant*</div>
+						<div class="col-md-2">
+							<select id="plantId" name="plantId" class="standardSelect"
+								tabindex="1" required
+								oninvalid="setCustomValidity('Please select plant')">
+								<option value="0">All</option>
+								<c:forEach items="${plantList}" var="plant">
+									<option value="${plant.plantId}">${plant.plantName}</option>
+								</c:forEach>
+
+							</select>
+						</div>
+
+						<div class="col-md-1">
+							<input type="button" class="btn btn-primary" onclick="showQuot()"
+								value="Submit">
+						</div>
+
+					</div>
+					<div class="form-group"></div>
+
 					<div class="col-xs-12 col-sm-12">
 
 
 
 
-						<div class="col-sm-6 col-lg-4" style="cursor: pointer;max-width: 27.333333%;">
-							<div class="card text-white bg-flat-color-2" style="  background: #22a3ac;">
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;"
+							onclick="showEnqBetDate(${dashBoard.totalEnq})">
+							<div class="card text-white bg-flat-color-2"
+								style="background: #22a3ac;">
 								<div class="card-body pb-0" align="center">
 
 									<h4 class="mb-0">
@@ -123,9 +166,12 @@ background-color: transparent;
 
 
 
-						<div class="col-sm-6 col-lg-4" style="cursor: pointer;max-width: 27.333333%;">
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;"
+							onclick="showQuotBetDate(${dashBoard.totalQuotPending})">
 
-							<div class="card text-white bg-flat-color-2" style="  background: #59c9f2;">
+							<div class="card text-white bg-flat-color-2"
+								style="background: #59c9f2;">
 								<div class="card-body pb-0" align="center">
 
 									<h4 class="mb-0">
@@ -141,9 +187,12 @@ background-color: transparent;
 						</div>
 
 
-						<div class="col-sm-6 col-lg-4" style="cursor: pointer;max-width: 27.333333%;">
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;"
+							onclick="showQuotBetDate1(${dashBoard.totalQuotPending})">
 
-							<div class="card text-white bg-flat-color-2" style="  background: #22a3ac;">
+							<div class="card text-white bg-flat-color-2"
+								style="background: #22a3ac;">
 								<div class="card-body pb-0" align="center">
 
 									<h4 class="mb-0">
@@ -164,8 +213,10 @@ background-color: transparent;
 
 					<div class="col-xs-12 col-sm-12">
 
-						<div class="col-sm-6 col-lg-4" style="cursor: pointer;max-width: 27.333333%;">
-							<div class="card text-white bg-flat-color-3" style="  background: #20a8d8;">
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;">
+							<div class="card text-white bg-flat-color-3"
+								style="background: #20a8d8;">
 								<div class="card-body pb-0" align="center">
 
 									<h4 class="mb-0">
@@ -184,9 +235,11 @@ background-color: transparent;
 						</div>
 
 
-						<div class="col-sm-6 col-lg-4" style="cursor: pointer;max-width: 27.333333%;">
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;">
 
-							<div class="card text-white bg-flat-color-3" style="  background: #59c9f2;">
+							<div class="card text-white bg-flat-color-3"
+								style="background: #59c9f2;">
 								<div class="card-body pb-0" align="center">
 
 									<h4 class="mb-0">
@@ -205,9 +258,11 @@ background-color: transparent;
 
 
 
-						<div class="col-sm-6 col-lg-4" style="cursor: pointer;max-width: 27.333333%;">
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;">
 
-							<div class="card text-white bg-flat-color-3" style="  background: #20a8d8;">
+							<div class="card text-white bg-flat-color-3"
+								style="background: #20a8d8;">
 								<div class="card-body pb-0" align="center">
 
 									<h4 class="mb-0">
@@ -224,10 +279,12 @@ background-color: transparent;
 
 						</div>
 
-						<div class="col-sm-6 col-lg-4" style="cursor: pointer;max-width: 27.333333%;">
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;">
 
-							<div class="card text-white bg-flat-color-2" style="  background: #4f90b9;">
-								<div class="card-body pb-0" align="center" >
+							<div class="card text-white bg-flat-color-2"
+								style="background: #4f90b9;">
+								<div class="card-body pb-0" align="center">
 
 									<h4 class="mb-0">
 
@@ -246,9 +303,11 @@ background-color: transparent;
 
 
 
-						<div class="col-sm-6 col-lg-4" style="cursor: pointer;max-width: 27.333333%;">
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;">
 
-							<div class="card text-white bg-flat-color-2" style="  background: #64c2de;">
+							<div class="card text-white bg-flat-color-2"
+								style="background: #64c2de;">
 								<div class="card-body pb-0" align="center">
 
 									<h4 class="mb-0">
@@ -269,9 +328,11 @@ background-color: transparent;
 
 
 
-						<div class="col-sm-6 col-lg-4" style="cursor: pointer;max-width: 27.333333%;">
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;">
 
-							<div class="card text-white bg-flat-color-2" style="  background: #4f90b9;">
+							<div class="card text-white bg-flat-color-2"
+								style="background: #4f90b9;">
 								<div class="card-body pb-0" align="center">
 
 									<h4 class="mb-0">
@@ -289,13 +350,15 @@ background-color: transparent;
 						</div>
 
 
- 
 
 
 
-						<div class="col-sm-6 col-lg-4" style="cursor: pointer;max-width: 27.333333%;">
 
-							<div class="card text-white bg-flat-color-3" style="  background: #64c2de;">
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;">
+
+							<div class="card text-white bg-flat-color-3"
+								style="background: #64c2de;">
 								<div class="card-body pb-0" align="center">
 
 									<h4 class="mb-0">
@@ -326,6 +389,7 @@ background-color: transparent;
 
 
 
+
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
 	<script
@@ -342,7 +406,145 @@ background-color: transparent;
 		src="${pageContext.request.contextPath}/resources/assets/js/widgets.js"></script>
 
 
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
+
+	<script type="text/javascript">
+		// onclick of submit to search order 
+		function showQuot() {
+
+			alert("Hi View Orders  ");
+
+			var plantId = document.getElementById("plantId").value;
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
+			alert(plantId);
+
+			var valid = true;
+
+			var plantId = document.getElementById("plantId").value;
+
+			//alert("plantId" + plantId);
+			var valid = true;
+			if (plantId == null || plantId == "") {
+				valid = false;
+				alert("Please Select Plant");
+
+				var dataTable = $('#bootstrap-data-table').DataTable();
+				dataTable.clear().draw();
+
+			} else if (plantId < 0) {
+				valid = false;
+
+			}
+
+			else if (fromDate == null || fromDate == "") {
+				valid = false;
+				alert("Please select from date");
+			}
+
+			else if (toDate == null || toDate == "") {
+				valid = false;
+				alert("Please select to date");
+			}
+
+			if (fromDate > toDate) {
+				valid = false;
+				alert("from date greater than todate ");
+			}
+			if (valid == true) {
+
+				$
+						.getJSON(
+								'${getDashboardCount}',
+								{
+
+									plantId : plantId,
+									fromDate : fromDate,
+									toDate : toDate,
+									ajax : 'true',
+
+								},
+
+								function(data) {
+									alert("hi");
+
+									document.getElementById("totalEnq").innerText = data.totalEnq;
+									document.getElementById("totalQuotPending").innerText = data.totalQuotPending;
+									document
+											.getElementById("totalQuotGenerated").innerText = data.totalQuotGenerated;
+									document.getElementById("totalPoPending").innerText = data.totalPoPending;
+									document.getElementById("totalOrderAmount").innerText = data.totalOrderAmount;
+									document.getElementById("totalBillAmount").innerText = data.totalBillAmount;
+									document.getElementById("totalTaxBillAmt").innerText = data.totalTaxBillAmt;
+									document
+											.getElementById("totalTaxableBillAmt").innerText = data.totalTaxableBillAmt;
+									document.getElementById("paymentRecPaid").innerText = data.paymentRecPaid;
+									document
+											.getElementById("paymentRecOutstandingPending").innerText = data.paymentRecOutstandingPending;
+
+								});
+
+			}//end of if valid ==true
+
+		}
+	</script>
+	<script>
+		$(function() {
+			$('input[id$=from_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+
+			$('input[id$=to_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+
+		});
+	</script>
+
+	<script type="text/javascript">
+		function showEnqBetDate(count) {
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+			var plantId = document.getElementById("plantId").value;
+
+			if (count > 0) {
+
+				window.open(
+						'${pageContext.request.contextPath}/showDashboardEnqList/'
+								+ fromDate + '/' + toDate + '/' + plantId,
+						"_self");
+			}
+		}
+	</script>
+
+	<script type="text/javascript">
+		function showQuotBetDate(count) {
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+			var plantId = document.getElementById("plantId").value;
+
+			window.open(
+					'${pageContext.request.contextPath}/showDashboardQuotList/'
+							+ fromDate + '/' + toDate + '/' + plantId, "_self");
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		function showQuotBetDate1(count) {
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+			var plantId = document.getElementById("plantId").value;
+
+			window.open(
+					'${pageContext.request.contextPath}/showDashboardQuotList1/'
+							+ fromDate + '/' + toDate + '/' + plantId, "_self");
+
+		}
+	</script>
 
 
 </body>
