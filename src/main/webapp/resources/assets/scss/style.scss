@@ -35,8 +35,9 @@
 body {
     background: $container-bg;
     display: table;
-    font-family: 'Open Sans' sans-serif !important;
-    font-size: 16px;
+    font-family: 'Open Sans';/* sans-serif !important */
+    font-size: 13px;
+    font-color:#393939;
     width: 100%
 }
 
@@ -269,7 +270,7 @@ aside.left-panel {
                         top: 9px;
                     }
                     a {
-                        padding: 2px 0 2px 30px;
+                        padding: 2px 0 2px 8px;
                         &:before {
                             content: '';
                             display: none;
@@ -801,7 +802,7 @@ header .form-inline {
                 width: 50px;
                 padding: .75rem 0;
                 margin: 0!important;
-                color: #fff;
+                color:#fffdf3;
                 outline: 0;
                 text-align: center;
                 background: transparent;
@@ -1195,7 +1196,7 @@ header .form-inline {
     text-align: center;
     background-color: #e9ecef;
     border: 1px solid rgba(0,0,0,.15);
-    border-radius: .25rem;
+    border-radius: 2.25rem;
 }
 
 

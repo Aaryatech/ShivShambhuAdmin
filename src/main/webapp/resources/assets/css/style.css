@@ -33,10 +33,11 @@
   transition: all 0.3s ease; }
 
 body {
-  background: #f1f2f7;
+  background: #e7e1bf;
   display: table;
-  font-family: 'Open Sans' sans-serif;
-  font-size: 16px;
+  font-family: 'Open Sans';
+  font-size: 13px;
+  font-color:#000000;
   width: 100%; }
 
 div[class*="col-"] {
@@ -98,7 +99,7 @@ img {
   width: 100%; }
 
 aside.left-panel {
-  background: #272c33;
+  background:#27332f;
   display: table-cell;
   height: 100vh;
   min-height: 100%;
@@ -108,7 +109,7 @@ aside.left-panel {
   transition: width 0.3s ease; }
 
 .navbar {
-  background: #272c33;
+  background: #27332f;
   border-radius: 0;
   border: none;
   display: block;
@@ -173,7 +174,7 @@ aside.left-panel {
         position: relative;
         width: 100%; }
         .navbar .navbar-nav li > a:hover, .navbar .navbar-nav li > a:hover .menu-icon {
-          color: #fff !important; }
+          color: #fff !important; font-size: 14px;}
         .navbar .navbar-nav li > a .menu-icon {
           color: #8b939b;
           float: left;
@@ -211,7 +212,7 @@ aside.left-panel {
           .navbar .navbar-nav li.menu-item-has-children a:hover:before {
             color: #fff; }
         .navbar .navbar-nav li.menu-item-has-children .sub-menu {
-          background: #272c33;
+          background: #27322f;
           border: none;
           box-shadow: none;
           overflow-y: hidden;
@@ -352,7 +353,7 @@ body.open .navbar .navbar-brand.hidden {
   transition: all .35s ease; }
 
 .right-panel header.header {
-  background: #fff;
+  background: #ffffea;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
   clear: both;
   display: inline-block;
@@ -370,7 +371,7 @@ header.fixed-top {
   position: inherit; }
 
 .menutoggle {
-  background: #e74c3c;
+  background: #25594b;
   border-radius: 50%;
   color: #fff !important;
   cursor: pointer;
@@ -544,7 +545,7 @@ header .form-inline {
       padding: 5px 0; }
   .user-area .user-avatar {
     float: right;
-    margin-top: 4px;
+    margin-top:0px;
     width: 32px; }
   .user-area .user-info .name {
     color: #8c8c8c;
