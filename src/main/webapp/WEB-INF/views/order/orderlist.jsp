@@ -277,6 +277,7 @@
 												<th style="text-align: center">Delivery Date</th>
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Mobile No</th>
+												<th style="text-align: center">Total</th>
 												<th style="text-align: center">Status</th>
 												<th style="text-align: center">Action</th>
 											</tr>
@@ -307,6 +308,10 @@
 
 													<td style="text-align: left"><c:out
 															value="${enq.custMobNo}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${enq.total}" /></td>
+
 
 
 
@@ -605,6 +610,7 @@
 																				v.deliveryDate,
 																				v.custName,
 																				v.custMobNo,
+																				v.total,
 																				status1,
 																				acButton ])
 																.draw();
