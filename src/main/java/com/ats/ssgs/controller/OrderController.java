@@ -49,8 +49,6 @@ import com.ats.ssgs.model.quot.QuotHeader;
 @Scope("session")
 public class OrderController {
 
-	
-	
 	List<Vehicle> vehicleList;
 	List<User> usrList;
 	List<Plant> plantList;
@@ -87,13 +85,13 @@ public class OrderController {
 			model.addObject("doc", doc);
 			model.addObject("isError", isError);
 			isError = 0;
-			
+
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Calendar cal = Calendar.getInstance();
 
 			String curDate = dateFormat.format(new Date());
-			
-			model.addObject("curDate" ,curDate);
+
+			model.addObject("curDate", curDate);
 
 		} catch (Exception e) {
 
@@ -172,10 +170,10 @@ public class OrderController {
 		float poRemainingQty = Float.parseFloat(request.getParameter("poRemainingQty"));
 		float itemTotal = Float.parseFloat(request.getParameter("itemTotal"));
 		float orderRate = Float.parseFloat(request.getParameter("poRate"));
-		
-		int orderDetId =Integer.parseInt(request.getParameter("orderDetId"));
-		
-		itemTotal=Math.round(itemTotal);
+
+		int orderDetId = Integer.parseInt(request.getParameter("orderDetId"));
+
+		itemTotal = Math.round(itemTotal);
 		if (tempOrdDetail == null) {
 			System.err.println("Ord Head =null ");
 			/*
@@ -185,7 +183,7 @@ public class OrderController {
 			 * ordHeader.setOrderTotal(itemTotal); ordHeader.setOtherCostAfterTax(0);
 			 * ordHeader.setTaxableValue(itemTotal); ordHeader.setTaxValue(0)
 			 */;
-			 
+
 			TempOrdDetail detail = new TempOrdDetail();
 			tempOrdDetail = new ArrayList<>();
 
@@ -194,7 +192,7 @@ public class OrderController {
 			detail.setPoDetailId(poDetailId);
 			detail.setTotal(itemTotal);
 			detail.setOrderRate(orderRate);
-detail.setOrderDetId(orderDetId);
+			detail.setOrderDetId(orderDetId);
 			tempOrdDetail.add(detail);
 			// ordHeader.setOrdDetailList(tempOrdDetail);
 			// return tempOrdDetail;
@@ -230,7 +228,6 @@ detail.setOrderDetId(orderDetId);
 				detail.setTotal(itemTotal);
 				detail.setOrderRate(orderRate);
 				detail.setOrderDetId(orderDetId);
-
 
 				/*
 				 * ordHeader.setOrderTotal(ordHeader.getOrderTotal()+itemTotal);
@@ -294,7 +291,6 @@ detail.setOrderDetId(orderDetId);
 			ordHeader.setProjId(projId);
 
 			float headerTotal = 0;
-			
 
 			HttpSession session = request.getSession();
 			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
@@ -327,7 +323,6 @@ detail.setOrderDetId(orderDetId);
 			ordHeader.setOrderValue(headerTotal);
 			ordHeader.setTotal(headerTotal);
 			ordHeader.setExInt1(login.getUser().getUserId());
-			
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("docCode", 3);
@@ -453,16 +448,31 @@ detail.setOrderDetId(orderDetId);
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
 
+		String[] statusList = request.getParameterValues("statusList");
+
+		System.out.println("values are" + plantId + custId + fromDate + toDate);
+
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < statusList.length; i++) {
+			sb = sb.append(statusList[i] + ",");
+
+		}
+		String items = sb.toString();
+		items = items.substring(0, items.length() - 1);
+
+		map.add("statusList", items);
+
 		map.add("plantId", plantId);
 		map.add("custId", custId);
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
-		//map.add("status", 0);
 
-		GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getOrderListBetDate", map, GetOrder[].class);
+		GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getOrderListBetDateAndStatus", map,
+				GetOrder[].class);
 		getOrdList = new ArrayList<GetOrder>(Arrays.asList(ordHeadArray));
-		
-		System.out.println("order list is"+getOrdList.toString() );
+
+		System.out.println("order list is" + getOrdList.toString());
 
 		return getOrdList;
 	}
@@ -518,380 +528,366 @@ detail.setOrderDetId(orderDetId);
 		}
 		return model;
 	}
-	
+
 	//
-	
-	
+
 	// updateOrder
-		@RequestMapping(value = "/updateOrder", method = RequestMethod.POST)
-		public String updateOrder(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/updateOrder", method = RequestMethod.POST)
+	public String updateOrder(HttpServletRequest request, HttpServletResponse response) {
 
-			ModelAndView model = null;
-			try {
+		ModelAndView model = null;
+		try {
 
-				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				String curDate = dateFormat.format(new Date());
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String curDate = dateFormat.format(new Date());
 
-				model = new ModelAndView("order/addOrder");
+			model = new ModelAndView("order/addOrder");
 
-			//	model.addObject("title", "Add Order");
+			// model.addObject("title", "Add Order");
 
-				int orderId = Integer.parseInt(request.getParameter("orderId"));
-				//int custId = Integer.parseInt(request.getParameter("cust_name"));
-				int projId = Integer.parseInt(request.getParameter("proj_id"));
-				int poId = Integer.parseInt(request.getParameter("po_id"));
+			int orderId = Integer.parseInt(request.getParameter("orderId"));
+			// int custId = Integer.parseInt(request.getParameter("cust_name"));
+			int projId = Integer.parseInt(request.getParameter("proj_id"));
+			int poId = Integer.parseInt(request.getParameter("po_id"));
 
-				//String ordDate = request.getParameter("ord_date");
-				String delDate = request.getParameter("del_date");
+			// String ordDate = request.getParameter("ord_date");
+			String delDate = request.getParameter("del_date");
 
-				// float itemTotal = Float.parseFloat(request.getParameter("itemTotal"));
+			// float itemTotal = Float.parseFloat(request.getParameter("itemTotal"));
 
-				OrderHeader ordHeader = new OrderHeader();
-				
-				MultiValueMap<String, Object>
+			OrderHeader ordHeader = new OrderHeader();
 
-				map = new LinkedMultiValueMap<String, Object>();
-					map.add("orderHeaderId", orderId);
-				ordHeader = rest.postForObject(Constants.url + "getOrdHeaderByOrdId", map, OrderHeader.class);
+			MultiValueMap<String, Object>
 
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("orderHeaderId", orderId);
+			ordHeader = rest.postForObject(Constants.url + "getOrdHeaderByOrdId", map, OrderHeader.class);
 
-				List<OrderDetail> orDetList = new ArrayList<>();
-				String NA = "NA";
-				ordHeader.setDeliveryDate(DateConvertor.convertToYMD(delDate));
-				ordHeader.setProdDate(DateConvertor.convertToYMD(delDate));
-				ordHeader.setProjId(projId);
+			List<OrderDetail> orDetList = new ArrayList<>();
+			String NA = "NA";
+			ordHeader.setDeliveryDate(DateConvertor.convertToYMD(delDate));
+			ordHeader.setProdDate(DateConvertor.convertToYMD(delDate));
+			ordHeader.setProjId(projId);
 
-				float headerTotal = 0;
+			float headerTotal = 0;
 
-				for (int i = 0; i < ordDetailList.size(); i++) {
+			for (int i = 0; i < ordDetailList.size(); i++) {
 
-					OrderDetail orDetail = new OrderDetail();
-					
-					
-					float orderQty=Float.parseFloat(request.getParameter("ordQty"+ordDetailList.get(i).getItemId()));
-					float itemTotal=Float.parseFloat(request.getParameter("itemTotal"+ordDetailList.get(i).getItemId()));
+				OrderDetail orDetail = new OrderDetail();
 
-					 orDetail.setOrderDetId(ordDetailList.get(i).getOrderDetId());
-					orDetail.setDelStatus(1);
-					orDetail.setExDate1(curDate);
-					orDetail.setExDate2(curDate);
-					orDetail.setExVar1(NA);
-					orDetail.setExVar2(NA);
-					orDetail.setExVar3(NA);
-					orDetail.setItemId(ordDetailList.get(i).getItemId());
-					orDetail.setOrderQty(orderQty);
-					orDetail.setOrderRate(ordDetailList.get(i).getOrderRate());
+				float orderQty = Float.parseFloat(request.getParameter("ordQty" + ordDetailList.get(i).getItemId()));
+				float itemTotal = Float
+						.parseFloat(request.getParameter("itemTotal" + ordDetailList.get(i).getItemId()));
 
-					orDetail.setPoDetailId(ordDetailList.get(i).getPoDetailId());
-					orDetail.setPoId(poId);
-					//orDetail.setRemOrdQty((orDetail.getRemOrdQty()-orDetail.getOrderQty()));
-					orDetail.setRemOrdQty(orDetail.getOrderQty());
-					orDetail.setTotal(itemTotal);
-					orDetail.setOrderId(ordDetailList.get(i).getOrderId());
-					orDetail.setStatus(ordDetailList.get(i).getStatus());
-					orDetList.add(orDetail);
+				orDetail.setOrderDetId(ordDetailList.get(i).getOrderDetId());
+				orDetail.setDelStatus(1);
+				orDetail.setExDate1(curDate);
+				orDetail.setExDate2(curDate);
+				orDetail.setExVar1(NA);
+				orDetail.setExVar2(NA);
+				orDetail.setExVar3(NA);
+				orDetail.setItemId(ordDetailList.get(i).getItemId());
+				orDetail.setOrderQty(orderQty);
+				orDetail.setOrderRate(ordDetailList.get(i).getOrderRate());
 
-					headerTotal = orDetail.getTotal() + headerTotal;
+				orDetail.setPoDetailId(ordDetailList.get(i).getPoDetailId());
+				orDetail.setPoId(poId);
+				// orDetail.setRemOrdQty((orDetail.getRemOrdQty()-orDetail.getOrderQty()));
+				orDetail.setRemOrdQty(orDetail.getOrderQty());
+				orDetail.setTotal(itemTotal);
+				orDetail.setOrderId(ordDetailList.get(i).getOrderId());
+				orDetail.setStatus(ordDetailList.get(i).getStatus());
+				orDetList.add(orDetail);
 
-				}
-				ordHeader.setOrderValue(headerTotal);
-				ordHeader.setTotal(headerTotal);
+				headerTotal = orDetail.getTotal() + headerTotal;
 
+			}
+			ordHeader.setOrderValue(headerTotal);
+			ordHeader.setTotal(headerTotal);
 
-				/*if (poDetailForOrdList.get(0).getTaxAmt() == 0) {
+			/*
+			 * if (poDetailForOrdList.get(0).getTaxAmt() == 0) {
+			 * 
+			 * ordHeader.setIsTaxIncluding(0);// tax not included
+			 * 
+			 * } else {
+			 * 
+			 * ordHeader.setIsTaxIncluding(1);// yes tax included
+			 * 
+			 * }
+			 */
+			ordHeader.setOrderDetailList(orDetList);
 
-					ordHeader.setIsTaxIncluding(0);// tax not included
+			OrderHeader updateOrdRes = rest.postForObject(Constants.url + "saveOrder", ordHeader, OrderHeader.class);
 
-				} else {
+			if (updateOrdRes != null) {
 
-					ordHeader.setIsTaxIncluding(1);// yes tax included
+				isError = 2;
 
-				}
-*/
-				ordHeader.setOrderDetailList(orDetList);
+			} else {
 
-				OrderHeader updateOrdRes = rest.postForObject(Constants.url + "saveOrder", ordHeader,
-						OrderHeader.class);
-
-				if (updateOrdRes != null) {
-
-					isError = 2;
-
-
-				} else {
-
-					isError = 1;
-				}
-				System.err.println("updateOrdRes " + updateOrdRes.toString());
-
-			} catch (Exception e) {
 				isError = 1;
-				System.err.println("exception In updateOrder at OrderController " + e.getMessage());
-
-				e.printStackTrace();
-
 			}
+			System.err.println("updateOrdRes " + updateOrdRes.toString());
 
-			return "redirect:/showOrderList";
+		} catch (Exception e) {
+			isError = 1;
+			System.err.println("exception In updateOrder at OrderController " + e.getMessage());
+
+			e.printStackTrace();
+
 		}
 
-		
-		
-		
-		@RequestMapping(value = "/deleteRecordofOrders", method = RequestMethod.POST)
-		public String deleteRecordofCompany(HttpServletRequest request, HttpServletResponse response) {
-			try {
+		return "redirect:/showOrderList";
+	}
 
-				String[] orderIds = request.getParameterValues("selectOrderToDelete");
-				System.out.println("id are"+orderIds);
+	@RequestMapping(value = "/deleteRecordofOrders", method = RequestMethod.POST)
+	public String deleteRecordofCompany(HttpServletRequest request, HttpServletResponse response) {
+		try {
 
-				StringBuilder sb = new StringBuilder();
+			String[] orderIds = request.getParameterValues("selectOrderToDelete");
+			System.out.println("id are" + orderIds);
 
-				for (int i = 0; i < orderIds.length; i++) {
-					sb = sb.append(orderIds[i] + ",");
+			StringBuilder sb = new StringBuilder();
 
-				}
-				String items = sb.toString();
-				items = items.substring(0, items.length() - 1);
-				
-				System.err.println("orderIds "+items.toString());
-
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-				map.add("orderIds", items);
-
-				Info errMsg = rest.postForObject(Constants.url + "deleteMultiOrder", map, Info.class);
-				System.err.println("inside method /deleteRecordofOrders");
-			} catch (Exception e) {
-
-				System.err.println("Exception in /deleteRecordofOrders @OrderController  " + e.getMessage());
-				e.printStackTrace();
-			}
-
-			return "redirect:/showOrderList";
-		}
-		
-		//*********************Pending Order*******************************
-
-		@RequestMapping(value = "/showPendingOrderList", method = RequestMethod.GET)
-		public ModelAndView showPendingOrderList(HttpServletRequest request, HttpServletResponse response) {
-
-			ModelAndView model = null;
-			try {
-
-				model = new ModelAndView("order/pendingOrder");
-
-				model.addObject("title", "Pending Order List");
-
-				Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
-				plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
-
-				model.addObject("plantList", plantList);
-
-				String fromDate = null, toDate = null;
-
-				if (request.getParameter("fromDate") == null || request.getParameter("fromDate") == "") {
-
-					System.err.println("onload call  ");
-
-					Calendar date = Calendar.getInstance();
-					date.set(Calendar.DAY_OF_MONTH, 1);
-
-					Date firstDate = date.getTime();
-
-					DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
-
-					fromDate = dateFormat.format(firstDate);
-
-					toDate = dateFormat.format(new Date());
-					System.err.println("cu Date  " + fromDate + "todays date   " + toDate);
-
-				} else {
-
-					System.err.println("After page load call");
-					fromDate = request.getParameter("fromDate");
-					toDate = request.getParameter("toDate");
-
-				}
-
-				// getOrderListBetDate
-
-				model.addObject("fromDate", fromDate);
-				model.addObject("toDate", toDate);
-
-			} catch (Exception e) {
-
-				System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
-
-				e.printStackTrace();
+			for (int i = 0; i < orderIds.length; i++) {
+				sb = sb.append(orderIds[i] + ",");
 
 			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
 
-			return model;
-		}
+			System.err.println("orderIds " + items.toString());
 
-		
-		
-		@RequestMapping(value = "/getOrderPendingListBetDate", method = RequestMethod.GET)
-		public @ResponseBody List<GetOrder> getOrderPendingListBetDate(HttpServletRequest request, HttpServletResponse response) {
-
-			System.err.println(" in getTempOrderHeader");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			int plantId = Integer.parseInt(request.getParameter("plantId"));
-			int custId = Integer.parseInt(request.getParameter("custId"));
+			map.add("orderIds", items);
 
-			String fromDate = request.getParameter("fromDate");
-			String toDate = request.getParameter("toDate");
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiOrder", map, Info.class);
+			System.err.println("inside method /deleteRecordofOrders");
+		} catch (Exception e) {
 
-			map.add("plantId", plantId);
-			map.add("custId", custId);
-			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
-			map.add("toDate", DateConvertor.convertToYMD(toDate));
-			//map.add("status", 0);
-
-			GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getPendingOrderListBetDate", map, GetOrder[].class);
-			getOrdList = new ArrayList<GetOrder>(Arrays.asList(ordHeadArray));
-			
-			System.out.println("order list is"+getOrdList.toString() );
-
-			return getOrdList;
+			System.err.println("Exception in /deleteRecordofOrders @OrderController  " + e.getMessage());
+			e.printStackTrace();
 		}
-		
-		@RequestMapping(value = "/showGenerateChalanForPendingOrder", method = RequestMethod.POST)
-		public ModelAndView showGenerateChalan1(HttpServletRequest request, HttpServletResponse response) {
 
-			ModelAndView model = null;
-			try {
+		return "redirect:/showOrderList";
+	}
 
-				model = new ModelAndView("chalan/generateChalan1");
+	// *********************Pending Order*******************************
 
-				model.addObject("title", "Add Order");
-				
-			int id=Integer.parseInt(request.getParameter("orderId"));
-				int key=Integer.parseInt(request.getParameter("key")); 
-				
-				
-				System.out.println("detail are"+id +key);
-				
-				
-				DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-				Calendar cal = Calendar.getInstance();
+	@RequestMapping(value = "/showPendingOrderList", method = RequestMethod.GET)
+	public ModelAndView showPendingOrderList(HttpServletRequest request, HttpServletResponse response) {
 
-				String curDate = dateFormat.format(new Date());
-				
-				model.addObject("curDate" ,curDate);
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		ModelAndView model = null;
+		try {
 
-				map.add("docCode", 5);
-				Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
-				model.addObject("doc", doc);
+			model = new ModelAndView("order/pendingOrder");
 
+			model.addObject("title", "Pending Order List");
 
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
-				Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
-				plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			model.addObject("plantList", plantList);
 
-				model.addObject("plantList", plantList);
+			String fromDate = null, toDate = null;
 
-				Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
-				vehicleList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
+			if (request.getParameter("fromDate") == null || request.getParameter("fromDate") == "") {
 
-				model.addObject("vehicleList", vehicleList);
+				System.err.println("onload call  ");
 
-				User[] usrArray = rest.getForObject(Constants.url + "getAllUserList", User[].class);
-				usrList = new ArrayList<User>(Arrays.asList(usrArray));
+				Calendar date = Calendar.getInstance();
+				date.set(Calendar.DAY_OF_MONTH, 1);
 
-				model.addObject("usrList", usrList);
+				Date firstDate = date.getTime();
 
-				model.addObject("title", "Add Chalan");
-				
-			
-				map.add("docCode", 3);
+				DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 
-				Document doc1 = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+				fromDate = dateFormat.format(firstDate);
 
-				model.addObject("doc", doc1);
-				
-				System.out.println("eee:"+getOrdList.get(key).toString());
-				
-				model.addObject("custName",getOrdList.get(key).getCustName());
-				model.addObject("plantName",getOrdList.get(key).getPlantName());
-				model.addObject("projName",getOrdList.get(key).getProjName());
-				model.addObject("orderNo",getOrdList.get(key).getOrderNo());
-				model.addObject("custId",getOrdList.get(key).getCustId());
-				model.addObject("plantId",getOrdList.get(key).getPlantId());
-				model.addObject("projId",getOrdList.get(key).getProjId());
-				model.addObject("orderId",getOrdList.get(key).getOrderId());
-				
-				
-				
-				model.addObject("curDate" ,curDate);
+				toDate = dateFormat.format(new Date());
+				System.err.println("cu Date  " + fromDate + "todays date   " + toDate);
 
-			} catch (Exception e) {
+			} else {
 
-				System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
-
-				e.printStackTrace();
+				System.err.println("After page load call");
+				fromDate = request.getParameter("fromDate");
+				toDate = request.getParameter("toDate");
 
 			}
 
-			return model;
-				
+			// getOrderListBetDate
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
+
+			e.printStackTrace();
+
 		}
-		/*List<Project> projList1;
-		List<GetChalanDetail> chDetailList;
-		@RequestMapping(value = "/closeOpenChalan/{chalanId}", method = RequestMethod.GET)
-		public ModelAndView closeChalan(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
 
-			ModelAndView model = null;
-			try {
+		return model;
+	}
 
-				model = new ModelAndView("chalan/chalan_edit");
+	@RequestMapping(value = "/getOrderPendingListBetDate", method = RequestMethod.GET)
+	public @ResponseBody List<GetOrder> getOrderPendingListBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
 
-				GetChalanHeader editChalan = new GetChalanHeader();
-				
-				 * for(int i=0;i<getOrdList.size();i++) {
-				 * 
-				 * if(getOrdList.get(i).getOrderId()==orderId) { editOrder=new GetOrder();
-				 * editOrder=getOrdList.get(i); break; } }
-				 
-				MultiValueMap<String, Object>
+		System.err.println(" in getTempOrderHeader");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-				map = new LinkedMultiValueMap<String, Object>();
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		int custId = Integer.parseInt(request.getParameter("custId"));
 
-				map.add("chalanId", chalanId);
-				editChalan = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
-				editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate()));
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
 
-				map = new LinkedMultiValueMap<String, Object>();
+		map.add("plantId", plantId);
+		map.add("custId", custId);
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		// map.add("status", 0);
 
-				map.add("custId", editChalan.getCustId());
-				Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
-				projList1 = new ArrayList<Project>(Arrays.asList(projArray));
+		GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getPendingOrderListBetDate", map,
+				GetOrder[].class);
+		getOrdList = new ArrayList<GetOrder>(Arrays.asList(ordHeadArray));
 
-				model.addObject("projList", projList1);
-				
-				map = new LinkedMultiValueMap<String, Object>();
-				
-				map.add("chalanId", chalanId);
-				GetChalanDetail[] chDetailArray = rest.postForObject(Constants.url + "getGetChalanDetailByChalanId", map,
-						GetChalanDetail[].class);
-				chDetailList = new ArrayList<GetChalanDetail>(Arrays.asList(chDetailArray));
+		System.out.println("order list is" + getOrdList.toString());
 
-				model.addObject("chDetailList", chDetailList);
+		return getOrdList;
+	}
 
-				model.addObject("editChalan", editChalan);
+	@RequestMapping(value = "/showGenerateChalanForPendingOrder", method = RequestMethod.POST)
+	public ModelAndView showGenerateChalan1(HttpServletRequest request, HttpServletResponse response) {
 
-				model.addObject("title", "Close Chalan");
+		ModelAndView model = null;
+		try {
 
-			} catch (Exception e) {
-				System.err.println("Exce in edit Chalan " + e.getMessage());
-				e.printStackTrace();
-			}
-			
-			return model;
+			model = new ModelAndView("chalan/generateChalan1");
+
+			model.addObject("title", "Add Order");
+
+			int id = Integer.parseInt(request.getParameter("orderId"));
+			int key = Integer.parseInt(request.getParameter("key"));
+
+			System.out.println("detail are" + id + key);
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar cal = Calendar.getInstance();
+
+			String curDate = dateFormat.format(new Date());
+
+			model.addObject("curDate", curDate);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("docCode", 5);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			model.addObject("doc", doc);
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
+			vehicleList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
+
+			model.addObject("vehicleList", vehicleList);
+
+			User[] usrArray = rest.getForObject(Constants.url + "getAllUserList", User[].class);
+			usrList = new ArrayList<User>(Arrays.asList(usrArray));
+
+			model.addObject("usrList", usrList);
+
+			model.addObject("title", "Add Chalan");
+
+			map.add("docCode", 3);
+
+			Document doc1 = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+
+			model.addObject("doc", doc1);
+
+			System.out.println("eee:" + getOrdList.get(key).toString());
+
+			model.addObject("custName", getOrdList.get(key).getCustName());
+			model.addObject("plantName", getOrdList.get(key).getPlantName());
+			model.addObject("projName", getOrdList.get(key).getProjName());
+			model.addObject("orderNo", getOrdList.get(key).getOrderNo());
+			model.addObject("custId", getOrdList.get(key).getCustId());
+			model.addObject("plantId", getOrdList.get(key).getPlantId());
+			model.addObject("projId", getOrdList.get(key).getProjId());
+			model.addObject("orderId", getOrdList.get(key).getOrderId());
+
+			model.addObject("curDate", curDate);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
+
+			e.printStackTrace();
+
 		}
-		*/
-		
+
+		return model;
+
+	}
+	/*
+	 * List<Project> projList1; List<GetChalanDetail> chDetailList;
+	 * 
+	 * @RequestMapping(value = "/closeOpenChalan/{chalanId}", method =
+	 * RequestMethod.GET) public ModelAndView closeChalan(HttpServletRequest
+	 * request, HttpServletResponse response, @PathVariable int chalanId) {
+	 * 
+	 * ModelAndView model = null; try {
+	 * 
+	 * model = new ModelAndView("chalan/chalan_edit");
+	 * 
+	 * GetChalanHeader editChalan = new GetChalanHeader();
+	 * 
+	 * for(int i=0;i<getOrdList.size();i++) {
+	 * 
+	 * if(getOrdList.get(i).getOrderId()==orderId) { editOrder=new GetOrder();
+	 * editOrder=getOrdList.get(i); break; } }
+	 * 
+	 * MultiValueMap<String, Object>
+	 * 
+	 * map = new LinkedMultiValueMap<String, Object>();
+	 * 
+	 * map.add("chalanId", chalanId); editChalan = rest.postForObject(Constants.url
+	 * + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
+	 * editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate(
+	 * )));
+	 * 
+	 * map = new LinkedMultiValueMap<String, Object>();
+	 * 
+	 * map.add("custId", editChalan.getCustId()); Project[] projArray =
+	 * rest.postForObject(Constants.url + "getProjectByCustId", map,
+	 * Project[].class); projList1 = new
+	 * ArrayList<Project>(Arrays.asList(projArray));
+	 * 
+	 * model.addObject("projList", projList1);
+	 * 
+	 * map = new LinkedMultiValueMap<String, Object>();
+	 * 
+	 * map.add("chalanId", chalanId); GetChalanDetail[] chDetailArray =
+	 * rest.postForObject(Constants.url + "getGetChalanDetailByChalanId", map,
+	 * GetChalanDetail[].class); chDetailList = new
+	 * ArrayList<GetChalanDetail>(Arrays.asList(chDetailArray));
+	 * 
+	 * model.addObject("chDetailList", chDetailList);
+	 * 
+	 * model.addObject("editChalan", editChalan);
+	 * 
+	 * model.addObject("title", "Close Chalan");
+	 * 
+	 * } catch (Exception e) { System.err.println("Exce in edit Chalan " +
+	 * e.getMessage()); e.printStackTrace(); }
+	 * 
+	 * return model; }
+	 */
+
 }

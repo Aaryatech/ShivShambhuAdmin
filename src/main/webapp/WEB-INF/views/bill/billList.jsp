@@ -25,7 +25,7 @@
 	
 <c:url var="getTempOrderHeader"
 	value="/getTempOrderHeader" /> --%>
-	
+
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -76,50 +76,50 @@
 
 <style>
 .alert {
-    padding: 20px;
-    background-color: red;
-    color: white;
-    
+	padding: 20px;
+	background-color: red;
+	color: white;
 }
+
 .alert1 {
-    padding: 20px;
-    background-color: green;
-    color: white;
-    
+	padding: 20px;
+	background-color: green;
+	color: white;
 }
 
 .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: black;
+	color: black;
 }
 </style>
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 .buttonload {
-    background-color: white; /* Green background */
-    border: none; /* Remove borders */
-    color: #ec268f; /* White text */
-    padding: 12px 15px; /* Some padding */
-    font-size: 13px; /* Set a font-size */
-    display:none;
+	background-color: white; /* Green background */
+	border: none; /* Remove borders */
+	color: #ec268f; /* White text */
+	padding: 12px 15px; /* Some padding */
+	font-size: 13px; /* Set a font-size */
+	display: none;
 }
 
 /* Add a right margin to each icon */
 .fa {
-    margin-left: -12px;
-    margin-right: 8px;
+	margin-left: -12px;
+	margin-right: 8px;
 }
 </style>
 </head>
@@ -141,31 +141,31 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-			
-			<c:choose>
-							<c:when test="${isError==1}">
-							
-							<div class="alert">
-							
+
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Failed !</strong>     Data not submitted  !!
-				</div>
-							
-							</c:when>
-							
-							<c:when test="${isError==2}">
-							
-							<div class="alert1">
-							
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Success</strong>     Data Submitted !!
-				</div>
-							
-							</c:when>
-							
-							</c:choose>
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -178,110 +178,151 @@
 								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
 										Customer</strong></a>
 							</div> --%>
-							
+
 
 						</div>
 						<div class="card-body card-block">
-							
-								<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+							<div class="row">
 
-									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select plant name')"
-											onchange="getData()">
-											<option value="">Plant</option>
+								<div class="col-md-2">Select Plant</div>
 
-											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-md-2">Select Customer</div>
-									<div class="col-md-4">
-										<select id="cust_name" name="cust_name" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select customer')"
-											onchange="getCustInfo()">
+								<div class="col-md-4">
+									<select id="plant_id" name="plant_id" class="standardSelect"
+										tabindex="1" required
+										oninvalid="setCustomValidity('Please select plant name')"
+										onchange="getData()">
+										<option value="0">All</option>
 
-										</select>
-									</div>
-
+										<c:forEach items="${plantList}" var="plant">
+											<option value="${plant.plantId}">${plant.plantName}</option>
+										</c:forEach>
+									</select>
 								</div>
-								<div class="form-group"></div>
-								
-								<div class="row">
-									<div class="col-md-2">From Date</div>
-									<div class="col-md-4">
-										<input type="text" autocomplete="off" id="from_date" name="from_date" required
-											style="width: 100%;" class="form-control"
-											value="${fromDate}"> <span class="error"
-											aria-live="polite"></span>
-									</div>
-									<div class="col-md-2">To Date</div>
-									<div class="col-md-4">
-										<input type="text" autocomplete="off"  id="to_date" name="to_date"
-											style="width: 100%;" class="form-control"
-											value="${toDate}"> <span
-											class="error" aria-live="polite"></span>
-									</div>
+								<div class="col-md-2">Select Customer</div>
+								<div class="col-md-4">
+									<select id="cust_name" name="cust_name" class="standardSelect"
+										tabindex="1" required
+										oninvalid="setCustomValidity('Please select customer')"
+										onchange="getCustInfo()">
+										<option value="0">All</option>
 
+									</select>
 								</div>
 
-								
-								<div class="form-group"></div>
-								<div class="row">
+							</div>
+							<div class="form-group"></div>
+
+							<div class="row">
+								<div class="col-md-2">From Date</div>
+								<div class="col-md-4">
+									<input type="text" autocomplete="off" id="from_date"
+										name="from_date" required style="width: 100%;"
+										class="form-control" value="${fromDate}"> <span
+										class="error" aria-live="polite"></span>
+								</div>
+								<div class="col-md-2">To Date</div>
+								<div class="col-md-4">
+									<input type="text" autocomplete="off" id="to_date"
+										name="to_date" style="width: 100%;" class="form-control"
+										value="${toDate}"> <span class="error"
+										aria-live="polite"></span>
+								</div>
+
+							</div>
+
+
+							<div class="form-group"></div>
+							<div class="row">
 								<div class="col-md-6"></div>
-									<div class="col-md-3">
-										<input type="button" class="btn btn-primary"  onclick="showBill()" value="Submit">
+								<div class="col-md-3">
+									<input type="button" class="btn btn-primary"
+										onclick="showBill()" value="Submit">
 									<button class="buttonload" id="loader">
-                                   <i class="fa fa-spinner fa-spin"></i>Loading
-                                   </button>
-									</div>
+										<i class="fa fa-spinner fa-spin"></i>Loading
+									</button>
 								</div>
-								
+							</div>
 
-								<div class="form-group"></div>
-								
-								</div>
-								
-								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-								
-								<div class="card-body card-block">
-									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
-										<thead>
-											<tr>
-											
-												<th style="text-align: center"><input type="checkbox" id="selectAll" /> Sr.No.</th>
-												<th style="text-align: center">Bill No</th>
-												<th style="text-align: center">Bill Date</th>
-												<th style="text-align: center">Customer Name</th>
-<!-- 												<th style="text-align: center">Status</th>
- -->												<th style="text-align: center">Action</th>
-											</tr>
-										</thead>
 
-									</table>
-								</div>
-
-				<center>
-										<input type="button" margin-right: 5px;" id="btn_submit"
-											class="btn btn-primary" onclick="billPdf()" 
-											value="Bill Pdf" />
-							</center>
-								
+							<div class="form-group"></div>
 
 						</div>
+
+						<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
+
+						<div class="card-body card-block">
+							<table id="bootstrap-data-table"
+								class="table table-striped table-bordered">
+								<thead>
+									<tr>
+
+										<th style="text-align: center"><input type="checkbox"
+											id="selectAll" /> Sr.No.</th>
+										<th style="text-align: center">Bill No</th>
+										<th style="text-align: center">Bill Date</th>
+										<th style="text-align: center">Customer Name</th>
+
+										<th style="text-align: center">Total Amount</th>
+										<th style="text-align: center">Taxable Amount</th>
+										<th style="text-align: center">Tax Amount</th>
+										<th style="text-align: center">Action</th>
+									</tr>
+								</thead>
+
+								<tbody>
+									<c:forEach items="${getBillList}" var="bill" varStatus="count">
+										<tr>
+											<%-- <td><input type="checkbox" class="chk" name="quotIds"
+												id="quotIds${count.index+1}" value="${bill.billHeadId}" /></td> --%>
+
+											<td style="text-align: center">${count.index+1}</td>
+
+
+											<td style="text-align: left"><c:out
+													value="${bill.billNo}" /></td>
+											<td style="text-align: center">${bill.billDate}</td>
+
+											<td style="text-align: left"><c:out
+													value="${bill.custName}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${bill.totalAmt}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${bill.taxableAmt}" /></td>
+
+											<td style="text-align: left"><c:out
+													value="${bill.taxAmt}" /></td>
+
+
+
+
+											<td><a
+												href="${pageContext.request.contextPath}/editQuotation/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
+													class="fa fa-edit" title="Generate Quotation"></i> <span
+													class="text-muted"></span></a></td>
+										</tr>
+									</c:forEach>
+								</tbody>
+
+							</table>
+						</div>
+
+						<center>
+							<input type="button" margin-right: 5px;" id="btn_submit"
+								class="btn btn-primary" onclick="billPdf()" value="Bill Pdf" />
+						</center>
+
+
 					</div>
 				</div>
 			</div>
-
-
 		</div>
-		<!-- .animated -->
+
+
+	</div>
+	<!-- .animated -->
 	<!-- .content -->
 
 
@@ -352,7 +393,7 @@
 			$('input[id$=from_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-			
+
 			$('input[id$=to_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
@@ -361,9 +402,8 @@
 	</script>
 
 	<script type="text/javascript">
-	
-	// on plant change function 
-		function getData() { 
+		// on plant change function 
+		function getData() {
 			var plantId = document.getElementById("plant_id").value;
 			var valid = true;
 
@@ -382,7 +422,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option selected value="-1"  >Select</option>';
+					var html = '<option selected value="0"  >All</option>';
 
 					for (var i = 0; i < len; i++) {
 
@@ -399,9 +439,8 @@
 					$('#po_id').html("-1");
 					$("#po_id").trigger("chosen:updated");
 					 */
-					var dataTable = $('#bootstrap-data-table')
-					.DataTable();
-			dataTable.clear().draw();
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
 
 				});
 			}//end of if
@@ -412,53 +451,51 @@
 
 
 	<script type="text/javascript">
-	// onclick of submit to search order 
+		// onclick of submit to search order 
 		function showBill() {
-		
-		//alert("Hi View Orders  ");
-	
+
+			//alert("Hi View Orders  ");
+
 			var plantId = document.getElementById("plant_id").value;
-			 var fromDate=document.getElementById("from_date").value;
-			 var toDate=document.getElementById("to_date").value;
-			 
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
 			var valid = true;
 
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
-			}			
-			
+			}
+
 			var custId = document.getElementById("cust_name").value;
 			var valid = true;
 			if (custId == null || custId == "") {
 				valid = false;
 				alert("Please Select Customer");
-				
-				var dataTable = $('#bootstrap-data-table')
-				.DataTable();
+
+				var dataTable = $('#bootstrap-data-table').DataTable();
 				dataTable.clear().draw();
 
-			}
-			else if(custId<0){
+			} else if (custId < 0) {
 				valid = false;
 
 			}
-			
+
 			else if (fromDate == null || fromDate == "") {
-					valid = false;
-					alert("Please select from date");
-				}			
-			 
+				valid = false;
+				alert("Please select from date");
+			}
+
 			else if (toDate == null || toDate == "") {
 				valid = false;
 				alert("Please select to date");
-			}			
-		
-			if(fromDate > toDate){
+			}
+
+			if (fromDate > toDate) {
 				valid = false;
 				alert("from date greater than todate ");
 			}
-			if(valid==true){
+			if (valid == true) {
 				$('#loader').show();
 				$
 						.getJSON(
@@ -474,49 +511,57 @@
 								function(data) {
 									$('#loader').hide();
 									//alert("Order Data " +JSON.stringify(data));
-									
-									 var dataTable = $('#bootstrap-data-table')
-									.DataTable();
-							dataTable.clear().draw();
 
-							$.each(data,function(i, v) {
-												//alert("hdjfh");
-										
-var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v.billHeadId+' class="chk"  value='+v.billHeadId+'/>'
-//var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
-//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
-										 var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-														+ v.billHeadId
-														+ ','
-														+ i
-														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
- 
-												dataTable.row
-														.add(
-																[
-																	checkB+''+ (i + 1),
-																		v.billNo,
-																		v.billDate,
-																		v.custName,
-																		acButton
-																		 ])
-														.draw();
-											}); 
-						
-								});	
-				
-}//end of if valid ==true
-						
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
+
+									$
+											.each(
+													data,
+													function(i, v) {
+														//alert("hdjfh");
+
+														var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v.billHeadId+' class="chk"  value='+v.billHeadId+'/>'
+														//var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
+														//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
+														var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
+																+ v.billHeadId
+																+ ','
+																+ i
+																+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+
+														dataTable.row
+																.add(
+																		[
+																				checkB
+																						+ ''
+																						+ (i + 1),
+																				v.billNo,
+																				v.billDate,
+																				v.custName,
+																				v.taxableAmt,
+																				v.taxAmt,
+																				v.totalAmt,
+																				acButton ])
+																.draw();
+													});
+
+								});
+
+			}//end of if valid ==true
+
 		}
-	
-	function callEdit(billHeadId){
-		
-		window.open("${pageContext.request.contextPath}/editBill/"+billHeadId);
-		
-	}
+
+		function callEdit(billHeadId) {
+
+			window.open("${pageContext.request.contextPath}/editBill/"
+					+ billHeadId);
+
+		}
 	</script>
-	
-		<!-- <script type="text/javascript">
+
+	<!-- <script type="text/javascript">
 	// on cust change function 
 		function showOrder() {
 			$('#divCheckbox').show();
@@ -610,32 +655,32 @@ var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v
 			
 		}
 	</script> -->
-	
-<script type="text/javascript">
-function billPdf()
-{
-	var checkedVals = $('input:checkbox:checked').map(function() {
-	    return this.value;
-	}).get();
-//checkedVals=checkedVals.slice(0,- 1);alert(checkedVals);
-checkedVals=checkedVals.join(",");
-var str2 = checkedVals.replace('/',"");
-	
-if(checkedVals=="")
-	{
-	alert("Please Select Bill")
-	}
-else
-	{
-	   window.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'+str2);
-	}
-}
-</script>
-<script type="text/javascript">
-$('#selectAll').click(function (e) {
-    $(this).closest('table').find('td input:checkbox').prop('checked', this.checked);
-});
-</script>
+
+	<script type="text/javascript">
+		function billPdf() {
+			var checkedVals = $('input:checkbox:checked').map(function() {
+				return this.value;
+			}).get();
+			//checkedVals=checkedVals.slice(0,- 1);alert(checkedVals);
+			checkedVals = checkedVals.join(",");
+			var str2 = checkedVals.replace('/', "");
+
+			if (checkedVals == "") {
+				alert("Please Select Bill")
+			} else {
+				window
+						.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
+								+ str2);
+			}
+		}
+	</script>
+	<script type="text/javascript">
+		$('#selectAll').click(
+				function(e) {
+					$(this).closest('table').find('td input:checkbox').prop(
+							'checked', this.checked);
+				});
+	</script>
 
 
 </body>

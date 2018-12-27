@@ -143,9 +143,9 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+									<div class="col-md-1">Select Plant</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
@@ -164,7 +164,7 @@
 										</select>
 									</div>
 									<div class="col-md-2">Select Customer</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
@@ -172,6 +172,46 @@
 											<option value="0">All</option>
 										</select>
 									</div>
+
+
+
+									<div class="col-md-1">Status</div>
+									<div class="col-md-2">
+										<select id="statusList" name="statusList"
+											class="standardSelect" tabindex="1" required
+											oninvalid="setCustomValidity('Please select customer')">
+
+
+											<c:choose>
+												<c:when test="${status==0}">
+													<option value="-1">All</option>
+													<option value="0" Selected>Pending</option>
+													<option value="1">Partial Used</option>
+													<option value="2">Completed</option>
+												</c:when>
+
+												<c:when test="${status==1}">
+													<option value="-1">All</option>
+													<option value="0">Pending</option>
+													<option value="1" Selected>Partial Used</option>
+													<option value="2">Completed</option>
+												</c:when>
+												<c:otherwise>
+													<option value="-1">All</option>
+													<option value="0">Pending</option>
+													<option value="1">Partial Used</option>
+													<option value="2">Completed</option>
+												</c:otherwise>
+											</c:choose>
+
+
+
+
+										</select>
+									</div>
+
+
+
 
 
 								</div>
@@ -375,6 +415,7 @@
 			var plantId = document.getElementById("plant_id").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
+			var statusList = document.getElementById("statusList").value;
 
 			var valid = true;
 
@@ -421,6 +462,7 @@
 									custId : custId,
 									fromDate : fromDate,
 									toDate : toDate,
+									statusList : statusList,
 									ajax : 'true',
 								},
 

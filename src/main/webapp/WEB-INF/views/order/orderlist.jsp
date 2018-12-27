@@ -151,7 +151,7 @@
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
-					
+
 						<div class="card-header">
 							<div class="col-md-2">
 								<strong>${title}</strong>
@@ -159,21 +159,22 @@
 
 
 						</div>
-						
 
-							<div class="card-body card-block">
-                    <form action="${pageContext.request.contextPath}/deleteRecordofOrders"
-							method="post">
+
+						<div class="card-body card-block">
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofOrders"
+								method="post">
 								<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+									<div class="col-md-1">Select Plant</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="">Select</option>
+											<option value="0">All</option>
 
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
@@ -181,12 +182,47 @@
 										</select>
 									</div>
 									<div class="col-md-2">Select Customer</div>
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
-											<option value="">Select</option>
+											<option value="0">All</option>
+										</select>
+									</div>
+
+									<div class="col-md-1">Status</div>
+									<div class="col-md-2">
+										<select id="statusList" name="statusList"
+											class="standardSelect" tabindex="1" required
+											oninvalid="setCustomValidity('Please select customer')">
+
+
+											<c:choose>
+												<c:when test="${status==0}">
+													<option value="-1">All</option>
+													<option value="0" Selected>Pending</option>
+													<option value="1">Partial Completed</option>
+													<option value="2">Completed</option>
+												</c:when>
+
+												<c:when test="${status==1}">
+													<option value="-1">All</option>
+													<option value="0">Pending</option>
+													<option value="1" Selected>Partial Completed</option>
+													<option value="2">Completed</option>
+												</c:when>
+												<c:otherwise>
+													<option value="-1">All</option>
+													<option value="0">Pending</option>
+													<option value="1">Partial Completed</option>
+													<option value="2">Completed</option>
+												</c:otherwise>
+											</c:choose>
+
+
+
+
 										</select>
 									</div>
 
@@ -227,25 +263,76 @@
 
 
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-								
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center"><input type="checkbox" name="selAll" id="selAll" /> Select All</th>
+												<th style="text-align: center"><input type="checkbox"
+													name="selAll" id="selAll" /></th>
 												<th style="text-align: center">Sr.</th>
 												<th style="text-align: center">Order No</th>
 												<th style="text-align: center">Order Date</th>
 												<th style="text-align: center">Delivery Date</th>
 												<th style="text-align: center">Customer Name</th>
-												<th style="text-align: center">Customer Mobile No</th>
+												<th style="text-align: center">Mobile No</th>
 												<th style="text-align: center">Status</th>
-												<!-- 												<th style="text-align: center">Status</th>
- -->
 												<th style="text-align: center">Action</th>
 											</tr>
 										</thead>
+										<tbody>
+											<c:forEach items="${getOrdList}" var="enq" varStatus="count">
+												<tr>
+													<td><input type="checkbox" class="chk"
+														name="selectOrderToDelete" id="orderIds${count.index+1}"
+														value="${enq.orderId}" /></td>
+													<td style="text-align: center">${count.index+1}</td>
+
+
+													<td style="text-align: center"><c:out
+															value="${enq.orderNo}" /></td>
+
+													<td style="text-align: center"><c:out
+															value="${enq.orderDate}" /></td>
+
+													<td style="text-align: center"><c:out
+															value="${enq.deliveryDate}" /></td>
+
+
+
+													<td style="text-align: left"><c:out
+															value="${enq.custName}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${enq.custMobNo}" /></td>
+
+
+
+													<td style="text-align: left"><c:choose>
+															<c:when test="${enq.status==0}">
+														Pending 
+													</c:when>
+															<c:when test="${enq.status==1}">
+														 Partial Completed
+													</c:when>
+															<c:otherwise>
+																Completed
+															</c:otherwise>
+
+														</c:choose></td>
+
+													<td><a
+														href="${pageContext.request.contextPath}/editOrder/${enq.orderId}"><i
+															class="fa fa-edit" title="Edit"></i> <span
+															class="text-muted"></span></a></td>
+
+												</tr>
+											</c:forEach>
+										</tbody>
+
+
 
 									</table>
 								</div>
@@ -254,9 +341,9 @@
 									id="deleteId"
 									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 									style="align-content: center; width: 113px; margin-left: 40px;">
-                             </form>
-							</div>
-						
+							</form>
+						</div>
+
 					</div>
 
 
@@ -416,6 +503,7 @@
 			var plantId = document.getElementById("plant_id").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
+			var statusList = document.getElementById("statusList").value;
 
 			var valid = true;
 
@@ -462,12 +550,13 @@
 									custId : custId,
 									fromDate : fromDate,
 									toDate : toDate,
+									statusList : statusList,
 									ajax : 'true',
 								},
 
 								function(data) {
 
-									//alert("Order Data " +JSON.stringify(data));
+									alert("Order Data " + JSON.stringify(data));
 
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();
@@ -482,28 +571,29 @@
 														if (v.status == 0) {
 															status1 = "Pending";
 														} else if (v.status == 1) {
+															status1 = "Partial Completed";
+														} else if (v.status == 2) {
 															status1 = "Completed";
 														}
 
-														if (v.status == 0) {
-															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																	+ v.orderId
-																	+ ','
-																	+ i
-																	+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-																	+ v.orderId
-																	+ ','
-																	+ i
-																	+ ')"><i class="fa fa-trash" title="Delete"></i></a>'
+														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																+ v.orderId
+																+ ','
+																+ i
+																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+																+ v.orderId
+																+ ','
+																+ i
+																+ ')"><i class="fa fa-trash" title="Delete"></i></a>'
 
-															chBox = '<input  type="checkbox" class="chk" name="selectOrderToDelete" id='+v.orderId+' class="check"  value='+v.orderId+'>'
-
+														chBox = '<input  type="checkbox" class="chk" name="selectOrderToDelete" id='+v.orderId+' class="check"  value='+v.orderId+'>'
+														/* if (v.status == 0) {
 														} else {
-															//alert("status>0 " +v.orderNo)
-															chBox = '-'
-															var acButton = '<a href="#" class="action_btn" ><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"><i class="fa fa-trash" title="Delete"></i></a>'
+														//alert("status>0 " +v.orderNo)
+														chBox = '-'
+														var acButton = '<a href="#" class="action_btn" ><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"><i class="fa fa-trash" title="Delete"></i></a>'
 														}
-
+														 */
 														//var chBox='<input type="checkbox" id="orderId" class="chk" name="quotIds" value='+v.orderId+'/>'
 														dataTable.row
 																.add(
@@ -536,24 +626,6 @@
 		function callDelete(orderId) {
 
 		}
-	</script>
-
-
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$('#bootstrap-data-table-export').DataTable();
-
-							$("#selAll")
-									.click(
-											function() {
-												$(
-														'#bootstrap-data-table tbody input[type="checkbox"]')
-														.prop('checked',
-																this.checked);
-											});
-						});
 	</script>
 
 

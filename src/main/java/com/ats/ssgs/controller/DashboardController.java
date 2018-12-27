@@ -28,6 +28,7 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.DashSaleCount;
+import com.ats.ssgs.model.GetBillHeader;
 import com.ats.ssgs.model.GetBillReport;
 import com.ats.ssgs.model.GetPoHeader;
 import com.ats.ssgs.model.GetQuotHeader;
@@ -401,12 +402,58 @@ public class DashboardController {
 			map.add("toDate", DateConvertor.convertToYMD(toDate));
 			map.add("statusList", 0);
 
-			GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getOrderListBetDate", map, GetOrder[].class);
+			GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getOrderListBetDateAndStatus", map,
+					GetOrder[].class);
 			getOrdList = new ArrayList<GetOrder>(Arrays.asList(ordHeadArray));
 
 			System.out.println("getOrdList list data " + getOrdList.toString());
 
 			model.addObject("getOrdList", getOrdList);
+
+		} catch (Exception e) {
+			System.err.println("Exce in /showQ" + e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+
+	List<GetBillHeader> getBillList = new ArrayList<>();
+
+	@RequestMapping(value = "/showDashboardBillList/{fromDate}/{toDate}/{plantId}", method = RequestMethod.GET)
+	public ModelAndView showDashboardBillList(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable String fromDate, @PathVariable String toDate, @PathVariable int plantId) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("bill/billList");
+
+			model.addObject("title", "Bill List");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			System.out.println("plant is" + plantList);
+
+			model.addObject("plantList", plantList);
+
+			model.addObject("plantId1", plantId);
+			model.addObject("status", 0);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("plantId", plantId);
+			map.add("custId", 0);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+
+			GetBillHeader[] ordHeadArray = rest.postForObject(Constants.url + "getBillHeadersByDateAndCustAndPlant",
+					map, GetBillHeader[].class);
+			getBillList = new ArrayList<GetBillHeader>(Arrays.asList(ordHeadArray));
+			System.out.println("getBillList" + getBillList.toString());
+
+			model.addObject("getBillList", getBillList);
 
 		} catch (Exception e) {
 			System.err.println("Exce in /showQ" + e.getMessage());

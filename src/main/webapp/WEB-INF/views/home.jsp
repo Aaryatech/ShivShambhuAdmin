@@ -102,22 +102,22 @@ background-color: transparent;
 
 					<div class="form-group"></div>
 
-				<div class="row">
-						<div class="col-md-1" style="color:black;">From*</div>
+					<div class="row">
+						<div class="col-md-1" style="color: black;">From*</div>
 						<div class="col-md-2">
 							<input type="text" autocomplete="off" id="from_date"
 								name="from_date" required style="width: 100%;"
 								class="form-control" value="${fromDate}"> <span
 								class="error" aria-live="polite"></span>
 						</div>
-						<div class="col-md-1" style="color:black;">To*</div>
+						<div class="col-md-1" style="color: black;">To*</div>
 						<div class="col-md-2">
 							<input type=text autocomplete="off" id="to_date" name="to_date"
 								style="width: 100%;" class="form-control" value="${toDate}">
 							<span class="error" aria-live="polite"></span>
 						</div>
 
-						<div class="col-md-2" style="color:black;">Select Plant*</div>
+						<div class="col-md-2" style="color: black;">Select Plant*</div>
 						<div class="col-md-2">
 							<select id="plantId" name="plantId" class="standardSelect"
 								tabindex="1" required
@@ -263,7 +263,8 @@ background-color: transparent;
 
 
 						<div class="col-sm-6 col-lg-4"
-							style="cursor: pointer; max-width: 27.333333%;">
+							style="cursor: pointer; max-width: 27.333333%;"
+							onclick="showOrderBetDate(${dashBoard.totalOrderAmount})">
 
 							<div class="card text-white bg-flat-color-3"
 								style="background: #59c9f2;">
@@ -286,7 +287,8 @@ background-color: transparent;
 
 
 						<div class="col-sm-6 col-lg-4"
-							style="cursor: pointer; max-width: 27.333333%;">
+							style="cursor: pointer; max-width: 27.333333%;"
+							onclick="showBillBetDate(${dashBoard.totalBillAmount})">
 
 							<div class="card text-white bg-flat-color-3"
 								style="background: #20a8d8;">
@@ -307,7 +309,8 @@ background-color: transparent;
 						</div>
 
 						<div class="col-sm-6 col-lg-4"
-							style="cursor: pointer; max-width: 27.333333%;">
+							style="cursor: pointer; max-width: 27.333333%;"
+							onclick="showBillBetDate(${dashBoard.totalTaxBillAmt})">
 
 							<div class="card text-white bg-flat-color-2"
 								style="background: #4f90b9;">
@@ -331,7 +334,8 @@ background-color: transparent;
 
 
 						<div class="col-sm-6 col-lg-4"
-							style="cursor: pointer; max-width: 27.333333%;">
+							style="cursor: pointer; max-width: 27.333333%;"
+							onclick="showBillBetDate(${dashBoard.totalTaxableBillAmt})">
 
 							<div class="card text-white bg-flat-color-2"
 								style="background: #64c2de;">
@@ -431,12 +435,12 @@ background-color: transparent;
 		src="${pageContext.request.contextPath}/resources/assets/js/dashboard.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/widgets.js"></script>
-<script
+	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
-	
 
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- 	<script>
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<!-- 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({
 				disable_search_threshold : 1,
@@ -624,6 +628,35 @@ background-color: transparent;
 
 		}
 	</script>
+
+
+	<script type="text/javascript">
+		function showOrderBetDate(count) {
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+			var plantId = document.getElementById("plantId").value;
+
+			window.open(
+					'${pageContext.request.contextPath}/showDashboardOrderList/'
+							+ fromDate + '/' + toDate + '/' + plantId, "_self");
+
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		function showBillBetDate(count) {
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+			var plantId = document.getElementById("plantId").value;
+
+			window.open(
+					'${pageContext.request.contextPath}/showDashboardBillList/'
+							+ fromDate + '/' + toDate + '/' + plantId, "_self");
+
+		}
+	</script>
+
 
 </body>
 </html>
