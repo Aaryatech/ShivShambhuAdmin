@@ -751,10 +751,11 @@
   transition: all 0.3s ease; }
 
 body {
-  background: #f1f2f7;
+  background: #e7e1bf;
   display: table;
-  font-family: 'Open Sans' sans-serif !important;
-  font-size: 16px;
+  /* font-family: 'Open Sans'; *//* sans-serif !important*/
+  font-size: 13px;
+  font-color:#000000;
   width: 100%; }
 
 div[class*="col-"] {
@@ -825,17 +826,17 @@ textarea {
   width: 100%; }
 
 aside.left-panel {
-  background: #272c33;
+  background:#27332f;
   display: table-cell;
   height: 100vh;
   min-height: 100%;
-  padding: 0 25px;
+  padding: 0 20px;
   vertical-align: top;
-  width: 280px;
+  width: 228px;
   transition: width 0.3s ease; }
 
 .navbar {
-  background: #272c33;
+  background: #27332f;
   border-radius: 0;
   border: none;
   display: block;
@@ -898,16 +899,16 @@ aside.left-panel {
         font-family: 'Open Sans';
         font-size: 14px;
         line-height: 30px;
-        padding: 10px 0;
+        padding: 7px 0;
         position: relative;
         width: 100%; }
         .navbar .navbar-nav li > a:hover, .navbar .navbar-nav li > a:hover .menu-icon {
-          color: #fff !important; }
+          color: #fff !important; font-size: 14.8px;  }
         .navbar .navbar-nav li > a .menu-icon {
           color: #8b939b;
           float: left;
           margin-top: 8px;
-          width: 55px;
+          width: 35px;
           text-align: left;
           z-index: 9; }
         .navbar .navbar-nav li > a .menu-title-text {
@@ -920,7 +921,7 @@ aside.left-panel {
           margin: 6px 0 0 0;
           padding: 0.4em 0.5em; }
       .navbar .navbar-nav li.menu-item-has-children {
-        position: relative; }
+        position: relative;  }
         .navbar .navbar-nav li.menu-item-has-children a {
           line-height: 30px; }
           .navbar .navbar-nav li.menu-item-has-children a:before {
@@ -940,7 +941,7 @@ aside.left-panel {
           .navbar .navbar-nav li.menu-item-has-children a:hover:before {
             color: #fff; }
         .navbar .navbar-nav li.menu-item-has-children .sub-menu {
-          background: #272c33;
+          background: #27322f;
           border: none;
           box-shadow: none;
           overflow-y: hidden;
@@ -956,7 +957,7 @@ aside.left-panel {
             font-size: 14px;
             top: 9px; }
           .navbar .navbar-nav li.menu-item-has-children .sub-menu a {
-            padding: 2px 0 2px 30px; }
+            padding: 2px 0 2px 8px; }
             .navbar .navbar-nav li.menu-item-has-children .sub-menu a:before {
               content: '';
               display: none; }
@@ -1107,7 +1108,7 @@ body.open .navbar .navbar-brand.hidden {
       content: "/\00a0"; }
 
 .right-panel header.header {
-  background: #fff;
+  background: #ffffea;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
   clear: both;
   display: inline-block;
@@ -1125,7 +1126,7 @@ header.fixed-top {
   position: inherit; }
 
 .menutoggle {
-  background: #e74c3c;
+  background: #25594b;
   border-radius: 50%;
   color: #fff !important;
   cursor: pointer;
@@ -1300,7 +1301,7 @@ header .form-inline {
       padding: 5px 0; }
   .user-area .user-avatar {
     float: right;
-    margin-top: 4px;
+    margin-top: 0px;
     width: 32px; }
   .user-area .user-info .name {
     color: #8c8c8c;
@@ -1365,7 +1366,9 @@ header .form-inline {
 
 .card {
   margin-bottom: 1.5rem;
-  border-radius: 0; }
+  border-radius: 0;
+  background-color: #fffdf3;
+   }
   .card h4 {
     font-size: 1.1rem; }
   .card .user-header .media img {
@@ -1378,7 +1381,7 @@ header .form-inline {
     width: 50px;
     padding: .75rem 0;
     margin: 0 !important;
-    color: #fff;
+    color: #fffdf3;
     outline: 0;
     text-align: center;
     background: transparent;
@@ -1702,7 +1705,7 @@ header .form-inline {
   text-align: center;
   background-color: #e9ecef;
   border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: .25rem; }
+  border-radius: 2.25rem; }
 
 .flotTip {
   background: #252525;
