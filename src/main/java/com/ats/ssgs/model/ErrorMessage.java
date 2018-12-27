@@ -5,7 +5,7 @@ public class ErrorMessage {
 	private boolean isError;
 	public String getMessage() {
 		return message;
-	}
+	} 
 	public void setMessage(String message) {
 		this.message = message;
 	}
