@@ -11,7 +11,7 @@
 
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
 <c:url var="getPayRecoveryBetDate" value="/getPayRecoveryBetDate" />
-
+<c:url var="getPayRecoveryBetDateVyPlantId" value="/getPayRecoveryBetDateVyPlantId" />
 
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
@@ -104,7 +104,7 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Select Date*</div>
+									<div class="col-md-2">Select Type*</div>
 
 									<div class="col-md-4">
 										<select id="txType" name="txType" class="standardSelect"
@@ -115,6 +115,22 @@
 
 										</select>
 									</div>
+									<div class="col-md-2">Select Plant*</div>
+									<div class="col-md-4">
+									<select id="plantId" name="plantId" class="standardSelect"
+										tabindex="1" required onchange="showDetail()">
+										<option value="">Select</option>
+
+										<option  value="0">All</option>
+										<c:forEach items="${plantList}" var="plant">
+
+											<option value="${plant.plantId}">${plant.plantName}</option>
+
+										</c:forEach>
+									</select>
+								</div>
+
+
 								</div>
 
 
@@ -143,15 +159,15 @@
 
 								</div>
 
-
-							<!-- 	<div class="form-group"></div>
+								<div class="form-group"></div>
+								<!-- 	<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-6"></div>
 									
 								</div>
  -->
 
-								<div class="form-group"></div>
+
 
 
 
@@ -199,6 +215,7 @@
 															value="${rec.billDate}" /></td>
 
 
+
 													<td style="text-align: left"><c:out
 															value="${rec.creditDate1}" /></td>
 
@@ -236,6 +253,27 @@
 										</tbody>
 
 									</table>
+									
+									<div class="col-md-2"></div>
+
+								<div class="col-md-3">
+
+									<button type="button" class="btn btn-primary"
+										onclick="exportToExcel();" disabled="disabled" id="expExcel"
+										style="align-content: center; width: 200px; margin-left: 80px;">
+										Export To Excel</button>
+								</div>
+
+
+								<div class="col-md-3">
+
+									<button type="button" class="btn btn-primary"
+										onclick="genPdf()" disabled="disabled" id="PDFButton"
+										style="align-content: center; width: 100px; margin-left: 80px;">
+										PDF</button>
+								</div>
+								&nbsp;
+									
 								</div>
 
 								<input type="submit" class="btn btn-primary" value="Delete"
@@ -306,7 +344,6 @@
 
 
 
-
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
@@ -333,6 +370,7 @@
 
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
+			var plantId = document.getElementById("plantId").value;
 
 			var valid = true;
 
@@ -358,6 +396,93 @@
 								{
 									fromDate : fromDate,
 									toDate : toDate,
+									plantId:plantId,
+									ajax : 'true',
+								},
+
+								function(data) {
+
+									//alert("Order Data " + JSON.stringify(data));
+
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
+
+									$
+											.each(
+													data,
+													function(i, v) {
+														var chBox;
+
+														var status1;
+														if (v.status == 0) {
+															status1 = "Pending";
+														} else if (v.status == 1) {
+															status1 = "Payment Done";
+														}
+
+														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																+ v.payHeadId
+																+ ','
+																+ i
+																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>'
+
+														chBox = '<input  type="checkbox" class="chk" name="payHeadIds" id='+v.payHeadId+' class="check"  value='+v.payHeadId+'>'
+
+														dataTable.row
+																.add(
+																		[
+																				chBox,
+																				i + 1,
+																				v.custName,
+																				v.billNo,
+																				v.billDate,
+																				v.creditDate1,
+																				v.creditDate2,
+																				v.paidAmt,
+																				v.pendingAmt,
+																				status1,
+																				acButton ])
+																.draw();
+													});
+
+								});
+
+			}//end of if valid ==true
+
+		}
+
+		function callEdit(payHeadId) {
+
+			window.open("${pageContext.request.contextPath}/editPayRec/"
+					+ payHeadId);
+
+		}
+	</script>
+
+
+
+
+<script type="text/javascript">
+		// onclick of submit to search order 
+		function showDetail() {
+
+			alert("Hi View Orders  ");
+
+			
+			var plantId = document.getElementById("plantId").value;
+
+			var valid = true;
+
+			
+			if (valid == true) {
+
+				$
+						.getJSON(
+								'${getPayRecoveryBetDateVyPlantId}',
+								{
+									
+									plantId:plantId,
 									ajax : 'true',
 								},
 
@@ -451,7 +576,26 @@
 		}
 	</script>
 
+<script type="text/javascript">
+		function exportToExcel() {
 
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
+		}
+	</script>
+
+	<script type="text/javascript">
+		function genPdf() {
+			//alert("hiii");
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
+			window.open('${pageContext.request.contextPath}/showPayRecPdf/'
+					+ fromDate + '/' + toDate);
+			document.getElementById("expExcel").disabled = true;
+
+		}
+	</script>
 
 </body>
 </html>
