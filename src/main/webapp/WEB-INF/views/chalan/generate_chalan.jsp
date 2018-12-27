@@ -622,6 +622,7 @@ body {
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
+		
 		<script type="text/javascript">
 		
 		function checkVehicle(vehId){
@@ -630,8 +631,7 @@ body {
 			         $("#out_div").show();
 			         
 		           $("#newdriver").append("<input type='text' id='new_dri_veh' name='new_dri_veh' onblur='setRemark()'/><br/>");
-		           
-		           
+		          
 		}
 		function setRemark(){
 			//alert("fkdsf");
