@@ -25,6 +25,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -58,7 +59,7 @@ public class HomeController {
 	}
 
 	@RequestMapping("/loginProcess")
-	public ModelAndView helloWorld(HttpServletRequest request, HttpServletResponse res) throws IOException {
+	public ModelAndView loginProcess(HttpServletRequest request, HttpServletResponse res) throws IOException {
 
 		String name = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -67,8 +68,7 @@ public class HomeController {
 
 		res.setContentType("text/html");
 		PrintWriter pw = res.getWriter();
-		HttpSession session = request.getSession();
-
+		HttpSession session=request.getSession();
 		try {
 			System.out.println("Login Process " + name);
 
@@ -115,8 +115,8 @@ public class HomeController {
 						System.err.println("new Module List " + newModuleList.toString());
 
 						session.setAttribute("newModuleList", newModuleList);
-						session.setAttribute("sessionModuleId", 0);
-						session.setAttribute("sessionSubModuleId", 0);
+						session.setAttribute("sessionModuleId",0);
+						session.setAttribute("sessionSubModuleId",0);
 
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -163,5 +163,21 @@ public class HomeController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value = "/setSubModId", method = RequestMethod.GET)
+	public @ResponseBody void setSubModId(HttpServletRequest request,
+		HttpServletResponse response) {
+		try {
+		int subModId=Integer.parseInt(request.getParameter("subModId"));
+		int modId=Integer.parseInt(request.getParameter("modId"));
+		HttpSession session = request.getSession();
 
+		session.setAttribute("sessionModuleId", modId);
+		session.setAttribute("sessionSubModuleId",subModId);
+		 session.removeAttribute( "exportExcelList" );
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

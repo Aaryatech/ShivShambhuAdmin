@@ -53,6 +53,7 @@
 .left {
 	text-align: left;
 }
+
 </style>
 
 </head>
@@ -83,7 +84,7 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showAddCompany"><strong>Add
+								<a href="${pageContext.request.contextPath}/showAddCompany" style="color:#774b30;"><strong>Add
 										Company </strong></a>
 							</div>
 
@@ -98,7 +99,7 @@
 									class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th class="check" style="text-align: center; width: 5%;"><input
+											<th id="sr" class="check" style="text-align: center; width: 5%;"><input
 												type="checkbox" name="selAll" id="selAll" /></th>
 											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Company Name</th>
@@ -106,7 +107,7 @@
 
 											<th style="text-align: center">Mobile No.</th>
 
-											<th style="text-align: center; width: 5%;">Action</th>
+											<th  id="action"  style="text-align: center; width: 5%;">Action</th>
 
 										</tr>
 									</thead>
@@ -128,11 +129,11 @@
 												<td style="text-align: center">${comp.contactNo1}</td>
 
 												<td style="text-align: center"><a
-													href="${pageContext.request.contextPath}/editCompany/${comp.companyId}"><i
+													href="${pageContext.request.contextPath}/editCompany/${comp.companyId}" style="color:#774b30;"><i
 														class="fa fa-edit" title="Edit"></i> <span
 														class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deleteCompany/${comp.companyId}"
-													onClick="return confirm('Are you sure want to delete this record');"><i
+													onClick="return confirm('Are you sure want to delete this record');" style="color:#774b30;"><i
 														class="fa fa-trash-o" title="Delete"></i></a></td>
 
 											</tr>
@@ -144,7 +145,7 @@
 									<input type="submit" class="btn btn-primary" value="Delete"
 										id="deleteId"
 										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
-										style="align-content: center; width: 113px; margin-left: 40px;">
+										style="align-content: center; width: 80px; height:35px; ">
 
 
 								</div>
@@ -218,6 +219,8 @@
 	</script>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			 $('#sr').removeClass('check sorting_asc');
+			 $('#action').removeClass('check sorting_asc');
 			$('#bootstrap-data-table-export').DataTable();
 		});
 	</script>

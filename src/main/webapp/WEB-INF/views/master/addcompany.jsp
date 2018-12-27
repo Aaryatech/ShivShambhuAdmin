@@ -143,11 +143,11 @@
 										<div class="col-md-2">Location(Optional)</div>
 
 									<div class="col-md-4">
-										<textarea id="comp_loc" name="comp_loc" class="form-control"
+										<input id="comp_loc" name="comp_loc" class="form-control"
 											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter location')"
-											maxlength="200"
-											onchange="try{setCustomValidity('')}catch(e){}">${editComp.compLoc}</textarea>
+											maxlength="200" value="${editComp.compLoc}"
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 								</div>
 								<div class="form-group"></div>
@@ -295,12 +295,12 @@
 								<div class="col-lg-3">
 									<input type="submit" class="btn btn-primary" value="Submit"
 										id="submitButton"
-										style="align-content: center; width: 113px; margin-left: 40px;">
+										style="align-content: center; width: 113px; margin-left: 90px;">
 
 								</div>
 								<div class="col-lg-3">
 									<input type="reset" class="btn btn-primary" value="Clear"
-										style="align-content: center; width: 113px; margin-left: 40px;">
+										style="align-content: center; width: 113px; margin-left: 5px;">
 
 								</div>
 							</form>

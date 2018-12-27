@@ -33,13 +33,20 @@
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/assets/scss/style.css">
-
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+	
+<style type="text/css">
+.card-header {
+    background-color: rgba(0,0,0,0.00);
+    }
+    
+</style>
 
 </head>
-<body class="bg-dark">
+<body class="bg-dark" style="background-color: #e7e1bf!important;">
 
 	<div align="right" style="margin-right: 15px;"></div>
 
@@ -52,10 +59,10 @@
 				<div align="center"></div>
 
 				<form action="loginProcess" method="post">
-					<div class="col-lg-12">
-						<div class="card">
+					<div class="col-lg-12" style="padding-right: 2px; padding-left: 0px;">
+						<div class="card" style="border-radius: 2.25rem;" >
 
-							<div class="card-header" align="center">Login</div>
+							<div class="card-header" align="center" style="font-family: 'Abril Fatface', cursive; font-size: 17px; font-weight: bold;color:#245345;">LOGIN</div>
 							<div class="card-body card-block">
 
 								<c:if test="${not empty errorMessage}">
@@ -68,7 +75,7 @@
 										<div class="input-group-addon">
 											<i class="fa fa-user"></i>
 										</div>
-										<input type="text" id="username" name="username"
+										<input type="text" id="username" name="username"  style="margin-left: 4px; font-size:0.96em; border-radius:20px;"
 											maxlength="10" placeholder="User Name" class="form-control"
 											autocomplete="off">
 									</div>
@@ -80,12 +87,12 @@
 											<i class="fa fa-asterisk"></i>
 										</div>
 										<input type="password" id="password" name="password"
-											placeholder="Password" class="form-control"
+											placeholder="Password" class="form-control" style="margin-left: 4px; font-size:0.96em; border-radius:20px;"
 											autocomplete="off">
 									</div>
 								</div>
 								<button type="submit" class="btn btn-primary"
-									style="align-content: center; width: 226px; margin-left: 80px;">
+									style="align-content: center; width: 90px; background-color:#6a7464; border-radius:21px; border-color: #748279; margin-left:120px;">
 									Login</button>
 							</div>
 						</div>
