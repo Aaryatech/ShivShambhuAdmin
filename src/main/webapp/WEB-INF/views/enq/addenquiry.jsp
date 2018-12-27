@@ -269,7 +269,7 @@
 								</section>
 								<div class="card-body card-block">
 
-									<table id="bootstrap-data-table"
+									<table id="t1"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
@@ -406,12 +406,12 @@
 			});
 		});
 	</script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(document).ready(function() {
 			$('#bootstrap-data-table').DataTable();
 		});
 	</script>
-
+ -->
 
 
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -626,7 +626,7 @@
 									if(data==null){
 										document.getElementById("submitButton").disabled=true;
 									}
-									var dataTable = $('#bootstrap-data-table')
+									var dataTable = $('#t1')
 											.DataTable();
 									dataTable.clear().draw();
 
@@ -725,7 +725,7 @@
 								if(data==null || data==""){
 									document.getElementById("submitButton").disabled=true;
 								}
-								var dataTable = $('#bootstrap-data-table')
+								var dataTable = $('#t1')
 										.DataTable();
 								dataTable.clear().draw();
 								$
@@ -792,7 +792,7 @@
 		
 		</script>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(document).ready(function() {
 			var dataTable = $('#bootstrap-data-table').DataTable();
 				columnDefs : [ {
@@ -807,7 +807,7 @@
 			}, ]
 			
 		);}
-	</script>
+	</script> -->
 	
 	
 	

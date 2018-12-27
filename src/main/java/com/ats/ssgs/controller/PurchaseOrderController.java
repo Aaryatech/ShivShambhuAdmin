@@ -32,8 +32,6 @@ import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.quot.QuotDetail;
 import com.ats.ssgs.model.quot.QuotHeader;
 
-
-
 @Controller
 @Scope("session")
 public class PurchaseOrderController {
@@ -47,9 +45,8 @@ public class PurchaseOrderController {
 
 		ModelAndView model = new ModelAndView("purchaseOrder/addPo");
 		try {
-
-			 
-
+			
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("quotHeadId", quotId); 
@@ -132,6 +129,7 @@ public class PurchaseOrderController {
 			String poValidityDate = request.getParameter("poValidityDate");
 			String delivery =  request.getParameter("delivery") ;
 			String poNo =  request.getParameter("poNo") ;
+			System.out.println("ponum is"+poNo);
 			float taxIncl = Float.parseFloat(request.getParameter("taxIncl"));
 
 			PoHeader save = new PoHeader();
@@ -151,10 +149,11 @@ public class PurchaseOrderController {
 			save.setDelStatus(1);
 			save.setExtra1((int)taxIncl);
 			
-
+			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("docCode", 7);
 			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			
 			
 			List<PoDetail> poDetailList = new ArrayList<PoDetail>();
 			
@@ -184,17 +183,21 @@ public class PurchaseOrderController {
 			System.err.println("res  PoHeader insert " + res.toString());
 			
 			if(res!=null) {
-				 map = new LinkedMultiValueMap<String, Object>();
-				map.add("quotHeadId", quotHeader.getQuotHeadId());
-				Info info = rest.postForObject(Constants.url + "/updateQuatationStatus", map,
-						Info.class);
 				
 				 map = new LinkedMultiValueMap<String, Object>();
-					map.add("srNo", doc.getSrNo() + 1);
-					map.add("docCode", 7);
-					Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
-					System.out.println("info is   updateDocSr "+updateDocSr); 
+				 map.add("quotHeadId", quotHeader.getQuotHeadId());
+				Info info = rest.postForObject(Constants.url + "/updateQuatationStatus", map,
+						Info.class);
+				 map = new LinkedMultiValueMap<String, Object>();
+				map.add("srNo", doc.getSrNo() + 1);
+				map.add("docCode", 7);
+				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+				System.out.println("info is   updateDocSr "+updateDocSr); 
+				
+				
 			}
+			
+			
 
 		} catch (Exception e) {
 			 

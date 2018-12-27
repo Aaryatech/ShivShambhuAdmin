@@ -151,9 +151,7 @@
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
-					<form
-								action="${pageContext.request.contextPath}/deleteRecordofChalan"
-								method="post">
+					
 						<div class="card-header">
 							<div class="col-md-2">
 								<strong>${title}</strong>
@@ -163,7 +161,9 @@
 
 						</div>
 						<div class="card-body card-block">
-							
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofChalan"
+								method="post">
 								<div class="row">
 
 									<div class="col-md-2">Select Plant</div>
@@ -198,17 +198,17 @@
 
 								<div class="form-group"></div>
 								
-								</div>
+							
 								
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-								<input
-												type="checkbox" name="selAll" id="selAll" /> Select All
+								
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center"></th>
+												<th style="text-align: center"><input
+												type="checkbox" name="selAll" id="selAll" /> Select All</th>
 												<th style="text-align: center">Sr.No.</th>
 												<th style="text-align: center">Chalan No</th>
 												<th style="text-align: center">Chalan Date</th>
@@ -230,7 +230,7 @@
 										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 						</form>	
-
+	</div>
 						</div>
 					</div>
 				</div>
