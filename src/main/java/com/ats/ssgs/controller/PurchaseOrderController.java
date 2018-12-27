@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -26,9 +27,12 @@ import com.ats.ssgs.model.GetPoHeader;
 import com.ats.ssgs.model.GetQuotHeader;
 import com.ats.ssgs.model.PoDetail;
 import com.ats.ssgs.model.PoHeader;
+import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.quot.QuotDetail;
 import com.ats.ssgs.model.quot.QuotHeader;
+
+
 
 @Controller
 @Scope("session")
@@ -38,8 +42,8 @@ public class PurchaseOrderController {
 	GetQuotHeader quotHeader = new GetQuotHeader();
 	
 	
-	@RequestMapping(value = "/addPo/{quotId}", method = RequestMethod.GET)
-	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotId) {
+	@RequestMapping(value = "/addPo/{quotId}/{plantId}", method = RequestMethod.GET)
+	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotId,@PathVariable int plantId) {
 
 		ModelAndView model = new ModelAndView("purchaseOrder/addPo");
 		try {
@@ -56,6 +60,58 @@ public class PurchaseOrderController {
 			Date date = new Date();
 			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 			model.addObject("todayDate",sf.format(date));
+			
+			
+
+			int CurrentYear = Calendar.getInstance().get(Calendar.YEAR);
+		    int CurrentMonth = (Calendar.getInstance().get(Calendar.MONTH)+1);
+		    String financiyalYearFrom="";
+		    String financiyalYearTo="";
+		    if(CurrentMonth<4)
+		    {
+		        financiyalYearFrom=""+(CurrentYear-1);
+		        financiyalYearTo=""+(CurrentYear);
+		    }
+		    else
+		    {
+		        financiyalYearFrom=""+(CurrentYear);
+		        financiyalYearTo=""+(CurrentYear+1);
+		    }
+		    
+		    System.out.println("year:"+financiyalYearFrom+financiyalYearTo);
+		    
+		    model.addObject("fyf",financiyalYearFrom);
+		    model.addObject("fyt",financiyalYearTo);
+			String var=null;
+			 map = new LinkedMultiValueMap<String, Object>();
+			map.add("docCode", 7);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			model.addObject("doc", doc);
+			System.out.println("doc data is"+doc);
+			
+		
+			int a=doc.getSrNo();
+			System.out.println("sr is "+a);
+			
+			if(String.valueOf(a).length()==1) {
+				
+			var="0000".concat(String.valueOf(a));
+				
+			}
+			else if(String.valueOf(a).length()==2){
+				var="000".concat(String.valueOf(a));
+			}
+			else {
+				var="00".concat(String.valueOf(a));
+				
+			}
+			
+			
+			
+			model.addObject("plantId", plantId);
+			
+			
+		    model.addObject("var",var);
 			
 		} catch (Exception e) {
 			 
@@ -95,6 +151,11 @@ public class PurchaseOrderController {
 			save.setDelStatus(1);
 			save.setExtra1((int)taxIncl);
 			
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("docCode", 7);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			
 			List<PoDetail> poDetailList = new ArrayList<PoDetail>();
 			
 			for(int i=0 ; i< quotHeader.getGetQuotDetailList().size() ; i++) {
@@ -123,10 +184,16 @@ public class PurchaseOrderController {
 			System.err.println("res  PoHeader insert " + res.toString());
 			
 			if(res!=null) {
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				 map = new LinkedMultiValueMap<String, Object>();
 				map.add("quotHeadId", quotHeader.getQuotHeadId());
 				Info info = rest.postForObject(Constants.url + "/updateQuatationStatus", map,
 						Info.class);
+				
+				 map = new LinkedMultiValueMap<String, Object>();
+					map.add("srNo", doc.getSrNo() + 1);
+					map.add("docCode", 7);
+					Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+					System.out.println("info is   updateDocSr "+updateDocSr); 
 			}
 
 		} catch (Exception e) {

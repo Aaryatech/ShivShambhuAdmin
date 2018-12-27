@@ -232,7 +232,7 @@
 											oninvalid="setCustomValidity('Please Select a Document')"
 											onchange="try{setCustomValidity('')}catch(e){}" 
 											style="width: 100%;"> <a
-											href="${vehImgPath}${editVeh.vehDoc1}">Doc 1</a>
+											href="${vehImgPath}${editVeh.vehDoc1}"></a>
 									</div>
 
 									<input type="hidden" id="doc11" name="doc11"

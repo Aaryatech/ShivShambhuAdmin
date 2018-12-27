@@ -123,7 +123,7 @@
 
 
 												<td><a
-													href="${pageContext.request.contextPath}/editQuot/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
+													href="${pageContext.request.contextPath}/editQuotation/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
 														class="fa fa-edit" title="Generate Quotation"></i> <span
 														class="text-muted"></span></a> <a
 													href="${pageContext.request.contextPath}/deleteQuot/${quot.quotHeadId}"
@@ -132,7 +132,7 @@
 														<c:when test="${quot.status==1}">
 
 															<a
-																href="${pageContext.request.contextPath}/addPo/${quot.quotHeadId}"><i
+																href="${pageContext.request.contextPath}/addPo/${quot.quotHeadId}/${quot.plantId}"><i
 																class="fa fa-list" title="Create PO"></i> </a>
 														</c:when>
 													</c:choose>

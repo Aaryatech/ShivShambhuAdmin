@@ -839,7 +839,7 @@ detail.setOrderDetId(orderDetId);
 			return model;
 				
 		}
-		List<Project> projList1;
+		/*List<Project> projList1;
 		List<GetChalanDetail> chDetailList;
 		@RequestMapping(value = "/closeOpenChalan/{chalanId}", method = RequestMethod.GET)
 		public ModelAndView closeChalan(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
@@ -850,12 +850,12 @@ detail.setOrderDetId(orderDetId);
 				model = new ModelAndView("chalan/chalan_edit");
 
 				GetChalanHeader editChalan = new GetChalanHeader();
-				/*
+				
 				 * for(int i=0;i<getOrdList.size();i++) {
 				 * 
 				 * if(getOrdList.get(i).getOrderId()==orderId) { editOrder=new GetOrder();
 				 * editOrder=getOrdList.get(i); break; } }
-				 */
+				 
 				MultiValueMap<String, Object>
 
 				map = new LinkedMultiValueMap<String, Object>();
@@ -892,6 +892,6 @@ detail.setOrderDetId(orderDetId);
 			
 			return model;
 		}
-		
+		*/
 		
 }
