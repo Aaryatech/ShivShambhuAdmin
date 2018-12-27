@@ -6,6 +6,8 @@ public class DashSaleCount {
 	private int totalQuotPending;
 	private int totalQuotGenerated;
 	private int totalPoPending;
+	private int poGenerated;
+
 	private float totalOrderAmount;
 	private float totalBillAmount;
 
@@ -16,6 +18,15 @@ public class DashSaleCount {
 	private float paymentRecPaid;
 
 	private float paymentRecOutstandingPending;
+
+	
+	public int getPoGenerated() {
+		return poGenerated;
+	}
+
+	public void setPoGenerated(int poGenerated) {
+		this.poGenerated = poGenerated;
+	}
 
 	public int getTotalEnq() {
 		return totalEnq;
@@ -100,10 +111,12 @@ public class DashSaleCount {
 	@Override
 	public String toString() {
 		return "DashSaleCount [totalEnq=" + totalEnq + ", totalQuotPending=" + totalQuotPending
-				+ ", totalQuotGenerated=" + totalQuotGenerated + ", totalPoPending=" + totalPoPending
-				+ ", totalOrderAmount=" + totalOrderAmount + ", totalBillAmount=" + totalBillAmount
+				+ ", totalQuotGenerated=" + totalQuotGenerated + ", totalPoPending=" + totalPoPending + ", poGenerated="
+				+ poGenerated + ", totalOrderAmount=" + totalOrderAmount + ", totalBillAmount=" + totalBillAmount
 				+ ", totalTaxBillAmt=" + totalTaxBillAmt + ", totalTaxableBillAmt=" + totalTaxableBillAmt
 				+ ", paymentRecPaid=" + paymentRecPaid + ", paymentRecOutstandingPending="
 				+ paymentRecOutstandingPending + "]";
 	}
+
+    
 }

@@ -18,6 +18,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -29,6 +30,7 @@ import com.ats.ssgs.model.PoDetail;
 import com.ats.ssgs.model.PoHeader;
 import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.quot.QuotDetail;
 import com.ats.ssgs.model.quot.QuotHeader;
 
@@ -357,6 +359,62 @@ public class PurchaseOrderController {
 
 		}
 		return "redirect:/getPoList";
+	}
+
+	@RequestMapping(value = "/showPoListByStatus", method = RequestMethod.GET)
+	public ModelAndView showPoListByStatus(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("purchaseOrder/poListDash");
+
+			model.addObject("title", "PO List");
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+		   List<Plant>	plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			System.out.println("plant is" + plantList);
+
+			model.addObject("plantList", plantList);
+
+		} catch (Exception e) {
+			System.err.println("Exce in /Po" + e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+
+	// getPoListByDateAndStatus
+
+	List<GetPoHeader> getPoList = new ArrayList<>();
+
+	@RequestMapping(value = "/getPOListBetDateAndPlantId", method = RequestMethod.GET)
+	public @ResponseBody List<GetPoHeader> getPOListBetDateAndPlantId(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		System.err.println(" in getPOListBetDateAndPlantId");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		int custId = Integer.parseInt(request.getParameter("custId"));
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+
+		map.add("plantId", plantId);
+		map.add("custId", custId);
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		map.add("statusList", -1);
+
+		GetPoHeader[] ordHeadArray = rest.postForObject(Constants.url + "getPoListByDateAndStatus" + "", map,
+				GetPoHeader[].class);
+		getPoList = new ArrayList<GetPoHeader>(Arrays.asList(ordHeadArray));
+
+		System.out.println("quot list data " + getPoList.toString());
+
+		return getPoList;
 	}
 
 }

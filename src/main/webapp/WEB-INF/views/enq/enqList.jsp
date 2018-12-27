@@ -209,7 +209,7 @@
 											<thead>
 												<tr>
 													<th style="text-align: center"><input type="checkbox"
-														name="selAll" id="selAll" /> Select All</th>
+														name="selAll" id="selAll" /></th>
 													<th style="text-align: center">No.</th>
 													<th style="text-align: center">Enquiry No</th>
 													<th style="text-align: center">Enquiry Date</th>
@@ -272,12 +272,12 @@
 										</table>
 									</div>
 
-							
+
 								</div>
-										<input type="submit" class="btn btn-primary" value="Delete"
-										id="deleteId"
-										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
-										style="align-content: center; width: 113px; margin-left: 40px;">
+								<input type="submit" class="btn btn-primary" value="Delete"
+									id="deleteId"
+									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+									style="align-content: center; width: 113px; margin-left: 40px;">
 							</div>
 						</form>
 					</div>
@@ -505,16 +505,6 @@
 
 															status1 = "PO Generated";
 														}
-
-														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.enqHeadId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-																+ v.enqHeadId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-trash" title="Delete"></i></a>'
 
 														chBox = '<input  type="checkbox" class="chk" name="selectEnqToDelete" id='+v.enqHeadId+' class="check"  value='+v.enqHeadId+'>'
 
