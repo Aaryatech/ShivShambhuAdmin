@@ -28,6 +28,8 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.DashSaleCount;
+import com.ats.ssgs.model.DashPlant;
+
 import com.ats.ssgs.model.GetBillHeader;
 import com.ats.ssgs.model.GetBillReport;
 import com.ats.ssgs.model.GetPoHeader;
@@ -507,6 +509,65 @@ public class DashboardController {
 			model.addObject("toDate", endDate1);
 
 			System.out.println("dashBoard" + dashBoard.toString());
+
+		} catch (Exception e) {
+
+			System.err.println("Exce ing etHubDashBoard  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/plantDash", method = RequestMethod.GET)
+	public ModelAndView plantDash(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("dash/plantDash");
+		try {
+
+			// System.out.println("hiiiiiiii");
+			model.addObject("title", "Crushing Plant");
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat dd = new SimpleDateFormat("dd-MM-yyyy");
+
+			Calendar cal = Calendar.getInstance();
+
+			Calendar cal1 = Calendar.getInstance();
+			cal.set(cal1.get(Calendar.YEAR), cal1.get(Calendar.MONTH), 1);
+
+			String firstDate = sdf.format(cal.getTimeInMillis());
+			String firstDate1 = dd.format(cal.getTimeInMillis());
+			cal.set(cal.DAY_OF_MONTH, cal.getActualMaximum(cal.DAY_OF_MONTH));
+			String endDate = sdf.format(cal.getTimeInMillis());
+			String endDate1 = dd.format(cal.getTimeInMillis());
+
+			System.out.println("sd " + firstDate);
+			System.out.println("ed " + endDate);
+
+			model.addObject("fromDate", firstDate1);
+			model.addObject("toDate", endDate1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("fromDate", firstDate);
+			map.add("toDate", endDate);
+			map.add("plantId", 0);
+
+			DashSaleCount dashBoard = rest.postForObject(Constants.url + "/getDashboardCountBetDate", map,
+					DashSaleCount.class);
+
+			model.addObject("dashBoard", dashBoard);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("fromDate", firstDate);
+			map.add("toDate", endDate);
+
+			DashPlant dashPlantCount = rest.postForObject(Constants.url + "/getPlantDashCountBetDate", map,
+					DashPlant.class);
+			model.addObject("dashPlantCount", dashPlantCount);
 
 		} catch (Exception e) {
 
