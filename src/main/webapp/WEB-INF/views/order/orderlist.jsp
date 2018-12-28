@@ -295,7 +295,7 @@
 															value="${enq.orderDate}" /></td>
 
 													<td style="text-align: center"><c:out
-															value="${enq.deliveryDate}" /></td>
+															value="${enq.deliveryDate}-${enq.exVar1 }" /></td>
 
 
 
@@ -597,6 +597,7 @@
 														}
 														 */
 														//var chBox='<input type="checkbox" id="orderId" class="chk" name="quotIds" value='+v.orderId+'/>'
+														var deliveryDate=v.deliveryDate+'-'+v.exVar1;
 														dataTable.row
 																.add(
 																		[
@@ -604,7 +605,7 @@
 																				i + 1,
 																				v.orderNo,
 																				v.orderDate,
-																				v.deliveryDate,
+																				deliveryDate,
 																				v.custName,
 																				v.custMobNo,
 																				v.total,

@@ -314,6 +314,15 @@
 											value="${curDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
+									
+									<div class="col-md-2">Dispatch Time</div>
+									<div class="col-md-4">
+										<input type="text" id="disp_time" name="disp_time" autocomplete="off" required 
+											style="width: 100%;" class="form-control" onkeypress="return allowOnlyNumber(event);"
+											value="0"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+									
 								</div>
 								
 

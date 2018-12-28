@@ -265,7 +265,7 @@ public class OrderController {
 			int custId = Integer.parseInt(request.getParameter("cust_name"));
 			int projId = Integer.parseInt(request.getParameter("proj_id"));
 			int poId = Integer.parseInt(request.getParameter("po_id"));
-
+String dispTime=request.getParameter("disp_time");
 			String ordDate = request.getParameter("ord_date");
 			String delDate = request.getParameter("del_date");
 
@@ -280,7 +280,9 @@ public class OrderController {
 			ordHeader.setDelStatus(1);
 			ordHeader.setExDate1(curDate);
 			ordHeader.setExDate2(curDate);
-			ordHeader.setExVar1(NA);
+			
+			ordHeader.setExVar1(dispTime);//Delivery time
+			
 			ordHeader.setExVar2(NA);
 			ordHeader.setExVar3(NA);
 			ordHeader.setOrderDate(DateConvertor.convertToYMD(ordDate));
@@ -549,7 +551,7 @@ public class OrderController {
 			// int custId = Integer.parseInt(request.getParameter("cust_name"));
 			int projId = Integer.parseInt(request.getParameter("proj_id"));
 			int poId = Integer.parseInt(request.getParameter("po_id"));
-
+			String dispTime = request.getParameter("disp_time");
 			// String ordDate = request.getParameter("ord_date");
 			String delDate = request.getParameter("del_date");
 
@@ -568,6 +570,9 @@ public class OrderController {
 			ordHeader.setDeliveryDate(DateConvertor.convertToYMD(delDate));
 			ordHeader.setProdDate(DateConvertor.convertToYMD(delDate));
 			ordHeader.setProjId(projId);
+			
+			ordHeader.setExVar1(dispTime);//Delivery time
+
 
 			float headerTotal = 0;
 
