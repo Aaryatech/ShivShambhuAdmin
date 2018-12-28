@@ -177,7 +177,7 @@ public class DashboardController {
 			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 			map.add("toDate", DateConvertor.convertToYMD(toDate));
 
-			GetEnqHeader[] ordHeadArray = rest.postForObject(Constants.url + "getEnqListByPlantIdAndCustId", map,
+			GetEnqHeader[] ordHeadArray = rest.postForObject(Constants.url + "getEnqListByPlantAndCust", map,
 					GetEnqHeader[].class);
 			getEnqList = new ArrayList<GetEnqHeader>(Arrays.asList(ordHeadArray));
 
@@ -345,7 +345,7 @@ public class DashboardController {
 			model.addObject("plantList", plantList);
 
 			model.addObject("plantId1", plantId);
-			model.addObject("status", 0);
+			model.addObject("status", 1);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -392,7 +392,7 @@ public class DashboardController {
 			model.addObject("plantList", plantList);
 
 			model.addObject("plantId1", plantId);
-			model.addObject("status", 0);
+			model.addObject("status", -1);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -400,7 +400,7 @@ public class DashboardController {
 			map.add("custId", 0);
 			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 			map.add("toDate", DateConvertor.convertToYMD(toDate));
-			map.add("statusList", 0);
+			map.add("statusList", -1);
 
 			GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getOrderListBetDateAndStatus", map,
 					GetOrder[].class);
@@ -461,6 +461,61 @@ public class DashboardController {
 		}
 		return model;
 
+	}
+
+	@RequestMapping(value = "/salesDashboard", method = RequestMethod.GET)
+	public ModelAndView salesDashboard(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("dash/salesDash");
+		try {
+
+			// System.out.println("hiiiiiiii");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat dd = new SimpleDateFormat("dd-MM-yyyy");
+
+			Calendar cal = Calendar.getInstance();
+
+			Calendar cal1 = Calendar.getInstance();
+			cal.set(cal1.get(Calendar.YEAR), cal1.get(Calendar.MONTH), 1);
+
+			String firstDate = sdf.format(cal.getTimeInMillis());
+			String firstDate1 = dd.format(cal.getTimeInMillis());
+			cal.set(cal.DAY_OF_MONTH, cal.getActualMaximum(cal.DAY_OF_MONTH));
+			String endDate = sdf.format(cal.getTimeInMillis());
+			String endDate1 = dd.format(cal.getTimeInMillis());
+
+			System.out.println("sd " + firstDate);
+			System.out.println("ed " + endDate);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("fromDate", firstDate);
+			map.add("toDate", endDate);
+			map.add("plantId", 0);
+
+			DashSaleCount dashBoard = rest.postForObject(Constants.url + "/getDashboardCountBetDate", map,
+					DashSaleCount.class);
+
+			model.addObject("dashBoard", dashBoard);
+
+			model.addObject("fromDate", firstDate1);
+			model.addObject("toDate", endDate1);
+
+			System.out.println("dashBoard" + dashBoard.toString());
+
+		} catch (Exception e) {
+
+			System.err.println("Exce ing etHubDashBoard  " + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return model;
 	}
 
 }

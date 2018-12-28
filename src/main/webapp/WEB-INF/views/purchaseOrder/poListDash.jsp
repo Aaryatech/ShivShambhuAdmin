@@ -143,9 +143,9 @@
 
 								<div class="row">
 
-									<div class="col-md-1">Select Plant</div>
+									<div class="col-md-2">Select Plant</div>
 
-									<div class="col-md-3">
+									<div class="col-md-2">
 										<select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
@@ -219,21 +219,21 @@
 
 								<div class="row">
 									<div class="col-md-2">From Date</div>
-									<div class="col-md-3">
+									<div class="col-md-2">
 										<input type="text" autocomplete="off" id="from_date"
 											name="from_date" required style="width: 100%;"
 											class="form-control" value="${fromDate}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
-									<div class="col-md-1">To Date</div>
-									<div class="col-md-3">
+									<div class="col-md-2">To Date</div>
+									<div class="col-md-2">
 										<input type="text" autocomplete="off" id="to_date"
 											name="to_date" style="width: 100%;" class="form-control"
 											value="${toDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
 
-									<div class="col-md-1"></div>
+									<div class="col-md-2"></div>
 									<div class="col-md-2">
 										<input type="button" class="btn btn-primary"
 											onclick="showQuot()" value="Submit">

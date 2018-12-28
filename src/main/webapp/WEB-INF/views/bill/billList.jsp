@@ -273,10 +273,10 @@
 								<tbody>
 									<c:forEach items="${getBillList}" var="bill" varStatus="count">
 										<tr>
-											<%-- <td><input type="checkbox" class="chk" name="quotIds"
-												id="quotIds${count.index+1}" value="${bill.billHeadId}" /></td> --%>
+											<td><input type="checkbox" class="chk" name="quotIds"
+												id="quotIds${count.index+1}" value="${bill.billHeadId}" />${count.index+1}</td>
 
-											<td style="text-align: center">${count.index+1}</td>
+											<%-- 		<td style="text-align: center">${count.index+1}</td> --%>
 
 
 											<td style="text-align: left"><c:out
@@ -299,9 +299,11 @@
 
 
 											<td><a
-												href="${pageContext.request.contextPath}/editQuotation/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
+												href="${pageContext.request.contextPath}/editBill/${bill.billHeadId}"><i
 													class="fa fa-edit" title="Generate Quotation"></i> <span
-													class="text-muted"></span></a></td>
+													class="text-muted"></span></a> &nbsp;<input type="button"
+												id="btn_submit" class="btn btn-primary"
+												onclick="singleBillPdf(${bill.billHeadId})" value="Pdf" /></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -523,13 +525,18 @@
 														//alert("hdjfh");
 
 														var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v.billHeadId+' class="chk"  value='+v.billHeadId+'/>'
-														//var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
-														//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
-														var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
+													
+														var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"  onclick="callEdit('
+																+ v.billHeadId
+																+ ','
+																+ i
+																+ ')"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Bill Pdf" onclick="singleBillPdf('
 																+ v.billHeadId
 																+ ','
 																+ i
 																+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+																
+																
 
 														dataTable.row
 																.add(
@@ -543,7 +550,8 @@
 																				v.taxableAmt,
 																				v.taxAmt,
 																				v.totalAmt,
-																				acButton ])
+																				acButton
+																		 ])
 																.draw();
 													});
 
@@ -655,7 +663,13 @@
 			
 		}
 	</script> -->
-
+	<script type="text/javascript">
+		function singleBillPdf(id) {
+			window
+			.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
+					+ id);
+		}
+		</script>
 	<script type="text/javascript">
 		function billPdf() {
 			var checkedVals = $('input:checkbox:checked').map(function() {

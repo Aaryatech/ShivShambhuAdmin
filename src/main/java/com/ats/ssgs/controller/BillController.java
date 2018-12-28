@@ -1041,9 +1041,9 @@ public class BillController {
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		// File f = new File("/home/ats-11/bill.pdf");
+		 File f = new File("/home/lenovo/bill.pdf");
 
-		File f = new File("/opt/tomcat-latest/webapps/uploads/shivreport.pdf");
+		//File f = new File("/opt/tomcat-latest/webapps/uploads/shivreport.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1063,8 +1063,8 @@ public class BillController {
 		String appPath = context.getRealPath("");
 		String filename = "ordermemo221.pdf";
 		// String filePath = "/report.pdf";
-		String filePath = "/opt/tomcat-latest/webapps/uploads/shivreport.pdf";
-		// String filePath ="home/ats-11/bill.pdf";
+		//String filePath = "/opt/tomcat-latest/webapps/uploads/shivreport.pdf";
+		 String filePath ="/home/lenovo/bill.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file

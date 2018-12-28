@@ -85,12 +85,11 @@ public class EnqController {
 			map.add("docCode", 1);
 			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
 			model.addObject("doc", doc);
-			
-			
+
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String curDate = dateFormat.format(new Date());
-			
-			model.addObject("curDate" ,curDate);
+
+			model.addObject("curDate", curDate);
 
 		} catch (Exception e) {
 
@@ -100,8 +99,7 @@ public class EnqController {
 
 		return model;
 	}
-	
-	
+
 	@RequestMapping(value = "/showEnqList", method = RequestMethod.GET)
 	public ModelAndView showQuotations(HttpServletRequest request, HttpServletResponse response) {
 
@@ -117,11 +115,10 @@ public class EnqController {
 			map.add("statusList", "0,1");
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
-			
-			System.out.println("plant is"+plantList);
+
+			System.out.println("plant is" + plantList);
 
 			model.addObject("plantList", plantList);
-
 
 		} catch (Exception e) {
 			System.err.println("Exce in /showQ" + e.getMessage());
@@ -130,18 +127,13 @@ public class EnqController {
 		return model;
 
 	}
-	
-	
-	
-	
 
 	List<GetEnqHeader> getEnqList = new ArrayList<>();
 
 	@RequestMapping(value = "/getEnqListBetDate", method = RequestMethod.GET)
-	public @ResponseBody List<GetEnqHeader> getOrderListBetDate(HttpServletRequest request, HttpServletResponse response) {
+	public @ResponseBody List<GetEnqHeader> getOrderListBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
 
-		
-		
 		System.err.println(" in enq");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -150,28 +142,23 @@ public class EnqController {
 
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
-		
-		System.out.println("values are"+plantId +custId + fromDate +toDate);
+
+		System.out.println("values are" + plantId + custId + fromDate + toDate);
 
 		map.add("plantId", plantId);
 		map.add("custId", custId);
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
-		//map.add("status", 0);
+		// map.add("status", 0);
 
-		GetEnqHeader[] ordHeadArray = rest.postForObject(Constants.url + "getEnqListByPlantIdAndCustId", map,GetEnqHeader[].class);
-		getEnqList  = new ArrayList<GetEnqHeader>(Arrays.asList(ordHeadArray));
-		
-		System.out.println("enq list is"+getEnqList.toString());
+		GetEnqHeader[] ordHeadArray = rest.postForObject(Constants.url + "getEnqListByPlantAndCust", map,
+				GetEnqHeader[].class);
+		getEnqList = new ArrayList<GetEnqHeader>(Arrays.asList(ordHeadArray));
+
+		System.out.println("enq list is" + getEnqList.toString());
 
 		return getEnqList;
 	}
-	
-	
-	
-	
-
-	
 
 	// Ajax call
 	@RequestMapping(value = "/getItemsByPlantId", method = RequestMethod.GET)
@@ -521,7 +508,7 @@ public class EnqController {
 
 			List<QuotDetail> quotDetailList = new ArrayList<>();
 
-			//quotHeader.setCompanyId(0);
+			// quotHeader.setCompanyId(0);
 
 			quotHeader.setCustId(enqInsertRes.getCustId());
 
@@ -546,8 +533,7 @@ public class EnqController {
 			quotHeader.setProjId(0);
 			quotHeader.setQuotDate(DateConvertor.convertToYMD(enqDate));
 			quotHeader.setUserId(1);
-			
-			
+
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("plantId", plantId);
@@ -555,7 +541,6 @@ public class EnqController {
 			Plant plant = rest.postForObject(Constants.url + "getPlantCompanyByPlantId", map, Plant.class);
 
 			quotHeader.setCompanyId(plant.getCompanyId());
-			
 
 			map = new LinkedMultiValueMap<String, Object>();
 
@@ -644,27 +629,25 @@ public class EnqController {
 		return "redirect:/showAddEnquiry";
 
 	}
-	
-	
+
 	@RequestMapping(value = "/deleteRecordofEnq", method = RequestMethod.POST)
 	public String deleteRecordofQuotations(HttpServletRequest request, HttpServletResponse response) {
 		try {
 
-			
 			System.out.println("Hellooooooooooooo");
 			String[] quotIds = request.getParameterValues("selectEnqToDelete");
-			System.out.println("id are"+quotIds );
+			System.out.println("id are" + quotIds);
 
 			StringBuilder sb = new StringBuilder();
 
-			for (int i = 0; i < quotIds .length; i++) {
-				sb = sb.append(quotIds [i] + ",");
+			for (int i = 0; i < quotIds.length; i++) {
+				sb = sb.append(quotIds[i] + ",");
 
 			}
 			String items = sb.toString();
 			items = items.substring(0, items.length() - 1);
-			
-			System.err.println("enqIds"+items.toString());
+
+			System.err.println("enqIds" + items.toString());
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 

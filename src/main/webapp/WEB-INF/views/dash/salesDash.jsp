@@ -253,38 +253,9 @@ background-color: transparent;
 									<p style="font-size: 15px; font-weight: bold; color: white;">
 										<font color="white">PO Generated</font>
 									</p>
-
-
 								</div>
 							</div>
-
 						</div>
-
-
-
-						<div class="col-sm-6 col-lg-4"
-							style="cursor: pointer; max-width: 27.333333%;"
-							onclick="showOrderBetDate(${dashBoard.totalOrderAmount})">
-
-							<div class="card text-white bg-flat-color-3"
-								style="background: #59c9f2;">
-								<div class="card-body pb-0" align="center">
-
-									<h4 class="mb-0">
-
-										<span class="count" style="font-size: 30px;">${dashBoard.totalOrderAmount}</span>
-
-									</h4>
-									<p style="font-size: 15px; font-weight: bold; color: white;">
-										<font color="white">Total Order Amount</font>
-									</p>
-
-								</div>
-							</div>
-
-						</div>
-
-
 
 						<div class="col-sm-6 col-lg-4"
 							style="cursor: pointer; max-width: 27.333333%;"
@@ -308,144 +279,13 @@ background-color: transparent;
 
 						</div>
 
-
-
-
-
-						<div class="col-sm-6 col-lg-4"
-							style="cursor: pointer; max-width: 27.333333%;"
-							onclick="showBillBetDate(${dashBoard.totalBillAmount})">
-
-							<div class="card text-white bg-flat-color-3"
-								style="background: #20a8d8;">
-								<div class="card-body pb-0" align="center">
-
-									<h4 class="mb-0">
-
-										<span class="count" style="font-size: 30px;">${dashBoard.totalBillAmount}</span>
-
-									</h4>
-									<p style="font-size: 15px; font-weight: bold; color: white;">
-										<font color="white">Total Bill Amount</font>
-									</p>
-
-								</div>
-							</div>
-
-						</div>
-
-						<div class="col-sm-6 col-lg-4"
-							style="cursor: pointer; max-width: 27.333333%;"
-							onclick="showBillBetDate(${dashBoard.totalTaxBillAmt})">
-
-							<div class="card text-white bg-flat-color-2"
-								style="background: #4f90b9;">
-								<div class="card-body pb-0" align="center">
-
-									<h4 class="mb-0">
-
-										<span class="count" style="font-size: 30px;">${dashBoard.totalTaxBillAmt}</span>
-
-									</h4>
-									<p style="font-size: 15px; font-weight: bold; color: white;">
-										<font color="white">Total Tax Bill Amount</font>
-									</p>
-
-								</div>
-							</div>
-
-						</div>
-
-
-
-
-						<div class="col-sm-6 col-lg-4"
-							style="cursor: pointer; max-width: 27.333333%;"
-							onclick="showBillBetDate(${dashBoard.totalTaxableBillAmt})">
-
-							<div class="card text-white bg-flat-color-2"
-								style="background: #64c2de;">
-								<div class="card-body pb-0" align="center">
-
-									<h4 class="mb-0">
-
-										<span class="count" style="font-size: 30px;">${dashBoard.totalTaxableBillAmt}</span>
-
-									</h4>
-									<p style="font-size: 15px; font-weight: bold; color: white;">
-										<font color="white">Total Taxable Bill Amount</font>
-									</p>
-
-								</div>
-							</div>
-
-						</div>
-
-
-
-
-
-						<div class="col-sm-6 col-lg-4"
-							style="cursor: pointer; max-width: 27.333333%;">
-
-							<div class="card text-white bg-flat-color-2"
-								style="background: #4f90b9;">
-								<div class="card-body pb-0" align="center">
-
-									<h4 class="mb-0">
-
-										<span class="count" style="font-size: 30px;">${dashBoard.paymentRecPaid}</span>
-
-									</h4>
-									<p style="font-size: 15px; font-weight: bold; color: white;">
-										<font color="white">Total Amount recovery</font>
-									</p>
-
-								</div>
-							</div>
-
-						</div>
-
-
-
-
-
-
-						<div class="col-sm-6 col-lg-4"
-							style="cursor: pointer; max-width: 27.333333%;">
-
-							<div class="card text-white bg-flat-color-3"
-								style="background: #64c2de;">
-								<div class="card-body pb-0" align="center">
-
-									<h4 class="mb-0">
-
-										<span class="count" style="font-size: 30px;">${dashBoard.paymentRecOutstandingPending}</span>
-
-									</h4>
-									<p style="font-size: 15px; font-weight: bold; color: white;">
-										<font color="white">Total Outstanding Amount</font>
-									</p>
-
-								</div>
-							</div>
-
-						</div>
-
-
 					</div>
-
-
 
 
 				</div>
 			</div>
 		</div>
 	</div>
-
-
-
-
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>

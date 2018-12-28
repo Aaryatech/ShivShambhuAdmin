@@ -168,6 +168,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
+											<option value="0">All</option>
 
 										</select>
 									</div>
@@ -213,10 +214,9 @@
 													<th style="text-align: center">No.</th>
 													<th style="text-align: center">Enquiry No</th>
 													<th style="text-align: center">Enquiry Date</th>
-													<th style="text-align: center">Quotation No</th>
-													<th style="text-align: center">Quotation Date</th>
+
 													<th style="text-align: center">Customer Name</th>
-													<th style="text-align: center">Customer Mobile No.</th>
+													<th style="text-align: center">Mobile No.</th>
 													<th style="text-align: center">Status</th>
 													<!-- <th style="text-align: center">Action</th> -->
 												</tr>
@@ -237,14 +237,9 @@
 													<td style="text-align: center"><c:out
 															value="${enq.enqDate}" /></td>
 
-													<td style="text-align: center"><c:out
-															value="${enq.quotNo}" /></td>
 
 
-													<td style="text-align: center"><c:out
-															value="${enq.quotDate}" /></td>
-
-													<td style="text-align: center"><c:out
+													<td style="text-align: left"><c:out
 															value="${enq.custName}" /></td>
 
 
@@ -515,8 +510,7 @@
 																				i + 1,
 																				v.enqNo,
 																				v.enqDate,
-																				v.quotNo,
-																				v.quotDate,
+
 																				v.custName,
 																				v.custMobNo,
 																				status1 ])
