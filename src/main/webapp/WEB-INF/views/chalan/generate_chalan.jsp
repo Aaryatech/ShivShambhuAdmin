@@ -468,9 +468,9 @@ body {
 								<div class="row">
 
 									
-									<div class="col-md-2" id="out_div" style="display: none;">Outside Vehicle,Driver</div>
+									<div class="col-md-2" id="out_div" style="display: none;">Outside Vehicle</div>
 
-									<div class="col-md-4" id="newdriver"></div>
+									<div class="col-md-10" id="newdriver"></div>
 									</div>
 								
 
@@ -626,17 +626,28 @@ body {
 		<script type="text/javascript">
 		
 		function checkVehicle(vehId){
-			alert(vehId);
-			         $("#newdriver").text('');
-			         $("#out_div").show();
+		//	alert(vehId);
+		document.getElementById("chalan_remark").value="";
+			var outVeh=${settingList[0].settingValue};
+			//alert("outVeh" +outVeh);
+			
+			if(vehId==outVeh){
+				
+				$("#newdriver").text('');
+		         $("#out_div").show();
+		         $("#newdriver").show();
+		         
+	           $("#newdriver").append("<input type='text' id='new_dri_veh' name='new_dri_veh' style='width:100%' oninput='setRemark()'/><br/>");
+			}else{
+				  $("#out_div").hide();
+				  $("#newdriver").hide();
+			}
 			         
-		           $("#newdriver").append("<input type='text' id='new_dri_veh' name='new_dri_veh' onblur='setRemark()'/><br/>");
-		          
 		}
 		function setRemark(){
 			//alert("fkdsf");
 			var remark=document.getElementById("new_dri_veh").value;
-			alert("remark " +remark);
+			//alert("remark " +remark);
 			document.getElementById("chalan_remark").value=remark;
 			//$("#chalan_remark").value=remark;
 		}

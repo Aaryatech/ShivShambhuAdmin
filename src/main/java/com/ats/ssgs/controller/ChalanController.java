@@ -39,6 +39,7 @@ import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
+import com.ats.ssgs.model.master.Setting;
 import com.ats.ssgs.model.master.User;
 import com.ats.ssgs.model.master.Vehicle;
 import com.ats.ssgs.model.order.GetOrder;
@@ -98,6 +99,15 @@ public class ChalanController {
 			String curTime = sdf.format(cal.getTime());
 
 			model.addObject("curTime", curTime);
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("keyList", "5");
+
+			Setting[] settArray = rest.postForObject(Constants.url + "getSettingValueByKeyList", map, Setting[].class);
+			List<Setting> settingList = new ArrayList<Setting>(Arrays.asList(settArray));
+
+			model.addObject("settingList", settingList);
+
 
 		} catch (Exception e) {
 
@@ -718,6 +728,16 @@ public class ChalanController {
 			usrList = new ArrayList<User>(Arrays.asList(usrArray));
 
 			model.addObject("usrList", usrList);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("keyList", "5");
+
+			Setting[] settArray = rest.postForObject(Constants.url + "getSettingValueByKeyList", map, Setting[].class);
+			List<Setting> settingList = new ArrayList<Setting>(Arrays.asList(settArray));
+
+			model.addObject("settingList", settingList);
+
 
 		} catch (Exception e) {
 			System.err.println("Exce in edit Chalan " + e.getMessage());

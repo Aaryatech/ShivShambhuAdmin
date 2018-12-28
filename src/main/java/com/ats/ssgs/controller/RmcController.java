@@ -29,6 +29,7 @@ import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
+import com.ats.ssgs.model.master.Setting;
 import com.ats.ssgs.model.master.User;
 import com.ats.ssgs.model.master.Vehicle;
 import com.ats.ssgs.model.rmc.GetRmcOrders;
@@ -157,6 +158,16 @@ public class RmcController {
 			System.err.println("rmcOrd " +rmcOrd);
 			
 			model.addObject("rmcOrd", rmcOrd);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("keyList", "5");
+
+			Setting[] settArray = rest.postForObject(Constants.url + "getSettingValueByKeyList", map, Setting[].class);
+			List<Setting> settingList = new ArrayList<Setting>(Arrays.asList(settArray));
+
+			model.addObject("settingList", settingList);
+
 
 
 		} catch (Exception e) {

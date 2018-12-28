@@ -1064,6 +1064,8 @@ var termTitle=data.termTitle
 		   
 	}
 	</script>
+	
+	
 
 
 	<script type="text/javascript">
@@ -1118,7 +1120,7 @@ var termTitle=data.termTitle
 					document.getElementById("no_of_km").readOnly = true; 
 					document.getElementById("toll_amt").readOnly = true; 
 					document.getElementById("no_of_tolls").readOnly = true; 
-					calcAll();
+					//calcAll();
 				}else{
 					document.getElementById("no_of_km").readOnly = false; 
 					document.getElementById("toll_amt").readOnly = false; 
@@ -1132,7 +1134,7 @@ var termTitle=data.termTitle
 					document.getElementById("toll_amt").value=tollAmt;
 					document.getElementById("no_of_tolls").value=noOfTolls;
 					
-					calcAll();
+					//calcAll();
 					
 				}
 			 

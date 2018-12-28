@@ -107,7 +107,6 @@
 											<tr>
 												<td><input type="checkbox" class="chk" name="quotIds"
 													id="quotIds${count.index+1}" value="${quot.quotHeadId}" /></td>
-
 												<td style="text-align: center">${count.index+1}</td>
 
 
@@ -123,7 +122,7 @@
 
 
 												<td><a
-													href="${pageContext.request.contextPath}/editQuotation/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
+													href="${pageContext.request.contextPath}/editQuotationDetail/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
 														class="fa fa-edit" title="Generate Quotation"></i> <span
 														class="text-muted"></span></a> <a
 													href="${pageContext.request.contextPath}/deleteQuot/${quot.quotHeadId}"
@@ -147,8 +146,11 @@
 										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
-
+<input type="button" margin-right: 5px;" id="btn_submit"
+											class="btn btn-primary" onclick="billPdf()" 
+											value="Pdf" />
 								</div>
+								
 							</form>
 
 						</div>
@@ -286,6 +288,27 @@
 											});
 						});
 	</script>
+	
+	<script type="text/javascript">
+function billPdf()
+{
+	var checkedVals = $('input:checkbox:checked').map(function() {
+	    return this.value;
+	}).get();
+//checkedVals=checkedVals.slice(0,- 1);alert(checkedVals);
+checkedVals=checkedVals.join(",");
+var quotIdList = checkedVals.replace('/',"");
+	
+if(checkedVals=="")
+	{
+	alert("Please Select Quotation")
+	}
+else
+	{
+	   window.open('${pageContext.request.contextPath}/pdf?url=pdf/showQuotPdf/'+quotIdList);
+	}
+}
+</script>
 
 
 </body>

@@ -455,7 +455,7 @@ body {
 
 									<div class="col-md-4">
 										<select id="veh_id" name="veh_id" style="width: 100%;"
-											class="standardSelect" tabindex="1" required>
+											class="standardSelect" tabindex="1" required onchange="checkVehicle(this.value)">
 											<option value="-1">Select</option>
 											<c:forEach items="${vehicleList}" var="veh">
 											
@@ -466,6 +466,17 @@ body {
 									</div>
 									
 								</div>
+								
+								<div class="form-group"></div>
+								<div class="row">
+
+									
+									<div class="col-md-2" id="out_div" style="display: none; width: 100%" >Outside Vehicle</div>
+
+									<div class="col-md-10" id="newdriver" ></div>
+									</div>
+								
+								
 								
 
 								<div class="form-group"></div>
@@ -616,6 +627,37 @@ body {
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
+		
+		<script type="text/javascript">
+		
+		function checkVehicle(vehId){
+		//	alert(vehId);
+		document.getElementById("chalan_remark").value="";
+			var outVeh=${settingList[0].settingValue};
+			//alert("outVeh" +outVeh);
+			
+			if(vehId==outVeh){
+				
+				$("#newdriver").text('');
+		         $("#out_div").show();
+		         $("#newdriver").show();
+		         
+	           $("#newdriver").append("<input type='text' id='new_dri_veh' name='new_dri_veh' style='width: 100%' oninput='setRemark()'/><br/>");
+			}else{
+				  $("#out_div").hide();
+				  $("#newdriver").hide();
+			}
+			         
+		}
+		function setRemark(){
+			//alert("fkdsf");
+			var remark=document.getElementById("new_dri_veh").value;
+			//alert("remark " +remark);
+			document.getElementById("chalan_remark").value=remark;
+			//$("#chalan_remark").value=remark;
+		}
+		</script>
+		
 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({
