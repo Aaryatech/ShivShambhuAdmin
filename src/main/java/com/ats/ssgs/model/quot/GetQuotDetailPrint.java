@@ -1,5 +1,6 @@
 package com.ats.ssgs.model.quot;
 
+import java.util.Date;
 
 public class GetQuotDetailPrint {
 	
@@ -25,6 +26,18 @@ public class GetQuotDetailPrint {
 	private int quotUomId;
 	
 	private String quotNo;
+	
+	private String quotDate;
+	
+	
+
+	public String getQuotDate() {
+		return quotDate;
+	}
+
+	public void setQuotDate(String quotDate) {
+		this.quotDate = quotDate;
+	}
 
 	public int getQuotDetailId() {
 		return quotDetailId;
@@ -119,6 +132,6 @@ public class GetQuotDetailPrint {
 		return "GetQuotDetailPrint [quotDetailId=" + quotDetailId + ", quotHeadId=" + quotHeadId + ", itemId=" + itemId
 				+ ", quotQty=" + quotQty + ", rate=" + rate + ", total=" + total + ", uomName=" + uomName
 				+ ", itemName=" + itemName + ", itemCode=" + itemCode + ", quotUomId=" + quotUomId + ", quotNo="
-				+ quotNo + "]";
+				+ quotNo + ", quotDate=" + quotDate + "]";
 	}
 }

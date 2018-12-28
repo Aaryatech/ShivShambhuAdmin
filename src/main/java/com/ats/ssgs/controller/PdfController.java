@@ -22,6 +22,7 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.Currency;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.GetBillHeaderPdf;
+import com.ats.ssgs.model.master.DocTermHeader;
 import com.ats.ssgs.model.quot.GetQuotHeads;
 import com.ats.ssgs.model.quot.QuotPrintData;
 
@@ -29,14 +30,15 @@ import com.ats.ssgs.model.quot.QuotPrintData;
 @Scope("session")
 public class PdfController {
 	
-	
 	@RequestMapping(value = "pdf/showQuotPdf/{quotIdList}", method = RequestMethod.GET)
 	public ModelAndView showBillsPdf( HttpServletRequest request,
 			HttpServletResponse response,@PathVariable("quotIdList") String[] quotIdList) {
+		List<QuotPrintData> quotPrintData=new ArrayList<>();
 
-		ModelAndView model = new ModelAndView("print_page/quot_print");
-System.err.println("in pdf/showQuotPdf/\", ");
+		ModelAndView model =null;
+		System.err.println("in pdf/showQuotPdf/\", ");
 		try {
+			 model = new ModelAndView("print_page/quot_print");
 			RestTemplate rest = new RestTemplate();
 			String strQuotIdList = new String();
 			for (int i = 0; i < quotIdList.length; i++) {
@@ -46,14 +48,20 @@ System.err.println("in pdf/showQuotPdf/\", ");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("quotIdList", strQuotIdList);
-			QuotPrintData[] qPrintArray = rest.postForObject(Constants.url + "/getQuotPrintData", map,
-				
-					QuotPrintData[].class);
-			List<QuotPrintData> quotPrintData=new ArrayList<QuotPrintData>(Arrays.asList(qPrintArray));
+			QuotPrintData[] qPrintArray = rest.postForObject(Constants.url + "/getQuotPrintData", map,QuotPrintData[].class);
+			 quotPrintData=new ArrayList<QuotPrintData>(Arrays.asList(qPrintArray));
 
-			System.err.println("pdf data "+quotPrintData.toString());
+			 
+			System.err.println("pdf data "+quotPrintData.get(0).getQuotDetPrint().toString());
 			//quotIdList
-			model.addObject("quotIdList", quotIdList);
+			//model.addObject("quotIdList", quotIdList);
+			
+			 map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("termId", 4);
+			DocTermHeader editDoc = rest.postForObject(Constants.url + "getDocHeaderByTermId", map, DocTermHeader.class);
+			
+			model.addObject("supplyList", editDoc.getDetailList());
 
 
 			model.addObject("quotPrintData", quotPrintData);
