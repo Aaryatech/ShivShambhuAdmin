@@ -6,6 +6,11 @@ public class DashPlant {
 	private float contrExpenses;
 	private float vehExpenses;
 	private float totalBillAmtRubber;
+	private float totalIssueExpenses;
+	private float totalBillAmtRmc;
+	private float totalIssueExpRmc;
+	private float paymentRecPaid;
+	private float paymentRecOutstandingPending;
 
 	public float getTotalBillAmount() {
 		return totalBillAmount;
@@ -39,10 +44,53 @@ public class DashPlant {
 		this.totalBillAmtRubber = totalBillAmtRubber;
 	}
 
+	public float getTotalIssueExpenses() {
+		return totalIssueExpenses;
+	}
+
+	public void setTotalIssueExpenses(float totalIssueExpenses) {
+		this.totalIssueExpenses = totalIssueExpenses;
+	}
+
+	public float getTotalBillAmtRmc() {
+		return totalBillAmtRmc;
+	}
+
+	public void setTotalBillAmtRmc(float totalBillAmtRmc) {
+		this.totalBillAmtRmc = totalBillAmtRmc;
+	}
+
+	public float getTotalIssueExpRmc() {
+		return totalIssueExpRmc;
+	}
+
+	public void setTotalIssueExpRmc(float totalIssueExpRmc) {
+		this.totalIssueExpRmc = totalIssueExpRmc;
+	}
+
+	public float getPaymentRecPaid() {
+		return paymentRecPaid;
+	}
+
+	public void setPaymentRecPaid(float paymentRecPaid) {
+		this.paymentRecPaid = paymentRecPaid;
+	}
+
+	public float getPaymentRecOutstandingPending() {
+		return paymentRecOutstandingPending;
+	}
+
+	public void setPaymentRecOutstandingPending(float paymentRecOutstandingPending) {
+		this.paymentRecOutstandingPending = paymentRecOutstandingPending;
+	}
+
 	@Override
 	public String toString() {
 		return "DashPlant [totalBillAmount=" + totalBillAmount + ", contrExpenses=" + contrExpenses + ", vehExpenses="
-				+ vehExpenses + ", totalBillAmtRubber=" + totalBillAmtRubber + "]";
+				+ vehExpenses + ", totalBillAmtRubber=" + totalBillAmtRubber + ", totalIssueExpenses="
+				+ totalIssueExpenses + ", totalBillAmtRmc=" + totalBillAmtRmc + ", totalIssueExpRmc=" + totalIssueExpRmc
+				+ ", paymentRecPaid=" + paymentRecPaid + ", paymentRecOutstandingPending="
+				+ paymentRecOutstandingPending + "]";
 	}
 
 }

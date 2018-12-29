@@ -212,7 +212,7 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.paymentRecPaid}</span>
+										<span class="count" style="font-size: 30px;">${dashPlantCount.paymentRecPaid}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -238,7 +238,7 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.paymentRecOutstandingPending}</span>
+										<span class="count" style="font-size: 30px;">${dashPlantCount.paymentRecOutstandingPending}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -292,7 +292,7 @@ background-color: transparent;
 
 						<div class="col-sm-6 col-lg-4"
 							style="cursor: pointer; max-width: 27.333333%;"
-							onclick="showQuotBetDate(${dashPlantCount.contrExpenses})">
+							onclick="showQuotBetDate(${dashPlantCount.totalIssueExpenses})">
 
 							<div class="card text-white bg-flat-color-2"
 								style="background: #59c9f2;">
@@ -300,10 +300,10 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.contrExpenses}</span>
+										<span class="count" style="font-size: 30px;">${dashPlantCount.totalIssueExpenses}</span>
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
-										<font color="white">Contractor Expenses</font>
+										<font color="white">Total Issue Expenses Rubber Mold</font>
 									</p>
 
 								</div>
@@ -321,11 +321,11 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.vehExpenses}</span>
+										<span class="count" style="font-size: 30px;">0</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
-										<font color="white">Vehicle Expenses</font>
+										<font color="white">Other Expenses</font>
 									</p>
 
 								</div>
@@ -345,7 +345,7 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.paymentRecPaid}</span>
+										<span class="count" style="font-size: 30px;">${dashPlantCount.paymentRecPaid}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -371,7 +371,139 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.paymentRecOutstandingPending}</span>
+										<span class="count" style="font-size: 30px;">${dashPlantCount.paymentRecOutstandingPending}</span>
+
+									</h4>
+									<p style="font-size: 15px; font-weight: bold; color: white;">
+										<font color="white">Total Outstanding Amount</font>
+									</p>
+
+								</div>
+
+
+							</div>
+						</div>
+					</div>
+
+
+					<div class="form-group"></div>
+
+					<div class="card">
+						<div class="card-header">
+							<div class="col-md-2">
+								<strong>RMC Plant</strong>
+							</div>
+
+						</div>
+					</div>
+					<div class="form-group"></div>
+
+					<div class="col-xs-12 col-sm-12">
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;"
+							onclick="showEnqBetDate(${dashPlantCount.totalBillAmtRmc})">
+							<div class="card text-white bg-flat-color-2"
+								style="background: #22a3ac;">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 30px;">${dashPlantCount.totalBillAmtRmc}</span>
+
+									</h4>
+									<p style="font-size: 15px; font-weight: bold; color: white;">
+										<font color="white">Total Billing Amount</font>
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+
+
+
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;"
+							onclick="showQuotBetDate(${dashPlantCount.totalIssueExpRmc})">
+
+							<div class="card text-white bg-flat-color-2"
+								style="background: #59c9f2;">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 30px;">${dashPlantCount.totalIssueExpRmc}</span>
+									</h4>
+									<p style="font-size: 15px; font-weight: bold; color: white;">
+										<font color="white">Total Issue Expenses</font>
+									</p>
+
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;"
+							onclick="showQuotBetDate1(${dashPlantCount.vehExpenses})">
+
+							<div class="card text-white bg-flat-color-2"
+								style="background: #22a3ac;">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 30px;">0</span>
+
+									</h4>
+									<p style="font-size: 15px; font-weight: bold; color: white;">
+										<font color="white">Other Expenses</font>
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+
+					</div>
+					<div class="col-xs-12 col-sm-12">
+
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;">
+
+							<div class="card text-white bg-flat-color-2"
+								style="background: #4f90b9;">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 30px;">${dashPlantCount.paymentRecPaid}</span>
+
+									</h4>
+									<p style="font-size: 15px; font-weight: bold; color: white;">
+										<font color="white">Total Amount recovery</font>
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+
+
+
+
+
+
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;">
+
+							<div class="card text-white bg-flat-color-3"
+								style="background: #64c2de;">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 30px;">${dashPlantCount.paymentRecOutstandingPending}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -389,6 +521,7 @@ background-color: transparent;
 			</div>
 		</div>
 	</div>
+
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
@@ -630,7 +763,5 @@ background-color: transparent;
 			}
 		}
 	</script>
-
-
 </body>
 </html>

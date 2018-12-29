@@ -551,15 +551,6 @@ public class DashboardController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("fromDate", firstDate);
-			map.add("toDate", endDate);
-			map.add("plantId", 0);
-
-			DashSaleCount dashBoard = rest.postForObject(Constants.url + "/getDashboardCountBetDate", map,
-					DashSaleCount.class);
-
-			model.addObject("dashBoard", dashBoard);
-
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("fromDate", firstDate);
@@ -577,6 +568,26 @@ public class DashboardController {
 		}
 
 		return model;
+	}
+
+	@RequestMapping(value = "/getPlantDashboardCount", method = RequestMethod.GET)
+	public @ResponseBody DashPlant getPlantDashboardCount(HttpServletRequest request, HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		String plantId = request.getParameter("plantId");
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+
+		map.add("plantId", plantId);
+
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+
+		DashPlant dashPlant = rest.postForObject(Constants.url + "getPlantDashCountBetDate", map, DashPlant.class);
+
+		return dashPlant;
 	}
 
 }
