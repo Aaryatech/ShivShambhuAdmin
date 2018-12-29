@@ -180,7 +180,6 @@
 												<th style="text-align: center">Bill Date</th>
 												<th style="text-align: center">Bill No</th>
 												<th style="text-align: center">Customer Name</th>
-
 												<th style="text-align: center">CGST</th>
 												<th style="text-align: center">SGST</th>
 												<th style="text-align: center">IGST</th>

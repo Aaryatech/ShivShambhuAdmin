@@ -121,7 +121,7 @@
 										tabindex="1" required onchange="showDetail()">
 										<option value="">Select</option>
 
-										<option  value="0">All</option>
+										<option selected value="0">All</option>
 										<c:forEach items="${plantList}" var="plant">
 
 											<option value="${plant.plantId}">${plant.plantName}</option>
@@ -187,6 +187,7 @@
 												<th style="text-align: center">Bill Date</th>
 												<th style="text-align: center">Credit Start Date</th>
 												<th style="text-align: center">Follow up Date</th>
+												<th style="text-align: center">Billing Amount</th>
 												<th style="text-align: center">Paid Amount</th>
 												<th style="text-align: center">Pending Amount</th>
 												<th style="text-align: center">Status</th>
@@ -222,6 +223,11 @@
 
 													<td style="text-align: left"><c:out
 															value="${rec.creditDate2}" /></td>
+															
+															
+															<td style="text-align: left"><c:out
+															value="${rec.billTotal}" /></td>
+															
 
 													<td style="text-align: left"><c:out
 															value="${rec.paidAmt}" /></td>
@@ -259,7 +265,7 @@
 								<div class="col-md-3">
 
 									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();" disabled="disabled" id="expExcel"
+										onclick="exportToExcel();"  id="expExcel"
 										style="align-content: center; width: 200px; margin-left: 80px;">
 										Export To Excel</button>
 								</div>
@@ -268,7 +274,7 @@
 								<div class="col-md-3">
 
 									<button type="button" class="btn btn-primary"
-										onclick="genPdf()" disabled="disabled" id="PDFButton"
+										onclick="genPdf()"  id="PDFButton"
 										style="align-content: center; width: 100px; margin-left: 80px;">
 										PDF</button>
 								</div>
@@ -288,7 +294,7 @@
 
 			</div>
 		</div>
-
+<!-- disabled="disabled" -->
 	</div>
 	<!-- .animated -->
 	<!-- .content -->
@@ -437,6 +443,7 @@
 																				v.custName,
 																				v.billNo,
 																				v.billDate,
+																				v.billTotal,
 																				v.creditDate1,
 																				v.creditDate2,
 																				v.paidAmt,
@@ -523,8 +530,10 @@
 																				v.custName,
 																				v.billNo,
 																				v.billDate,
+																				
 																				v.creditDate1,
 																				v.creditDate2,
+																				v.billTotal,
 																				v.paidAmt,
 																				v.pendingAmt,
 																				status1,
@@ -586,15 +595,41 @@
 
 	<script type="text/javascript">
 		function genPdf() {
-			//alert("hiii");
+			alert("hiii");
+			
+			
+			var temp= document.getElementById("txType").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-
+			alert("from date"+fromDate);
+			alert("to date"+toDate);
+			
+			
+			if(temp==1){
 			window.open('${pageContext.request.contextPath}/showPayRecPdf/'
 					+ fromDate + '/' + toDate);
-			document.getElementById("expExcel").disabled = true;
+			}
+			else{
+				window.open('${pageContext.request.contextPath}/showPayRecPdf1/');
+			}
+		document.getElementById("expExcel").disabled = true;
+			
 
 		}
+		
+		/* function genPdf1() {
+			//alert("hiii");
+			
+
+			window.open('${pageContext.request.contextPath}/showPayRecPdf1/'
+					+ fromDate + '/' + toDate);
+		document.getElementById("expExcel").disabled = true;
+
+		}
+		
+		
+		
+		 */
 	</script>
 
 </body>

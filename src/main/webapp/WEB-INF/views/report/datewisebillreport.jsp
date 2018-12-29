@@ -408,9 +408,9 @@
 		function callEdit(billHeadId, billDate) {
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-			
+		/* 	
 			alert("Bill Head id is"+billDate);
-			alert("date is"+billDate);
+			alert("date is"+billDate); */
 
 			window
 					.open("${pageContext.request.contextPath}/showDateBillDetailReport/"
