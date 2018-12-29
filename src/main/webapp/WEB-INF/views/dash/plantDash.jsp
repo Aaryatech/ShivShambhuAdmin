@@ -251,6 +251,28 @@ background-color: transparent;
 							</div>
 						</div>
 
+						<div class="col-sm-6 col-lg-4"
+							style="cursor: pointer; max-width: 27.333333%;"
+							onclick="showQuotBetDate1(${dashPlantCount.otherExpTotal})">
+
+							<div class="card text-white bg-flat-color-2"
+								style="background: #22a3ac;">
+								<div class="card-body pb-0" align="center">
+
+									<h4 class="mb-0">
+
+										<span class="count" style="font-size: 30px;">${dashPlantCount.otherExpTotal}</span>
+
+									</h4>
+									<p style="font-size: 15px; font-weight: bold; color: white;">
+										<font color="white">Other Expenses</font>
+									</p>
+
+								</div>
+							</div>
+
+						</div>
+
 					</div>
 
 
@@ -313,7 +335,7 @@ background-color: transparent;
 
 						<div class="col-sm-6 col-lg-4"
 							style="cursor: pointer; max-width: 27.333333%;"
-							onclick="showQuotBetDate1(${dashPlantCount.vehExpenses})">
+							onclick="showQuotBetDate1(${dashPlantCount.otherExpTotalRubber})">
 
 							<div class="card text-white bg-flat-color-2"
 								style="background: #22a3ac;">
@@ -321,7 +343,7 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">0</span>
+										<span class="count" style="font-size: 30px;">${dashPlantCount.otherExpTotalRubber}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -423,8 +445,7 @@ background-color: transparent;
 
 
 						<div class="col-sm-6 col-lg-4"
-							style="cursor: pointer; max-width: 27.333333%;"
-							onclick="showQuotBetDate(${dashPlantCount.totalIssueExpRmc})">
+							style="cursor: pointer; max-width: 27.333333%;">
 
 							<div class="card text-white bg-flat-color-2"
 								style="background: #59c9f2;">
@@ -453,7 +474,7 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">0</span>
+										<span class="count" style="font-size: 30px;">${dashPlantCount.otherExpTotalRmc}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">

@@ -119,7 +119,8 @@
 							<strong>${title}</strong>
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertOtherExpenses"
+							<form
+								action="${pageContext.request.contextPath}/insertOtherExpenses"
 								id="submitForm" method="post">
 
 
@@ -135,7 +136,7 @@
 											<option value="-1">Select</option>
 											<c:forEach items="${plantList}" var="plant">
 												<c:choose>
-													<c:when test="${plant.plantId==editSP.plantId}">
+													<c:when test="${plant.plantId==editOt.plantId}">
 														<option value="${plant.plantId}" selected>${plant.plantName}</option>
 													</c:when>
 													<c:otherwise>
@@ -148,56 +149,54 @@
 									</div>
 
 
+									<input type="hidden" name="otherExpId"
+										value="${editOt.otherExpId}">
 
+									<div class="col-md-1">Date*</div>
 
-									<div class="col-md-2">Date*</div>
-
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="text" autocomplete="off" id="date" name="date"
 											required style="width: 100%;" class="form-control"
-											value="${curDate}"> <span class="error"
+											oninvalid="setCustomValidity('Please enter correct Date')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											value="${editOt.date}"> <span class="error"
 											aria-live="polite"></span>
+									</div>
+									<div class="col-md-1">Amount*</div>
+									<div class="col-md-2">
+										<input type="text" name="amount" id="amount"
+											value="${editOt.amount}" autocomplete="off"
+											style="width: 100%;" class="form-control"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
+											oninvalid="setCustomValidity('Please enter correct Amount')"
+											onchange="try{setCustomValidity('')}catch(e){}"> <span
+											class="error" aria-live="polite"></span>
 									</div>
 
 
-								
 
 								</div>
 								<div class="form-group"></div>
 
 								<div class="row">
 									<div class="col-md-2">Remark*</div>
-									<div class="col-md-4">
+									<div class="col-md-8">
 										<input type="text" id="remark" name="remark" maxlength="250"
-											class="form-control" autocomplete="off" required
-											style="width: 100%;">
-									</div>
-									<div class="col-md-2">Amount*</div>
-									<div class="col-md-4">
-										<input type="text" name="amount" id="amount" autocomplete="off"
-											style="width: 100%;" class="form-control" required>  <span class="error" 
-											aria-live="polite"></span>
+											oninvalid="setCustomValidity('Please enter remark')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											value="${editOt.reamrk}" class="form-control"
+											autocomplete="off" required style="width: 100%;">
 									</div>
 
-								</div>
-
-								<div class="form-group"></div>
-
-								<div class="row">
-									<div class="col-lg-5"></div>
 									<div class="col-lg-2">
 
 										<input type="submit" class="btn btn-primary" value="Submit"
 											id="submitButton"
 											style="align-content: center; width: 113px; margin-left: 40px;">
 									</div>
-									<div class="col-lg-5"></div>
-
 
 
 								</div>
-
-
 
 
 							</form>
@@ -208,7 +207,7 @@
 						<div class="card-body card-block">
 
 							<form
-								action="${pageContext.request.contextPath}/deleteRecordofSP"
+								action="${pageContext.request.contextPath}/deleteRecordofOtExp"
 								method="post">
 
 								<table id="bootstrap-data-table"
@@ -219,40 +218,44 @@
 											<th class="check" style="text-align: center; width: 5%;"><input
 												type="checkbox" name="selAll" id="selAll" /></th>
 
-											<th style="text-align: center; width: 5%;">Sr</th>
-											<th style="text-align: center">Sub Plant Name</th>
-											<th style="text-align: center">Location</th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
+											<th style="text-align: center">Date</th>
+											<th style="text-align: center">Plant Name</th>
+											<th style="text-align: center">Amount</th>
 
-
+											<th style="text-align: center">Remark</th>
 											<th style="text-align: center; width: 5%;">Action</th>
 
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${spList}" var="sp" varStatus="count">
+										<c:forEach items="${getOtList}" var="sp" varStatus="count">
 											<tr>
 
-												<td><input type="checkbox" class="chk" name="spIds"
-													id="spIds${count.index+1}" value="${sp.subplantId}" /></td>
+												<td><input type="checkbox" class="chk"
+													name="otherExpIds" id="otherExpIds${count.index+1}"
+													value="${sp.otherExpId}" /></td>
 
 												<td style="text-align: center">${count.index+1}</td>
 
+												<td style="text-align: center"><c:out
+														value="${sp.date}" /></td>
+
 
 												<td style="text-align: left"><c:out
-														value="${sp.subplantName}" /></td>
+														value="${sp.plantName}" /></td>
+
+												<td style="text-align: right"><c:out
+														value="${sp.amount}" /></td>
 
 												<td style="text-align: left"><c:out
-														value="${sp.location}" /></td>
-
-
-
-
+														value="${sp.reamrk}" /></td>
 
 												<td style="text-align: center"><a
-													href="${pageContext.request.contextPath}/editSP/${sp.subplantId}"><i
+													href="${pageContext.request.contextPath}/editOtherExpenses/${sp.otherExpId}"><i
 														class="fa fa-edit"></i> <span class="text-muted"></span></a>
 													&nbsp; <a
-													href="${pageContext.request.contextPath}/deleteSP/${sp.subplantId}"
+													href="${pageContext.request.contextPath}/deleteOtherExp/${sp.otherExpId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
 														class="fa fa-trash-o"></i></a></td>
 
@@ -380,36 +383,7 @@
 						});
 	</script>
 
-	<script type="text/javascript">
-		function getUomNameCheck() {
 
-			var uomName = $("#uomName").val();
-
-			$.getJSON('${getUniqueUomNameCheck}', {
-
-				uomName : uomName,
-
-				ajax : 'true',
-
-			}, function(data) {
-				if (data.error == true) {
-					alert("Measurement Unit Name Already Exist");
-
-					document.getElementById("uomName").value = "";
-					/* setTimeout(function() {
-						document.getElementById("#deptName").focus();
-					}, 100); */
-					document.getElementById("submitButton").disabled = true;
-				} else {
-					document.getElementById("submitButton").disabled = false;
-
-				}
-			}
-
-			);
-
-		}
-	</script>
 
 </body>
 </html>

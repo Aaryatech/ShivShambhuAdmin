@@ -11,6 +11,9 @@ public class DashPlant {
 	private float totalIssueExpRmc;
 	private float paymentRecPaid;
 	private float paymentRecOutstandingPending;
+	private float otherExpTotal;
+	private float otherExpTotalRubber;
+	private float otherExpTotalRmc;
 
 	public float getTotalBillAmount() {
 		return totalBillAmount;
@@ -84,13 +87,38 @@ public class DashPlant {
 		this.paymentRecOutstandingPending = paymentRecOutstandingPending;
 	}
 
+	public float getOtherExpTotal() {
+		return otherExpTotal;
+	}
+
+	public void setOtherExpTotal(float otherExpTotal) {
+		this.otherExpTotal = otherExpTotal;
+	}
+
+	public float getOtherExpTotalRubber() {
+		return otherExpTotalRubber;
+	}
+
+	public void setOtherExpTotalRubber(float otherExpTotalRubber) {
+		this.otherExpTotalRubber = otherExpTotalRubber;
+	}
+
+	public float getOtherExpTotalRmc() {
+		return otherExpTotalRmc;
+	}
+
+	public void setOtherExpTotalRmc(float otherExpTotalRmc) {
+		this.otherExpTotalRmc = otherExpTotalRmc;
+	}
+
 	@Override
 	public String toString() {
 		return "DashPlant [totalBillAmount=" + totalBillAmount + ", contrExpenses=" + contrExpenses + ", vehExpenses="
 				+ vehExpenses + ", totalBillAmtRubber=" + totalBillAmtRubber + ", totalIssueExpenses="
 				+ totalIssueExpenses + ", totalBillAmtRmc=" + totalBillAmtRmc + ", totalIssueExpRmc=" + totalIssueExpRmc
 				+ ", paymentRecPaid=" + paymentRecPaid + ", paymentRecOutstandingPending="
-				+ paymentRecOutstandingPending + "]";
+				+ paymentRecOutstandingPending + ", otherExpTotal=" + otherExpTotal + ", otherExpTotalRubber="
+				+ otherExpTotalRubber + ", otherExpTotalRmc=" + otherExpTotalRmc + "]";
 	}
 
 }

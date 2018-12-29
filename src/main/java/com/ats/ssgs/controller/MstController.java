@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Controller;
@@ -26,9 +27,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.VpsImageUpload;
+import com.ats.ssgs.model.GetOtherExpenses;
 import com.ats.ssgs.model.OtherExpenses;
 import com.ats.ssgs.model.VehicleType;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Subplant;
 import com.ats.ssgs.model.master.Uom;
@@ -723,8 +726,10 @@ public class MstController {
 
 			model.addObject("plantList", plantList);
 
-			model.addObject("plantList", plantList);
+			GetOtherExpenses[] otArray = rest.getForObject(Constants.url + "getOtherExpList", GetOtherExpenses[].class);
+			List<GetOtherExpenses> getOtList = new ArrayList<GetOtherExpenses>(Arrays.asList(otArray));
 
+			model.addObject("getOtList", getOtList);
 		} catch (Exception e) {
 
 			System.err.println("exception In showAddOtherExp at M Contr" + e.getMessage());
@@ -742,45 +747,40 @@ public class MstController {
 
 		try {
 
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
+
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			String curDate = dateFormat.format(new Date());
 			System.err.println("Inside insert insertOtherExpenses method");
 
-			int othExpId = 0;
+			int otherExpId = 0;
 			try {
-				othExpId = Integer.parseInt(request.getParameter("othExpId"));
+				otherExpId = Integer.parseInt(request.getParameter("otherExpId"));
 			} catch (Exception e) {
-				othExpId = 0;
+				otherExpId = 0;
 			}
-			// DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-			// String curDate = dateFormat.format(new Date());
 
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
 
 			String date = request.getParameter("date");
 			String remark = request.getParameter("remark");
 			float amt = Float.parseFloat(request.getParameter("amount"));
-			
-			OtherExpenses exp=new OtherExpenses();
-			exp.setOtherExpId(othExpId);
+
+			OtherExpenses exp = new OtherExpenses();
+			exp.setOtherExpId(otherExpId);
 			exp.setPlantId(plantId);
 			exp.setDate(DateConvertor.convertToYMD(date));
 			exp.setReamrk(remark);
-			exp.setUserId(1);
+			exp.setUserId(login.getUser().getUserId());
 			exp.setAmount(amt);
 			exp.setDelStatus(1);
 			exp.setExInt1(0);
 			exp.setExInt2(0);
 			exp.setExVarchar1("NA");
-			exp.setExDate1("Na");
+			exp.setExDate1(curDate);
 			exp.setExBool1(0);
-			
-			
-
-			/*OtherExpenses exp = new OtherExpenses(othExpId, plantId, DateConvertor.convertToYMD(date), remark, 1, amt,
-					1, 0, 0, "NA", "NA", 0);*/
 
 			System.out.println("Exp data is " + exp.toString());
 
@@ -799,6 +799,95 @@ public class MstController {
 			e.printStackTrace();
 
 		}
+		return "redirect:/showAddOtherExp";
+	}
+
+	@RequestMapping(value = "/editOtherExpenses/{otherExpId}", method = RequestMethod.GET)
+	public ModelAndView editOtherExpenses(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int otherExpId) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("mst/otherExpenses");
+			model.addObject("title", "Edit Other Expenses");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			GetOtherExpenses[] otArray = rest.getForObject(Constants.url + "getOtherExpList", GetOtherExpenses[].class);
+			List<GetOtherExpenses> getOtList = new ArrayList<GetOtherExpenses>(Arrays.asList(otArray));
+
+			model.addObject("getOtList", getOtList);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("otherExpId", otherExpId);
+
+			OtherExpenses editOt = rest.postForObject(Constants.url + "getOtherExpByExpId", map, OtherExpenses.class);
+
+			model.addObject("editOt", editOt);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editOt at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/deleteOtherExp/{otherexpId}", method = RequestMethod.GET)
+	public String deleteOtherExp(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int otherexpId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("otherExpId", otherexpId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteOtherExp", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteOtherExp @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showAddOtherExp";
+	}
+
+	@RequestMapping(value = "/deleteRecordofOtExp", method = RequestMethod.POST)
+	public String deleteRecordofOtExp(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] otherExpIds = request.getParameterValues("otherExpIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < otherExpIds.length; i++) {
+				sb = sb.append(otherExpIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("otherExpIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiOtherExp", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofOtExp @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
 		return "redirect:/showAddOtherExp";
 	}
 
