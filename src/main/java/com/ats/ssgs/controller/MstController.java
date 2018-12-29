@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.VpsImageUpload;
+import com.ats.ssgs.model.OtherExpenses;
 import com.ats.ssgs.model.VehicleType;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Plant;
@@ -37,21 +38,19 @@ import com.ats.ssgs.model.mat.Contractor;
 
 @Controller
 public class MstController {
-	
+
 	private ArrayList<Vehicle> vehList;
 	private ArrayList<Subplant> spList;
 	private ArrayList<Contractor> conList;
 	private ArrayList<Plant> plantList;
 	private ArrayList<VehicleType> vtypeList;
-	
-	
+
 	RestTemplate rest = new RestTemplate();
 	int isError = 0;
 
 	private ArrayList<Uom> uomList;
-	
-	
-	//*************************************Contractor************************************//
+
+	// *************************************Contractor************************************//
 	@RequestMapping(value = "/showAddContractor", method = RequestMethod.GET)
 	public ModelAndView showAddVendor(HttpServletRequest request, HttpServletResponse response) {
 
@@ -66,7 +65,7 @@ public class MstController {
 			Contractor[] conArray = rest.getForObject(Constants.url + "getAllContractorList", Contractor[].class);
 			conList = new ArrayList<Contractor>(Arrays.asList(conArray));
 
-			model.addObject("conList", conList );
+			model.addObject("conList", conList);
 
 		} catch (Exception e) {
 
@@ -79,14 +78,12 @@ public class MstController {
 		return model;
 
 	}
-	
-	
+
 	@RequestMapping(value = "/insertContractor", method = RequestMethod.POST)
 	public String insertUom(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 
-			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			String curDate = dateFormat.format(new Date());
@@ -96,20 +93,20 @@ public class MstController {
 			try {
 				conId = Integer.parseInt(request.getParameter("contrId"));
 			} catch (Exception e) {
-				conId  = 0;
+				conId = 0;
 			}
-			//DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			// DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-			//String curDate = dateFormat.format(new Date());
+			// String curDate = dateFormat.format(new Date());
 
 			String conName = request.getParameter("conName");
 			String conMob = request.getParameter("mobNo");
-			float rate=Float.parseFloat(request.getParameter("contrRate"));
+			float rate = Float.parseFloat(request.getParameter("contrRate"));
 
-			Contractor con=new Contractor();
+			Contractor con = new Contractor();
 			con.setContrId(conId);
 			con.setContrName(conName);
-			con.setContrMob( conMob);
+			con.setContrMob(conMob);
 			con.setContrRate(rate);
 			con.setContrType(1);
 			con.setDelStatus(1);
@@ -119,10 +116,9 @@ public class MstController {
 			con.setExInt2(0);
 			con.setExVar1("NA");
 			con.setExVar2("NA");
-			System.out.println("con data is "+con.toString());
-			
-			
-			Contractor conInsertRes = rest.postForObject(Constants.url + "saveContractor",con, Contractor.class);
+			System.out.println("con data is " + con.toString());
+
+			Contractor conInsertRes = rest.postForObject(Constants.url + "saveContractor", con, Contractor.class);
 
 			if (conInsertRes != null) {
 				isError = 2;
@@ -139,7 +135,6 @@ public class MstController {
 		return "redirect:/showAddContractor";
 	}
 
-
 	@RequestMapping(value = "/editCon/{contrId}", method = RequestMethod.GET)
 	public ModelAndView editCon(HttpServletRequest request, HttpServletResponse response, @PathVariable int contrId) {
 
@@ -150,7 +145,7 @@ public class MstController {
 			Contractor[] conArray = rest.getForObject(Constants.url + "getAllContractorList", Contractor[].class);
 			conList = new ArrayList<Contractor>(Arrays.asList(conArray));
 
-			model.addObject("conList", conList );
+			model.addObject("conList", conList);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -159,7 +154,7 @@ public class MstController {
 			Contractor editCon = rest.postForObject(Constants.url + "getContractorById", map, Contractor.class);
 
 			model.addObject("title", "Edit Contractor");
-			model.addObject("editCon", editCon );
+			model.addObject("editCon", editCon);
 
 		} catch (Exception e) {
 
@@ -171,7 +166,7 @@ public class MstController {
 
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/deleteCon/{contrId}", method = RequestMethod.GET)
 	public String deleteCon(HttpServletRequest request, HttpServletResponse response, @PathVariable int contrId) {
 
@@ -191,15 +186,12 @@ public class MstController {
 
 		return "redirect:/showAddContractor";
 	}
-	
-	
-	
 
 	@RequestMapping(value = "/deleteRecordofCon", method = RequestMethod.POST)
 	public String deleteRecordofUom(HttpServletRequest request, HttpServletResponse response) {
 		try {
 
-			String[]contrIds = request.getParameterValues("contrIds");
+			String[] contrIds = request.getParameterValues("contrIds");
 
 			StringBuilder sb = new StringBuilder();
 
@@ -225,16 +217,13 @@ public class MstController {
 		return "redirect:/showAddContractor";
 	}
 
-	
-	
-	//*************************************Vehicle************************************//
+	// *************************************Vehicle************************************//
 	@RequestMapping(value = "/showAddVehicle", method = RequestMethod.GET)
 	public ModelAndView showAddVehicle(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
 		try {
 
-			
 			model = new ModelAndView("mst/vehicle");
 			model.addObject("isError", isError);
 			isError = 0;
@@ -244,17 +233,16 @@ public class MstController {
 			vehList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
 
 			model.addObject("vehList", vehList);
-			
-			
-			VehicleType[] vehTypeArray = rest.getForObject(Constants.url + "getAllVehicleTypeList", VehicleType[].class);
+
+			VehicleType[] vehTypeArray = rest.getForObject(Constants.url + "getAllVehicleTypeList",
+					VehicleType[].class);
 			vtypeList = new ArrayList<VehicleType>(Arrays.asList(vehTypeArray));
 
 			model.addObject("vtypeList", vtypeList);
-			
+
 			Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
 			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
 			model.addObject("uomList", uomList);
-
 
 		} catch (Exception e) {
 
@@ -267,11 +255,11 @@ public class MstController {
 		return model;
 
 	}
-	
-	
+
 	@RequestMapping(value = "/insertVehicle", method = RequestMethod.POST)
 	public String insertWeighing(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("doc1") List<MultipartFile> file1, @RequestParam("doc2") List<MultipartFile> file2, @RequestParam("doc3") List<MultipartFile> file3, @RequestParam("doc4") List<MultipartFile> file4) {
+			@RequestParam("doc1") List<MultipartFile> file1, @RequestParam("doc2") List<MultipartFile> file2,
+			@RequestParam("doc3") List<MultipartFile> file3, @RequestParam("doc4") List<MultipartFile> file4) {
 
 		try {
 			System.err.println("Inside insertVehicle method");
@@ -280,9 +268,7 @@ public class MstController {
 			Date now = new Date();
 			Calendar cal = Calendar.getInstance();
 
-		
-
-			int vehId1= 0;
+			int vehId1 = 0;
 			try {
 				vehId1 = Integer.parseInt(request.getParameter("vehId"));
 			} catch (Exception e) {
@@ -292,20 +278,18 @@ public class MstController {
 			String curDate = dateFormat.format(new Date());
 			String VehName = request.getParameter("vehName");
 			String company = request.getParameter("compName");
-			String vehType=request.getParameter("vehType");
+			String vehType = request.getParameter("vehType");
 			int uom = Integer.parseInt(request.getParameter("plant_id"));
 			float l_capacity = Float.parseFloat(request.getParameter("loadCapacity"));
-			String vehNum=request.getParameter("vehNum");
+			String vehNum = request.getParameter("vehNum");
 
-			
 			System.out.println("Previous Image1" + file1.get(0).getOriginalFilename());
 			System.out.println("Previous Image2" + file2.get(0).getOriginalFilename());
 			System.out.println("Previous Image3" + file3.get(0).getOriginalFilename());
 			System.out.println("Previous Image4" + file4.get(0).getOriginalFilename());
 
-			
 			String prevImage1 = request.getParameter("doc11");
-			String prevImage2 =request.getParameter("doc12");
+			String prevImage2 = request.getParameter("doc12");
 			String prevImage3 = request.getParameter("doc13");
 			String prevImage4 = request.getParameter("doc14");
 			try {
@@ -403,25 +387,24 @@ public class MstController {
 			veh.setExInt3(1);
 			veh.setExVar1("NA");
 			veh.setExVar2("NA");
-			
+
 			try {
 				veh.setVehDoc1(prevImage1);
 				veh.setVehDoc2(prevImage2);
 				veh.setVehDoc3(prevImage3);
 				veh.setVehDoc4(prevImage4);
-				
 
 			} catch (Exception e) {
 				veh.setVehDoc1("NA");
 				veh.setVehDoc2("NA");
 				veh.setVehDoc3("NA");
 				veh.setVehDoc4("NA");
-				
+
 			}
 
-			System.out.println("veh " +veh.toString());
-			Vehicle vehInsertRes = rest.postForObject(Constants.url + "saveVehicle",veh, Vehicle.class);
-			
+			System.out.println("veh " + veh.toString());
+			Vehicle vehInsertRes = rest.postForObject(Constants.url + "saveVehicle", veh, Vehicle.class);
+
 			if (vehInsertRes != null) {
 				isError = 2;
 			} else {
@@ -438,7 +421,7 @@ public class MstController {
 		return "redirect:/showAddVehicle";
 
 	}
-	
+
 	@RequestMapping(value = "/editVeh/{vehicleId}", method = RequestMethod.GET)
 	public ModelAndView editVeh(HttpServletRequest request, HttpServletResponse response, @PathVariable int vehicleId) {
 
@@ -446,45 +429,41 @@ public class MstController {
 		try {
 			model = new ModelAndView("mst/vehicle");
 
-			Vehicle[] vehArray= rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
+			Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
 			vehList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
 
-			model.addObject("vehList", vehList );
+			model.addObject("vehList", vehList);
 
-			
-			VehicleType[] vehTypeArray = rest.getForObject(Constants.url + "getAllVehicleTypeList", VehicleType[].class);
+			VehicleType[] vehTypeArray = rest.getForObject(Constants.url + "getAllVehicleTypeList",
+					VehicleType[].class);
 			vtypeList = new ArrayList<VehicleType>(Arrays.asList(vehTypeArray));
-			model.addObject("vtypeList", vtypeList );
-			
+			model.addObject("vtypeList", vtypeList);
+
 			Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
 			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
 			model.addObject("uomList", uomList);
-			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("vehId",vehicleId);
+			map.add("vehId", vehicleId);
 
 			Vehicle editVeh = rest.postForObject(Constants.url + "getVehicleById", map, Vehicle.class);
 
 			model.addObject("title", "Edit Vehicle");
-			model.addObject("editVeh",editVeh);
-			
+			model.addObject("editVeh", editVeh);
+
 			model.addObject("vehImgPath", Constants.VEH_IMG_URL);
 
 		} catch (Exception e) {
 
 			System.err.println("exception In editCon at Master Contr" + e.getMessage());
 
-			e.printStackTrace(); 
+			e.printStackTrace();
 
 		}
-		
 
 		return model;
 	}
-	
-	
-	
 
 	@RequestMapping(value = "/deleteVeh/{vehicleId}", method = RequestMethod.GET)
 	public String deleteVeh(HttpServletRequest request, HttpServletResponse response, @PathVariable int vehicleId) {
@@ -493,7 +472,7 @@ public class MstController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("vehId",vehicleId);
+			map.add("vehId", vehicleId);
 
 			Info errMsg = rest.postForObject(Constants.url + "deleteVehicle", map, Info.class);
 
@@ -505,16 +484,14 @@ public class MstController {
 
 		return "redirect:/showAddVehicle";
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/deleteRecordofVeh", method = RequestMethod.POST)
 	public String deleteRecordofVeh(HttpServletRequest request, HttpServletResponse response) {
 		try {
 
 			System.out.println("inside multi veh delete");
 			String[] vehIds = request.getParameterValues("vehIds");
-			System.out.println("veh ids to del"+vehIds);
+			System.out.println("veh ids to del" + vehIds);
 
 			StringBuilder sb = new StringBuilder();
 
@@ -540,9 +517,7 @@ public class MstController {
 		return "redirect:/showAddVehicle";
 	}
 
-	
-	
-	//*************************************Vehicle************************************//
+	// *************************************Vehicle************************************//
 	@RequestMapping(value = "/showAddSP", method = RequestMethod.GET)
 	public ModelAndView showAddSP(HttpServletRequest request, HttpServletResponse response) {
 
@@ -554,21 +529,23 @@ public class MstController {
 			isError = 0;
 
 			model.addObject("title", "Add Subplant");
-			Subplant[] sbArray = rest.getForObject(Constants.url + "getAllSubPlantList",Subplant[].class);
+			Subplant[] sbArray = rest.getForObject(Constants.url + "getAllSubPlantList", Subplant[].class);
 			spList = new ArrayList<Subplant>(Arrays.asList(sbArray));
 
-			model.addObject("spList", spList );
-			
+			model.addObject("spList", spList);
+
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
-			
-			/*VehicleType[] vehArray = rest.getForObject(Constants.url + "getAllVehicleType", VehicleType[].class);
-			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));*/
+
+			/*
+			 * VehicleType[] vehArray = rest.getForObject(Constants.url +
+			 * "getAllVehicleType", VehicleType[].class); plantList = new
+			 * ArrayList<Plant>(Arrays.asList(plantArray));
+			 */
 
 			model.addObject("plantList", plantList);
-
 
 		} catch (Exception e) {
 
@@ -581,14 +558,12 @@ public class MstController {
 		return model;
 
 	}
-	
-	
+
 	@RequestMapping(value = "/insertSubplant", method = RequestMethod.POST)
 	public String insertSubplant(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 
-			
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			String curDate = dateFormat.format(new Date());
@@ -596,39 +571,36 @@ public class MstController {
 
 			int spId = 0;
 			try {
-				spId  = Integer.parseInt(request.getParameter("spId"));
+				spId = Integer.parseInt(request.getParameter("spId"));
 			} catch (Exception e) {
-				spId   = 0;
+				spId = 0;
 			}
-			//DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			// DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-			//String curDate = dateFormat.format(new Date());
+			// String curDate = dateFormat.format(new Date());
 
 			String spName = request.getParameter("spName");
 			String spLoc = request.getParameter("spLoc");
-			int pid=Integer.parseInt(request.getParameter("plant_id"));
+			int pid = Integer.parseInt(request.getParameter("plant_id"));
 
-			Subplant sp=new Subplant();
-			
+			Subplant sp = new Subplant();
+
 			sp.setPlantId(pid);
 			sp.setSubplantName(spName);
 			sp.setLocation(spLoc);
 			sp.setDelStatus(1);
 			sp.setSubplantId(spId);
-			
+
 			sp.setExBool1(0);
 			sp.setExDate1(curDate);
 			sp.setExInt1(0);
 			sp.setExInt2(0);
 			sp.setExVar1("NA");
 			sp.setExVar2("NA");
-			
-		
-			
-			System.out.println("sp data is "+sp.toString());
-			
-			
-			Subplant conInsertRes = rest.postForObject(Constants.url + "saveSubPlant",sp,Subplant.class);
+
+			System.out.println("sp data is " + sp.toString());
+
+			Subplant conInsertRes = rest.postForObject(Constants.url + "saveSubPlant", sp, Subplant.class);
 
 			if (conInsertRes != null) {
 				isError = 2;
@@ -645,7 +617,6 @@ public class MstController {
 		return "redirect:/showAddSP";
 	}
 
-
 	@RequestMapping(value = "/editSP/{spId}", method = RequestMethod.GET)
 	public ModelAndView editSP(HttpServletRequest request, HttpServletResponse response, @PathVariable int spId) {
 
@@ -656,15 +627,11 @@ public class MstController {
 			Subplant[] conArray = rest.getForObject(Constants.url + "getAllSubPlantList", Subplant[].class);
 			spList = new ArrayList<Subplant>(Arrays.asList(conArray));
 
-			model.addObject("spList",spList );
-			
-			
-			
+			model.addObject("spList", spList);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("spId", spId);
-			
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -674,7 +641,7 @@ public class MstController {
 			Subplant editSP = rest.postForObject(Constants.url + "getSubPlantById", map, Subplant.class);
 
 			model.addObject("title", "Edit Subplant");
-			model.addObject("editSP", editSP );
+			model.addObject("editSP", editSP);
 
 		} catch (Exception e) {
 
@@ -686,7 +653,7 @@ public class MstController {
 
 		return model;
 	}
-	
+
 	@RequestMapping(value = "/deleteSP/{spId}", method = RequestMethod.GET)
 	public String deleteSP(HttpServletRequest request, HttpServletResponse response, @PathVariable int spId) {
 
@@ -706,15 +673,12 @@ public class MstController {
 
 		return "redirect:/showAddSP";
 	}
-	
-	
-	
 
 	@RequestMapping(value = "/deleteRecordofSP", method = RequestMethod.POST)
 	public String deleteRecordofSP(HttpServletRequest request, HttpServletResponse response) {
 		try {
 
-			String[]spIds = request.getParameterValues("spIds");
+			String[] spIds = request.getParameterValues("spIds");
 
 			StringBuilder sb = new StringBuilder();
 
@@ -740,7 +704,102 @@ public class MstController {
 		return "redirect:/showAddSP";
 	}
 
-	
-	
-	
+	// *************************************Other
+	// Expenses************************************//
+	@RequestMapping(value = "/showAddOtherExp", method = RequestMethod.GET)
+	public ModelAndView showAddOtherExp(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("mst/otherExpenses");
+			model.addObject("isError", isError);
+			isError = 0;
+
+			model.addObject("title", "Add Other Expenses");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			model.addObject("plantList", plantList);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddOtherExp at M Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/insertOtherExpenses", method = RequestMethod.POST)
+	public String insertOtherExpenses(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			String curDate = dateFormat.format(new Date());
+			System.err.println("Inside insert insertOtherExpenses method");
+
+			int othExpId = 0;
+			try {
+				othExpId = Integer.parseInt(request.getParameter("othExpId"));
+			} catch (Exception e) {
+				othExpId = 0;
+			}
+			// DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			// String curDate = dateFormat.format(new Date());
+
+			int plantId = Integer.parseInt(request.getParameter("plant_id"));
+
+			String date = request.getParameter("date");
+			String remark = request.getParameter("remark");
+			float amt = Float.parseFloat(request.getParameter("amount"));
+			
+			OtherExpenses exp=new OtherExpenses();
+			exp.setOtherExpId(othExpId);
+			exp.setPlantId(plantId);
+			exp.setDate(DateConvertor.convertToYMD(date));
+			exp.setReamrk(remark);
+			exp.setUserId(1);
+			exp.setAmount(amt);
+			exp.setDelStatus(1);
+			exp.setExInt1(0);
+			exp.setExInt2(0);
+			exp.setExVarchar1("NA");
+			exp.setExDate1("Na");
+			exp.setExBool1(0);
+			
+			
+
+			/*OtherExpenses exp = new OtherExpenses(othExpId, plantId, DateConvertor.convertToYMD(date), remark, 1, amt,
+					1, 0, 0, "NA", "NA", 0);*/
+
+			System.out.println("Exp data is " + exp.toString());
+
+			OtherExpenses expInsertRes = rest.postForObject(Constants.url + "saveOtherExpenses", exp,
+					OtherExpenses.class);
+
+			if (expInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in insert OtherExpenses " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return "redirect:/showAddOtherExp";
+	}
+
 }
