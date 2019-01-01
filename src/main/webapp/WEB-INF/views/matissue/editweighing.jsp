@@ -268,25 +268,34 @@
 
 								<div class="row">
 									<div class="col-md-2">Add Photo1</div>
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="file" id="imgInp" name="imgInp"
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please Select photo')" readonly
 											src="${weighImageUrl}${editWeigh.photo1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span> <img
-											src="${weighImageUrl}${editWeigh.photo1}" alt="l" height="42"
-											width="42">
+											class="error" aria-live="polite"></span>
+									</div>
+									<div class="col-md-2">
+										<img id="image1" name="image1"
+											src="https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/media/assets/submodel/8230.jpg"
+											alt="l" height="50px;" width="50px;">
+
 									</div>
 
 									<div class="col-md-2">Add Photo2*</div>
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="file" id="imgInp1" name="imgInp1"
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter photo')"
 											value="${editWeigh.photo2}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
+									</div>
+									<div class="col-md-2">
+										<img id="image2" name="image2"
+											src="https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/media/assets/submodel/8230.jpg"
+											alt="l" height="50px;" width="50px;">
 
 									</div>
 								</div>
@@ -378,7 +387,44 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
 
+	<script type="text/javascript">
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
 
+				reader.onload = function(e) {
+					$('#image1').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$("#imgInp").change(function() {
+			//alert("Hi imgInp2");
+
+			readURL(this);
+		});
+	</script>
+
+	<script type="text/javascript">
+		function readURL2(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#image2').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$("#imgInp1").change(function() {
+			//alert("Hi imgInp1");
+			readURL2(this);
+		});
+	</script>
 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({
@@ -450,41 +496,7 @@
 		}
 	</script>
 
-	<script type="text/javascript">
-		function readURL(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
 
-				reader.onload = function(e) {
-					$('#image1').attr('src', e.target.result);
-				}
-
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
-
-		$("#imgInp").change(function() {
-			readURL(this);
-		});
-	</script>
-
-	<script type="text/javascript">
-		function readURL(input) {
-			if (input.files && input.files[0]) {
-				var reader = new FileReader();
-
-				reader.onload = function(e) {
-					$('#image2').attr('src', e.target.result);
-				}
-
-				reader.readAsDataURL(input.files[0]);
-			}
-		}
-
-		$("#imgInp1").change(function() {
-			readURL(this);
-		});
-	</script>
 
 </body>
 </html>

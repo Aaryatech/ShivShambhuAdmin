@@ -268,27 +268,40 @@
 
 								<div class="row">
 									<div class="col-md-2">Add Photo1*</div>
-									<div class="col-md-4">
-										<input type="file" id="imgInp" name="imgInp"
+									<div class="col-md-2">
+										<input type="file" id="imgInp" name="imgInp" accept="image/*"
 											style="width: 100%;" class="form-control" autocomplete="off"
-											oninvalid="setCustomValidity('Please Select photo')"
-											value="${editWeigh.photo1}"  required
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
+											value="${editWeigh.photo1}" required
+											onchange="validateFileType()" /> <span class="error"
+											aria-live="polite"></span>
+									</div>
+									<div class="col-md-2">
+										<img id="image1" name="image1"
+											src="https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/media/assets/submodel/8230.jpg"
+											alt="l" height="50px;" width="50px;">
 									</div>
 
+
+
+
 									<div class="col-md-2">Add Photo2</div>
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="file" id="imgInp1" name="imgInp1"
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter photo')"
 											value="${editWeigh.photo2}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
-
 									</div>
+									<div class="col-md-2">
+										<img id="image2" name="image2"
+											src="https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/media/assets/submodel/8230.jpg"
+											alt="l" height="50px;" width="50px;">
+									</div>
+
+
 								</div>
+
 
 								<div class="form-group"></div>
 
@@ -377,7 +390,19 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
 
-
+<!-- 	<script type="text/javascript">
+		function validateFileType(fileName) {
+			var fileName = document.getElementById("" + fileName).value;
+			var idxDot = fileName.lastIndexOf(".") + 1;
+			var extFile = fileName.substr(idxDot, fileName.length)
+					.toLowerCase();
+			if (extFile == "jpg" || extFile == "jpeg" || extFile == "png") {
+				//TO DO
+			} else {
+				alert("Only jpg/jpeg and png files are allowed!");
+			}
+		}
+	</script> -->
 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({
@@ -463,12 +488,14 @@
 		}
 
 		$("#imgInp").change(function() {
+			//alert("Hi imgInp2");
+
 			readURL(this);
 		});
 	</script>
 
 	<script type="text/javascript">
-		function readURL(input) {
+		function readURL2(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
 
@@ -481,7 +508,8 @@
 		}
 
 		$("#imgInp1").change(function() {
-			readURL(this);
+			//	alert("Hi imgInp1");
+			readURL2(this);
 		});
 	</script>
 
