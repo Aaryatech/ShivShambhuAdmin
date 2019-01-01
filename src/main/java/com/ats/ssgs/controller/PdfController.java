@@ -22,6 +22,7 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.Currency;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.GetBillHeaderPdf;
+import com.ats.ssgs.model.chalan.ChalanPrintData;
 import com.ats.ssgs.model.master.DocTermHeader;
 import com.ats.ssgs.model.quot.GetQuotHeads;
 import com.ats.ssgs.model.quot.QuotPrintData;
@@ -65,6 +66,43 @@ public class PdfController {
 
 
 			model.addObject("quotPrintData", quotPrintData);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+	}
+	
+	
+	@RequestMapping(value = "pdf/showChalanPdf/{chalanId}", method = RequestMethod.GET)
+	public ModelAndView showChalanPdf( HttpServletRequest request,
+			HttpServletResponse response,@PathVariable("chalanId") int chalanId) {
+		//List<ChalanPrintData> chPrintData=new ArrayList<>();
+
+		ModelAndView model =null;
+		System.err.println("in pdf/showQuotPdf/\", ");
+		try {
+			 model = new ModelAndView("print_page/chalan_print");
+			RestTemplate rest = new RestTemplate();
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("chalanId", chalanId);
+			ChalanPrintData chPrintData = rest.postForObject(Constants.url + "/getChalanPrintData", map,ChalanPrintData.class);
+
+			 
+			System.err.println("pdf data "+chPrintData.toString());
+			//quotIdList
+			//model.addObject("quotIdList", quotIdList);
+			
+			/* map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("termId", 4);
+			DocTermHeader editDoc = rest.postForObject(Constants.url + "getDocHeaderByTermId", map, DocTermHeader.class);
+			
+			model.addObject("supplyList", editDoc.getDetailList());
+
+*/
+			model.addObject("printData", chPrintData);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

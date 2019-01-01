@@ -384,6 +384,7 @@
 			
 			
 			if(valid==true){
+				alert("plant Id " +plantId);
 			
 				$
 						.getJSON(
@@ -417,7 +418,11 @@
 															+ v.chalanId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-times"></i></a>'
+															+ ')"><i class="fa fa-times"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
+															+ v.chalanId
+															+ ','
+															+ i
+															+ ')"><i class="fa-file-pdf-o"></i></a>'
 															
 															 chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
 								}else{
@@ -434,9 +439,14 @@
 													+ v.chalanId
 													+ ','
 													+ i
-													+ ')"><i class="fa fa-times"></i></a>'
+													+ ')"><i class="fa fa-times"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
+														+ v.chalanId
+														+ ','
+														+ i
+														+ ')"><i class="fa-file-pdf-o"></i></a>'
 									
 									chBox=""
+									
 									
 								}
 
@@ -473,9 +483,14 @@ function callClose(chalanId){
 		window.open("${pageContext.request.contextPath}/closeChalan/"+chalanId);
 		
 	}
+	
+	function callPdf(chalanId,key){
+		alert("call Pdf " +chalanId);
+		   window.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'+chalanId);
+
+	}
 	</script>
 	
-</script>
 	
 		
 	<script type="text/javascript">
