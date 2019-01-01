@@ -1,9 +1,8 @@
-package com.ats.ssgs.model;
+package com.ats.ssgs.model.master;
 
-public class GetExistingItemDetail {
+public class AddItemDetail {
 
 	private int itemDetailId;
-
 	private int itemId;
 
 	private int rmType;
@@ -27,16 +26,17 @@ public class GetExistingItemDetail {
 	private int int2;
 
 	private String exVar1;
-
 	private int boll1;
 
 	private int boll2;
 
-	private String uomName;
+	public String getExVar1() {
+		return exVar1;
+	}
 
-	private String catDesc;
-
-	private int isDuplicate;
+	public void setExVar1(String exVar1) {
+		this.exVar1 = exVar1;
+	}
 
 	public int getItemDetailId() {
 		return itemDetailId;
@@ -134,14 +134,6 @@ public class GetExistingItemDetail {
 		this.int2 = int2;
 	}
 
-	public String getExVar1() {
-		return exVar1;
-	}
-
-	public void setExVar1(String exVar1) {
-		this.exVar1 = exVar1;
-	}
-
 	public int getBoll1() {
 		return boll1;
 	}
@@ -158,37 +150,12 @@ public class GetExistingItemDetail {
 		this.boll2 = boll2;
 	}
 
-	public String getUomName() {
-		return uomName;
-	}
-
-	public void setUomName(String uomName) {
-		this.uomName = uomName;
-	}
-
-	public String getCatDesc() {
-		return catDesc;
-	}
-
-	public void setCatDesc(String catDesc) {
-		this.catDesc = catDesc;
-	}
-
-	public int getIsDuplicate() {
-		return isDuplicate;
-	}
-
-	public void setIsDuplicate(int isDuplicate) {
-		this.isDuplicate = isDuplicate;
-	}
-
 	@Override
 	public String toString() {
-		return "GetExistingItemDetail [itemDetailId=" + itemDetailId + ", itemId=" + itemId + ", rmType=" + rmType
-				+ ", rmId=" + rmId + ", rmName=" + rmName + ", rmUomId=" + rmUomId + ", rmQty=" + rmQty + ", rmWeight="
-				+ rmWeight + ", noPiecesPerItem=" + noPiecesPerItem + ", delStatus=" + delStatus + ", int1=" + int1
-				+ ", int2=" + int2 + ", exVar1=" + exVar1 + ", boll1=" + boll1 + ", boll2=" + boll2 + ", uomName="
-				+ uomName + ", catDesc=" + catDesc + ", isDuplicate=" + isDuplicate + "]";
+		return "AddItemDetail [itemDetailId=" + itemDetailId + ", itemId=" + itemId + ", rmType=" + rmType + ", rmId="
+				+ rmId + ", rmName=" + rmName + ", rmUomId=" + rmUomId + ", rmQty=" + rmQty + ", rmWeight=" + rmWeight
+				+ ", noPiecesPerItem=" + noPiecesPerItem + ", delStatus=" + delStatus + ", int1=" + int1 + ", int2="
+				+ int2 + ", exVar1=" + exVar1 + ", boll1=" + boll1 + ", boll2=" + boll2 + "]";
 	}
 
 }

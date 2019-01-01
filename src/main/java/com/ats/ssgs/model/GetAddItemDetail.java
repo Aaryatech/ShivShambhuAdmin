@@ -2,29 +2,22 @@ package com.ats.ssgs.model;
 
 public class GetAddItemDetail {
 	private int itemDetailId;
-	
+
 	private int itemId;
-	
+
 	private int rmId;
-	
+
 	private int isDuplicate;
-	
+
 	private String rmName;
-	
-	
+
 	private float qty;
-	
-	private String categoryName;
-	
+
 	private int uomId;
 
 	private String uomName;
 
 	private int catId;
-
-	
-	
-	
 
 	public int getItemDetailId() {
 		return itemDetailId;
@@ -50,7 +43,6 @@ public class GetAddItemDetail {
 		this.isDuplicate = isDuplicate;
 	}
 
-	
 	public String getRmName() {
 		return rmName;
 	}
@@ -65,14 +57,6 @@ public class GetAddItemDetail {
 
 	public void setQty(float qty) {
 		this.qty = qty;
-	}
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
 	}
 
 	public int getUomId() {
@@ -99,8 +83,6 @@ public class GetAddItemDetail {
 		this.catId = catId;
 	}
 
-	
-	
 	public int getRmId() {
 		return rmId;
 	}
@@ -112,15 +94,8 @@ public class GetAddItemDetail {
 	@Override
 	public String toString() {
 		return "GetAddItemDetail [itemDetailId=" + itemDetailId + ", itemId=" + itemId + ", rmId=" + rmId
-				+ ", isDuplicate=" + isDuplicate + ", rmName=" + rmName + ", qty=" + qty + ", categoryName="
-				+ categoryName + ", uomId=" + uomId + ", uomName=" + uomName + ", catId=" + catId
-				+ ", getItemDetailId()=" + getItemDetailId() + ", getItemId()=" + getItemId() + ", getIsDuplicate()="
-				+ getIsDuplicate() + ", getRmName()=" + getRmName() + ", getQty()=" + getQty() + ", getCategoryName()="
-				+ getCategoryName() + ", getUomId()=" + getUomId() + ", getUomName()=" + getUomName() + ", getCatId()="
-				+ getCatId() + ", getRmId()=" + getRmId() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
-				+ ", toString()=" + super.toString() + "]";
+				+ ", isDuplicate=" + isDuplicate + ", rmName=" + rmName + ", qty=" + qty + ", uomId=" + uomId
+				+ ", uomName=" + uomName + ", catId=" + catId + "]";
 	}
 
-	
-	
 }

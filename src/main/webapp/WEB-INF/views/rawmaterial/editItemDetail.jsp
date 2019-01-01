@@ -11,9 +11,10 @@
 
 <c:url var="getRawItemByCatId" value="/getRawItemByCatId" />
 
-<c:url var="addItemDetailInExisting" value="/addItemDetailInExisting" />
+<c:url var="editInAddItemDetail" value="/editInAddItemDetail" />
 
-<c:url var="getItemDetailForEdit" value="/getItemDetailForEdit" />
+<c:url var="getDetailEditForItemDetail"
+	value="/getDetailEditForItemDetail" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -128,27 +129,27 @@
 						</div>
 						<div class="card-body card-block">
 							<form
-								action="${pageContext.request.contextPath}/updateItemDetail"
+								action="${pageContext.request.contextPath}/insertItemDetail"
 								id="submitForm" onsubmit="disableSubmitButton()" method="post">
 
-								
+
 								<div class="row">
 
 									<div class="col-md-2">Item Name*</div>
 									<div class="col-md-4">
-										<input type="text" id="itemName" name="itemName" maxlength="10"
-											class="form-control" style="width: 100%;" autocomplete="off"
-											value="${itemName}" readonly>
+										<input type="text" maxlength="10" class="form-control"
+											style="width: 100%;" autocomplete="off" value="${itemName}"
+											readonly>
 									</div>
-									
+
 									<div class="col-md-2">Item Code*</div>
 									<div class="col-md-4">
-										<input type="text" id="itemCode" name="itemCode" maxlength="10"
-											class="form-control" style="width: 100%;" autocomplete="off"
-											value="${itemCode}" readonly>
+										<input type="text" id="itemCode" name="itemCode"
+											maxlength="10" class="form-control" style="width: 100%;"
+											autocomplete="off" value="${itemCode}" readonly>
 									</div>
-									
-									
+
+
 								</div>
 								<hr>
 								<div class="form-group"></div>
@@ -169,15 +170,13 @@
 									<div class="col-md-2">Select Item*</div>
 
 									<div class="col-md-4">
-										<select id="rmName" name="rmName" class="standardSelect" >
+										<select id="rmName" name="rmName" class="standardSelect">
 											<option value="-1">Select</option>
 
 										</select>
 									</div>
 								</div>
-								
-								
-								
+
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Quantity</div>
@@ -187,44 +186,32 @@
 											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
-									
-									 <div class="col-md-2">UOM*</div>
+
+									<!-- <div class="col-md-2">UOM*</div>
 									<div class="col-md-4">
-									<input type="text" id="uom" name="uom" class="form-control"
-											autocomplete="off" style="width: 100%;"
-											value="kg" readonly>	
-									</div>
-									
-									
-								</div>
-								
-								<div class="form-group"></div>
-								 <div class="row">
-									
-									
-										<input type="hidden" id="itemIdnew" name="itemIdnew" 
-											 value="${itemId}">
-									</div>
-								
-									 
-									
-								
-								
-								
-									<div class="form-group"></div>
-								<div class="row">
-									
-									
-									
+										<input type="text" id="uom" name="uom" class="form-control"
+											autocomplete="off" style="width: 100%;" value="kg" readonly>
+									</div> -->
+
 									<div class="col-md-2"></div>
 									<div class="col-md-2">
 										<input type="button" value="Add" class="btn btn-primary"
 											style="align-content: center; width: 113px;" onclick="add()" />
 									</div>
+
+
 								</div>
-								
-								
-								
+
+								<div class="form-group"></div>
+								<div class="row">
+
+
+									<input type="hidden" id="itemIdnew" name="itemIdnew"
+										value="${itemId}">
+								</div>
+
+								<div class="form-group"></div>
+								<div class="row"></div>
 
 								<input type="hidden" id="isDelete" name="isDelete" value="0">
 								<input type="hidden" name="isEdit" id="isEdit" value="0">
@@ -245,11 +232,11 @@
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">Measurement of Unit</th>
 												<th style="text-align: center">Item Quantity</th>
-												<th style="text-align: center">Item Category</th>
+												<!-- <th style="text-align: center">Item Category</th> -->
 												<th style="text-align: center; width: 5%;">Action</th>
 											</tr>
 										</thead>
-										
+
 										<tbody>
 											<c:forEach items="${editItemDetail}" var="itemDetail"
 												varStatus="count">
@@ -260,20 +247,16 @@
 													<td style="text-align: left"><c:out
 															value="${itemDetail.rmName}" /></td>
 
-
 													<td style="text-align: left"><c:out
 															value="${itemDetail.uomName}" /></td>
-
-
 
 													<td style="text-align: left"><c:out
 															value="${itemDetail.rmQty}" /></td>
 
-
-													<td style="text-align: left"><c:out
+													<%-- 	<td style="text-align: left"><c:out
 															value="${itemDetail.catDesc}" /></td>
 
-
+ --%>
 													<%-- <td style="text-align: left"><c:out
 															value="${itemDetail.value}" /></td> --%>
 
@@ -284,9 +267,6 @@
 														<a href="#"
 														onclick="callDelete(${itemDetail.itemDetailId},${count.index})"><i
 															class="fa fa fa-trash-o"></i> <span class="text-muted"></span></a></td>
-
-
-
 
 												</tr>
 											</c:forEach>
@@ -299,7 +279,7 @@
 								<div class="col-lg-2">
 
 									<input type="submit" class="btn btn-primary" value="Submit"
-										id="submitButton" disabled 
+										id="submitButton" disabled
 										style="align-content: center; width: 113px; margin-left: 20px;">
 
 								</div>
@@ -368,21 +348,21 @@
 
 	<script type="text/javascript">
 		function add() {
-			//alert("in add  ");
+			alert("in add  ");
 			var rmName = document.getElementById("rmName").value;
 			var qty = document.getElementById("qty").value;
 			var isEdit = document.getElementById("isEdit").value;
 			var isDelete = document.getElementById("isDelete").value;
 			var index = document.getElementById("index").value;
 			var catId = document.getElementById("catId").value;
-			var categoryName = $("#catId option:selected").html();
-			var uom = document.getElementById("uom").value;
+		
+		/* 	var uom = document.getElementById("uom").value; */
 			//alert("data is"+rmName    +qty  +index  +catId  +uom);
 
 			//alert("Inside add ajax");
 			$
 					.getJSON(
-							'${addItemDetailInExisting}',
+							'${editInAddItemDetail}',
 							{
 								
 								isDelete : isDelete,
@@ -390,9 +370,9 @@
 								index : index,
 								rmName : rmName,
 								qty : qty,
+								/* uom:uom, */
 								catId : catId,
-								uom:uom,
-								categoryName:categoryName,
+								
 								ajax : 'true',
 
 							},
@@ -428,8 +408,8 @@
 															[ i + 1,
 																	v.rmName,
 																	v.uomName,
-																	v.qty,
-																	v.categoryName,
+																	v.rmQty,
+																	
 																	str ])
 															.draw();
 												});
@@ -444,11 +424,62 @@
 			document.getElementById("submitButton").disabled = false;
 
 		}
-
+		
+		
 		function callEdit(itemDetailId, index) {
 
 			document.getElementById("isEdit").value = "1";
-			$.getJSON('${getItemDetailForEdit}', {
+			$.getJSON('${getDetailEditForItemDetail}', {
+				itemDetailId : itemDetailId,
+				index : index,
+				ajax : 'true',
+
+			}, function(data) {
+				alert("data" + data);
+				alert(data.catId);
+				$("#catId").val(data.catId);
+				$("#catId").trigger("chosen:updated");
+				document.getElementById("rmName").value = data.itemId;
+				document.getElementById("qty").value = data.rmQty;
+				document.getElementById("uom").value = data.uomName;
+				document.getElementById("index").value = index;
+
+				$.getJSON('${getRawItemByCatId}', {
+
+					catId : data.catId,
+					ajax : 'true',
+
+				},
+
+				function(data1) {
+					//alert("hiii");
+					var html;
+					var len = data1.length;
+					var html = '<option value="-1"  >Select Item</option>';
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data1[i].itemId + '">'
+								+ data1[i].itemCode + '</option>';
+					}
+					//html += '</option>';
+
+					$('#rmName').html(html);
+					//$("#itemName").trigger("chosen:updated");
+
+					$("#rmName").val(data1.itemId);
+					$("#rmName").trigger("chosen:updated");
+
+				});
+
+			});
+
+		}
+
+
+		/* function callEdit(itemDetailId, index) {
+
+			document.getElementById("isEdit").value = "1";
+			$.getJSON('${getDetailEditForItemDetail}', {
 				itemDetailId : itemDetailId,
 				index : index,
 				ajax : 'true',
@@ -459,8 +490,8 @@
 				$("#catId").val(data.catId);
 				$("#catId").trigger("chosen:updated");
 				document.getElementById("rmName").value = data.itemId;
-				document.getElementById("qty").value = data.qty;
-				document.getElementById("uom").value = data.uom;
+				document.getElementById("qty").value = data.rmQty;
+				document.getElementById("uom").value = data.uomName;
 				
 				document.getElementById("index").value = index;
 
@@ -494,15 +525,15 @@
 			});
 
 		}
-
+ */
 		function callDelete(itemDetailId, index) {
 
-			//alert("hii");
+			alert("hii");
 			document.getElementById("isEdit").value = 0;
-			//alert("index" + index);
+			alert("index" + index);
 			$
 					.getJSON(
-							'${addTempItemDetail}',
+							'${editInAddItemDetail}',
 							{
 								isDelete : 1,
 								isEdit : 0,
@@ -512,9 +543,7 @@
 							},
 
 							function(data) {
-								if(data==null || data==""){
-									document.getElementById("submitButton").disabled=true;
-								}
+								
 								var dataTable = $('#bootstrap-data-table')
 										.DataTable();
 								dataTable.clear().draw();
@@ -536,8 +565,8 @@
 															[ i + 1,
 																	v.rmName,
 																	v.uomName,
-																	v.qty,
-																	v.categoryName,
+																	v.rmQty,
+																	
 																	str ])
 															.draw();
 												});
@@ -545,13 +574,7 @@
 
 		}
 
-		function validate(s) {
-			var rgx = /^[0-9]*\.?[0-9]*$/;
-			return s.match(rgx);
-		}
-		function callAlert(msg) {
-			alert(msg);
-		}
+	
 	</script>
 
 	<script type="text/javascript">
@@ -645,8 +668,8 @@
 
 		}
 	</script>
-	
-	
+
+
 	<script type="text/javascript">
 		function getUom() {
 			//document.getElementById("submitButton").disabled=true;
@@ -693,7 +716,8 @@
 			}
 
 		}
-		</script> -->
+		</script>
+	-->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
