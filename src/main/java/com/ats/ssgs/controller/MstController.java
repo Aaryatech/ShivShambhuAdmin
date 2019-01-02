@@ -303,7 +303,7 @@ public class MstController {
 					String extension = FilenameUtils.getExtension(file1.get(0).getOriginalFilename());
 
 					prevImage1 = tStamp + "_1." + extension;
-					imgUpload.saveUploadedFiles(file1.get(0), Constants.CAT_FILE_TYPE, prevImage1);
+					imgUpload.saveUploadedFiles(file1.get(0), Constants.VEH_IMG_TYPE, prevImage1);
 
 					System.out.println("prevImage1" + prevImage1);
 				}
@@ -322,7 +322,7 @@ public class MstController {
 					String extension = FilenameUtils.getExtension(file1.get(0).getOriginalFilename());
 
 					prevImage2 = tStamp + "_2." + extension;
-					imgUpload.saveUploadedFiles(file2.get(0), Constants.CAT_FILE_TYPE, prevImage2);
+					imgUpload.saveUploadedFiles(file2.get(0), Constants.VEH_IMG_TYPE, prevImage2);
 					System.out.println("prevImage2" + prevImage2);
 
 				}
@@ -342,7 +342,7 @@ public class MstController {
 					String extension = FilenameUtils.getExtension(file3.get(0).getOriginalFilename());
 
 					prevImage3 = tStamp + "_3." + extension;
-					imgUpload.saveUploadedFiles(file3.get(0), Constants.CAT_FILE_TYPE, prevImage3);
+					imgUpload.saveUploadedFiles(file3.get(0), Constants. VEH_IMG_TYPE, prevImage3);
 					System.out.println("prevImage3" + prevImage3);
 
 				}
@@ -362,7 +362,7 @@ public class MstController {
 					String extension = FilenameUtils.getExtension(file4.get(0).getOriginalFilename());
 
 					prevImage4 = tStamp + "_4." + extension;
-					imgUpload.saveUploadedFiles(file4.get(0), Constants.CAT_FILE_TYPE, prevImage4);
+					imgUpload.saveUploadedFiles(file4.get(0), Constants. VEH_IMG_TYPE, prevImage4);
 					System.out.println("prevImage4" + prevImage4);
 
 				}

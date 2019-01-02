@@ -1339,7 +1339,7 @@ public class PayRecController {
 			try {
 				model = new ModelAndView("payrec/payrecDoneCustWise");
 
-				model.addObject("title", "Payment Recovery Done List");
+				model.addObject("title", "Payment Recovery Done Customerwise List");
 
 				
 				

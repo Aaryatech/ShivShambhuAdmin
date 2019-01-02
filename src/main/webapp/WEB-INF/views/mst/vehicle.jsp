@@ -100,7 +100,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<strong>Data Submitted Successfully</strong>
+								<strong>Data Submitted  Successfully</strong>
 							</div>
 						</div>
 					</c:when>
@@ -123,8 +123,8 @@
 									<div class="col-md-2">Vehicle Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="vehName" name="vehName" maxlength="60"
-											pattern="[a-zA-Z][a-zA-Z]*" value="${editVeh.vehicleName}"
-											class="form-control" onblur="getUomNameCheck()"
+											 value="${editVeh.vehicleName}"
+											class="form-control" 
 											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct Vehicle  Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
