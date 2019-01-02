@@ -401,6 +401,7 @@ public class ChalanController {
 			chHeader.setExVar1(String.valueOf(login.getUser().getUserId()));// userId
 			chHeader.setExInt1(1);// delStatus
 			chHeader.setExFloat1(0);// isClosed
+			chHeader.setInKm(0.0f);
 
 			ChalanHeader chHeadInserRes = rest.postForObject(Constants.url + "saveChalanHeaderDetail", chHeader,
 					ChalanHeader.class);

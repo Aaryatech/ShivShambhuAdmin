@@ -87,7 +87,8 @@ public class BillController {
 	 */
 
 	RestTemplate rest = new RestTemplate();
-	List<GetItemsForBill> billItems;
+	List<GetItemsForBill> billItems;int billHeadId=0;
+	int custId=0;
 
 	@RequestMapping(value = "/showBill", method = RequestMethod.GET)
 	public ModelAndView showBill(HttpServletRequest request, HttpServletResponse response) {
@@ -100,7 +101,8 @@ public class BillController {
 			/*
 			 * Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList",
 			 * Plant[].class); List<Plant> plantList = new
-			 * ArrayList<Plant>(Arrays.asList(plantArray));
+			 * ArrayList<Plant>(Arrays.asList(plantArray)); getChalanSelectedItems
+			 * 
 			 * 
 			 * model.addObject("plantList", plantList);
 			 */DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -120,6 +122,9 @@ public class BillController {
 
 			model.addObject("compList", compList);
 			model.addObject("title", "Add Bill");
+			model.addObject("billHeadId",billHeadId);
+			model.addObject("custId",custId);
+
 		} catch (Exception e) {
 
 			System.err.println("" + e.getMessage());
@@ -545,42 +550,8 @@ public class BillController {
 						payRecoveryHead, PayRecoveryHead.class);
 				System.out.println(insertHeadRes.toString());
 
-				/*
-				 * final String emailSMTPserver = "smtp.gmail.com"; final String emailSMTPPort =
-				 * "587"; final String mailStoreType = "imaps"; final String username =
-				 * "atsinfosoft@gmail.com"; final String password = "atsinfosoft@123";
-				 * 
-				 * System.out.println("username" + username); System.out.println("password" +
-				 * password);
-				 * 
-				 * Properties props = new Properties(); props.put("mail.smtp.host",
-				 * "smtp.gmail.com"); props.put("mail.smtp.socketFactory.port", "465");
-				 * props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-				 * props.put("mail.smtp.auth", "true"); props.put("mail.smtp.port", "587");
-				 * 
-				 * Session session = Session.getDefaultInstance(props, new
-				 * javax.mail.Authenticator() { protected PasswordAuthentication
-				 * getPasswordAuthentication() { return new PasswordAuthentication(username,
-				 * password); } });
-				 * 
-				 * try { Store mailStore = session.getStore(mailStoreType);
-				 * mailStore.connect(emailSMTPserver, username, password);
-				 * 
-				 * String mes = " Hello Sir";
-				 * 
-				 * String address = editCust.getCustEmail();
-				 * 
-				 * String subject = "  ";
-				 * 
-				 * String filename = "/home/lenovo/Desktop/Report.pdf";
-				 * 
-				 * Message mimeMessage = new MimeMessage(session); mimeMessage.setFrom(new
-				 * InternetAddress(username));
-				 * mimeMessage.setRecipients(Message.RecipientType.TO,
-				 * InternetAddress.parse(address)); mimeMessage.setSubject(subject);
-				 * mimeMessage.setText(mes); mimeMessage.setFileName(filename);
-				 * Transport.send(mimeMessage); } catch (Exception e) { e.printStackTrace(); }
-				 */
+				 billHeadId=insertBillHeadRes.getBillHeadId();
+				custId=custId;
 
 				// isError = 2;
 				map = new LinkedMultiValueMap<String, Object>();
@@ -1041,9 +1012,9 @@ public class BillController {
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		 File f = new File("/home/lenovo/bill.pdf");
+		File f = new File("/home/lenovo/bill.pdf");
 
-		//File f = new File("/opt/tomcat-latest/webapps/uploads/shivreport.pdf");
+		// File f = new File("/opt/tomcat-latest/webapps/uploads/shivreport.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1063,8 +1034,8 @@ public class BillController {
 		String appPath = context.getRealPath("");
 		String filename = "ordermemo221.pdf";
 		// String filePath = "/report.pdf";
-		//String filePath = "/opt/tomcat-latest/webapps/uploads/shivreport.pdf";
-		 String filePath ="/home/lenovo/bill.pdf";
+		// String filePath = "/opt/tomcat-latest/webapps/uploads/shivreport.pdf";
+		String filePath = "/home/lenovo/bill.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file
@@ -1159,4 +1130,68 @@ public class BillController {
 
 		}
 	}
+
+	@RequestMapping(value = "/sendEmailByBillId", method = RequestMethod.GET)
+	public @ResponseBody String sendEmailByBillId(HttpServletRequest request, HttpServletResponse response) {
+		String str = "";
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			int billHeadId = Integer.parseInt(request.getParameter("billHeadId"));
+			int custId = Integer.parseInt(request.getParameter("custId"));
+
+			final String emailSMTPserver = "smtp.gmail.com";
+			final String emailSMTPPort = "587";
+			final String mailStoreType = "imaps";
+			final String username = "atsinfosoft@gmail.com";
+			final String password = "atsinfosoft@123";
+
+			System.out.println("username" + username);
+			System.out.println("password" + password);
+
+			Properties props = new Properties();
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.socketFactory.port", "465");
+			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", "587");
+
+			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			});
+
+			try {
+				Store mailStore = session.getStore(mailStoreType);
+				mailStore.connect(emailSMTPserver, username, password);
+
+				String mes = " Hello Sir";
+
+				map.add("custId", custId);
+			//	Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
+
+				String address ="dhomaneneha@gmail.com";// editCust.getCustEmail();
+
+				String subject = "  ";
+
+				String filename = "/home/lenovo/bill.pdf";
+
+				Message mimeMessage = new MimeMessage(session);
+				mimeMessage.setFrom(new InternetAddress(username));
+				mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
+				mimeMessage.setSubject(subject);
+				mimeMessage.setText(mes);
+				mimeMessage.setFileName(filename);
+				Transport.send(mimeMessage);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return str;
+	}
+
 }

@@ -17,6 +17,9 @@
 <c:url var="getOrderDetailForChalan" value="/getOrderDetailForChalan" />
 <c:url var="getChalanItems" value="/getChalanItems" />
 <c:url var="getChalanSelectedItems" value="/getChalanSelectedItems" />
+
+<c:url var="sendEmailByBillId" value="/sendEmailByBillId" />
+
 <c:url var="getItemsForBill" value="/getItemsForBill" />
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -62,25 +65,26 @@
 	text-align: left;
 }
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 .buttonload {
-    background-color: white; /* Green background */
-    border: none; /* Remove borders */
-    color: #ec268f; /* White text */
-    padding: 12px 15px; /* Some padding */
-    font-size: 13px; /* Set a font-size */
-    display:none;
+	background-color: white; /* Green background */
+	border: none; /* Remove borders */
+	color: #ec268f; /* White text */
+	padding: 12px 15px; /* Some padding */
+	font-size: 13px; /* Set a font-size */
+	display: none;
 }
 
 /* Add a right margin to each icon */
 .fa {
-    margin-left: -12px;
-    margin-right: 8px;
+	margin-left: -12px;
+	margin-right: 8px;
 }
 </style>
 </head>
-<body>
+<body onload="sendEmailByBillHeadId(${billHeadId},${custId})">
 
 
 	<!-- Left Panel -->
@@ -98,31 +102,31 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-			
-			<c:choose>
-							<c:when test="${isError==1}">
-							
-							<div class="alert">
-							
+
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Failed !</strong>     Data not submitted  !!
-				</div>
-							
-							</c:when>
-							
-							<c:when test="${isError==2}">
-							
-							<div class="alert1">
-							
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Success</strong>     Data Submitted !!
-				</div>
-							
-							</c:when>
-							
-							</c:choose>
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -130,19 +134,20 @@
 							<div class="col-md-2">
 								<strong>${title}</strong>
 							</div>
-							 <div class="col-md-8"></div>
+							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showBillList" style="color:black"><strong>All Bills</strong></a>
-							</div> 
-							
+								<a href="${pageContext.request.contextPath}/showBillList" style="color:black"><strong>All
+										Bills</strong></a>
+							</div>
+
 
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertBill"
-							id="addBill" onsubmit="validate()"	method="post">
+								id="addBill" onsubmit="validate()" method="post">
 
-<div class="row">
-	<div class="col-md-2">Select Company*</div>
+								<div class="row">
+									<div class="col-md-2">Select Company*</div>
 
 									<div class="col-md-4">
 										<select id="companyId" name="companyId" class="standardSelect"
@@ -162,7 +167,7 @@
 											</c:forEach>
 										</select>
 									</div>
-									
+
 									<div class="col-md-2">Select Plant</div>
 
 									<div class="col-md-4">
@@ -177,16 +182,17 @@
 											</c:forEach>
 										</select>
 									</div>
-									</div>	<div class="form-group"></div>
-									
-									
-									<div class="row">
+								</div>
+								<div class="form-group"></div>
+
+
+								<div class="row">
 									<div class="col-md-2">Bill Date</div>
 									<div class="col-md-4">
-										<input type="text" autocomplete="off"  id="bill_date" name="bill_date" required
-											style="width: 100%;" class="form-control"
-											value="${curDate}"> <span class="error"
-											aria-live="polite"></span>
+										<input type="text" autocomplete="off" id="bill_date"
+											name="bill_date" required style="width: 100%;"
+											class="form-control" value="${curDate}"> <span
+											class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-2">Bill No</div>
 									<div class="col-md-4">
@@ -198,9 +204,9 @@
 
 								</div>
 
-									<div class="form-group"></div>
-							<div class="row">
-							
+								<div class="form-group"></div>
+								<div class="row">
+
 									<div class="col-md-2">Customer</div>
 									<div class="col-md-4">
 										<select id="cust_name" name="cust_name" class="standardSelect"
@@ -210,35 +216,34 @@
 
 										</select>
 									</div>
-                          <div class="col-md-2">Select Project</div>
+									<div class="col-md-2">Select Project</div>
 
 									<div class="col-md-4">
 										<select id="proj_id" name="proj_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select project')"
-										
 											onchange="getOrderHeaders()">
-												<option selected value="-1">Select</option>
+											<option selected value="-1">Select</option>
 
 											<c:forEach items="${projList}" var="proj">
-											
-											<c:choose>
-											<c:when test="${quotHeader.projId==proj.projId}">
-												<option selected value="${proj.projId}">${proj.projName}</option>
-											</c:when>
-											<c:otherwise>
-												<option value="${proj.projId}">${proj.projName}</option>
-											</c:otherwise>
-											</c:choose>
-											
+
+												<c:choose>
+													<c:when test="${quotHeader.projId==proj.projId}">
+														<option selected value="${proj.projId}">${proj.projName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${proj.projId}">${proj.projName}</option>
+													</c:otherwise>
+												</c:choose>
+
 											</c:forEach>
 
 										</select>
 									</div>
 								</div>
 								<div class="form-group"></div>
-								
-								
+
+
 								<div id="divCheckbox" style="display: none;">
 									<div class="form-group"></div>
 									<div class="row">
@@ -262,7 +267,7 @@
 									</div>
 								</div>
 								<div class="form-group"></div>
-								
+
 								<div class="row">
 
 									<div class="col-md-2">Select PO</div>
@@ -272,28 +277,27 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select PO')"
 											onchange="getChalansByPo(this.value)">
-												<option selected value="-1">Select</option>
+											<option selected value="-1">Select</option>
 
 											<c:forEach items="${projList}" var="proj">
-											
+
 												<option value="${proj.projId}">${proj.projName}</option>
-											
+
 											</c:forEach>
 
 										</select>
 									</div>
 								</div>
-									<div class="form-group"></div>
-									
+								<div class="form-group"></div>
+
 								<div class="row">
 
 									<div class="col-md-2">Select Chalan</div>
 
 									<div class="col-md-10">
-										<select id="chalan_id" name="chalan_id"  class="standardSelect" 
+										<select id="chalan_id" name="chalan_id" class="standardSelect"
 											tabindex="1" required multiple="multiple"
-											oninvalid="setCustomValidity('Please select Challan')"
-											>
+											oninvalid="setCustomValidity('Please select Challan')">
 											<option value="-1">Select</option>
 
 											<%-- <c:forEach items="${plantList}" var="plant">
@@ -301,29 +305,26 @@
 											</c:forEach> --%>
 										</select>
 									</div>
-									</div>
-									<div class="form-group"></div>
-									
-									<div class="row">
-
-										
-										</div>						
+								</div>
 								<div class="form-group"></div>
-								
+
+								<div class="row"></div>
+								<div class="form-group"></div>
+
 								<div class="row">
 									<div class="col-md-2">Remark</div>
 
 									<div class="col-md-6">
-										<input type="text" id="bill_remark" name="bill_remark" required
-											style="width: 100%;" class="form-control"
-											value="-"> <span class="error"
-											aria-live="polite"></span>
+										<input type="text" id="bill_remark" name="bill_remark"
+											required style="width: 100%;" class="form-control" value="-">
+										<span class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-3">
-										<input type="button"  onclick="getChalanItems()" class="btn btn-primary" value="Search">
-<button class="buttonload" id="loader">
-                                   <i class="fa fa-spinner fa-spin"></i>Loading
-                                   </button>
+										<input type="button" onclick="getChalanItems()"
+											class="btn btn-primary" value="Search">
+										<button class="buttonload" id="loader">
+											<i class="fa fa-spinner fa-spin"></i>Loading
+										</button>
 									</div>
 									<!-- <div class="col-md-2">Cost Segment</div>
 
@@ -332,11 +333,11 @@
 												 value="-" required style="width: 100%;" class="form-control">
 											<span class="error" aria-live="polite"></span>
 										</div> -->
-									
-									</div>
+
+								</div>
 
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-								
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
@@ -348,7 +349,7 @@
 												<th style="text-align: center">Rate</th>
 												<th style="text-align: center">Chalan Qty</th>
 												<th style="text-align: center">Qty</th>
-													<th style="text-align: center">Disc %</th>
+												<th style="text-align: center">Disc %</th>
 												<th style="text-align: center">Taxable Amt</th>
 												<th style="text-align: center">Disc Amt</th>
 												<th style="text-align: center">Tax %</th>
@@ -356,12 +357,12 @@
 												<th style="text-align: center">Total</th>
 											</tr>
 										</thead>
-										
+
 										<tbody>
-										
-										
+
+
 										</tbody>
-										
+
 									</table>
 								</div>
 								<div class="form-group"></div>
@@ -376,17 +377,18 @@
 
 								</div> -->
 								<div class="form-group"></div>
-								<div class="row" >
+								<div class="row">
 
-								<!-- 	<div class="col-md-2">Other Cost After Tax</div>
+									<!-- 	<div class="col-md-2">Other Cost After Tax</div>
 
 									<div class="col-md-3">845</div> -->
 									<!-- <div class="col-md-2">Total</div>
 
 									<div class="col-md-3" id="ordTotal">0</div>
  -->
-									<div class="col-md-2" >
-								<!-- onclick="validateForm()" -->		<input type="Submit"   class="btn btn-primary" value="Submit">
+									<div class="col-md-2">
+										<!-- onclick="validateForm()" -->
+										<input type="Submit" class="btn btn-primary" value="Submit">
 
 									</div>
 
@@ -413,7 +415,7 @@
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	<!-- Footer -->
 
-	
+
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
@@ -469,7 +471,7 @@
 			 
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 	
 	function validate()
@@ -566,7 +568,7 @@
 	}
 	
 	</script>
-<script type="text/javascript">
+	<script type="text/javascript">
 function allowOnlyNumber1(evt)
 	{
 	  var charCode = (evt.which) ? evt.which : event.keyCode
@@ -620,7 +622,7 @@ function allowOnlyNumber1(evt)
 
 		}
 	</script>
-<script type="text/javascript">
+	<script type="text/javascript">
 function onCompanyChange(companyId) { 
 	var valid = true;
 
@@ -662,7 +664,7 @@ function onCompanyChange(companyId) {
 
 }
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 function getChalansByPo(poId)
 {
 	
@@ -819,7 +821,7 @@ $
 		}
 	
 	</script>
-	
+
 	<script type="text/javascript">
 	function getChalanItems(){
 		var chalanId = document.getElementById("chalan_id").value;
@@ -866,7 +868,7 @@ $
 		}
 		}
 	</script>
-	
+
 	<script type="text/javascript">
 	function allowOnlyNumber(evt){
 		
@@ -1048,6 +1050,54 @@ $
 	
 	</script>
 
+
+
+
+	<script type="text/javascript">
+	function sendEmailByBillHeadId(billHeadId,custId){
+		var isValid=true;
+		if(billHeadId==0){
+			
+		}
+		else{
+			
+			alert("ppoiio");
+		
+				window
+				.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
+						+ billHeadId);
+				
+				$
+				.getJSON(
+						'${sendEmailByBillId}',
+						{
+							billHeadId : billHeadId,
+							custId : custId,
+							ajax : 'true',
+
+						},
+						function(data) {
+							
+						});
+				
+				
+				
+			
+			
+			
+			
+		}
+	}
+	</script>
+
+	<script type="text/javascript">
+		function singleBillPdf(id) {
+			window
+			.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
+					+ id);
+		}
+		</script>
+
 	<script type="text/javascript">
 function toggle() {
 			  checkboxes = document.getElementsByName('selChalanItem');
@@ -1057,9 +1107,9 @@ function toggle() {
 			  }
 				  
 			
-			</script> 
-			
-<script
+			</script>
+
+	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/init.js"
 		type="text/javascript" charset="utf-8"></script>
 </body>
