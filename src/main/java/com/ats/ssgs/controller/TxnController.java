@@ -87,7 +87,7 @@ public class TxnController {
 
 			model.addObject("conList", conList);
 
-			model.addObject("weighImageUrl", Constants.IMAGE_FOLDER);
+			model.addObject("weighImageUrl", Constants.WEIGHT_READING_URL);
 
 		} catch (Exception e) {
 
@@ -149,7 +149,7 @@ public class TxnController {
 
 					// String prevImage1 = new String();
 					prevImage1 = tStamp + "_1." + extension;
-					imgUpload.saveUploadedFiles(file.get(0), Constants.CAT_FILE_TYPE, prevImage1);
+					imgUpload.saveUploadedFiles(file.get(0), Constants.WEIGHT_IMG_TYPE, prevImage1);
 
 					System.out.println("prevImage1" + prevImage1);
 				}
@@ -168,7 +168,7 @@ public class TxnController {
 					String extension = FilenameUtils.getExtension(file1.get(0).getOriginalFilename());
 
 					prevImage2 = tStamp + "_2." + extension;
-					imgUpload.saveUploadedFiles(file1.get(0), Constants.CAT_FILE_TYPE, prevImage2);
+					imgUpload.saveUploadedFiles(file1.get(0), Constants.WEIGHT_IMG_TYPE, prevImage2);
 					System.out.println("prevImage2" + prevImage2);
 
 				}
@@ -268,7 +268,7 @@ public class TxnController {
 		try {
 			model = new ModelAndView("matissue/editweighing");
 			model.addObject("title", "Edit Weighing");
-			model.addObject("weighImageUrl", Constants.IMAGE_FOLDER);
+			model.addObject("weighImageUrl", Constants.WEIGHT_READING_URL);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
