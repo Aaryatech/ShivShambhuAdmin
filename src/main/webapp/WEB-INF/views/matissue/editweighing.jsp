@@ -278,7 +278,7 @@
 									</div>
 									<div class="col-md-2">
 										<img id="image1" name="image1"
-											src="https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/media/assets/submodel/8230.jpg"
+											src="${weighImageUrl}${editWeigh.photo1}"
 											alt="l" height="50px;" width="50px;">
 
 									</div>
@@ -294,7 +294,7 @@
 									</div>
 									<div class="col-md-2">
 										<img id="image2" name="image2"
-											src="https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/media/assets/submodel/8230.jpg"
+											src="${weighImageUrl}${editWeigh.photo2}"
 											alt="l" height="50px;" width="50px;">
 
 									</div>

@@ -6,11 +6,11 @@ public class Constants {
 	public static final String url = "http://132.148.151.41:8080/shivShambhuWebApi/";
 	public static final String REPORT_SAVE = "/opt/tomcat-latest/webapps/uploads/shiv/Report.pdf";
 	public static final String ReportURL = "http://132.148.151.41:8080/shivAdmin/";
-	public static final String VEH_IMG_URL = "http://132.148.151.41:8080/shiv/Veh/";
-	public static final String WEIGHT_READING_URL = "http://132.148.151.41:8080/shiv/Weight/";
+	public static final String VEH_IMG_URL = "http://132.148.151.41:8080/uploads/shiv/Veh/";
+	public static final String WEIGHT_READING_URL = "http://132.148.151.41:8080/uploads/shiv/Weight/";
 	
-	private static final int VEH_IMG_TYPE=2;//fix for local and gloabal
-	private static final int WEIGHT_IMG_TYPE=1;//fix for local and gloabal
+	public static final int VEH_IMG_TYPE=2;//fix for local and gloabal
+	public static final int WEIGHT_IMG_TYPE=1;//fix for local and gloabal
 
 	//Local
 
