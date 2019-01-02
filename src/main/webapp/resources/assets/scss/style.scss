@@ -195,7 +195,7 @@ aside.left-panel {
             }
             >a {
                 background: none !important;
-                color: #c8c9ce !important;
+                color: #ffffff !important;
                 display: inline-block;
                 font-family: 'Open Sans';
                 font-size: 14px;
@@ -208,7 +208,7 @@ aside.left-panel {
                     color: #fff !important;
                 }
                 .menu-icon {
-                    color: #8b939b;
+                    color: #ffffff;
                     float: left;
                     margin-top: 8px;
                     width: 55px;
@@ -233,7 +233,7 @@ aside.left-panel {
                     line-height: 30px;
                     &:before {
                         content: "\f105";
-                        color: #c8c9ce;
+                        color: #ffffff;
                         font-family: 'Fontawesome';
                         font-size: 16px;
                         position: absolute;
@@ -261,7 +261,7 @@ aside.left-panel {
                         position: relative;
                     }
                     i {
-                        color: #c8c9ce;
+                        color: #FFFFFF ;
                         float: left;
                         padding: 0;
                         position: absolute;
@@ -608,7 +608,7 @@ header .form-inline {
         &:visited {
             background: none !important;
             border-color: transparent !important;
-            color: #272c33 !important;
+            color: #58bdc3 !important;
         }
     }
     .dropdown-menu {
@@ -1807,6 +1807,7 @@ header .form-inline {
                     padding: .5rem;
                 }
             }
+            
             .tab-content.pl-3 {
                 padding-left: 0 !important;
             }
