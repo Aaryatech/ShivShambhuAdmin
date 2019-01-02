@@ -30,16 +30,16 @@ import com.ats.ssgs.model.quot.QuotPrintData;
 @Controller
 @Scope("session")
 public class PdfController {
-	
-	@RequestMapping(value = "pdf/showQuotPdf/{quotIdList}", method = RequestMethod.GET)
-	public ModelAndView showBillsPdf( HttpServletRequest request,
-			HttpServletResponse response,@PathVariable("quotIdList") String[] quotIdList) {
-		List<QuotPrintData> quotPrintData=new ArrayList<>();
 
-		ModelAndView model =null;
+	@RequestMapping(value = "pdfQuot/showQuotPdf/{quotIdList}", method = RequestMethod.GET)
+	public ModelAndView showBillsPdf(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("quotIdList") String[] quotIdList) {
+		List<QuotPrintData> quotPrintData = new ArrayList<>();
+
+		ModelAndView model = null;
 		System.err.println("in pdf/showQuotPdf/\", ");
 		try {
-			 model = new ModelAndView("print_page/quot_print");
+			model = new ModelAndView("print_page/quot_print");
 			RestTemplate rest = new RestTemplate();
 			String strQuotIdList = new String();
 			for (int i = 0; i < quotIdList.length; i++) {
@@ -49,21 +49,21 @@ public class PdfController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("quotIdList", strQuotIdList);
-			QuotPrintData[] qPrintArray = rest.postForObject(Constants.url + "/getQuotPrintData", map,QuotPrintData[].class);
-			 quotPrintData=new ArrayList<QuotPrintData>(Arrays.asList(qPrintArray));
+			QuotPrintData[] qPrintArray = rest.postForObject(Constants.url + "/getQuotPrintData", map,
+					QuotPrintData[].class);
+			quotPrintData = new ArrayList<QuotPrintData>(Arrays.asList(qPrintArray));
 
-			 
-			System.err.println("pdf data "+quotPrintData.get(0).getQuotDetPrint().toString());
-			//quotIdList
-			//model.addObject("quotIdList", quotIdList);
-			
-			 map = new LinkedMultiValueMap<String, Object>();
+			System.err.println("pdf data " + quotPrintData.get(0).getQuotDetPrint().toString());
+			// quotIdList
+			// model.addObject("quotIdList", quotIdList);
+
+			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("termId", 4);
-			DocTermHeader editDoc = rest.postForObject(Constants.url + "getDocHeaderByTermId", map, DocTermHeader.class);
-			
-			model.addObject("supplyList", editDoc.getDetailList());
+			DocTermHeader editDoc = rest.postForObject(Constants.url + "getDocHeaderByTermId", map,
+					DocTermHeader.class);
 
+			model.addObject("supplyList", editDoc.getDetailList());
 
 			model.addObject("quotPrintData", quotPrintData);
 		} catch (Exception e) {
@@ -71,38 +71,39 @@ public class PdfController {
 		}
 		return model;
 	}
-	
-	
-	@RequestMapping(value = "pdf/showChalanPdf/{chalanId}", method = RequestMethod.GET)
-	public ModelAndView showChalanPdf( HttpServletRequest request,
-			HttpServletResponse response,@PathVariable("chalanId") int chalanId) {
-		//List<ChalanPrintData> chPrintData=new ArrayList<>();
 
-		ModelAndView model =null;
+	@RequestMapping(value = "pdf/showChalanPdf/{chalanId}", method = RequestMethod.GET)
+	public ModelAndView showChalanPdf(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("chalanId") int chalanId) {
+		// List<ChalanPrintData> chPrintData=new ArrayList<>();
+
+		ModelAndView model = null;
 		System.err.println("in pdf/showQuotPdf/\", ");
 		try {
-			 model = new ModelAndView("print_page/chalan_print");
+			model = new ModelAndView("print_page/chalan_print");
 			RestTemplate rest = new RestTemplate();
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("chalanId", chalanId);
-			ChalanPrintData chPrintData = rest.postForObject(Constants.url + "/getChalanPrintData", map,ChalanPrintData.class);
+			ChalanPrintData chPrintData = rest.postForObject(Constants.url + "/getChalanPrintData", map,
+					ChalanPrintData.class);
 
-			 
-			System.err.println("pdf data /showChalanPdf "+chPrintData.toString());
-			//quotIdList
-			//model.addObject("quotIdList", quotIdList);
-			
-			/* map = new LinkedMultiValueMap<String, Object>();
+			System.err.println("pdf data /showChalanPdf " + chPrintData.toString());
+			// quotIdList
+			// model.addObject("quotIdList", quotIdList);
 
-			map.add("termId", 4);
-			DocTermHeader editDoc = rest.postForObject(Constants.url + "getDocHeaderByTermId", map, DocTermHeader.class);
-			
-			model.addObject("supplyList", editDoc.getDetailList());
-
-*/
+			/*
+			 * map = new LinkedMultiValueMap<String, Object>();
+			 * 
+			 * map.add("termId", 4); DocTermHeader editDoc =
+			 * rest.postForObject(Constants.url + "getDocHeaderByTermId", map,
+			 * DocTermHeader.class);
+			 * 
+			 * model.addObject("supplyList", editDoc.getDetailList());
+			 * 
+			 */
 			model.addObject("printData", chPrintData);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

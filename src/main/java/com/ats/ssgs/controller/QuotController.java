@@ -1,5 +1,12 @@
 package com.ats.ssgs.controller;
 
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 
 import java.text.SimpleDateFormat;
@@ -7,7 +14,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Store;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +44,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+import org.zefer.pd4ml.PD4Constants;
+import org.zefer.pd4ml.PD4ML;
+import org.zefer.pd4ml.PD4PageMark;
 
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
@@ -53,6 +79,8 @@ public class QuotController {
 	List<Plant> plantList;
 	List<PaymentTerm> payTermList;
 	List<DocTermHeader> docTermList;
+	int quotHeadIdPdf = 0;
+	int pdfCustId = 0;
 
 	@RequestMapping(value = "/showQuotations", method = RequestMethod.GET)
 	public ModelAndView showQuotations(HttpServletRequest request, HttpServletResponse response) {
@@ -66,13 +94,16 @@ public class QuotController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("statusList", "0,1");
+			map.add("statusList", "0");
 
 			GetQuotHeads[] quotArray = rest.postForObject(Constants.url + "getQuotHeaders", map, GetQuotHeads[].class);
 			quotList = new ArrayList<GetQuotHeads>(Arrays.asList(quotArray));
 			System.err.println("quotList" + quotList.toString());
 
 			model.addObject("quotList", quotList);
+
+			model.addObject("quotHeadIdPdf", quotHeadIdPdf);
+			model.addObject("pdfCustId", pdfCustId);
 
 		} catch (Exception e) {
 			System.err.println("Exce in /showQuotations" + e.getMessage());
@@ -185,109 +216,102 @@ public class QuotController {
 	List<GetItemWithEnq> enqItemList;
 
 	/*
-	@RequestMapping(value = "/editQuot/{quotHeadId}/plantId}/{custId}/{enqHeadId}", method = RequestMethod.GET)
-	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotHeadId,
-			@PathVariable int plantId, @PathVariable int custId, @PathVariable int enqHeadId) {
-
-		ModelAndView model = null;
-		try {
-
-			model = new ModelAndView("quot/editQuot");
-
-			model.addObject("title", "Quotation Edit");
-
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-			map.add("plantId", plantId);
-			map.add("enqHeadId", enqHeadId);
-
-			GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map,
-					GetItemWithEnq[].class);
-			itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
-			newItemList = new ArrayList<GetItemWithEnq>();
-			enqItemList = new ArrayList<GetItemWithEnq>();
-			System.err.println(" Original Item List " + itemList.toString());
-
-			List<Integer> indexList = new ArrayList<>();
-			for (int i = 0; i < itemList.size(); i++) {
-
-				if (itemList.get(i).getQuotQty() == 0) {
-
-					newItemList.add(itemList.get(i));
-				} else {
-
-					enqItemList.add(itemList.get(i));
-				}
-
-			}
-
-			System.err.println("enqItemList " + enqItemList.toString());
-
-			System.err.println("newItemList " + newItemList.toString());
-
-			model.addObject("itemList", enqItemList);
-			model.addObject("newItemList", newItemList);
-
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("plantId", plantId);
-
-			Cust[] custArray = rest.postForObject(Constants.url + "getCustListByPlant", map, Cust[].class);
-			custList = new ArrayList<Cust>(Arrays.asList(custArray));
-			model.addObject("custList", custList);
-
-			// System.err.println("cust List " + custList.toString());
-
-			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
-			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
-			model.addObject("plantList", plantList);
-
-			// System.err.println("Plant List " + plantList.toString());
-
-			model.addObject("plantId", plantId);
-			model.addObject("custId", custId);
-			
-			 * model.addObject("custName", custName);
-			 * model.addObject("plantName",plantName);
-			 
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("custId", custId);
-			Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
-			projList = new ArrayList<Project>(Arrays.asList(projArray));
-
-			model.addObject("projList", projList);
-
-			PaymentTerm[] payTermArray = rest.getForObject(Constants.url + "getAllPaymentTermList",
-					PaymentTerm[].class);
-			payTermList = new ArrayList<PaymentTerm>(Arrays.asList(payTermArray));
-
-			model.addObject("payTermList", payTermList);
-
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("docId", 2);
-
-			DocTermHeader[] docTermArray = rest.postForObject(Constants.url + "getDocHeaderByDocId", map,
-					DocTermHeader[].class);
-			docTermList = new ArrayList<DocTermHeader>(Arrays.asList(docTermArray));
-
-			model.addObject("docTermList", docTermList);
-
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("quotHeadId", quotHeadId);
-
-			QuotHeader quotHeader = rest.postForObject(Constants.url + "getQuotHeaderByQuotHeadId", map,
-					QuotHeader.class);
-			quotHeader.setQuotDate(DateConvertor.convertToDMY(quotHeader.getQuotDate()));
-			model.addObject("quotHeader", quotHeader);
-
-		} catch (Exception e) {
-			System.err.println("Exce in /showQuotations" + e.getMessage());
-			e.printStackTrace();
-		}
-		return model;
-
-	}*/
-	
-	
+	 * @RequestMapping(value =
+	 * "/editQuot/{quotHeadId}/plantId}/{custId}/{enqHeadId}", method =
+	 * RequestMethod.GET) public ModelAndView editQuot(HttpServletRequest request,
+	 * HttpServletResponse response, @PathVariable int quotHeadId,
+	 * 
+	 * @PathVariable int plantId, @PathVariable int custId, @PathVariable int
+	 * enqHeadId) {
+	 * 
+	 * ModelAndView model = null; try {
+	 * 
+	 * model = new ModelAndView("quot/editQuot");
+	 * 
+	 * model.addObject("title", "Quotation Edit");
+	 * 
+	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
+	 * Object>();
+	 * 
+	 * map.add("plantId", plantId); map.add("enqHeadId", enqHeadId);
+	 * 
+	 * GetItemWithEnq[] itemArray = rest.postForObject(Constants.url +
+	 * "getItemsAndEnqItemList", map, GetItemWithEnq[].class); itemList = new
+	 * ArrayList<GetItemWithEnq>(Arrays.asList(itemArray)); newItemList = new
+	 * ArrayList<GetItemWithEnq>(); enqItemList = new ArrayList<GetItemWithEnq>();
+	 * System.err.println(" Original Item List " + itemList.toString());
+	 * 
+	 * List<Integer> indexList = new ArrayList<>(); for (int i = 0; i <
+	 * itemList.size(); i++) {
+	 * 
+	 * if (itemList.get(i).getQuotQty() == 0) {
+	 * 
+	 * newItemList.add(itemList.get(i)); } else {
+	 * 
+	 * enqItemList.add(itemList.get(i)); }
+	 * 
+	 * }
+	 * 
+	 * System.err.println("enqItemList " + enqItemList.toString());
+	 * 
+	 * System.err.println("newItemList " + newItemList.toString());
+	 * 
+	 * model.addObject("itemList", enqItemList); model.addObject("newItemList",
+	 * newItemList);
+	 * 
+	 * map = new LinkedMultiValueMap<String, Object>(); map.add("plantId", plantId);
+	 * 
+	 * Cust[] custArray = rest.postForObject(Constants.url + "getCustListByPlant",
+	 * map, Cust[].class); custList = new ArrayList<Cust>(Arrays.asList(custArray));
+	 * model.addObject("custList", custList);
+	 * 
+	 * // System.err.println("cust List " + custList.toString());
+	 * 
+	 * Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList",
+	 * Plant[].class); plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+	 * model.addObject("plantList", plantList);
+	 * 
+	 * // System.err.println("Plant List " + plantList.toString());
+	 * 
+	 * model.addObject("plantId", plantId); model.addObject("custId", custId);
+	 * 
+	 * model.addObject("custName", custName);
+	 * model.addObject("plantName",plantName);
+	 * 
+	 * map = new LinkedMultiValueMap<String, Object>(); map.add("custId", custId);
+	 * Project[] projArray = rest.postForObject(Constants.url +
+	 * "getProjectByCustId", map, Project[].class); projList = new
+	 * ArrayList<Project>(Arrays.asList(projArray));
+	 * 
+	 * model.addObject("projList", projList);
+	 * 
+	 * PaymentTerm[] payTermArray = rest.getForObject(Constants.url +
+	 * "getAllPaymentTermList", PaymentTerm[].class); payTermList = new
+	 * ArrayList<PaymentTerm>(Arrays.asList(payTermArray));
+	 * 
+	 * model.addObject("payTermList", payTermList);
+	 * 
+	 * map = new LinkedMultiValueMap<String, Object>(); map.add("docId", 2);
+	 * 
+	 * DocTermHeader[] docTermArray = rest.postForObject(Constants.url +
+	 * "getDocHeaderByDocId", map, DocTermHeader[].class); docTermList = new
+	 * ArrayList<DocTermHeader>(Arrays.asList(docTermArray));
+	 * 
+	 * model.addObject("docTermList", docTermList);
+	 * 
+	 * map = new LinkedMultiValueMap<String, Object>(); map.add("quotHeadId",
+	 * quotHeadId);
+	 * 
+	 * QuotHeader quotHeader = rest.postForObject(Constants.url +
+	 * "getQuotHeaderByQuotHeadId", map, QuotHeader.class);
+	 * quotHeader.setQuotDate(DateConvertor.convertToDMY(quotHeader.getQuotDate()));
+	 * model.addObject("quotHeader", quotHeader);
+	 * 
+	 * } catch (Exception e) { System.err.println("Exce in /showQuotations" +
+	 * e.getMessage()); e.printStackTrace(); } return model;
+	 * 
+	 * }
+	 */
 
 	@RequestMapping(value = "/editQuotationDetail/{quotHeadId}/{plantId}/{custId}/{enqHeadId}", method = RequestMethod.GET)
 	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotHeadId,
@@ -382,6 +406,13 @@ public class QuotController {
 					QuotHeader.class);
 			quotHeader.setQuotDate(DateConvertor.convertToDMY(quotHeader.getQuotDate()));
 			model.addObject("quotHeader", quotHeader);
+
+		/*	quotHeadIdPdf = quotHeader.getQuotHeadId();
+
+			pdfCustId = quotHeader.getCustId();*/
+
+			System.out.println("quotHeadIdPdf=================" + quotHeadIdPdf);
+			System.out.println("pdfCustId=================" + pdfCustId);
 
 		} catch (Exception e) {
 			System.err.println("Exce in /showQuotations" + e.getMessage());
@@ -820,129 +851,12 @@ public class QuotController {
 
 			System.err.println("quotHeadUpdateRes  " + quotHeadUpdateRes.toString());
 
-			// new COde
+			if (quotHeadUpdateRes != null) {
 
-			/*
-			 * for (int i = 0; i < selectItem.length; i++) {
-			 * 
-			 * System.err.println("selItem " + selectItem[i]);
-			 * 
-			 * for (int j = 0; j < itemList.size(); j++) {
-			 * 
-			 * if (itemList.get(j).getItemId() == Integer.parseInt(selectItem[i])) {
-			 * 
-			 * System.err.println("Item Ids Matched ");
-			 * 
-			 * QuotDetail detail = new QuotDetail();
-			 * 
-			 * float quotQty = Float .parseFloat(request.getParameter("quot_qty" +
-			 * itemList.get(j).getItemId())); float transCost = Float
-			 * .parseFloat(request.getParameter("trans_cost" +
-			 * itemList.get(j).getItemId())); float otherCostDetail = Float
-			 * .parseFloat(request.getParameter("other_cost" +
-			 * itemList.get(j).getItemId())); float taxableValue = Float
-			 * .parseFloat(request.getParameter("taxable_amt" +
-			 * itemList.get(j).getItemId())); float taxValue = Float
-			 * .parseFloat(request.getParameter("tax_amt" + itemList.get(j).getItemId()));
-			 * float total = Float.parseFloat(request.getParameter("final_amt" +
-			 * itemList.get(j).getItemId())); float otherCostAfterTax = Float
-			 * .parseFloat(request.getParameter("oth_cost_aft_tax" +
-			 * itemList.get(j).getItemId()));
-			 * 
-			 * detail.setCgstPer(itemList.get(j).getCgst()); detail.setConFactor(1);
-			 * detail.setDelStatus(1); detail.setConvQty(1);
-			 * detail.setIgstPer(itemList.get(j).getIgst());
-			 * detail.setItemId(itemList.get(j).getItemId()); detail.setNoOfKm(noOfKm);
-			 * detail.setOtherCost(otherCostDetail);
-			 * detail.setOtherCostAfterTax(otherCostAfterTax); detail.setQuotQty(quotQty);
-			 * detail.setQuotUomId(itemList.get(j).getUomId()); detail.setRate(total);
-			 * detail.setRoyaltyRate(itemList.get(j).getRoyaltyRate());
-			 * detail.setSgstPer(itemList.get(j).getSgst()); detail.setStatus(1);
-			 * detail.setTaxableValue(taxableValue);
-			 * detail.setTaxId(itemList.get(j).getTaxId()); detail.setTaxValue(taxValue);
-			 * detail.setTollCost(tollCost); detail.setTotal(total);
-			 * detail.setTransCost(transCost); detail.setExDate2(curDate);
-			 * detail.setOtherCostBeforeTax(0);
-			 * 
-			 * if (taxValue > 0) { if(cust.getIsSameState()==1) {
-			 * 
-			 * detail.setCgstValue((taxValue / 2)); detail.setIgstValue(0);
-			 * detail.setIgstPer(0); detail.setSgstValue((taxValue / 2)); }else {
-			 * detail.setIgstValue(taxValue); detail.setIgstPer(itemList.get(i).getIgst());
-			 * 
-			 * detail.setCgstValue(0); detail.setSgstValue(0);
-			 * 
-			 * detail.setCgstPer(0); detail.setSgstPer(0);
-			 * 
-			 * } quotHeader.setTaxValue(1);
-			 * 
-			 * } else { detail.setCgstValue(0); detail.setIgstValue(0);
-			 * detail.setSgstValue(0);
-			 * 
-			 * detail.setCgstPer(0); detail.setSgstPer(0); detail.setIgstPer(0);
-			 * 
-			 * 
-			 * }
-			 * 
-			 * tempQDetailList.add(detail);
-			 * 
-			 * } // End of If
-			 * 
-			 * } // End of Item List For
-			 * 
-			 * } // End of Selected Item For Loop
-			 * 
-			 * for (int i = 0; i < tempQDetailList.size(); i++) {
-			 * 
-			 * int flag = 0;
-			 * 
-			 * for (int j = 0; j < quotDetList.size(); j++) { if
-			 * (tempQDetailList.get(i).getItemId() == quotDetList.get(j).getItemId()) {
-			 * 
-			 * flag = 1; quotDetList.get(j).setCgstPer(tempQDetailList.get(i).getCgstPer());
-			 * quotDetList.get(j).setCgstValue(tempQDetailList.get(i).getCgstValue());
-			 * quotDetList.get(j).setConFactor(tempQDetailList.get(i).getConFactor());
-			 * quotDetList.get(j).setConvQty(tempQDetailList.get(i).getConvQty());
-			 * quotDetList.get(j).setDelStatus(tempQDetailList.get(i).getDelStatus()); //
-			 * quotDetList.get(j).setEnqDetailId(tempQDetailList.get(i).get);
-			 * quotDetList.get(j).setExDate2(tempQDetailList.get(i).getExDate2());
-			 * quotDetList.get(j).setIgstPer(tempQDetailList.get(i).getIgstPer());
-			 * quotDetList.get(j).setIgstValue(tempQDetailList.get(i).getIgstValue()); //
-			 * quotDetList.get(j).setItemId(itemId);
-			 * quotDetList.get(j).setNoOfKm(tempQDetailList.get(i).getNoOfKm());
-			 * quotDetList.get(j).setOtherCost(tempQDetailList.get(i).getOtherCost());
-			 * quotDetList.get(j).setOtherCostAfterTax(tempQDetailList.get(i).
-			 * getOtherCostAfterTax()); // quotDetList.get(j).setQuotDetailId(quotDetailId);
-			 * // quotDetList.get(j).setQuotHeadId(quotHeadId);
-			 * quotDetList.get(j).setQuotQty(tempQDetailList.get(i).getQuotQty());
-			 * quotDetList.get(j).setQuotUomId(tempQDetailList.get(i).getQuotUomId());
-			 * quotDetList.get(j).setRate(tempQDetailList.get(i).getTotal());
-			 * quotDetList.get(j).setRoyaltyRate(tempQDetailList.get(i).getRoyaltyRate());
-			 * quotDetList.get(j).setSgstPer(tempQDetailList.get(i).getSgstPer());
-			 * quotDetList.get(j).setSgstValue(tempQDetailList.get(i).getSgstValue());
-			 * quotDetList.get(j).setStatus(tempQDetailList.get(i).getStatus());
-			 * quotDetList.get(j).setTaxableValue(tempQDetailList.get(i).getTaxableValue());
-			 * quotDetList.get(j).setTaxId(tempQDetailList.get(i).getTaxId());
-			 * quotDetList.get(j).setTaxValue(tempQDetailList.get(i).getTaxValue());
-			 * 
-			 * quotDetList.get(j).setTollCost(tempQDetailList.get(i).getTollCost());
-			 * quotDetList.get(j).setTotal(tempQDetailList.get(i).getTotal());
-			 * quotDetList.get(j).setTransCost(tempQDetailList.get(i).getTransCost());
-			 * 
-			 * }
-			 * 
-			 * } if (flag == 0) {
-			 * 
-			 * System.err.println("inside flag==0"); tempQDetailList.get(i).setExVar1("NA");
-			 * tempQDetailList.get(i).setExVar2("NA");
-			 * tempQDetailList.get(i).setExVar3("NA");
-			 * tempQDetailList.get(i).setExDate1(curDate);
-			 * tempQDetailList.get(i).setExDate2(curDate);
-			 * tempQDetailList.get(i).setQuotHeadId(quotHeadId);
-			 * quotDetList.add(tempQDetailList.get(i)); }
-			 * 
-			 * }
-			 */
+				quotHeadIdPdf = quotHeadUpdateRes.getQuotHeadId();
+
+				pdfCustId = quotHeadUpdateRes.getCustId();
+			}
 
 		} catch (Exception e) {
 			System.err.println("Exce in upd qtn process " + e.getMessage());
@@ -1020,4 +934,214 @@ public class QuotController {
 		return "redirect:/showQuotationsCustWise";
 	}
 
+	private Dimension format = PD4Constants.A4;
+	private boolean landscapeValue = false;
+	private int topValue = 8;
+	private int leftValue = 0;
+	private int rightValue = 0;
+	private int bottomValue = 8;
+	private String unitsValue = "m";
+	private String proxyHost = "";
+	private int proxyPort = 0;
+
+	private int userSpaceWidth = 750;
+	private static int BUFFER_SIZE = 1024;
+
+	@RequestMapping(value = "/pdfQuot", method = RequestMethod.GET)
+	public void showPDF(HttpServletRequest request, HttpServletResponse response) {
+
+		String url = request.getParameter("url");
+		System.out.println("URL " + url);
+		// http://monginis.ap-south-1.elasticbeanstalk.com
+		// File f = new File("/report.pdf");
+		File f = new File("/home/lenovo/bill.pdf");
+
+		// File f = new File("/opt/tomcat-latest/webapps/uploads/shivreport.pdf");
+
+		// File f = new
+		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
+
+		System.out.println("I am here " + f.toString());
+		try {
+			runConverter(Constants.ReportURL + url, f, request, response);
+			System.out.println("Come on lets get ");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+
+			System.out.println("Pdf conversion exception " + e.getMessage());
+		}
+
+		// get absolute path of the application
+		ServletContext context = request.getSession().getServletContext();
+		String appPath = context.getRealPath("");
+		String filename = "/home/lenovo/bill.pdf";
+		// String filePath = "/report.pdf";
+		// String filePath = "/opt/tomcat-latest/webapps/uploads/shivreport.pdf";
+		String filePath = "/home/lenovo/bill.pdf";
+		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
+
+		// construct the complete absolute path of the file
+		String fullPath = appPath + filePath;
+		File downloadFile = new File(filePath);
+		FileInputStream inputStream = null;
+		try {
+			inputStream = new FileInputStream(downloadFile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			// get MIME type of the file
+			String mimeType = context.getMimeType(fullPath);
+			if (mimeType == null) {
+				// set to binary type if MIME mapping not found
+				mimeType = "application/pdf";
+			}
+			System.out.println("MIME type: " + mimeType);
+
+			String headerKey = "Content-Disposition";
+
+			// response.addHeader("Content-Disposition", "attachment;filename=report.pdf");
+			response.setContentType("application/pdf");
+
+			// get output stream of the response
+			OutputStream outStream;
+
+			outStream = response.getOutputStream();
+
+			byte[] buffer = new byte[BUFFER_SIZE];
+			int bytesRead = -1;
+
+			// write bytes read from the input stream into the output stream
+
+			while ((bytesRead = inputStream.read(buffer)) != -1) {
+				outStream.write(buffer, 0, bytesRead);
+			}
+
+			inputStream.close();
+			outStream.close();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (quotHeadIdPdf != 0) {
+				try {
+
+					final String emailSMTPserver = "smtp.gmail.com";
+					final String emailSMTPPort = "587";
+					final String mailStoreType = "imaps";
+					final String username = "atsinfosoft@gmail.com";
+					final String password = "atsinfosoft@123";
+
+					System.out.println("username" + username);
+					System.out.println("password" + password);
+
+					Properties props = new Properties();
+					props.put("mail.smtp.host", "smtp.gmail.com");
+					props.put("mail.smtp.socketFactory.port", "465");
+					props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+					props.put("mail.smtp.auth", "true");
+					props.put("mail.smtp.port", "587");
+
+					Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+						protected PasswordAuthentication getPasswordAuthentication() {
+							return new PasswordAuthentication(username, password);
+						}
+					});
+
+					try {
+						Store mailStore = session.getStore(mailStoreType);
+						mailStore.connect(emailSMTPserver, username, password);
+
+						String mes = " Hello Sir";
+
+						System.out.println("pdfcustId======================================" + pdfCustId);
+						MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+						map.add("custId", pdfCustId);
+
+						Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
+
+						String address = editCust.getCustEmail();
+						System.out.println("Email Send To" + editCust.getCustEmail());
+
+						// String address = "dhomaneneha@gmail.com";// editCust.getCustEmail();
+						// String address = "shirkeanmol@gmail.com";
+						String subject = "  ";
+
+						Message mimeMessage = new MimeMessage(session);
+						mimeMessage.setFrom(new InternetAddress(username));
+						mimeMessage.setRecipients(Message.RecipientType.TO, InternetAddress.parse(address));
+						mimeMessage.setSubject(subject);
+						mimeMessage.setText(mes);
+
+						mimeMessage.setFileName(filename);
+
+						BodyPart mbodypart = new MimeBodyPart();
+						Multipart multipart = new MimeMultipart();
+						DataSource source = new FileDataSource(filename);
+						mbodypart.setDataHandler(new DataHandler(source));
+						mbodypart.setFileName(filename);
+						multipart.addBodyPart(mbodypart);
+						mimeMessage.setContent(multipart);
+
+						Transport.send(mimeMessage);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+
+		}
+	}
+
+	private void runConverter(String urlstring, File output, HttpServletRequest request, HttpServletResponse response)
+			throws IOException {
+
+		if (urlstring.length() > 0) {
+			if (!urlstring.startsWith("http://") && !urlstring.startsWith("file:")) {
+				urlstring = "http://" + urlstring;
+			}
+			System.out.println("PDF URL " + urlstring);
+			java.io.FileOutputStream fos = new java.io.FileOutputStream(output);
+
+			PD4ML pd4ml = new PD4ML();
+
+			try {
+
+				PD4PageMark footer = new PD4PageMark();
+				footer.setPageNumberTemplate("page $[page] of $[total]");
+				footer.setTitleAlignment(PD4PageMark.LEFT_ALIGN);
+				footer.setPageNumberAlignment(PD4PageMark.RIGHT_ALIGN);
+				footer.setInitialPageNumber(1);
+				footer.setFontSize(8);
+				footer.setAreaHeight(15);
+
+				pd4ml.setPageFooter(footer);
+
+			} catch (Exception e) {
+				System.out.println("Pdf conversion method excep " + e.getMessage());
+			}
+			try {
+				pd4ml.setPageSize(landscapeValue ? pd4ml.changePageOrientation(format) : format);
+			} catch (Exception e) {
+				System.out.println("Pdf conversion ethod excep " + e.getMessage());
+			}
+
+			if (unitsValue.equals("mm")) {
+				pd4ml.setPageInsetsMM(new Insets(topValue, leftValue, bottomValue, rightValue));
+			} else {
+				pd4ml.setPageInsets(new Insets(topValue, leftValue, bottomValue, rightValue));
+			}
+
+			pd4ml.setHtmlWidth(userSpaceWidth);
+
+			pd4ml.render(urlstring, fos);
+
+		}
+	}
 }

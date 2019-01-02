@@ -242,6 +242,11 @@ body {
 										</select>
 									</div>
 
+
+									<input type="hidden" name="quotHeadIdPdf" id="quotHeadIdPdf"
+										value="${quotHeadIdPdf}"> <input type="hidden"
+										name="pdfCustId" id="pdfCustId" value="${pdfCustId}">
+
 								</div>
 								<input type="hidden" name="item_id" id="item_id" value="0">
 								<div class="form-group"></div>
@@ -295,7 +300,10 @@ body {
 
 
 								</div>
-								<input type="hidden" id="quotHeadId" name="quotHeadId"
+
+								<input type="hidden" id="quotStatus" name="quotStatus"
+									value="${quotHeader.status}"> <input type="hidden"
+									id="quotHeadId" name="quotHeadId"
 									value="${quotHeader.quotHeadId}"> <input type="hidden"
 									id="pay_term_name" name="pay_term_name"
 									value="${quotHeader.payTerms}">
@@ -470,21 +478,19 @@ body {
 									<c:choose>
 										<c:when test="${quotHeader.taxValue>0}">
 											<div class="col-md-1">
-												No<input type="radio" checked name="is_tax_inc" id="is_tax_inc"
-													value="1" onchange="calcAll()">
+												No<input type="radio" checked name="is_tax_inc"
+													id="is_tax_inc" value="1" onchange="calcAll()">
 											</div>
 
 											<div class="col-md-1">
-												Yes<input  type="radio" name="is_tax_inc"
-													id="is_tax_inc" value="0"
-													onchange="calcAll()">
+												Yes<input type="radio" name="is_tax_inc" id="is_tax_inc"
+													value="0" onchange="calcAll()">
 											</div>
 										</c:when>
 										<c:otherwise>
 											<div class="col-md-1">
-												No<input type="radio"   name="is_tax_inc"
-													id="is_tax_inc" value="1" 
-													onchange="calcAll()">
+												No<input type="radio" name="is_tax_inc" id="is_tax_inc"
+													value="1" onchange="calcAll()">
 											</div>
 
 											<div class="col-md-1">
@@ -696,7 +702,8 @@ body {
 
 										<div class="col-md-4">
 											<input type="text" id="quot_remark" name="quot_remark"
-												class="form-control" style="width: 100%;" value="${quotHeader.otherRemark1}" required>
+												class="form-control" style="width: 100%;"
+												value="${quotHeader.otherRemark1}" required>
 										</div>
 
 										<div class="col-md-1">
@@ -1064,8 +1071,8 @@ var termTitle=data.termTitle
 		   
 	}
 	</script>
-	
-	
+
+
 
 
 	<script type="text/javascript">
@@ -1098,7 +1105,6 @@ var termTitle=data.termTitle
 	<script type="text/javascript">
 		
 		function callsetKM(){
-			
 			var x=${quotHeader.noOfKm};
 			//alert("No of km " +x);
 			if(x==0){
@@ -1107,6 +1113,7 @@ var termTitle=data.termTitle
 			}else{
 				setKM(0);
 			}
+			
 		}
 		
 		function setKM(delPlace) {
@@ -1144,7 +1151,7 @@ var termTitle=data.termTitle
 
 
 
-	
+
 	<!--  CalcAll function onchange of KM  -->
 
 	<script type="text/javascript">
@@ -1346,6 +1353,9 @@ var termTitle=data.termTitle
 	function valthisform()
 	{
 	    var okay=true;
+	    var quotHeadIdPdf=document.getElementById("quotHeadId").value;
+	    var quotStatus=document.getElementById("quotStatus").value;
+	  
 /* 
 	    var checkboxs=document.getElementsByName("selectItem");
 	    for(var i=0,l=checkboxs.length;i<l;i++)
@@ -1380,6 +1390,24 @@ var termTitle=data.termTitle
 
 	    	var form=document.getElementById("updateQuotation");
 	    	form.submit();
+	    	
+
+			if(quotHeadIdPdf==0 ){
+				
+				//alert("hiii");
+				
+			}
+			else {
+				
+				//alert("ppoiio");
+			
+					window
+					.open('${pageContext.request.contextPath}/pdfQuot?url=pdf/showQuotPdf/'
+							+ quotHeadIdPdf);
+					
+			}
+		
+	    	
 	    }
 	   
 	}
@@ -1418,8 +1446,8 @@ var termTitle=data.termTitle
 	  return valid;
 	} 
 	</script>
-	
-<!-- 	<script type="text/javascript">
+
+	<!-- 	<script type="text/javascript">
 
         $(document).ready(function(){
 
@@ -1446,7 +1474,7 @@ var termTitle=data.termTitle
 
     </script> -->
 
-	
+
 	<!-- <script type="text/javascript">
 		function getData() {
 			var plantId = document.getElementById("plant_id").value;
@@ -1777,5 +1805,9 @@ window.onclick = function(event) {
 
 </script>
  -->
+
+	<script type="text/javascript">
+	
+	</script>
 </body>
 </html>
