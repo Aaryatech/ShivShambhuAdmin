@@ -13,7 +13,7 @@
 					class="fa fa fa-tasks"></i></a>
 				<div class="header-left">
 
-					<strong class="card-title" style="color:#245345;font-size:16px; font-family: 'Merriweather', serif;">Shiv Shambhu-Gajanan Stone Admin </strong>
+					<strong class="card-title" style="color:#58bdc3;font-size:16px; font-family: 'Merriweather', serif;">Shiv Shambhu-Gajanan Stone Admin </strong>
 
 					<!-- <div class="dropdown for-notification">
 						<button class="btn btn-secondary dropdown-toggle" type="button"

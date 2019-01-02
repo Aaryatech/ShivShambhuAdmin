@@ -282,11 +282,11 @@
 
 													<td><a
 														href="${pageContext.request.contextPath}/editPo/${poList.poId}"><i
-															class="fa fa-edit" title="Edit"></i> <span
+															class="fa fa-edit"  style="color:black" title="Edit"></i> <span
 															class="text-muted"></span></a> <a
 														href="${pageContext.request.contextPath}/deletePurchaseOrder/${poList.poId}"
 														onClick="return confirm('Are you sure want to delete this record');"><i
-															class="fa fa-trash-o" title="Delete"></i></a>
+															class="fa fa-trash-o" style="color:black"  title="Delete"></i></a>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -484,7 +484,7 @@
 																+ v.poId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>'
+																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 
 														chBox = '<input  type="checkbox" class="chk" name="poIds" id='+v.poId+' class="check"  value='+v.poId+'>'
 														dataTable.row

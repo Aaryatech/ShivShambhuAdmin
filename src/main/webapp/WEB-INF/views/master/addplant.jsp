@@ -118,7 +118,7 @@
 							</div>
 							<div class="col-md-6"></div>
 							<div class="col-md-3" align="left">
-								<a href="${pageContext.request.contextPath}/showPlantList"><strong>Plant
+								<a href="${pageContext.request.contextPath}/showPlantList" style="color:black"><strong>Plant
 										List</strong></a>
 							</div>
 						</div>
@@ -209,11 +209,11 @@
 <!-- pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" -->
 									</div>
 
-									<div class="col-md-2">FAX No*</div>
+									<div class="col-md-2">Short Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="fax" name="fax" autocomplete="off"
 											required style="width: 100%;" class="form-control"
-											oninvalid="setCustomValidity('Please enter correct FAX no')"
+											
 											maxlength="20" value="${editPlant.plantFax1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>

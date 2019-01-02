@@ -118,7 +118,7 @@
 							</div>
 							<div class="col-md-5"></div>
 							<div class="col-md-3" align="left">
-								<a href="${pageContext.request.contextPath}/showAddWeighing"><strong>Add
+								<a href="${pageContext.request.contextPath}/showAddWeighing" style="color:black"><strong>Add
 										Weighing </strong></a>
 							</div>
 						</div>
@@ -433,7 +433,7 @@
 																+ v.weighId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>'
+																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 
 														chBox = '<input  type="checkbox" class="chk" name="weighIds" id='+v.weighId+' class="check"  value='+v.weighId+'>'
 

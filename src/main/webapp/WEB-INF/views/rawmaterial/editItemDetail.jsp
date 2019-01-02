@@ -263,10 +263,10 @@
 
 													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${itemDetail.itemDetailId},${count.index})"><i
-															class="fa fa-edit"></i> <span class="text-muted"></span></a>
+															class="fa fa-edit" style="color:black" ></i> <span class="text-muted"></span></a>
 														<a href="#"
 														onclick="callDelete(${itemDetail.itemDetailId},${count.index})"><i
-															class="fa fa fa-trash-o"></i> <span class="text-muted"></span></a></td>
+															class="fa fa-trash-o" style="color:black"></i> <span class="text-muted"></span></a></td>
 
 												</tr>
 											</c:forEach>

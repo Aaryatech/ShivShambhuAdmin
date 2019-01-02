@@ -300,7 +300,7 @@
 
 											<td><a
 												href="${pageContext.request.contextPath}/editBill/${bill.billHeadId}"><i
-													class="fa fa-edit" title="Generate Quotation"></i> <span
+													class="fa fa-edit" style="color:black" title="Generate Quotation"></i> <span
 													class="text-muted"></span></a> &nbsp;<input type="button"
 												id="btn_submit" class="btn btn-primary"
 												onclick="singleBillPdf(${bill.billHeadId})" value="Pdf" /></td>
@@ -530,11 +530,11 @@
 																+ v.billHeadId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Bill Pdf" onclick="singleBillPdf('
+																+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Bill Pdf" onclick="singleBillPdf('
 																+ v.billHeadId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
 																
 																
 

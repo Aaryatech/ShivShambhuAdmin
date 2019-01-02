@@ -121,7 +121,7 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showMatIssueContractorList"><strong>Material
+									href="${pageContext.request.contextPath}/showMatIssueContractorList" style="color:black"><strong>Material
 										Issue Contractor List</strong></a>
 							</div>
 
@@ -352,11 +352,11 @@
 															+ v.matVehDetailId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 															+ v.matVehDetailId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-trash"></i></a>'
+															+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
@@ -460,11 +460,11 @@
 															+ v.matVehDetailId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 															+ v.matVehDetailId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-trash"></i></a>'
+															+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
 													dataTable.row.add(
 															[ i + 1,
 																	v.itemName,

@@ -355,7 +355,7 @@
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.vehicleId
 																+ ','
-																+ ')"><i class="fa fa-list"></i></a>'
+																+ ')" style="color:black"><i class="fa fa-list"></i></a>'
 
 														dataTable.row
 																.add(

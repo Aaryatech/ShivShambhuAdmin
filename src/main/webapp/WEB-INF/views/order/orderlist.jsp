@@ -327,7 +327,7 @@
 
 													<td><a
 														href="${pageContext.request.contextPath}/editOrder/${enq.orderId}"><i
-															class="fa fa-edit" title="Edit"></i> <span
+															class="fa fa-edit" style="color:black" title="Edit"></i> <span
 															class="text-muted"></span></a></td>
 
 												</tr>
@@ -582,11 +582,11 @@
 																+ v.orderId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 																+ v.orderId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-trash" title="Delete"></i></a>'
+																+ ')" style="color:black"><i class="fa fa-trash" title="Delete"></i></a>'
 
 														chBox = '<input  type="checkbox" class="chk" name="selectOrderToDelete" id='+v.orderId+' class="check"  value='+v.orderId+'>'
 														/* if (v.status == 0) {

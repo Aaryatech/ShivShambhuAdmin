@@ -71,19 +71,37 @@ public class PurchaseOrderController {
 				financiyalYearFrom = "" + (CurrentYear);
 				financiyalYearTo = "" + (CurrentYear + 1);
 			}
+			
+				int ab=(Integer.parseInt(financiyalYearFrom ))%2000;
+				int ab1=(Integer.parseInt(financiyalYearTo))%2000;
 
+			
+				System.out.println("year sc:" + ab +ab1);
+				
+				
 			System.out.println("year:" + financiyalYearFrom + financiyalYearTo);
 
-			model.addObject("fyf", financiyalYearFrom);
-			model.addObject("fyt", financiyalYearTo);
+			model.addObject("fyf", ab);
+			model.addObject("fyt", ab1);
 			String var = null;
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("docCode", 7);
 			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
 			model.addObject("doc", doc);
 			System.out.println("doc data is" + doc);
+			
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("plantId",plantId);
+			
+			Plant pl= rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+			String shortName=pl.getPlantFax1();
+			System.out.println("pl is "+pl.toString());
+			System.out.println("short name  "+shortName);
 
 			int a = doc.getSrNo();
+			
+			
 			System.out.println("sr is " + a);
 
 			if (String.valueOf(a).length() == 1) {
@@ -100,6 +118,12 @@ public class PurchaseOrderController {
 			model.addObject("plantId", plantId);
 
 			model.addObject("var", var);
+			
+			
+
+		
+			
+			model.addObject("shortName",shortName);
 
 		} catch (Exception e) {
 

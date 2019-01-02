@@ -109,7 +109,7 @@
 											<td style="text-align: center"><a
 												href="${pageContext.request.contextPath}/deleteRole/${createdRoleList.roleId}"
 												onClick="return confirm('Are you sure want to delete this record');"><i
-													class="fa fa-trash-o" title="Delete"></i></a></td>
+													class="fa fa-trash-o"  style="color:black" title="Delete"></i></a></td>
 
 										</tr>
 									</c:forEach>

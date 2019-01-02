@@ -123,7 +123,7 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showMatIssueVehicleList"><strong>Material
+									href="${pageContext.request.contextPath}/showMatIssueVehicleList" style="color:black"><strong>Material
 										Issue Vehicle List</strong></a>
 							</div>
 
@@ -313,10 +313,10 @@
 
 													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${matDetail.matVehDetailId},${count.index})"><i
-															class="fa fa-edit"></i> <span class="text-muted"></span></a>
+															class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
 														<a href="#"
 														onclick="callDelete(${matDetail.matVehDetailId},${count.index})"><i
-															class="fa fa fa-trash-o"></i> <span class="text-muted"></span></a></td>
+															class="fa fa fa-trash-o" style="color:black"></i> <span class="text-muted"></span></a></td>
 
 
 
@@ -441,11 +441,11 @@
 															+ v.matVehDetailId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 															+ v.matVehDetailId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-trash"></i></a>'
+															+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
@@ -543,11 +543,11 @@
 														+ v.matVehDetailId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+														+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 														+ v.matVehDetailId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-trash"></i></a>'
+														+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,

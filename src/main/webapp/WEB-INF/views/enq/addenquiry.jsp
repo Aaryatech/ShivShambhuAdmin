@@ -99,7 +99,7 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
+								<a href="${pageContext.request.contextPath}/showAddCustomer" style="color:black"><strong>Add
 										Customer</strong></a>
 							</div>
 
@@ -643,11 +643,11 @@
 															+ v.itemId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 																+ v.itemId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-trash"></i></a>'
+																+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
 
 														dataTable.row
 																.add(
@@ -737,11 +737,11 @@
 															+ v.itemId
 															+ ','
 															+ i
-															+ ')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
+															+ ')" style="color:black"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
 															+ v.itemId
 															+ ','
 															+ i
-															+ ')"><abbr title="Edit"><i class="fa fa-edit"></i></abbr></a>'
+															+ ')" style="color:black"><abbr title="Edit"><i class="fa fa-edit"></i></abbr></a>'
 
 													dataTable.row.add(
 															[ i + 1,

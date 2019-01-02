@@ -303,10 +303,10 @@
 
 													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${recDetail.payHeadId},${count.index})"><i
-															class="fa fa-edit"></i> <span class="text-muted"></span></a>
+															class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
 														<a href="#"
 														onclick="callDelete(${recDetail.payHeadId},${count.index})"><i
-															class="fa fa fa-trash-o"></i> <span class="text-muted"></span></a></td>
+															class="fa fa fa-trash-o" style="color:black"></i> <span class="text-muted"></span></a></td>
 
 
 
@@ -435,11 +435,11 @@
 														+ v.payDetailId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+														+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 														+ v.payDetailId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-trash"></i></a>'
+														+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
 
 													dataTable.row.add(
 															[ i + 1,
@@ -510,11 +510,11 @@
 														+ v.payDetailId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+														+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 														+ v.payDetailId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-trash"></i></a>'
+														+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
 													dataTable.row.add(
 															[ i + 1,
 																v.paymentDate,

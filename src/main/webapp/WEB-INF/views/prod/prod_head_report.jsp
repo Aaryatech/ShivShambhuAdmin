@@ -369,11 +369,11 @@
 														+ v.itemId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-list"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="viewRMHeaderDetail('
+														+ ')" style="color:black"><i class="fa fa-list"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="viewRMHeaderDetail('
 														+ v.itemId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-times"></i></a>'
+														+ ')" style="color:black"><i class="fa fa-times"></i></a>'
 														
  
 												dataTable.row

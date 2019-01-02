@@ -350,7 +350,7 @@
 																+ v.contrId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-list"></i></a>'
+																+ ')" style="color:black"><i class="fa fa-list"></i></a>'
 
 														dataTable.row
 																.add(

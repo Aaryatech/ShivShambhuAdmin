@@ -83,7 +83,7 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showAddVendor"><strong>Add
+								<a href="${pageContext.request.contextPath}/showAddVendor" style="color:black"><strong>Add
 										Vendor </strong></a>
 							</div>
 
@@ -139,11 +139,11 @@
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editVendor/${vend.vendId}"><i
-														class="fa fa-edit" title="Edit"></i> <span class="text-muted"></span></a>
+														class="fa fa-edit" style="color:black" title="Edit"></i> <span class="text-muted"></span></a>
 													&nbsp; <a
 													href="${pageContext.request.contextPath}/deleteVendor/${vend.vendId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o" title="Delete"></i></a></td>
+														class="fa fa-trash-o"  style="color:black" title="Delete"></i></a></td>
 
 											</tr>
 										</c:forEach>

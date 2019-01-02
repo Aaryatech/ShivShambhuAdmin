@@ -94,7 +94,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="poNo" name="poNo"
-											class="form-control" value="${plantId}-${fyf}-${fyt}-${var}" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
+											class="form-control" value="${shortName}-${fyf}-${fyt}-${var}" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
 									</div>
 									 
 

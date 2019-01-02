@@ -83,7 +83,7 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showAddProject"><strong>Add
+								<a href="${pageContext.request.contextPath}/showAddProject" style="color:black"><strong>Add
 										Project </strong></a>
 							</div>
 
@@ -141,11 +141,11 @@
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editProject/${pro.projId}"><i
-														class="fa fa-edit" title="Edit"></i> <span
+														class="fa fa-edit" style="color:black"  title="Edit"></i> <span
 														class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deleteProject/${pro.projId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o" title="Delete"></i></a></td>
+														class="fa fa-trash-o" style="color:black"  title="Delete"></i></a></td>
 
 											</tr>
 										</c:forEach>

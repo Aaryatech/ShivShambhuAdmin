@@ -116,7 +116,7 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showProjectList"><strong>Project
+								<a href="${pageContext.request.contextPath}/showProjectList" style="color:black"><strong>Project
 										List</strong></a>
 							</div>
 

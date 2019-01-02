@@ -84,7 +84,7 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showAddMatIssueVehicle"><strong>Add
+									href="${pageContext.request.contextPath}/showAddMatIssueVehicle" style="color:black"><strong>Add
 										Material Issue Vehicle </strong></a>
 							</div>
 
@@ -134,11 +134,11 @@
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editMatIssueVeh/${matIssue.matVehHeaderId}"><i
-														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+														class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
 													&nbsp; <a
 													href="${pageContext.request.contextPath}/deleteMatVehicle/${matIssue.matVehHeaderId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o"></i></a></td>
+														class="fa fa-trash-o" style="color:black"></i></a></td>
 
 											</tr>
 										</c:forEach>

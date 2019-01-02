@@ -154,7 +154,7 @@
 								<div class="row">
 								<input type="hidden" name="prodHeaderId" id="prodHeaderId" value="0"/>
 
-									<div class="col-md-2">Plant</div>
+									<div class="col-md-1">Plant</div>
 
 									<div class="col-md-3">
 										<select id="plant_id" name="plant_id" class="standardSelect"
@@ -375,11 +375,11 @@
 														+ v.productionHeaderId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-list"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+														+ ')" style="color:black"><i class="fa fa-list"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 														+ v.productionHeaderId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-trash"></i></a>'
+														+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
 														
 														var status;
 														var startDate;

@@ -459,7 +459,7 @@
 
 															var acButton = '<a href="#" class="action_btn" onclick="callDateDetail('
 																	+ v.custId
-																	+')"><i class="fa fa-list" title="Detail"></i></a>'
+																	+')" style="color:black"><i class="fa fa-list" title="Detail"></i></a>'
 
 															
 															chBox = '<input  type="checkbox" class="chk" name="payHeadIds" id='+v.payHeadId+' class="check"  value='+v.payHeadId+'>'

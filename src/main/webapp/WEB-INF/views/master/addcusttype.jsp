@@ -199,11 +199,11 @@
 
 												<td style="text-align: center; width: 5%;"><a
 													href="${pageContext.request.contextPath}/editCustType/${custType.custTypeId}"><i
-														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+														class="fa fa-edit"  style="color:black"></i> <span class="text-muted"></span></a>
 													&nbsp; <a
 													href="${pageContext.request.contextPath}/deleteCustType/${custType.custTypeId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o"></i></a></td>
+														class="fa fa-trash-o" style="color:black"></i></a></td>
 
 											</tr>
 										</c:forEach>

@@ -121,7 +121,7 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showTaxList"><strong>Tax
+								<a href="${pageContext.request.contextPath}/showTaxList" style="color:black"><strong>Tax
 										List</strong></a>
 							</div>
 

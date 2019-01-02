@@ -228,7 +228,7 @@
 
 													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${rec.payHeadId},${count.index})"><i
-															class="fa fa-edit"></i> <span class="text-muted"></span></a>
+															class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
 													</td>
 
 
@@ -469,7 +469,7 @@
 																+ v.payHeadId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>'
+																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 
 														chBox = '<input  type="checkbox" class="chk" name="payHeadIds" id='+v.payHeadId+' class="check"  value='+v.payHeadId+'>'
 

@@ -83,7 +83,7 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showAddTax"><strong>Add
+								<a href="${pageContext.request.contextPath}/showAddTax" style="color:black"><strong>Add
 										Tax </strong></a>
 							</div>
 

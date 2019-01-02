@@ -116,7 +116,7 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showPoklenReadingList"><strong>Poklen
+									href="${pageContext.request.contextPath}/showPoklenReadingList" style="color:black"><strong>Poklen
 										Reading List</strong></a>
 							</div>
 

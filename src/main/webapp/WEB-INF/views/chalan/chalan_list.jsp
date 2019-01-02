@@ -410,19 +410,19 @@
 												+ v.chalanId
 												+ ','
 												+ i
-												+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+												+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 														+ v.chalanId
 														+ ','
 														+ i
-														+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose('
+														+ ')" style="color:black"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose('
 															+ v.chalanId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-times"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
+															+ ')" style="color:black"><i class="fa fa-times"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
 															+ v.chalanId
 															+ ','
 															+ i
-															+ ')"><i class="fa-file-pdf-o"></i></a>'
+															+ ')" style="color:black"><i class="fa-file-pdf-o"></i></a>'
 															
 															 chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
 								}else{
@@ -435,11 +435,11 @@
 												+ v.chalanId
 												+ ','
 												+ i
-												+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose1('
+												+ ')" style="color:black"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose1('
 													+ v.chalanId
 													+ ','
 													+ i
-													+ ')"><i class="fa fa-times"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
+													+ ')" style="color:black"><i class="fa fa-times"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
 														+ v.chalanId
 														+ ','
 														+ i

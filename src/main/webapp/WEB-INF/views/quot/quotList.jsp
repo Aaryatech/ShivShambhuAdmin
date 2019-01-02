@@ -123,16 +123,16 @@
 
 												<td><a
 													href="${pageContext.request.contextPath}/editQuotationDetail/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
-														class="fa fa-edit" title="Generate Quotation"></i> <span
+														class="fa fa-edit" style="color:black" title="Generate Quotation"></i> <span
 														class="text-muted"></span></a> <a
 													href="${pageContext.request.contextPath}/deleteQuot/${quot.quotHeadId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o" title="Delete"></i></a> <c:choose>
+														class="fa fa-trash-o" style="color:black" title="Delete"></i></a> <c:choose>
 														<c:when test="${quot.status==1}">
 
 															<a
 																href="${pageContext.request.contextPath}/addPo/${quot.quotHeadId}/${quot.plantId}"><i
-																class="fa fa-list" title="Create PO"></i> </a>
+																class="fa fa-list" title="Create PO" style="color:black"></i> </a>
 														</c:when>
 													</c:choose>
 											</tr>

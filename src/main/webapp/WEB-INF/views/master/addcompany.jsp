@@ -115,7 +115,7 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showCompList"><strong>Company
+								<a href="${pageContext.request.contextPath}/showCompList" style="color:black" ><strong>Company
 										List</strong></a>
 							</div>
 

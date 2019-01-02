@@ -117,7 +117,7 @@
 							</div>
 							<div class="col-md-5"></div>
 							<div class="col-md-3" align="left">
-								<a href="${pageContext.request.contextPath}/showAddPReading"><strong>Add
+								<a href="${pageContext.request.contextPath}/showAddPReading" style="color:black"><strong>Add
 										Poklen Reading </strong></a>
 							</div>
 						</div>
@@ -340,7 +340,7 @@
 																+ v.readingId
 																+ ','
 																+ i
-																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>'
+																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 
 														chBox = '<input  type="checkbox" class="chk" name="readingIds" id='+v.readingId+' class="check"  value='+v.readingId+'>'
 

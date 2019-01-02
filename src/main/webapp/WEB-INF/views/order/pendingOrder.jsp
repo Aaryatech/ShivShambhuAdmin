@@ -507,15 +507,15 @@
 																	+ v.orderId
 																	+ ','
 																	+ i
-																	+ ')"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+																	+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 																	+ v.orderId
 																	+ ','
 																	+ i
-																	+ ')"><i class="fa fa-trash" title="Delete"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDetail('
+																	+ ')" style="color:black"><i class="fa fa-trash" title="Delete"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDetail('
 																	+ v.orderId
 																	+ ','
 																	+ i
-																	+ ')"><i class="fa fa-list"  title="Generate Chalan"></i></a>'
+																	+ ')" style="color:black"><i class="fa fa-list"  title="Generate Chalan"></i></a>'
 	
 														
 

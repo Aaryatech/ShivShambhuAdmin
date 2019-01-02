@@ -31,14 +31,14 @@ font-size:14;
   }
   .btn-primary {
     color: #fff;
-    background-color:#25594b ;
-    border-color: #25594b;
+    background-color:#58bdc3 ;
+    border-color: #58bdc3;
     border-radius:25px;
 }
 .btn-primary:hover {
   color: #fff;
-  background-color: #58997a;
-  border-color:  #58997a;
+  background-color: #58bdc3;
+  border-color:  #58bdc3;
 }
 ::-webkit-scrollbar {
   width: 7px;

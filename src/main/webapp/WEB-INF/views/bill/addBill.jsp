@@ -132,7 +132,7 @@
 							</div>
 							 <div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showBillList"><strong>All Bills</strong></a>
+								<a href="${pageContext.request.contextPath}/showBillList" style="color:black"><strong>All Bills</strong></a>
 							</div> 
 							
 

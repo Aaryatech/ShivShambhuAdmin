@@ -82,7 +82,7 @@
 							</div>
 							<div class="col-md-6"></div>
 							<div class="col-md-3" align="left">
-								<a href="${pageContext.request.contextPath}/showItemList"><strong>Item
+								<a href="${pageContext.request.contextPath}/showItemList" style="color:black"><strong>Item
 										List</strong></a>
 							</div>
 						</div>

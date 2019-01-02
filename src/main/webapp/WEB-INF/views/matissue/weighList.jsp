@@ -83,7 +83,7 @@
 							</div>
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
-								<a href="${pageContext.request.contextPath}/showAddWeighing"><strong>Add
+								<a href="${pageContext.request.contextPath}/showAddWeighing" style="color:black"><strong>Add
 										Weighing </strong></a>
 							</div>
 
@@ -135,11 +135,11 @@
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editWeighing/${weigh.weighId}"><i
-														class="fa fa-edit"></i> <span class="text-muted"></span></a>
+														class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
 													&nbsp; <a
 													href="${pageContext.request.contextPath}/deleteWeighing/${weigh.weighId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o"></i></a></td>
+														class="fa fa-trash-o" style="color:black"></i></a></td>
 
 											</tr>
 										</c:forEach>
