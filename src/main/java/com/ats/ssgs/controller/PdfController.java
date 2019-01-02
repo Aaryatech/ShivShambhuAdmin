@@ -89,7 +89,7 @@ public class PdfController {
 			ChalanPrintData chPrintData = rest.postForObject(Constants.url + "/getChalanPrintData", map,ChalanPrintData.class);
 
 			 
-			System.err.println("pdf data "+chPrintData.toString());
+			System.err.println("pdf data /showChalanPdf "+chPrintData.toString());
 			//quotIdList
 			//model.addObject("quotIdList", quotIdList);
 			

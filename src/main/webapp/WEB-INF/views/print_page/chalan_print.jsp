@@ -27,74 +27,155 @@ contentType="text/html; charset=utf-8"%>
 </table>
 <hr style="margin-left: 100px;"></hr>
 <br></br>
-<p style="margin-left: 100px; text-align: left" >Chalan No:${printData.chalanItemList[0].chalanNo}
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Date: ${printData.chalanItemList[0].chalanDate}
+<!-- <p style="text-align: center; font-size: 14px;font-weight: bold;"><u>Chalan</u></p>
+ -->
+<p style="margin-left: 100px; text-align: left" ><b>Chalan No:</b>${printData.chalanItemList[0].chalanNo}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Date:</b> ${printData.chalanItemList[0].chalanDate}
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vehicle No: ${printData.chalanItemList[0].vehNo}</p>
-<p style="text-align: center; font-size: 14px;font-weight: bold;"><u>Chalan</u></p>
-<p style="margin-left: 100px;"><b>Customer Name</b>
-<c:out value="${printData.chalanItemList[0].custName}"></c:out><br></br></p>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Vehicle No:</b> ${printData.chalanItemList[0].vehNo}</p>
+<p style="margin-left: 100px;"><b>Customer Name:</b>
+<c:out value="${printData.chalanItemList[0].custName}"></c:out>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Project:</b> ${printData.chalanItemList[0].projName}<br></br></p>
 
 
 <%-- <table  width="80%" border="0"  cellpadding="0" cellspacing="0" style="border-right:1px solid #313131; margin-left:100px; ">
 <tr>
-<td style="border-left:1px solid #000;border-top:1px solid #000;
+<td  style="border-left:1px solid #000;border-top:1px solid #000;
   padding: 2px ; border-bottom:1px solid #000;;
   text-align: center;">Sr No</td>
 <td style="border-left:1px solid #000;border-top:1px solid #000;
   padding: 2px ;border-bottom:1px solid #000;
   text-align: center;">Material</td>
-<td style="border-left:1px solid #000;border-top:1px solid #000;
+  </tr>
+  <tr>
+  <td rowspan="2" style="border-left:1px solid #000;border-top:1px solid #000;
   padding: 2px ;border-bottom:1px solid #000;
-  text-align: center;">Unit</td>
-<td style="border-left:1px solid #000;border-top:1px solid #000;
-  padding: 2px 2px;
-  text-align: center;border-bottom:1px solid #000;">Rate / Brass</td>
-</tr>
+  text-align: center;">Plant Measure</td>
+  <td colspan="4" style="border-left:1px solid #000;border-top:1px solid #000;
+  padding: 2px ;border-bottom:1px solid #000;
+  text-align: center;">Site Measure</td>
+<td   rowspan="2" style="border-left:1px solid #000;border-top:1px solid #000;
+  padding: 2px ;border-bottom:1px solid #000;
+  text-align: center;">L</td>
+  <td  style="border-left:1px solid #000;border-top:1px solid #000;
+  padding: 2px ;border-bottom:1px solid #000;
+  text-align: center;">W</td>
+  <td  style="border-left:1px solid #000;border-top:1px solid #000;
+  padding: 2px ;border-bottom:1px solid #000;
+  text-align: center;">H</td>
+  
+  <td   style="border-left:1px solid #000;border-top:1px solid #000;
+  padding: 2px ;border-bottom:1px solid #000;
+  text-align: center;">T</td>
+  </tr>
+  
 
 
-<c:forEach items="${printData.quotDetPrint}" var="quot" varStatus="count3">
+<c:forEach items="${printData.chalanItemList}" var="quot" varStatus="count3">
 
 <tr>
-<td style="border-bottom:1px solid #313131; border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.quotHeadId}--${quot.quotDetailId}</td>
+<td  style="border-bottom:1px solid #313131; border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemId}</td>
 <td style="border-bottom:1px solid #313131; border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemName}</td>
-<td style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.uomName}</td>
-<td align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000;  font-size:10px;">${quot.total}</td>
-
 </tr>
+<tr>
+<td colspan="2"  style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemName}</td>
+<td colspan="2"  align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000;  font-size:10px;">${quot.itemName}</td>
+<td colspan="2"  style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemName}</td>
+<td colspan="2"  align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000;  font-size:10px;">${quot.itemName}</td>
+</tr>
+
 </c:forEach>
 
 </table> --%>
 
-<c:forEach items="${printData.chalanItemList}" var="chalan" varStatus="count3">
-<p style="margin-left: 100px;">${count3.index+1})<b>Item Name:</b>${chalan.itemName}</p>
+<table  width="100%" border="0" cellpadding="0" cellspacing="0"
+			style="border-top: 1px solid #313131; border-right: 1px solid #313131; margin-left: 100px;" >
+<tr>
+				<td rowspan="2" width="2%"
+					style="border-bottom: 1px solid #313131; border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 12px;">Sr. No.</td>
+				<td align="left" width="35%" rowspan="2"
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Item
+					Name</td>
+				<td align="center" width="10%" colspan="4"
+					style="border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: center;">
+					Plant</td>
+				<td align="center" width="10%" colspan="4"
+					style="border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: center;">Site</td>
+			</tr>
+			<tr>
+				<td align="center" width="2%"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">L
+				</td>
+				<td align="center" width="2%"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">W</td>
+					<td align="center" width="2%"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">H
+				</td>
+				<td align="center" width="2%"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">T</td>
+				<td align="center" width="2%"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">L
+				</td>
+				<td align="center" width="2%"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">W</td>
+					<td align="center" width="2%"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">H
+				</td>
+				<td align="center" width="2%"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">T</td>
+			</tr>
+			
+			<c:forEach items="${printData.chalanItemList}" var="quot" varStatus="count3">
 
-<p style="margin-left: 100px;"><b>Measurement</b> Length:${chalan.itemLengthPlant}&nbsp;Width:${chalan.itemWidthPlant}&nbsp;&nbsp;Height:${chalan.itemHeightPlant}&nbsp;&nbsp;Total:${chalan.itemTotalPlant}</p>
+<tr>
+<td  style="border-bottom:1px solid #313131; border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${count3.index+1}</td>
+<td style="border-bottom:1px solid #313131; border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemName}</td>
+
+<td  align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemLengthPlant}</td>
+<td  align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000;  font-size:10px;">${quot.itemWidthPlant}</td>
+<td align="right"  style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemHeightPlant}</td>
+<td   align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000;  font-size:10px;">${quot.itemTotalPlant}</td>
+
+<c:if test="${quot.itemTotalSite>0}">
+<td align="right"  width="2%" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemLengthSite}</td>
+<td  width="2%" align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000;  font-size:10px;">${quot.itemWidthSite}</td>
+<td align="right" width="2%"  style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemHeightSite}</td>
+<td  width="2%"  align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000;  font-size:10px;">${quot.itemTotalSite}</td>
+</c:if>
+
+<c:if test="${quot.itemTotalSite==0}">
+<td align="right" width="2%"  style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; color:white; font-size:10px;">-</td>
+<td  width="2%" align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; color:white; font-size:10px;">-</td>
+<td align="right" width="2%"  style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; color:white; font-size:10px;">-</td>
+<td  width="2%" align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; color:white;  font-size:10px;">-</td>
+</c:if>
+</tr>
 
 </c:forEach>
-<hr style="margin-left: 100px;"></hr>
-<p style="margin-left: 100px;"><b>Out Time:</b>${printData.chalanItemList[0].vehTimeOut}&nbsp;Out Km:${printData.chalanItemList[0].outKm}</p>
-<p style="margin-left: 100px;" ><b>In Time:</b>${printData.chalanItemList[0].vehTimeIn}&nbsp;In Km:${printData.chalanItemList[0].inKm}</p>
+			
+			
+			</table>
+			
 
-<br></br>
-<%-- <p style="margin-left: 100px;"><b ><u>Notes:-Terms And Conditions</u></b></p>
-<c:forEach items="${printData.docTermList}" var="docTerm" varStatus="count1">
 
-<p style="margin-left: 100px;">${count1.index+1}) ${docTerm.termDesc}</p>
-</c:forEach>
-<br></br>
-<p style="margin-left: 100px;">We also supply material to following parties.</p>
-<c:forEach items="${supplyList}" var="supply" varStatus="count4">
+<%-- <c:forEach items="${printData.chalanItemList}" var="chalan" varStatus="count3">
+<p style="margin-left: 100px;">${count3.index+1})<b>Item Name:</b>&nbsp;&nbsp;&nbsp;<u>${chalan.itemName}</u></p>
 
-<p style="margin-left: 100px;">${count4.index+1}) ${supply.termDesc}</p>
-</c:forEach>
-<br></br>
-<p style="margin-left: 100px;"><u><b>Our Bank Details:</b></u></p>
+<p style="margin-left: 100px;"><b>Plant Measurement:</b> Length:<u>${chalan.itemLengthPlant}</u>&nbsp;Width:<u>${chalan.itemWidthPlant}</u>&nbsp;&nbsp;Height:<u>${chalan.itemHeightPlant}</u>&nbsp;&nbsp;Total:<u>${chalan.itemTotalPlant}</u></p>
 
-<p style="margin-left: 100px;">${printData.comp.compName}</p>
-<p style="margin-left: 100px;">A/c. No. ${printData.bank.accNo}</p>
-<p style="margin-left: 100px;">${printData.bank.bankName}</p>
-<p style="margin-left: 100px;">IFSC Code: ${printData.bank.bankIfsc}</p> --%>
+<c:if test="${chalan.itemTotalSite==0.0}">
+<p style="margin-left: 100px;"><b>Site Measurement:</b> Length:<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>Width:<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>Height:<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>Total:<u>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+</c:if>
+<c:if test="${chalan.itemTotalSite>0}">
+<p style="margin-left: 100px;"><b>Site Measurement:</b> Length:<u>${chalan.itemLengthSite}</u>&nbsp;Width:<u>${chalan.itemWidthSite}</u>&nbsp;&nbsp;Height:<u>${chalan.itemHeightSite}</u>&nbsp;&nbsp;Total:<u>${chalan.itemTotalSite}</u></p>
+</c:if>
+<p style="margin-left: 100px;"><b>Site Measurement</b> Length:${chalan.itemLengthSite}&nbsp;Width:${chalan.itemWidthSite}&nbsp;&nbsp;Height:${chalan.itemHeightSite}&nbsp;&nbsp;Total:${chalan.itemTotalSite}</p>
+
+</c:forEach> --%>
+<p style="margin-left: 100px;" align="left" ><b>Out Time:</b>${printData.chalanItemList[0].vehTimeOut}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Out Km:</b>${printData.chalanItemList[0].outKm}</p>
+<p style="margin-left: 100px;" align="left"><b>In Time:</b>${printData.chalanItemList[0].vehTimeIn}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>In Km:</b>${printData.chalanItemList[0].inKm}</p>
+<p style="margin-left: 100px;"><b>Driver Sign</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Site Incharge</b></p>
+<p style="margin-left: 100px;"><b></b>${printData.chalanItemList[0].usrName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b></b>${printData.chalanItemList[0].sitePersonName}</p>
+
 
 <div style="page-break-after: always;" ></div>
  
