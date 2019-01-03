@@ -1355,6 +1355,7 @@ var termTitle=data.termTitle
 	    var okay=true;
 	    var quotHeadIdPdf=document.getElementById("quotHeadId").value;
 	    var quotStatus=document.getElementById("quotStatus").value;
+	    alert("quotHeadIdPdf"+quotHeadIdPdf);
 	  
 /* 
 	    var checkboxs=document.getElementsByName("selectItem");
@@ -1391,8 +1392,7 @@ var termTitle=data.termTitle
 	    	var form=document.getElementById("updateQuotation");
 	    	form.submit();
 	    	
-
-			if(quotHeadIdPdf==0 ){
+ if(quotHeadIdPdf==0 ){
 				
 				//alert("hiii");
 				
@@ -1405,8 +1405,7 @@ var termTitle=data.termTitle
 					.open('${pageContext.request.contextPath}/pdfQuot?url=pdf/showQuotPdf/'
 							+ quotHeadIdPdf);
 					
-			}
-		
+			} 
 	    	
 	    }
 	   

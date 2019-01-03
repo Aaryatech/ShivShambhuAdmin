@@ -116,8 +116,8 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showPoklenReadingList" style="color:black"><strong>Poklen
-										Reading List</strong></a>
+									href="${pageContext.request.contextPath}/showPoklenReadingList"
+									style="color: black"><strong>Poklen Reading List</strong></a>
 							</div>
 
 						</div>
@@ -168,7 +168,7 @@
 											class="form-control" required style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">End Date*</div>
+									<div class="col-md-2">End Date</div>
 
 									<div class="col-md-4">
 										<input type="text" id="end_date" name="end_date"
@@ -176,7 +176,7 @@
 											value="${editPRead.endDate}"
 											oninvalid="setCustomValidity('Please select date')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" required style="width: 100%;">
+											class="form-control" style="width: 100%;">
 									</div>
 
 								</div>
@@ -280,14 +280,14 @@
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
-									<div class="col-md-2">End Reading*</div>
+									<div class="col-md-2">End Reading</div>
 									<div class="col-md-4">
 										<input type="text" id="endReading" name="endReading"
 											class="form-control" autocomplete="off" style="width: 100%;"
 											value="${editPRead.endReading}" onchange="checkReading()"
 											oninvalid="setCustomValidity('Please enter correct reading')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 
@@ -296,7 +296,7 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Start Time</div>
+									<div class="col-md-2">Start Time*</div>
 									<div class="col-md-4">
 										<input type="time" id="startTime" name="startTime"
 											class="form-control" autocomplete="off" style="width: 100%;"
@@ -311,7 +311,7 @@
 											class="form-control" autocomplete="off" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter time')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editPRead.endTime}" required>
+											value="${editPRead.endTime}">
 									</div>
 								</div>
 
