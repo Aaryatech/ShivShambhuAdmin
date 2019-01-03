@@ -600,9 +600,13 @@
 			//alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
+			var plantId= document.getElementById("plant_id").value;
+			var custId= document.getElementById("cust_name").value;
+			
+			
 
 			window.open('${pageContext.request.contextPath}/showEnqListPdf/'
-					+ fromDate + '/' + toDate);
+					+ fromDate + '/' + toDate +'/' + custId + '/' + plantId);
 			document.getElementById("expExcel").disabled = true;
 
 		}

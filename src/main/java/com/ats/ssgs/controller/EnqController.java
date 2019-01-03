@@ -245,8 +245,8 @@ public class EnqController {
 	
 	
 	
-	@RequestMapping(value = "/showEnqListPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
-	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+	@RequestMapping(value = "/showEnqListPdf/{fromDate}/{toDate}/{custId}/{plantId}", method = RequestMethod.GET)
+	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,@PathVariable("custId") int custId,@PathVariable("plantId") int plantId,
 			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showDatewisePdf");
@@ -383,22 +383,67 @@ public class EnqController {
 
 			}
 			document.open();
-			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
+			Paragraph name = new Paragraph("Shiv Shambhu(Datewise Equiry List)\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			Paragraph company = new Paragraph("Datewise Enquiry List\n", f);
-			company.setAlignment(Element.ALIGN_CENTER);
-			document.add(company);
-			document.add(new Paragraph(" "));
-
+			
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			
+			String plantname=null;
+			String custName=null;
+			
+			
+		
+
+			
+			if(plantId==0) {
+				plantname="All";
+				
+			}
+			else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("plantId", plantId);
+
+				Plant getPlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+				plantname=getPlant.getPlantName();
+				System.out.println("plantname"+plantname);
+				
+				
+				
+			}
+			if(custId==0) {
+				custName="All";
+				
+			}
+			else {
+				
+				
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				System.out.println();
+
+				map.add("custId", custId);
+
+				GetCust getcus1 = rest.postForObject(Constants.url + "getCustomerByCustId", map, GetCust.class);
+				custName=getcus1.getCustName();
+				System.out.println("custName"+custName);
+				
+			}
+			Paragraph p2 = new Paragraph("FromDate:"+fromDate +" ToDate:"+toDate+"  Plant:" + plantname + "  Customer:" + custName, headFont);
+			p2.setAlignment(Element.ALIGN_CENTER);
+			document.add(p2);
+			document.add(new Paragraph("\n"));
+			
+			
+			
+			document.add(table);
+			
+			/*Paragraph p1 = new Paragraph("Total:"+tot, headFont);
 			p1.setAlignment(Element.ALIGN_CENTER);
 			document.add(p1);
-			document.add(new Paragraph("\n"));
-			document.add(table);
+			document.add(new Paragraph("\n"));*/
 
 			int totalPages = writer.getPageNumber();
 
@@ -439,6 +484,7 @@ public class EnqController {
 			ex.printStackTrace();
 
 		}
+
 
 	}
 

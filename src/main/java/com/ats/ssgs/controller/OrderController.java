@@ -2,6 +2,8 @@ package com.ats.ssgs.controller;
 
 import java.io.BufferedInputStream;
 
+
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,6 +47,7 @@ import com.ats.ssgs.model.chalan.GetChalanDetail;
 import com.ats.ssgs.model.chalan.GetChalanHeader;
 import com.ats.ssgs.model.enq.GetEnqHeader;
 import com.ats.ssgs.model.master.Cust;
+import com.ats.ssgs.model.master.GetCust;
 //import com.ats.ssgs.model.master.Document;
 //import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.Info;
@@ -567,8 +570,8 @@ public class OrderController {
 		return getOrdList;
 	}
 
-	@RequestMapping(value = "/showOrderListPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
-	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+	@RequestMapping(value = "/showOrderListPdf/{fromDate}/{toDate}/{custId}/{plantId}", method = RequestMethod.GET)
+	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,@PathVariable("custId") int custId,@PathVariable("plantId") int plantId,
 			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showDatewisePdf");
@@ -652,7 +655,7 @@ public class OrderController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-
+			float tot=0;
 			int index = 0;
 			for (GetOrder work : getOrdList) {
 				index++;
@@ -706,6 +709,10 @@ public class OrderController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				
+				tot=tot+work.getTotal();
+				System.out.println("total is"+tot);
 
 				String status1 = null;
 				int stat = work.getStatus();
@@ -727,22 +734,62 @@ public class OrderController {
 
 			}
 			document.open();
-			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
+			Paragraph name = new Paragraph("Shiv Shambhu(Datewise Order List)\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			Paragraph company = new Paragraph("Datewise Order List\n", f);
-			company.setAlignment(Element.ALIGN_CENTER);
-			document.add(company);
-			document.add(new Paragraph(" "));
-
+			
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			
+			String plantname=null;
+			String custName=null;
+			
+			if(plantId==0) {
+				plantname="All";
+				
+			}
+			else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("plantId", plantId);
+
+				Plant getPlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+				plantname=getPlant.getPlantName();
+				System.out.println("plantname"+plantname);
+				
+				
+				
+			}
+			if(custId==0) {
+				custName="All";
+				
+			}
+			else {
+				
+				
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("custId", custId);
+
+				GetCust getcus = rest.postForObject(Constants.url + "getCustomerByCustId", map, GetCust.class);
+				custName=getcus.getCustName();
+				System.out.println("custName"+custName);
+				
+			}
+			Paragraph p2 = new Paragraph("FromDate:"+fromDate +" ToDate:"+toDate+"  Plant:" + plantname + "  Customer:" + custName, headFont);
+			p2.setAlignment(Element.ALIGN_CENTER);
+			document.add(p2);
+			document.add(new Paragraph("\n"));
+			
+			
+			
+			document.add(table);
+			
+			Paragraph p1 = new Paragraph("Total:"+tot, headFont);
 			p1.setAlignment(Element.ALIGN_CENTER);
 			document.add(p1);
 			document.add(new Paragraph("\n"));
-			document.add(table);
 
 			int totalPages = writer.getPageNumber();
 
@@ -1113,12 +1160,13 @@ public class OrderController {
 		return getOrdList;
 	}
 
-	@RequestMapping(value = "/showPendingOrderListPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
-	public void showOrderDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+	@RequestMapping(value = "/showPendingOrderListPdf/{fromDate}/{toDate}/{custId}/{plantId}", method = RequestMethod.GET)
+	public void showOrderDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,@PathVariable("custId") int custId,@PathVariable("plantId") int plantId,
 			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showDatewisePdf");
 		Document document = new Document(PageSize.A4);
+		System.out.println("custId "+custId);
 
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
@@ -1233,25 +1281,73 @@ public class OrderController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				//tot=tot+work.getTotal();
+				//System.out.println("total is"+tot);
 
 			}
 			document.open();
-			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
+			Paragraph name = new Paragraph("Shiv Shambhu(Datewise Pending Chalan List)\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			Paragraph company = new Paragraph("Datewise Pending Chalan List\n", f);
-			company.setAlignment(Element.ALIGN_CENTER);
-			document.add(company);
-			document.add(new Paragraph(" "));
-
+			
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			
+			String plantname=null;
+			String custName=null;
+			
+			
+		
+
+			
+			if(plantId==0) {
+				plantname="All";
+				
+			}
+			else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("plantId", plantId);
+
+				Plant getPlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+				plantname=getPlant.getPlantName();
+				System.out.println("plantname"+plantname);
+				
+				
+				
+			}
+			if(custId==0) {
+				custName="All";
+				
+			}
+			else {
+				
+				
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				System.out.println();
+
+				map.add("custId", custId);
+
+				GetCust getcus1 = rest.postForObject(Constants.url + "getCustomerByCustId", map, GetCust.class);
+				custName=getcus1.getCustName();
+				System.out.println("custName"+custName);
+				
+			}
+			Paragraph p2 = new Paragraph("FromDate:"+fromDate +" ToDate:"+toDate+"  Plant:" + plantname + "  Customer:" + custName, headFont);
+			p2.setAlignment(Element.ALIGN_CENTER);
+			document.add(p2);
+			document.add(new Paragraph("\n"));
+			
+			
+			
+			document.add(table);
+			
+			/*Paragraph p1 = new Paragraph("Total:"+tot, headFont);
 			p1.setAlignment(Element.ALIGN_CENTER);
 			document.add(p1);
-			document.add(new Paragraph("\n"));
-			document.add(table);
+			document.add(new Paragraph("\n"));*/
 
 			int totalPages = writer.getPageNumber();
 

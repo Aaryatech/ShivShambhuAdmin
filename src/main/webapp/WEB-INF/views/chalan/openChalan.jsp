@@ -10,7 +10,7 @@
 <title>Shiv Admin</title>
 
 
-<c:url var="getChalanListByPlant" value="/getChalanListByPlant" />
+<c:url var="getOpenChalanListByPlant" value="/getOpenChalanListByPlant" />
 <%-- 
 
 <c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
@@ -225,6 +225,23 @@
 										</thead>
 
 									</table>
+										<div class="col-md-3">
+
+									<button type="button" class="btn btn-primary"
+										onclick="exportToExcel();" disabled="disabled" id="expExcel"
+										style="align-content: center; width: 200px; margin-left: 80px;">
+										Export To Excel</button>
+								</div>
+
+
+								<div class="col-md-3">
+
+									<button type="button" class="btn btn-primary"
+										onclick="genPdf()" disabled="disabled" id="PDFButton"
+										style="align-content: center; width: 100px; margin-left: 80px;">
+										PDF</button>
+								</div>
+								&nbsp;
 								</div>
 
 							<input type="submit" class="btn btn-primary" value="Delete"
@@ -389,13 +406,24 @@
 			
 				$
 						.getJSON(
-								'${getChalanListByPlant}',
+								'${getOpenChalanListByPlant}',
 								{
 									plantId : plantId,
 									ajax : 'true',
 								},
 
 								function(data) {
+									
+									document.getElementById("expExcel").disabled = false;
+									document.getElementById("PDFButton").disabled = false;
+
+									if (data == "") {
+										alert("No records found !!");
+										document.getElementById("expExcel").disabled = true;
+										document.getElementById("PDFButton").disabled = true;
+
+									}
+
 									
 									//alert("Order Data " +JSON.stringify(data));
 									var chBox;
@@ -467,7 +495,29 @@ function callClose(chalanId){
 											});
 						});
 	</script>
+		<script type="text/javascript">
+		function exportToExcel() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
+		}
+	</script>
+
+	<script type="text/javascript">
+		function genPdf() {
+			
 		
+			var plantId= document.getElementById("plant_id").value;
+		
+			//alert("plant_id"+plant_id);
+			
+
+			window.open('${pageContext.request.contextPath}/showOpenChalanListPdf/'
+					+ plantId);
+			document.getElementById("expExcel").disabled = true;
+
+		}
+	</script>
 
 
 

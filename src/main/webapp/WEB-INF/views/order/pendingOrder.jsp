@@ -641,9 +641,16 @@
 			//alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
+			var plantId= document.getElementById("plant_id").value;
+			var custId= document.getElementById("cust_name").value;
+			
 
+			
+			alert("plant id is"+plantId);
+			alert("cust id is"+custId); 
+			
 			window.open('${pageContext.request.contextPath}/showPendingOrderListPdf/'
-					+ fromDate + '/' + toDate);
+					+ fromDate + '/' + toDate  +'/' + custId + '/' + plantId );
 			document.getElementById("expExcel").disabled = true;
 
 		}

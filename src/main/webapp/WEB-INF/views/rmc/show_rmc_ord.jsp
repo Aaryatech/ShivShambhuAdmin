@@ -171,7 +171,7 @@
 									<input type="hidden" name="itemId" id="itemId"
 										value="0" />
 
-									<div class="col-md-2">Plant</div>
+									<div class="col-md-1">Plant</div>
 
 									<div class="col-md-3">
 										<select id="plant_id" name="plant_id" class="standardSelect"
@@ -180,9 +180,21 @@
 											onchange="getData()">
 											<option value="">Select</option>
 
+
+<c:forEach items="${plantList}" var="plant">
+												<c:choose>
+													<c:when test="${plant.plantId==${plantId}}">
+														<option value="${plant.plantId}">${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+													<option value="${plant.plantId}">${plant.plantName}</option>
+													</c:otherwise>
+												</c:choose>
+</c:forEach>
+										<%-- 	</c:forEach>
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
-											</c:forEach>
+											</c:forEach> --%>
 										</select>
 									</div>
 
@@ -255,13 +267,32 @@
 													value="${orderDet.remOrdQty}" /></td>
 													
 													
-											<td style="text-align: center;"><%-- <a href="#" class="action_btn" onclick="callEdit(${orderDet.orderId})"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; --%><a href="#" class="action_btn" onclick="callChalanPage(${orderDet.orderDetId},${orderDet.orderId},${count.index})"><i class="fa fa-list"  title="Chalan"></i></a></td>
+											<td style="text-align: center;"><%-- <a href="#" class="action_btn" onclick="callEdit(${orderDet.orderId})"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; --%><a href="#" class="action_btn" onclick="callChalanPage(${orderDet.orderDetId},${orderDet.orderId},${count.index})"><i class="fa fa-list"   title="Chalan"></i></a></td>
 													
 										
 										</tr>
 										</c:forEach>
 
 									</table>
+									<div class="col-md-2"></div>
+
+								<div class="col-md-3">
+
+									<button type="button" class="btn btn-primary"
+										onclick="exportToExcel();"  id="expExcel"
+										style="align-content: center; width: 200px; margin-left: 80px;">
+										Export To Excel</button>
+								</div>
+
+
+								<div class="col-md-3">
+
+									<button type="button" class="btn btn-primary"
+										onclick="genPdf()"  id="PDFButton"
+										style="align-content: center; width: 100px; margin-left: 80px;">
+										PDF</button>
+								</div>
+								&nbsp;
 								</div>
 								<div class="form-group"></div>
 
@@ -422,6 +453,31 @@ function callChalanPage(orderId,orderDetId,key) {
 	} 
 	</script>
 
+
+	<script type="text/javascript">
+		function exportToExcel() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
+		}
+	</script>
+
+	<script type="text/javascript">
+		function genPdf() {
+			alert("hiii");
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+			var plantId = document.getElementById("plant_id").value;
+		
+			
+			alert("PlantId is"+plantId);
+
+			window.open('${pageContext.request.contextPath}/showRmcListPdf/'
+					+ fromDate + '/' + toDate +'/'  + plantId);
+			document.getElementById("expExcel").disabled = true;
+
+		}
+	</script>
 
 
 	<!-- <script type="text/javascript">
