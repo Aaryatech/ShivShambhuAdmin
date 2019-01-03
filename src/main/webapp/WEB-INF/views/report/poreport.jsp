@@ -169,10 +169,10 @@
 										value="${toDate}"> <span class="error"
 										aria-live="polite"></span>
 								</div>
-								<div class="col-md-2">
+								<!-- <div class="col-md-2">
 									<input type="button" class="btn btn-primary"
 										onclick="showQuot()" value="Submit">
-								</div>
+								</div> -->
 
 							</div>
 
@@ -352,8 +352,10 @@
 				alert("from date greater than todate ");
 			}
 			if (valid == true) {
-				
-				alert("From Date : "+fromDate+"           To Date : "+toDate+"         Type : "+type+"        PlantId : "+plantId);
+
+				alert("From Date : " + fromDate + "           To Date : "
+						+ toDate + "         Type : " + type
+						+ "        PlantId : " + plantId);
 
 				$.getJSON('${getPOReportBetDate}', {
 
@@ -385,8 +387,8 @@
 
 						dataTable.row.add(
 								[ i + 1, v.poNo, v.poDate, v.itemName,
-										v.custName, v.custMobNo, acButton ])
-								.draw();
+										v.poRemainingQty, v.custName,
+										v.custMobNo ]).draw();
 					});
 
 				});
@@ -411,9 +413,8 @@
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			window
-					.open('${pageContext.request.contextPath}/showContractorwisePdf/'
-							+ fromDate + '/' + toDate);
+			window.open('${pageContext.request.contextPath}/showPOReportPdf/'
+					+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 
 		}
