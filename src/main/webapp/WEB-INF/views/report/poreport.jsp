@@ -11,7 +11,7 @@
 
 
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
-<c:url var="getContraReportBetDate" value="/getContraReportBetDate" />
+<c:url var="getPOReportBetDate" value="/getPOReportBetDate" />
 <%-- 
 
 <c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
@@ -352,8 +352,10 @@
 				alert("from date greater than todate ");
 			}
 			if (valid == true) {
+				
+				alert("From Date : "+fromDate+"           To Date : "+toDate+"         Type : "+type+"        PlantId : "+plantId);
 
-				$.getJSON('${getContraReportBetDate}', {
+				$.getJSON('${getPOReportBetDate}', {
 
 					fromDate : fromDate,
 					toDate : toDate,
@@ -382,8 +384,9 @@
 					$.each(data, function(i, v) {
 
 						dataTable.row.add(
-								[ i + 1, v.contrName, v.total, v.qtyTotal,
-										v.weighContrQty, acButton ]).draw();
+								[ i + 1, v.poNo, v.poDate, v.itemName,
+										v.custName, v.custMobNo, acButton ])
+								.draw();
 					});
 
 				});

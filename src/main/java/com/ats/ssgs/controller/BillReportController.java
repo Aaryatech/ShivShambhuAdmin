@@ -41,6 +41,7 @@ import com.ats.ssgs.model.GetDateWiseDetailBill;
 import com.ats.ssgs.model.GetDatewiseReport;
 import com.ats.ssgs.model.GetItemsForBill;
 import com.ats.ssgs.model.GetItenwiseBillReport;
+import com.ats.ssgs.model.GetPoReport;
 import com.ats.ssgs.model.MonthWiseBill;
 import com.ats.ssgs.model.TaxWiseBill;
 import com.ats.ssgs.model.master.Company;
@@ -100,54 +101,64 @@ public class BillReportController {
 		return model;
 
 	}
+	
+	
+	List<GetPoReport> poReportList;
+	
 
 	@RequestMapping(value = "/getPOReportBetDate", method = RequestMethod.GET)
-	public @ResponseBody List<GetDatewiseReport> getPOReportBetDate(HttpServletRequest request,
+	public @ResponseBody List<GetPoReport> getPOReportBetDate(HttpServletRequest request,
 			HttpServletResponse response) {
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		int type = Integer.parseInt(request.getParameter("type"));
 
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		map.add("plantId",plantId);
+		map.add("type", type);
 
-		GetDatewiseReport[] ordHeadArray = rest.postForObject(Constants.url + "getDatewiseBillReport", map,
-				GetDatewiseReport[].class);
-		dateBillList = new ArrayList<GetDatewiseReport>(Arrays.asList(ordHeadArray));
+		
+		
+		GetPoReport[] poReportArray = rest.postForObject(Constants.url + "getPoReportBetDateAndType", map,
+				GetPoReport[].class);
+		poReportList = new ArrayList<GetPoReport>(Arrays.asList(poReportArray));
 
+		System.out.println("LIST : -----------------------"+poReportList);
+		
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		ExportToExcel expoExcel = new ExportToExcel();
 		List<String> rowData = new ArrayList<String>();
 
 		rowData.add("Sr. No");
-		rowData.add("Bill Date");
-		rowData.add("CGST");
-		rowData.add("IGST");
-		rowData.add("SGST");
-		rowData.add("Tax Amount");
-		rowData.add("Taxable Amount");
-		rowData.add("Total Amount");
+		rowData.add("PO Date");
+		rowData.add("PO NO");
+		rowData.add("Item");
+		rowData.add("PO Remaining Qty");
+		rowData.add("Customer");
+		rowData.add("Mobile");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 		int cnt = 1;
-		for (int i = 0; i < dateBillList.size(); i++) {
+		for (int i = 0; i < poReportList.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 			cnt = cnt + i;
 			rowData.add("" + (i + 1));
 
-			rowData.add("" + dateBillList.get(i).getBillDate());
+			rowData.add("" + poReportList.get(i).getPoDate());
 
-			rowData.add("" + dateBillList.get(i).getCgstAmt());
-			rowData.add("" + dateBillList.get(i).getIgstAmt());
-			rowData.add("" + dateBillList.get(i).getSgstAmt());
-			rowData.add("" + dateBillList.get(i).getTaxAmt());
-			rowData.add("" + dateBillList.get(i).getTaxableAmt());
-			rowData.add("" + dateBillList.get(i).getTotalAmt());
+			rowData.add("" + poReportList.get(i).getPoNo());
+			rowData.add("" + poReportList.get(i).getItemName());
+			rowData.add("" + poReportList.get(i).getPoRemainingQty());
+			rowData.add("" + poReportList.get(i).getCustName());
+			rowData.add("" + poReportList.get(i).getCustMobNo());
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -156,9 +167,9 @@ public class BillReportController {
 
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
-		session.setAttribute("excelName", "GetBillReport");
+		session.setAttribute("excelName", "GetPOReport");
 
-		return dateBillList;
+		return poReportList;
 	}
 
 	@RequestMapping(value = "/showDatewiseBillReport", method = RequestMethod.GET)
