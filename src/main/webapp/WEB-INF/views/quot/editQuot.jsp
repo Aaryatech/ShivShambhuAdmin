@@ -1355,7 +1355,7 @@ var termTitle=data.termTitle
 	    var okay=true;
 	    var quotHeadIdPdf=document.getElementById("quotHeadId").value;
 	    var quotStatus=document.getElementById("quotStatus").value;
-	    alert("quotHeadIdPdf"+quotHeadIdPdf);
+	  //  alert("quotHeadIdPdf"+quotHeadIdPdf);
 	  
 /* 
 	    var checkboxs=document.getElementsByName("selectItem");

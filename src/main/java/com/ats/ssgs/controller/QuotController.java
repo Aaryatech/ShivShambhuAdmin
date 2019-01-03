@@ -202,7 +202,7 @@ public class QuotController {
 
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
-		//int stat=Integer.parseInt(request.getParameter("statusList"));
+		// int stat=Integer.parseInt(request.getParameter("statusList"));
 
 		String[] statusList = request.getParameterValues("statusList");
 
@@ -230,7 +230,7 @@ public class QuotController {
 		getQuotList = new ArrayList<GetQuotHeader>(Arrays.asList(ordHeadArray));
 
 		System.out.println("quot list data " + getQuotList.toString());
-		
+
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		ExportToExcel expoExcel = new ExportToExcel();
@@ -241,7 +241,6 @@ public class QuotController {
 		rowData.add("Quotation No");
 		rowData.add("Quotation Date");
 		rowData.add("Employee Name");
-	
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -257,20 +256,16 @@ public class QuotController {
 			rowData.add("" + getQuotList.get(i).getQuotNo());
 			rowData.add("" + getQuotList.get(i).getQuotDate());
 			rowData.add("" + getQuotList.get(i).getUsrName());
-			
-			/*String status1=null;
-			int stat=getEnqList.get(i).getEnqStatus();
-			if (stat== 0) {
-				status1 = "Enquiry Generated";
-			} else if (stat == 1) {
-				status1 = "Quotation Generated";
-			} else {
 
-				status1 = "PO Generated";
-			}
-
-			rowData.add("" + status1 );
-		*/
+			/*
+			 * String status1=null; int stat=getEnqList.get(i).getEnqStatus(); if (stat== 0)
+			 * { status1 = "Enquiry Generated"; } else if (stat == 1) { status1 =
+			 * "Quotation Generated"; } else {
+			 * 
+			 * status1 = "PO Generated"; }
+			 * 
+			 * rowData.add("" + status1 );
+			 */
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -280,18 +275,14 @@ public class QuotController {
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
 		session.setAttribute("excelName", "Customerwise Quotation List");
-		
-		
 
 		return getQuotList;
 	}
 
-	
-	
-
 	@RequestMapping(value = "/showQuotListPdf/{fromDate}/{toDate}/{custId}/{plantId}", method = RequestMethod.GET)
-	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,@PathVariable("custId") int custId,@PathVariable("plantId") int plantId,
-			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			@PathVariable("custId") int custId, @PathVariable("plantId") int plantId, HttpServletRequest request,
+			HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showDatewisePdf");
 		Document document = new Document(PageSize.A4);
@@ -317,7 +308,7 @@ public class QuotController {
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f});
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -332,13 +323,12 @@ public class QuotController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
+
 			hcell = new PdfPCell(new Phrase("Company Name ", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-
 
 			hcell = new PdfPCell(new Phrase("Quotation No.", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -358,7 +348,6 @@ public class QuotController {
 
 			table.addCell(hcell);
 
-			
 			int index = 0;
 			for (GetQuotHeader work : getQuotList) {
 				index++;
@@ -399,27 +388,18 @@ public class QuotController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				
 				/*
-				String status1=null;
-				int stat=work.getEnqStatus();
-				if (stat== 0) {
-					status1 = "Enquiry Generated";
-				} else if (stat == 1) {
-					status1 = "Quotation Generated";
-				} else {
-
-					status1 = "PO Generated";
-				}
-
-				cell = new PdfPCell(new Phrase("" + status1, headFont));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table.addCell(cell);*/
-
-				
+				 * String status1=null; int stat=work.getEnqStatus(); if (stat== 0) { status1 =
+				 * "Enquiry Generated"; } else if (stat == 1) { status1 = "Quotation Generated";
+				 * } else {
+				 * 
+				 * status1 = "PO Generated"; }
+				 * 
+				 * cell = new PdfPCell(new Phrase("" + status1, headFont));
+				 * cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				 * cell.setHorizontalAlignment(Element.ALIGN_RIGHT); cell.setPaddingRight(2);
+				 * cell.setPadding(3); table.addCell(cell);
+				 */
 
 			}
 			document.open();
@@ -427,63 +407,55 @@ public class QuotController {
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			
+
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			
-			String plantname=null;
-			String custName=null;
-			
-			
-		
 
-			
-			if(plantId==0) {
-				plantname="All";
-				
-			}
-			else {
+			String plantname = null;
+			String custName = null;
+
+			if (plantId == 0) {
+				plantname = "All";
+
+			} else {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("plantId", plantId);
 
 				Plant getPlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
-				plantname=getPlant.getPlantName();
-				System.out.println("plantname"+plantname);
-				
-				
-				
+				plantname = getPlant.getPlantName();
+				System.out.println("plantname" + plantname);
+
 			}
-			if(custId==0) {
-				custName="All";
-				
-			}
-			else {
-				
-				
+			if (custId == 0) {
+				custName = "All";
+
+			} else {
+
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				System.out.println();
 
 				map.add("custId", custId);
 
 				GetCust getcus1 = rest.postForObject(Constants.url + "getCustomerByCustId", map, GetCust.class);
-				custName=getcus1.getCustName();
-				System.out.println("custName"+custName);
-				
+				custName = getcus1.getCustName();
+				System.out.println("custName" + custName);
+
 			}
-			Paragraph p2 = new Paragraph("FromDate:"+fromDate +" ToDate:"+toDate+"  Plant:" + plantname + "  Customer:" + custName, headFont);
+			Paragraph p2 = new Paragraph(
+					"FromDate:" + fromDate + " ToDate:" + toDate + "  Plant:" + plantname + "  Customer:" + custName,
+					headFont);
 			p2.setAlignment(Element.ALIGN_CENTER);
 			document.add(p2);
 			document.add(new Paragraph("\n"));
-			
-			
-			
+
 			document.add(table);
-			
-			/*Paragraph p1 = new Paragraph("Total:"+tot, headFont);
-			p1.setAlignment(Element.ALIGN_CENTER);
-			document.add(p1);
-			document.add(new Paragraph("\n"));*/
+
+			/*
+			 * Paragraph p1 = new Paragraph("Total:"+tot, headFont);
+			 * p1.setAlignment(Element.ALIGN_CENTER); document.add(p1); document.add(new
+			 * Paragraph("\n"));
+			 */
 
 			int totalPages = writer.getPageNumber();
 
@@ -524,7 +496,6 @@ public class QuotController {
 			ex.printStackTrace();
 
 		}
-
 
 	}
 
@@ -1276,7 +1247,7 @@ public class QuotController {
 		// File f = new File("/report.pdf");
 		// File f = new File("/home/lenovo/bill.pdf");
 
-		File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/bill.pdf");
+		File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1296,9 +1267,9 @@ public class QuotController {
 		String appPath = context.getRealPath("");
 
 		// String filename = "/home/lenovo/bill.pdf";
-		String filename = "/opt/apache-tomcat-9.0.4/webapps/uploads/bill.pdf";
+		String filename = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
 		// String filePath = "/report.pdf";
-		String filePath = "/opt/apache-tomcat-9.0.4/webapps/uploads/bill.pdf";
+		String filePath = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
 		// String filePath = "/home/lenovo/bill.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 

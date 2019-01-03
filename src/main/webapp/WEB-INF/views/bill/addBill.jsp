@@ -1061,7 +1061,7 @@ $
 		}
 		else{
 			
-			alert("ppoiio");
+			//alert("ppoiio");
 		
 				window
 				.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
