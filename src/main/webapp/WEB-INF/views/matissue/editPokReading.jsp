@@ -116,8 +116,8 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showPoklenReadingList" style="color:black"><strong>Poklen
-										Reading List</strong></a>
+									href="${pageContext.request.contextPath}/showPoklenReadingList"
+									style="color: black"><strong>Poklen Reading List</strong></a>
 							</div>
 
 						</div>
@@ -172,8 +172,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="end_date" name="end_date" required
-											autocomplete="off" value="${editPRead.endDate}"
-											onchange="checkDate()"
+											autocomplete="off" value="${endDate}" onchange="checkDate()"
 											oninvalid="setCustomValidity('Please select date')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;">
@@ -283,9 +282,8 @@
 									<div class="col-md-2">End Reading*</div>
 									<div class="col-md-4">
 										<input type="text" id="endReading" name="endReading" required
-											value="${editPRead.endReading}" class="form-control"
-											autocomplete="off" style="width: 100%;"
-											onchange="checkReading()"
+											value="${endReading}" class="form-control" autocomplete="off"
+											style="width: 100%;" onchange="checkReading()"
 											oninvalid="setCustomValidity('Please enter correct reading')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?"
@@ -309,8 +307,8 @@
 									<div class="col-md-2">End Time*</div>
 									<div class="col-md-4">
 										<input type="time" id="endTime" name="endTime" required
-											value="${editPRead.endTime}" class="form-control"
-											autocomplete="off" style="width: 100%;"
+											value="${endTime}" class="form-control" autocomplete="off"
+											style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter endtime')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>

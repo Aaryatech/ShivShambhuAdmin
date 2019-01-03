@@ -463,20 +463,42 @@ public class TxnController {
 			pReading.setPokType(pokeType);
 			pReading.setReadingId(readingId);
 
+			System.out.println("curDate123456===============" + curDate);
+			System.out.println("curDate===============" + curDate);
+
+			try {
+
+				String end_date = request.getParameter("end_date");
+				System.out.println("end_date" + end_date);
+				if (!end_date.isEmpty()) {
+					pReading.setEndDate(DateConvertor.convertToYMD(end_date));
+				} else {
+					pReading.setEndDate(curDate);
+				}
+
+			} catch (Exception e) {
+				pReading.setEndDate(curDate);
+
+			}
+			try {
+				pReading.setEndReading(Float.parseFloat(request.getParameter("endReading")));
+
+			} catch (Exception e) {
+				pReading.setEndReading(0);
+
+			}
+
+			try {
+				pReading.setEndTime(request.getParameter("endTime"));
+
+			} catch (Exception e) {
+				pReading.setEndTime("00:00:00");
+			}
+
 			if (readingId != 0) {
 				pReading.setExInt1(2);
 			} else {
 				pReading.setExInt1(1);
-			}
-
-			try {
-				pReading.setEndDate(DateConvertor.convertToYMD(request.getParameter("end_date")));
-				pReading.setEndReading(Float.parseFloat(request.getParameter("endReading")));
-				pReading.setEndTime(request.getParameter("endTime"));
-			} catch (Exception e) {
-				pReading.setEndDate(curDate);
-				pReading.setEndReading(0);
-				pReading.setEndTime("00:00:00");
 			}
 
 			PoklenReading prInsertRes = rest.postForObject(Constants.url + "savePoklenReading", pReading,
@@ -489,7 +511,9 @@ public class TxnController {
 
 			System.err.println("plantInsertRes " + prInsertRes.toString());
 
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			System.err.println("EXCE in weighInsertRes " + e.getMessage());
 			e.printStackTrace();
 
@@ -550,7 +574,7 @@ public class TxnController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("status", 2);
+			map.add("status", 1);
 
 			GetPoklenReading[] weighArray = rest.postForObject(Constants.url + "getPokleByStatus", map,
 					GetPoklenReading[].class);
@@ -647,6 +671,18 @@ public class TxnController {
 					PoklenReading.class);
 
 			model.addObject("editPRead", editPRead);
+
+			if (editPRead.getExInt1() == 1) {
+				model.addObject("endDate", "-");
+				model.addObject("endReading", "-");
+				model.addObject("endTime", "-");
+			} else {
+
+				model.addObject("endDate", editPRead.getEndDate());
+				model.addObject("endReading", editPRead.getEndReading());
+				model.addObject("endTime", editPRead.getEndTime());
+
+			}
 
 		} catch (Exception e) {
 
