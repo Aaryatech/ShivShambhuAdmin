@@ -407,9 +407,11 @@ public class QuotController {
 			quotHeader.setQuotDate(DateConvertor.convertToDMY(quotHeader.getQuotDate()));
 			model.addObject("quotHeader", quotHeader);
 
-		/*	quotHeadIdPdf = quotHeader.getQuotHeadId();
-
-			pdfCustId = quotHeader.getCustId();*/
+			/*
+			 * quotHeadIdPdf = quotHeader.getQuotHeadId();
+			 * 
+			 * pdfCustId = quotHeader.getCustId();
+			 */
 
 			System.out.println("quotHeadIdPdf=================" + quotHeadIdPdf);
 			System.out.println("pdfCustId=================" + pdfCustId);
@@ -954,9 +956,9 @@ public class QuotController {
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		File f = new File("/home/lenovo/bill.pdf");
+		// File f = new File("/home/lenovo/bill.pdf");
 
-		// File f = new File("/opt/tomcat-latest/webapps/uploads/shivreport.pdf");
+		File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/bill.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -974,10 +976,12 @@ public class QuotController {
 		// get absolute path of the application
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
-		String filename = "/home/lenovo/bill.pdf";
+
+		// String filename = "/home/lenovo/bill.pdf";
+		String filename = "/opt/apache-tomcat-9.0.4/webapps/uploads/bill.pdf";
 		// String filePath = "/report.pdf";
-		// String filePath = "/opt/tomcat-latest/webapps/uploads/shivreport.pdf";
-		String filePath = "/home/lenovo/bill.pdf";
+		String filePath = "/opt/apache-tomcat-9.0.4/webapps/uploads/bill.pdf";
+		// String filePath = "/home/lenovo/bill.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file
@@ -1066,8 +1070,6 @@ public class QuotController {
 						String address = editCust.getCustEmail();
 						System.out.println("Email Send To" + editCust.getCustEmail());
 
-						// String address = "dhomaneneha@gmail.com";// editCust.getCustEmail();
-						// String address = "shirkeanmol@gmail.com";
 						String subject = "  ";
 
 						Message mimeMessage = new MimeMessage(session);
