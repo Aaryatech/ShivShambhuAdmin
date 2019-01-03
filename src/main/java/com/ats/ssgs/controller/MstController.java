@@ -431,6 +431,10 @@ public class MstController {
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("mst/vehicle");
+			
+			
+			
+			//model.addObject("ImageUrl", Constants.VEH_IMG_URL);
 
 			Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
 			vehList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
@@ -456,6 +460,7 @@ public class MstController {
 			model.addObject("editVeh", editVeh);
 
 			model.addObject("vehImgPath", Constants.VEH_IMG_URL);
+			
 
 		} catch (Exception e) {
 

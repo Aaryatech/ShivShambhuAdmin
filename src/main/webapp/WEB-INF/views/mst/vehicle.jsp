@@ -115,7 +115,8 @@
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertVehicle"
 								id="submitForm" method="post" enctype="multipart/form-data">
-
+								
+			
 
 
 								<div class="form-group"></div>
@@ -226,33 +227,41 @@
 
 								<div class="row">
 									<div class="col-md-2">Vehicle Document 1</div>
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="file" id="doc1" name="doc1"
-											value="${editVeh. vehDoc1}" class="form-control"
+											value="${editVeh.vehDoc1}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
 											onchange="try{setCustomValidity('')}catch(e){}" 
-											style="width: 100%;"> <a
-											href="${vehImgPath}${editVeh.vehDoc1}"></a>
-									</div>
+											style="width: 100%;"> 
 
-									<input type="hidden" id="doc11" name="doc11"
-										value="${editVeh.vehDoc1}"> <input type="hidden"
-										id="doc12" name="doc12" value="${editVeh.vehDoc2}"> <input
-										type="hidden" id="doc13" name="doc13"
-										value="${editVeh.vehDoc3}"> <input type="hidden"
-										id="doc14" name="doc14" value="${editVeh.vehDoc4}">
+									</div>
+									
+									
+								 <div class="col-md-2">
+										<img id="Docc1" name="Docc1"
+											<a href="${vehImgPath}${editVeh.vehDoc1}">Doc1 </a>
+											
+											></div> 
 
 
 									<div class="col-md-2">Vehicle Document 2</div>
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="file" id="doc2" name="doc2"
-											value="${editVeh. vehDoc2}" class="form-control"
+											value="${editVeh.vehDoc2}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
 											onchange="try{setCustomValidity('')}catch(e){}" 
 											style="width: 100%;">
 									</div>
 
 
+
+									 <div class="col-md-2">
+										<img id="Docc2" name="Docc2"
+											<a
+											href="${vehImgPath}${editVeh.vehDoc2}">Doc2</a>		
+										>							
+									</div>
+					
 
 								</div>
 								<div class="form-group"></div>
@@ -260,22 +269,39 @@
 								<div class="row">
 
 									<div class="col-md-2">Vehicle Document 3</div>
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="file" id="doc3" name="doc3"
-											value="${editVeh. vehDoc3}" class="form-control"
+											value="${editVeh.vehDoc3}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
 											onchange="try{setCustomValidity('')}catch(e){}" 
 											style="width: 100%;">
 									</div>
 
+
+
+									<div class="col-md-2">
+										<img id="Docc3" name="Docc3"
+											<a
+											href="${vehImgPath}${editVeh.vehDoc3}">Doc3</a>			
+											>
+									</div>
+					 
 									<div class="col-md-2">Vehicle Document 4</div>
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="file" id="doc4" name="doc4"
-											value="${editVeh. vehDoc4}" class="form-control"
+											value="${editVeh.vehDoc4}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
+									
+									 <div class="col-md-2">
+										<img id="Docc4" name="Docc4"
+											<a
+											href="${vehImgPath}${editVeh.vehDoc4}">Doc4</a>
+											>
+									</div> 
+					
 								</div>
 								<div class="form-group"></div>
 
@@ -509,5 +535,81 @@
 		}
 	</script>
 
+
+<script type="text/javascript">
+		function readURL1(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#Docc1').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$("#doc1").change(function() {
+			//	alert("Hi imgInp1");
+			readURL1(this);
+		});
+	</script>
+	
+	<script type="text/javascript">
+		function readURL2(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#Docc2').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$("#doc2").change(function() {
+			//	alert("Hi imgInp1");
+			readURL2(this);
+		});
+	</script>
+	
+	<script type="text/javascript">
+		function readURL3(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#Docc3').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$("#doc3").change(function() {
+			//	alert("Hi imgInp1");
+			readURL3(this);
+		});
+	</script>
+	
+	<script type="text/javascript">
+		function readURL4(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#Docc4').attr('src', e.target.result);
+				}
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
+		$("#doc4").change(function() {
+			//	alert("Hi imgInp1");
+			readURL4(this);
+		});
+	</script>
 </body>
 </html>

@@ -1,5 +1,15 @@
 package com.ats.ssgs.controller;
 
+import java.io.BufferedInputStream;
+
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,12 +18,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,11 +39,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
+import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.PoHeader;
 import com.ats.ssgs.model.chalan.GetChalanDetail;
 import com.ats.ssgs.model.chalan.GetChalanHeader;
+import com.ats.ssgs.model.enq.GetEnqHeader;
 import com.ats.ssgs.model.master.Cust;
-import com.ats.ssgs.model.master.Document;
+//import com.ats.ssgs.model.master.Document;
+//import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
@@ -44,6 +61,17 @@ import com.ats.ssgs.model.order.OrderHeader;
 import com.ats.ssgs.model.order.TempOrdDetail;
 import com.ats.ssgs.model.order.TempOrdHeader;
 import com.ats.ssgs.model.quot.QuotHeader;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Font.FontFamily;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 
 @Controller
 @Scope("session")
@@ -80,7 +108,8 @@ public class OrderController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("docCode", 3);
 
-			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,
+					com.ats.ssgs.model.master.Document.class);
 
 			model.addObject("doc", doc);
 			model.addObject("isError", isError);
@@ -265,7 +294,7 @@ public class OrderController {
 			int custId = Integer.parseInt(request.getParameter("cust_name"));
 			int projId = Integer.parseInt(request.getParameter("proj_id"));
 			int poId = Integer.parseInt(request.getParameter("po_id"));
-String dispTime=request.getParameter("disp_time");
+			String dispTime = request.getParameter("disp_time");
 			String ordDate = request.getParameter("ord_date");
 			String delDate = request.getParameter("del_date");
 
@@ -280,9 +309,9 @@ String dispTime=request.getParameter("disp_time");
 			ordHeader.setDelStatus(1);
 			ordHeader.setExDate1(curDate);
 			ordHeader.setExDate2(curDate);
-			
-			ordHeader.setExVar1(dispTime);//Delivery time
-			
+
+			ordHeader.setExVar1(dispTime);// Delivery time
+
 			ordHeader.setExVar2(NA);
 			ordHeader.setExVar3(NA);
 			ordHeader.setOrderDate(DateConvertor.convertToYMD(ordDate));
@@ -329,7 +358,8 @@ String dispTime=request.getParameter("disp_time");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("docCode", 3);
 
-			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,
+					com.ats.ssgs.model.master.Document.class);
 			ordHeader.setOrderNo(doc.getDocPrefix() + "" + doc.getSrNo());
 
 			if (poDetailForOrdList.get(0).getTaxAmt() == 0) {
@@ -476,7 +506,284 @@ String dispTime=request.getParameter("disp_time");
 
 		System.out.println("order list is" + getOrdList.toString());
 
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+
+		rowData.add("Sr. No");
+		rowData.add("Order No");
+		rowData.add("Order Date");
+		rowData.add("Delivery Date");
+
+		rowData.add("Customer Name");
+		rowData.add("Mobile No");
+		rowData.add("Total");
+
+		rowData.add("Status");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		int cnt = 1;
+		for (int i = 0; i < getOrdList.size(); i++) {
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			cnt = cnt + i;
+			rowData.add("" + (i + 1));
+
+			rowData.add("" + getOrdList.get(i).getOrderNo());
+
+			rowData.add("" + getOrdList.get(i).getOrderDate());
+			// rowData.add("" + getOrdList.get(i).getCustName());
+			rowData.add("" + getOrdList.get(i).getDeliveryDate());
+
+			rowData.add("" + getOrdList.get(i).getCustName());
+			rowData.add("" + getOrdList.get(i).getCustMobNo());
+			rowData.add("" + getOrdList.get(i).getTotal());
+
+			String status1 = null;
+			int stat = getOrdList.get(i).getStatus();
+			if (stat == 0) {
+				status1 = "Pending";
+			} else if (stat == 1) {
+				status1 = "Partial Completed";
+			} else {
+
+				status1 = "Completed";
+			}
+
+			rowData.add("" + status1);
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "Order List");
+
 		return getOrdList;
+	}
+
+	@RequestMapping(value = "/showOrderListPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
+	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+		BufferedOutputStream outStream = null;
+		System.out.println("Inside Pdf showDatewisePdf");
+		Document document = new Document(PageSize.A4);
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+
+		System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		String FILE_PATH = Constants.REPORT_SAVE;
+		File file = new File(FILE_PATH);
+
+		PdfWriter writer = null;
+
+		FileOutputStream out = new FileOutputStream(FILE_PATH);
+		try {
+			writer = PdfWriter.getInstance(document, out);
+		} catch (DocumentException e) {
+
+			e.printStackTrace();
+		}
+
+		PdfPTable table = new PdfPTable(8);
+		try {
+			System.out.println("Inside PDF Table try");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			headFont1.setColor(BaseColor.WHITE);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+
+			PdfPCell hcell = new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			hcell.setPadding(3);
+			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Order No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Order date ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Delivery date ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Customer Name ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Mobile No ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Total ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Status", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			int index = 0;
+			for (GetOrder work : getOrdList) {
+				index++;
+				PdfPCell cell;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPadding(3);
+				cell.setPaddingRight(2);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getOrderNo(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getOrderDate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getDeliveryDate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getCustName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getCustMobNo(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getTotal(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				String status1 = null;
+				int stat = work.getStatus();
+				if (stat == 0) {
+					status1 = "Pending";
+				} else if (stat == 1) {
+					status1 = "Partial Completed";
+				} else {
+
+					status1 = "Completed";
+				}
+
+				cell = new PdfPCell(new Phrase("" + status1, headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+			}
+			document.open();
+			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
+			name.setAlignment(Element.ALIGN_CENTER);
+			document.add(name);
+			document.add(new Paragraph(" "));
+			Paragraph company = new Paragraph("Datewise Order List\n", f);
+			company.setAlignment(Element.ALIGN_CENTER);
+			document.add(company);
+			document.add(new Paragraph(" "));
+
+			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new Date());
+			Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			p1.setAlignment(Element.ALIGN_CENTER);
+			document.add(p1);
+			document.add(new Paragraph("\n"));
+			document.add(table);
+
+			int totalPages = writer.getPageNumber();
+
+			System.out.println("Page no " + totalPages);
+
+			document.close();
+
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+				try {
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
+					e.printStackTrace();
+				}
+			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error: " + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+
 	}
 
 	List<GetOrderDetail> ordDetailList;
@@ -570,9 +877,8 @@ String dispTime=request.getParameter("disp_time");
 			ordHeader.setDeliveryDate(DateConvertor.convertToYMD(delDate));
 			ordHeader.setProdDate(DateConvertor.convertToYMD(delDate));
 			ordHeader.setProjId(projId);
-			
-			ordHeader.setExVar1(dispTime);//Delivery time
 
+			ordHeader.setExVar1(dispTime);// Delivery time
 
 			float headerTotal = 0;
 
@@ -689,7 +995,7 @@ String dispTime=request.getParameter("disp_time");
 
 			model = new ModelAndView("order/pendingOrder");
 
-			model.addObject("title", "Pending Order List");
+			model.addObject("title", "Pending Chalan List");
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -763,8 +1069,233 @@ String dispTime=request.getParameter("disp_time");
 
 		System.out.println("order list is" + getOrdList.toString());
 
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+
+		rowData.add("Sr. No");
+		rowData.add("Order No");
+		rowData.add("Order Date");
+		rowData.add("Delivery Date");
+
+		rowData.add("Customer Name");
+		rowData.add("Mobile No");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		int cnt = 1;
+		for (int i = 0; i < getOrdList.size(); i++) {
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			cnt = cnt + i;
+			rowData.add("" + (i + 1));
+
+			rowData.add("" + getOrdList.get(i).getOrderNo());
+
+			rowData.add("" + getOrdList.get(i).getOrderDate());
+			// rowData.add("" + getOrdList.get(i).getCustName());
+			rowData.add("" + getOrdList.get(i).getDeliveryDate());
+
+			rowData.add("" + getOrdList.get(i).getCustName());
+			rowData.add("" + getOrdList.get(i).getCustMobNo());
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "Pending Chalan List");
+
 		return getOrdList;
 	}
+
+	@RequestMapping(value = "/showPendingOrderListPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
+	public void showOrderDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+		BufferedOutputStream outStream = null;
+		System.out.println("Inside Pdf showDatewisePdf");
+		Document document = new Document(PageSize.A4);
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+
+		System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		String FILE_PATH = Constants.REPORT_SAVE;
+		File file = new File(FILE_PATH);
+
+		PdfWriter writer = null;
+
+		FileOutputStream out = new FileOutputStream(FILE_PATH);
+		try {
+			writer = PdfWriter.getInstance(document, out);
+		} catch (DocumentException e) {
+
+			e.printStackTrace();
+		}
+
+		PdfPTable table = new PdfPTable(6);
+		try {
+			System.out.println("Inside PDF Table try");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			headFont1.setColor(BaseColor.WHITE);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+
+			PdfPCell hcell = new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			hcell.setPadding(3);
+			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Order No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Order date ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Delivery date ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Customer Name ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Mobile No ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			int index = 0;
+			for (GetOrder work : getOrdList) {
+				index++;
+				PdfPCell cell;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPadding(3);
+				cell.setPaddingRight(2);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getOrderNo(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getOrderDate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getDeliveryDate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getCustName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getCustMobNo(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+			}
+			document.open();
+			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
+			name.setAlignment(Element.ALIGN_CENTER);
+			document.add(name);
+			document.add(new Paragraph(" "));
+			Paragraph company = new Paragraph("Datewise Pending Chalan List\n", f);
+			company.setAlignment(Element.ALIGN_CENTER);
+			document.add(company);
+			document.add(new Paragraph(" "));
+
+			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new Date());
+			Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			p1.setAlignment(Element.ALIGN_CENTER);
+			document.add(p1);
+			document.add(new Paragraph("\n"));
+			document.add(table);
+
+			int totalPages = writer.getPageNumber();
+
+			System.out.println("Page no " + totalPages);
+
+			document.close();
+
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+				try {
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
+					e.printStackTrace();
+				}
+			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error: " + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+
+	}
+
+	// List<GetOrder> getOrdList = new ArrayList<>();
 
 	@RequestMapping(value = "/showGenerateChalanForPendingOrder", method = RequestMethod.POST)
 	public ModelAndView showGenerateChalan1(HttpServletRequest request, HttpServletResponse response) {
@@ -772,14 +1303,15 @@ String dispTime=request.getParameter("disp_time");
 		ModelAndView model = null;
 		try {
 
+			System.out.println("inside aaa");
 			model = new ModelAndView("chalan/generateChalan1");
 
-			model.addObject("title", "Add Order");
+			model.addObject("title", "Add Chalan");
 
 			int id = Integer.parseInt(request.getParameter("orderId"));
 			int key = Integer.parseInt(request.getParameter("key"));
 
-			System.out.println("detail are" + id + key);
+			System.out.println("key are" + id + key);
 
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Calendar cal = Calendar.getInstance();
@@ -790,7 +1322,8 @@ String dispTime=request.getParameter("disp_time");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("docCode", 5);
-			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,
+					com.ats.ssgs.model.master.Document.class);
 			model.addObject("doc", doc);
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
@@ -811,12 +1344,14 @@ String dispTime=request.getParameter("disp_time");
 			model.addObject("title", "Add Chalan");
 
 			map.add("docCode", 3);
+			System.out.println("before");
 
-			Document doc1 = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			com.ats.ssgs.model.master.Document doc1 = rest.postForObject(Constants.url + "getDocument", map,
+					com.ats.ssgs.model.master.Document.class);
 
 			model.addObject("doc", doc1);
-
-			System.out.println("eee:" + getOrdList.get(key).toString());
+			System.out.println("after");
+			System.out.println("open chalan data :" + getOrdList.get(key).toString());
 
 			model.addObject("custName", getOrdList.get(key).getCustName());
 			model.addObject("plantName", getOrdList.get(key).getPlantName());
@@ -840,59 +1375,65 @@ String dispTime=request.getParameter("disp_time");
 		return model;
 
 	}
-	/*
-	 * List<Project> projList1; List<GetChalanDetail> chDetailList;
-	 * 
-	 * @RequestMapping(value = "/closeOpenChalan/{chalanId}", method =
-	 * RequestMethod.GET) public ModelAndView closeChalan(HttpServletRequest
-	 * request, HttpServletResponse response, @PathVariable int chalanId) {
-	 * 
-	 * ModelAndView model = null; try {
-	 * 
-	 * model = new ModelAndView("chalan/chalan_edit");
-	 * 
-	 * GetChalanHeader editChalan = new GetChalanHeader();
-	 * 
-	 * for(int i=0;i<getOrdList.size();i++) {
-	 * 
-	 * if(getOrdList.get(i).getOrderId()==orderId) { editOrder=new GetOrder();
-	 * editOrder=getOrdList.get(i); break; } }
-	 * 
-	 * MultiValueMap<String, Object>
-	 * 
-	 * map = new LinkedMultiValueMap<String, Object>();
-	 * 
-	 * map.add("chalanId", chalanId); editChalan = rest.postForObject(Constants.url
-	 * + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
-	 * editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate(
-	 * )));
-	 * 
-	 * map = new LinkedMultiValueMap<String, Object>();
-	 * 
-	 * map.add("custId", editChalan.getCustId()); Project[] projArray =
-	 * rest.postForObject(Constants.url + "getProjectByCustId", map,
-	 * Project[].class); projList1 = new
-	 * ArrayList<Project>(Arrays.asList(projArray));
-	 * 
-	 * model.addObject("projList", projList1);
-	 * 
-	 * map = new LinkedMultiValueMap<String, Object>();
-	 * 
-	 * map.add("chalanId", chalanId); GetChalanDetail[] chDetailArray =
-	 * rest.postForObject(Constants.url + "getGetChalanDetailByChalanId", map,
-	 * GetChalanDetail[].class); chDetailList = new
-	 * ArrayList<GetChalanDetail>(Arrays.asList(chDetailArray));
-	 * 
-	 * model.addObject("chDetailList", chDetailList);
-	 * 
-	 * model.addObject("editChalan", editChalan);
-	 * 
-	 * model.addObject("title", "Close Chalan");
-	 * 
-	 * } catch (Exception e) { System.err.println("Exce in edit Chalan " +
-	 * e.getMessage()); e.printStackTrace(); }
-	 * 
-	 * return model; }
-	 */
+
+	List<Project> projList1;
+	List<GetChalanDetail> chDetailList;
+
+	@RequestMapping(value = "/closeOpenChalan/{chalanId}", method = RequestMethod.GET)
+	public ModelAndView closeChalan(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int chalanId) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("chalan/chalan_edit");
+
+			GetChalanHeader editChalan = new GetChalanHeader();
+
+			/*for (int i = 0; i < getOrdList.size(); i++) {
+
+				if (getOrdList.get(i).getOrderId() == orderId) {
+					editOrder = new GetOrder();
+					editOrder = getOrdList.get(i);
+					break;
+				}
+			}
+*/
+			MultiValueMap<String, Object>
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("chalanId", chalanId);
+			editChalan = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
+			editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate()));
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custId", editChalan.getCustId());
+			Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
+			projList1 = new ArrayList<Project>(Arrays.asList(projArray));
+
+			model.addObject("projList", projList1);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("chalanId", chalanId);
+			GetChalanDetail[] chDetailArray = rest.postForObject(Constants.url + "getGetChalanDetailByChalanId", map,
+					GetChalanDetail[].class);
+			chDetailList = new ArrayList<GetChalanDetail>(Arrays.asList(chDetailArray));
+
+			model.addObject("chDetailList", chDetailList);
+
+			model.addObject("editChalan", editChalan);
+
+			model.addObject("title", "Close Chalan");
+
+		} catch (Exception e) {
+			System.err.println("Exce in edit Chalan " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return model;
+	}
 
 }

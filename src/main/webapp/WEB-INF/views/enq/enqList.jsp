@@ -265,6 +265,27 @@
 											</c:forEach>
 
 										</table>
+										
+										<div class="col-md-2"></div>
+
+								<div class="col-md-3">
+
+									<button type="button" class="btn btn-primary"
+										onclick="exportToExcel();" disabled="disabled" id="expExcel"
+										style="align-content: center; width: 200px; margin-left: 80px;">
+										Export To Excel</button>
+								</div>
+
+
+								<div class="col-md-3">
+
+									<button type="button" class="btn btn-primary"
+										onclick="genPdf()" disabled="disabled" id="PDFButton"
+										style="align-content: center; width: 100px; margin-left: 80px;">
+										PDF</button>
+								</div>
+								&nbsp;
+										
 									</div>
 
 
@@ -480,7 +501,18 @@
 
 								function(data) {
 
-									alert("Order Data " + JSON.stringify(data));
+									
+									document.getElementById("expExcel").disabled = false;
+									document.getElementById("PDFButton").disabled = false;
+
+									if (data == "") {
+										alert("No records found !!");
+										document.getElementById("expExcel").disabled = true;
+										document.getElementById("PDFButton").disabled = true;
+
+									}
+
+									
 
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();
@@ -510,7 +542,6 @@
 																				i + 1,
 																				v.enqNo,
 																				v.enqDate,
-
 																				v.custName,
 																				v.custMobNo,
 																				status1 ])
@@ -555,10 +586,32 @@
 
 
 
+
+	<script type="text/javascript">
+		function exportToExcel() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
+		}
+	</script>
+
+	<script type="text/javascript">
+		function genPdf() {
+			//alert("hiii");
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
+			window.open('${pageContext.request.contextPath}/showEnqListPdf/'
+					+ fromDate + '/' + toDate);
+			document.getElementById("expExcel").disabled = true;
+
+		}
+	</script>
+
+
 </body>
 </html>
 
 
 
-<!-- SELECT h.*,c.cust_name,c.cust_mob_no,p.plant_name,e.enq_gen_by,t.quot_no,t.quot_date FROM  t_enq_header h ,m_customer c,t_quot_header t,m_plant p,enq_gen_fact e WHERE c.cust_id=h.cust_id AND p.plant_id=h.plant_id AND e.enq_gen_id=h.enq_gen_id AND h.quot_id=t.quot_head_id AND h.plant_id=51 
-		AND h.enq_date BETWEEN '2018-01-01' AND '2018-12-31' AND h.ex_int1=1 -->
+<

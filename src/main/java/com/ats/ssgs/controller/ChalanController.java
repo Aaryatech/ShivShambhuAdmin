@@ -304,13 +304,15 @@ public class ChalanController {
 	public String insertChalan(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
+			
+			System.err.println("Inside insert insertChalan method");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("orderId", tempChItemList.get(0).getOrderId());
 			GetOrder getOrder = rest.postForObject(Constants.url + "getOrderHeaderById", map, GetOrder.class);
 
-			System.err.println("Inside insert insertEnq method");
+			
 
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
 			int custId = Integer.parseInt(request.getParameter("cust_name"));
@@ -951,5 +953,6 @@ public class ChalanController {
 	}
 	
 	
-
+	
+	
 }

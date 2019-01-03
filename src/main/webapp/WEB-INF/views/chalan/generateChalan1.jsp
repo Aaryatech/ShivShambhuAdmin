@@ -287,7 +287,7 @@ body {
 									</div>
 									<div class="col-md-2">Customer</div>
 									<div class="col-md-4">
-									<select id="cust_id" name="cust_id" class="standardSelect"
+									<select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required>
 										<option selected value="${custId}">${custName}</option>
 
@@ -330,7 +330,7 @@ body {
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select project')"
 										
-											onchange="getOrderHeaders()">
+											onchange="getOrderHeaders1()">
 												<option selected value="${projId}">${projName}</option>
 											<%-- <c:forEach items="${projList}" var="proj">
 											
@@ -354,7 +354,7 @@ body {
 										<select id="order_id" name="order_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select order')"
-											onchange="showOrderItemPopup(this.value)">
+											onchange="showOrderItemPopup1(this.value)">
 										<option selected value="${orderId}">${orderNo}</option>
 
 											<%-- <c:forEach items="${plantList}" var="plant">
@@ -538,13 +538,6 @@ body {
 								<div class="form-group"></div>
 								<div class="row">
 
-								<!-- 	<div class="col-md-2">Other Cost After Tax</div>
-
-									<div class="col-md-3">845</div> -->
-									<!-- <div class="col-md-2">Total</div>
-
-									<div class="col-md-3" id="ordTotal">0</div>
- -->
 									<div class="col-md-2">
 										<input type="button"  onclick="validateForm()" class="btn btn-primary" value="Submit">
 
@@ -631,8 +624,111 @@ body {
 	
 	<script type="text/javascript">
 	
+	/* function validateForm()
+	{
+	    //var checkboxs=document.getElementsByName("selectItem");
+	    var okay=true;
+	   /*  for(var i=0,l=checkboxs.length;i<l;i++)
+	    {
+	        if(checkboxs[i].checked)
+	        {
+	            okay=true;
+	            break;
+	        }
+	    } 
+	   // alert("Okay " +okay);
+
+	    var plantId=document.getElementById("plant_id").value;
+	    var custId=document.getElementById("cust_name").value;
+		var orderId=document.getElementById("order_id").value;
+		
+		 var driverId=document.getElementById("driver_id").value;
+		 var vehId=document.getElementById("veh_id").value;
+		
+		 var chalanDate=document.getElementById("chalan_date").value;
+		 var costSegment=document.getElementById("cost_segment").value;
+		 var outTime=document.getElementById("out_time").value;
+		 var outKm=document.getElementById("out_km").value;
+		 var chalanRemark =document.getElementById("chalan_remark").value;
+
+	 alert("plantId" + plantId);
+	 
+	 alert("custId" +custId);
+	 alert("orderId" +orderId);
+	 alert("driverId" +driverId);
+	 alert("vehId" +vehId);
+	 alert("chalanDate" +chalanDate);
+	 alert("costSegment" +costSegment);
+	 alert("outTime" +outTime);
+	 alert("outKm" +outKm);
+	 alert("chalanRemark" +chalanRemark);
+	
+	      if(plantId<0 || plantId=="" || plantId==null){
+	    	okay=false;
+	    	alert("Please select plant name");
+	    }
+	    else if(custId<0 || custId=="" || custId==null){
+	    	okay=false;
+	    	alert("Please select customer ");
+	    }
+	      
+	    else if(orderId<0 || orderId=="" || orderId==null){
+	    	okay=false;
+	    	alert("Please select order ");
+	    }
+	      
+	    else if(driverId<0 || driverId=="" || driverId==null){
+	    	okay=false;
+	    	alert("Please select driver ");
+	    }
+	      
+	    else if(vehId<0 || vehId=="" || vehId==null){
+	    	okay=false;
+	    	alert("Please select vehicle ");
+	    }
+	      
+	      
+	     
+	      
+	      
+	    else if(chalanDate<0 || chalanDate=="" || chalanDate==null){
+	    	okay=false;
+	    	alert("Please select chalan date ");
+	    }
+	      
+	    else if(costSegment<0 || costSegment=="" || costSegment==null){
+	    	okay=false;
+	    	alert("Please enter cost segment ");
+	    }
+	      
+	    else if(outTime<0 || outTime=="" || outTime==null){
+	    	okay=false;
+	    	alert("Please select out time ");
+	    }
+	      
+	    else if(outKm<0 || outKm=="" || outKm==null){
+	    	okay=false;
+	    	alert("Please enter out kilometer ");
+	    }
+	    else if(chalanRemark<0 || chalanRemark=="" || chalanRemark==null){
+	    	okay=false;
+	    	alert("Please enter chalan remark ");
+	    }
+	      
+		    alert("Okay " +okay);
+
+	     if(okay){
+
+	    	var form=document.getElementById("insertChalan");
+	    	form.action=("insertChalan");
+	    	form.submit();
+	    }
+	   
+	} */
+	
 	function validateForm()
 	{
+		alert("hi");
 	    //var checkboxs=document.getElementsByName("selectItem");
 	    var okay=true;
 	   /*  for(var i=0,l=checkboxs.length;i<l;i++)
@@ -646,11 +742,20 @@ body {
 	   // alert("Okay " +okay);
 
 	    var plantId=document.getElementById("plant_id").value;
+		 alert("plantId" + plantId);
+
 	    var custId=document.getElementById("cust_name").value;
+		 alert("plantId" + plantId);
+
 		var orderId=document.getElementById("order_id").value;
-		
+		 alert("plantId" + plantId);
+
 		 var driverId=document.getElementById("driver_id").value;
+		 alert("plantId" + plantId);
+
 		 var vehId=document.getElementById("veh_id").value;
+		 alert("plantId" + plantId);
+
 		
 		 var chalanDate=document.getElementById("chalan_date").value;
 		 var costSegment=document.getElementById("cost_segment").value;
