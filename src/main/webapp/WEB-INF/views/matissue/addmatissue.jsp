@@ -121,8 +121,9 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showMatIssueContractorList" style="color:black"><strong>Material
-										Issue Contractor List</strong></a>
+									href="${pageContext.request.contextPath}/showMatIssueContractorList"
+									style="color: black"><strong>Material Issue
+										Contractor List</strong></a>
 							</div>
 
 						</div>
@@ -159,7 +160,8 @@
 									<div class="col-md-2">Issue No*</div>
 									<div class="col-md-4">
 										<input type="text" id="issueNo" name="issueNo" maxlength="10"
-											class="form-control" style="width: 100%;" autocomplete="off"
+											value="${doc.srNo}" class="form-control" style="width: 100%;"
+											autocomplete="off" readonly
 											oninvalid="setCustomValidity('Please enter correct Issue No')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											pattern="[0-9]+">
@@ -352,7 +354,7 @@
 															+ v.matVehDetailId
 															+ ','
 															+ i
-															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 															+ v.matVehDetailId
 															+ ','
 															+ i
@@ -445,8 +447,8 @@
 							},
 
 							function(data) {
-								if(data==null || data==""){
-									document.getElementById("submitButton").disabled=true;
+								if (data == null || data == "") {
+									document.getElementById("submitButton").disabled = true;
 								}
 								var dataTable = $('#bootstrap-data-table')
 										.DataTable();

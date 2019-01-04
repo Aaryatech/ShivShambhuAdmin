@@ -122,8 +122,9 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showMatIssueContractorList" style="color:black"><strong>Material
-										Issue Contractor List</strong></a>
+									href="${pageContext.request.contextPath}/showMatIssueContractorList"
+									style="color: black"><strong>Material Issue
+										Contractor List</strong></a>
 							</div>
 
 						</div>
@@ -300,10 +301,11 @@
 
 													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${matDetail.matDetailId},${count.index})"><i
-															class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
-														<a href="#"
+															class="fa fa-edit" style="color: black"></i> <span
+															class="text-muted"></span></a> <a href="#"
 														onclick="callDelete(${matDetail.matDetailId},${count.index})"><i
-															class="fa fa fa-trash-o" style="color:black"></i> <span class="text-muted"></span></a></td>
+															class="fa fa fa-trash-o" style="color: black"></i> <span
+															class="text-muted"></span></a></td>
 
 
 
@@ -423,12 +425,15 @@
 										.each(
 												data,
 												function(i, v) {
+													if (v.exInt2 == 1) {
+														alert("Item Already Added");
+													}
 
 													var str = '<a href="#" class="action_btn" onclick="callEdit('
 														+ v.matVehDetailId
 														+ ','
 														+ i
-														+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+														+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 														+ v.matVehDetailId
 														+ ','
 														+ i

@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.master.DocTermHeader;
+import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Uom;
@@ -76,7 +77,27 @@ public class MatIssueController {
 
 			model.addObject("catList", catList);
 
-			model.addObject("title", "Material Issue to Contractor");
+			model.addObject("title", "Add Material Issue Contractor");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("docCode", 8);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			model.addObject("doc", doc);
+			String var = null;
+			int a = doc.getSrNo();
+
+			System.out.println("sr is " + a);
+
+			if (String.valueOf(a).length() == 1) {
+
+				var = "0000".concat(String.valueOf(a));
+
+			} else if (String.valueOf(a).length() == 2) {
+				var = "000".concat(String.valueOf(a));
+			} else {
+				var = "00".concat(String.valueOf(a));
+
+			}
 
 		} catch (Exception e) {
 
@@ -238,26 +259,26 @@ public class MatIssueController {
 
 		RawMatItem[] itemArray = rest.postForObject(Constants.url + "getRawItemListByCatId", map, RawMatItem[].class);
 		rawItemList = new ArrayList<RawMatItem>(Arrays.asList(itemArray));
-		
-		if(!rawItemList.isEmpty()) {
-			
-			System.err.println("rmi Item List  by cat id " +rawItemList.toString());
+
+		if (!rawItemList.isEmpty()) {
+
+			System.err.println("rmi Item List  by cat id " + rawItemList.toString());
 		}
 
 		return rawItemList;
 
 	}
-	
+
 	@RequestMapping(value = "/getOneRmItem", method = RequestMethod.GET)
 	public @ResponseBody RawMatItem getRawItemByRmId(HttpServletRequest request, HttpServletResponse response) {
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		RawMatItem rmItemm=null;
+		RawMatItem rmItemm = null;
 		int rmId = Integer.parseInt(request.getParameter("rmId"));
 
-		for(int i=0;i<rawItemList.size();i++) {
-			if(rmId==rawItemList.get(i).getItemId())
-				rmItemm= rawItemList.get(i);
+		for (int i = 0; i < rawItemList.size(); i++) {
+			if (rmId == rawItemList.get(i).getItemId())
+				rmItemm = rawItemList.get(i);
 			break;
 		}
 		return rmItemm;
@@ -291,6 +312,9 @@ public class MatIssueController {
 	public String insertMatIssueContractor(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("docCode", 8);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
 			HttpSession session = request.getSession();
 			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
 
@@ -367,6 +391,11 @@ public class MatIssueController {
 
 			if (matIssueInsertRes != null) {
 				isError = 2;
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("srNo", doc.getSrNo() + 1);
+				map.add("docCode", 8);
+				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+				System.out.println("info is   updateDocSr " + updateDocSr);
 			} else {
 				isError = 1;
 			}
@@ -561,40 +590,82 @@ public class MatIssueController {
 				int catId = Integer.parseInt(request.getParameter("catId"));
 				float qty = Float.parseFloat(request.getParameter("qty"));
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-				// Calendar cal = Calendar.getInstance();
+
 				String curDate = dateFormat.format(new Date());
 
-				GetMatIssueDetail matIssueDetail = new GetMatIssueDetail();
-				matIssueDetail.setDelStatus(1);
-				matIssueDetail.setExBool1(1);
-				matIssueDetail.setExDate1(curDate);
-				matIssueDetail.setExInt1(catId);
-				matIssueDetail.setExInt2(1);
-				matIssueDetail.setExVar1("NA");
-				matIssueDetail.setExVar2("NA");
-				matIssueDetail.setItemCode(getSingleItem.getItemCode());
-				matIssueDetail.setItemDesc(getSingleItem.getItemDesc());
-				matIssueDetail.setItemRate(getSingleItem.getItemClRate());
-				matIssueDetail.setMatHeaderId(matHeaderId);
-				matIssueDetail.setQuantity(qty);
-				matIssueDetail.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
-				matIssueDetail.setValue(getSingleItem.getItemClRate() * qty);
-				matIssueDetail.setItemId(itemId);
+				if (editMat.getMatIssueDetailList().size() > 0) {
+					int flag = 0;
+					for (int i = 0; i < editMat.getMatIssueDetailList().size(); i++) {
+						editMat.getMatIssueDetailList().get(i).setExInt2(0);
+						if (editMat.getMatIssueDetailList().get(i).getItemId() == itemId) {
+							editMat.getMatIssueDetailList().get(i).setExInt2(1);
+							flag = 1;
 
-				Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
-				uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+						} // end of if item exist
 
-				for (int i = 0; i < uomList.size(); i++) {
-					if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
+					} // end of for
+					if (flag == 0) {
 
-					{
-						matIssueDetail.setUomName(uomList.get(i).getUomName());
+						GetMatIssueDetail matIssueDetail = new GetMatIssueDetail();
+						matIssueDetail.setDelStatus(1);
+						matIssueDetail.setExBool1(1);
+						matIssueDetail.setExDate1(curDate);
+						matIssueDetail.setExInt1(catId);
+						matIssueDetail.setExVar1("NA");
+						matIssueDetail.setExVar2("NA");
+						matIssueDetail.setItemCode(getSingleItem.getItemCode());
+						matIssueDetail.setItemDesc(getSingleItem.getItemDesc());
+						matIssueDetail.setItemRate(getSingleItem.getItemClRate());
+						matIssueDetail.setMatHeaderId(matHeaderId);
+						matIssueDetail.setQuantity(qty);
+						matIssueDetail.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
+						matIssueDetail.setValue(getSingleItem.getItemClRate() * qty);
+						matIssueDetail.setItemId(itemId);
+
+						Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+						uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+
+						for (int i = 0; i < uomList.size(); i++) {
+							if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
+
+							{
+								matIssueDetail.setUomName(uomList.get(i).getUomName());
+							}
+						}
+						editMat.getMatIssueDetailList().add(matIssueDetail);
+						// getMatIssueDetailList.add(matIssueDetail);
+
+						System.out.println("Inside Edit Raw Material");
 					}
-				}
-				editMat.getMatIssueDetailList().add(matIssueDetail);
-				// getMatIssueDetailList.add(matIssueDetail);
+				} else {
+					GetMatIssueDetail matIssueDetail = new GetMatIssueDetail();
+					matIssueDetail.setDelStatus(1);
+					matIssueDetail.setExBool1(1);
+					matIssueDetail.setExDate1(curDate);
+					matIssueDetail.setExInt1(catId);
+					matIssueDetail.setExVar1("NA");
+					matIssueDetail.setExVar2("NA");
+					matIssueDetail.setItemCode(getSingleItem.getItemCode());
+					matIssueDetail.setItemDesc(getSingleItem.getItemDesc());
+					matIssueDetail.setItemRate(getSingleItem.getItemClRate());
+					matIssueDetail.setMatHeaderId(matHeaderId);
+					matIssueDetail.setQuantity(qty);
+					matIssueDetail.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
+					matIssueDetail.setValue(getSingleItem.getItemClRate() * qty);
+					matIssueDetail.setItemId(itemId);
 
-				System.out.println("Inside Edit Raw Material");
+					Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+					uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+
+					for (int i = 0; i < uomList.size(); i++) {
+						if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
+
+						{
+							matIssueDetail.setUomName(uomList.get(i).getUomName());
+						}
+					}
+					editMat.getMatIssueDetailList().add(matIssueDetail);
+				}
 			}
 
 		} catch (Exception e) {
@@ -713,7 +784,7 @@ public class MatIssueController {
 
 			model.addObject("catList", catList);
 
-			model.addObject("title", "Material Issue to Vehicle");
+			model.addObject("title", "Add Material Issue to Vehicle");
 
 		} catch (Exception e) {
 
@@ -914,7 +985,7 @@ public class MatIssueController {
 
 			map.add("matVehHeaderId", matVehHeaderId);
 			editVeh = rest.postForObject(Constants.url + "getMatIssueVehicleByHeaderId", map, GetVehHeader.class);
-			model.addObject("title", "Edit Material Issue Vehicle");
+			model.addObject("title", "Edit Material Issue to Vehicle");
 			model.addObject("editVeh", editVeh);
 			model.addObject("editVehDetail", editVeh.getVehDetailList());
 
@@ -991,35 +1062,85 @@ public class MatIssueController {
 
 				String curDate = dateFormat.format(new Date());
 
-				GetVehDetail matIssueDetail = new GetVehDetail();
-				matIssueDetail.setDelStatus(1);
-				matIssueDetail.setExBool1(1);
-				matIssueDetail.setExDate1(curDate);
-				matIssueDetail.setExInt1(catId);
-				matIssueDetail.setExInt2(1);
-				matIssueDetail.setExVar1("NA");
-				matIssueDetail.setExVar2("NA");
-				matIssueDetail.setItemCode(getSingleItem.getItemCode());
-				matIssueDetail.setItemDesc(getSingleItem.getItemDesc());
-				matIssueDetail.setRate(getSingleItem.getItemClRate());
-				matIssueDetail.setMatVehHeaderId(matVehHeaderId);
-				matIssueDetail.setQuantity(qty);
-				matIssueDetail.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
-				matIssueDetail.setValue(getSingleItem.getItemClRate() * qty);
-				matIssueDetail.setItemId(itemId);
+				if (editVeh.getVehDetailList().size() > 0) {
+					int flag = 0;
+					for (int i = 0; i < editVeh.getVehDetailList().size(); i++) {
+						editVeh.getVehDetailList().get(i).setExInt2(0);
+						if (editVeh.getVehDetailList().get(i).getItemId() == itemId) {
+							editVeh.getVehDetailList().get(i).setExInt2(1);
+							flag = 1;
 
-				Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
-				uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+						} // end of if item exist
 
-				for (int i = 0; i < uomList.size(); i++) {
-					if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
+					} // end of for
 
-					{
-						matIssueDetail.setUomName(uomList.get(i).getUomName());
+					if (flag == 0) {
+
+						GetVehDetail matIssueDetail = new GetVehDetail();
+						matIssueDetail.setDelStatus(1);
+						matIssueDetail.setExBool1(1);
+						matIssueDetail.setExDate1(curDate);
+						matIssueDetail.setExInt1(catId);
+
+						matIssueDetail.setExVar1("NA");
+						matIssueDetail.setExVar2("NA");
+						matIssueDetail.setItemCode(getSingleItem.getItemCode());
+						matIssueDetail.setItemDesc(getSingleItem.getItemDesc());
+						matIssueDetail.setRate(getSingleItem.getItemClRate());
+						matIssueDetail.setMatVehHeaderId(matVehHeaderId);
+						matIssueDetail.setQuantity(qty);
+						matIssueDetail.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
+						matIssueDetail.setValue(getSingleItem.getItemClRate() * qty);
+						matIssueDetail.setItemId(itemId);
+
+						Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+						uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+
+						System.out.println("------------------" + uomList.toString());
+
+						for (int i = 0; i < uomList.size(); i++) {
+							if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
+
+							{
+								matIssueDetail.setUomName(uomList.get(i).getUomName());
+
+								System.out.println("---getItemUom2--------------" + getSingleItem.getItemUom2());
+							}
+						}
+						editVeh.getVehDetailList().add(matIssueDetail);
+
+					} else {
+						GetVehDetail matIssueDetail = new GetVehDetail();
+						matIssueDetail.setDelStatus(1);
+						matIssueDetail.setExBool1(1);
+						matIssueDetail.setExDate1(curDate);
+						matIssueDetail.setExInt1(catId);
+
+						matIssueDetail.setExVar1("NA");
+						matIssueDetail.setExVar2("NA");
+						matIssueDetail.setItemCode(getSingleItem.getItemCode());
+						matIssueDetail.setItemDesc(getSingleItem.getItemDesc());
+						matIssueDetail.setRate(getSingleItem.getItemClRate());
+						matIssueDetail.setMatVehHeaderId(matVehHeaderId);
+						matIssueDetail.setQuantity(qty);
+						matIssueDetail.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
+						matIssueDetail.setValue(getSingleItem.getItemClRate() * qty);
+						matIssueDetail.setItemId(itemId);
+
+						Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+						uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+
+						for (int i = 0; i < uomList.size(); i++) {
+							if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
+
+							{
+								matIssueDetail.setUomName(uomList.get(i).getUomName());
+								System.out.println("---getItemUom2--------------" + getSingleItem.getItemUom2());
+							}
+						}
+						editVeh.getVehDetailList().add(matIssueDetail);
 					}
 				}
-				editVeh.getVehDetailList().add(matIssueDetail);
-
 			}
 
 		} catch (Exception e) {

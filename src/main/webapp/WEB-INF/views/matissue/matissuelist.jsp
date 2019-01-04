@@ -85,7 +85,7 @@
 							<div class="col-md-4" align="left">
 								<a
 									href="${pageContext.request.contextPath}/showAddMatIssueContractor"
-									style="color: black"><strong>Add Material Issue
+									style="color: black"><strong>Add Material Issue 
 										Contractor </strong></a>
 							</div>
 
@@ -105,7 +105,6 @@
 											<th style="text-align: center">Contractor Name</th>
 											<th style="text-align: center">Date</th>
 											<th style="text-align: center">Issue No</th>
-
 											<th style="text-align: center">Action</th>
 
 										</tr>

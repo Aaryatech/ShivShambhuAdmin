@@ -366,14 +366,14 @@
 												<td style="text-align: right"><c:out
 														value="${veh.loadCapacity}" /></td>
 
-												<td style="text-align: right"><c:choose>
+												<td style="text-align: left"><c:choose>
 														<c:when test="${veh.vehicleType==1}">
 														In
 													</c:when>
-														<c:when test="${veh.pokType==2}">
+														<c:when test="${veh.vehicleType==2}">
 														Out
 													</c:when>
-														<c:when test="${veh.pokType==3}">
+														<c:when test="${veh.vehicleType==3}">
 														Poklen
 													</c:when>
 													</c:choose></td>
