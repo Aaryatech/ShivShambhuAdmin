@@ -882,6 +882,76 @@ public class ChalanController {
 			String curTime = sdf.format(cal.getTime());
 
 			model.addObject("curTime", curTime);
+			
+			
+			
+			String inTime = request.getParameter("in_time");
+			float inKm = Float.parseFloat(request.getParameter("in_km"));
+			String chalanRemark = request.getParameter("chalan_remark");
+			String costSegment = request.getParameter("cost_segment");
+			String sitePerName = request.getParameter("site_per_name");
+			String sitePerMob = request.getParameter("site_per_mob");
+
+			int orderId = Integer.parseInt(request.getParameter("order_id"));
+			int chalanId1 = Integer.parseInt(request.getParameter("chalan_id"));
+
+			ChalanHeader chHeader = new ChalanHeader();
+
+			chHeader.setChalanId(chalanId1);
+			chHeader.setChalanRemark(chalanRemark);
+			chHeader.setVehTimeIn(inTime);
+
+			chHeader.setInKm(inKm);
+			chHeader.setCostSegment(costSegment);
+			chHeader.setSitePersonName(sitePerName);
+			chHeader.setSitePersonMob(sitePerMob);
+			chHeader.setOrderId(orderId);
+
+			chHeader.setStatus(1);
+			chHeader.setExFloat1(1);// set to 1 while close
+
+			List<ChalanDetail> chalanDList = new ArrayList<>();
+
+			for (int i = 0; i < chDetailList.size(); i++) {
+
+				try {
+
+					float itemQty = Float
+							.parseFloat(request.getParameter("chQty" + chDetailList.get(i).getChalanDetailId()));
+					float siteWidth = Float
+							.parseFloat(request.getParameter("width" + chDetailList.get(i).getChalanDetailId()));
+					float siteHeight = Float
+							.parseFloat(request.getParameter("height" + chDetailList.get(i).getChalanDetailId()));
+					float siteLength = Float
+							.parseFloat(request.getParameter("length" + chDetailList.get(i).getChalanDetailId()));
+					float siteTotal = Float
+							.parseFloat(request.getParameter("itemTotal" + chDetailList.get(i).getChalanDetailId()));
+
+					ChalanDetail det = new ChalanDetail();
+
+					det.setChalanDetailId(chDetailList.get(i).getChalanDetailId());
+					det.setItemQty(itemQty);
+					det.setItemHeightSite(siteHeight);
+					det.setItemWidthSite(siteWidth);
+					det.setItemLengthSite(siteLength);
+					det.setItemTotalSite(siteTotal);
+					det.setItemId(chDetailList.get(i).getItemId());
+					det.setOrderDetailId(chDetailList.get(i).getOrderDetailId());
+
+					det.setStatus(1);
+
+					chalanDList.add(det);
+				} catch (Exception e) {
+
+					System.err.println("Exce in getting chalan detail " + e.getMessage());
+					e.printStackTrace();
+				}
+			}
+			chHeader.setChalanDetailList(chalanDList);
+			System.err.println(" update bean  chHeader " + chHeader.toString());
+
+			Info chHeadInserRes = rest.postForObject(Constants.url + "closeChalanApi", chHeader, Info.class);
+
 
 		} catch (Exception e) {
 			System.err.println("Exce in edit Chalan " + e.getMessage());
@@ -1590,5 +1660,133 @@ public class ChalanController {
 		}
 
 	}
+	
+	
+	@RequestMapping(value = "/closeOpenChalan/{chalanId}", method = RequestMethod.GET)
+	public ModelAndView closeOpenChalan(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int chalanId) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("chalan/chalan_edit");
+
+			GetChalanHeader editChalan = new GetChalanHeader();
+
+			/*for (int i = 0; i < getOrdList.size(); i++) {
+
+				if (getOrdList.get(i).getOrderId() == orderId) {
+					editOrder = new GetOrder();
+					editOrder = getOrdList.get(i);
+					break;
+				}
+			}
+*/
+			List<Project> projList1;
+			MultiValueMap<String, Object>
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("chalanId", chalanId);
+			editChalan = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
+			editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate()));
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custId", editChalan.getCustId());
+			Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
+			projList1 = new ArrayList<Project>(Arrays.asList(projArray));
+
+			model.addObject("projList", projList1);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("chalanId", chalanId);
+			GetChalanDetail[] chDetailArray = rest.postForObject(Constants.url + "getGetChalanDetailByChalanId", map,
+					GetChalanDetail[].class);
+			chDetailList = new ArrayList<GetChalanDetail>(Arrays.asList(chDetailArray));
+
+			model.addObject("chDetailList", chDetailList);
+
+			model.addObject("editChalan", editChalan);
+
+			model.addObject("title", "Close Chalan");
+
+			String inTime = request.getParameter("in_time");
+			float inKm = Float.parseFloat(request.getParameter("in_km"));
+			String chalanRemark = request.getParameter("chalan_remark");
+			String costSegment = request.getParameter("cost_segment");
+			String sitePerName = request.getParameter("site_per_name");
+			String sitePerMob = request.getParameter("site_per_mob");
+
+			int orderId = Integer.parseInt(request.getParameter("order_id"));
+			int chalanId1 = Integer.parseInt(request.getParameter("chalan_id"));
+
+			ChalanHeader chHeader = new ChalanHeader();
+
+			chHeader.setChalanId(chalanId1);
+			chHeader.setChalanRemark(chalanRemark);
+			chHeader.setVehTimeIn(inTime);
+
+			chHeader.setInKm(inKm);
+			chHeader.setCostSegment(costSegment);
+			chHeader.setSitePersonName(sitePerName);
+			chHeader.setSitePersonMob(sitePerMob);
+			chHeader.setOrderId(orderId);
+
+			chHeader.setStatus(1);
+			chHeader.setExFloat1(1);// set to 1 while close
+
+			List<ChalanDetail> chalanDList = new ArrayList<>();
+
+			for (int i = 0; i < chDetailList.size(); i++) {
+
+				try {
+
+					float itemQty = Float
+							.parseFloat(request.getParameter("chQty" + chDetailList.get(i).getChalanDetailId()));
+					float siteWidth = Float
+							.parseFloat(request.getParameter("width" + chDetailList.get(i).getChalanDetailId()));
+					float siteHeight = Float
+							.parseFloat(request.getParameter("height" + chDetailList.get(i).getChalanDetailId()));
+					float siteLength = Float
+							.parseFloat(request.getParameter("length" + chDetailList.get(i).getChalanDetailId()));
+					float siteTotal = Float
+							.parseFloat(request.getParameter("itemTotal" + chDetailList.get(i).getChalanDetailId()));
+
+					ChalanDetail det = new ChalanDetail();
+
+					det.setChalanDetailId(chDetailList.get(i).getChalanDetailId());
+					det.setItemQty(itemQty);
+					det.setItemHeightSite(siteHeight);
+					det.setItemWidthSite(siteWidth);
+					det.setItemLengthSite(siteLength);
+					det.setItemTotalSite(siteTotal);
+					det.setItemId(chDetailList.get(i).getItemId());
+					det.setOrderDetailId(chDetailList.get(i).getOrderDetailId());
+
+					det.setStatus(1);
+
+					chalanDList.add(det);
+				} catch (Exception e) {
+
+					System.err.println("Exce in getting chalan detail " + e.getMessage());
+					e.printStackTrace();
+				}
+			}
+			chHeader.setChalanDetailList(chalanDList);
+			System.err.println(" update bean  chHeader " + chHeader.toString());
+
+			Info chHeadInserRes = rest.postForObject(Constants.url + "closeChalanApi", chHeader, Info.class);
+
+
+		} catch (Exception e) {
+			System.err.println("Exce in edit Chalan " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+
 	
 }

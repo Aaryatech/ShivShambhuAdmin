@@ -162,10 +162,10 @@
 						</div>
 						<div class="card-body card-block">
 							
-							
+							<%-- 
 							<form
 								action="${pageContext.request.contextPath}/deleteRecordofChalan"
-								method="post">
+								method="post"> --%>
 								<div class="row">
 
 									<div class="col-md-2">Select Plant</div>
@@ -209,8 +209,7 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center"><input
-												type="checkbox" name="selAll" id="selAll" /> Select All</th>
+											
 												<th style="text-align: center">Sr.No.</th>
 												<th style="text-align: center">Chalan No</th>
 												<th style="text-align: center">Chalan Date</th>
@@ -244,11 +243,11 @@
 								&nbsp;
 								</div>
 
-							<input type="submit" class="btn btn-primary" value="Delete"
+							<!-- <input type="submit" class="btn btn-primary" value="Delete"
 										id="deleteId"
 										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
-										style="align-content: center; width: 113px; margin-left: 40px;">
-						</form>	
+										style="align-content: center; width: 113px; margin-left: 40px;"> -->
+						<!-- </form>	 -->
 	</div>
 						</div>
 					</div>
@@ -445,7 +444,7 @@
  
 												dataTable.row
 														.add(
-																[chBox,
+																[
 																		i + 1,
 																		v.chalanNo,
 																		v.chalanDate,

@@ -200,13 +200,13 @@
 
 
 
-								<input type="checkbox" name="selAll" id="selAll" />
+							
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center"></th>
+												<th style="text-align: center">	<input type="checkbox" name="selAll" id="selAll" /></th>
 												<th style="text-align: center; width: 5%;">Sr.</th>
 												<th style="text-align: center">Vehicle Name</th>
 												<th style="text-align: center">Poklen Name</th>

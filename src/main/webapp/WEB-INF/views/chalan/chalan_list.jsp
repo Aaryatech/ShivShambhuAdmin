@@ -462,7 +462,7 @@
 										+ v.chalanId
 										+ ','
 										+ i
-										+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete1('
+										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete1('
 												+ v.chalanId
 												+ ','
 												+ i
@@ -474,7 +474,7 @@
 														+ v.chalanId
 														+ ','
 														+ i
-														+ ')"><i class="fa-file-pdf-o"></i></a>'
+														+ ')" style="color:black><i class="fa-file-pdf-o"></i></a>'
 									
 									chBox=""
 									
