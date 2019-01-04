@@ -96,14 +96,14 @@
 							<div class="form-group"></div>
 
 							<div class="row">
-								<div class="col-md-2">From Date</div>
+								<div class="col-md-2">From Date*</div>
 								<div class="col-md-4">
 									<input type="text" autocomplete="off" id="from_date"
 										name="from_date" required style="width: 100%;"
 										class="form-control" value="${fromDate}"> <span
 										class="error" aria-live="polite"></span>
 								</div>
-								<div class="col-md-2">To Date</div>
+								<div class="col-md-2">To Date*</div>
 								<div class="col-md-4">
 									<input type="text" autocomplete="off" id="to_date"
 										name="to_date" style="width: 100%;" class="form-control"
@@ -116,6 +116,23 @@
 							<div class="form-group"></div>
 
 							<div class="row">
+
+								<div class="col-md-2">Select Plant*</div>
+
+								<div class="col-md-4">
+									<select id="plantId" name="plantId" class="standardSelect"
+										tabindex="1" multiple="multiple" required
+										oninvalid="setCustomValidity('Please select Challan')">
+										<option value="0">All</option>
+										<c:forEach items="${plantList}" var="plant">
+
+											<option value="${plant.plantId}">${plant.plantName}</option>
+
+										</c:forEach>
+
+
+									</select>
+								</div>
 
 
 								<div class="col-md-2">Select Customer*</div>
@@ -134,22 +151,7 @@
 									</select>
 								</div>
 
-								<div class="col-md-2">Select Plant*</div>
 
-								<div class="col-md-4">
-									<select id="plantId" name="plantId" class="standardSelect"
-										tabindex="1" multiple="multiple" required
-										oninvalid="setCustomValidity('Please select Challan')">
-										<option value="0">All</option>
-										<c:forEach items="${plantList}" var="plant">
-
-											<option value="${plant.plantId}">${plant.plantName}</option>
-
-										</c:forEach>
-
-
-									</select>
-								</div>
 							</div>
 
 							<div class="form-group"></div>

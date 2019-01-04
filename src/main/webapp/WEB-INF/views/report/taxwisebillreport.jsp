@@ -96,14 +96,14 @@
 							<div class="form-group"></div>
 
 							<div class="row">
-								<div class="col-md-2">From Date</div>
+								<div class="col-md-2">From Date*</div>
 								<div class="col-md-4">
 									<input type="text" autocomplete="off" id="from_date"
 										name="from_date" required style="width: 100%;"
 										class="form-control" value="${fromDate}"> <span
 										class="error" aria-live="polite"></span>
 								</div>
-								<div class="col-md-2">To Date</div>
+								<div class="col-md-2">To Date*</div>
 								<div class="col-md-4">
 									<input type="text" autocomplete="off" id="to_date"
 										name="to_date" style="width: 100%;" class="form-control"
@@ -117,14 +117,29 @@
 
 							<div class="row">
 
-								<div class="col-md-2">Select Customer</div>
+								<div class="col-md-2">Select Plant*</div>
+
+								<div class="col-md-4">
+									<select id="plantId" name="plantId" class="standardSelect"
+										multiple tabindex="1" required onchange="getData()">
+
+
+										<option value="0">All</option>
+										<c:forEach items="${plantList}" var="plant">
+											<option value="${plant.plantId}">${plant.plantName}</option>
+
+										</c:forEach>
+									</select>
+								</div>
+
+								<div class="col-md-2">Select Customer*</div>
 
 								<div class="col-md-4">
 									<select id="custId" name="custId" class="standardSelect"
 										multiple tabindex="1" required
 										oninvalid="setCustomValidity('Please select company')"
 										onchange="getData()">
-										<option value="">Select</option>
+
 										<option value="0">All</option>
 
 										<c:forEach items="${custList}" var="cust">
@@ -134,21 +149,7 @@
 
 									</select>
 								</div>
-								<div class="col-md-2">Select Plant*</div>
 
-								<div class="col-md-4">
-									<select id="plantId" name="plantId" class="standardSelect"
-										multiple tabindex="1" required onchange="getData()">
-										<option value="">Select</option>
-
-										<option value="0">All</option>
-										<c:forEach items="${plantList}" var="plant">
-
-											<option value="${plant.plantId}">${plant.plantName}</option>
-
-										</c:forEach>
-									</select>
-								</div>
 							</div>
 
 
@@ -375,7 +376,7 @@
 
 						dataTable.row.add(
 								[ i + 1, v.billNo, v.custGstNo, v.custName,
-										v.cgstAmt, v.sgstAmt,v.igstAmt, 
+										v.cgstAmt, v.sgstAmt, v.igstAmt,
 										v.taxableAmt, v.taxAmt, v.totalAmt
 
 								]).draw();

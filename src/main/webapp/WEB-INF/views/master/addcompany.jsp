@@ -213,7 +213,7 @@
 								<div class="row">
 									<div class="col-md-2">PAN No*</div>
 									<div class="col-md-4">
-										<input type="text" id="pan_no" name="pan_no" required
+										<input type="text" id="pan_no" name="pan_no" required maxlength="10"
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter PAN no')"
 											value="${editComp.compPanNo}" pattern="[A-Z]{5}\d{4}[A-Z]{1}"

@@ -100,7 +100,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">×</span>
 								</button>
-								<strong>Data Submitted  Successfully</strong>
+								<strong>Data Submitted Successfully</strong>
 							</div>
 						</div>
 					</c:when>
@@ -115,8 +115,8 @@
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertVehicle"
 								id="submitForm" method="post" enctype="multipart/form-data">
-								
-			
+
+
 
 
 								<div class="form-group"></div>
@@ -124,8 +124,7 @@
 									<div class="col-md-2">Vehicle Name*</div>
 									<div class="col-md-4">
 										<input type="text" id="vehName" name="vehName" maxlength="60"
-											 value="${editVeh.vehicleName}"
-											class="form-control" 
+											value="${editVeh.vehicleName}" class="form-control"
 											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct Vehicle  Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
@@ -191,19 +190,19 @@
 								<div class="row">
 									<div class="col-md-2">Vehicle Number*</div>
 									<div class="col-md-4">
-										<input type="text" id="vehNum" name="vehNum" 
+										<input type="text" id="vehNum" name="vehNum"
 											autocomplete="off" value="${editVeh.vehNo}"
 											class="form-control"
 											oninvalid="setCustomValidity('Please enter load capacity of Vehicle')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
 									</div>
-									
-									
+
+
 									<div class="col-md-2">Select Vehicle Type*</div>
 
 									<div class="col-md-4">
-										<select id="vehType" name="vehType"  class="standardSelect"
+										<select id="vehType" name="vehType" class="standardSelect"
 											tabindex="1" required onchange="getData()">
 											<option value="-1">Select</option>
 											<c:forEach items="${vtypeList}" var="vtlist">
@@ -231,17 +230,16 @@
 										<input type="file" id="doc1" name="doc1"
 											value="${editVeh.vehDoc1}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
-											onchange="try{setCustomValidity('')}catch(e){}" 
-											style="width: 100%;"> 
+											onchange="try{setCustomValidity('')}catch(e){}"
+											style="width: 100%;">
 
 									</div>
-									
-									
-								 <div class="col-md-2">
+
+
+									<div class="col-md-2">
 										<img id="Docc1" name="Docc1"
-											<a href="${vehImgPath}${editVeh.vehDoc1}">Doc1 </a>
-											
-											></div> 
+											<a href="${vehImgPath}${editVeh.vehDoc1}">Doc1 </a>>
+									</div>
 
 
 									<div class="col-md-2">Vehicle Document 2</div>
@@ -249,19 +247,18 @@
 										<input type="file" id="doc2" name="doc2"
 											value="${editVeh.vehDoc2}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
-											onchange="try{setCustomValidity('')}catch(e){}" 
+											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
 
 
 
-									 <div class="col-md-2">
+									<div class="col-md-2">
 										<img id="Docc2" name="Docc2"
 											<a
-											href="${vehImgPath}${editVeh.vehDoc2}">Doc2</a>		
-										>							
+											href="${vehImgPath}${editVeh.vehDoc2}">Doc2</a>>
 									</div>
-					
+
 
 								</div>
 								<div class="form-group"></div>
@@ -273,7 +270,7 @@
 										<input type="file" id="doc3" name="doc3"
 											value="${editVeh.vehDoc3}" class="form-control"
 											oninvalid="setCustomValidity('Please Select a Document')"
-											onchange="try{setCustomValidity('')}catch(e){}" 
+											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
 
@@ -282,10 +279,9 @@
 									<div class="col-md-2">
 										<img id="Docc3" name="Docc3"
 											<a
-											href="${vehImgPath}${editVeh.vehDoc3}">Doc3</a>			
-											>
+											href="${vehImgPath}${editVeh.vehDoc3}">Doc3</a>>
 									</div>
-					 
+
 									<div class="col-md-2">Vehicle Document 4</div>
 									<div class="col-md-2">
 										<input type="file" id="doc4" name="doc4"
@@ -294,14 +290,13 @@
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
 									</div>
-									
-									 <div class="col-md-2">
+
+									<div class="col-md-2">
 										<img id="Docc4" name="Docc4"
 											<a
-											href="${vehImgPath}${editVeh.vehDoc4}">Doc4</a>
-											>
-									</div> 
-					
+											href="${vehImgPath}${editVeh.vehDoc4}">Doc4</a>>
+									</div>
+
 								</div>
 								<div class="form-group"></div>
 
@@ -334,15 +329,14 @@
 									<thead>
 										<tr>
 											<th class="check" style="text-align: center; width: 5%;"><input
-												type="checkbox" name="selAll" id="selAll" />Select All</th>
+												type="checkbox" name="selAll" id="selAll" /></th>
 
-											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Vehicle Name</th>
 											<th style="text-align: center">Vehicle Number</th>
 											<th style="text-align: center">Company Name</th>
-											
-											<th style="text-align: center">LoadCapacity</th>
-
+											<th style="text-align: center">Load Capacity</th>
+											<th style="text-align: center">Vehicle Type</th>
 											<th style="text-align: center; width: 5%;">Action</th>
 
 										</tr>
@@ -365,20 +359,32 @@
 
 												<td style="text-align: right"><c:out
 														value="${veh.vehCompName}" /></td>
-														
-														
-														
+
+
+
 
 												<td style="text-align: right"><c:out
 														value="${veh.loadCapacity}" /></td>
 
+												<td style="text-align: right"><c:choose>
+														<c:when test="${veh.vehicleType==1}">
+														In
+													</c:when>
+														<c:when test="${veh.pokType==2}">
+														Out
+													</c:when>
+														<c:when test="${veh.pokType==3}">
+														Poklen
+													</c:when>
+													</c:choose></td>
+
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editVeh/${veh.vehicleId}"><i
-														class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
-													&nbsp; <a
+														class="fa fa-edit" style="color: black"></i> <span
+														class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deleteVeh/${veh.vehicleId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o" style="color:black"></i></a></td>
+														class="fa fa-trash-o" style="color: black"></i></a></td>
 
 											</tr>
 										</c:forEach>
@@ -536,7 +542,7 @@
 	</script>
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		function readURL1(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
@@ -554,7 +560,7 @@
 			readURL1(this);
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 		function readURL2(input) {
 			if (input.files && input.files[0]) {
@@ -573,7 +579,7 @@
 			readURL2(this);
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 		function readURL3(input) {
 			if (input.files && input.files[0]) {
@@ -592,7 +598,7 @@
 			readURL3(this);
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 		function readURL4(input) {
 			if (input.files && input.files[0]) {

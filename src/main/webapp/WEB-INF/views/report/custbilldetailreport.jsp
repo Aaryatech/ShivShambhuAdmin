@@ -83,7 +83,7 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-				
+
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">

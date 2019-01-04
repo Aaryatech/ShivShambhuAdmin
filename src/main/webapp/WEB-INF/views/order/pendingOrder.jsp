@@ -152,22 +152,22 @@
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
-						
 
 
-							<div class="card-header">
-								<div class="col-md-2">
-									<strong>${title}</strong>
-								</div>
 
-
+						<div class="card-header">
+							<div class="col-md-2">
+								<strong>${title}</strong>
 							</div>
 
 
-							<div class="card-body card-block">
-<form
-							action="${pageContext.request.contextPath}/deleteRecordofOrders"
-							method="post" id="ordListForm">
+						</div>
+
+
+						<div class="card-body card-block">
+							<form
+								action="${pageContext.request.contextPath}/deleteRecordofOrders"
+								method="post" id="ordListForm">
 								<div class="row">
 
 									<div class="col-md-2">Select Plant</div>
@@ -196,24 +196,24 @@
 
 								</div>
 								<div class="form-group"></div>
-<div class="row">
+								<div class="row">
 
-									
+
 									<div class="col-md-2"></div>
 
 									<div class="col-md-4">
-										<input type="hidden" id="key" name="key" style="width: 100%;" class="form-control">
+										<input type="hidden" id="key" name="key" style="width: 100%;"
+											class="form-control">
 									</div>
 									<div class="col-md-2"></div>
 
 									<div class="col-md-4">
-										<input type="hidden" id="orderId" name="orderId" required 
-											style="width: 100%;" class="form-control"  maxlength="10"
-											> <span class="error"
-											aria-live="polite"></span>
+										<input type="hidden" id="orderId" name="orderId" required
+											style="width: 100%;" class="form-control" maxlength="10">
+										<span class="error" aria-live="polite"></span>
 									</div>
 								</div>
-									<div class="form-group"></div>
+								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">From Date</div>
 									<div class="col-md-4">
@@ -255,14 +255,14 @@
 										<thead>
 											<tr>
 												<th style="text-align: center"><input type="checkbox"
-													name="selAll" id="selAll" /> Select All</th>
+													name="selAll" id="selAll" /></th>
 												<th style="text-align: center">Sr.</th>
 												<th style="text-align: center">Order No</th>
 												<th style="text-align: center">Order Date</th>
 												<th style="text-align: center">Delivery Date</th>
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Customer Mobile No</th>
-												
+
 												<!-- 												<th style="text-align: center">Status</th>
  -->
 												<th style="text-align: center">Action</th>
@@ -270,38 +270,38 @@
 										</thead>
 
 									</table>
-									
-									
-									
+
+
+
 									<div class="col-md-2"></div>
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();" disabled="disabled" id="expExcel"
-										style="align-content: center; width: 200px; margin-left: 80px;">
-										Export To Excel</button>
-								</div>
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" disabled="disabled" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
 
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="genPdf()" disabled="disabled" id="PDFButton"
-										style="align-content: center; width: 100px; margin-left: 80px;">
-										PDF</button>
-								</div>
-								&nbsp;
-										
+										<button type="button" class="btn btn-primary"
+											onclick="genPdf()" disabled="disabled" id="PDFButton"
+											style="align-content: center; width: 100px; margin-left: 80px;">
+											PDF</button>
+									</div>
+									&nbsp;
+
 								</div>
 
 								<input type="submit" class="btn btn-primary" value="Delete"
 									id="deleteId"
 									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 									style="align-content: center; width: 113px; margin-left: 40px;">
-	</form>
-							</div>
-					
+							</form>
+						</div>
+
 					</div>
 
 
@@ -512,7 +512,6 @@
 
 								function(data) {
 
-									
 									document.getElementById("expExcel").disabled = false;
 									document.getElementById("PDFButton").disabled = false;
 
@@ -534,7 +533,6 @@
 													data,
 													function(i, v) {
 														var chBox;
-														
 
 														if (v.status == 0) {
 															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
@@ -550,8 +548,6 @@
 																	+ ','
 																	+ i
 																	+ ')" style="color:black"><i class="fa fa-list"  title="Generate Chalan"></i></a>'
-	
-														
 
 															chBox = '<input  type="checkbox" class="chk" name="selectOrderToDelete" id='+v.orderId+' class="check"  value='+v.orderId+'>'
 
@@ -572,7 +568,7 @@
 																				v.deliveryDate,
 																				v.custName,
 																				v.custMobNo,
-																				
+
 																				acButton ])
 																.draw();
 													});
@@ -589,21 +585,19 @@
 					+ orderId);
 
 		}
-		
-		
-		
-		function callDetail(orderId,key){
+
+		function callDetail(orderId, key) {
 			//alert("Hello"+orderId +"key " +key);
-			document.getElementById("key").value=key;
-			document.getElementById("orderId").value=orderId;
-		
+			document.getElementById("key").value = key;
+			document.getElementById("orderId").value = orderId;
+
 			var form = document.getElementById("ordListForm");
-			form.action=("showGenerateChalanForPendingOrder");
+			form.action = ("showGenerateChalanForPendingOrder");
 			form.submit();
-			
+
 		}
 
-		function callDelete(orderId,key) {
+		function callDelete(orderId, key) {
 
 		}
 	</script>
@@ -628,7 +622,7 @@
 
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");
@@ -641,16 +635,21 @@
 			//alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-			var plantId= document.getElementById("plant_id").value;
-			var custId= document.getElementById("cust_name").value;
-			
+			var plantId = document.getElementById("plant_id").value;
+			var custId = document.getElementById("cust_name").value;
 
-			
-			alert("plant id is"+plantId);
-			alert("cust id is"+custId); 
-			
-			window.open('${pageContext.request.contextPath}/showPendingOrderListPdf/'
-					+ fromDate + '/' + toDate  +'/' + custId + '/' + plantId );
+			alert("plant id is" + plantId);
+			alert("cust id is" + custId);
+
+			window
+					.open('${pageContext.request.contextPath}/showPendingOrderListPdf/'
+							+ fromDate
+							+ '/'
+							+ toDate
+							+ '/'
+							+ custId
+							+ '/'
+							+ plantId);
 			document.getElementById("expExcel").disabled = true;
 
 		}

@@ -66,6 +66,7 @@
 .left {
 	text-align: left;
 }
+
 .center {
 	text-align: center;
 }
@@ -99,8 +100,8 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showAddCustomer" style="color:black"><strong>Add
-										Customer</strong></a>
+								<a href="${pageContext.request.contextPath}/showAddCustomer"
+									style="color: black"><strong>Add Customer</strong></a>
 							</div>
 
 						</div>
@@ -130,8 +131,8 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
-																							<option value="">Select</option>
-											
+											<option value="">Select</option>
+
 
 
 										</select>
@@ -171,9 +172,10 @@
 									<div class="col-md-2">Enquiry Date</div>
 
 									<div class="col-md-4">
-										<input type="text" id="enq_date" name="enq_date" required readonly="readonly"
-											style="width: 100%;" class="form-control" autocomplete="off"
-												oninvalid="setCustomValidity('Please select enquiry date')"
+										<input type="text" id="enq_date" name="enq_date" required
+											readonly="readonly" style="width: 100%;" class="form-control"
+											autocomplete="off"
+											oninvalid="setCustomValidity('Please select enquiry date')"
 											value="${curDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
@@ -195,8 +197,9 @@
 								<input type="hidden" id="itemUomId" name="itemUomId" value="0">
 
 								<div class="form-group"></div>
-								<section class="form-control">
 
+								<section class="form-control">
+									<div class="form-group"></div>
 									<div class="row">
 
 
@@ -233,7 +236,8 @@
 										<div class="col-md-2">Quantity</div>
 										<div class="col-md-4">
 											<input type="text" id="qty" name="qty" class="form-control"
-												style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?" onkeypress="return allowOnlyNumber(event);">
+												style="width: 100%;" pattern="[0-9]+(\.[0-9]{0,2})?%?"
+												onkeypress="return allowOnlyNumber(event);">
 										</div>
 
 
@@ -249,7 +253,7 @@
 									<div class="form-group"></div>
 
 									<div class="row">
-									<!-- 	<div class="col-md-2">Rate</div>
+										<!-- 	<div class="col-md-2">Rate</div>
 										<div class="col-md-4">
 											<input type="text" readonly="readonly" id="item_rate"
 												name="item_rate" class="form-control" style="width: 100%;"
@@ -260,7 +264,7 @@
 
 										<div class="col-md-8">
 											<input type="button" value="Add Item" class="btn btn-primary"
-												style="align-content: center; width: 226px;"
+												style="align-content: center; width: 113px;"
 												onclick="addItem()" />
 
 										</div>
@@ -269,8 +273,7 @@
 								</section>
 								<div class="card-body card-block">
 
-									<table id="t1"
-										class="table table-striped table-bordered">
+									<table id="t1" class="table table-striped table-bordered">
 										<thead>
 											<tr>
 
@@ -311,7 +314,7 @@
 											class="standardSelect" tabindex="1" required
 											oninvalid="setCustomValidity('Please select enquiry source')"
 											onchange="try{setCustomValidity('')}catch(e){}">
-				<option value="0">Select</option>
+											<option value="0">Select</option>
 											<c:forEach items="${enqGenFactList}" var="enqFrom">
 												<option value="${enqFrom.enqGenId}">${enqFrom.enqGenBy}</option>
 											</c:forEach>
@@ -330,10 +333,13 @@
 									</div>
 
 									<div class="col-md-4">
-										<input type="submit" style="width: 100%;" disabled class="btn btn-primary" id="submitButton" value="Submit">
+										<input type="submit"
+											style="align-content: center; width: 113px; margin-left: 20px;"
+											disabled class="btn btn-primary" id="submitButton"
+											value="Submit">
 
 									</div>
-										<!-- <div class="col-md-2">
+									<!-- <div class="col-md-2">
 										<input type="reset"   value="Clear" class="btn btn-primary" >
 
 									</div> -->
@@ -808,9 +814,9 @@
 			
 		);}
 	</script> -->
-	
-	
-	
+
+
+
 
 </body>
 </html>

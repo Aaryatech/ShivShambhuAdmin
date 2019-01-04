@@ -141,7 +141,7 @@
 									<div class="col-md-2">Mobile No.*</div>
 
 									<div class="col-md-4">
-										<input type="text" id="mobNo" name="mobNo"
+										<input type="text" id="mobNo" name="mobNo" required
 											value="${editCon.contrMob}" class="form-control"
 											style="width: 100%;" autocomplete="off" maxlength="10"
 											pattern="^[1-9]{1}[0-9]{9}$"

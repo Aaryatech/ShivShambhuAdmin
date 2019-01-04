@@ -1187,7 +1187,14 @@ public class MasterController {
 			cust.setIsSameState(sameState);
 
 			try {
-				cust.setCustDob(DateConvertor.convertToYMD(request.getParameter("dob")));
+				String dob=request.getParameter("dob");
+				if(!dob.isEmpty())
+				{
+				cust.setCustDob(DateConvertor.convertToYMD(dob));
+				}else
+				{
+					
+				}
 			} catch (Exception e) {
 				cust.setCustDob(curDate);
 			}

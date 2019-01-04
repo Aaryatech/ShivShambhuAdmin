@@ -263,10 +263,11 @@
 
 													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${itemDetail.itemDetailId},${count.index})"><i
-															class="fa fa-edit" style="color:black" ></i> <span class="text-muted"></span></a>
-														<a href="#"
+															class="fa fa-edit" style="color: black"></i> <span
+															class="text-muted"></span></a> <a href="#"
 														onclick="callDelete(${itemDetail.itemDetailId},${count.index})"><i
-															class="fa fa-trash-o" style="color:black"></i> <span class="text-muted"></span></a></td>
+															class="fa fa-trash-o" style="color: black"></i> <span
+															class="text-muted"></span></a></td>
 
 												</tr>
 											</c:forEach>
@@ -348,7 +349,7 @@
 
 	<script type="text/javascript">
 		function add() {
-			alert("in add  ");
+			//alert("in add  ");
 			var rmName = document.getElementById("rmName").value;
 			var qty = document.getElementById("qty").value;
 			var isEdit = document.getElementById("isEdit").value;
@@ -398,7 +399,7 @@
 															+ v.itemId
 															+ ','
 															+ i
-															+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ ')"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 															+ v.itemId
 															+ ','
 															+ i
@@ -435,8 +436,8 @@
 				ajax : 'true',
 
 			}, function(data) {
-				alert("data" + data);
-				alert(data.catId);
+			//	alert("data" + data);
+				//alert(data.catId);
 				$("#catId").val(data.catId);
 				$("#catId").trigger("chosen:updated");
 				document.getElementById("rmName").value = data.itemId;
@@ -528,9 +529,9 @@
  */
 		function callDelete(itemDetailId, index) {
 
-			alert("hii");
+			//alert("hii");
 			document.getElementById("isEdit").value = 0;
-			alert("index" + index);
+			//alert("index" + index);
 			$
 					.getJSON(
 							'${editInAddItemDetail}',
@@ -626,7 +627,7 @@
 			//document.getElementById("submitButton").disabled=true;
 
 			var catId = document.getElementById("catId").value;
-				alert("catId Id " + catId);
+				//alert("catId Id " + catId);
 				
 
 			var valid = true;
