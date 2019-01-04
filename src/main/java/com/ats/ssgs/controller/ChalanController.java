@@ -201,6 +201,29 @@ public class ChalanController {
 		return ordDetailList;
 	}
 
+	
+	
+	
+	@RequestMapping(value = "/deleteChalan/{chalanId}", method = RequestMethod.GET)
+	public String deleteCon(HttpServletRequest request, HttpServletResponse response, @PathVariable int chalanId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("chalanId", chalanId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteChalan", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteCon @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showAddContractor";
+	}
+
 	// setChalanItem;
 	List<TempChalanItem> tempChItemList;
 

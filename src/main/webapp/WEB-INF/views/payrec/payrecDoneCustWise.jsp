@@ -156,7 +156,7 @@
 										<option value="0">All</option>
 									</select>
 								</div>
-
+</div>
 
 								<div class="form-group"></div>
 
@@ -170,20 +170,14 @@
 								</div>
 
 								<div class="form-group"></div>
-								<!-- 	<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-6"></div>
-									
-								</div>
- -->
-
-
+								
+								
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th class="check" style="text-align: center; width: 5%;">
+												<!-- <th class="check" style="text-align: center; width: 5%;"> -->
 												<th style="text-align: center; width: 5%;">Sr.</th>
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Mobile No.</th>
@@ -263,7 +257,7 @@
 									id="deleteId"
 									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 									style="align-content: center; width: 113px; margin-left: 40px;"> -->
-							</div>
+							
 
 						</div>
 					</div>
@@ -271,6 +265,7 @@
 				</div>
 			</div>
 			<!-- disabled="disabled" -->
+		</div>
 		</div>
 		<!-- .animated -->
 		<!-- .content -->
@@ -397,7 +392,7 @@
 			// onclick of submit to search order 
 			function showQuot() {
 
-				alert("Hi View Orders  ");
+				//alert("Hi View Orders  ");
 
 				var fromDate = document.getElementById("from_date").value;
 				var toDate = document.getElementById("to_date").value;
@@ -467,7 +462,7 @@
 															dataTable.row
 																	.add(
 																			[
-																					chBox,
+																					
 																					i + 1,
 																					v.custName,
 																					v.custMobNo,

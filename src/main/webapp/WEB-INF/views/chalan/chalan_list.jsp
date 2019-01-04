@@ -466,7 +466,7 @@
 												+ v.chalanId
 												+ ','
 												+ i
-												+ ')" style="color:black"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose1('
+												+ ')" style="color:black"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 													+ v.chalanId
 													+ ','
 													+ i
@@ -518,6 +518,12 @@ function callClose(chalanId){
 	function callPdf(chalanId,key){
 		alert("call Pdf " +chalanId);
 		   window.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'+chalanId);
+
+	}
+	
+	function callDelete(chalanId,key){
+		alert("call Pdf " +chalanId);
+		   window.open('${pageContext.request.contextPath}/deleteChalan/'+chalanId"_self");
 
 	}
 	</script>

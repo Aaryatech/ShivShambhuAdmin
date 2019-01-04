@@ -225,7 +225,7 @@
 									</div>
 
 
-									<div class="col-md-2">Select Transction Type*</div>
+									<div class="col-md-2">Select Transaction Type*</div>
 
 									<div class="col-md-4">
 										<select id="txType" name="txType" class="standardSelect"

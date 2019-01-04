@@ -178,8 +178,8 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th class="check" style="text-align: center; width: 5%;">
-												<th style="text-align: center; width: 5%;">Sr.</th>
+<!-- 												<th class="check" style="text-align: center; width: 5%;">
+ -->												<th style="text-align: center; width: 5%;">Sr.</th>
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Bill No</th>
 												<th style="text-align: center">Bill Date</th>
@@ -401,7 +401,7 @@
 		// onclick of submit to search order 
 		function showQuot() {
 
-			alert("Hi View Orders  ");
+			//alert("Hi View Orders  ");
 
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
@@ -476,7 +476,7 @@
 														dataTable.row
 																.add(
 																		[
-																			chBox,
+																			
 																				i + 1,
 																				v.custName,
 																				v.billNo,
