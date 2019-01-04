@@ -70,6 +70,7 @@ import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.master.User;
 import com.ats.ssgs.model.order.GetOrder;
+import com.ats.ssgs.model.prodrm.RmcQuotItemDetail;
 import com.ats.ssgs.model.quot.GetItemWithEnq;
 import com.ats.ssgs.model.quot.GetQuotHeads;
 import com.ats.ssgs.model.quot.QuotDetail;
@@ -104,6 +105,91 @@ public class QuotController {
 	List<DocTermHeader> docTermList;
 	int quotHeadIdPdf = 0;
 	int pdfCustId = 0;
+
+	List<RmcQuotItemDetail> rmcQuotItemList;
+
+	// Ajax call 4 Jan 2019
+	@RequestMapping(value = "/getRmcQuotItemDetail", method = RequestMethod.GET)
+	public @ResponseBody List<RmcQuotItemDetail> getRmcQuotItemDetail(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int itemId = Integer.parseInt(request.getParameter("itemId"));
+		int indexKey = Integer.parseInt(request.getParameter("indexKey"));
+
+		if (indexKey >= 0) {
+			map.add("itemId", itemId);
+
+			RmcQuotItemDetail[] rmcItem = rest.postForObject(Constants.url + "getRmcQuotItemDetail", map,
+					RmcQuotItemDetail[].class);
+			rmcQuotItemList = new ArrayList<RmcQuotItemDetail>(Arrays.asList(rmcItem));
+		}
+		System.err.println("Ajax rmcQuotItemList  List " + rmcQuotItemList.toString());
+
+		return rmcQuotItemList;
+
+	}
+
+	// setRmcQuotItemDetail 4 Jan 2019 if changes in rm quantity and opRate
+	@RequestMapping(value = "/setRmcQuotItemDetail", method = RequestMethod.GET)
+	public void setRmcQuotItemDetail(HttpServletRequest request, HttpServletResponse response) {
+
+		int detailId = Integer.parseInt(request.getParameter("detailId"));
+		int index = Integer.parseInt(request.getParameter("index"));
+		float opRate = Float.parseFloat(request.getParameter("opRate"));
+		float rmQty = Float.parseFloat(request.getParameter("rmQty"));
+		float unitRate = Float.parseFloat(request.getParameter("unitRate"));
+		float amt = Float.parseFloat(request.getParameter("amt"));
+
+		rmcQuotItemList.get(index).setAmt(amt);
+		rmcQuotItemList.get(index).setItemOpRate(opRate);
+		rmcQuotItemList.get(index).setRmQty(rmQty);
+		rmcQuotItemList.get(index).setUnitRate(unitRate);
+		rmcQuotItemList.get(index).setAmt(amt);
+		System.err.println("Setted ");
+	}
+
+	
+	//getMixItemRate
+	
+	@RequestMapping(value = "/getMixItemRate", method = RequestMethod.GET)
+	public @ResponseBody GetItemWithEnq getMixItemRate(HttpServletRequest request, HttpServletResponse response) {
+		GetItemWithEnq itemEnq = null;
+		try {
+			System.err.println("Mix Rate get ");
+		float itemRate=0;
+		
+		int itemId=rmcQuotItemList.get(0).getItemId();
+		System.err.println("Item itemId " +itemId);
+
+		for(int i=0;i<rmcQuotItemList.size();i++) {
+			itemRate=itemRate+rmcQuotItemList.get(i).getAmt();
+		}
+		System.err.println("Item Rate " +itemRate);
+		for(int i=0;i<enqItemList.size();i++) {
+			
+			if(enqItemList.get(i).getItemId()==itemId) {
+				itemEnq=enqItemList.get(i);
+				System.err.println("itemEnq  matched setted " +itemEnq.toString());
+				enqItemList.get(i).setItemRate1(itemRate);
+				break;
+			}
+		}
+		
+		itemEnq.setItemRate1(itemRate);
+		}
+		catch (Exception e) {
+			System.err.println("Exce in getMixItemRate " +e.getMessage());
+			e.printStackTrace();
+			
+		}
+		return itemEnq;
+		
+	}
+
+	
+	
 
 	@RequestMapping(value = "/showQuotations", method = RequestMethod.GET)
 	public ModelAndView showQuotations(HttpServletRequest request, HttpServletResponse response) {
@@ -144,7 +230,7 @@ public class QuotController {
 
 			model = new ModelAndView("quot/quotList");
 
-			model.addObject("title", "Generate Purchase Order");
+			model.addObject("title", "Add Customer P.O.");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -172,7 +258,7 @@ public class QuotController {
 
 			model = new ModelAndView("quot/quotListNew");
 
-			model.addObject("title", "Quotation List");
+			model.addObject("title", "Quotation List CustomerWise");
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
@@ -712,12 +798,12 @@ public class QuotController {
 		return model;
 
 	}
-	// getNewItemsForQuotation
+	// getNewItemsForQuotation 
 
 	@RequestMapping(value = "/getNewItemsForQuotation", method = RequestMethod.GET)
 	public @ResponseBody List<GetItemWithEnq> getNewItemsForQuotation(HttpServletRequest request,
 			HttpServletResponse response) {
-
+System.err.println(" Inside IgetNewItemsForQuotation " );
 		int itemId = Integer.parseInt(request.getParameter("itemId"));
 		float quotQty = Float.parseFloat(request.getParameter("quotQty"));
 
@@ -763,10 +849,11 @@ public class QuotController {
 
 			enqItemList.remove(index);
 		}
+		
 		System.err.println("Ajax getNewItemsForQuotation  List size " + enqItemList.size());
 
 		System.err.println("Ajax getNewItemsForQuotation  List " + enqItemList.toString());
-
+ 
 		return enqItemList;
 
 	}

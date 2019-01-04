@@ -40,24 +40,20 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.ExportToExcel;
-import com.ats.ssgs.model.GetDatewiseReport;
 import com.ats.ssgs.model.enq.EnqDetail;
 import com.ats.ssgs.model.enq.EnqGenFact;
 import com.ats.ssgs.model.enq.EnqHeader;
 import com.ats.ssgs.model.enq.GetEnqHeader;
 import com.ats.ssgs.model.enq.TempEnqItem;
 import com.ats.ssgs.model.master.Cust;
-//import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.GetCust;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Uom;
-import com.ats.ssgs.model.quot.GetQuotHeads;
 import com.ats.ssgs.model.quot.QuotDetail;
 import com.ats.ssgs.model.quot.QuotHeader;
 import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
@@ -111,7 +107,7 @@ public class EnqController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("docCode", 1);
-			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map, com.ats.ssgs.model.master.Document.class);
 			model.addObject("doc", doc);
 
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");

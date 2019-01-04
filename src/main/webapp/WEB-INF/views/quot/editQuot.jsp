@@ -121,6 +121,15 @@ body {
 <c:url var="getNewItemsForQuotation" value="/getNewItemsForQuotation" />
 
 
+<c:url var="getRmcQuotItemDetail" value="/getRmcQuotItemDetail" />
+<!--4 Jan  -->
+<c:url var="getMixItemRate" value="/getMixItemRate" />
+<!-- 4 Jan  -->
+<c:url var="setRmcQuotItemDetail" value="/setRmcQuotItemDetail" />
+<!-- 4 Jan  -->
+
+
+
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -376,26 +385,29 @@ body {
 
 								</div>
 								<!-- end of myModal div -->
-								
-								
+
+
 								<div id="itemDetailModal" class="modal1">
 
 									<div class="modal-content" style="color: black;">
 										<span class="close" id="close1">&times;</span>
-										<h5 style="text-align: left;">Material Cost As Per Mix Design</h5>
+										<h5 style="text-align: left;">Material Cost As Per Mix
+											Design</h5>
 										<div class=" box-content">
 
-											<div
-												style="overflow: scroll; height: 50%; width: 50%; overflow: auto">
-												<table style="width: 100%" id="table_grid2">
+											<div align="center"
+												style="overflow: scroll; height: 70%; width: 70%; overflow: auto;">
+												<table style="width: 100%;" id="table_grid2" border="1">
 													<thead>
 														<tr>
-															<th class="col-md-1">Sr.No.</th>
-															<th class="col-md-1">Material</th>
+															<th width="2%">Sr.No.</th>
+															<th class="col-md-2">Material</th>
+															<th class="col-md-1">Weight</th>
+
 															<th class="col-md-1">Unit</th>
 															<th class="col-md-1">Rate</th>
-															<th class="col-md-1">Unit Rate</th>
 															<th class="col-md-1">Constant</th>
+															<th class="col-md-1">Unit_Rate</th>
 															<th class="col-md-1">Amount</th>
 														</tr>
 													</thead>
@@ -403,6 +415,8 @@ body {
 
 													</tbody>
 												</table>
+												<input type="button" onclick="submitAmt()"
+													class="btnbtn-primary" value="Submit">
 											</div>
 
 
@@ -680,7 +694,7 @@ body {
  -->
 
 
-													<td class="col-md-2" style="text-align: left"><c:out
+													<td class="col-md-2" id="rate" style="text-align: left"><c:out
 															value="${item.itemRate1}" /></td>
 
 													<td class="col-md-2" style="text-align: left"><c:out
@@ -717,8 +731,7 @@ body {
 														href="#"
 														onclick="callDelete(${item.itemId},${count.index})"
 														class="action_btn"><i class="fa fa-trash-o"
-															title="Delete"></i></a>&nbsp;&nbsp;<a
-														href="#"
+															title="Delete"></i></a>&nbsp;&nbsp;<a href="#"
 														onclick="callItemDetail(${item.itemId},${count.index})"
 														class="action_btn"><i class="fa fa-list"
 															title="Item Detail"></i></a></td>
@@ -730,7 +743,9 @@ body {
 
 									</table>
 
-
+									<input type="hidden" id="rmc_mix_total" name="rmc_mix_total"
+										value="0"> class="form-control" style="width: 100%;"
+									value="${quotHeader.otherRemark1}" required>
 
 									<div class="form-group"></div>
 
@@ -850,7 +865,7 @@ body {
 	<script type="text/javascript">
 	
 	function getNewItems(args){
-		//alert("Hi");
+		alert("Hi");
 		if(args==0){
 		document.getElementById('newItemAddDiv').style.display="block";
 		}
@@ -884,7 +899,7 @@ body {
 								},
 
 								function(data) {
-									//alert("length " +data.length);
+									alert("length " +data.length);
 									//alert("Order Data " +JSON.stringify(data));
 									//alert("length " +data.length);
 
@@ -1096,10 +1111,7 @@ window.onclick = function(event) {
 									.DataTable();
 							dataTable.clear().draw();
 var termTitle=data.termTitle
-//$("term_title").text(termTitle);
-//document.getElementById("term_title").value="Term Title :" +termTitle;
-//document.getElementById("term_title").style.display="block";
-							$
+			$
 									.each(
 											data.detailList,
 											function(i, v) {
@@ -1111,9 +1123,7 @@ var termTitle=data.termTitle
 																	desc1])
 														.draw();
 											});
-				// window.alert("Term Detail "+data.detailList[i].termDesc);
 				
-				// alert("Term Detail "+temp);
 
 	}); 
 		   
@@ -1311,7 +1321,7 @@ var termTitle=data.termTitle
 </script>
 	<script type="text/javascript">
 	function itemCalc(itemId,fRate,itemRate,royRate,taxPer){
-		//alert("itemCalc taxPer 1" +taxPer)
+		alert("itemCalc taxPer 1" +taxPer)
 	//alert("Hi");
 	/* var isTaxInc;
 			if (document.getElementById('is_tax_inc').checked) {
@@ -1368,13 +1378,20 @@ var termTitle=data.termTitle
 	 if(valid==true){
 	
 	 var taxableAmt=parseFloat(itemRate)+parseFloat(tollCost)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
-	
+	 taxableAmt=taxableAmt.toFxed(2);
+
 	 document.getElementById("taxable_amt"+itemId).value=taxableAmt;
 
 	 var taxAmt=(taxableAmt*taxPer)/100;
+	 taxAmt=taxAmt.toFxed(2);
 
 	 document.getElementById("tax_amt"+itemId).value=taxAmt;
+	 //alert(taxAmt);
+
 	 var finalAmt=parseFloat(taxableAmt)+parseFloat(taxAmt)+parseFloat(otherCostAfterTax);
+	 finalAmt=finalAmt.toFxed(2);
+	 //alert(finalAmt);
+
 	 document.getElementById("final_amt"+itemId).value=finalAmt;
 	 
 	 }
@@ -1388,6 +1405,19 @@ var termTitle=data.termTitle
 			var dataTable = $('#table_grid1').DataTable();
 				columnDefs : [ {
 					targets : [ 1,2],
+					className : "right"
+				}, ]
+			
+		});
+		
+		
+	</script>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var dataTable = $('#table_grid2').DataTable();
+				columnDefs : [ {
+					targets : [5,6,7],
 					className : "right"
 				}, ]
 			
@@ -1494,31 +1524,124 @@ var termTitle=data.termTitle
 	  return valid;
 	} 
 	</script>
-	
+
 	<script type="text/javascript">
 	
 	function callItemDetail(itemId,indexKey){
 		
-		alert("Item Id " +itemId +"index Key " +indexKey) ;
+		//alert("Item Id " +itemId +"index Key " +indexKey) ;
 		
-		var modal = document.getElementById('itemDetailModal');
-		modal.style.display = "block";
-		
-		
-		 var span = document.getElementById("close1");
-
-		 span.onclick = function() {
-		     modal.style.display = "none"; 
-		 }
-
 		 // When the user clicks anywhere outside of the modal, close it
-		 window.onclick = function(event) {
-		     if (event.target == modal) {
-		         modal.style.display = "none";
-		         
-		     }
-		 }
+		
+		 $.getJSON('${getRmcQuotItemDetail}', {
+			 itemId : itemId,
+			 indexKey :indexKey,
+				ajax : 'true',
+
+			},
+
+			function(data) {
+//alert(data);
+				var modal = document.getElementById('itemDetailModal');
+				modal.style.display = "block";
+				
+				 var span = document.getElementById("close1");
+
+				 span.onclick = function() {
+				     modal.style.display = "none"; 
+				 }
+
+				 window.onclick = function(event) {
+				     if (event.target == modal) {
+				         modal.style.display = "none";
+				         
+				     }
+				 }
+				 
+				 
+							var dataTable = $('#table_grid2')
+									.DataTable();
+							dataTable.clear().draw();
+							
+
+			$
+									.each(
+											data,
+											function(i, v) {
+												var index=i+1;
+												var itemOpRate='<input  type="text" value='+v.itemOpRate+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="op_rate'+v.itemDetailId+'" name="op_rate'+v.itemDetailId+'" oninput="calcAmt('+v.itemDetailId+','+v.itemWt+','+i+')"/>'
+												var rmQty='<input  type="text" value='+v.rmQty+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="rm_qty'+v.itemDetailId+'" name="rm_qty'+v.itemDetailId+'" oninput="calcAmt('+v.itemDetailId+','+v.itemWt+','+i+')"/>'
+
+												var unitRate='<input  type="text" value='+v.unitRate+'  readonly  class="form-control"  onkeypress="return allowOnlyNumber(event);" id="unit_rate'+v.itemDetailId+'" name="unit_rate'+v.itemDetailId+'"/>'
+												var amt='<input  type="text" value='+v.amt+' readonly   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="amt'+v.itemDetailId+'" name="amt'+v.itemDetailId+'"/>'
+
+												
+												dataTable.row
+														.add(
+																[
+																	index,v.itemDesc,v.itemWt,v.uom,itemOpRate,rmQty,unitRate,amt])
+														.draw();
+											});
+				
+
+	}); 
+		 
+		 
 	}
+	function calcAmt(detailId,itemWt,index){
+		
+		//alert(detailId)
+				//alert(itewWt)
+				var opRate=document.getElementById('op_rate'+detailId).value;
+		
+		//alert(opRate);
+		var rmQty=document.getElementById('rm_qty'+detailId).value;
+		//alert("itemWt"+itemWt);
+		var unitRate=parseFloat(opRate)/itemWt;
+		//alert("Unit Rate" +unitRate);
+		
+		document.getElementById('unit_rate'+detailId).value=unitRate.toFixed(2);
+		var amt=parseFloat(unitRate)*rmQty;
+		document.getElementById('amt'+detailId).value=amt.toFixed(2);
+
+		 $.getJSON('${setRmcQuotItemDetail}', {
+			 detailId : detailId,
+			 index : index,
+			 opRate :opRate,
+			 rmQty : rmQty,
+			 unitRate : unitRate,
+			 amt : amt,
+			 ajax : 'true',
+
+			});
+		
+		callItemDetail(-1,-1);
+		//ajax will set values to this record 
+		//call to callItemDetail to set updated record
+				//var unitRate=
+	} 
+	
+	 
+	</script>
+	<script type="text/javascript">
+	
+function submitAmt(){
+		
+		//alert("In Submit Amt");
+		
+		 $.getJSON('${getMixItemRate}', {
+				ajax : 'true',
+
+			},
+
+			function(data) {
+				var modal = document.getElementById('itemDetailModal');
+				modal.style="display:none";
+alert(JSON.stringify(data));
+itemCalc(data.itemId,data.freightRate,data.itemRate1,data.royaltyRate,data.totalTaxPer)	;
+	}); 
+		 
+	} 
 	
 	</script>
 
