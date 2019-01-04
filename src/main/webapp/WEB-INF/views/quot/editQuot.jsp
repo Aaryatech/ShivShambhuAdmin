@@ -33,9 +33,9 @@ body {
 }
 
 /* The Modal (background) */
-.modal {
+.modal1 {
 	display: none; /* Hidden by default */
-	position: fixed; /* Stay in place */
+	position: absolute; /* Stay in place */
 	z-index: 1; /* Sit on top */
 	padding-top: 100px; /* Location of the box */
 	left: 0;
@@ -72,7 +72,7 @@ body {
 }
 
 #overlay {
-	position: fixed;
+	position: absolute;
 	display: none;
 	width: 50%;
 	height: auto;
@@ -376,6 +376,42 @@ body {
 
 								</div>
 								<!-- end of myModal div -->
+								
+								
+								<div id="itemDetailModal" class="modal1">
+
+									<div class="modal-content" style="color: black;">
+										<span class="close" id="close1">&times;</span>
+										<h5 style="text-align: left;">Material Cost As Per Mix Design</h5>
+										<div class=" box-content">
+
+											<div
+												style="overflow: scroll; height: 50%; width: 50%; overflow: auto">
+												<table style="width: 100%" id="table_grid2">
+													<thead>
+														<tr>
+															<th class="col-md-1">Sr.No.</th>
+															<th class="col-md-1">Material</th>
+															<th class="col-md-1">Unit</th>
+															<th class="col-md-1">Rate</th>
+															<th class="col-md-1">Unit Rate</th>
+															<th class="col-md-1">Constant</th>
+															<th class="col-md-1">Amount</th>
+														</tr>
+													</thead>
+													<tbody>
+
+													</tbody>
+												</table>
+											</div>
+
+
+										</div>
+										<br>
+
+									</div>
+
+								</div>
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -681,7 +717,11 @@ body {
 														href="#"
 														onclick="callDelete(${item.itemId},${count.index})"
 														class="action_btn"><i class="fa fa-trash-o"
-															title="Delete"></i></a></td>
+															title="Delete"></i></a>&nbsp;&nbsp;<a
+														href="#"
+														onclick="callItemDetail(${item.itemId},${count.index})"
+														class="action_btn"><i class="fa fa-list"
+															title="Item Detail"></i></a></td>
 
 
 												</tr>
@@ -872,7 +912,11 @@ var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
 														+ v.itemId
 														+ ','
 														+ i
-														+ ')" style="color:black"><i class="fa fa-trash-o"></i></a>' 
+														+ ')" style="color:black"><i class="fa fa-trash-o"></i></a>&nbsp;&nbsp;<a href="#"  class="action_btn" onclick="callItemDetail('
+														+ v.itemId
+														+ ','
+														+ i
+														+ ')" style="color:black"><i class="fa fa-list"></i></a>' 
  
 												dataTable.row
 														.add(
@@ -956,7 +1000,11 @@ var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 										+ v.itemId
 										+ ','
 										+ i
-										+ ')" style="color:black"><i class="fa fa-trash"></i></a>' 
+										+ ')" style="color:black"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;<a href="#"  class="action_btn" onclick="callItemDetail('
+										+ v.itemId
+										+ ','
+										+ i
+										+ ')" style="color:black"><i class="fa fa-list"></i></a>' 
 
 								dataTable.row
 										.add(
@@ -1011,18 +1059,16 @@ var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 				//newwindow=window.open(data,'name','height=40,width=40');
 				
 				
-				var modal = document.getElementById('myModal');
 
 // Get the button that opens the modal
 var btn = document.getElementById("quot_doc_term_id");
 
 // Get the <span> element that closes the modal
- var span = document.getElementById("close");
 
 // When the user clicks the button, open the modal 
 
-	
-		modal.style.display = "block";
+					var modal = document.getElementById('myModal');
+					modal.style.display = "block";
 	    //itemByIntendId(); 
 	    //getValue();
 	
@@ -1030,6 +1076,8 @@ var btn = document.getElementById("quot_doc_term_id");
 
 
 // When the user clicks on <span> (x), close the modal
+ var span = document.getElementById("close");
+
 span.onclick = function() {
     modal.style.display = "none"; 
 }
@@ -1355,7 +1403,6 @@ var termTitle=data.termTitle
 	    var okay=true;
 	    var quotHeadIdPdf=document.getElementById("quotHeadId").value;
 	    var quotStatus=document.getElementById("quotStatus").value;
-	  //  alert("quotHeadIdPdf"+quotHeadIdPdf);
 	  
 /* 
 	    var checkboxs=document.getElementsByName("selectItem");
@@ -1392,7 +1439,8 @@ var termTitle=data.termTitle
 	    	var form=document.getElementById("updateQuotation");
 	    	form.submit();
 	    	
- if(quotHeadIdPdf==0 ){
+
+			if(quotHeadIdPdf==0 ){
 				
 				//alert("hiii");
 				
@@ -1405,7 +1453,8 @@ var termTitle=data.termTitle
 					.open('${pageContext.request.contextPath}/pdfQuot?url=pdf/showQuotPdf/'
 							+ quotHeadIdPdf);
 					
-			} 
+			}
+		
 	    	
 	    }
 	   
@@ -1444,6 +1493,33 @@ var termTitle=data.termTitle
 	  }
 	  return valid;
 	} 
+	</script>
+	
+	<script type="text/javascript">
+	
+	function callItemDetail(itemId,indexKey){
+		
+		alert("Item Id " +itemId +"index Key " +indexKey) ;
+		
+		var modal = document.getElementById('itemDetailModal');
+		modal.style.display = "block";
+		
+		
+		 var span = document.getElementById("close1");
+
+		 span.onclick = function() {
+		     modal.style.display = "none"; 
+		 }
+
+		 // When the user clicks anywhere outside of the modal, close it
+		 window.onclick = function(event) {
+		     if (event.target == modal) {
+		         modal.style.display = "none";
+		         
+		     }
+		 }
+	}
+	
 	</script>
 
 	<!-- 	<script type="text/javascript">
