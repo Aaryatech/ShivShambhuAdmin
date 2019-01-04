@@ -547,7 +547,7 @@
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.quotHeadId
 																+ ','
-																+ v.plantId
+																+ v.plantIds
 																+ ','
 																+ v.custId
 																+ ','
@@ -580,7 +580,7 @@
 
 		function callEdit(quotHeadId, plantId, custId, enqHeadId) {
 
-			window.open("${pageContext.request.contextPath}/editQuotation/"
+			window.open("${pageContext.request.contextPath}/editQuotationDetail/"
 					+ quotHeadId + '/' + plantId + '/' + custId + '/'
 					+ enqHeadId);
 

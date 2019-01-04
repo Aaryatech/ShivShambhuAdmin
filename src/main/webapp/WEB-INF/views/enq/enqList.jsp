@@ -193,7 +193,7 @@
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">
-										<input type="button" class="btn btn-primary"
+										<input type="button" class="btn btn-primary" id="submitButton"
 											onclick="showQuot()" value="Submit">
 
 									</div>
@@ -582,9 +582,19 @@
 																this.checked);
 											});
 						});
+		
+		
 	</script>
 
+<script type="text/javascript">
 
+
+function disableSubmitButton(){
+	  document.getElementById('submitButton').innerHTML='Please Wait';
+	  document.getElementById("submitButton").disabled=true;
+}
+
+</script>
 
 
 	<script type="text/javascript">

@@ -51,7 +51,7 @@ public class ProdReportController {
 		try {
 			model = new ModelAndView("prod/prod_head_report");
 
-			model.addObject("title", "Production Report Between Date");
+			model.addObject("title", "Production Report");
 			
 			model.addObject("isError", isError);
 			isError = 0;

@@ -144,7 +144,7 @@ public class QuotController {
 
 			model = new ModelAndView("quot/quotList");
 
-			model.addObject("title", "Add Customer P.O.");
+			model.addObject("title", "Generate Purchase Order");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -172,7 +172,7 @@ public class QuotController {
 
 			model = new ModelAndView("quot/quotListNew");
 
-			model.addObject("title", "Quotation List CustomerWise");
+			model.addObject("title", "Quotation List");
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 

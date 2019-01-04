@@ -153,7 +153,7 @@
 									<input type="hidden" name="itemId" id="itemId"
 										value="0" />
 
-									<div class="col-md-2">Plant</div>
+									<div class="col-md-1">Plant</div>
 
 									<div class="col-md-3">
 										<select id="plant_id" name="plant_id" class="standardSelect"
