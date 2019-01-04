@@ -372,11 +372,7 @@ public class RmcController {
 			
 			document.add(table);
 			
-			Paragraph p1 = new Paragraph("Total:"+tot, headFont);
-			p1.setAlignment(Element.ALIGN_CENTER);
-			document.add(p1);
-			document.add(new Paragraph("\n"));
-
+			
 			int totalPages = writer.getPageNumber();
 
 			System.out.println("Page no " + totalPages);

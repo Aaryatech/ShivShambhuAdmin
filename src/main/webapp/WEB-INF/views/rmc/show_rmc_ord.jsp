@@ -181,16 +181,16 @@
 											<option value="">Select</option>
 
 
-<c:forEach items="${plantList}" var="plant">
+									<c:forEach items="${plantList}" var="plant">
 												<c:choose>
-													<c:when test="${plant.plantId==${plantId}}">
-														<option value="${plant.plantId}">${plant.plantName}</option>
+													<c:when test="${plant.plantId==plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
 													</c:when>
-													<c:otherwise>
+													<c:otherwise>s
 													<option value="${plant.plantId}">${plant.plantName}</option>
 													</c:otherwise>
 												</c:choose>
-</c:forEach>
+									</c:forEach>
 										<%-- 	</c:forEach>
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
