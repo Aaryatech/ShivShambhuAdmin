@@ -115,8 +115,8 @@
 							</div>
 							<div class="col-md-6"></div>
 							<div class="col-md-3" align="left">
-								<a href="${pageContext.request.contextPath}/showCustList" style="color:black"><strong>Customer
-										List</strong></a>
+								<a href="${pageContext.request.contextPath}/showCustList"
+									style="color: black"><strong>Customer List</strong></a>
 							</div>
 						</div>
 						<div class="card-body card-block">
@@ -271,7 +271,7 @@
 											onchange="checkDOB()" autocomplete="off" style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Customer Code</div>
+									<!-- <div class="col-md-2">Customer Code</div>
 
 									<div class="col-md-4">
 										<input type="text" id="cust_code" name="cust_code"
@@ -280,7 +280,16 @@
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;">
 									</div>
+ -->
 
+									<div class="col-md-2">Kilometer</div>
+									<div class="col-md-4">
+										<input type="text" id="km" name="km" class="form-control"
+											autocomplete="off" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											oninvalid="setCustomValidity('Please enter Kilometer')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
 								</div>
 
 
@@ -328,21 +337,6 @@
 									</div>
 									<div class="col-md-2"></div>
 								</div>
-								<div class="form-group"></div>
-
-								<div class="row">
-
-
-									<div class="col-md-2">Kilometer</div>
-									<div class="col-md-4">
-										<input type="text" id="km" name="km" class="form-control"
-											autocomplete="off" style="width: 100%;"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											oninvalid="setCustomValidity('Please enter Kilometer')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-									</div>
-
-								</div>
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -368,6 +362,7 @@
 									</div>
 
 								</div>
+								<div class="form-group"></div>
 
 								<div class="row">
 									<div class="col-md-2">Telephone No</div>

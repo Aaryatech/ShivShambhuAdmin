@@ -1115,39 +1115,21 @@ public class MasterController {
 			}
 
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
-
-			int custType = Integer.parseInt(request.getParameter("cust_type"));
-
 			String custName = request.getParameter("cust_name");
-
-			System.err.println("cust Name " + custName);
-
 			String mobNo = request.getParameter("mob_no");
-//
+			int custType = Integer.parseInt(request.getParameter("cust_type"));
 
 			String refName = request.getParameter("ref_name");
 			String email = request.getParameter("email");
-
 			String panNo = request.getParameter("pan_no");
-
 			String gstNo = request.getParameter("gst_no");
-
 			String ownerName = request.getParameter("ownerName");
 			String accPerson = request.getParameter("accPerson");
 			String accPerMob = request.getParameter("accPerMob");
-
-			// int custCate = Integer.parseInt(request.getParameter("cust_cate"));
-			// System.err.println("custCate " + custCate);
 			String custAdd = request.getParameter("cust_add");
 
-			String dob = request.getParameter("dob");
-
 			String custCode = request.getParameter("cust_code");
-
 			int isChequeRecv = Integer.parseInt(request.getParameter("cheque"));
-
-			System.err.println("isChequeRecv " + isChequeRecv);
-
 			String chequeRemark = request.getParameter("cheque_remark");
 			String contPerName = request.getParameter("cont_per_name");
 			String contPerMob = request.getParameter("con_per_mob");
@@ -1155,17 +1137,6 @@ public class MasterController {
 			String custVendor = request.getParameter("cust_vendor");
 
 			int sameState = Integer.parseInt(request.getParameter("state"));
-
-			/*
-			 * String creaditDays = request.getParameter("creaditDays");
-			 * 
-			 * String creaditLimit = request.getParameter("creaditLimit");
-			 * 
-			 * String km = request.getParameter("km");
-			 */
-			// String pincode = request.getParameter("pincode");
-
-			// System.err.println("refName Name " + refName);
 			String dateOfReg = request.getParameter("reg_date");
 
 			if (refName.equals("")) {
@@ -1190,7 +1161,6 @@ public class MasterController {
 			cust.setCustDob(curDate);
 			cust.setCustEmail(email);
 			cust.setCustGstNo(gstNo);
-			cust.setCustDob(DateConvertor.convertToYMD(dob));
 
 			cust.setCustId(custId);
 			cust.setCustLandline(telNo);
@@ -1203,30 +1173,6 @@ public class MasterController {
 			cust.setAccPerMob(accPerMob);
 			cust.setAccPerson(accPerson);
 
-			try {
-				cust.setPincode(request.getParameter("pincode"));
-				cust.setCustCat(Integer.parseInt(request.getParameter("cust_cate")));
-				cust.setKm(Float.parseFloat(request.getParameter("km")));
-
-				cust.setCreaditDays(Float.parseFloat(request.getParameter("creaditDays")));
-
-				cust.setCreaditLimit(Float.parseFloat(request.getParameter("creaditLimit")));
-
-				cust.setCustVendor(Integer.parseInt(custVendor));
-			} catch (Exception e) {
-				cust.setPincode("NA");
-				cust.setKm(0);
-				cust.setCreaditDays(0);
-				cust.setCreaditLimit(0);
-				cust.setCustVendor(0);
-				cust.setCustCat(0);
-			}
-
-			if (custId == 0) {
-				cust.setDateOfReg(curDate);
-			} else {
-				cust.setDateOfReg(curDate);
-			}
 			cust.setDelStatus(1);
 			cust.setExDate1(curDate);
 
@@ -1236,10 +1182,48 @@ public class MasterController {
 
 			cust.setChequeRemark(chequeRemark);
 
-			// cust.setToken("NA");
 			cust.setRespPerson(refName);
 			cust.setPlantId(plantId);
 			cust.setIsSameState(sameState);
+
+			try {
+				cust.setCustDob(DateConvertor.convertToYMD(request.getParameter("dob")));
+			} catch (Exception e) {
+				cust.setCustDob(curDate);
+			}
+
+			if (custId == 0) {
+				cust.setDateOfReg(curDate);
+			} else {
+				cust.setDateOfReg(curDate);
+			}
+
+			try {
+
+				cust.setCustCat(Integer.parseInt(request.getParameter("cust_cate")));
+
+				cust.setCreaditDays(Float.parseFloat(request.getParameter("creaditDays")));
+				cust.setCreaditLimit(Float.parseFloat(request.getParameter("creaditLimit")));
+
+			} catch (Exception e) {
+
+				cust.setCreaditDays(0);
+				cust.setCreaditLimit(0);
+				cust.setCustCat(0);
+
+			}
+
+			try {
+				cust.setPincode(request.getParameter("pincode"));
+
+				cust.setKm(Float.parseFloat(request.getParameter("km")));
+				cust.setCustVendor(Integer.parseInt(custVendor));
+			} catch (Exception e) {
+				cust.setPincode("NA");
+				cust.setKm(0);
+				cust.setCustVendor(0);
+
+			}
 
 			Cust custInsertRes = rest.postForObject(Constants.url + "saveCust", cust, Cust.class);
 
@@ -1996,7 +1980,7 @@ public class MasterController {
 				userId = 0;
 			}
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-			 int deptId = Integer.parseInt(request.getParameter("dept_id"));
+			int deptId = Integer.parseInt(request.getParameter("dept_id"));
 			// int plantId = Integer.parseInt(request.getParameter("plant_id"));
 
 			int companyId = Integer.parseInt(request.getParameter("company_id"));

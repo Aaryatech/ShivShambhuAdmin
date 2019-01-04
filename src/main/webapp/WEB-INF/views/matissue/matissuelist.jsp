@@ -84,8 +84,9 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showAddMatIssueContractor" style="color:black"><strong>Add
-										Material Issue Contractor </strong></a>
+									href="${pageContext.request.contextPath}/showAddMatIssueContractor"
+									style="color: black"><strong>Add Material Issue
+										Contractor </strong></a>
 							</div>
 
 						</div>
@@ -122,20 +123,20 @@
 												<td style="text-align: left"><c:out
 														value="${matIssue.contrName}" /></td>
 
-												<td style="text-align: left"><c:out
+												<td style="text-align: center"><c:out
 														value="${matIssue.date}" /></td>
 
-												<td style="text-align: right"><c:out
+												<td style="text-align: center"><c:out
 														value="${matIssue.issueNo}" /></td>
 
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editMatIssueCon/${matIssue.matHeaderId}"><i
-														class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
-													&nbsp; <a
+														class="fa fa-edit" style="color: black"></i> <span
+														class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deleteMatIssueCon/${matIssue.matHeaderId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o" style="color:black"></i></a></td>
+														class="fa fa-trash-o" style="color: black"></i></a></td>
 
 											</tr>
 										</c:forEach>

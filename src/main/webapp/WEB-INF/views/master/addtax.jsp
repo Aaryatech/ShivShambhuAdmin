@@ -121,8 +121,8 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showTaxList" style="color:black"><strong>Tax
-										List</strong></a>
+								<a href="${pageContext.request.contextPath}/showTaxList"
+									style="color: black"><strong>Tax List</strong></a>
 							</div>
 
 						</div>
@@ -345,6 +345,24 @@
 			if (valid == true) {
 				document.getElementById("igst").value = (parseFloat(sgst) + parseFloat(cgst));
 				document.getElementById("totalTaxPer").value = (parseFloat(sgst) + parseFloat(cgst));
+
+				var igst = document.getElementById("igst").value;
+				var cess = document.getElementById("cess").value;
+				var valid = true;
+
+				if (igst == null && cess > 0) {
+
+					valid = false;
+				} else if (cess == null && igst > 0) {
+
+					valid = false;
+				}
+
+				if (valid == true) {
+
+					document.getElementById("totalTaxPer").value = (parseFloat(cess) + parseFloat(igst));
+				}
+
 			}
 
 		}

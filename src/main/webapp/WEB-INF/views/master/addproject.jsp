@@ -116,8 +116,8 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showProjectList" style="color:black"><strong>Project
-										List</strong></a>
+								<a href="${pageContext.request.contextPath}/showProjectList"
+									style="color: black"><strong>Project List</strong></a>
 							</div>
 
 						</div>
@@ -270,7 +270,7 @@
 									<div class="col-md-4">
 										<input type="text" id="km" name="km" class="form-control"
 											pattern="\d+(\.\d{1,2})?" style="width: 100%;"
-											value="${editPro.km}" maxlength="10"
+											value="${editPro.km}" maxlength="10" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct kilometer')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
@@ -278,14 +278,18 @@
 
 									<div class="col-lg-2"></div>
 									<div class="col-lg-2">
-										<button type="submit" class="btn btn-primary"
+
+
+										<input type="submit" class="btn btn-primary" value="Submit"
 											style="align-content: center; width: 113px; margin-left: 40px;">
-											Submit</button>
+
 									</div>
-									<div class="col-lg-2" align="left">
-										<button type="reset" class="btn btn-primary"
+
+									<div class="col-lg-2">
+
+										<input type="reset" class="btn btn-primary" value="Clear"
 											style="align-content: center; width: 113px; margin-left: 40px;">
-											Clear</button>
+
 									</div>
 								</div>
 							</form>

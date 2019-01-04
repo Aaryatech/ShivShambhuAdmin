@@ -77,7 +77,15 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<strong>${title}</strong>
+							<div class="col-md-2">
+								<strong>${title}</strong>
+							</div>
+							<div class="col-md-8"></div>
+							<div class="col-md-2" align="left">
+								<a href="${pageContext.request.contextPath}/showAddCustomer"
+									style="color: black"><strong>Add Customer </strong></a>
+							</div>
+
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertCust"
@@ -177,11 +185,11 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Email</div>
+									<div class="col-md-2">Email*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="email" name="email" autocomplete="off"
-											style="width: 100%;" class="form-control"
+											style="width: 100%;" class="form-control" required
 											oninvalid="setCustomValidity('Please enter email')"
 											maxlength="50" value="${editCust.custEmail}"
 											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
@@ -223,11 +231,11 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Category</div>
+									<div class="col-md-2">Category*</div>
 
 									<div class="col-md-4">
 										<select id="cust_cate" name="cust_cate" class="standardSelect"
-											tabindex="1"
+											tabindex="1" required
 											oninvalid="setCustomValidity('Please enter customer category')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 											<option value="">Select</option>
@@ -283,10 +291,10 @@
 									<div class="col-md-4">
 										<input type="text" id="dob" name="dob" class="form-control"
 											autocomplete="off" value="${editCust.custDob}"
-											style="width: 100%;">
+											onchange="checkDOB()" style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Customer Code</div>
+									<%-- <div class="col-md-2">Customer Code</div>
 
 									<div class="col-md-4">
 										<input type="text" id="cust_code" name="cust_code"
@@ -295,6 +303,15 @@
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editCust.custCode}" class="form-control"
 											style="width: 100%;">
+									</div> --%>
+
+									<div class="col-md-2">Kilometer</div>
+									<div class="col-md-4">
+										<input type="text" id="km" name="km" class="form-control"
+											autocomplete="off" style="width: 100%;"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter Kilometer')"
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
 								</div>
@@ -303,21 +320,21 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Credit Limit</div>
+									<div class="col-md-2">Credit Limit*</div>
 									<div class="col-md-4">
 										<input type="text" id="creaditLimit" name="creaditLimit"
-											class="form-control" style="width: 100%;"
-											value="${editCust.creaditLimit}"
+											class="form-control" style="width: 100%;" required
+											value="${editCust.creaditLimit}" autocomplete="off"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											oninvalid="setCustomValidity('Please enter creaditLimit')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
-									<div class="col-md-2">Credit Days</div>
+									<div class="col-md-2">Credit Days*</div>
 									<div class="col-md-4">
 										<input type="text" id="creaditDays" name="creaditDays"
 											class="form-control" style="width: 100%;"
-											value="${editCust.creaditDays}"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											value="${editCust.creaditDays}" required
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter creaditDays')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
@@ -380,11 +397,11 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Mobile No</div>
+									<div class="col-md-2">Contact Person Mobile No</div>
 
 									<div class="col-md-4">
 										<input type="text" id="con_per_mob" name="con_per_mob"
-											value="${editCust.custMobNo}" style="width: 100%;"
+											value="${editCust.contactPerMob}" style="width: 100%;"
 											class="form-control"
 											oninvalid="setCustomValidity('Please enter mob no')"
 											maxlength="10" pattern="^[1-9]{1}[0-9]{9}$"
@@ -393,6 +410,7 @@
 									</div>
 
 								</div>
+								<div class="form-group"></div>
 
 								<div class="row">
 									<div class="col-md-2">Telephone No</div>
@@ -615,6 +633,26 @@
 						return true;
 					});
 		});
+
+		function checkDOB() {
+			//In javascript
+			var dateEntered = document.getElementById("dob").value;
+			// In JQuery
+			var dateEntered = $("#dob").val();
+
+			var date = dateEntered.substring(0, 2);
+			var month = dateEntered.substring(3, 5);
+			var year = dateEntered.substring(6, 10);
+
+			var dateToCompare = new Date(year, month - 1, date);
+			var currentDate = new Date();
+
+			if (dateToCompare > currentDate) {
+				alert("Please enter DOB less than Current Date ");
+				document.getElementById('dob').value = "";
+			}
+
+		}
 	</script>
 
 

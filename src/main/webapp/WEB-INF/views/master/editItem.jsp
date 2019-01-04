@@ -252,13 +252,14 @@
 
 									<div class="col-md-2">
 										<input type="text" id="pmax_stock" name="pmax_stock"
-											value="${editItem.plantMaxStock}" class="form-control"
-											style="width: 100%;">
+											onchange="checkstock() " value="${editItem.plantMaxStock}"
+											class="form-control" style="width: 100%;">
 									</div>
 									<div class="col-md-2">Plant ROL Stock*</div>
 
 									<div class="col-md-2">
 										<input type="text" id="prol_stock" name="prol_stock"
+											onchange="checkstockvalue()"
 											value="${editItem.plantRolStock}" class="form-control"
 											style="width: 100%;">
 									</div>
@@ -402,6 +403,30 @@
 
 		});
 	</script>
+	<script>
+		function checkstock() {
+
+			var min_stock = document.getElementById("pmin_stock").value;
+			var max_stock = document.getElementById("pmax_stock").value;
+			/* alert( "min stk is"+min_stock);
+			alert( "max stk is"+max_stock); */
+			var valid = true;
+
+			if (min_stock > max_stock) {
+
+				valid = false;
+			}
+
+			if (valid == false) {
+
+				alert("Enter Minimum Stock less than Maximum ");
+				document.getElementById("pmin_stock").value = "";
+				document.getElementById("pmax_stock").value = "";
+			}
+
+		}
+	</script>
+
 
 </body>
 </html>
