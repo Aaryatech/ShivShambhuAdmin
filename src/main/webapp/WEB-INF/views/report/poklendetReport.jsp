@@ -83,7 +83,7 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-				
+
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -134,9 +134,9 @@
 												<th style="text-align: center; width: 5%;">Sr.</th>
 
 												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">Measurement of Unit</th>
-												<th style="text-align: center">Item Rate</th>
+												<th style="text-align: center">Measurement Unit</th>
 												<th style="text-align: center">Item Quantity</th>
+												<th style="text-align: center">Item Rate</th>
 												<th style="text-align: center">Value</th>
 											</tr>
 										</thead>
@@ -156,12 +156,14 @@
 													<td style="text-align: center"><c:out
 															value="${matDetail.uomName}" /></td>
 
-													<td style="text-align: right"><c:out
-															value="${matDetail.rate}" /></td>
-
 
 													<td style="text-align: right"><c:out
 															value="${matDetail.quantity}" /></td>
+
+
+													<td style="text-align: right"><c:out
+															value="${matDetail.rate}" /></td>
+
 
 
 													<td style="text-align: right"><c:out
@@ -203,10 +205,10 @@
 
 												<th style="text-align: center; width: 5%;">Sr No</th>
 
-												<th style="text-align: center">Quantity</th>
 												<th style="text-align: center">Contractor Name</th>
 												<th style="text-align: center">Poklen Name</th>
 												<th style="text-align: center">Poklen No</th>
+												<th style="text-align: center">Quantity</th>
 											</tr>
 										</thead>
 
@@ -216,8 +218,7 @@
 												<tr>
 
 													<td style="text-align: center">${count.index+1}</td>
-													<td style="text-align: right"><c:out
-															value="${weighing.quantity}" /></td>
+
 
 													<td style="text-align: left"><c:out
 															value="${weighing.contrName}" /></td>
@@ -228,6 +229,9 @@
 
 													<td style="text-align: left"><c:out
 															value="${weighing.vehicleNo}" /></td>
+
+													<td style="text-align: right"><c:out
+															value="${weighing.quantity}" /></td>
 
 												</tr>
 											</c:forEach>

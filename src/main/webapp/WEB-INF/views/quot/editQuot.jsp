@@ -1480,7 +1480,7 @@ var termTitle=data.termTitle
 				//alert("ppoiio");
 			
 					window
-					.open('${pageContext.request.contextPath}/pdfQuot?url=pdf/showQuotPdf/'
+					.open('${pageContext.request.contextPath}/pdf?url=pdfQuot/showQuotPdf/'
 							+ quotHeadIdPdf);
 					
 			}

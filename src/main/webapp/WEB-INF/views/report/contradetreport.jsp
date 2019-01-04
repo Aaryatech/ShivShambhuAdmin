@@ -203,9 +203,9 @@
 												<th style="text-align: center; width: 5%;">Sr.</th>
 												<th style="text-align: center">Date</th>
 												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">Measurement of Unit</th>
-												<th style="text-align: center">Item Rate</th>
+												<th style="text-align: center">Measurement Unit</th>
 												<th style="text-align: center">Item Quantity</th>
+												<th style="text-align: center">Item Rate</th>
 												<th style="text-align: center">Value</th>
 
 											</tr>
@@ -229,15 +229,11 @@
 													<td style="text-align: left"><c:out
 															value="${matDetail.uomName}" /></td>
 
-
-
-													<td style="text-align: left"><c:out
-															value="${matDetail.itemRate}" /></td>
-
-
 													<td style="text-align: left"><c:out
 															value="${matDetail.quantity}" /></td>
 
+													<td style="text-align: left"><c:out
+															value="${matDetail.itemRate}" /></td>
 
 													<td style="text-align: left"><c:out
 															value="${matDetail.value}" /></td>
@@ -280,11 +276,12 @@
 
 												<th style="text-align: center; width: 5%;">Sr No</th>
 												<th style="text-align: center">Date</th>
-												<th style="text-align: center">Quantity</th>
+
 												<th style="text-align: center">Vehicle Name</th>
 												<th style="text-align: center">Vehicle No</th>
 												<th style="text-align: center">Poklen Name</th>
 												<th style="text-align: center">Poklen No</th>
+												<th style="text-align: center">Quantity</th>
 
 
 											</tr>
@@ -300,10 +297,6 @@
 															value="${editMat.date}" /></td>
 
 													<td style="text-align: left"><c:out
-															value="${weighing.quantity}" /></td>
-
-
-													<td style="text-align: left"><c:out
 															value="${weighing.vehicleName}" /></td>
 
 													<td style="text-align: left"><c:out
@@ -314,6 +307,9 @@
 
 													<td style="text-align: left"><c:out
 															value="${weighing.pokeNo}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${weighing.quantity}" /></td>
 
 												</tr>
 											</c:forEach>
