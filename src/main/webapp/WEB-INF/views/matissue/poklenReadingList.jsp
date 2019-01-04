@@ -163,7 +163,7 @@
 
 
 
-								<input type="checkbox" name="selAll" id="selAll" />
+								
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
@@ -178,6 +178,7 @@
 												<th style="text-align: center">Shift Type</th>
 												<th style="text-align: center">Start Reading</th>
 												<th style="text-align: center">End Reading</th>
+												<th style="text-align: center">Status</th>
 												<th style="text-align: center">Action</th>
 											</tr>
 										</thead>
@@ -295,7 +296,7 @@
 		// onclick of submit to search order 
 		function showQuot() {
 
-			alert("Hi View Orders  ");
+			//alert("Hi View Orders  ");
 
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
@@ -366,13 +367,37 @@
 														} else if (v.shiftType == 1) {
 															shiftType1 = "Night";
 														}
+														
+														var status;
+														if (v.exInt1 == 1) {
+															status= "Pending";
+														} else if(v.exInt1 == 2) {
+															status= "Completed";
+														}
+														
+														if(v.exInt1 == 2){
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.readingId
 																+ ','
 																+ i
 																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
-
+														}
+														else if(v.exInt1 == 1){
+															
+															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																+ v.readingId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
+																+ v.readingId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-close"></i></a>'
+															
+															
+														}
+														
 														chBox = '<input  type="checkbox" class="chk" name="readingIds" id='+v.readingId+' class="check"  value='+v.readingId+'>'
 
 														//var chBox='<input type="checkbox" id="orderId" class="chk" name="quotIds" value='+v.orderId+'/>'
@@ -387,6 +412,7 @@
 																				shiftType1,
 																				v.startReading,
 																				v.endReading,
+																				status,
 
 																				acButton ])
 																.draw();

@@ -601,6 +601,7 @@ public class TxnController {
 		rowData.add("Shift Type");
 		rowData.add("Start Reading");
 		rowData.add("End Reading");
+		rowData.add("Status");
 
 		
 		expoExcel.setRowData(rowData);
@@ -637,9 +638,18 @@ public class TxnController {
 			
 			
 			rowData.add("" + pReading.get(i).getStartReading());
-
 			
 			rowData.add("" + pReading.get(i).getEndReading());
+			
+			String status=null;
+			if(pReading.get(i).getEndReading()==0  ) {
+				status="Pending";
+				
+			}else {
+				status="Completed";
+			}
+			
+			rowData.add("" + status);
 			
 			
 			expoExcel.setRowData(rowData);
@@ -679,11 +689,11 @@ public class TxnController {
 			e.printStackTrace();
 		}
 
-		PdfPTable table = new PdfPTable(7);
+		PdfPTable table = new PdfPTable(8);
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f,3.2f });
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f,3.2f,3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -730,6 +740,12 @@ public class TxnController {
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("End Reading ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Status ", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
@@ -805,6 +821,20 @@ public class TxnController {
 
 
 				cell = new PdfPCell(new Phrase("" + work.getEndReading(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+				
+				String status=null;
+				if(work.getEndReading()==0  ) {
+					status="Pending";
+					
+				}else {
+					status="Completed";
+				}
+				cell = new PdfPCell(new Phrase(""+status, headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);

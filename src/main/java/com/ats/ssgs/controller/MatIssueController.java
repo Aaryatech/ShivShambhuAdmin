@@ -76,7 +76,7 @@ public class MatIssueController {
 
 			model.addObject("catList", catList);
 
-			model.addObject("title", "Add Material Issue Contractor");
+			model.addObject("title", "Material Issue to Contractor");
 
 		} catch (Exception e) {
 
@@ -394,7 +394,7 @@ public class MatIssueController {
 					GetMatIssueHeader[].class);
 			matIssueHeaderList = new ArrayList<GetMatIssueHeader>(Arrays.asList(matArray));
 
-			model.addObject("title", "Material Issue Contractor List");
+			model.addObject("title", "Material Issue to Contractor List");
 			model.addObject("matIssueList", matIssueHeaderList);
 		} catch (Exception e) {
 
@@ -713,7 +713,7 @@ public class MatIssueController {
 
 			model.addObject("catList", catList);
 
-			model.addObject("title", "Add Material Issue Vehicle");
+			model.addObject("title", "Material Issue to Vehicle");
 
 		} catch (Exception e) {
 
@@ -826,7 +826,7 @@ public class MatIssueController {
 					GetVehHeader[].class);
 			matIssueVehList = new ArrayList<GetVehHeader>(Arrays.asList(matArray));
 
-			model.addObject("title", "Material Issue Vehicle List");
+			model.addObject("title", "Material Issue to Vehicle List");
 			model.addObject("matIssueList", matIssueVehList);
 		} catch (Exception e) {
 
