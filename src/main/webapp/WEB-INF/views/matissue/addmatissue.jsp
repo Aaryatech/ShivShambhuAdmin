@@ -225,9 +225,10 @@
 
 												<th style="text-align: center; width: 5%;">Sr No</th>
 												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">Measurement of Unit</th>
-												<th style="text-align: center">Item Rate</th>
+												<th style="text-align: center">Measurement Unit</th>
 												<th style="text-align: center">Item Quantity</th>
+												<th style="text-align: center">Item Rate</th>
+
 												<th style="text-align: center">Value</th>
 												<th style="text-align: center; width: 5%;">Action</th>
 											</tr>
@@ -364,8 +365,9 @@
 															[ i + 1,
 																	v.itemName,
 																	v.uomName,
-																	v.itemRate,
 																	v.quantity,
+																	v.itemRate,
+
 																	v.value,
 																	str ])
 															.draw();

@@ -165,7 +165,10 @@ public class ReportController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("matHeaderId", matHeaderId);
-			editMat = rest.postForObject(Constants.url + "getMatIssueContrByHeaderId", map, GetMatIssueHeader.class);
+			map.add("contrId", contrId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			editMat = rest.postForObject(Constants.url + "getMatIssueByContrAndDate", map, GetMatIssueHeader.class);
 			model.addObject("title", "Contractorwise Report");
 			model.addObject("editMat", editMat);
 			model.addObject("editMatDetail", editMat.getMatIssueDetailList());

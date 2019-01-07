@@ -241,9 +241,10 @@
 
 												<th style="text-align: center; width: 5%;">Sr No</th>
 												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">Measurement of Unit</th>
-												<th style="text-align: center">Item Rate</th>
+												<th style="text-align: center">Measurement Unit</th>
 												<th style="text-align: center">Item Quantity</th>
+												<th style="text-align: center">Item Rate</th>
+
 												<th style="text-align: center">Value</th>
 												<th style="text-align: center; width: 5%;">Action</th>
 											</tr>
@@ -301,11 +302,11 @@
 
 													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${matDetail.matDetailId},${count.index})"><i
-															class="fa fa-edit" style="color: black"></i> <span
+															class="fa fa-edit"></i> <span style="color: black"
 															class="text-muted"></span></a> <a href="#"
 														onclick="callDelete(${matDetail.matDetailId},${count.index})"><i
-															class="fa fa fa-trash-o" style="color: black"></i> <span
-															class="text-muted"></span></a></td>
+															class="fa fa fa-trash-o"></i> <span class="text-muted"
+															style="color: black"></span></a></td>
 
 
 
@@ -443,8 +444,9 @@
 															[ i + 1,
 																	v.itemDesc,
 																	v.uomName,
-																	v.itemRate,
 																	v.quantity,
+																	v.itemRate,
+																
 																	v.value,
 																	str ])
 															.draw();

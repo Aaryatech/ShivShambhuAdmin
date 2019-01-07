@@ -12,6 +12,7 @@
 <c:url var="getRawItemByCatId" value="/getRawItemByCatId" />
 
 <c:url var="addMatIssueDetail" value="/addMatIssueDetail" />
+<c:url var="getVehicleById" value="/getVehicleById" />
 
 <c:url var="getMatIssueForEdit" value="/getMatIssueForEdit" />
 
@@ -121,8 +122,9 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showMatIssueVehicleList" style="color:black"><strong>Material
-										Issue Vehicle List</strong></a>
+									href="${pageContext.request.contextPath}/showMatIssueVehicleList"
+									style="color: black"><strong>Material Issue
+										Vehicle List</strong></a>
 							</div>
 
 						</div>
@@ -137,9 +139,8 @@
 
 									<div class="col-md-4">
 										<select id="vehId" name="vehId" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select Vehicle')"
-											onchange="getData()">
+											tabindex="1" required onchange="getContractRate()"
+											oninvalid="setCustomValidity('Please select Vehicle')">
 											<option>Select</option>
 											<c:forEach items="${vehList}" var="veh">
 												<option value="${veh.vehicleId}">${veh.vehicleName}</option>
@@ -159,7 +160,8 @@
 									<div class="col-md-2">Vehicle No*</div>
 									<div class="col-md-4">
 										<input type="text" id="vehNo" name="vehNo" maxlength="10"
-											class="form-control" style="width: 100%;" autocomplete="off"
+											readonly class="form-control" style="width: 100%;"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Vehicle No')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											pattern="[0-9]+">
@@ -232,9 +234,10 @@
 
 												<th style="text-align: center; width: 5%;">Sr No</th>
 												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">Measurement of Unit</th>
-												<th style="text-align: center">Item Rate</th>
+												<th style="text-align: center">Measurement Unit</th>
 												<th style="text-align: center">Item Quantity</th>
+												<th style="text-align: center">Item Rate</th>
+
 												<th style="text-align: center">Value</th>
 												<th style="text-align: center; width: 5%;">Action</th>
 											</tr>
@@ -474,8 +477,8 @@
 															[ i + 1,
 																	v.itemName,
 																	v.uomName,
-																	v.itemRate,
 																	v.quantity,
+																	v.itemRate,
 																	v.value,
 																	str ])
 															.draw();
@@ -590,6 +593,29 @@
 
 		});
 	</script>
+
+	<script type="text/javascript">
+		function getContractRate() {
+			//	alert("hiiiii");
+			var vehId = document.getElementById("vehId").value;
+			//	alert(contrId);
+
+			$.getJSON('${getVehicleById}', {
+
+				vehId : vehId,
+				ajax : 'true',
+
+			},
+
+			function(data) {
+
+				document.getElementById("vehNo").value = data.vehNo;
+
+			});
+
+		}
+	</script>
+
 
 </body>
 </html>

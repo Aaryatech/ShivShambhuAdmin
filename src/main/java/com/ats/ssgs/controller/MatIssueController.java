@@ -1241,4 +1241,20 @@ public class MatIssueController {
 
 	}
 
+	// Ajax call
+	@RequestMapping(value = "/getVehicleById", method = RequestMethod.GET)
+	public @ResponseBody Vehicle getVehicleById(HttpServletRequest request, HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int vehId = Integer.parseInt(request.getParameter("vehId"));
+
+		map.add("vehId", vehId);
+
+		Vehicle conArray = rest.postForObject(Constants.url + "getVehicleById", map, Vehicle.class);
+
+		return conArray;
+
+	}
+
 }
