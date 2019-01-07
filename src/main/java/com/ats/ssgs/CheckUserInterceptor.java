@@ -49,11 +49,11 @@ public class CheckUserInterceptor extends HandlerInterceptorAdapter {
 			try {
 
 				userObj = (LoginResUser) session.getAttribute("UserDetail");
-
+				System.out.println("userObj" + userObj.toString());
 			} catch (Exception e) {
 				// TODO: handle exception
 
-				// System.out.println("User Details: "+userObj);
+				System.out.println("User Details: " + userObj);
 
 			}
 

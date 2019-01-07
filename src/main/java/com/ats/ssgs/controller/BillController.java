@@ -506,59 +506,62 @@ public class BillController {
 
 			if (insertBillHeadRes != null) {
 
-				PayRecoveryHead payRecoveryHead = new PayRecoveryHead();
+				if (grandTotalAmt != 0) {
 
-				payRecoveryHead.setBillNo(billNo);
-				payRecoveryHead.setBillTotal(grandTotalAmt);
-				payRecoveryHead.setBillDate(DateConvertor.convertToYMD(billDate));
-				payRecoveryHead.setCustId(custId);
-				payRecoveryHead.setDelStatus(1);
-				payRecoveryHead.setExBool1(1);
-				payRecoveryHead.setUserId(login.getUser().getUserId());
-				payRecoveryHead.setExBool2(1);
-				payRecoveryHead.setStatus(0);
-				payRecoveryHead.setRemark("NA");
-				payRecoveryHead.setPendingAmt(grandTotalAmt);
-				payRecoveryHead.setBillHeadId(insertBillHeadRes.getBillHeadId());
+					PayRecoveryHead payRecoveryHead = new PayRecoveryHead();
 
-				payRecoveryHead.setExDate1(curDate);
-				payRecoveryHead.setExInt1(0);
-				payRecoveryHead.setExInt2(0);
-				payRecoveryHead.setExInt3(0);
-				payRecoveryHead.setExVarchar1("NA");
-				payRecoveryHead.setExVarchar2("NA");
-				payRecoveryHead.setPaidAmt(0);
+					payRecoveryHead.setBillNo(billNo);
+					payRecoveryHead.setBillTotal(grandTotalAmt);
+					payRecoveryHead.setBillDate(DateConvertor.convertToYMD(billDate));
+					payRecoveryHead.setCustId(custId);
+					payRecoveryHead.setDelStatus(1);
+					payRecoveryHead.setExBool1(1);
+					payRecoveryHead.setUserId(login.getUser().getUserId());
+					payRecoveryHead.setExBool2(1);
+					payRecoveryHead.setStatus(0);
+					payRecoveryHead.setRemark("NA");
+					payRecoveryHead.setPendingAmt(grandTotalAmt);
+					payRecoveryHead.setBillHeadId(insertBillHeadRes.getBillHeadId());
 
-				MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
+					payRecoveryHead.setExDate1(curDate);
+					payRecoveryHead.setExInt1(0);
+					payRecoveryHead.setExInt2(0);
+					payRecoveryHead.setExInt3(0);
+					payRecoveryHead.setExVarchar1("NA");
+					payRecoveryHead.setExVarchar2("NA");
+					payRecoveryHead.setPaidAmt(0);
 
-				map2.add("custId", custId);
+					MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
 
-				Cust cust = rest.postForObject(Constants.url + "getCustByCustId", map2, Cust.class);
+					map2.add("custId", custId);
 
-				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-				Calendar c = Calendar.getInstance();
-				Calendar c1 = Calendar.getInstance();
+					Cust cust = rest.postForObject(Constants.url + "getCustByCustId", map2, Cust.class);
 
-				c.setTime(sdf.parse(billDate));
-				c1.setTime(sdf.parse(billDate));
+					SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+					Calendar c = Calendar.getInstance();
+					Calendar c1 = Calendar.getInstance();
 
-				System.out.println("cust credit days" + cust.getCreaditDays());
+					c.setTime(sdf.parse(billDate));
+					c1.setTime(sdf.parse(billDate));
 
-				c.add(Calendar.DAY_OF_MONTH, (int) cust.getCreaditDays());
-				c1.add(Calendar.DAY_OF_MONTH, (int) (cust.getCreaditDays() - 5));
-				String creaditDate2 = sdf.format(c.getTimeInMillis());
+					System.out.println("cust credit days" + cust.getCreaditDays());
 
-				String creaditDate1 = sdf.format(c1.getTimeInMillis());
+					c.add(Calendar.DAY_OF_MONTH, (int) cust.getCreaditDays());
+					c1.add(Calendar.DAY_OF_MONTH, (int) (cust.getCreaditDays() - 5));
+					String creaditDate2 = sdf.format(c.getTimeInMillis());
 
-				payRecoveryHead.setCreditDate2(DateConvertor.convertToYMD(creaditDate2));
-				System.out.println("creaditDate2" + creaditDate2);
+					String creaditDate1 = sdf.format(c1.getTimeInMillis());
 
-				payRecoveryHead.setCreditDate3(DateConvertor.convertToYMD(creaditDate1));
-				payRecoveryHead.setCreditDate1(DateConvertor.convertToYMD(creaditDate1));
+					payRecoveryHead.setCreditDate2(DateConvertor.convertToYMD(creaditDate2));
+					System.out.println("creaditDate2" + creaditDate2);
 
-				PayRecoveryHead insertHeadRes = rest.postForObject(Constants.url + "savePaymentRecoveryHeader",
-						payRecoveryHead, PayRecoveryHead.class);
-				System.out.println(insertHeadRes.toString());
+					payRecoveryHead.setCreditDate3(DateConvertor.convertToYMD(creaditDate1));
+					payRecoveryHead.setCreditDate1(DateConvertor.convertToYMD(creaditDate1));
+
+					PayRecoveryHead insertHeadRes = rest.postForObject(Constants.url + "savePaymentRecoveryHeader",
+							payRecoveryHead, PayRecoveryHead.class);
+					System.out.println(insertHeadRes.toString());
+				}
 
 				// isError = 2;
 				map = new LinkedMultiValueMap<String, Object>();

@@ -139,6 +139,8 @@ public class ReportController {
 			rowData.add("" + getList.get(i).getWeighContrQty());
 
 			expoExcel.setRowData(rowData);
+
+			
 			exportToExcelList.add(expoExcel);
 
 		}
@@ -172,6 +174,12 @@ public class ReportController {
 			model.addObject("title", "Contractorwise Report");
 			model.addObject("editMat", editMat);
 			model.addObject("editMatDetail", editMat.getMatIssueDetailList());
+
+			float total = 0;
+			for (int j = 0; j < editMat.getMatIssueDetailList().size(); j++) {
+				total = total + editMat.getMatIssueDetailList().get(j).getValue();
+			}
+			model.addObject("total", total);
 
 			map = new LinkedMultiValueMap<String, Object>();
 

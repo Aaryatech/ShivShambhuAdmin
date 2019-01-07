@@ -1009,7 +1009,7 @@ public class MatIssueController {
 			int isEdit = Integer.parseInt(request.getParameter("isEdit"));
 
 			if (isDelete == 1) {
-				System.out.println("IsDelete" + isDelete);
+				System.out.println("IsDelete" + 1);
 				int key = Integer.parseInt(request.getParameter("key"));
 
 				GetVehDetail delteDetail = editVeh.getVehDetailList().get(key);
@@ -1022,7 +1022,7 @@ public class MatIssueController {
 				Info errMsg = rest.postForObject(Constants.url + "deleteMatVehDetail", map, Info.class);
 
 			} else if (isEdit == 1) {
-
+				System.err.println("isEdit ==1");
 				int itemId = Integer.parseInt(request.getParameter("itemName"));
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -1045,7 +1045,7 @@ public class MatIssueController {
 			}
 
 			else {
-
+				System.err.println("isEdit not 1");
 				int matVehHeaderId = Integer.parseInt(request.getParameter("matVehHeaderId"));
 
 				int itemId = Integer.parseInt(request.getParameter("itemName"));
@@ -1069,13 +1069,14 @@ public class MatIssueController {
 						if (editVeh.getVehDetailList().get(i).getItemId() == itemId) {
 							editVeh.getVehDetailList().get(i).setExInt2(1);
 							flag = 1;
+							System.err.println("flag ==1");
 
 						} // end of if item exist
 
 					} // end of for
 
 					if (flag == 0) {
-
+						System.err.println("flag ==0");
 						GetVehDetail matIssueDetail = new GetVehDetail();
 						matIssueDetail.setDelStatus(1);
 						matIssueDetail.setExBool1(1);
@@ -1110,7 +1111,9 @@ public class MatIssueController {
 						editVeh.getVehDetailList().add(matIssueDetail);
 
 					} else {
-						GetVehDetail matIssueDetail = new GetVehDetail();
+						
+						System.err.println("ELSE ");
+						/*GetVehDetail matIssueDetail = new GetVehDetail();
 						matIssueDetail.setDelStatus(1);
 						matIssueDetail.setExBool1(1);
 						matIssueDetail.setExDate1(curDate);
@@ -1138,7 +1141,7 @@ public class MatIssueController {
 								System.out.println("---getItemUom2--------------" + getSingleItem.getItemUom2());
 							}
 						}
-						editVeh.getVehDetailList().add(matIssueDetail);
+						editVeh.getVehDetailList().add(matIssueDetail);*/
 					}
 				}
 			}
