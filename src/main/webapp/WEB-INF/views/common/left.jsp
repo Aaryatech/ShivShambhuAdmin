@@ -27,7 +27,7 @@ font-size:14;
 .form-control {
   display: block;
   width: 100%;
-  padding: 0.15rem 0.99rem;
+  padding: 0.05rem 0.10rem;
   }
   .btn-primary {
     color: #fff;

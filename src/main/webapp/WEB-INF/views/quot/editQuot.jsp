@@ -48,7 +48,7 @@ body {
 }
 
 /* Modal Content */
-.modal-content {
+.modal-content1{
 	background-color: #fefefe;
 	margin: auto;
 	padding: 20px;
@@ -251,6 +251,8 @@ body {
 										</select>
 									</div>
 
+	<input type="hidden" name="quotHeadStatus" id="quotHeadStatus"
+										value="0">
 
 									<input type="hidden" name="quotHeadIdPdf" id="quotHeadIdPdf"
 										value="${quotHeadIdPdf}"> <input type="hidden"
@@ -355,7 +357,7 @@ body {
 								</div>
 
 
-								<div id="myModal" class="modal">
+								<div id="myModal" class="modal1">
 
 									<div class="modal-content" style="color: black;">
 										<span class="close" id="close">&times;</span>
@@ -600,33 +602,33 @@ body {
 
 											<tr>
 
-												<th style="text-align: center" class="col-md-1">Sr</th>
+												<th style="text-align: center" width="2%">Sr</th>
 
 												<th>Item name</th>
 												<th style="text-align: center" class="col-md-1">Quantity</th>
-												<th style="text-align: center" class="col-md-1">UOM</th>
+												<!-- <th style="text-align: center" class="col-md-1">UOM</th> -->
 
-												<th style="text-align: center" class="col-md-2">Trans
+												<th style="text-align: center" class="col-md-1">Trans
 													cost</th>
-												<th style="text-align: center" class="col-md-2">Toll
-													Cost</th>
-												<th style="text-align: center" class="col-md-2">Other
+												<!-- <th style="text-align: center" class="col-md-2">Toll
+													Cost</th> -->
+												<th style="text-align: center" class="col-md-1">Other
 													Cost</th>
 
-												<th style="text-align: center" class="col-md-2">Item
+												<th style="text-align: center" class="col-md-1">Item
 													Rate</th>
-												<th style="text-align: center" class="col-md-2">Roy
+												<th style="text-align: center" class="col-md-1">Roy
 													Rate</th>
 												<th style="text-align: center" class="col-md-1">GST</th>
 
-												<th style="text-align: center" class="col-md-2">Taxable</th>
-												<th style="text-align: center" class="col-md-2">Tax
+												<th style="text-align: center" class="col-md-1">Taxable</th>
+												<th style="text-align: center" class="col-md-1">Tax
 													value</th>
-												<th style="text-align: center" class="col-md-2">Cost
+												<th style="text-align: center" class="col-md-1">Cost
 													After Tax</th>
 
-												<th style="text-align: center" class="col-md-2">Final</th>
-												<th style="text-align: center" class="col-md-2">Action</th>
+												<th style="text-align: center" class="col-md-1">Final</th>
+												<th style="text-align: center" class="col-md-1">Action</th>
 
 
 											</tr>
@@ -638,10 +640,10 @@ body {
 												<tr>
 
 
-													<td class="col-md-1" style="text-align: center">${count.index+1}</td>
+													<td width="2%" style="text-align: center">${count.index+1}</td>
 
 
-													<td class="col-md-2" style="text-align: left"><c:out
+													<td class="col-md-1" style="text-align: left"><c:out
 															value="${item.itemName}" /></td>
 
 													<c:if test="${quotHeader.status==0}">
@@ -665,23 +667,23 @@ body {
 													<c:if test="${item.enqQty > 0}">
 														<c:set var="uomName" value="${item.enqUomName}"></c:set>
 													</c:if>
-													<td class="col-md-1" style="text-align: left"><c:out
-															value="${uomName}" /></td>
+													<%-- <td class="col-md-1" style="text-align: left"><c:out
+															value="${uomName}" /></td> --%>
 
 
-													<td class="col-md-2" style="text-align: center"><input
+													<td class="col-md-1" style="text-align: center"><input
 														type="text" id="trans_cost${item.itemId}"
 														value="${item.transCost}"
 														onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														name="trans_cost${item.itemId}" class="form-control"></td>
 
-													<td class="col-md-2" style="text-align: center"><input
+													<%-- <td class="col-md-1" style="text-align: center"><input
 														type="text" id="toll_cost${item.itemId}" readonly
 														value="${quotHeader.tollCost}"
 														name="toll_cost${item.itemId}" class="form-control"></td>
-
-													<td class="col-md-2" style="text-align: center"><input
+ --%>
+													<td class="col-md-1" style="text-align: center"><input
 														type="text" min="0"
 														onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
@@ -693,29 +695,30 @@ body {
 														style="width: 100%;"></td>
  -->
 
+													<td class="col-md-1" id="rate" style="text-align: left"><input
+														type="text" id="itemRate${item.itemId}"
+														value="${item.itemRate1}" name="itemRate${item.itemId}"
+														class="form-control"></td>
 
-													<td class="col-md-2" id="rate" style="text-align: left"><c:out
-															value="${item.itemRate1}" /></td>
-
-													<td class="col-md-2" style="text-align: left"><c:out
+													<td class="col-md-1" style="text-align: left"><c:out
 															value="${item.royaltyRate}" /></td>
 
-													<td class="col-md-2" style="text-align: left"><c:out
+													<td class="col-md-1" style="text-align: left"><c:out
 															value="${item.totalTaxPer}%" /></td>
 
-													<td class="col-md-2" style="text-align: right"><input
+													<td class="col-md-1" style="text-align: right"><input
 														type="text" readonly id="taxable_amt${item.itemId}"
 														value="${item.taxableValue}"
 														name="taxable_amt${item.itemId}" class="form-control"></td>
 
 
-													<td class="col-md-2" style="text-align: right" width="100%"><input
+													<td class="col-md-1" style="text-align: right" width="100%"><input
 														type="text" readonly id='tax_amt${item.itemId}'
 														value="${item.taxValue}" name="tax_amt${item.itemId}"
 														class="form-control"></td>
 
 
-													<td class="col-md-2" style="text-align: center"><input
+													<td class="col-md-1" style="text-align: center"><input
 														type="text" min="0"
 														onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
@@ -723,11 +726,11 @@ body {
 														value="${item.otherCostAfterTax}"
 														name="oth_cost_aft_tax${item.itemId}" class="form-control"></td>
 
-													<td class="col-md-2" style="text-align: right"><input
+													<td class="col-md-1" style="text-align: right"><input
 														type="text" readonly id="final_amt${item.itemId}"
 														value="${item.finalTotal}" name="final_amt${item.itemId}"
 														class="form-control"></td>
-													<td class="col-md-2" style="text-align: center"><a
+													<td class="col-md-1" style="text-align: center"><a
 														href="#"
 														onclick="callDelete(${item.itemId},${count.index})"
 														class="action_btn"><i class="fa fa-trash-o"
@@ -744,8 +747,7 @@ body {
 									</table>
 
 									<input type="hidden" id="rmc_mix_total" name="rmc_mix_total"
-										value="0"> class="form-control" style="width: 100%;"
-									value="${quotHeader.otherRemark1}" required>
+										value="0" class="form-control" style="width: 100%;" required>
 
 									<div class="form-group"></div>
 
@@ -766,7 +768,13 @@ body {
 												onclick="valthisform()" value="Generate Quotation">
 
 										</div>
+										<div class="col-md-2"></div>
 
+<div class="col-md-1">
+											<input type="button" class="btn btn-primary"
+												onclick="valthisformUpdateQuot()" value="Update Quotation">
+
+										</div>
 									</div>
 								</div>
 							</form>
@@ -862,10 +870,69 @@ body {
 
 		});
 	</script>
+
+	<script type="text/javascript">
+	//SACHIN : - Common function to append table data for getNewItems() and callDelete() 
+	
+	function appendTableData(data) {
+		//alert("length " +data.length);
+		 var dataTable = $('#bootstrap-data-table')
+		.DataTable();
+ dataTable.clear().draw();
+$.each(data,function(i, v) {
+var quotQty = '<input  type="text"  class="form-control" onkeypress="return allowOnlyNumber(event);" id="quot_qty'+v.itemId+'" name="quot_qty'+v.itemId+'"  value="'+v.quotQty+'" />'
+var finalAmt = '<input  type="text"   class="form-control"   id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
+var transCost='<input  type="text"  class="form-control" value='+v.transCost+'  onkeypress="return allowOnlyNumber(event);" id="trans_cost'+v.itemId+'" name="trans_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+var tollCosta='<input  type="text" value='+tollCost+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="toll_cost'+v.itemId+'" name="toll_cost'+v.itemId+'"/>'
+var otherCost='<input  type="text" value='+v.otherCost+' class="form-control"  onkeypress="return allowOnlyNumber(event);" id="other_cost'+v.itemId+'" name="other_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+var taxable='<input  type="text" value='+v.taxableValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="taxable_amt'+v.itemId+'" name="taxable_amt'+v.itemId+'"/>'
+var tax='<input  type="text" value='+v.taxValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="tax_amt'+v.itemId+'" name="tax_amt'+v.itemId+'"/>'
+var costAfTax='<input  type="text" value='+v.otherCostAfterTax+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+var finalAmt='<input  type="text" value='+v.finalTotal+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
+var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
+							+ v.itemId
+							+ ','
+							+ i
+							+ ')" style="color:black"><i class="fa fa-trash-o"></i></a>&nbsp;&nbsp;<a href="#"  class="action_btn" onclick="callItemDetail('
+							+ v.itemId
+							+ ','
+							+ i
+							+ ')" style="color:black"><i class="fa fa-list"></i></a>' 
+							
+							//var itemRateDiv = '<div id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'">+'v.itemRate1+'</div>'
+							var itemRateDiv = '<input  type="text"   class="form-control" value='+v.itemRate1+'  id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'"/>'
+
+					dataTable.row
+							.add(
+									[
+											i + 1,
+											v.itemName,
+											quotQty,
+										//	v.enqUomName,
+											transCost,
+											//tollCosta,
+											otherCost,
+											itemRateDiv,
+											v.royaltyRate,
+											v.totalTaxPer,
+											taxable,
+											tax,
+											costAfTax,
+											finalAmt,
+											acButton
+											 ])
+							.draw();
+				}); 
+
+calcAll();
+
+		
+	}
+	</script>
 	<script type="text/javascript">
 	
 	function getNewItems(args){
-		alert("Hi");
+		//alert("Hi");
 		if(args==0){
 		document.getElementById('newItemAddDiv').style.display="block";
 		}
@@ -884,7 +951,6 @@ body {
 				alert("please select item ");
 			}
 				if(valid==true){
-				
 			
 				$
 						.getJSON(
@@ -899,80 +965,18 @@ body {
 								},
 
 								function(data) {
-									alert("length " +data.length);
-									//alert("Order Data " +JSON.stringify(data));
-									//alert("length " +data.length);
-
-									 var dataTable = $('#bootstrap-data-table')
-									.DataTable();
-							 dataTable.clear().draw();
-
-							$.each(data,function(i, v) {
-												//alert("hdjfh");
-var quotQty = '<input  type="text"  class="form-control" onkeypress="return allowOnlyNumber(event);" id="quot_qty'+v.itemId+'" name="quot_qty'+v.itemId+'"  value="'+v.quotQty+'" />'
-var finalAmt = '<input  type="text"   class="form-control"   id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
-var transCost='<input  type="text"  class="form-control" value='+v.transCost+'  onkeypress="return allowOnlyNumber(event);" id="trans_cost'+v.itemId+'" name="trans_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
-var tollCosta='<input  type="text" value='+tollCost+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="toll_cost'+v.itemId+'" name="toll_cost'+v.itemId+'"/>'
-var otherCost='<input  type="text" value='+v.otherCost+' class="form-control"  onkeypress="return allowOnlyNumber(event);" id="other_cost'+v.itemId+'" name="other_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
-var taxable='<input  type="text" value='+v.taxableValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="taxable_amt'+v.itemId+'" name="taxable_amt'+v.itemId+'"/>'
-var tax='<input  type="text" value='+v.taxValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="tax_amt'+v.itemId+'" name="tax_amt'+v.itemId+'"/>'
-var costAfTax='<input  type="text" value='+v.otherCostAfterTax+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
-var finalAmt='<input  type="text" value='+v.finalTotal+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
-/*<a href="#" class="action_btn" onclick="callEdit('
-												+ v.itemId
-												+ ','
-												+ i
-												+ ')"><i class="fa fa-edit"></i></a>*/
-var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
-														+ v.itemId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-trash-o"></i></a>&nbsp;&nbsp;<a href="#"  class="action_btn" onclick="callItemDetail('
-														+ v.itemId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-list"></i></a>' 
- 
-												dataTable.row
-														.add(
-																[
-																		i + 1,
-																		v.itemName,
-																		quotQty,
-																		v.enqUomName,
-																		transCost,
-																		tollCosta,
-																		otherCost,
-																		v.itemRate1,
-																		v.royaltyRate,
-																		v.totalTaxPer,
-																		taxable,
-																		tax,
-																		costAfTax,
-																		finalAmt,
-																		acButton
-																		 ])
-														.draw();
-											}); 
-							
-							calcAll();
-
-						 
-								});	
-				
-		
-				}	
+									
+									appendTableData(data);
+			});	
+	
 	}
+		}
 	}
 	function callDelete(itemId,index){
-		//alert("Item Id  " +itemId + "Index " +index);
-		
 		var x= confirm('Are you sure want to delete this record');
-		//alert("X" +x);
 		if(x==true){
 		var tollCost=${quotHeader.tollCost};
 		var quotHeaderId=${quotHeader.quotHeadId};
-		
 		$
 		.getJSON(
 				'${getNewItemsForQuotation}',
@@ -984,159 +988,19 @@ var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
 					index : index,
 					ajax : 'true',
 				},
-
 				function(data) {
-					//alert("length " +data.length);
-					
-									//alert(data[0].tempMsg)
-
-					//alert("Order Data " +JSON.stringify(data[0].totalTaxPer));
-					//alert("length " +data.length);
-					 var dataTable = $('#bootstrap-data-table')
-					.DataTable();
-			 dataTable.clear().draw();
-
-			$.each(data,function(i, v) {
-								//alert("hdjfh");
-var quotQty = '<input  type="text"  class="form-control"  id="quotQty'+v.itemId+'" name="quotQty'+v.itemId+'"  value="'+v.quotQty+'" />'
-var finalAmt = '<input  type="text"   class="form-control"   id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
-var transCost='<input  type="text"  class="form-control" value='+v.transCost+'  onkeypress="return allowOnlyNumber(event);" id="trans_cost'+v.itemId+'" name="trans_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
-var tollCosta='<input  type="text" value='+tollCost+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="toll_cost'+v.itemId+'" name="toll_cost'+v.itemId+'"/>'
-var otherCost='<input  type="text" value='+v.otherCost+' class="form-control"  onkeypress="return allowOnlyNumber(event);" id="other_cost'+v.itemId+'" name="other_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
-var taxable='<input  type="text" value='+v.taxableValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="taxable_amt'+v.itemId+'" name="taxable_amt'+v.itemId+'"/>'
-var tax='<input  type="text" value='+v.taxValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="tax_amt'+v.itemId+'" name="tax_amt'+v.itemId+'"/>'
-var costAfTax='<input  type="text" value='+v.otherCostAfterTax+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
-var finalAmt='<input  type="text" value='+v.finalTotal+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
-var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-								+ v.itemId
-								+ ','
-								+ i
-								+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-										+ v.itemId
-										+ ','
-										+ i
-										+ ')" style="color:black"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;<a href="#"  class="action_btn" onclick="callItemDetail('
-										+ v.itemId
-										+ ','
-										+ i
-										+ ')" style="color:black"><i class="fa fa-list"></i></a>' 
-
-								dataTable.row
-										.add(
-												[
-														i + 1,
-														v.itemName,
-														quotQty,
-														v.enqUomName,
-														transCost,
-														tollCosta,
-														otherCost,
-														v.itemRate1,
-														v.royaltyRate,
-														v.totalTaxPer,
-														taxable,
-														tax,
-														costAfTax,
-														finalAmt,
-														acButton
-														 ])
-										.draw();
-							}); 
-			
-		 
+					appendTableData(data);
 				});	
-
-
 		}
-		
 	}
 	
 	</script>
-
-
-	<script type="text/javascript">
-	function showDocDetailPopup(){
-		
-		var termId=	document.getElementById('quot_doc_term_id').value;
-		//alert("Hi doc Detail " +termId);
-	
-
-		   $.getJSON('${getDocTermDetail}', {
-			 termId : termId,
-				ajax : 'true',
-
-			},
-
-			function(data) {
-
-				//alert("Data " +JSON.stringify(data.detailList));
-				
-				//newwindow=window.open(data,'name','height=40,width=40');
-				
-				
-
-// Get the button that opens the modal
-var btn = document.getElementById("quot_doc_term_id");
-
-// Get the <span> element that closes the modal
-
-// When the user clicks the button, open the modal 
-
-					var modal = document.getElementById('myModal');
-					modal.style.display = "block";
-	    //itemByIntendId(); 
-	    //getValue();
-	
-    
-
-
-// When the user clicks on <span> (x), close the modal
- var span = document.getElementById("close");
-
-span.onclick = function() {
-    modal.style.display = "none"; 
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-        
-    }
-}
-				var temp;
-				var len = data.detailList.length;
-					
-							var dataTable = $('#table_grid1')
-									.DataTable();
-							dataTable.clear().draw();
-var termTitle=data.termTitle
-			$
-									.each(
-											data.detailList,
-											function(i, v) {
-												var index=i+1;
-												var desc1=index+") "+v.termDesc;
-												dataTable.row
-														.add(
-																[
-																	desc1])
-														.draw();
-											});
-				
-
-	}); 
-		   
-	}
-	</script>
-
 
 
 
 	<script type="text/javascript">
 		
 		function changeTaxValue1(value1){
-			//alert("Inside changeTaxValue " +value1);
 			calcAll();
 		}
 		</script>
@@ -1144,24 +1008,12 @@ var termTitle=data.termTitle
 		
 		function setData(){
 			var payTerm= $("#pay_term_id option:selected").html();
-			//alert("payTerm " +payTerm);
 			document.getElementById("pay_term_name").value=payTerm;
-			//showDocDetailPopup();
 			
 		}
 		</script>
-	<!-- <script type="text/javascript">
-		
-		function toggle() {
-			  checkboxes = document.getElementsByName('selectItem');
-			  for(var i=0, n=checkboxes.length;i<n;i++) {
-			    checkboxes[i].checked = source.checked;
-			  }
-			  }
-				  
-		</script> -->
+
 	<script type="text/javascript">
-		
 		function callsetKM(){
 			var x=${quotHeader.noOfKm};
 			//alert("No of km " +x);
@@ -1173,7 +1025,6 @@ var termTitle=data.termTitle
 			}
 			
 		}
-		
 		function setKM(delPlace) {
 		//alert("hiii");
 				 if(delPlace==1){
@@ -1185,7 +1036,7 @@ var termTitle=data.termTitle
 					document.getElementById("no_of_km").readOnly = true; 
 					document.getElementById("toll_amt").readOnly = true; 
 					document.getElementById("no_of_tolls").readOnly = true; 
-					//calcAll();
+				calcAll();
 				}else{
 					document.getElementById("no_of_km").readOnly = false; 
 					document.getElementById("toll_amt").readOnly = false; 
@@ -1199,31 +1050,22 @@ var termTitle=data.termTitle
 					document.getElementById("toll_amt").value=tollAmt;
 					document.getElementById("no_of_tolls").value=noOfTolls;
 					
-					//calcAll();
+					calcAll();
 					
 				}
-			 
 			}
 		
 		</script>
-
-
 
 
 	<!--  CalcAll function onchange of KM  -->
 
 	<script type="text/javascript">
 		function calcAll() {
-			//alert("in call ");
-				
-		//	alert("isTaxInc2 " +isTaxInc);
-			
 			var otherCostHeader= document.getElementById("other_cost").value;
 			var tollCost= document.getElementById("toll_amt").value;
 			var km= document.getElementById("no_of_km").value;
-			
 			var valid=true;
-			
 			 if(otherCostHeader==null || otherCostHeader==""){
 				 valid=false;
 			 }
@@ -1233,8 +1075,6 @@ var termTitle=data.termTitle
 			 else if(km==null || km==""){
 			 valid=false;
  			}
-			 
-			 
 			 if(otherCostHeader<0){
 				 valid=false;
 				 alert("Please enter valid other cost");
@@ -1249,44 +1089,37 @@ var termTitle=data.termTitle
 			 alert("Please enter valid kilometer");
 
  			}
-			 
 			 if(valid==true){
-
+				 alert("valid==true");
 		 var plantId=${quotHeader.plantIds};
 		 var enqHeadId=${quotHeader.enqHeadId};
-			
 		 $.getJSON('${getItemsAndEnqItemList}', {
-
 				plantId : plantId,
 				enqHeadId : enqHeadId,
 				ajax : 'true',
-
 			},
-
 			function(data) {
-				//alert("data " +JSON.stringify(data));
 				var len = data.length;
 				 if(tollCost==null || tollCost==""){
 					tollCost=0;
 				 }
-				 
 				 for (var i = 0; i < len; i++) {
 					 var frRate=parseFloat(data[i].freightRate);
+					// alert("frRate" +frRate);
 					 var transCost=frRate * km;
+					 //alert("tollCost "+tollCost);
+					transCost=parseFloat(transCost)+parseFloat(tollCost);
+					//alert("transCost "+transCost);
 					 var itemRate=parseFloat(data[i].itemRate1);
 					 var royRate=parseFloat(data[i].royaltyRate);
 					 var taxPer=parseFloat(data[i].totalTaxPer);
-						//alert("data[i].royaltyRate" +data[i].royaltyRate);
-						 //alert("taxPerfdfdvdv" +isTaxInc);
 						 var isTaxInc = $("input[name=is_tax_inc]:checked").val()
-				//alert("isTaxInc Yes No Per Item  " +isTaxInc);
 					 if(isTaxInc==0){
 						 taxPer=0;
 					 }
-					// alert("TAx pes" +taxPer);
 
 					document.getElementById("trans_cost"+data[i].itemId).value=transCost.toFixed(2);
-					document.getElementById("toll_cost"+data[i].itemId).value=tollCost;
+					//document.getElementById("toll_cost"+data[i].itemId).value=tollCost;
 					document.getElementById("other_cost"+data[i].itemId).value=otherCostHeader;
 					
 					 var otherCost= document.getElementById("other_cost"+data[i].itemId).value;
@@ -1309,7 +1142,7 @@ var termTitle=data.termTitle
 						 otherCostAfterTax=0;
 					 }
 					 var finalAmt=parseFloat(taxableAmt)+parseFloat(taxAmt)+parseFloat(otherCostAfterTax);
-
+					// alert("finalAmt " +finalAmt); 
 					 document.getElementById("final_amt"+data[i].itemId).value=finalAmt;
 					 
 				 } 
@@ -1321,26 +1154,15 @@ var termTitle=data.termTitle
 </script>
 	<script type="text/javascript">
 	function itemCalc(itemId,fRate,itemRate,royRate,taxPer){
-		alert("itemCalc taxPer 1" +taxPer)
-	//alert("Hi");
-	/* var isTaxInc;
-			if (document.getElementById('is_tax_inc').checked) {
-				isTaxInc = document.getElementById('is_tax_inc').value;
-				}
-			else{
-				isTaxInc=0;
-			}
-			 if(isTaxInc==0){
-				 taxPer=0;
-			 } */
-			 
+		//alert("itemCalc itemRate" +itemRate)
 		 var isTaxInc = $("input[name=is_tax_inc]:checked").val()
 				 if(isTaxInc==0){
 					 taxPer=0;
 				 }
-	var tollCost =document.getElementById("toll_cost"+itemId).value;
+	//var tollCost =document.getElementById("toll_cost"+itemId).value;
 	var transCost =document.getElementById("trans_cost"+itemId).value;
 	var otherCost= document.getElementById("other_cost"+itemId).value;
+	transCost=transCost+tollCost;
 	var valid=true;
 	 if(otherCost<0){
 		 valid=false;
@@ -1354,10 +1176,8 @@ var termTitle=data.termTitle
 	 else if(transCost<0){
 	 valid=false;
 	 alert("Please enter valid transport cost");
-
 		}
 	 
-	
 	var otherCostAfterTax= document.getElementById("oth_cost_aft_tax"+itemId).value;
 	 if(otherCostAfterTax==null || otherCostAfterTax=="" || otherCostAfterTax<0){
 		 otherCostAfterTax=0;
@@ -1376,31 +1196,179 @@ var termTitle=data.termTitle
 	 }
 	 
 	 if(valid==true){
-	
+
 	 var taxableAmt=parseFloat(itemRate)+parseFloat(tollCost)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
-	 taxableAmt=taxableAmt.toFxed(2);
+		//alert("is valid =true1");
+
+	 taxableAmt=taxableAmt.toFixed(2);
+		//alert("is valid =true2");
 
 	 document.getElementById("taxable_amt"+itemId).value=taxableAmt;
+		//alert("is valid =true3");
 
-	 var taxAmt=(taxableAmt*taxPer)/100;
-	 taxAmt=taxAmt.toFxed(2);
 
+	 var taxAmt=(parseFloat(taxableAmt)*parseFloat(taxPer))/100;
+		//alert("is valid =true4");
+
+	 taxAmt=taxAmt.toFixed(2);
+		//alert("is valid =true5");
+
+		//alert("Tax Amt  " +taxAmt);
 	 document.getElementById("tax_amt"+itemId).value=taxAmt;
-	 //alert(taxAmt);
 
+	document.getElementById("itemRate"+itemId).value = itemRate;
+	 var rate=document.getElementById("itemRate"+itemId).value;
+	// alert("new "+rate);
+		//var itemRateDiv = '<input  type="text"   class="form-control" value='+v.itemRate1+'  id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'"/>'
+
+	 alert(taxAmt);
 	 var finalAmt=parseFloat(taxableAmt)+parseFloat(taxAmt)+parseFloat(otherCostAfterTax);
-	 finalAmt=finalAmt.toFxed(2);
-	 //alert(finalAmt);
-
+	 finalAmt=finalAmt.toFixed(2);
+	// alert(finalAmt);
 	 document.getElementById("final_amt"+itemId).value=finalAmt;
-	 
+	// alert("End ")
 	 }
-	 
 }
 
 </script>
 
+
+
 	<script type="text/javascript">
+	
+	function callItemDetail(itemId,indexKey){
+		
+		 $.getJSON('${getRmcQuotItemDetail}', {
+			 itemId : itemId,
+			 indexKey :indexKey,
+				ajax : 'true',
+			},
+
+			function(data) {
+				var modal = document.getElementById('itemDetailModal');
+				modal.style.display = "block";
+				 var span = document.getElementById("close1");
+				 span.onclick = function() {
+				     modal.style.display = "none"; 
+				 }
+				 window.onclick = function(event) {
+				     if (event.target == modal) {
+				         modal.style.display = "none";
+				     }
+				 }
+							var dataTable = $('#table_grid2')
+									.DataTable();
+							dataTable.clear().draw();
+
+			$
+									.each(
+											data,
+											function(i, v) {
+												var index=i+1;
+												var itemOpRate='<input  type="text" value='+v.itemOpRate+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="op_rate'+v.itemDetailId+'" name="op_rate'+v.itemDetailId+'" oninput="calcAmt('+v.itemDetailId+','+v.itemWt+','+i+')"/>'
+												var rmQty='<input  type="text" value='+v.rmQty+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="rm_qty'+v.itemDetailId+'" name="rm_qty'+v.itemDetailId+'" oninput="calcAmt('+v.itemDetailId+','+v.itemWt+','+i+')"/>'
+
+												var unitRate='<input  type="text" value='+v.unitRate+'  readonly  class="form-control"  onkeypress="return allowOnlyNumber(event);" id="unit_rate'+v.itemDetailId+'" name="unit_rate'+v.itemDetailId+'"/>'
+												var amt='<input  type="text" value='+v.amt+' readonly   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="amt'+v.itemDetailId+'" name="amt'+v.itemDetailId+'"/>'
+
+												dataTable.row
+														.add(
+																[
+																	index,v.itemDesc,v.itemWt,v.uom,itemOpRate,rmQty,unitRate,amt])
+														.draw();
+											});
+
+	}); 
+		 
+	}
+	function calcAmt(detailId,itemWt,index){
+				var opRate=document.getElementById('op_rate'+detailId).value;
+		
+		var rmQty=document.getElementById('rm_qty'+detailId).value;
+		var unitRate=parseFloat(opRate)/itemWt;
+		document.getElementById('unit_rate'+detailId).value=unitRate.toFixed(2);
+		var amt=parseFloat(unitRate)*rmQty;
+		document.getElementById('amt'+detailId).value=amt.toFixed(2);
+		 $.getJSON('${setRmcQuotItemDetail}', {
+			 detailId : detailId,
+			 index : index,
+			 opRate :opRate,
+			 rmQty : rmQty,
+			 unitRate : unitRate,
+			 amt : amt,
+			 ajax : 'true',
+
+			});
+		
+		callItemDetail(-1,-1);
+	} 
+	 
+	</script>
+	<script type="text/javascript">
+function submitAmt(){
+		
+		 $.getJSON('${getMixItemRate}', {
+				ajax : 'true',
+
+			},
+
+			function(data) {
+				var modal = document.getElementById('itemDetailModal');
+				modal.style="display:none";
+				//alert(data.itemRate1);
+				itemCalc(data.itemId,data.freightRate,data.itemRate1,data.royaltyRate,data.totalTaxPer)	;
+	}); 
+		// alert("Hi");
+	}
+
+	
+	</script>
+
+	<script type="text/javascript">
+	function showDocDetailPopup(){
+		var termId=	document.getElementById('quot_doc_term_id').value;
+		   $.getJSON('${getDocTermDetail}', {
+			 termId : termId,
+				ajax : 'true',
+			},
+			function(data) {
+				var btn = document.getElementById("quot_doc_term_id");
+					var modal = document.getElementById('myModal');
+					modal.style.display = "block";
+ 			var span = document.getElementById("close");
+	span.onclick = function() {
+   	 modal.style.display = "none"; 
+	}
+	window.onclick = function(event) {
+    	if (event.target == modal) {
+       	 modal.style.display = "none";
+        
+    	}
+	}
+				var temp;
+				var len = data.detailList.length;
+					
+							var dataTable = $('#table_grid1')
+									.DataTable();
+							dataTable.clear().draw();
+				var termTitle=data.termTitle
+			$
+									.each(
+											data.detailList,
+											function(i, v) {
+												var index=i+1;
+												var desc1=index+") "+v.termDesc;
+												dataTable.row
+														.add(
+																[
+																	desc1])
+														.draw();
+											});
+	}); 
+	}
+	</script>
+
+	<!-- <script type="text/javascript">
 		$(document).ready(function() {
 			var dataTable = $('#table_grid1').DataTable();
 				columnDefs : [ {
@@ -1411,7 +1379,7 @@ var termTitle=data.termTitle
 		});
 		
 		
-	</script>
+	</script> -->
 
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -1423,7 +1391,6 @@ var termTitle=data.termTitle
 			
 		});
 		
-		
 	</script>
 
 	<script type="text/javascript">
@@ -1433,65 +1400,64 @@ var termTitle=data.termTitle
 	    var okay=true;
 	    var quotHeadIdPdf=document.getElementById("quotHeadId").value;
 	    var quotStatus=document.getElementById("quotStatus").value;
-	  
-/* 
-	    var checkboxs=document.getElementsByName("selectItem");
-	    for(var i=0,l=checkboxs.length;i<l;i++)
-	    {
-	        if(checkboxs[i].checked)
-	        {
-	            okay=true;
-	            break;
-	        }
-	    } */
-	   // alert("Okay " +okay);
-
 	    var quotTerm=document.getElementById("quot_doc_term_id").value;
 	    var payTerm=document.getElementById("pay_term_id").value;
 	  
 	     if(quotTerm<0 || quotTerm=="" || quotTerm==null){
-
 	    	okay=false;
-
 	    	alert("please select quotation term ");
 	    }
 	    else if(payTerm<0 || payTerm=="" || payTerm==null){
 	    	okay=false;
-
-		   // alert("Okay in pay term " +okay);
-
 	    	alert("please select payment term ");
 	    	
 	    }
 	    else if(okay){
-		   // alert("Okay on submit" +okay);
-
+	    	document.getElementById("quotHeadStatus").value=1;
 	    	var form=document.getElementById("updateQuotation");
 	    	form.submit();
-	    	
-
 			if(quotHeadIdPdf==0 ){
-				
-				//alert("hiii");
-				
 			}
 			else {
-				
-				//alert("ppoiio");
-			
 					window
 					.open('${pageContext.request.contextPath}/pdf?url=pdfQuot/showQuotPdf/'
 							+ quotHeadIdPdf);
-					
 			}
+	    }
+	}
+	
+	function valthisformUpdateQuot(){
 		
+		var okay=true;
+	    var quotHeadIdPdf=document.getElementById("quotHeadId").value;
+	    var quotStatus=document.getElementById("quotStatus").value;
+	    var quotTerm=document.getElementById("quot_doc_term_id").value;
+	    var payTerm=document.getElementById("pay_term_id").value;
+	  
+	     if(quotTerm<0 || quotTerm=="" || quotTerm==null){
+	    	okay=false;
+	    	alert("please select quotation term ");
+	    }
+	    else if(payTerm<0 || payTerm=="" || payTerm==null){
+	    	okay=false;
+	    	alert("please select payment term ");
 	    	
 	    }
-	   
+	    else if(okay){
+	    	document.getElementById("quotHeadStatus").value=0;
+
+	    	var form=document.getElementById("updateQuotation");
+	    	form.submit();
+			
+	    }
+		
+		
+		
 	}
 	</script>
-	<script type="text/javascript">
 
+
+	<script type="text/javascript">
 	function allowOnlyNumber(evt){
 	    var charCode = (evt.which) ? evt.which : event.keyCode
 	    if (charCode == 46){
@@ -1523,126 +1489,6 @@ var termTitle=data.termTitle
 	  }
 	  return valid;
 	} 
-	</script>
-
-	<script type="text/javascript">
-	
-	function callItemDetail(itemId,indexKey){
-		
-		//alert("Item Id " +itemId +"index Key " +indexKey) ;
-		
-		 // When the user clicks anywhere outside of the modal, close it
-		
-		 $.getJSON('${getRmcQuotItemDetail}', {
-			 itemId : itemId,
-			 indexKey :indexKey,
-				ajax : 'true',
-
-			},
-
-			function(data) {
-//alert(data);
-				var modal = document.getElementById('itemDetailModal');
-				modal.style.display = "block";
-				
-				 var span = document.getElementById("close1");
-
-				 span.onclick = function() {
-				     modal.style.display = "none"; 
-				 }
-
-				 window.onclick = function(event) {
-				     if (event.target == modal) {
-				         modal.style.display = "none";
-				         
-				     }
-				 }
-				 
-				 
-							var dataTable = $('#table_grid2')
-									.DataTable();
-							dataTable.clear().draw();
-							
-
-			$
-									.each(
-											data,
-											function(i, v) {
-												var index=i+1;
-												var itemOpRate='<input  type="text" value='+v.itemOpRate+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="op_rate'+v.itemDetailId+'" name="op_rate'+v.itemDetailId+'" oninput="calcAmt('+v.itemDetailId+','+v.itemWt+','+i+')"/>'
-												var rmQty='<input  type="text" value='+v.rmQty+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="rm_qty'+v.itemDetailId+'" name="rm_qty'+v.itemDetailId+'" oninput="calcAmt('+v.itemDetailId+','+v.itemWt+','+i+')"/>'
-
-												var unitRate='<input  type="text" value='+v.unitRate+'  readonly  class="form-control"  onkeypress="return allowOnlyNumber(event);" id="unit_rate'+v.itemDetailId+'" name="unit_rate'+v.itemDetailId+'"/>'
-												var amt='<input  type="text" value='+v.amt+' readonly   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="amt'+v.itemDetailId+'" name="amt'+v.itemDetailId+'"/>'
-
-												
-												dataTable.row
-														.add(
-																[
-																	index,v.itemDesc,v.itemWt,v.uom,itemOpRate,rmQty,unitRate,amt])
-														.draw();
-											});
-				
-
-	}); 
-		 
-		 
-	}
-	function calcAmt(detailId,itemWt,index){
-		
-		//alert(detailId)
-				//alert(itewWt)
-				var opRate=document.getElementById('op_rate'+detailId).value;
-		
-		//alert(opRate);
-		var rmQty=document.getElementById('rm_qty'+detailId).value;
-		//alert("itemWt"+itemWt);
-		var unitRate=parseFloat(opRate)/itemWt;
-		//alert("Unit Rate" +unitRate);
-		
-		document.getElementById('unit_rate'+detailId).value=unitRate.toFixed(2);
-		var amt=parseFloat(unitRate)*rmQty;
-		document.getElementById('amt'+detailId).value=amt.toFixed(2);
-
-		 $.getJSON('${setRmcQuotItemDetail}', {
-			 detailId : detailId,
-			 index : index,
-			 opRate :opRate,
-			 rmQty : rmQty,
-			 unitRate : unitRate,
-			 amt : amt,
-			 ajax : 'true',
-
-			});
-		
-		callItemDetail(-1,-1);
-		//ajax will set values to this record 
-		//call to callItemDetail to set updated record
-				//var unitRate=
-	} 
-	
-	 
-	</script>
-	<script type="text/javascript">
-	
-function submitAmt(){
-		
-		//alert("In Submit Amt");
-		
-		 $.getJSON('${getMixItemRate}', {
-				ajax : 'true',
-
-			},
-
-			function(data) {
-				var modal = document.getElementById('itemDetailModal');
-				modal.style="display:none";
-alert(JSON.stringify(data));
-itemCalc(data.itemId,data.freightRate,data.itemRate1,data.royaltyRate,data.totalTaxPer)	;
-	}); 
-		 
-	} 
-	
 	</script>
 
 	<!-- 	<script type="text/javascript">

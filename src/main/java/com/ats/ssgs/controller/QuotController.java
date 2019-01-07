@@ -932,6 +932,8 @@ System.err.println(" Inside IgetNewItemsForQuotation " );
 			model.addObject("title", "Quotation List");
 
 			int quotHeadId = Integer.parseInt(request.getParameter("quotHeadId"));
+			int quotHeadStatus = Integer.parseInt(request.getParameter("quotHeadStatus"));
+			System.err.println("quotHeadStatus" +quotHeadStatus);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -963,7 +965,7 @@ System.err.println(" Inside IgetNewItemsForQuotation " );
 
 			quotHeader.setUserId(1);// to be get from session who logged in to do this activity
 
-			quotHeader.setStatus(1);
+			quotHeader.setStatus(quotHeadStatus);
 
 			quotHeader.setPayTermId(payTermId);
 			quotHeader.setTransportTerms(transportTerms);
