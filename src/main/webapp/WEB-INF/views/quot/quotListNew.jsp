@@ -249,6 +249,7 @@
 												<th style="text-align: center">Quotation No</th>
 												<th style="text-align: center">Quotation Date</th>
 												<th style="text-align: center">Employee Name</th>
+												<th style="text-align: center">Status</th>
 												<th style="text-align: center">Action</th>
 											</tr>
 										</thead>
@@ -275,8 +276,27 @@
 												<td style="text-align: center"><c:out
 														value="${quot.usrName}" /></td>
 
-												<td style="text-align: center"><c:out
-														value="${quot.usrName}" /></td>
+
+
+
+
+
+												<td style="text-align: left"><c:choose>
+														<c:when test="${quot.status==0}">
+														 Pending
+													</c:when>
+														<c:when test="${quot.status==1}">
+														Quotation Generated
+													</c:when>
+														<c:otherwise>
+														PO Generated
+													</c:otherwise>
+
+													</c:choose></td>
+												<td><a
+													href="${pageContext.request.contextPath}/editQuotationDetail/${quot.quotHeadId}/${quot.plantIds}/${quot.custId}/${quot.enqHeadId}"><i
+														class="fa fa-edit" style="color: black"></i> <span
+														class="text-muted"></span></a></td>
 
 
 											</tr>
@@ -288,23 +308,23 @@
 									</table>
 									<div class="col-md-2"></div>
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();" disabled="disabled" id="expExcel"
-										style="align-content: center; width: 200px; margin-left: 80px;">
-										Export To Excel</button>
-								</div>
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" disabled="disabled" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
 
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="genPdf()" disabled="disabled" id="PDFButton"
-										style="align-content: center; width: 100px; margin-left: 80px;">
-										PDF</button>
-								</div>
-								&nbsp;
+										<button type="button" class="btn btn-primary"
+											onclick="genPdf()" disabled="disabled" id="PDFButton"
+											style="align-content: center; width: 100px; margin-left: 80px;">
+											PDF</button>
+									</div>
+									&nbsp;
 								</div>
 
 								<input type="submit" class="btn btn-primary" value="Delete"
@@ -521,7 +541,7 @@
 								},
 
 								function(data) {
-									
+
 									document.getElementById("expExcel").disabled = false;
 									document.getElementById("PDFButton").disabled = false;
 
@@ -542,6 +562,16 @@
 											.each(
 													data,
 													function(i, v) {
+
+														var status1;
+														if (v.status == 0) {
+															status1 = "Pending";
+														} else if (v.status == 1) {
+															status1 = "Quotation Generated";
+														} else {
+
+															status1 = "PO Generated";
+														}
 														var chBox;
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
@@ -568,6 +598,7 @@
 																				v.quotNo,
 																				v.quotDate,
 																				v.usrName,
+																				status1,
 																				acButton ])
 																.draw();
 													});
@@ -580,9 +611,15 @@
 
 		function callEdit(quotHeadId, plantId, custId, enqHeadId) {
 
-			window.open("${pageContext.request.contextPath}/editQuotationDetail/"
-					+ quotHeadId + '/' + plantId + '/' + custId + '/'
-					+ enqHeadId);
+			window
+					.open("${pageContext.request.contextPath}/editQuotationDetail/"
+							+ quotHeadId
+							+ '/'
+							+ plantId
+							+ '/'
+							+ custId
+							+ '/'
+							+ enqHeadId);
 
 		}
 	</script>
@@ -619,15 +656,12 @@
 			//alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-			var plantId= document.getElementById("plant_id").value;
-			var custId= document.getElementById("cust_name").value;
-			var statusList= document.getElementById("statusList").value;
-
-			
-			
+			var plantId = document.getElementById("plant_id").value;
+			var custId = document.getElementById("cust_name").value;
+			var statusList = document.getElementById("statusList").value;
 
 			window.open('${pageContext.request.contextPath}/showQuotListPdf/'
-					+ fromDate + '/' + toDate +'/' + custId + '/' + plantId );
+					+ fromDate + '/' + toDate + '/' + custId + '/' + plantId);
 			document.getElementById("expExcel").disabled = true;
 
 		}

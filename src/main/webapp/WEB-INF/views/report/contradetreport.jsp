@@ -253,9 +253,8 @@
 										<div class="col-md-8"></div>
 										<div class="col-md-1">Total</div>
 										<div class="col-md-3">
-											<input type="text" value="${editMat.total}"
-												class="form-control" style="width: 100%;" autocomplete="off"
-												readonly>
+											<input type="text" value="${total}" class="form-control"
+												style="width: 100%;" autocomplete="off" readonly>
 										</div>
 									</div>
 									&nbsp;&nbsp;

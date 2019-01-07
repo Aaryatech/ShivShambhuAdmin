@@ -371,8 +371,9 @@
 			var fromDate = document.getElementById("fromDate").value;
 			var toDate = document.getElementById("toDate").value;
 
-			window.open('${pageContext.request.contextPath}/showBillwisePdf/'
-					+ fromDate + '/' + toDate);
+			window
+					.open('${pageContext.request.contextPath}/showCustomerwiseDetailPdf/'
+							+ fromDate + '/' + toDate);
 			document.getElementById("expExcel").disabled = true;
 
 		}

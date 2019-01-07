@@ -168,6 +168,7 @@
 										<tr>
 											<th style="text-align: center; width: 5%;">Sr No.</th>
 											<th style="text-align: center">Bill Date</th>
+
 											<th style="text-align: center">CGST</th>
 											<th style="text-align: center">SGST</th>
 											<th style="text-align: center">IGST</th>
@@ -374,7 +375,7 @@
 											.each(
 													data,
 													function(i, v) {
- 
+
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.billHeadId
 																+ ',/'
@@ -408,15 +409,17 @@
 		function callEdit(billHeadId, billDate) {
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-		/* 	
-			alert("Bill Head id is"+billDate);
-			alert("date is"+billDate); */
+			/* 	
+				alert("Bill Head id is"+billDate);
+				alert("date is"+billDate); */
 
 			window
 					.open("${pageContext.request.contextPath}/showDateBillDetailReport/"
-							+ billHeadId  
-							+  billDate +  '/' +fromDate
-							+ '/' 
+							+ billHeadId
+							+ billDate
+							+ '/'
+							+ fromDate
+							+ '/'
 							+ toDate);
 
 		}

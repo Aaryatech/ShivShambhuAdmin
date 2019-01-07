@@ -257,6 +257,7 @@
 										<input type="text" id="pincode" name="pincode" maxlength="6"
 											autocomplete="off" class="form-control" style="width: 100%;"
 											value="${editPro.pincode}" pattern="[0-9]+"
+											onchange="checkPincodeLength()"
 											oninvalid="setCustomValidity('Please enter correct Pincode')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
@@ -504,6 +505,18 @@
 				document.getElementById("end_date").value = "";
 			}
 
+		}
+	</script>
+
+	<script type="text/javascript">
+		function checkPincodeLength() {
+			//In javascript
+			var pincode = document.getElementById("pincode").value;
+
+			if (pincode.length != 4 && pincode.length != 6) {
+				alert("Please enter correct Pincode ");
+				document.getElementById("pincode").value = "";
+			}
 		}
 	</script>
 

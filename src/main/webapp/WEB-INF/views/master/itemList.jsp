@@ -111,7 +111,7 @@
 											<th style="text-align: center">Dispatch limit</th>
 											<th style="text-align: center">Freight Rate</th>
 											<th style="text-align: center">Royalty Rate</th>
-											<th style="text-align: center">Action</th>
+											<th style="text-align: center width: 5%;">Action</th>
 
 										</tr>
 									</thead>
@@ -174,12 +174,12 @@
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editItem/${item.itemId}"><i
 														class="fa fa-edit" style="color: black" title="Edit"></i>
-														<span class="text-muted"></span></a> &nbsp; <a
+														<span class="text-muted"></span></a> <a
 													href="${pageContext.request.contextPath}/deleteItem/${item.itemId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
 														class="fa fa-trash-o" style="color: black" title="Delete"></i></a>
 
-													&nbsp; <a
+													<a
 													href="${pageContext.request.contextPath}/getExistingItemDetail/${item.itemId}/${item.itemName}/${item.itemCode}"><i
 														class="fa fa-list" style="color: black" title="Detail"></i></a>
 												</td>

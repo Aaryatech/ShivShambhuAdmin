@@ -137,7 +137,7 @@
 																class="fa fa-list" title="Create PO"
 																style="color: black"></i> </a>
 														</c:when>
-													</c:choose>
+													</c:choose></td>
 											</tr>
 										</c:forEach>
 									</tbody>

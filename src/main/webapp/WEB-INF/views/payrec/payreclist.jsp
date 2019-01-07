@@ -11,7 +11,8 @@
 
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
 <c:url var="getPayRecoveryBetDate" value="/getPayRecoveryBetDate" />
-<c:url var="getPayRecoveryBetDateVyPlantId" value="/getPayRecoveryBetDateVyPlantId" />
+<c:url var="getPayRecoveryBetDateVyPlantId"
+	value="/getPayRecoveryBetDateVyPlantId" />
 
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
@@ -117,18 +118,18 @@
 									</div>
 									<div class="col-md-2">Select Plant*</div>
 									<div class="col-md-4">
-									<select id="plantId" name="plantId" class="standardSelect"
-										tabindex="1" required onchange="showDetail()">
-										<option value="">Select</option>
+										<select id="plantId" name="plantId" class="standardSelect"
+											tabindex="1" required onchange="showDetail()">
+											<option value="">Select</option>
 
-										<option selected value="0">All</option>
-										<c:forEach items="${plantList}" var="plant">
+											<option selected value="0">All</option>
+											<c:forEach items="${plantList}" var="plant">
 
-											<option value="${plant.plantId}">${plant.plantName}</option>
+												<option value="${plant.plantId}">${plant.plantName}</option>
 
-										</c:forEach>
-									</select>
-								</div>
+											</c:forEach>
+										</select>
+									</div>
 
 
 								</div>
@@ -179,7 +180,6 @@
 										<thead>
 											<tr>
 												<th class="check" style="text-align: center; width: 5%;"><input
-													type="checkbox" name="selAll" id="selAll" /><input
 													type="checkbox" name="selAll" id="selAll" /></th>
 												<th style="text-align: center; width: 5%;">Sr.</th>
 												<th style="text-align: center">Customer Name</th>
@@ -223,11 +223,11 @@
 
 													<td style="text-align: left"><c:out
 															value="${rec.creditDate2}" /></td>
-															
-															
-															<td style="text-align: left"><c:out
+
+
+													<td style="text-align: left"><c:out
 															value="${rec.billTotal}" /></td>
-															
+
 
 													<td style="text-align: left"><c:out
 															value="${rec.paidAmt}" /></td>
@@ -248,8 +248,8 @@
 
 													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${rec.payHeadId},${count.index})"><i
-															class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
-													</td>
+															class="fa fa-edit" style="color: black"></i> <span
+															class="text-muted"></span></a></td>
 
 
 
@@ -259,27 +259,27 @@
 										</tbody>
 
 									</table>
-									
+
 									<div class="col-md-2"></div>
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();"  id="expExcel"
-										style="align-content: center; width: 200px; margin-left: 80px;">
-										Export To Excel</button>
-								</div>
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
 
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="genPdf()"  id="PDFButton"
-										style="align-content: center; width: 100px; margin-left: 80px;">
-										PDF</button>
-								</div>
-								&nbsp;
-									
+										<button type="button" class="btn btn-primary"
+											onclick="genPdf()" id="PDFButton"
+											style="align-content: center; width: 100px; margin-left: 80px;">
+											PDF</button>
+									</div>
+									&nbsp;
+
 								</div>
 
 								<input type="submit" class="btn btn-primary" value="Delete"
@@ -294,7 +294,7 @@
 
 			</div>
 		</div>
-<!-- disabled="disabled" -->
+		<!-- disabled="disabled" -->
 	</div>
 	<!-- .animated -->
 	<!-- .content -->
@@ -372,7 +372,7 @@
 		// onclick of submit to search order 
 		function showQuot() {
 
-			alert("Hi View Orders  ");
+			//alert("Hi View Orders  ");
 
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
@@ -470,18 +470,16 @@
 
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		// onclick of submit to search order 
 		function showDetail() {
 
-			alert("Hi View Orders  ");
+			//alert("Hi View Orders  ");
 
 			
 			var plantId = document.getElementById("plantId").value;
 
 			var valid = true;
-
-			
 			if (valid == true) {
 
 				$
@@ -585,7 +583,7 @@
 		}
 	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");
@@ -595,7 +593,7 @@
 
 	<script type="text/javascript">
 		function genPdf() {
-			alert("hiii");
+			//alert("hiii");
 			
 			
 			var temp= document.getElementById("txType").value;

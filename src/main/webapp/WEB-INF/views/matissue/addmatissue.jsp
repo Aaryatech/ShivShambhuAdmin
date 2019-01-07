@@ -136,7 +136,7 @@
 
 									<div class="col-md-2">Select Contractor*</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<select id="contr_id" name="contr_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select Contractor')"
@@ -148,17 +148,14 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Date*</div>
-									<div class="col-md-4">
+									<div class="col-md-1">Date*</div>
+									<div class="col-md-2">
 										<input type="text" id="date" name="date" autocomplete="off"
 											required class="form-control" required style="width: 100%;">
 									</div>
-								</div>
-								<div class="form-group"></div>
-								<div class="row">
 
 									<div class="col-md-2">Issue No*</div>
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="text" id="issueNo" name="issueNo" maxlength="10"
 											value="${doc.srNo}" class="form-control" style="width: 100%;"
 											autocomplete="off" readonly
@@ -167,6 +164,8 @@
 											pattern="[0-9]+">
 									</div>
 								</div>
+								<!-- <div class="form-group"></div>
+								<div class="row"></div> -->
 								<hr>
 								<div class="form-group"></div>
 								<div class="row">
@@ -223,7 +222,7 @@
 										<thead>
 											<tr>
 
-												<th style="text-align: center; width: 5%;">Sr No</th>
+												<th style="text-align: center; width: 5%;">Sr.</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">Measurement Unit</th>
 												<th style="text-align: center">Item Quantity</th>
