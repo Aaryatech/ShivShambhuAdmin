@@ -49,6 +49,7 @@ public class AccessRightController {
 
 	RestTemplate rest = new RestTemplate();
 	public AccessRightModuleList accessRightModuleList;
+	int isError = 0;
 
 	@RequestMapping(value = "/showCreateRole", method = RequestMethod.GET)
 	public ModelAndView showAccessRight(HttpServletRequest request, HttpServletResponse response) {
@@ -63,6 +64,7 @@ public class AccessRightController {
 			System.out.println("Access List " + accessRightModuleList.toString());
 			model.addObject("allModuleList", accessRightModuleList.getAccessRightModuleList());
 			model.addObject("title", "Create Role");
+			isError = 0;
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -227,6 +229,13 @@ public class AccessRightController {
 			System.out.println("heare");
 			try {
 				Info info = rest.postForObject(Constants.url + "saveAssignRole", assignRoleDetailList, Info.class);
+
+				if (info.isError() == false) {
+					isError = 2;
+				} else {
+					isError = 1;
+
+				}
 			} catch (Exception e) {
 				System.err.println("Exc in saveAssignRole  " + e.getMessage());
 				e.printStackTrace();

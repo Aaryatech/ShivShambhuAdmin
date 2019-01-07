@@ -140,7 +140,6 @@ public class ReportController {
 
 			expoExcel.setRowData(rowData);
 
-			
 			exportToExcelList.add(expoExcel);
 
 		}
@@ -860,6 +859,10 @@ public class ReportController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("matVehHeaderId", matVehHeaderId);
+			map.add("vehicleId", vehId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+
 
 			editVeh = rest.postForObject(Constants.url + "getMatIssueVehicleByHeaderId", map, GetVehHeader.class);
 			model.addObject("title", "Vehicle Report");
@@ -868,11 +871,19 @@ public class ReportController {
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
+			float vehTotal = 0;
+			for (int j = 0; j < editVeh.getVehDetailList().size(); j++) {
+				vehTotal = vehTotal + editVeh.getVehDetailList().get(j).getValue();
+			}
+			model.addObject("vehTotal", vehTotal);
+
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("vehicleId", vehId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
 
-			GetWeighing[] weighingArray = rest.postForObject(Constants.url + "getWeighByVehicleId", map,
+			GetWeighing[] weighingArray = rest.postForObject(Constants.url + "getWeighByVehicle", map,
 					GetWeighing[].class);
 			weighing = new ArrayList<GetWeighing>(Arrays.asList(weighingArray));
 
@@ -1756,6 +1767,8 @@ public class ReportController {
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("vehicleId", vehicleId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
 
 			GetVehDetail[] vehArray = rest.postForObject(Constants.url + "getMatIssueVehicleByVehicleId", map,
 					GetVehDetail[].class);
@@ -1766,6 +1779,8 @@ public class ReportController {
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("vehicleId", vehicleId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
 
 			GetWeighing[] weighingArray = rest.postForObject(Constants.url + "getWeighByVehicleId", map,
 					GetWeighing[].class);
@@ -1776,6 +1791,8 @@ public class ReportController {
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("poklenId", vehicleId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
 			GetPoklenReading[] readingArray = rest.postForObject(Constants.url + "getByPoklenId", map,
 					GetPoklenReading[].class);
 			readingList = new ArrayList<GetPoklenReading>(Arrays.asList(readingArray));

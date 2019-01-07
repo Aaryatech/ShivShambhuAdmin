@@ -123,20 +123,61 @@
 
 								<div class="box-content">
 
-									<div class="col-md-2">Select User</div>
+									<!-- <div class="col-md-2">Select User*</div>
 									<div class="col-md-4" style="text-align: center">
 										<input type="text" name="empName" id="empName"
 											class="form-control" required data-rule-required="true"
 											readonly>
 
+									</div> -->
+
+									<div class="col-md-2">Select User*</div>
+									<div class="col-md-2">
+										<select name="empId" id="empId" class="standardSelect"
+											tabindex="1" required>
+
+
+											<option value="" disabled selected>Select</option>
+
+
+											<c:forEach items="${userList}" var="user" varStatus="count">
+												<option value="${user.userId}"><c:out
+														value="${user.usrName}" /></option>
+											</c:forEach>
+
+										</select>
+									</div>
+
+									<div class="col-md-2">Select Role*</div>
+									<div class="col-md-2">
+										<select name="role" id="role" class="standardSelect"
+											tabindex="1" required>
+
+
+											<option value="" disabled selected>Select</option>
+
+
+											<c:forEach items="${createdRoleList}" var="createdRoleList"
+												varStatus="count">
+												<option value="${createdRoleList.roleId}"><c:out
+														value="${createdRoleList.roleName}" /></option>
+											</c:forEach>
+
+										</select>
+									</div>
+									<div class="col-md-2"></div>
+									<div class="col-md-4" style="text-align: center">
+										<input type="submit" class="btn btn-primary" value="Submit"
+											style="align-content: center; width: 113px; margin-left: 40px;">
+
 									</div>
 
 									<input type="hidden" id="empId" name="empId">
 								</div>
-								<br /> <br /> <br />
-								<div class="box-content">
 
-									<div class="col-md-2">Role</div>
+								<%-- 	<div class="box-content">
+
+									<div class="col-md-2">Select Role*</div>
 									<div class="col-md-4" style="text-align: center">
 										<select name="role" id="role" class="form-control"
 											tabindex="6" required data-rule-required="true">
@@ -155,18 +196,19 @@
 									</div>
 
 
-								</div>
+								</div> --%>
 								<br /> <br /> <br />
-								<div class="box-content">
+								<!-- <div class="box-content">
 
 									<div class="col-md-2"></div>
 									<div class="col-md-4" style="text-align: center">
 										<input type="submit" value="Submit" class="btn btn-info">
 
 									</div>
-								</div>
+								</div> -->
 								<br /> <br />
 
+								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-12 table-responsive">
 										<table class="table table-bordered table-striped fill-head "
@@ -174,9 +216,9 @@
 											<thead>
 												<tr>
 													<th>Sr.No.</th>
-													<th>Users Name</th>
+													<th>User Name</th>
 													<th>Assigned Role</th>
-													<th>Add/Edit/View</th>
+													<!-- 	<th>Add/Edit/View</th> -->
 
 												</tr>
 											</thead>
@@ -220,14 +262,15 @@
 														<td align="left"><c:out value="${empRoll}" /></td>
 
 
-														<td><span class='<c:out value="${btnClass}" />'
+														<%-- <td><span class='<c:out value="${btnClass}" />'
 															data-toggle="tooltip" title='<c:out value="${add}" />'
 															onclick="editRole('${userList.usrName}', ${userList.userId})"></span>
 															<a
 															href="${pageContext.request.contextPath}/showAssignUserDetail/<c:out value="${userList.userId}" />/${rId}/<c:out value="${userList.usrName}" />/${empRoll}"
-															data-toggle="tooltip" title="Access Detail"> <span
+															data-toggle="tooltip" title="Access Detail"
+															style="color: black"> <span
 																class='<c:out value="${detail}" />'></span>
-														</a></td>
+														</a></td> --%>
 													</tr>
 
 												</c:forEach>
@@ -254,11 +297,10 @@
 
 
 
-
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
 	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+		src="${pageContext.request.contextPath}/resources/assets/js/popper.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
 	<script
@@ -266,22 +308,41 @@
 
 
 	<script
-		src="${pageContext.request.contextPath}/resources/assets/js/dashboard.js"></script>
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables.min.js"></script>
 	<script
-		src="${pageContext.request.contextPath}/resources/assets/js/widgets.js"></script>
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/jszip.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/pdfmake.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/vfs_fonts.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.html5.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.print.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables-init.js"></script>
+
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
 
 
 	<script>
-		function editRole(empName, empId)
-		{
-			
+		function editRole(empName, empId) {
+
 			//alert(empId);
-			document.getElementById("empId").value=empId;
-			document.getElementById("empName").value=empName;
-			
-			 
+			document.getElementById("empId").value = empId;
+			document.getElementById("empName").value = empName;
+
 		}
-		</script>
+	</script>
 
 
 

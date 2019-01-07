@@ -120,7 +120,7 @@
 						<div class="card-body card-block">
 							<form id="validation-form"
 								action="${pageContext.request.contextPath}/submitCreateRole"
-								method="post">
+								id="submitForm" method="post">
 
 								<!-- <div class="form-group">
 									<label class="col-sm-3 col-lg-2 control-label">Enter Role
@@ -133,11 +133,13 @@
 								</div> -->
 								<input type="hidden" name="x" value="9999" id="x" />
 								<div class="box-content">
-									<div class="col-md-2">Enter Role Name</div>
+									<div class="col-md-2">Enter Role Name*</div>
 									<div class="col-md-4">
 										<input type="text" name="roleName" id="roleName"
-											placeholder="Role Name" class="form-control"
-											data-rule-required="true" />
+											oninvalid="setCustomValidity('Please enter role name')"
+											onchange="try{setCustomValidity('')}catch(e){}" required
+											autocomplete="off" placeholder="Role Name"
+											class="form-control" data-rule-required="true" />
 									</div>
 									<br />
 
@@ -147,6 +149,7 @@
 
 								<!-- <input type="submit" class="btn btn-info" value="View All" > -->
 								<br />
+								<div class="form-group"></div>
 
 								<div class="row">
 									<div class="col-md-12 table-responsive">
@@ -299,7 +302,7 @@
 												</c:forEach>
 											</tbody>
 										</table>
-								<%-- 		<table class="table table-bordered table-striped fill-head "
+										<%-- 		<table class="table table-bordered table-striped fill-head "
 											style="width: 70%" id="table_grid">
 											<thead>
 												<tr>
@@ -696,7 +699,8 @@
 
 								<div class="row">
 									<div class="col-md-12" style="text-align: center">
-										<input type="submit" class="btn btn-info" value="Submit">
+										<input type="submit" class="btn btn-primary" value="Submit"
+											style="align-content: center; width: 113px; margin-left: 40px;">
 
 									</div>
 								</div>
@@ -830,7 +834,17 @@
 			   
 			  });  
 		</script>
+	<script type="text/javascript">
+		$(function() {
+			$('#submitForm').submit(
+					function() {
 
+						$("input[type='submit']", this).val("Please Wait...")
+								.attr('disabled', 'disabled');
+						return true;
+					});
+		});
+	</script>
 
 
 </body>

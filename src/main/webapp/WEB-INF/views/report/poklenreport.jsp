@@ -128,25 +128,30 @@
 
 							<div class="row">
 								<div class="col-md-2">From Date</div>
-								<div class="col-md-4">
+								<div class="col-md-2">
 									<input type="text" autocomplete="off" id="from_date"
 										name="from_date" required style="width: 100%;"
 										class="form-control" value="${fromDate}"> <span
 										class="error" aria-live="polite"></span>
 								</div>
 								<div class="col-md-2">To Date</div>
-								<div class="col-md-4">
+								<div class="col-md-2">
 									<input type="text" autocomplete="off" id="to_date"
 										name="to_date" style="width: 100%;" class="form-control"
 										value="${toDate}"> <span class="error"
 										aria-live="polite"></span>
+								</div>
+								<div class="col-md-2"></div>
+								<div class="col-md-2">
+									<input type="button" class="btn btn-primary"
+										onclick="showReport()" value="Submit">
 								</div>
 
 							</div>
 
 
 
-							<div class="form-group"></div>
+							<!-- <div class="form-group"></div>
 							<div class="row">
 								<div class="col-md-6"></div>
 								<div class="col-md-2">
@@ -155,7 +160,7 @@
 								</div>
 							</div>
 
-
+ -->
 							<div class="form-group"></div>
 
 						</div>
