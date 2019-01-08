@@ -149,8 +149,8 @@
 										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
-									<input type="button" margin-right: 5px;" id="btn_submit"
-										class="btn btn-primary" onclick="billPdf()" value="Pdf" />
+								<!-- 	<input type="button" margin-right: 5px;" id="btn_submit"
+										class="btn btn-primary" onclick="billPdf()" value="Pdf" /> -->
 								</div>
 
 							</form>
@@ -291,7 +291,7 @@
 						});
 	</script>
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function billPdf() {
 			var checkedVals = $('input:checkbox:checked').map(function() {
 				return this.value;
@@ -309,7 +309,7 @@
 			}
 		}
 	</script>
-
+ -->
 
 </body>
 </html>

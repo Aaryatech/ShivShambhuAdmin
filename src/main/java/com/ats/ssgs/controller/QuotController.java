@@ -960,7 +960,7 @@ System.err.println(" Inside IgetNewItemsForQuotation " );
 			Float otherCost = Float.parseFloat(request.getParameter("other_cost"));
 			int quotTermId = Integer.parseInt(request.getParameter("quot_doc_term_id"));
 			float noOfKm = Float.parseFloat(request.getParameter("no_of_km"));
-
+String quotDate=request.getParameter("quot_date");
 			String payTerms = request.getParameter("pay_term_name");
 
 			quotHeader.setUserId(1);// to be get from session who logged in to do this activity
@@ -981,7 +981,7 @@ System.err.println(" Inside IgetNewItemsForQuotation " );
 			quotHeader.setExDate2(curDate);
 			quotHeader.setTaxValue(is_tax_inc);
 			// quotHeader.setCompanyId(companyId);
-
+quotHeader.setQuotDate(DateConvertor.convertToYMD(quotDate));
 			List<QuotDetail> quotDetList = quotHeader.getQuotDetailList();
 
 			System.err.println("Header  " + quotHeader.toString());
@@ -1334,9 +1334,9 @@ System.err.println(" Inside IgetNewItemsForQuotation " );
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		// File f = new File("/home/lenovo/bill.pdf");
+		 File f = new File("/home/ats-11/quot.pdf");
 
-		File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf");
+		//File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1356,10 +1356,10 @@ System.err.println(" Inside IgetNewItemsForQuotation " );
 		String appPath = context.getRealPath("");
 
 		// String filename = "/home/lenovo/bill.pdf";
-		String filename = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
+		String filename =  "/home/ats-11/quot.pdf";
 		// String filePath = "/report.pdf";
-		String filePath = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
-		// String filePath = "/home/lenovo/bill.pdf";
+		//String filePath = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
+		String filePath = "/home/ats-11/quot.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file

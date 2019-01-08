@@ -1420,7 +1420,7 @@ function submitAmt(){
 			}
 			else {
 					window
-					.open('${pageContext.request.contextPath}/pdf?url=pdfQuot/showQuotPdf/'
+					.open('${pageContext.request.contextPath}/pdfQuot?url=pdf/showQuotPdf/'
 							+ quotHeadIdPdf);
 			}
 	    }

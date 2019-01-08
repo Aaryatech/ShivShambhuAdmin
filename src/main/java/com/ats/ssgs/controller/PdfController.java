@@ -31,7 +31,7 @@ import com.ats.ssgs.model.quot.QuotPrintData;
 @Scope("session")
 public class PdfController {
 
-	@RequestMapping(value = "pdfQuot/showQuotPdf/{quotIdList}", method = RequestMethod.GET)
+	@RequestMapping(value = "pdf/showQuotPdf/{quotIdList}", method = RequestMethod.GET)
 	public ModelAndView showBillsPdf(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("quotIdList") String[] quotIdList) {
 		List<QuotPrintData> quotPrintData = new ArrayList<>();

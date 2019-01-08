@@ -17,6 +17,14 @@ public class GetQuotDetailPrint {
 	
 	private float total;
 	
+	
+	private float taxPer;//new
+	private float taxableValue;//new 
+	private float taxValue;//new
+	private float isTaxInc;//new
+	
+	
+	
 	private String uomName;
 	
 	private String itemName;
@@ -127,11 +135,49 @@ public class GetQuotDetailPrint {
 		this.quotNo = quotNo;
 	}
 
+	
+	
+	
+	public float getTaxPer() {
+		return taxPer;
+	}
+
+	public void setTaxPer(float taxPer) {
+		this.taxPer = taxPer;
+	}
+
+	public float getTaxableValue() {
+		return taxableValue;
+	}
+
+	public void setTaxableValue(float taxableValue) {
+		this.taxableValue = taxableValue;
+	}
+
+	public float getTaxValue() {
+		return taxValue;
+	}
+
+	public void setTaxValue(float taxValue) {
+		this.taxValue = taxValue;
+	}
+
+	public float getIsTaxInc() {
+		return isTaxInc;
+	}
+
+	public void setIsTaxInc(float isTaxInc) {
+		this.isTaxInc = isTaxInc;
+	}
+
 	@Override
 	public String toString() {
 		return "GetQuotDetailPrint [quotDetailId=" + quotDetailId + ", quotHeadId=" + quotHeadId + ", itemId=" + itemId
-				+ ", quotQty=" + quotQty + ", rate=" + rate + ", total=" + total + ", uomName=" + uomName
-				+ ", itemName=" + itemName + ", itemCode=" + itemCode + ", quotUomId=" + quotUomId + ", quotNo="
-				+ quotNo + ", quotDate=" + quotDate + "]";
+				+ ", quotQty=" + quotQty + ", rate=" + rate + ", total=" + total + ", taxPer=" + taxPer
+				+ ", taxableValue=" + taxableValue + ", taxValue=" + taxValue + ", isTaxInc=" + isTaxInc + ", uomName="
+				+ uomName + ", itemName=" + itemName + ", itemCode=" + itemCode + ", quotUomId=" + quotUomId
+				+ ", quotNo=" + quotNo + ", quotDate=" + quotDate + "]";
 	}
+	
+	
 }
