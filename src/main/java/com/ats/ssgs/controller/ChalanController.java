@@ -540,11 +540,11 @@ public class ChalanController {
 
 		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
 
-		for (int i = 0; i < chalanHeadList.size(); i++) {
+		/*for (int i = 0; i < chalanHeadList.size(); i++) {
 
 			chalanHeadList.get(i).setChalanDate(DateConvertor.convertToDMY(chalanHeadList.get(i).getChalanDate()));
 		}
-
+*/
 		System.err.println("Ajax chalanHeadList /getChalanListByPlant " + chalanHeadList.toString());
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
@@ -881,7 +881,7 @@ public class ChalanController {
 
 			map.add("chalanId", chalanId);
 			editChalan = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
-			editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate()));
+			//editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate()));
 
 			map = new LinkedMultiValueMap<String, Object>();
 
@@ -1101,7 +1101,7 @@ public class ChalanController {
 
 			map.add("chalanId", chalanId);
 			editChalan = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
-			editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate()));
+			//editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate()));
 
 			map = new LinkedMultiValueMap<String, Object>();
 
@@ -1295,6 +1295,7 @@ public class ChalanController {
 					ChalanHeader.class);
 
 		} catch (Exception e) {
+			e.printStackTrace();
 
 			System.err.println("Exce in update Chalan ");
 		}
