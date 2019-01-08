@@ -183,8 +183,10 @@ public class ReportController {
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("contrId", contrId);
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
 
-			GetWeighing[] weighingArray = rest.postForObject(Constants.url + "getWeighByContraId", map,
+			GetWeighing[] weighingArray = rest.postForObject(Constants.url + "getWeighByContraAndDate", map,
 					GetWeighing[].class);
 			weighing = new ArrayList<GetWeighing>(Arrays.asList(weighingArray));
 
@@ -862,7 +864,6 @@ public class ReportController {
 			map.add("vehicleId", vehId);
 			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 			map.add("toDate", DateConvertor.convertToYMD(toDate));
-
 
 			editVeh = rest.postForObject(Constants.url + "getMatIssueVehicleByHeaderId", map, GetVehHeader.class);
 			model.addObject("title", "Vehicle Report");

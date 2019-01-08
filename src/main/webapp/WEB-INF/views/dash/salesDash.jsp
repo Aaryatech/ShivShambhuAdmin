@@ -106,14 +106,14 @@ background-color: transparent;
 					<div class="form-group"></div>
 
 					<div class="row">
-						<div class="col-md-1" style="color: black;">From*</div>
+						<div class="col-md-1" style="color: black;">From Date*</div>
 						<div class="col-md-2">
 							<input type="text" autocomplete="off" id="from_date"
 								name="from_date" required style="width: 100%;"
 								class="form-control" value="${fromDate}"> <span
 								class="error" aria-live="polite"></span>
 						</div>
-						<div class="col-md-1" style="color: black;">To*</div>
+						<div class="col-md-1" style="color: black;">To Date*</div>
 						<div class="col-md-2">
 							<input type=text autocomplete="off" id="to_date" name="to_date"
 								style="width: 100%;" class="form-control" value="${toDate}">

@@ -46,37 +46,40 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 .buttonload {
-    background-color: white; /* Green background */
-    border: none; /* Remove borders */
-    color: #ec268f; /* White text */
-    padding: 12px 15px; /* Some padding */
-    font-size: 13px; /* Set a font-size */
-    display:none;
+	background-color: white; /* Green background */
+	border: none; /* Remove borders */
+	color: #ec268f; /* White text */
+	padding: 12px 15px; /* Some padding */
+	font-size: 13px; /* Set a font-size */
+	display: none;
 }
 
 /* Add a right margin to each icon */
 .fa {
-    margin-left: -12px;
-    margin-right: 8px;
+	margin-left: -12px;
+	margin-right: 8px;
 }
- ::-webkit-scrollbar{
-        height: 10px;
-        width: 6px;
-        background:#868e96;
-    }
-    ::-webkit-scrollbar-thumb:horizontal{
-        background: #000;
-        border-radius: 10px;
-    }
+
+::-webkit-scrollbar {
+	height: 10px;
+	width: 6px;
+	background: #868e96;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+	background: #000;
+	border-radius: 10px;
+}
 </style>
-	</head>
+</head>
 <body>
 
 	<c:url var="getItemList" value="/getItemList"></c:url>
-<c:url var="getDispatchItemsByDate" value="/getDispatchItemsByDate"/>
+	<c:url var="getDispatchItemsByDate" value="/getDispatchItemsByDate" />
 	<!-- Left Panel -->
 	<jsp:include page="/WEB-INF/views/common/left.jsp"></jsp:include>
 	<!-- Left Panel -->
@@ -92,7 +95,7 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-		<form id="form1" method="post">
+
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -100,10 +103,12 @@
 							<div class="col-md-2">
 								<strong>Dispatch Sheet</strong>
 							</div>
-											
+
 
 						</div>
 						<div class="card-body card-block">
+							<form id="form1" method="post">
+
 								<div class="row">
 
 									<div class="col-md-1">Plant</div>
@@ -121,64 +126,65 @@
 									<div class="col-md-1">From</div>
 									<div class="col-md-2">
 										<input type="text" id="from_date" name="from_date" required
-											style="width: 100%;" class="form-control"
-											value="${fromDate}"> <span class="error"
-											aria-live="polite"></span>
+											style="width: 100%;" class="form-control" value="${fromDate}">
+										<span class="error" aria-live="polite"></span>
 									</div>
-                                    <div class="col-md-1">To</div>
+									<div class="col-md-1">To</div>
 									<div class="col-md-2">
 										<input type="text" id="to_date" name="to_date" required
-											style="width: 100%;" class="form-control"
-											value="${toDate}"> <span class="error"
-											aria-live="polite"></span>
+											style="width: 100%;" class="form-control" value="${toDate}">
+										<span class="error" aria-live="polite"></span>
 									</div>
-										<div class="col-md-3">
-										<input type="button" class="btn btn-primary" id="searchButton" value="Search"  onclick="searchItem()" >
-<button class="buttonload" id="loader">
-                                   <i class="fa fa-spinner fa-spin"></i>Loading
-                                   </button>
+									<div class="col-md-3">
+										<input type="button" class="btn btn-primary" id="searchButton"
+											value="Search" onclick="searchItem()">
+										<button class="buttonload" id="loader">
+											<i class="fa fa-spinner fa-spin"></i>Loading
+										</button>
 									</div>
 								</div>
-								
-								
-								<div class="card-body card-block" style="overflow: scroll;  width: 72vw;">
-									<table id="table1"
-										class="table table-striped table-bordered"  style="table-layout: none; width:100%">
-			 							<thead>
+
+
+								<div class="card-body card-block"
+									style="overflow: scroll; width: 72vw;">
+									<table id="table1" class="table table-striped table-bordered"
+										style="table-layout: none; width: 100%">
+										<thead>
 											<tr>
-											<th>Sr.No.</th>
-											<th>Item Name</th>
-											<th>Item Code</th>
-											
+												<th>Sr.No.</th>
+												<th>Item Name</th>
+												<th>Item Code</th>
+
 											</tr>
 										</thead>
-                                         <tbody>
-                                         
-                                         </tbody> 
+										<tbody>
+
+										</tbody>
 									</table>
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-								<div class="col-md-2">
-							 	<input type="button" id="pdf" value="PDF" class="btn btn-primary"
-													onclick="genPdf()" disabled/>
-													</div>
-														<div class="col-md-4"></div>
-													<div class="col-md-2">Production Date</div>
+									<div class="col-md-2">
+										<input type="button" id="pdf" value="PDF"
+											class="btn btn-primary" onclick="genPdf()" disabled />
+									</div>
+									<div class="col-md-4"></div>
+									<div class="col-md-2">Production Date</div>
 									<div class="col-md-2">
 										<input type="text" id="prod_date" name="prod_date" required
-											style="width: 100%;" class="form-control"
-											value="${fromDate}"> <span class="error"
-											aria-live="polite"></span>
+											style="width: 100%;" class="form-control" value="${fromDate}">
+										<span class="error" aria-live="polite"></span>
 									</div>
-													
-													<input type="button" id="prodPlanButton" value="Add to Production" disabled class="btn btn-primary"
-													onclick="putProd()" />
-													</div>
+
+									<input type="button" id="prodPlanButton"
+										value="Add to Production" disabled class="btn btn-primary"
+										onclick="putProd()" />
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
-				</form>
+
 			</div>
 
 
@@ -206,9 +212,9 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
-<script
+	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables.min.js"></script>
-    <script
+	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
@@ -266,7 +272,7 @@
 		});
 	</script>
 
-	 <script type="text/javascript">
+	<script type="text/javascript">
 	function reformatDateString(s) {
 		  var b = s.split(/\D/);
 		  return b.reverse().join('-');
@@ -596,7 +602,7 @@
 		}
 		 
 	</script>
-	
+
 	<script type="text/javascript">
 	
 	
@@ -650,7 +656,7 @@
 
 		}
 	</script>
-	 <script type="text/javascript">
+	<script type="text/javascript">
 	 function onDateChange(index,key)
 		{
 		 alert(key);	alert(index);
@@ -705,14 +711,14 @@
 		}
 	 
 	 </script>
-	 <script type="text/javascript">
+	<script type="text/javascript">
 
 function genPdf(){
 	window.open('${pageContext.request.contextPath}/showDispatchPdf');
 }
 
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 
 function putProd(){
 	//alert("hi");
@@ -727,7 +733,7 @@ function putProd(){
 
 </script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 	
 		function allowOnlyNumber(evt){
 	    var charCode = (evt.which) ? evt.which : event.keyCode

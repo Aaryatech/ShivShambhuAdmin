@@ -48,7 +48,7 @@ body {
 }
 
 /* Modal Content */
-.modal-content1{
+.modal-content1 {
 	background-color: #fefefe;
 	margin: auto;
 	padding: 20px;
@@ -251,12 +251,11 @@ body {
 										</select>
 									</div>
 
-	<input type="hidden" name="quotHeadStatus" id="quotHeadStatus"
-										value="0">
-
-									<input type="hidden" name="quotHeadIdPdf" id="quotHeadIdPdf"
-										value="${quotHeadIdPdf}"> <input type="hidden"
-										name="pdfCustId" id="pdfCustId" value="${pdfCustId}">
+									<input type="hidden" name="quotHeadStatus" id="quotHeadStatus"
+										value="0"> <input type="hidden" name="quotHeadIdPdf"
+										id="quotHeadIdPdf" value="${quotHeadIdPdf}"> <input
+										type="hidden" name="pdfCustId" id="pdfCustId"
+										value="${pdfCustId}">
 
 								</div>
 								<input type="hidden" name="item_id" id="item_id" value="0">
@@ -770,7 +769,7 @@ body {
 										</div>
 										<div class="col-md-2"></div>
 
-<div class="col-md-1">
+										<div class="col-md-1">
 											<input type="button" class="btn btn-primary"
 												onclick="valthisformUpdateQuot()" value="Update Quotation">
 
@@ -1416,13 +1415,7 @@ function submitAmt(){
 	    	document.getElementById("quotHeadStatus").value=1;
 	    	var form=document.getElementById("updateQuotation");
 	    	form.submit();
-			if(quotHeadIdPdf==0 ){
-			}
-			else {
-					window
-					.open('${pageContext.request.contextPath}/pdfQuot?url=pdf/showQuotPdf/'
-							+ quotHeadIdPdf);
-			}
+	
 	    }
 	}
 	
@@ -1448,11 +1441,50 @@ function submitAmt(){
 
 	    	var form=document.getElementById("updateQuotation");
 	    	form.submit();
+	    	
+	    	
 			
 	    }
 		
 		
 		
+	}
+	</script>
+
+	<script type="text/javascript">
+	function sendEmailByBillHeadId(billHeadId,custId){
+		var isValid=true;
+		if(billHeadId==0){
+			
+		}
+		else{
+			
+			
+		
+				window
+				.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
+						+ billHeadId);
+				
+				$
+				/* .getJSON(
+						'${sendEmailByBillId}',
+						{
+							billHeadId : billHeadId,
+							custId : custId,
+							ajax : 'true',
+
+						},
+						function(data) {
+							
+						});
+				
+				
+				 */
+			
+			
+			
+			
+		}
 	}
 	</script>
 

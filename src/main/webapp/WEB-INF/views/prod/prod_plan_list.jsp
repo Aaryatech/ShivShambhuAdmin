@@ -61,31 +61,30 @@
 
 <style>
 .alert {
-    padding: 20px;
-    background-color: red;
-    color: white;
-    
+	padding: 20px;
+	background-color: red;
+	color: white;
 }
+
 .alert1 {
-    padding: 20px;
-    background-color: green;
-    color: white;
-    
+	padding: 20px;
+	background-color: green;
+	color: white;
 }
 
 .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: black;
+	color: black;
 }
 </style>
 
@@ -109,31 +108,31 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-			
-			<c:choose>
-							<c:when test="${isError==1}">
-							
-							<div class="alert">
-							
+
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Failed !</strong>     Data not submitted  !!
-				</div>
-							
-							</c:when>
-							
-							<c:when test="${isError==2}">
-							
-							<div class="alert1">
-							
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Success</strong>     Data Submitted !!
-				</div>
-							
-							</c:when>
-							
-							</c:choose>
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -146,13 +145,18 @@
 								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
 										Customer</strong></a>
 							</div> --%>
-							
+
 
 						</div>
 						<div class="card-body card-block">
-							<form id="prodHeadForm" method="post">
+
+							<form id="prodHeadForm"
+								action="${pageContext.request.contextPath}/deleteRecordofProductionPlant"
+								method="post">
+
 								<div class="row">
-								<input type="hidden" name="prodHeaderId" id="prodHeaderId" value="0"/>
+									<input type="hidden" name="prodHeaderId" id="prodHeaderId"
+										value="0" />
 
 									<div class="col-md-1">Plant</div>
 
@@ -168,79 +172,89 @@
 											</c:forEach>
 										</select>
 									</div>
-									
+
 									<div class="col-md-1">From</div>
 									<div class="col-md-2">
-										<input type="text" autocomplete="off" id="from_date" name="from_date" required
-											style="width: 100%;" class="form-control"
-											value="${fromDate}"> <span class="error"
-											aria-live="polite"></span>
+										<input type="text" autocomplete="off" id="from_date"
+											name="from_date" required style="width: 100%;"
+											class="form-control" value="${fromDate}"> <span
+											class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-1">To</div>
 									<div class="col-md-2">
-										<input type="text" autocomplete="off"  id="to_date" name="to_date"
-											style="width: 100%;" class="form-control"
-											value="${toDate}"> <span
-											class="error" aria-live="polite"></span>
+										<input type="text" autocomplete="off" id="to_date"
+											name="to_date" style="width: 100%;" class="form-control"
+											value="${toDate}"> <span class="error"
+											aria-live="polite"></span>
 									</div>
-									
+
 									<div class="col-md-1">
-										<input type="button" class="btn btn-primary"  onclick="showProdHeader()" value="Submit">
+										<input type="button" class="btn btn-primary"
+											onclick="showProdHeader()" value="Submit">
 									</div>
 
 								</div>
 
-								
+
 								<div class="form-group"></div>
 								<div class="row">
-								<div class="col-md-6"></div>
-									
+									<div class="col-md-6"></div>
+
 								</div>
-								
+
 
 								<div class="form-group"></div>
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-								
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center">Sr.No.</th>
+												<th class="check" style="text-align: center; width: 5%;"><input
+													type="checkbox" name="selAll" id="selAll" /></th>
+												<th style="text-align: center">Sr.</th>
 												<th style="text-align: center">Plant Name</th>
 												<th style="text-align: center">Production Date</th>
 												<th style="text-align: center">Start Date</th>
 												<th style="text-align: center">End Date</th>
 												<th style="text-align: center">Batch</th>
 												<th style="text-align: center">Status</th>
- 												<th style="text-align: center">Action</th>
+												<th style="text-align: center">Action</th>
 											</tr>
 										</thead>
 
 									</table>
+									<div class="col-md-2">
+
+										<input type="submit" class="btn btn-primary" value="Delete"
+											id="deleteId"
+											onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+											style="align-content: center; width: 113px; margin-left: 40px;">
+									</div>
 									<div class="col-md-2"></div>
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();" disabled="disabled" id="expExcel"
-										style="align-content: center; width: 200px; margin-left: 80px;">
-										Export To Excel</button>
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" disabled="disabled" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
+
+
+									<div class="col-md-3">
+
+										<button type="button" class="btn btn-primary"
+											onclick="genPdf()" disabled="disabled" id="PDFButton"
+											style="align-content: center; width: 100px; margin-left: 80px;">
+											PDF</button>
+									</div>
+									&nbsp;
 								</div>
-
-
-								<div class="col-md-3">
-
-									<button type="button" class="btn btn-primary"
-										onclick="genPdf()" disabled="disabled" id="PDFButton"
-										style="align-content: center; width: 100px; margin-left: 80px;">
-										PDF</button>
-								</div>
-								&nbsp;
-								</div>
-								</form>
+							</form>
 						</div>
-						
+
 					</div>
 				</div>
 			</div>
@@ -248,8 +262,8 @@
 
 		</div>
 		<!-- .animated -->
-	<!-- .content -->
-</div>
+		<!-- .content -->
+	</div>
 
 
 	<!-- .animated -->
@@ -319,7 +333,7 @@
 			$('input[id$=from_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-			
+
 			$('input[id$=to_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
@@ -330,38 +344,38 @@
 
 
 	<script type="text/javascript">
-	// onclick of submit to search order 
+		// onclick of submit to search order 
 		function showProdHeader() {
-		
-		//alert("Hi View Prod Plans  ");
-	
+
+			//alert("Hi View Prod Plans  ");
+
 			var plantId = document.getElementById("plant_id").value;
-			 var fromDate=document.getElementById("from_date").value;
-			 var toDate=document.getElementById("to_date").value;
-			 
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
 			var valid = true;
 
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
-			}			
-			
+			}
+
 			else if (fromDate == null || fromDate == "") {
-					valid = false;
-					alert("Please select from date");
-				}			
-			 
+				valid = false;
+				alert("Please select from date");
+			}
+
 			else if (toDate == null || toDate == "") {
 				valid = false;
 				alert("Please select to date");
-			}			
-		
-			if(fromDate > toDate){
+			}
+
+			if (fromDate > toDate) {
 				valid = false;
 				alert("from date can not be greater than to date ");
 			}
-			if(valid==true){
-			
+			if (valid == true) {
+
 				$
 						.getJSON(
 								'${getProdHeadersBetDate}',
@@ -383,93 +397,87 @@
 
 									}
 
-									
-									
 									//alert("Order Data " +JSON.stringify(data));
-									if(data == null || data==""){
+									if (data == null || data == "") {
 										alert("No records found");
 									}
-									
-									 var dataTable = $('#bootstrap-data-table')
-									.DataTable();
-							dataTable.clear().draw();
-							
-							//alert("Data " +JSON.stringify(data));
 
-							$.each(data,function(i, v) {
-												//alert("hdjfh");
-//var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-//var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
-//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
-										 var acButton = '<a href="#" class="action_btn" onclick="viewProdDetail('
-														+ v.productionHeaderId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-list"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-														+ v.productionHeaderId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
-														
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
+
+									//alert("Data " +JSON.stringify(data));
+
+									$
+											.each(
+													data,
+													function(i, v) {
+														//alert("hdjfh");
+														//var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
+														//var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
+														//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
+														var acButton = '<a href="#" class="action_btn" onclick="viewProdDetail('
+																+ v.productionHeaderId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-list"></i></a>&nbsp;'
+														var chBox;
+														chBox = '<input  type="checkbox" class="chk" name="prodIds" id='+v.productionHeaderId+' class="check"  value='+v.productionHeaderId+'>'
+
 														var status;
 														var startDate;
 														var endDate;
-														
-														if(v.productionStatus==1){
-															status="Planned";
-															startDate="-";
-															endDate="-";
+
+														if (v.productionStatus == 1) {
+															status = "Planned";
+															startDate = "-";
+															endDate = "-";
+														} else if (v.productionStatus == 2) {
+															status = "Started";
+															startDate = v.productionStartDate;
+															endDate = "-";
+														} else if (v.productionStatus == 3) {
+															status = "Completed";
+															startDate = v.productionStartDate;
+															endDate = v.productionEndDate;
 														}
-															else if(v.productionStatus==2){
-																status="Started";
-																startDate=v.productionStartDate;
-																endDate="-";
-															}
-																else if(v.productionStatus==3){
-																	status="Completed";
-																	startDate=v.productionStartDate;
-																	endDate=v.productionEndDate;
-																}
-																	
-																	
- 
-												dataTable.row
-														.add(
-																[
-																		i + 1,
-																		v.plantName,
-																		v.productionDate,
-																		startDate,
-																		endDate,
-																		v.productionBatch,
-																		status,
-																		acButton
-																		 ])
-														.draw();
-											}); 
-						
-								});	
-				
-}//end of if valid ==true
-						
+
+														dataTable.row
+																.add(
+																		[
+																				chBox,
+																				i + 1,
+																				v.plantName,
+																				v.productionDate,
+																				startDate,
+																				endDate,
+																				v.productionBatch,
+																				status,
+																				acButton ])
+																.draw();
+													});
+
+								});
+
+			}//end of if valid ==true
+
 		}
-	
-	function viewProdDetail(prodHeaderId){
-		
-		document.getElementById("prodHeaderId").value=prodHeaderId;
-		var form=document.getElementById("prodHeadForm");
-		
-		form.action=("getProdDetail");
-		
-		form.submit();
-		
-		
-		//window.open("${pageContext.request.contextPath}/editOrder/"+orderId);
-		
-	}
+
+		function viewProdDetail(prodHeaderId) {
+
+			document.getElementById("prodHeaderId").value = prodHeaderId;
+			var form = document.getElementById("prodHeadForm");
+
+			form.action = ("getProdDetail");
+
+			form.submit();
+
+			//window.open("${pageContext.request.contextPath}/editOrder/"+orderId);
+
+		}
 	</script>
-	
-		<!-- <script type="text/javascript">
+
+	<!-- <script type="text/javascript">
 	// on cust change function 
 		function showOrder() {
 			$('#divCheckbox').show();
@@ -563,7 +571,7 @@
 			
 		}
 	</script> -->
-	
+
 
 	<script type="text/javascript">
 		function exportToExcel() {
@@ -578,18 +586,32 @@
 			//alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-			var plantId= document.getElementById("plant_id").value;
+			var plantId = document.getElementById("plant_id").value;
 			//var custId= document.getElementById("cust_name").value;
-			
-			
 
-			window.open('${pageContext.request.contextPath}/showProdPlanListPdf/'
-					+ fromDate + '/' + toDate + '/' + plantId);
+			window
+					.open('${pageContext.request.contextPath}/showProdPlanListPdf/'
+							+ fromDate + '/' + toDate + '/' + plantId);
 			document.getElementById("expExcel").disabled = true;
 
 		}
 	</script>
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
 
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
+	</script>
 
 
 </body>

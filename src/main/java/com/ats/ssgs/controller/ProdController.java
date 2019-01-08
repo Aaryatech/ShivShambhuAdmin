@@ -72,6 +72,7 @@ public class ProdController {
 
 	List<Plant> plantList;
 	int isError = 0;
+
 	@RequestMapping(value = "/showProdPlanList", method = RequestMethod.GET)
 	public ModelAndView showProdPlanList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -80,10 +81,9 @@ public class ProdController {
 			model = new ModelAndView("prod/prod_plan_list");
 
 			model.addObject("title", "Production Plan List");
-			
+
 			model.addObject("isError", isError);
 			isError = 0;
-			
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -148,7 +148,7 @@ public class ProdController {
 						.setProductionEndDate(DateConvertor.convertToDMY(prodHeadList.get(i).getProductionEndDate()));
 
 			}
-			
+
 			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 			ExportToExcel expoExcel = new ExportToExcel();
@@ -157,7 +157,6 @@ public class ProdController {
 			rowData.add("Sr. No");
 			rowData.add("Plant Name");
 			rowData.add("Production Date");
-			
 
 			rowData.add("Start Date");
 			rowData.add("End Date");
@@ -183,7 +182,7 @@ public class ProdController {
 
 				rowData.add("" + prodHeadList.get(i).getProductionEndDate());
 				rowData.add("" + prodHeadList.get(i).getProductionBatch());
-				//rowData.add("" + prodHeadList.get(i).getTotal());
+				// rowData.add("" + prodHeadList.get(i).getTotal());
 
 				String status1 = null;
 				int stat = prodHeadList.get(i).getProductionStatus();
@@ -211,14 +210,14 @@ public class ProdController {
 			System.err.println("Exce in Ajax /getProdHeadersBetDate  " + e.getMessage());
 			e.printStackTrace();
 		}
-		
+
 		return prodHeadList;
 	}
 
-	
 	@RequestMapping(value = "/showProdPlanListPdf/{fromDate}/{toDate}/{plantId}", method = RequestMethod.GET)
-	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,@PathVariable("plantId") int plantId,
-			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			@PathVariable("plantId") int plantId, HttpServletRequest request, HttpServletResponse response)
+			throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showDatewisePdf");
 		Document document = new Document(PageSize.A4);
@@ -290,13 +289,12 @@ public class ProdController {
 
 			table.addCell(hcell);
 
-
 			hcell = new PdfPCell(new Phrase("Status", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			float tot=0;
+			float tot = 0;
 			int index = 0;
 			for (GetProdPlanHeader work : prodHeadList) {
 				index++;
@@ -344,7 +342,6 @@ public class ProdController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				
 				String status1 = null;
 				int stat = work.getProductionStatus();
 				if (stat == 1) {
@@ -369,55 +366,52 @@ public class ProdController {
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			
+
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			
-			String plantname=null;
-			//String custName=null;
-			
-			if(plantId==0) {
-				plantname="All";
-				
-			}
-			else {
+
+			String plantname = null;
+			// String custName=null;
+
+			if (plantId == 0) {
+				plantname = "All";
+
+			} else {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("plantId", plantId);
 
 				Plant getPlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
-				plantname=getPlant.getPlantName();
-				System.out.println("plantname"+plantname);
-				
-				
-				
-			}
-			/*if(custId==0) {
-				custName="All";
-				
-			}
-			else {
-				
-				
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				plantname = getPlant.getPlantName();
+				System.out.println("plantname" + plantname);
 
-				map.add("custId", custId);
-
-				GetCust getcus = rest.postForObject(Constants.url + "getCustomerByCustId", map, GetCust.class);
-				custName=getcus.getCustName();
-				System.out.println("custName"+custName);
-				
-			}*/
-			Paragraph p2 = new Paragraph("FromDate:"+fromDate +" ToDate:"+toDate+"  Plant:" + plantname + "" , headFont);
+			}
+			/*
+			 * if(custId==0) { custName="All";
+			 * 
+			 * } else {
+			 * 
+			 * 
+			 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
+			 * Object>();
+			 * 
+			 * map.add("custId", custId);
+			 * 
+			 * GetCust getcus = rest.postForObject(Constants.url + "getCustomerByCustId",
+			 * map, GetCust.class); custName=getcus.getCustName();
+			 * System.out.println("custName"+custName);
+			 * 
+			 * }
+			 */
+			Paragraph p2 = new Paragraph("FromDate:" + fromDate + " ToDate:" + toDate + "  Plant:" + plantname + "",
+					headFont);
 			p2.setAlignment(Element.ALIGN_CENTER);
 			document.add(p2);
 			document.add(new Paragraph("\n"));
-			
-			
-			
+
 			document.add(table);
-			
-			Paragraph p1 = new Paragraph("Total:"+tot, headFont);
+
+			Paragraph p1 = new Paragraph("Total:" + tot, headFont);
 			p1.setAlignment(Element.ALIGN_CENTER);
 			document.add(p1);
 			document.add(new Paragraph("\n"));
@@ -463,6 +457,7 @@ public class ProdController {
 		}
 
 	}
+
 	GetProdPlanHeader prodHeader;
 
 	@RequestMapping(value = "/getProdDetail", method = RequestMethod.POST)
@@ -503,16 +498,16 @@ public class ProdController {
 
 			List<GetProdPlanDetail> proDList = prodHeader.getGetProdPlanDetList();
 			List<ProdPlanDetail> planDetails = new ArrayList<>();
-			
-			System.err.println("proDList size  " +proDList.size() + "\n  " +"toSting  " +proDList.toString());
+
+			System.err.println("proDList size  " + proDList.size() + "\n  " + "toSting  " + proDList.toString());
 
 			for (int i = 0; i < proDList.size(); i++) {
-					System.err.println("string "+"prodQty"+proDList.get(i).getProductionDetailId());
-				
+				System.err.println("string " + "prodQty" + proDList.get(i).getProductionDetailId());
+
 				float prodQty = Float
-						.parseFloat(request.getParameter("prodQty"+proDList.get(i).getProductionDetailId()));
+						.parseFloat(request.getParameter("prodQty" + proDList.get(i).getProductionDetailId()));
 				float rejQty = Float
-						.parseFloat(request.getParameter("rejQty"+proDList.get(i).getProductionDetailId()));
+						.parseFloat(request.getParameter("rejQty" + proDList.get(i).getProductionDetailId()));
 
 				ProdPlanDetail det = new ProdPlanDetail();
 
@@ -533,18 +528,18 @@ public class ProdController {
 			planHeader.setProductionEndDate(dateFormatyy.format(new Date()));
 
 			Info completeProd = rest.postForObject(Constants.url + "completeProd", planHeader, Info.class);
-			
-			if(completeProd.isError()==false) {
-				isError=2;
-			}else {
-				isError=1;
+
+			if (completeProd.isError() == false) {
+				isError = 2;
+			} else {
+				isError = 1;
 			}
-			
+
 			System.err.println("completeProd  " + completeProd.toString());
 
 		} catch (Exception e) {
-			
-			System.err.println("Exce in complete Prod  " +e.getMessage());
+
+			System.err.println("Exce in complete Prod  " + e.getMessage());
 			e.printStackTrace();
 
 		}
@@ -552,7 +547,8 @@ public class ProdController {
 		return "redirect:/showProdPlanList";
 
 	}
-	//List<ItemDetail> rmItemList;
+
+	// List<ItemDetail> rmItemList;
 	@RequestMapping(value = "/showManBOM", method = RequestMethod.GET)
 	public ModelAndView showManBOM(HttpServletRequest request, HttpServletResponse response) {
 
@@ -561,31 +557,32 @@ public class ProdController {
 			model = new ModelAndView("prod/man_bom");
 
 			model.addObject("title", "Manual BOM");
-			
-			/*String itemIdList = new String();
-			//List<String> itemIdList=new ArrayList<>();
-			
-			List<GetProdPlanDetail> proDList = prodHeader.getGetProdPlanDetList();
-			
-			for(GetProdPlanDetail detail: proDList ) {
-				itemIdList=itemIdList.concat(""+detail.getItemId()+",");
-			}
-			//getItemDetailByItemIds
-			itemIdList=itemIdList.substring(0, itemIdList.length()-1);
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("delStatus", 1);
-			map.add("itemIdList", itemIdList);
-			System.err.println("itemIdList " +itemIdList);
-*/
-			/*ItemDetail[] rmItemArray = rest.postForObject(Constants.url + "getItemDetailByItemIds", map,
-					ItemDetail[].class);
-			rmItemList = new ArrayList<ItemDetail>(Arrays.asList(rmItemArray));
-			
-			System.err.println("rmItemList " +rmItemList.toString());
-			
-			model.addObject("rmItemList", rmItemList);*/
-			
+			/*
+			 * String itemIdList = new String(); //List<String> itemIdList=new
+			 * ArrayList<>();
+			 * 
+			 * List<GetProdPlanDetail> proDList = prodHeader.getGetProdPlanDetList();
+			 * 
+			 * for(GetProdPlanDetail detail: proDList ) {
+			 * itemIdList=itemIdList.concat(""+detail.getItemId()+","); }
+			 * //getItemDetailByItemIds itemIdList=itemIdList.substring(0,
+			 * itemIdList.length()-1); MultiValueMap<String, Object> map = new
+			 * LinkedMultiValueMap<String, Object>();
+			 * 
+			 * map.add("delStatus", 1); map.add("itemIdList", itemIdList);
+			 * System.err.println("itemIdList " +itemIdList);
+			 */
+			/*
+			 * ItemDetail[] rmItemArray = rest.postForObject(Constants.url +
+			 * "getItemDetailByItemIds", map, ItemDetail[].class); rmItemList = new
+			 * ArrayList<ItemDetail>(Arrays.asList(rmItemArray));
+			 * 
+			 * System.err.println("rmItemList " +rmItemList.toString());
+			 * 
+			 * model.addObject("rmItemList", rmItemList);
+			 */
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("prodHeaderId", prodHeader.getProductionHeaderId());
@@ -593,46 +590,47 @@ public class ProdController {
 			GetItemDetail[] rmItemArray = rest.postForObject(Constants.url + "getItemDetailForBOM", map,
 					GetItemDetail[].class);
 			getRmItemList = new ArrayList<GetItemDetail>(Arrays.asList(rmItemArray));
-			
-			System.err.println("rmItemList " +getRmItemList.toString());
-			
+
+			System.err.println("rmItemList " + getRmItemList.toString());
+
 			model.addObject("rmItemList", getRmItemList);
 			model.addObject("prodHeader", prodHeader);
 
 			model.addObject("isError", isError);
 			isError = 0;
-			
-		}catch (Exception e) {
-			
-			System.err.println("Exce in showManBOM   " +e.getMessage());
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in showManBOM   " + e.getMessage());
 			e.printStackTrace();
 
 		}
 		return model;
 	}
-	
-	//insertManualBOM
+
+	// insertManualBOM
 	@RequestMapping(value = "/insertManualBOM", method = RequestMethod.POST)
 	public String insertManualBOM(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
 
-			String curDate=dateFormatyy.format(new Date());
-			
-			ReqBomHeader bomHeader=new ReqBomHeader();
-			
-			List<ReqBomDetail> reqBomDetail=new ArrayList<>();
-			
-			String NA="NA";
-			for (int i=0; i<getRmItemList.size(); i++) {
-				
-				System.err.println("I " +i);
-				
-				float rmQty = Float.parseFloat(request.getParameter("rmQty"+getRmItemList.get(i).getItemDetailId()));
-				System.err.println("string at  "+i+" " +"rmQty"+getRmItemList.get(i).getRmName() +"rm qty "+rmQty);
+			String curDate = dateFormatyy.format(new Date());
+
+			ReqBomHeader bomHeader = new ReqBomHeader();
+
+			List<ReqBomDetail> reqBomDetail = new ArrayList<>();
+
+			String NA = "NA";
+			for (int i = 0; i < getRmItemList.size(); i++) {
+
+				System.err.println("I " + i);
+
+				float rmQty = Float.parseFloat(request.getParameter("rmQty" + getRmItemList.get(i).getItemDetailId()));
+				System.err.println(
+						"string at  " + i + " " + "rmQty" + getRmItemList.get(i).getRmName() + "rm qty " + rmQty);
 
 				ReqBomDetail bomDet = new ReqBomDetail();
-				
+
 				bomDet.setAutoRmReqQty(rmQty);
 				bomDet.setDelStatus(1);
 				bomDet.setExVar1(NA);
@@ -648,9 +646,9 @@ public class ProdController {
 				bomDet.setRmReqQty(rmQty);
 				bomDet.setStatus(1);
 				bomDet.setUom(getRmItemList.get(i).getRmUomName());
-				
+
 				reqBomDetail.add(bomDet);
-				
+
 			}
 
 			bomHeader.setApprovedDate(curDate);
@@ -666,69 +664,63 @@ public class ProdController {
 			bomHeader.setSenderUserId(prodHeader.getUserId());
 			bomHeader.setStatus(1);
 			bomHeader.setSubPlantId(prodHeader.getSubPlantId());
-			
+
 			bomHeader.setReqBomDetailsList(reqBomDetail);
 
-			ReqBomHeader bomInsertRes = rest.postForObject(Constants.url + "saveBomHeaderDetail", bomHeader, ReqBomHeader.class);
-			
-			if(bomInsertRes!=null) {
-				isError=2;
-			}else {
-				isError=1;
+			ReqBomHeader bomInsertRes = rest.postForObject(Constants.url + "saveBomHeaderDetail", bomHeader,
+					ReqBomHeader.class);
+
+			if (bomInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
 			}
-			
+
 			System.err.println("bomInsertRes  " + bomInsertRes.toString());
 
 		} catch (Exception e) {
-			
-			System.err.println("Exce in bom Insert Manual BOM Prod  " +e.getMessage());
+
+			System.err.println("Exce in bom Insert Manual BOM Prod  " + e.getMessage());
 			e.printStackTrace();
 		}
 
 		return "redirect:/showProdPlanList";
 	}
-	
+
 	List<GetItemDetail> getRmItemList;
+
 	@RequestMapping(value = "/showBOM", method = RequestMethod.GET)
 	public ModelAndView showBOM(HttpServletRequest request, HttpServletResponse response) {
 //			//get response in session and get to showBom Disp Controller
 
-		
-		if(prodHeader==null) {
-			
-			System.err.println("prodHeader==null" );
-			
-			HttpSession session=request.getSession();
-			
-			
-			
-			
-			ProdPlanHeader insertHeader=(ProdPlanHeader) session.getAttribute("prodHeader");
-			
-			
-			MultiValueMap<String, Object>   map = new LinkedMultiValueMap<String, Object>();
+		if (prodHeader == null) {
+
+			System.err.println("prodHeader==null");
+
+			HttpSession session = request.getSession();
+
+			ProdPlanHeader insertHeader = (ProdPlanHeader) session.getAttribute("prodHeader");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("prodHeaderId", insertHeader.getProductionHeaderId());
 			prodHeader = rest.postForObject(Constants.url + "getProdPlanDetail", map, GetProdPlanHeader.class);
-			
-			System.err.println("prodHeader " +prodHeader.toString());
+
+			System.err.println("prodHeader " + prodHeader.toString());
 
 			prodHeader.setProductionDate(DateConvertor.convertToDMY(prodHeader.getProductionDate()));
 			prodHeader.setProductionStartDate(DateConvertor.convertToDMY(prodHeader.getProductionStartDate()));
 			prodHeader.setProductionEndDate(DateConvertor.convertToDMY(prodHeader.getProductionEndDate()));
 
-			
-			System.err.println("prodHeader from session  " +prodHeader.toString() );
+			System.err.println("prodHeader from session  " + prodHeader.toString());
 
-			
 		}
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("prod/auto_bom");
 
 			model.addObject("title", "Automatic BOM");
-			
-		
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("prodHeaderId", prodHeader.getProductionHeaderId());
@@ -736,107 +728,138 @@ public class ProdController {
 			GetItemDetail[] rmItemArray = rest.postForObject(Constants.url + "getItemDetailForBOM", map,
 					GetItemDetail[].class);
 			getRmItemList = new ArrayList<GetItemDetail>(Arrays.asList(rmItemArray));
-			
-			System.err.println("rmItemList " +getRmItemList.toString());
-			
+
+			System.err.println("rmItemList " + getRmItemList.toString());
+
 			model.addObject("rmItemList", getRmItemList);
 			model.addObject("prodHeader", prodHeader);
 
 			model.addObject("isError", isError);
 			isError = 0;
-			
-		}catch (Exception e) {
-			
-			System.err.println("Exce in showBOM   " +e.getMessage());
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in showBOM   " + e.getMessage());
 			e.printStackTrace();
 
 		}
 		return model;
 	}
-	
-	
-	//insertBOM
-		@RequestMapping(value = "/insertBOM", method = RequestMethod.POST)
-		public String insertBOM(HttpServletRequest request, HttpServletResponse response) {
 
-			try {
+	// insertBOM
+	@RequestMapping(value = "/insertBOM", method = RequestMethod.POST)
+	public String insertBOM(HttpServletRequest request, HttpServletResponse response) {
 
-				String curDate=dateFormatyy.format(new Date());
-				
-				ReqBomHeader bomHeader=new ReqBomHeader();
-				
-				List<ReqBomDetail> reqBomDetail=new ArrayList<>();
-				
-				String NA="NA";
-				for (int i=0; i<getRmItemList.size(); i++) {
-					
-					System.err.println("I " +i);
-					
-					float rmQty = Float.parseFloat(request.getParameter("rmQty"+getRmItemList.get(i).getItemDetailId()));
-					System.err.println("string at  "+i+" " +"rmQty"+getRmItemList.get(i).getRmName() +"rm qty "+rmQty);
-					float rmEditQty = Float.parseFloat(request.getParameter("rmEditQty"+getRmItemList.get(i).getItemDetailId()));
+		try {
 
-					ReqBomDetail bomDet = new ReqBomDetail();
-					
-					bomDet.setAutoRmReqQty(rmQty);
-					bomDet.setDelStatus(1);
-					bomDet.setExVar1(NA);
-					bomDet.setExVar2(NA);
-					bomDet.setExVar3(NA);
-					bomDet.setItemValue(0);
-					bomDet.setMrnBatch(NA);
-					bomDet.setMrnItemRate(0);
-					bomDet.setRejectedQty(0);
-					bomDet.setReturnQty(0);
-					bomDet.setRmId(getRmItemList.get(i).getRmId());
-					bomDet.setRmIssueQty(0);
-					bomDet.setRmReqQty(rmEditQty);
-					bomDet.setStatus(1);
-					bomDet.setUom(getRmItemList.get(i).getRmUomName());
-					
-					reqBomDetail.add(bomDet);
-					
-				}
+			String curDate = dateFormatyy.format(new Date());
 
-				bomHeader.setApprovedDate(curDate);
-				bomHeader.setApprovedUserId(0);
-				bomHeader.setBomReqDate(curDate);
-				bomHeader.setDelStatus(1);
-				bomHeader.setExVar1(NA);
-				bomHeader.setExVar2(NA);
-				bomHeader.setIsManual(0);
-				bomHeader.setPlantId(prodHeader.getPlantId());
-				bomHeader.setProductionDate(DateConvertor.convertToYMD(prodHeader.getProductionDate()));
-				bomHeader.setProductionId(prodHeader.getProductionHeaderId());
-				bomHeader.setSenderUserId(prodHeader.getUserId());
-				bomHeader.setStatus(1);
-				bomHeader.setSubPlantId(prodHeader.getSubPlantId());
-				
-				bomHeader.setReqBomDetailsList(reqBomDetail);
+			ReqBomHeader bomHeader = new ReqBomHeader();
 
-				ReqBomHeader bomInsertRes = rest.postForObject(Constants.url + "saveBomHeaderDetail", bomHeader, ReqBomHeader.class);
-				
-				if(bomInsertRes!=null) {
-					isError=2;
-				}else {
-					isError=1;
-				}
-				
-				System.err.println("bomInsertRes  " + bomInsertRes.toString());
-				
-				
-				prodHeader=null;
-				HttpSession session=request.getSession();
-				
-				session.removeAttribute("prodHeader");				
+			List<ReqBomDetail> reqBomDetail = new ArrayList<>();
 
-			} catch (Exception e) {
-				
-				System.err.println("Exce in bom Insert Manual BOM Prod  " +e.getMessage());
-				e.printStackTrace();
+			String NA = "NA";
+			for (int i = 0; i < getRmItemList.size(); i++) {
+
+				System.err.println("I " + i);
+
+				float rmQty = Float.parseFloat(request.getParameter("rmQty" + getRmItemList.get(i).getItemDetailId()));
+				System.err.println(
+						"string at  " + i + " " + "rmQty" + getRmItemList.get(i).getRmName() + "rm qty " + rmQty);
+				float rmEditQty = Float
+						.parseFloat(request.getParameter("rmEditQty" + getRmItemList.get(i).getItemDetailId()));
+
+				ReqBomDetail bomDet = new ReqBomDetail();
+
+				bomDet.setAutoRmReqQty(rmQty);
+				bomDet.setDelStatus(1);
+				bomDet.setExVar1(NA);
+				bomDet.setExVar2(NA);
+				bomDet.setExVar3(NA);
+				bomDet.setItemValue(0);
+				bomDet.setMrnBatch(NA);
+				bomDet.setMrnItemRate(0);
+				bomDet.setRejectedQty(0);
+				bomDet.setReturnQty(0);
+				bomDet.setRmId(getRmItemList.get(i).getRmId());
+				bomDet.setRmIssueQty(0);
+				bomDet.setRmReqQty(rmEditQty);
+				bomDet.setStatus(1);
+				bomDet.setUom(getRmItemList.get(i).getRmUomName());
+
+				reqBomDetail.add(bomDet);
+
 			}
 
-			return "redirect:/showProdPlanList";
+			bomHeader.setApprovedDate(curDate);
+			bomHeader.setApprovedUserId(0);
+			bomHeader.setBomReqDate(curDate);
+			bomHeader.setDelStatus(1);
+			bomHeader.setExVar1(NA);
+			bomHeader.setExVar2(NA);
+			bomHeader.setIsManual(0);
+			bomHeader.setPlantId(prodHeader.getPlantId());
+			bomHeader.setProductionDate(DateConvertor.convertToYMD(prodHeader.getProductionDate()));
+			bomHeader.setProductionId(prodHeader.getProductionHeaderId());
+			bomHeader.setSenderUserId(prodHeader.getUserId());
+			bomHeader.setStatus(1);
+			bomHeader.setSubPlantId(prodHeader.getSubPlantId());
+
+			bomHeader.setReqBomDetailsList(reqBomDetail);
+
+			ReqBomHeader bomInsertRes = rest.postForObject(Constants.url + "saveBomHeaderDetail", bomHeader,
+					ReqBomHeader.class);
+
+			if (bomInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
+
+			System.err.println("bomInsertRes  " + bomInsertRes.toString());
+
+			prodHeader = null;
+			HttpSession session = request.getSession();
+
+			session.removeAttribute("prodHeader");
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in bom Insert Manual BOM Prod  " + e.getMessage());
+			e.printStackTrace();
 		}
-	
+
+		return "redirect:/showProdPlanList";
+	}
+
+	@RequestMapping(value = "/deleteRecordofProductionPlant", method = RequestMethod.POST)
+	public String deleteRecordofProductionPlant(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] prodIds = request.getParameterValues("prodIds");
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < prodIds.length; i++) {
+				sb = sb.append(prodIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("prodHeaderIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiProdPlan", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofProductionPlant @prod  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showProdPlanList";
+	}
+
 }

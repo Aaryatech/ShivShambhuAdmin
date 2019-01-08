@@ -258,7 +258,8 @@
 										<c:forEach items="${getQuotList}" var="quot" varStatus="count">
 											<tr>
 												<td><input type="checkbox" class="chk"
-													name="quotHeadIds" id="quotHeadIds${count.index+1}"
+													name="selectQuatationToDelete"
+													id="selectQuatationToDelete${count.index+1}"
 													value="${quot.quotHeadId}" /></td>
 												<td style="text-align: center">${count.index+1}</td>
 
@@ -331,9 +332,9 @@
 									id="deleteId"
 									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 									style="align-content: center; width: 113px; margin-left: 40px;">
-									
-									<input type="button" margin-right: 5px;" id="btn_submit"
-										class="btn btn-primary" onclick="billPdf()" value="Pdf" />
+
+								<input type="button" margin-right: 5px;" id="btn_submit"
+									class="btn btn-primary" onclick="billPdf()" value="Pdf" />
 							</div>
 						</form>
 
@@ -402,7 +403,7 @@
 			});
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 		function billPdf() {
 			var checkedVals = $('input:checkbox:checked').map(function() {
@@ -421,7 +422,7 @@
 			}
 		}
 	</script>
-	
+
 	<script type="text/javascript">
 		$(document)
 				.ready(
@@ -608,13 +609,13 @@
 																+ ','
 																+ i
 																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callSinglePdf('
-																	+ v.quotHeadId
-																	+ ','
-																	+ i
-																	+ ')" style="color:red"><i class="fa fa-edit"  title="Edit"></i></a>'
+																+ v.quotHeadId
+																+ ','
+																+ i
+																+ ')" style="color:red"><i class="fa fa-edit"  title="Edit"></i></a>'
 
 														chBox = '<input  type="checkbox" class="chk" name="selectQuatationToDelete" id='+v.quotHeadId+' class="check"  value='+v.quotHeadId+'>'
-													
+
 														//var chBox='<input type="checkbox" id="orderId" class="chk" name="quotIds" value='+v.orderId+'/>'
 														dataTable.row
 																.add(
@@ -649,12 +650,12 @@
 							+ enqHeadId);
 
 		}
-		function callSinglePdf(quotIdList){
-			
+		function callSinglePdf(quotIdList) {
+
 			window
-			.open('${pageContext.request.contextPath}/pdfQuot?url=pdf/showQuotPdf/'
-					+ quotIdList);
-			
+					.open('${pageContext.request.contextPath}/pdfQuot?url=pdf/showQuotPdf/'
+							+ quotIdList);
+
 		}
 	</script>
 

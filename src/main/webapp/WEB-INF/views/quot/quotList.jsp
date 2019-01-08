@@ -56,7 +56,7 @@
 </style>
 
 </head>
-<body>
+<body onload="sendEmailByQuotHeadId(${quotHeadIdPdf},${pdfCustId})">
 
 
 	<!-- Left Panel -->
@@ -149,7 +149,7 @@
 										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
-								<!-- 	<input type="button" margin-right: 5px;" id="btn_submit"
+									<!-- 	<input type="button" margin-right: 5px;" id="btn_submit"
 										class="btn btn-primary" onclick="billPdf()" value="Pdf" /> -->
 								</div>
 
@@ -289,6 +289,37 @@
 																this.checked);
 											});
 						});
+	</script>
+
+	<script type="text/javascript">
+		function sendEmailByQuotHeadId(quotHeadIdPdf, custId) {
+			var isValid = true;
+			if (quotHeadIdPdf == 0) {
+
+			} else {
+
+				window
+						.open('${pageContext.request.contextPath}/pdfQuot?url=pdf/showQuotPdf/'
+								+ quotHeadIdPdf);
+
+				
+				/* .getJSON(
+						'${sendEmailByBillId}',
+						{
+							billHeadId : billHeadId,
+							custId : custId,
+							ajax : 'true',
+
+						},
+						function(data) {
+							
+						});
+				
+				
+				 */
+
+			}
+		}
 	</script>
 
 	<!-- <script type="text/javascript">

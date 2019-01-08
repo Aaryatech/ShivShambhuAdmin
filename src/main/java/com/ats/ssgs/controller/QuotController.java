@@ -150,46 +150,41 @@ public class QuotController {
 		System.err.println("Setted ");
 	}
 
-	
-	//getMixItemRate
-	
+	// getMixItemRate
+
 	@RequestMapping(value = "/getMixItemRate", method = RequestMethod.GET)
 	public @ResponseBody GetItemWithEnq getMixItemRate(HttpServletRequest request, HttpServletResponse response) {
 		GetItemWithEnq itemEnq = null;
 		try {
 			System.err.println("Mix Rate get ");
-		float itemRate=0;
-		
-		int itemId=rmcQuotItemList.get(0).getItemId();
-		System.err.println("Item itemId " +itemId);
+			float itemRate = 0;
 
-		for(int i=0;i<rmcQuotItemList.size();i++) {
-			itemRate=itemRate+rmcQuotItemList.get(i).getAmt();
-		}
-		System.err.println("Item Rate " +itemRate);
-		for(int i=0;i<enqItemList.size();i++) {
-			
-			if(enqItemList.get(i).getItemId()==itemId) {
-				itemEnq=enqItemList.get(i);
-				System.err.println("itemEnq  matched setted " +itemEnq.toString());
-				enqItemList.get(i).setItemRate1(itemRate);
-				break;
+			int itemId = rmcQuotItemList.get(0).getItemId();
+			System.err.println("Item itemId " + itemId);
+
+			for (int i = 0; i < rmcQuotItemList.size(); i++) {
+				itemRate = itemRate + rmcQuotItemList.get(i).getAmt();
 			}
-		}
-		
-		itemEnq.setItemRate1(itemRate);
-		}
-		catch (Exception e) {
-			System.err.println("Exce in getMixItemRate " +e.getMessage());
+			System.err.println("Item Rate " + itemRate);
+			for (int i = 0; i < enqItemList.size(); i++) {
+
+				if (enqItemList.get(i).getItemId() == itemId) {
+					itemEnq = enqItemList.get(i);
+					System.err.println("itemEnq  matched setted " + itemEnq.toString());
+					enqItemList.get(i).setItemRate1(itemRate);
+					break;
+				}
+			}
+
+			itemEnq.setItemRate1(itemRate);
+		} catch (Exception e) {
+			System.err.println("Exce in getMixItemRate " + e.getMessage());
 			e.printStackTrace();
-			
+
 		}
 		return itemEnq;
-		
-	}
 
-	
-	
+	}
 
 	@RequestMapping(value = "/showQuotations", method = RequestMethod.GET)
 	public ModelAndView showQuotations(HttpServletRequest request, HttpServletResponse response) {
@@ -782,15 +777,6 @@ public class QuotController {
 			quotHeader.setQuotDate(DateConvertor.convertToDMY(quotHeader.getQuotDate()));
 			model.addObject("quotHeader", quotHeader);
 
-			/*
-			 * quotHeadIdPdf = quotHeader.getQuotHeadId();
-			 * 
-			 * pdfCustId = quotHeader.getCustId();
-			 */
-
-			System.out.println("quotHeadIdPdf=================" + quotHeadIdPdf);
-			System.out.println("pdfCustId=================" + pdfCustId);
-
 		} catch (Exception e) {
 			System.err.println("Exce in /showQuotations" + e.getMessage());
 			e.printStackTrace();
@@ -798,12 +784,12 @@ public class QuotController {
 		return model;
 
 	}
-	// getNewItemsForQuotation 
+	// getNewItemsForQuotation
 
 	@RequestMapping(value = "/getNewItemsForQuotation", method = RequestMethod.GET)
 	public @ResponseBody List<GetItemWithEnq> getNewItemsForQuotation(HttpServletRequest request,
 			HttpServletResponse response) {
-System.err.println(" Inside IgetNewItemsForQuotation " );
+		System.err.println(" Inside IgetNewItemsForQuotation ");
 		int itemId = Integer.parseInt(request.getParameter("itemId"));
 		float quotQty = Float.parseFloat(request.getParameter("quotQty"));
 
@@ -849,11 +835,11 @@ System.err.println(" Inside IgetNewItemsForQuotation " );
 
 			enqItemList.remove(index);
 		}
-		
+
 		System.err.println("Ajax getNewItemsForQuotation  List size " + enqItemList.size());
 
 		System.err.println("Ajax getNewItemsForQuotation  List " + enqItemList.toString());
- 
+
 		return enqItemList;
 
 	}
@@ -933,7 +919,7 @@ System.err.println(" Inside IgetNewItemsForQuotation " );
 
 			int quotHeadId = Integer.parseInt(request.getParameter("quotHeadId"));
 			int quotHeadStatus = Integer.parseInt(request.getParameter("quotHeadStatus"));
-			System.err.println("quotHeadStatus" +quotHeadStatus);
+			System.err.println("quotHeadStatus" + quotHeadStatus);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -960,7 +946,7 @@ System.err.println(" Inside IgetNewItemsForQuotation " );
 			Float otherCost = Float.parseFloat(request.getParameter("other_cost"));
 			int quotTermId = Integer.parseInt(request.getParameter("quot_doc_term_id"));
 			float noOfKm = Float.parseFloat(request.getParameter("no_of_km"));
-String quotDate=request.getParameter("quot_date");
+			String quotDate = request.getParameter("quot_date");
 			String payTerms = request.getParameter("pay_term_name");
 
 			quotHeader.setUserId(1);// to be get from session who logged in to do this activity
@@ -981,7 +967,7 @@ String quotDate=request.getParameter("quot_date");
 			quotHeader.setExDate2(curDate);
 			quotHeader.setTaxValue(is_tax_inc);
 			// quotHeader.setCompanyId(companyId);
-quotHeader.setQuotDate(DateConvertor.convertToYMD(quotDate));
+			quotHeader.setQuotDate(DateConvertor.convertToYMD(quotDate));
 			List<QuotDetail> quotDetList = quotHeader.getQuotDetailList();
 
 			System.err.println("Header  " + quotHeader.toString());
@@ -1332,11 +1318,10 @@ quotHeader.setQuotDate(DateConvertor.convertToYMD(quotDate));
 
 		String url = request.getParameter("url");
 		System.out.println("URL " + url);
-		// http://monginis.ap-south-1.elasticbeanstalk.com
-		// File f = new File("/report.pdf");
-		 File f = new File("/home/ats-11/quot.pdf");
 
-		//File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf");
+		File f = new File("/home/lenovo/quot.pdf");
+
+		// File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1355,11 +1340,11 @@ quotHeader.setQuotDate(DateConvertor.convertToYMD(quotDate));
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 
-		// String filename = "/home/lenovo/bill.pdf";
-		String filename =  "/home/ats-11/quot.pdf";
+		String filename = "/home/lenovo/quot.pdf";
+		// String filename = "/home/ats-11/quot.pdf";
 		// String filePath = "/report.pdf";
-		//String filePath = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
-		String filePath = "/home/ats-11/quot.pdf";
+		// String filePath = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
+		String filePath = "/home/lenovo/quot.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file
