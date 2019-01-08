@@ -516,7 +516,7 @@ public class ChalanController {
 	}
 
 	// getChalanListByPlant
-	List<GetChalanHeader> chalanHeadList;
+	List<GetChalanHeader> chalanHeadList=new ArrayList<>();
 
 	@RequestMapping(value = "/getChalanListByPlant", method = RequestMethod.GET)
 	public @ResponseBody List<GetChalanHeader> getChalanListByPlant(HttpServletRequest request,
@@ -524,10 +524,17 @@ public class ChalanController {
 		
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
-		System.err.println("plantId for getChalanListByPlant  " + plantId);
+		
+		String fromDate=request.getParameter("fromDate");
+		String toDate=request.getParameter("toDate");
+		
+		
+		System.err.println("plantId for getChalanListByPlant  " + plantId +"from " +fromDate + "to Date " +toDate);
 
-		map.add("plantId", plantId);
-		// map.add("chalanStatus", 0);
+		 map.add("plantId", plantId);
+		 map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		 map.add("toDate", DateConvertor.convertToYMD(toDate));
+
 		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByPlantAndStatus", map,
 				GetChalanHeader[].class);
 
@@ -1356,7 +1363,7 @@ public class ChalanController {
 	
 	@RequestMapping(value = "/getOpenChalanListByPlant", method = RequestMethod.GET)
 	public @ResponseBody List<GetChalanHeader> getOpenChalanListByPlant(HttpServletRequest request, HttpServletResponse response) {
-		List<GetChalanHeader> chalanHeadList;
+		List<GetChalanHeader> chalanHeadList=new ArrayList<>();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
 		System.err.println("plantId for getChalanListByPlant  " +plantId);

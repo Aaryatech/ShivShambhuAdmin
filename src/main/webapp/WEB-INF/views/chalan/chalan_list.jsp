@@ -25,7 +25,31 @@
 <c:url var="getTempOrderHeader"
 	value="/getTempOrderHeader" /> --%>
 	
+<style>
+.buttonload {
+    background-color: white; /* Green background */
+    border: none; /* Remove borders */
+    color: #ec268f; /* White text */
+    padding: 12px 15px; /* Some padding */
+    font-size: 13px; /* Set a font-size */
+    display:none;
+}
 
+/* Add a right margin to each icon */
+.fa {
+    margin-left: -12px;
+    margin-right: 8px;
+}
+ ::-webkit-scrollbar{
+        height: 10px;
+        width: 6px;
+        background:#868e96;
+    }
+    ::-webkit-scrollbar-thumb:horizontal{
+        background: #000;
+        border-radius: 10px;
+    }
+</style>
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -164,7 +188,7 @@
 							<form
 								action="${pageContext.request.contextPath}/deleteRecordofChalan"
 								method="post">
-								<div class="row">
+								<%-- <div class="row">
 
 									<div class="col-md-2">Select Plant</div>
 
@@ -182,19 +206,48 @@
 									</div>
 									
 									<div class="col-md-2">
-										<input type="button" class="btn btn-primary"  onclick="showChalan()" value="Submit">
+										<input type="button"   onclick="showChalan1()" value="Submit 11">
+									</div>
+								</div>
+								 --%>
+								 
+								 
+<div class="row">
+
+									<div class="col-md-1">Plant</div>
+
+									<div class="col-md-2">
+										<select id="plant_id" name="plant_id" class="standardSelect"
+											tabindex="1" required>
+											<option value="">Select Plant</option>
+
+											<c:forEach items="${plantList}" var="plant">
+												<option value="${plant.plantId}">${plant.plantName}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="col-md-1">From</div>
+									<div class="col-md-2">
+										<input type="text" id="from_date" name="from_date" required
+											style="width: 100%;" class="form-control"
+											value="${fromDate}"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+                                    <div class="col-md-1">To</div>
+									<div class="col-md-2">
+										<input type="text" id="to_date" name="to_date" required
+											style="width: 100%;" class="form-control"
+											value="${toDate}"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+										<div class="col-md-3">
+										<input type="button" class="btn btn-primary" id="searchButton" value="Search"  onclick="showChalan()" >
+<button class="buttonload" id="loader">
+                                   <i class="fa fa-spinner fa-spin"></i>Loading
+                                   </button>
 									</div>
 								</div>
 								
-
-								<!-- 
-								<div class="row">
-								<div class="col-md-6"></div>
-									<div class="col-md-2">
-										<input type="button" class="btn btn-primary"  onclick="showChalan()" value="Submit">
-									</div>
-								</div>
-								 -->
 
 								<div class="form-group"></div>
 								
@@ -397,25 +450,44 @@
 			var plantId = document.getElementById("plant_id").value;
 			var valid = true;
 
+			var fromDate = $("#from_date").val();
+			var toDate = $("#to_date").val();
+			var d1 = fromDate.split("-");
+			var d2 = toDate.split("-");
+			d1 = d1[2].concat(d1[1], d1[0]);
+			d2 = d2[2].concat(d2[1], d2[0]);
+			///alert("fromDate " +fromDate);
+			///alert("toDate " +toDate);
+			
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
-			}			
-			
+			}else if(fromDate==null || fromDate==""){
+				valid=false;
+				alert("Please select from date")
+			}else if(toDate==null || toDate==""){
+				valid=false;
+				alert("Please select to date");
+			}else if (parseInt(d1) > parseInt(d2)) {
+				isValid = false;
+			    alert("From Date must be less than To Date!!");
+			} 
 			
 			if(valid==true){
-				alert("plant Id " +plantId);
-			
+			//	alert("plant Id " +plantId);
+				$('#loader').show();
 				$
 						.getJSON(
 								'${getChalanListByPlant}',
 								{
 									plantId : plantId,
+									fromDate : fromDate,
+									toDate : toDate,
 									ajax : 'true',
 								},
 
 								function(data) {
-
+									$('#loader').hide();
 									document.getElementById("expExcel").disabled = false;
 									document.getElementById("PDFButton").disabled = false;
 
@@ -453,7 +525,7 @@
 															+ v.chalanId
 															+ ','
 															+ i
-															+ ')" style="color:black"><i class="fa-file-pdf-o"></i></a>'
+															+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
 															
 															 chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
 								}else{
@@ -474,7 +546,7 @@
 														+ v.chalanId
 														+ ','
 														+ i
-														+ ')" style="color:black><i class="fa-file-pdf-o"></i></a>'
+														+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
 									
 									chBox=""
 									
@@ -516,14 +588,14 @@ function callClose(chalanId){
 	}
 	
 	function callPdf(chalanId,key){
-		alert("call Pdf " +chalanId);
+		//alert("call Pdf " +chalanId);
 		   window.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'+chalanId);
 
 	}
 	
 	function callDelete(chalanId,key){
-		alert("call Pdf " +chalanId);
-		   window.open('${pageContext.request.contextPath}/deleteChalan/'+chalanId"_self");
+		//alert("call Pdf " +chalanId);
+		   window.open('${pageContext.request.contextPath}/deleteChalan/'+chalanId,"_self");
 
 	}
 	</script>
