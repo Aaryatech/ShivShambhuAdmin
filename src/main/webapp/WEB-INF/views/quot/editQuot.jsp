@@ -359,7 +359,7 @@ body {
 								<div id="myModal" class="modal1">
 
 									<div class="modal-content" style="color: black;">
-										<span class="close" id="close">&times;</span>
+										<span class="close" id="close"  style="text-align: right;">&times;</span>
 										<h5 style="text-align: left;">Quotation Terms And
 											Conditions</h5>
 										<div class=" box-content">
@@ -391,7 +391,7 @@ body {
 								<div id="itemDetailModal" class="modal1">
 
 									<div class="modal-content" style="color: black;">
-										<span class="close" id="close1">&times;</span>
+										<span class="close" id="close1" style="text-align: right;">&times;</span>
 										<h5 style="text-align: left;">Material Cost As Per Mix
 											Design</h5>
 										<div class=" box-content">
@@ -403,9 +403,10 @@ body {
 														<tr>
 															<th width="2%">Sr.No.</th>
 															<th class="col-md-2">Material</th>
-															<th class="col-md-1">Weight</th>
 
 															<th class="col-md-1">Unit</th>
+															<th class="col-md-1">Weight</th>
+
 															<th class="col-md-1">Rate</th>
 															<th class="col-md-1">Constant</th>
 															<th class="col-md-1">Unit_Rate</th>
@@ -1264,8 +1265,8 @@ calcAll();
 											data,
 											function(i, v) {
 												var index=i+1;
-												var itemOpRate='<input  type="text" value='+v.itemOpRate+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="op_rate'+v.itemDetailId+'" name="op_rate'+v.itemDetailId+'" oninput="calcAmt('+v.itemDetailId+','+v.itemWt+','+i+')"/>'
-												var rmQty='<input  type="text" value='+v.rmQty+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="rm_qty'+v.itemDetailId+'" name="rm_qty'+v.itemDetailId+'" oninput="calcAmt('+v.itemDetailId+','+v.itemWt+','+i+')"/>'
+												var itemOpRate='<input  type="text" value='+v.itemOpRate+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="op_rate'+v.itemDetailId+'" name="op_rate'+v.itemDetailId+'" onmouseleave="calcAmt('+v.itemDetailId+','+v.itemWt+','+i+')"/>'
+												var rmQty='<input  type="text" value='+v.rmQty+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="rm_qty'+v.itemDetailId+'" name="rm_qty'+v.itemDetailId+'" onmouseleave="calcAmt('+v.itemDetailId+','+v.itemWt+','+i+')"/>'
 
 												var unitRate='<input  type="text" value='+v.unitRate+'  readonly  class="form-control"  onkeypress="return allowOnlyNumber(event);" id="unit_rate'+v.itemDetailId+'" name="unit_rate'+v.itemDetailId+'"/>'
 												var amt='<input  type="text" value='+v.amt+' readonly   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="amt'+v.itemDetailId+'" name="amt'+v.itemDetailId+'"/>'
@@ -1273,7 +1274,7 @@ calcAll();
 												dataTable.row
 														.add(
 																[
-																	index,v.itemDesc,v.itemWt,v.uom,itemOpRate,rmQty,unitRate,amt])
+																	index,v.itemDesc,v.uom,v.itemWt,itemOpRate,rmQty,unitRate,amt])
 														.draw();
 											});
 
