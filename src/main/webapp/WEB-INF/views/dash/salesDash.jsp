@@ -9,6 +9,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+<c:url var="getDashboardCount" value="/getDashboardCount" />
 
 <link rel="apple-touch-icon" href="apple-icon.png">
 <link rel="shortcut icon"
@@ -41,6 +42,8 @@
 <link
 	href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
 	rel='stylesheet' type='text/css'>
+<link rel="stylesheet"
+	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 
 
 <script type="text/javascript"
@@ -152,7 +155,7 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalEnq}</span>
+										<span class="count" style="font-size: 30px;" id="totalEnq">${dashBoard.totalEnq}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -176,7 +179,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalQuotPending}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalQuotPending">${dashBoard.totalQuotPending}</span>
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
 										<font color="white">Pending Quotations</font>
@@ -197,7 +201,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalQuotGenerated}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalQuotGenerated">${dashBoard.totalQuotGenerated}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -223,7 +228,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalPoPending}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalPoPending">${dashBoard.totalPoPending}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -247,7 +253,7 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.poGenerated}</span>
+										<span class="count" style="font-size: 30px;" id="poGenerated">${dashBoard.poGenerated}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -267,7 +273,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalNoOfOrders}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalNoOfOrders">${dashBoard.totalNoOfOrders}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -397,6 +404,7 @@ background-color: transparent;
 											.getElementById("totalQuotGenerated").innerText = data.totalQuotGenerated;
 									document.getElementById("totalPoPending").innerText = data.totalPoPending;
 									document.getElementById("totalOrderAmount").innerText = data.totalOrderAmount;
+									document.getElementById("totalNoOfOrders").innerText = data.totalNoOfOrders;
 									document.getElementById("totalBillAmount").innerText = data.totalBillAmount;
 									document.getElementById("totalTaxBillAmt").innerText = data.totalTaxBillAmt;
 									document
@@ -411,6 +419,12 @@ background-color: transparent;
 
 		}
 	</script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script>
 	<script>
 		$(function() {
 			$('input[id$=from_date]').datepicker({

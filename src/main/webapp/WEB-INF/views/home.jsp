@@ -9,10 +9,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+<c:url var="getDashboardCount" value="/getDashboardCount" />
+
 
 <link rel="apple-touch-icon" href="apple-icon.png">
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/favicon.ico">
+<link rel="stylesheet"
+	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
 
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/assets/css/normalize.css">
@@ -103,14 +107,14 @@ background-color: transparent;
 					<div class="form-group"></div>
 
 					<div class="row">
-						<div class="col-md-1" style="color: black;">From*</div>
+						<div class="col-md-1" style="color: black;">From Date*</div>
 						<div class="col-md-2">
 							<input type="text" autocomplete="off" id="from_date"
 								name="from_date" required style="width: 100%;"
 								class="form-control" value="${fromDate}"> <span
 								class="error" aria-live="polite"></span>
 						</div>
-						<div class="col-md-1" style="color: black;">To*</div>
+						<div class="col-md-1" style="color: black;">To Date*</div>
 						<div class="col-md-2">
 							<input type=text autocomplete="off" id="to_date" name="to_date"
 								style="width: 100%;" class="form-control" value="${toDate}">
@@ -120,8 +124,7 @@ background-color: transparent;
 						<div class="col-md-2" style="color: black;">Select Plant*</div>
 						<div class="col-md-2">
 							<select id="plantId" name="plantId" class="standardSelect"
-								tabindex="1" required
-								oninvalid="setCustomValidity('Please select plant')">
+								tabindex="1" required>
 								<option value="0">All</option>
 								<c:forEach items="${plantList}" var="plant">
 									<option value="${plant.plantId}">${plant.plantName}</option>
@@ -131,8 +134,10 @@ background-color: transparent;
 						</div>
 
 						<div class="col-md-1">
-							<input type="button" class="btn btn-primary" onclick="showQuot()"
-								value="Submit">
+							<div class="col-md-2">
+								<input type="button" class="btn btn-primary"
+									onclick="showQuot()" value="Submit">
+							</div>
 						</div>
 
 					</div>
@@ -152,7 +157,7 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalEnq}</span>
+										<span class="count" style="font-size: 30px;" id="totalEnq">${dashBoard.totalEnq}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -176,7 +181,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalQuotPending}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalQuotPending">${dashBoard.totalQuotPending}</span>
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
 										<font color="white">Pending Quotations</font>
@@ -197,7 +203,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalQuotGenerated}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalQuotGenerated">${dashBoard.totalQuotGenerated}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -223,7 +230,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalPoPending}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalPoPending">${dashBoard.totalPoPending}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -247,7 +255,7 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.poGenerated}</span>
+										<span class="count" style="font-size: 30px;" id="poGenerated">${dashBoard.poGenerated}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -272,7 +280,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalOrderAmount}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalOrderAmount">${dashBoard.totalOrderAmount}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -296,7 +305,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalNoOfOrders}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalNoOfOrders">${dashBoard.totalNoOfOrders}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -322,7 +332,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalBillAmount}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalBillAmount">${dashBoard.totalBillAmount}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -344,7 +355,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalTaxBillAmt}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalTaxBillAmt">${dashBoard.totalTaxBillAmt}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -369,7 +381,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.totalTaxableBillAmt}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalTaxableBillAmt">${dashBoard.totalTaxableBillAmt}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -394,7 +407,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.paymentRecPaid}</span>
+										<span class="count" style="font-size: 30px;"
+											id="paymentRecPaid">${dashBoard.paymentRecPaid}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -420,7 +434,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashBoard.paymentRecOutstandingPending}</span>
+										<span class="count" style="font-size: 30px;"
+											id="paymentRecOutstandingPending">${dashBoard.paymentRecOutstandingPending}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -447,25 +462,44 @@ background-color: transparent;
 
 
 
+
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
 	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+		src="${pageContext.request.contextPath}/resources/assets/js/popper.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/jszip.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/pdfmake.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/vfs_fonts.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.html5.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.print.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables-init.js"></script>
 
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/js/dashboard.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/resources/assets/js/widgets.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
 
 
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 	<!-- 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({
@@ -476,6 +510,7 @@ background-color: transparent;
 		});
 	</script> 
  -->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
 			$('input[id$=from_date]').datepicker({
@@ -556,7 +591,9 @@ background-color: transparent;
 									document
 											.getElementById("totalQuotGenerated").innerText = data.totalQuotGenerated;
 									document.getElementById("totalPoPending").innerText = data.totalPoPending;
+									document.getElementById("poGenerated").innerText = data.poGenerated;
 									document.getElementById("totalOrderAmount").innerText = data.totalOrderAmount;
+									document.getElementById("totalNoOfOrders").innerText = data.totalNoOfOrders;
 									document.getElementById("totalBillAmount").innerText = data.totalBillAmount;
 									document.getElementById("totalTaxBillAmt").innerText = data.totalTaxBillAmt;
 									document
@@ -571,17 +608,18 @@ background-color: transparent;
 
 		}
 	</script>
+
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 	<script>
-		$(function() {
-			$('input[id$=from_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
-			});
 
-			$('input[id$=to_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
-			});
-
-		});
+	$(function() { $('input[id$=from_date]').datepicker({ dateFormat :
+	'dd-mm-yy' }); $('input[id$=to_date]').datepicker({ dateFormat :
+	'dd-mm-yy' }); });
 	</script>
 
 	<script type="text/javascript">

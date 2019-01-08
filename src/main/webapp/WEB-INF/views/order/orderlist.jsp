@@ -283,7 +283,8 @@
 											<c:forEach items="${getOrdList}" var="enq" varStatus="count">
 												<tr>
 													<td><input type="checkbox" class="chk"
-														name="selectOrderToDelete" id="orderIds${count.index+1}"
+														name="selectOrderToDelete"
+														id="selectOrderToDelete${count.index+1}"
 														value="${enq.orderId}" /></td>
 													<td style="text-align: center">${count.index+1}</td>
 
@@ -327,8 +328,8 @@
 
 													<td><a
 														href="${pageContext.request.contextPath}/editOrder/${enq.orderId}"><i
-															class="fa fa-edit" style="color:black" title="Edit"></i> <span
-															class="text-muted"></span></a></td>
+															class="fa fa-edit" style="color: black" title="Edit"></i>
+															<span class="text-muted"></span></a></td>
 
 												</tr>
 											</c:forEach>
@@ -337,28 +338,28 @@
 
 
 									</table>
-									
-									
+
+
 									<div class="col-md-2"></div>
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();" disabled="disabled" id="expExcel"
-										style="align-content: center; width: 200px; margin-left: 80px;">
-										Export To Excel</button>
-								</div>
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" disabled="disabled" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
 
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="genPdf()" disabled="disabled" id="PDFButton"
-										style="align-content: center; width: 100px; margin-left: 80px;">
-										PDF</button>
-								</div>
-								&nbsp;
-										
+										<button type="button" class="btn btn-primary"
+											onclick="genPdf()" disabled="disabled" id="PDFButton"
+											style="align-content: center; width: 100px; margin-left: 80px;">
+											PDF</button>
+									</div>
+									&nbsp;
+
 								</div>
 
 								<input type="submit" class="btn btn-primary" value="Delete"
@@ -579,7 +580,6 @@
 								},
 
 								function(data) {
-									
 
 									document.getElementById("expExcel").disabled = false;
 									document.getElementById("PDFButton").disabled = false;
@@ -590,8 +590,6 @@
 										document.getElementById("PDFButton").disabled = true;
 
 									}
-
-									
 
 									//alert("Order Data " + JSON.stringify(data));
 
@@ -617,11 +615,7 @@
 																+ v.orderId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-																+ v.orderId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-trash" title="Delete"></i></a>'
+																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;'
 
 														chBox = '<input  type="checkbox" class="chk" name="selectOrderToDelete" id='+v.orderId+' class="check"  value='+v.orderId+'>'
 														/* if (v.status == 0) {
@@ -632,7 +626,9 @@
 														}
 														 */
 														//var chBox='<input type="checkbox" id="orderId" class="chk" name="quotIds" value='+v.orderId+'/>'
-														var deliveryDate=v.deliveryDate+'-'+v.exVar1;
+														var deliveryDate = v.deliveryDate
+																+ '-'
+																+ v.exVar1;
 														dataTable.row
 																.add(
 																		[
@@ -667,7 +663,7 @@
 		}
 	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");
@@ -678,19 +674,17 @@
 	<script type="text/javascript">
 		function genPdf() {
 			//alert("hiii");
-			
+
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-			var plantId= document.getElementById("plant_id").value;
-			var custId= document.getElementById("cust_name").value;
-			
+			var plantId = document.getElementById("plant_id").value;
+			var custId = document.getElementById("cust_name").value;
+
 			//alert("plant id is"+plantId);
 			//alert("cust id is"+custId); 
-			
-		
 
 			window.open('${pageContext.request.contextPath}/showOrderListPdf/'
-					+ fromDate + '/' + toDate  +'/' + custId + '/' + plantId );
+					+ fromDate + '/' + toDate + '/' + custId + '/' + plantId);
 			document.getElementById("expExcel").disabled = true;
 
 		}

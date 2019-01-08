@@ -9,11 +9,16 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+<c:url var="getPlantDashboardCount" value="/getPlantDashboardCount" />
 
 <link rel="apple-touch-icon" href="apple-icon.png">
 <link rel="shortcut icon"
 	href="${pageContext.request.contextPath}/resources/favicon.ico">
-
+<link rel="stylesheet"
+	href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<link
+	href="${pageContext.request.contextPath}/resources/assets/css/lib/vector-map/jqvmap.min.css"
+	rel="stylesheet">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/assets/css/normalize.css">
 <link rel="stylesheet"
@@ -143,7 +148,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.totalBillAmount}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalBillAmount">${dashPlantCount.totalBillAmount}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -167,7 +173,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.contrExpenses}</span>
+										<span class="count" style="font-size: 30px;"
+											id="contrExpenses">${dashPlantCount.contrExpenses}</span>
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
 										<font color="white">Contractor Expenses</font>
@@ -188,7 +195,7 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.vehExpenses}</span>
+										<span class="count" style="font-size: 30px;" id="vehExpenses">${dashPlantCount.vehExpenses}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -212,7 +219,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.paymentRecPaid}</span>
+										<span class="count" style="font-size: 30px;"
+											id="paymentRecPaid">${dashPlantCount.paymentRecPaid}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -238,7 +246,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.paymentRecOutstandingPending}</span>
+										<span class="count" style="font-size: 30px;"
+											id="paymentRecOutstandingPending">${dashPlantCount.paymentRecOutstandingPending}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -261,7 +270,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.otherExpTotal}</span>
+										<span class="count" style="font-size: 30px;"
+											id="otherExpTotal">${dashPlantCount.otherExpTotal}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -298,7 +308,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.totalBillAmtRubber}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalBillAmtRubber">${dashPlantCount.totalBillAmtRubber}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -322,7 +333,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.totalIssueExpenses}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalIssueExpenses">${dashPlantCount.totalIssueExpenses}</span>
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
 										<font color="white">Total Issue Expenses Rubber Mold</font>
@@ -343,7 +355,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.otherExpTotalRubber}</span>
+										<span class="count" style="font-size: 30px;"
+											id="otherExpTotalRubber">${dashPlantCount.otherExpTotalRubber}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -367,7 +380,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.paymentRecPaid}</span>
+										<span class="count" style="font-size: 30px;"
+											id="paymentRecPaid">${dashPlantCount.paymentRecPaid}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -393,7 +407,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.paymentRecOutstandingPending}</span>
+										<span class="count" style="font-size: 30px;"
+											id="paymentRecOutstandingPending">${dashPlantCount.paymentRecOutstandingPending}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -430,7 +445,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.totalBillAmtRmc}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalBillAmtRmc">${dashPlantCount.totalBillAmtRmc}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -453,7 +469,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.totalIssueExpRmc}</span>
+										<span class="count" style="font-size: 30px;"
+											id="totalIssueExpRmc">${dashPlantCount.totalIssueExpRmc}</span>
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
 										<font color="white">Total Issue Expenses</font>
@@ -474,7 +491,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.otherExpTotalRmc}</span>
+										<span class="count" style="font-size: 30px;"
+											id="otherExpTotalRmc">${dashPlantCount.otherExpTotalRmc}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -498,7 +516,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.paymentRecPaid}</span>
+										<span class="count" style="font-size: 30px;"
+											id="paymentRecPaid">${dashPlantCount.paymentRecPaid}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -524,7 +543,8 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;">${dashPlantCount.paymentRecOutstandingPending}</span>
+										<span class="count" style="font-size: 30px;"
+											id="paymentRecOutstandingPending">${dashPlantCount.paymentRecOutstandingPending}</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -592,32 +612,14 @@ background-color: transparent;
 		// onclick of submit to search order 
 		function showQuot() {
 
-		
-
-			var plantId = document.getElementById("plantId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
 
 			var valid = true;
 
-			var plantId = document.getElementById("plantId").value;
-
-			//alert("plantId" + plantId);
 			var valid = true;
-			if (plantId == null || plantId == "") {
-				valid = false;
-				alert("Please Select Plant");
-
-				var dataTable = $('#bootstrap-data-table').DataTable();
-				dataTable.clear().draw();
-
-			} else if (plantId < 0) {
-				valid = false;
-
-			}
-
-			else if (fromDate == null || fromDate == "") {
+			 if (fromDate == null || fromDate == "") {
 				valid = false;
 				alert("Please select from date");
 			}
@@ -635,10 +637,10 @@ background-color: transparent;
 
 				$
 						.getJSON(
-								'${getDashboardCount}',
+								'${getPlantDashboardCount}',
 								{
 
-									plantId : plantId,
+									
 									fromDate : fromDate,
 									toDate : toDate,
 									ajax : 'true',
@@ -646,21 +648,25 @@ background-color: transparent;
 								},
 
 								function(data) {
-									alert("hi");
+									//alert("hi");
 
-									document.getElementById("totalEnq").innerText = data.totalEnq;
-									document.getElementById("totalQuotPending").innerText = data.totalQuotPending;
-									document
-											.getElementById("totalQuotGenerated").innerText = data.totalQuotGenerated;
-									document.getElementById("totalPoPending").innerText = data.totalPoPending;
-									document.getElementById("totalOrderAmount").innerText = data.totalOrderAmount;
 									document.getElementById("totalBillAmount").innerText = data.totalBillAmount;
-									document.getElementById("totalTaxBillAmt").innerText = data.totalTaxBillAmt;
+									document.getElementById("contrExpenses").innerText = data.contrExpenses;
 									document
-											.getElementById("totalTaxableBillAmt").innerText = data.totalTaxableBillAmt;
-									document.getElementById("paymentRecPaid").innerText = data.paymentRecPaid;
+											.getElementById("vehExpenses").innerText = data.vehExpenses;
+									document.getElementById("totalBillAmtRubber").innerText = data.totalBillAmtRubber;
+									document.getElementById("totalIssueExpenses").innerText = data.totalIssueExpenses;
+									document.getElementById("totalBillAmtRmc").innerText = data.totalBillAmtRmc;
+									document.getElementById("totalIssueExpRmc").innerText = data.totalIssueExpRmc;
 									document
-											.getElementById("paymentRecOutstandingPending").innerText = data.paymentRecOutstandingPending;
+											.getElementById("paymentRecPaid").innerText = data.paymentRecPaid;
+									document.getElementById("paymentRecOutstandingPending").innerText = data.paymentRecOutstandingPending;
+									document
+											.getElementById("otherExpTotal").innerText = data.otherExpTotal;
+									document
+									.getElementById("otherExpTotalRubber").innerText = data.otherExpTotalRubber;
+									document
+									.getElementById("otherExpTotalRmc").innerText = data.otherExpTotalRmc;
 
 								});
 
@@ -668,6 +674,13 @@ background-color: transparent;
 
 		}
 	</script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+	<script>
+	
 	<script>
 		$(function() {
 			$('input[id$=from_date]').datepicker({

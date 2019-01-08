@@ -258,7 +258,8 @@
 										<c:forEach items="${getQuotList}" var="quot" varStatus="count">
 											<tr>
 												<td><input type="checkbox" class="chk"
-													name="quotHeadIds" id="quotHeadIds${count.index+1}"
+													name=selectQuatationToDelete
+													id="selectQuatationToDelete${count.index+1}"
 													value="${quot.quotHeadId}" /></td>
 												<td style="text-align: center">${count.index+1}</td>
 

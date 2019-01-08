@@ -135,8 +135,7 @@
 
 
 						</div>
-						<form
-							action="${pageContext.request.contextPath}/deleteRecordofQuotations"
+						<form action="${pageContext.request.contextPath}/deleteRecordofPO"
 							method="post">
 
 							<div class="card-body card-block">
@@ -282,11 +281,11 @@
 
 													<td><a
 														href="${pageContext.request.contextPath}/editPo/${poList.poId}"><i
-															class="fa fa-edit"  style="color:black" title="Edit"></i> <span
-															class="text-muted"></span></a> <a
+															class="fa fa-edit" style="color: black" title="Edit"></i>
+															<span class="text-muted"></span></a> <a
 														href="${pageContext.request.contextPath}/deletePurchaseOrder/${poList.poId}"
 														onClick="return confirm('Are you sure want to delete this record');"><i
-															class="fa fa-trash-o" style="color:black"  title="Delete"></i></a>
+															class="fa fa-trash-o" style="color: black" title="Delete"></i></a>
 												</tr>
 											</c:forEach>
 										</tbody>
@@ -468,7 +467,7 @@
 
 								function(data) {
 
-									alert("Order Data " + JSON.stringify(data));
+									//alert("Order Data " + JSON.stringify(data));
 
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();

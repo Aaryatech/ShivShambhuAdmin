@@ -412,4 +412,37 @@ public class PurchaseOrderController {
 		return getPoList;
 	}
 
+	@RequestMapping(value = "/deleteRecordofPO", method = RequestMethod.POST)
+	public String deleteRecordofPO(HttpServletRequest request, HttpServletResponse response) {
+		try {
+
+			String[] poIds = request.getParameterValues("poIds");
+			System.out.println("id are" + poIds);
+
+			StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < poIds.length; i++) {
+				sb = sb.append(poIds[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			System.err.println("quotIds" + items.toString());
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("poIds", items);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteMultiPO", map, Info.class);
+			System.err.println("inside method /deleteMultiPO");
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteRecordofPO @POController  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showPoListByStatus";
+	}
+
 }

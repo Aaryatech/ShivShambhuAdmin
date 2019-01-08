@@ -125,34 +125,6 @@ public class DashboardController {
 		return dashBoard;
 	}
 
-	/*
-	 * @RequestMapping(value = "/showDashEnqBetDate", method = RequestMethod.GET)
-	 * public ModelAndView showDashEnqBetDate(HttpServletRequest request,
-	 * HttpServletResponse response) {
-	 * 
-	 * ModelAndView model = null; try {
-	 * 
-	 * model = new ModelAndView("dashboard/enqbetdate");
-	 * 
-	 * model.addObject("title", "Enquiry List Between Date");
-	 * 
-	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
-	 * Object>();
-	 * 
-	 * map.add("statusList", "0,1"); Plant[] plantArray =
-	 * rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
-	 * plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
-	 * 
-	 * System.out.println("plant is" + plantList);
-	 * 
-	 * model.addObject("plantList", plantList);
-	 * 
-	 * } catch (Exception e) { System.err.println("Exce in /showQ" +
-	 * e.getMessage()); e.printStackTrace(); } return model;
-	 * 
-	 * }
-	 */
-
 	List<GetEnqHeader> getEnqList = new ArrayList<>();
 	List<GetQuotHeader> getQuotList = new ArrayList<>();
 	List<GetPoHeader> getPoList = new ArrayList<>();
@@ -595,5 +567,4 @@ public class DashboardController {
 		return dashPlant;
 	}
 
-	
 }
