@@ -267,7 +267,7 @@
 													value="${orderDet.remOrdQty}" /></td>
 													
 													
-											<td style="text-align: center;"><%-- <a href="#" class="action_btn" onclick="callEdit(${orderDet.orderId})"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; --%><a href="#" class="action_btn" onclick="callChalanPage(${orderDet.orderDetId},${orderDet.orderId},${count.index})"><i class="fa fa-list"   title="Chalan"></i></a></td>
+											<td style="text-align: center;"><%-- <a href="#" class="action_btn" onclick="callEdit(${orderDet.orderId})"><i class="fa fa-edit"   title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; --%><a href="#" class="action_btn" onclick="callChalanPage(${orderDet.orderDetId},${orderDet.orderId},${count.index})"><i class="fa fa-list" style="color: black"   title="Chalan"></i></a></td>
 													
 										
 										</tr>

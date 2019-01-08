@@ -96,11 +96,10 @@
 							<div class="col-md-5"></div>
 
 						</div>
-						<form
-							action="${pageContext.request.contextPath}/deleteRecordofPayRec"
-							method="post">
-
+						
 							<div class="card-body card-block">
+							
+							
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -169,18 +168,12 @@
  -->
 
 
-
-
-
-
-
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th class="check" style="text-align: center; width: 5%;"><input
-													type="checkbox" name="selAll" id="selAll" /></th>
+												
 												<th style="text-align: center; width: 5%;">Sr.</th>
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Bill No</th>
@@ -199,10 +192,10 @@
 										<tbody>
 											<c:forEach items="${recList}" var="rec" varStatus="count">
 												<tr>
-													<td><input type="checkbox" class="chk"
+													<%-- <td><input type="checkbox" class="chk"
 														name="payHeadIds" id="payHeadIds${count.index+1}"
 														value="${rec.payHeadId}" /></td>
-
+ --%>
 													<td style="text-align: center">${count.index+1}</td>
 
 													<td style="text-align: left"><c:out
@@ -282,13 +275,10 @@
 
 								</div>
 
-								<input type="submit" class="btn btn-primary" value="Delete"
-									id="deleteId"
-									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
-									style="align-content: center; width: 113px; margin-left: 40px;">
+								
 							</div>
 
-						</form>
+						
 					</div>
 				</div>
 
@@ -433,12 +423,11 @@
 																+ i
 																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 
-														chBox = '<input  type="checkbox" class="chk" name="payHeadIds" id='+v.payHeadId+' class="check"  value='+v.payHeadId+'>'
 
 														dataTable.row
 																.add(
 																		[
-																				chBox,
+																				
 																				i + 1,
 																				v.custName,
 																				v.billNo,
@@ -518,12 +507,11 @@
 																+ i
 																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 
-														chBox = '<input  type="checkbox" class="chk" name="payHeadIds" id='+v.payHeadId+' class="check"  value='+v.payHeadId+'>'
 
 														dataTable.row
 																.add(
 																		[
-																				chBox,
+																				
 																				i + 1,
 																				v.custName,
 																				v.billNo,

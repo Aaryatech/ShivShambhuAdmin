@@ -786,6 +786,8 @@ public class PayRecController {
 	@RequestMapping(value = "/deleteRecordofPayRec", method = RequestMethod.POST)
 	public String deleteRecordofPayRec(HttpServletRequest request, HttpServletResponse response) {
 		try {
+			System.out.println("Delete multi........................ " );
+
 
 			String[] payHeadIds = request.getParameterValues("payHeadIds");
 
@@ -888,7 +890,8 @@ public class PayRecController {
 
 				editRec.getPayRecoveryDetailList().get(index).setTxNo(txNo);
 				editRec.getPayRecoveryDetailList().get(index).setTypeTx(typeTx);
-				editRec.getPayRecoveryDetailList().get(index).setPaymentDate(DateConvertor.convertToDMY(paymentDate));
+				System.out.println("IsDelete dateeee" + paymentDate);
+				editRec.getPayRecoveryDetailList().get(index).setPaymentDate((paymentDate));
 				editRec.getPayRecoveryDetailList().get(index).setPaidAmt(paidAmt);
 
 			}

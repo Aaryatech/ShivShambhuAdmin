@@ -107,6 +107,7 @@ public class RmcController {
 			}
 			map.add("plantId", plantId);
 			model = new ModelAndView("rmc/show_rmc_ord");
+			model.addObject("title","RMC Order List");
 			GetRmcOrders[] rmcOrArray = rest.postForObject(Constants.url + "/getRmcOrdList", map, GetRmcOrders[].class);
 
 			rmcOrdList = new ArrayList<GetRmcOrders>(Arrays.asList(rmcOrArray));

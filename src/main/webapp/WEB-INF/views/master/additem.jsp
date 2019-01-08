@@ -386,9 +386,12 @@
 			var max_stock= document.getElementById("pmax_stock").value;
 			/* alert( "min stk is"+min_stock);
 			alert( "max stk is"+max_stock); */
+			var len= max_stock.length;
+			  
+			
 			var valid = true;
 			
-
+			if(len!=0){
 			if (  min_stock > max_stock  ) {
 
 				valid = false;
@@ -400,6 +403,7 @@
 				document.getElementById("pmin_stock").value="";
 				document.getElementById("pmax_stock").value="";
 			}
+		}
 
 		}
 	</script>

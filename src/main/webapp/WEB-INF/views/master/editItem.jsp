@@ -239,33 +239,47 @@
 
 
 								<div class="form-group"></div>
+								
+								
+								
 								<div class="row">
 
-									<div class="col-md-2">Plant Min Stock</div>
+									<div class="col-md-2">Plant Min Stock*</div>
 
 									<div class="col-md-2">
 										<input type="text" id="pmin_stock" name="pmin_stock"
-											value="${editItem.plantMinStock}" class="form-control"
-											style="width: 100%;">
+											autocomplete="off" pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											onchange="checkstock() " value="${editItem.plantMinStock}"
+											onkeypress="return allowOnlyNumber(event);"
+											oninvalid="setCustomValidity('Please enter plan min stock')"
+											class="form-control" style="width: 100%;">
 									</div>
 									<div class="col-md-2">Plant Max Stock*</div>
 
 									<div class="col-md-2">
 										<input type="text" id="pmax_stock" name="pmax_stock"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter plan max stock')"
 											onchange="checkstock() " value="${editItem.plantMaxStock}"
-											onchange="checkstock() "
-											class="form-control" style="width: 100%;">
+											onkeypress="return allowOnlyNumber(event);"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											class="form-control" style="width: 100%;" required>
 									</div>
 									<div class="col-md-2">Plant ROL Stock*</div>
 
 									<div class="col-md-2">
 										<input type="text" id="prol_stock" name="prol_stock"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter prol stock')"
+											onkeypress="return allowOnlyNumber(event);" value="${editItem.plantRolStock}"
 											onchange="checkstockvalue()"
-											value="${editItem.plantRolStock}" class="form-control"
-											style="width: 100%;">
+											onchange="try{setCustomValidity('')}catch(e){}"
+											class="form-control" style="width: 100%;" required>
 									</div>
 
 								</div>
+
+
 								<div class="form-group"></div>
 								<div class="row">
 
@@ -407,26 +421,55 @@
 	<script>
 		function checkstock() {
 
-			var min_stock = document.getElementById("pmin_stock").value;
-			var max_stock = document.getElementById("pmax_stock").value;
+			var min_stock= document.getElementById("pmin_stock").value;
+			var max_stock= document.getElementById("pmax_stock").value;
 			/* alert( "min stk is"+min_stock);
 			alert( "max stk is"+max_stock); */
+			var len= max_stock.length;
+			  
+			
 			var valid = true;
-
-			if (min_stock > max_stock) {
+			
+			if(len!=0){
+			if (  min_stock > max_stock  ) {
 
 				valid = false;
-			}
+			} 
 
 			if (valid == false) {
-
+				
 				alert("Enter Minimum Stock less than Maximum ");
-				document.getElementById("pmin_stock").value = "";
-				document.getElementById("pmax_stock").value = "";
+				document.getElementById("pmin_stock").value="";
+				document.getElementById("pmax_stock").value="";
 			}
+		}
 
 		}
 	</script>
+<script>
+		
+		function allowOnlyNumber(evt){
+		    var charCode = (evt.which) ? evt.which : event.keyCode
+		    if (charCode == 46){
+		        var inputValue = $("#floor").val();
+		        var count = (inputValue.match(/'.'/g) || []).length;
+		        
+		        if(count<1){
+		            if (inputValue.indexOf('.') < 1){
+		                return true;
+		            }
+		            return false;
+		        }else{
+		            return false;
+		        }
+		    }
+		    if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57)){
+		        return false;
+		    }
+		    return true;
+		}
+	</script>
+
 
 
 </body>
