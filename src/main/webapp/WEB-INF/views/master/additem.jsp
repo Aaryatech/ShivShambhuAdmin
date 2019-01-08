@@ -213,6 +213,7 @@
 									<div class="col-md-2">
 										<input type="text" id="pmin_stock" name="pmin_stock"
 											autocomplete="off" pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											onchange="checkstock() "
 											onkeypress="return allowOnlyNumber(event);"
 											oninvalid="setCustomValidity('Please enter plan min stock')"
 											class="form-control" style="width: 100%;">
@@ -386,6 +387,7 @@
 			/* alert( "min stk is"+min_stock);
 			alert( "max stk is"+max_stock); */
 			var valid = true;
+			
 
 			if (  min_stock > max_stock  ) {
 

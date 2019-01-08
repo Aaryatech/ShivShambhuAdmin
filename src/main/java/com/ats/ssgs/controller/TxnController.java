@@ -440,6 +440,119 @@ public class TxnController {
 
 	}
 
+	@RequestMapping(value = "/insertPendingPoklenReading", method = RequestMethod.POST)
+	public String insertPendingPoklenReading(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			System.err.println("Inside insertPoklenReading method");
+
+			int readingId = 0;
+			try {
+				readingId = Integer.parseInt(request.getParameter("readingId"));
+			} catch (Exception e) {
+				readingId = 0;
+			}
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			String curDate = dateFormat.format(new Date());
+			int poklenId = Integer.parseInt(request.getParameter("poklenId"));
+
+			int pokeType = Integer.parseInt(request.getParameter("pokeType"));
+
+			int sType = Integer.parseInt(request.getParameter("sType"));
+
+			float startReading = Float.parseFloat(request.getParameter("startReading"));
+			// float endReading = Float.parseFloat(request.getParameter("endReading"));
+
+			String startDate = request.getParameter("start_date");
+
+			// String endDate = request.getParameter("end_date");
+			String startTime = request.getParameter("startTime");
+			// String endTime = request.getParameter("endTime");
+
+			PoklenReading pReading = new PoklenReading();
+
+			pReading.setDelStatus(1);
+
+			pReading.setExBool1(1);
+			pReading.setExDate1(curDate);
+
+			pReading.setExInt2(1);
+			pReading.setPoklenId(poklenId);
+
+			pReading.setExVar1("NA");
+			pReading.setExVar2("NA");
+			pReading.setStartTime(startTime);
+			pReading.setStartReading(startReading);
+			pReading.setStartDate(DateConvertor.convertToYMD(startDate));
+			pReading.setShiftType(sType);
+			pReading.setPokType(pokeType);
+			pReading.setReadingId(readingId);
+
+			System.out.println("curDate123456===============" + curDate);
+			System.out.println("curDate===============" + curDate);
+
+			try {
+
+				String end_date = request.getParameter("end_date");
+				System.out.println("end_date" + end_date);
+				if (!end_date.isEmpty()) {
+					pReading.setEndDate(DateConvertor.convertToYMD(end_date));
+				} else {
+					pReading.setEndDate(curDate);
+				}
+
+			} catch (Exception e) {
+				pReading.setEndDate(curDate);
+
+			}
+			try {
+				pReading.setEndReading(Float.parseFloat(request.getParameter("endReading")));
+
+			} catch (Exception e) {
+				pReading.setEndReading(0);
+
+			}
+
+			try {
+				pReading.setEndTime(request.getParameter("endTime"));
+
+			} catch (Exception e) {
+				pReading.setEndTime("00:00:00");
+			}
+
+			/*if (readingId != 0) {
+				pReading.setExInt1(2);
+			} else {*/
+			
+			
+				pReading.setExInt1(1);
+			
+
+			PoklenReading prInsertRes = rest.postForObject(Constants.url + "savePoklenReading", pReading,
+					PoklenReading.class);
+			if (prInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
+			}
+
+			System.err.println("plantInsertRes " + prInsertRes.toString());
+
+		} catch (
+
+		Exception e) {
+			System.err.println("EXCE in weighInsertRes " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return "redirect:/showAddPReading";
+
+	}
+	
+	
+	
 	@RequestMapping(value = "/insertPoklenReading", method = RequestMethod.POST)
 	public String insertPoklenReading(HttpServletRequest request, HttpServletResponse response) {
 
@@ -522,11 +635,123 @@ public class TxnController {
 				pReading.setEndTime("00:00:00");
 			}
 
-			if (readingId != 0) {
+			/*if (readingId != 0) {
 				pReading.setExInt1(2);
-			} else {
+			} else {*/
+			
+			
 				pReading.setExInt1(1);
+			
+
+			PoklenReading prInsertRes = rest.postForObject(Constants.url + "savePoklenReading", pReading,
+					PoklenReading.class);
+			if (prInsertRes != null) {
+				isError = 2;
+			} else {
+				isError = 1;
 			}
+
+			System.err.println("plantInsertRes " + prInsertRes.toString());
+
+		} catch (
+
+		Exception e) {
+			System.err.println("EXCE in weighInsertRes " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		return "redirect:/showAddPReading";
+
+	}
+	
+	
+	
+	@RequestMapping(value = "/endPoklenReading", method = RequestMethod.POST)
+	public String endPoklenReading(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			System.err.println("Inside endPoklenReading method");
+
+			int readingId = 0;
+			try {
+				readingId = Integer.parseInt(request.getParameter("readingId"));
+			} catch (Exception e) {
+				readingId = 0;
+			}
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			String curDate = dateFormat.format(new Date());
+			int poklenId = Integer.parseInt(request.getParameter("poklenId"));
+
+			int pokeType = Integer.parseInt(request.getParameter("pokeType"));
+
+			int sType = Integer.parseInt(request.getParameter("sType"));
+
+			float startReading = Float.parseFloat(request.getParameter("startReading"));
+			// float endReading = Float.parseFloat(request.getParameter("endReading"));
+
+			String startDate = request.getParameter("start_date");
+
+			// String endDate = request.getParameter("end_date");
+			String startTime = request.getParameter("startTime");
+			// String endTime = request.getParameter("endTime");
+
+			PoklenReading pReading = new PoklenReading();
+
+			pReading.setDelStatus(1);
+
+			pReading.setExBool1(1);
+			pReading.setExDate1(curDate);
+
+			pReading.setExInt2(1);
+			pReading.setPoklenId(poklenId);
+
+			pReading.setExVar1("NA");
+			pReading.setExVar2("NA");
+			pReading.setStartTime(startTime);
+			pReading.setStartReading(startReading);
+			pReading.setStartDate(DateConvertor.convertToYMD(startDate));
+			pReading.setShiftType(sType);
+			pReading.setPokType(pokeType);
+			pReading.setReadingId(readingId);
+
+			System.out.println("curDate123456===============" + curDate);
+			System.out.println("curDate===============" + curDate);
+
+			try {
+
+				String end_date = request.getParameter("end_date");
+				System.out.println("end_date" + end_date);
+				if (!end_date.isEmpty()) {
+					pReading.setEndDate(DateConvertor.convertToYMD(end_date));
+				} else {
+					pReading.setEndDate(curDate);
+				}
+
+			} catch (Exception e) {
+				pReading.setEndDate(curDate);
+
+			}
+			try {
+				pReading.setEndReading(Float.parseFloat(request.getParameter("endReading")));
+
+			} catch (Exception e) {
+				pReading.setEndReading(0);
+
+			}
+
+			try {
+				pReading.setEndTime(request.getParameter("endTime"));
+
+			} catch (Exception e) {
+				pReading.setEndTime("00:00:00");
+			}
+
+				pReading.setExInt1(2);
+			
+				
+		
 
 			PoklenReading prInsertRes = rest.postForObject(Constants.url + "savePoklenReading", pReading,
 					PoklenReading.class);
@@ -988,9 +1213,9 @@ public class TxnController {
 		return "redirect:/showPoklenReadingList";
 	}
 
-	@RequestMapping(value = "/editPReading/{readingId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/editPReading/{readingId}/{flag}", method = RequestMethod.GET)
 	public ModelAndView editPReading(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable int readingId) {
+			@PathVariable int readingId,@PathVariable int flag) {
 
 		ModelAndView model = null;
 		try {
@@ -1006,6 +1231,118 @@ public class TxnController {
 			vehPoklenList = new ArrayList<Vehicle>(Arrays.asList(vehPoklenArray));
 
 			model.addObject("vehPoklenList", vehPoklenList);
+			
+			model.addObject("flag",flag);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("readingId", readingId);
+
+			PoklenReading editPRead = rest.postForObject(Constants.url + "getPoklenReadingById", map,
+					PoklenReading.class);
+
+			model.addObject("editPRead", editPRead);
+
+			if (editPRead.getExInt1() == 1) {
+				model.addObject("endDate", "-");
+				model.addObject("endReading", "-");
+				model.addObject("endTime", "-");
+			} else {
+
+				model.addObject("endDate", editPRead.getEndDate());
+				model.addObject("endReading", editPRead.getEndReading());
+				model.addObject("endTime", editPRead.getEndTime());
+
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editPRead at txn Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	
+	
+	@RequestMapping(value = "/editPReading1/{readingId}/{flag}", method = RequestMethod.GET)
+	public ModelAndView editPReading1(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int readingId,@PathVariable int flag) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("matissue/editPendingPokReading");
+			model.addObject("title", "Edit Poklen Reading");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("vehicleType", 3);
+
+			Vehicle[] vehPoklenArray = rest.postForObject(Constants.url + "getVehListByVehicleType", map,
+					Vehicle[].class);
+			vehPoklenList = new ArrayList<Vehicle>(Arrays.asList(vehPoklenArray));
+
+			model.addObject("vehPoklenList", vehPoklenList);
+			
+			model.addObject("flag",flag);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("readingId", readingId);
+
+			PoklenReading editPRead = rest.postForObject(Constants.url + "getPoklenReadingById", map,
+					PoklenReading.class);
+
+			model.addObject("editPRead", editPRead);
+
+			if (editPRead.getExInt1() == 1) {
+				model.addObject("endDate", "-");
+				model.addObject("endReading", "-");
+				model.addObject("endTime", "-");
+			} else {
+
+				model.addObject("endDate", editPRead.getEndDate());
+				model.addObject("endReading", editPRead.getEndReading());
+				model.addObject("endTime", editPRead.getEndTime());
+
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("exception In editPRead at txn Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	
+	
+	@RequestMapping(value = "/endPReading/{readingId}/{flag}", method = RequestMethod.GET)
+	public ModelAndView endPReading(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int readingId,@PathVariable int flag) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("matissue/endPoklen");
+			model.addObject("title", "End Poklen Reading");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("vehicleType", 3);
+
+			Vehicle[] vehPoklenArray = rest.postForObject(Constants.url + "getVehListByVehicleType", map,
+					Vehicle[].class);
+			vehPoklenList = new ArrayList<Vehicle>(Arrays.asList(vehPoklenArray));
+
+			model.addObject("vehPoklenList", vehPoklenList);
+			
+			model.addObject("flag",flag);
 
 			map = new LinkedMultiValueMap<String, Object>();
 

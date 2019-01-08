@@ -353,7 +353,7 @@
 													data,
 													function(i, v) {
 														var chBox;
-
+				                                        var flag;
 														var pokType1;
 														if (v.pokType == 0) {
 															pokType1 = "Breaking";
@@ -371,8 +371,10 @@
 														var status;
 														if (v.exInt1 == 1) {
 															status= "Pending";
+															flag=1;
 														} else if(v.exInt1 == 2) {
 															status= "Completed";
+															flag=2;
 														}
 														
 														if(v.exInt1 == 2){
@@ -380,20 +382,24 @@
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.readingId
 																+ ','
+																+flag
+																+','
 																+ i
 																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 														}
 														else if(v.exInt1 == 1){
 															
-															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+															var acButton = '<a href="#" class="action_btn" onclick="callClose('
+																+ v.readingId
+																+ ','
+																+flag
+																+','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-close"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit1('
 																+ v.readingId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-																+ v.readingId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-close"></i></a>'
+																+ ')" style="color:black"><i class="fa fa-edit"></i></a>'
 															
 															
 														}
@@ -424,10 +430,22 @@
 
 		}
 
-		function callEdit(readingId) {
+		function callEdit(readingId,flag) {
 
 			window.open("${pageContext.request.contextPath}/editPReading/"
-					+ readingId);
+					+ readingId + '/' + flag );
+
+		}
+		function callEdit1(readingId,flag) {
+
+			window.open("${pageContext.request.contextPath}/editPReading1/"
+					+ readingId + '/' + flag );
+
+		}
+		function callClose(readingId,flag) {
+
+			window.open("${pageContext.request.contextPath}/endPReading/"
+					+ readingId + '/' + flag );
 
 		}
 	</script>

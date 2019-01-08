@@ -97,6 +97,20 @@ public class PurchaseOrderController {
 			System.out.println("short name  " + shortName);
 
 			model.addObject("shortName", shortName);
+			
+			int a=doc.getSrNo();
+			if(String.valueOf(a).length()==1) {
+				var="0000".concat(String.valueOf(a));
+				
+			}else if(String.valueOf(a).length()==2) {
+				var="000".concat(String.valueOf(a));
+				
+			}else if(String.valueOf(a).length()==3){
+				var="00".concat(String.valueOf(a));
+				
+			}
+			System.out.println("doc data is" + doc);
+			model.addObject("var", var);
 
 		} catch (Exception e) {
 

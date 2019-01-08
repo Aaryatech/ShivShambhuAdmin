@@ -273,7 +273,7 @@
 									<div class="col-md-4">
 										<input type="text" id="startReading" name="startReading"
 											class="form-control" autocomplete="off" style="width: 100%;"
-											value="${editPRead.startReading}"
+											value="${editPRead.startReading}"  onchange="checkReading()"
 											oninvalid="setCustomValidity('Please enter correct reading')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
@@ -326,7 +326,7 @@
 									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
-								</div>
+								</div> 
 							</form>
 						</div>
 					</div>

@@ -253,6 +253,7 @@
 									<div class="col-md-2">
 										<input type="text" id="pmax_stock" name="pmax_stock"
 											onchange="checkstock() " value="${editItem.plantMaxStock}"
+											onchange="checkstock() "
 											class="form-control" style="width: 100%;">
 									</div>
 									<div class="col-md-2">Plant ROL Stock*</div>
