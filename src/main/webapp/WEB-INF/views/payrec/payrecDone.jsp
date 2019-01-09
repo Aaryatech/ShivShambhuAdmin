@@ -481,9 +481,9 @@
 																				v.custName,
 																				v.billNo,
 																				v.billDate,
-																				v.billTotal,
-																				v.paidAmt,
-																				v.pendingAmt,
+																				v.billTotal.toFixed(2),
+																				v.paidAmt.toFixed(2),
+																				v.pendingAmt.toFixed(2),
 																				acButton ])
 																.draw();
 													});

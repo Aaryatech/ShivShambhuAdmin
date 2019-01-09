@@ -522,7 +522,7 @@
 													dataTable.row.add(
 															[ i + 1,
 																v.paymentDate,
-																v.paidAmt,
+																v.paidAmt.toFixed(2),
 																	str ])
 															.draw();
 												});

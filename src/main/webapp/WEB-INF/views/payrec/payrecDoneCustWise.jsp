@@ -466,9 +466,9 @@
 																					i + 1,
 																					v.custName,
 																					v.custMobNo,
-																					v.billTotal,
-																					v.paidAmt,
-																					v.pendingAmt,
+																					v.billTotal.toFixed(2),
+																					v.paidAmt.toFixed(2),
+																					v.pendingAmt.toFixed(2),
 																					acButton ])
 																	.draw();
 														});
@@ -486,7 +486,7 @@
 
 function callDateDetail(custId) {
 
-	alert("hello..");
+	//alert("hello..");
 	var fromDate = document.getElementById("from_date").value;
 	var toDate = document.getElementById("to_date").value;
 

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!doctype html>
 <html class="no-js" lang="">
 
@@ -218,15 +220,20 @@
 															value="${rec.creditDate2}" /></td>
 
 
-													<td style="text-align: left"><c:out
-															value="${rec.billTotal}" /></td>
+													<td style="text-align: left">
+													
+													<fmt:formatNumber type = "number" 
+         maxFractionDigits = "2" value="${rec.billTotal}" /></td>
 
 
-													<td style="text-align: left"><c:out
-															value="${rec.paidAmt}" /></td>
+													<td style="text-align: left">
+													<fmt:formatNumber type = "number" 
+         maxFractionDigits = "2" value="${rec.paidAmt}" /></td>
 
-													<td style="text-align: left"><c:out
-															value="${rec.pendingAmt}" /></td>
+													<td style="text-align: left">
+												<fmt:formatNumber type = "number" 
+         maxFractionDigits = "2" value="${rec.pendingAmt}" /></td>	
+													
 
 
 													<td style="text-align: left"><c:choose>
@@ -432,11 +439,11 @@
 																				v.custName,
 																				v.billNo,
 																				v.billDate,
-																				v.billTotal,
+																				v.billTotal.toFixed(2),
 																				v.creditDate1,
 																				v.creditDate2,
-																				v.paidAmt,
-																				v.pendingAmt,
+																				v.paidAmt.toFixed(2),
+																				v.pendingAmt.toFixed(2),
 																				status1,
 																				acButton ])
 																.draw();
@@ -516,12 +523,11 @@
 																				v.custName,
 																				v.billNo,
 																				v.billDate,
-																				
 																				v.creditDate1,
 																				v.creditDate2,
-																				v.billTotal,
-																				v.paidAmt,
-																				v.pendingAmt,
+																				v.billTotal.toFixed(2),
+																				v.paidAmt.toFixed(2),
+																				v.pendingAmt.toFixed(2),
 																				status1,
 																				acButton ])
 																.draw();
