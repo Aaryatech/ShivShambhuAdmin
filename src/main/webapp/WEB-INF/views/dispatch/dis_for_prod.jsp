@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+
 <!doctype html>
 <html class="no-js" lang="">
 
@@ -234,6 +236,7 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.colVis.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables-init.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment-with-locales.min.js"></script>
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
@@ -279,42 +282,48 @@
 		}
 		function searchItem() {
 			
-			 
-		
+		/* 	var date = "03-11-2014";
+			var newdate1 = date.split("-").reverse().join("-"); */
+			//alert("result:"+newdate1);
 			
+            var dat1 = document.getElementById('from_date').value;
+			  var dat2 = document.getElementById('to_date').value;
+			  
+          //  alert("old date:"+dat1);
+            
+            var newdate1 = dat1.split("-").reverse().join("-");
+            var newdate2 = dat2.split("-").reverse().join("-");
+            
+            //alert("new date:"+newdate1);
+          //  alert("new date:"+newdate2);
+            
+             var start = moment(newdate1);
+            
+            var end = moment(newdate2);
+          
+           var n=end.diff(start, "days");
+          // alert(n);
+           
+			var isValid = validate();
+
+		if(n>5){
+			isValid=false;
+			alert("Please Select From Date And To Date within 5 Days");
+		}
+			
+		 
+         
 		
 			  $('#table1 td').remove();
 			$('#table1 th').remove();
-			var isValid = validate();
 
 			if (isValid) {
 				$('#loader').show();
 				var plantId = $("#plant_id").val();
 				var startDate = reformatDateString($("#from_date").val());
 				var endDate=reformatDateString($("#to_date").val());
-				/* 
-				var fromDate = $("#from_date").val();
-				var toDate = $("#to_date").val();
-				var d1 = fromDate.split("-");
-				var d2 = toDate.split("-");
-				d1 = d1[2].concat(d1[1], d1[0]);
-				d2 = d2[2].concat(d2[1], d2[0]);
-				var x= parseInt(d2)-parseInt(d1);
-				alert("x= "+x);
-				  if (x>5) {
-						isValid = false;
-					    alert("Select Date Properly!!");
-					}  */
 				
-					
-					
-					// var dat1 = document.getElementById('from_date').value;
-					/* var date1 = new Date(document.getElementById('from_date').value);
-					var date2 = new Date(document.getElementById('to_date').value);
-					var diffDays = date2.getDate() - date1.getDate(); 
-					alert("diff is"+diffDays)
-	                 */
-	                
+	                 
 	                
 				var listDate = [];
 				
@@ -330,13 +339,6 @@
 				    dateMove.setDate(dateMove.getDate()+1);
 				};
 			 
-				/* if((strDate - endDate)<=5){
-					alert("Hi 5 ");
-				}else{
-					alert("hi else 5");
-				}
-				 */
-		      
 				$.getJSON('${getItemList}',{
 					
 					                plantId : plantId,
