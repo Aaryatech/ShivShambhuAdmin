@@ -1209,8 +1209,11 @@ calcAll();
 					 var transCost=frRate * km;
 					 //alert("tollCost "+tollCost);
 					transCost=parseFloat(transCost)+parseFloat(tollCost);
-					//alert("transCost "+transCost);
+					//alert("data[i].itemRate1 "+data[i].itemRate1);
 					 var itemRate=parseFloat(data[i].itemRate1);
+					 
+						document.getElementById("itemRate"+data[i].itemId).value = data[i].itemRate1;
+
 					 var royRate=parseFloat(data[i].royaltyRate);
 					 var taxPer=parseFloat(data[i].totalTaxPer);
 						 var isTaxInc = $("input[name=is_tax_inc]:checked").val()
@@ -1228,7 +1231,7 @@ calcAll();
 						 otherCost=0;
 					 }
 					 
-					 var taxableAmt=parseFloat(itemRate)+parseFloat(tollCost)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
+					 var taxableAmt=parseFloat(itemRate)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
 					//alert("taxabelAmt " +taxableAmt); 
 					 document.getElementById("taxable_amt"+data[i].itemId).value=taxableAmt;
 
@@ -1262,17 +1265,18 @@ calcAll();
 	//var tollCost =document.getElementById("toll_cost"+itemId).value;
 	var transCost =document.getElementById("trans_cost"+itemId).value;
 	var otherCost= document.getElementById("other_cost"+itemId).value;
-	transCost=transCost+tollCost;
+	//transCost=parseFloat(transCost)+parseFloat(tollCost);
+	//alert("Trans Cost " +transCost);
 	var valid=true;
 	 if(otherCost<0){
 		 valid=false;
 		 alert("Please enter valid other cost");
 	 }
-	 else if(tollCost<0){
+	/*  else if(tollCost<0){
 		 valid=false;
 		 alert("Please enter valid toll cost");
 
-	 }
+	 } */
 	 else if(transCost<0){
 	 valid=false;
 	 alert("Please enter valid transport cost");
@@ -1287,17 +1291,13 @@ calcAll();
 		 otherCost=0;
 	 }
 	 
-	 if(tollCost==null || tollCost==""){
-		 tollCost=0;
-	 }
-	 
 	 if(transCost==null || transCost==""){
 		 transCost=0;
 	 }
 	 
 	 if(valid==true){
 
-	 var taxableAmt=parseFloat(itemRate)+parseFloat(tollCost)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
+	 var taxableAmt=parseFloat(itemRate)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
 		//alert("is valid =true1");
 
 	 taxableAmt=taxableAmt.toFixed(2);
@@ -1318,14 +1318,14 @@ calcAll();
 
 	document.getElementById("itemRate"+itemId).value = itemRate;
 	 var rate=document.getElementById("itemRate"+itemId).value;
-	// alert("new "+rate);
+	//alert("new "+rate);
 		//var itemRateDiv = '<input  type="text"   class="form-control" value='+v.itemRate1+'  id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'"/>'
 
-	 alert(taxAmt);
+	 //alert(taxAmt);
 	 var finalAmt=parseFloat(taxableAmt)+parseFloat(taxAmt)+parseFloat(otherCostAfterTax);
 	 finalAmt=finalAmt.toFixed(2);
-	// alert(finalAmt);
-	 document.getElementById("final_amt"+itemId).value=finalAmt;
+	//alert(finalAmt);
+	 document.getElementById("final_amt"+itemId).value=finalAmt
 	// alert("End ")
 	 }
 }
@@ -1416,7 +1416,8 @@ function submitAmt(){
 				var modal = document.getElementById('itemDetailModal');
 				modal.style="display:none";
 				//alert(data.itemRate1);
-				itemCalc(data.itemId,data.freightRate,data.itemRate1,data.royaltyRate,data.totalTaxPer)	;
+				//itemCalc(data.itemId,data.freightRate,data.itemRate1,data.royaltyRate,data.totalTaxPer)	;
+				 calcAll();
 	}); 
 		// alert("Hi");
 	}

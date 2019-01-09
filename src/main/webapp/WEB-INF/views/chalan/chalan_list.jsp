@@ -270,8 +270,8 @@
 												<th style="text-align: center">Vehicle No</th>
 												<th style="text-align: center">Driver Name</th>
 												
-<!-- 												<th style="text-align: center">Status</th>
- -->												<th style="text-align: center">Action</th>
+											<th style="text-align: center">Status</th>
+ 											<th style="text-align: center">Action</th>
 											</tr>
 										</thead>
 
@@ -506,9 +506,9 @@
 							dataTable.clear().draw();
 
 							$.each(data,function(i, v) {
-								
-								if(v.status==0){
-												
+								var status;
+								if(v.exFloat1==0){
+										status="Open";		
 										 var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 												+ v.chalanId
 												+ ','
@@ -529,12 +529,12 @@
 															
 															 chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
 								}else{
-									
+									status="Closed";	
 									var acButton = '<a href="#" class="action_btn" onclick="callEdit1('
 										+ v.chalanId
 										+ ','
 										+ i
-										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete1('
 													+ v.chalanId
 													+ ','
 													+ i
@@ -560,6 +560,7 @@
 																		v.projName,
 																		v.vehNo,
 																		v.driverName,
+																		status,
 																		acButton
 																		 ])
 														.draw();

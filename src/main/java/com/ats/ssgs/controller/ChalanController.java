@@ -1216,6 +1216,8 @@ public class ChalanController {
 
 				det.setChalanDetailId(chDetailList.get(i).getChalanDetailId());
 				det.setItemQty(itemQty);
+				
+				det.setItemQtyBeforeEdit(chDetailList.get(i).getItemQty());
 				det.setItemHeightPlant(pHeight);
 				det.setItemWidthPlant(pWidth);
 				det.setItemLengthPlant(pLength);
