@@ -279,26 +279,11 @@
 										<select id="chalan_id" name="chalan_id" class="standardSelect"
 											tabindex="1" multiple="multiple"
 											oninvalid="setCustomValidity('Please select Challan')">
-
-
-
 											<c:forEach items="${chalanHeadList}" var="chalanHead">
-												<c:forEach items="${editBill.challanId}" var="bill">
 
-													<c:choose>
-														<c:when test="${chalanHead.chalanId==bill}">
-															<option selected value="${chalanHead.chalanId}">${chalanHead.chalanNo}</option>
-														</c:when>
-														<c:otherwise>
-															<option value="${chalanHead.chalanId}">${chalanHead.chalanNo}</option>
-														</c:otherwise>
-													</c:choose>
-
-
-
-													<option value="${chalanHeadList.chalanId}" selected>${chalanHeadList.chalanNo}</option>
-												</c:forEach>
+												<option value="${chalanHead.chalanId}" selected>${chalanHead.chalanNo}</option>
 											</c:forEach>
+
 										</select>
 									</div>
 								</div>
@@ -376,7 +361,6 @@
 														id="chalanQty${count.index}${billDetail.itemId}"
 														name="chalanQty${count.index}${billDetail.itemId}"
 														oninput="calculation(${count.index},${billDetail.itemId})" />
-													
 													<td style="text-align: center"><p
 															id="taxableAmt${count.index}${billDetail.itemId}">
 															<c:out value="${billDetail.taxableAmt}" />

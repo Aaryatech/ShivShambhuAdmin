@@ -376,7 +376,7 @@ public class BillController {
 						System.err.println("orderId" + chalanIdList);
 					} else {
 						chalanIdList.put(billItems.get(i).getChalanId(), "");
-						System.err.println("orderId" + chalanIdList);
+						System.err.println("chalanIdList" + chalanIdList);
 
 					}
 					if (isTaxIncluding == 0) {
@@ -521,20 +521,20 @@ public class BillController {
 
 			billHeader.setBillDetailList(billDetailList);
 
-			BillHeader insertBillHeadRes = rest.postForObject(Constants.url + "saveBills", billHeader,
-					BillHeader.class);
-			billHeadId = insertBillHeadRes.getBillHeadId();
-			custId = insertBillHeadRes.getCustId();
-			pdfCustId = insertBillHeadRes.getCustId();
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("custId", insertBillHeadRes.getCustId());
-			Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
+			if (grandTotalAmt > 0) {
 
-			System.out.println("Send To Email Address" + editCust.getCustEmail());
+				BillHeader insertBillHeadRes = rest.postForObject(Constants.url + "saveBills", billHeader,
+						BillHeader.class);
+				billHeadId = insertBillHeadRes.getBillHeadId();
+				custId = insertBillHeadRes.getCustId();
+				pdfCustId = insertBillHeadRes.getCustId();
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("custId", insertBillHeadRes.getCustId());
+				Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
 
-			if (insertBillHeadRes != null) {
+				System.out.println("Send To Email Address" + editCust.getCustEmail());
 
-				if (grandTotalAmt != 0) {
+				if (insertBillHeadRes != null) {
 
 					PayRecoveryHead payRecoveryHead = new PayRecoveryHead();
 
@@ -589,29 +589,28 @@ public class BillController {
 					PayRecoveryHead insertHeadRes = rest.postForObject(Constants.url + "savePaymentRecoveryHeader",
 							payRecoveryHead, PayRecoveryHead.class);
 					System.out.println(insertHeadRes.toString());
+
+					map = new LinkedMultiValueMap<String, Object>();
+
+					map.add("srNo", doc.getSrNo() + 1);
+					map.add("docCode", doc.getDocCode());
+
+					Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+					System.out.println(chalanDetailList.toString());
+					map = new LinkedMultiValueMap<String, Object>();
+					String idList = chalanDetailList.toString();
+					String chList = idList.substring(1, idList.length() - 1).replace(", ", ",");
+					map.add("chalanDetailId", chList);
+
+					Info updateChalanStatus = rest.postForObject(Constants.url + "updateChalanStatus", map, Info.class);
+
+					System.err.println(updateChalanStatus.toString());
+
+				} else {
+
 				}
-
-				// isError = 2;
-				map = new LinkedMultiValueMap<String, Object>();
-
-				map.add("srNo", doc.getSrNo() + 1);
-				map.add("docCode", doc.getDocCode());
-
-				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
-				System.out.println(chalanDetailList.toString());
-				map = new LinkedMultiValueMap<String, Object>();
-				String idList = chalanDetailList.toString();
-				String chList = idList.substring(1, idList.length() - 1).replace(", ", ",");
-				map.add("chalanDetailId", chList);
-
-				Info updateChalanStatus = rest.postForObject(Constants.url + "updateChalanStatus", map, Info.class);
-
-				System.err.println(updateChalanStatus.toString());
-			} else {
-
-				// isError = 1;
+				System.err.println("insertBillHeadRes " + insertBillHeadRes.toString());
 			}
-			System.err.println("insertBillHeadRes " + insertBillHeadRes.toString());
 
 		} catch (Exception e) {
 			// isError = 1;
@@ -730,12 +729,7 @@ public class BillController {
 
 			model = new ModelAndView("bill/editBill");
 			GetBillHeader editBill = null;
-			/*
-			 * for(int i=0;i<getOrdList.size();i++) {
-			 * 
-			 * if(getOrdList.get(i).getOrderId()==orderId) { editOrder=new GetOrder();
-			 * editOrder=getOrdList.get(i); break; } }
-			 */
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("billHeadId", billHeadId);
@@ -743,11 +737,22 @@ public class BillController {
 			System.err.println(editBill.toString());
 			map = new LinkedMultiValueMap<String, Object>();
 
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("poId", "1");
-			map.add("chalanStatus", "1,2");
-			map.add("billStatus", "1,2");
-			GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByCustAndStatus", map,
+			String chalanIdList = editBill.getChallanId();
+			
+			System.out.println("chalanIdList"+chalanIdList);
+
+			/*StringBuilder sb = new StringBuilder();
+
+			for (int i = 0; i < chalanIdList.length; i++) {
+				sb = sb.append(chalanIdList[i] + ",");
+
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);*/
+
+			map.add("chalanIdList", chalanIdList);
+
+			GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByChalanIdList", map,
 					GetChalanHeader[].class);
 
 			List<GetChalanHeader> chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
