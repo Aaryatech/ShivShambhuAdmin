@@ -376,6 +376,7 @@
 														id="chalanQty${count.index}${billDetail.itemId}"
 														name="chalanQty${count.index}${billDetail.itemId}"
 														oninput="calculation(${count.index},${billDetail.itemId})" />
+													
 													<td style="text-align: center"><p
 															id="taxableAmt${count.index}${billDetail.itemId}">
 															<c:out value="${billDetail.taxableAmt}" />
@@ -383,7 +384,7 @@
 
 
 													<td style="text-align: center"><input type="text"
-														class="form-control" value="${billDetail.qty}"
+														class="form-control" value="${billDetail.discPer}"
 														id="discPer${count.index}${billDetail.itemId}"
 														name="discPer${count.index}${billDetail.itemId}"
 														oninput="calculation(${count.index},${billDetail.itemId})" />
