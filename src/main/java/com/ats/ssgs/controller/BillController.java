@@ -194,31 +194,30 @@ public class BillController {
 		return chalanHeadList;
 	}
 
-	@RequestMapping(value = "/getChalanByPO", method = RequestMethod.GET)
-	public @ResponseBody List<GetChalanHeader> getChalanListByCustId(HttpServletRequest request,
-			HttpServletResponse response) {
-		List<GetChalanHeader> chalanHeadList;
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		int poId = Integer.parseInt(request.getParameter("poId"));
-		System.err.println("poId for getChalanListByPlant  " + poId);
-
-		map.add("poId", poId);
-		map.add("chalanStatus", "1,2");
-		map.add("billStatus", 1);
-		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByCustAndStatus", map,
-				GetChalanHeader[].class);
-
-		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
-
-		for (int i = 0; i < chalanHeadList.size(); i++) {
-
-			chalanHeadList.get(i).setChalanDate(DateConvertor.convertToDMY(chalanHeadList.get(i).getChalanDate()));
-		}
-
-		System.err.println("Ajax chalanHeadList " + chalanHeadList.toString());
-
-		return chalanHeadList;
-	}
+	/*
+	 * @RequestMapping(value = "/getChalanByPO", method = RequestMethod.GET)
+	 * public @ResponseBody List<GetChalanHeader>
+	 * getChalanListByCustId(HttpServletRequest request, HttpServletResponse
+	 * response) { List<GetChalanHeader> chalanHeadList; MultiValueMap<String,
+	 * Object> map = new LinkedMultiValueMap<String, Object>(); int poId =
+	 * Integer.parseInt(request.getParameter("poId"));
+	 * System.err.println("poId for getChalanListByPlant  " + poId);
+	 * 
+	 * map.add("poId", poId); map.add("chalanStatus", "1,2"); map.add("billStatus",
+	 * 1); GetChalanHeader[] chArray = rest.postForObject(Constants.url +
+	 * "getChalanHeadersByCustAndStatus", map, GetChalanHeader[].class);
+	 * 
+	 * chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
+	 * 
+	 * for (int i = 0; i < chalanHeadList.size(); i++) {
+	 * 
+	 * chalanHeadList.get(i).setChalanDate(DateConvertor.convertToDMY(chalanHeadList
+	 * .get(i).getChalanDate())); }
+	 * 
+	 * System.err.println("Ajax chalanHeadList " + chalanHeadList.toString());
+	 * 
+	 * return chalanHeadList; }
+	 */
 
 	@RequestMapping(value = "/getItemsForBill", method = RequestMethod.GET)
 	public @ResponseBody List<GetItemsForBill> getItemsForBill(HttpServletRequest request,
@@ -745,7 +744,7 @@ public class BillController {
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map = new LinkedMultiValueMap<String, Object>();
-			map.add("poId", editBill.getPoId());
+			map.add("poId", "1");
 			map.add("chalanStatus", "1,2");
 			map.add("billStatus", "1,2");
 			GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByCustAndStatus", map,
@@ -753,6 +752,8 @@ public class BillController {
 
 			List<GetChalanHeader> chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
 			model.addObject("chalanHeadList", chalanHeadList);
+
+			System.out.println("chalanHeadList" + chalanHeadList.toString());
 
 			map.add("custId", editBill.getCustId());
 			List<Project> projList;
