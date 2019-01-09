@@ -808,7 +808,7 @@ public class QuotController {
 						newItemList.get(i).setEnqUomId(newItemList.get(i).getUomId());
 						newItemList.get(i).setEnqUomName(newItemList.get(i).getUomName());
 						newItemList.get(i).setQuotQty(quotQty);
-						newItemList.get(0).setTempMsg("Item Added Successfully");
+						enqItemList.get(0).setTempMsg("Item Added Successfully");
 						enqItemList.add(newItemList.get(i));
 
 						System.err.println("Newly added item in quot " + newItemList.get(i).toString());

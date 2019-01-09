@@ -942,15 +942,15 @@ calcAll();
 			var quotQty=document.getElementById('new_item_qty').value;
 			var tollCost=${quotHeader.tollCost};
 			var quotHeaderId=${quotHeader.quotHeadId};
-			/* var valid=true;
+			 var valid=true;
 			if(quotQty<0 || quotQty==0){
 				valid=false;
 				alert("please enter valid quotation quantity ");
-			}else if(itenmId=="" || itemId==null){
+			}else if(itemId=="" || itemId==null){
 				valid=false;
 				alert("please select item ");
 			}
-				if(valid==true){ */
+				if(valid==true){ 
 			
 				$
 						.getJSON(
@@ -965,7 +965,8 @@ calcAll();
 								},
 
 								function(data) {
-									alert(data.length);
+									//alert("Success");
+									alert(data[0].tempMsg);
 									//appendTableData(data);
 									
 									 var dataTable = $('#bootstrap-data-table')
@@ -1017,7 +1018,7 @@ calcAll();
 												});
 			});	
 	
-	//}
+	}//end of if valid==true
 		}
 	}
 	function callDelete(itemId,index){
@@ -1038,8 +1039,8 @@ calcAll();
 				},
 				function(data) {
 					//appendTableData(data);
-					
-					alert(data.length);
+						alert(data[0].tempMsg);
+					//alert("Success");
 					//appendTableData(data);
 					
 					 var dataTable = $('#bootstrap-data-table')
