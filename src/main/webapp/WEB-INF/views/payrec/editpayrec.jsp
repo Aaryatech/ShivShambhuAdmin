@@ -592,20 +592,7 @@
 
 		});
 	</script>
-	<!-- <script type="text/javascript">
-function hideDiv(type){
-	  
-	  
-	if(type==0){
-	   
-	    document.getElementById("hide_div").style="display:none"
-	} else 
-		{
-		 document.getElementById("hide_div").style="visible"
-
-		} 
-	}
-</script> -->
+	
 <script>
 		
 		function allowOnlyNumber(evt){
@@ -633,9 +620,9 @@ function hideDiv(type){
 		
 		function validatedate()
 		  {
-			alert("inside");
+			//alert("inside");
 			var inputText="5555555555555555";
-			alert("hello date is:::"+document.getElementById("paymentDate").value);
+			//alert("hello date is:::"+document.getElementById("paymentDate").value);
 		  var dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
 		  // Match the date format through regular expression
 		  

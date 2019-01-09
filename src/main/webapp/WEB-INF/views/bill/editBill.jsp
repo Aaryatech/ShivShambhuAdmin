@@ -278,10 +278,10 @@
 								<div class="col-md-2">Chalans</div>
 									<div class="col-md-4">
 										<select id="chalan_id" name="chalan_id"  class="standardSelect" 
-											tabindex="1" required multiple="multiple"
+											tabindex="1"  multiple="multiple" 
 											oninvalid="setCustomValidity('Please select Challan')"
 											>
-											<option value="-1">Select</option>
+											
 
 											<c:forEach items="${chalanHeadList}" var="chalanHeadList">
 												<option value="${chalanHeadList.chalanId}" selected>${chalanHeadList.chalanNo}</option>
