@@ -223,7 +223,7 @@
 									<div class="col-md-2">Paid Amount</div>
 									<div class="col-md-4">
 										<input type="text" id="paidAmt" name="paidAmt"
-										onkeypress="return allowOnlyNumber(event);"
+										onkeypress="return allowOnlyNumber(event);" onchange="checkstock() "
 											class="form-control" autocomplete="off" style="width: 100%;">
 									</div>
 
@@ -264,7 +264,7 @@
 									<div class="col-md-1"></div>
 									<div class="col-md-2">
 										<input type="button" value="Add" class="btn btn-primary"
-											style="align-content: center; width: 113px;" onclick="add()" />
+											style="align-content: center; width: 113px;" onclick=" validatedate(); add(); " />
 									</div>
 								</div>
 
@@ -325,7 +325,7 @@
 								<div class="col-lg-4"></div>
 								<div class="col-lg-2">
 
-									<input type="submit" class="btn btn-primary" value="Submit" onclick="validatedate(document.submitForm.paymentDate)"
+									<input type="submit" class="btn btn-primary" value="Submit" 
 										style="align-content: center; width: 113px; margin-left: 20px;">
 
 								</div>
@@ -394,7 +394,7 @@
 
 	<script type="text/javascript">
 		function add() {
-			alert("in add  ");
+			//alert("in add  ");
 			var txType = document.getElementById("txType").value;
 			var txNo = document.getElementById("txNo").value;
 			var isEdit = document.getElementById("isEdit").value;
@@ -406,7 +406,7 @@
 			
 		
 
-			alert("Inside add ajax"+paidAmt);
+			//alert("Inside add ajax"+paidAmt);
 			$
 					.getJSON(
 							'${editInAddPayRec}',
@@ -592,20 +592,7 @@
 
 		});
 	</script>
-	<!-- <script type="text/javascript">
-function hideDiv(type){
-	  
-	  
-	if(type==0){
-	   
-	    document.getElementById("hide_div").style="display:none"
-	} else 
-		{
-		 document.getElementById("hide_div").style="visible"
-
-		} 
-	}
-</script> -->
+	
 <script>
 		
 		function allowOnlyNumber(evt){
@@ -631,27 +618,34 @@ function hideDiv(type){
 		
 		
 		
-		function validatedate(inputText)
+		function validatedate()
 		  {
+			//alert("inside");
+			var inputText="5555555555555555";
+			//alert("hello date is:::"+document.getElementById("paymentDate").value);
 		  var dateformat = /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/;
 		  // Match the date format through regular expression
+		  
 		  if(inputText.value.match(dateformat))
 		  {
-		  document.form1.text1.focus();
+			  
+			  document.submitForm.paymentDate.focus();
 		  //Test which seperator is used '/' or '-'
-		  var opera1 = inputText.value.split('/');
+		 var opera1 = inputText.value.split('/');
 		  var opera2 = inputText.value.split('-');
 		  lopera1 = opera1.length;
 		  lopera2 = opera2.length;
 		  // Extract the string into month, date and year
 		  if (lopera1>1)
 		  {
-			  
+			  alert("/");
 			  var pdate = inputText.value.split('/');
 		  }
 		  else if (lopera2>1)
 		  {
+			  alert("-");
 		  var pdate = inputText.value.split('-');
+		  alert(pdate);
 		  }
 		  var dd = parseInt(pdate[0]);
 		  var mm  = parseInt(pdate[1]);
@@ -687,12 +681,40 @@ function hideDiv(type){
 		  else
 		  {
 		  alert("Invalid date format!");
-		  document.form1.text1.focus();
+		  document.submitForm.paymentDate.focus();
 		  return false;
 		  }
 		  }
 	</script>
 
+<script>
+		function checkstock() {
+
+			var pendingAmt= document.getElementById("pendingAmt").value;
+			var paidAmt= document.getElementById("paidAmt").value;
+			/* alert( "min stk is"+min_stock);
+			alert( "max stk is"+max_stock); */
+			//var len= max_stock.length;
+			  
+			
+			var valid = true;
+			
+			
+			if (  paidAmt > pendingAmt  ) {
+
+				valid = false;
+			} 
+
+			if (valid == false) {
+				
+				alert("Enter Paid Amount less than Pending Amount ");
+				document.getElementById("paidAmt").value="";
+				//document.getElementById("pmax_stock").value="";
+			}
+		}
+
+		
+	</script>
 
 
 
