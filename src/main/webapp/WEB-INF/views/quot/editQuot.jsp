@@ -942,7 +942,7 @@ calcAll();
 			var quotQty=document.getElementById('new_item_qty').value;
 			var tollCost=${quotHeader.tollCost};
 			var quotHeaderId=${quotHeader.quotHeadId};
-			var valid=true;
+			/* var valid=true;
 			if(quotQty<0 || quotQty==0){
 				valid=false;
 				alert("please enter valid quotation quantity ");
@@ -950,7 +950,7 @@ calcAll();
 				valid=false;
 				alert("please select item ");
 			}
-				if(valid==true){
+				if(valid==true){ */
 			
 				$
 						.getJSON(
@@ -965,11 +965,59 @@ calcAll();
 								},
 
 								function(data) {
+									alert(data.length);
+									//appendTableData(data);
 									
-									appendTableData(data);
+									 var dataTable = $('#bootstrap-data-table')
+										.DataTable();
+								 dataTable.clear().draw();
+								$.each(data,function(i, v) {
+								var quotQty = '<input  type="text"  class="form-control" onkeypress="return allowOnlyNumber(event);" id="quot_qty'+v.itemId+'" name="quot_qty'+v.itemId+'"  value="'+v.quotQty+'" />'
+								var finalAmt = '<input  type="text"   class="form-control"   id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
+								var transCost='<input  type="text"  class="form-control" value='+v.transCost+'  onkeypress="return allowOnlyNumber(event);" id="trans_cost'+v.itemId+'" name="trans_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+								var tollCosta='<input  type="text" value='+tollCost+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="toll_cost'+v.itemId+'" name="toll_cost'+v.itemId+'"/>'
+								var otherCost='<input  type="text" value='+v.otherCost+' class="form-control"  onkeypress="return allowOnlyNumber(event);" id="other_cost'+v.itemId+'" name="other_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+								var taxable='<input  type="text" value='+v.taxableValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="taxable_amt'+v.itemId+'" name="taxable_amt'+v.itemId+'"/>'
+								var tax='<input  type="text" value='+v.taxValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="tax_amt'+v.itemId+'" name="tax_amt'+v.itemId+'"/>'
+								var costAfTax='<input  type="text" value='+v.otherCostAfterTax+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+								var finalAmt='<input  type="text" value='+v.finalTotal+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
+								var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
+															+ v.itemId
+															+ ','
+															+ i
+															+ ')" style="color:black"><i class="fa fa-trash-o"></i></a>&nbsp;&nbsp;<a href="#"  class="action_btn" onclick="callItemDetail('
+															+ v.itemId
+															+ ','
+															+ i
+															+ ')" style="color:black"><i class="fa fa-list"></i></a>' 
+															
+															//var itemRateDiv = '<div id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'">+'v.itemRate1+'</div>'
+															var itemRateDiv = '<input  type="text"   class="form-control" value='+v.itemRate1+'  id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'"/>'
+
+													dataTable.row
+															.add(
+																	[
+																			i + 1,
+																			v.itemName,
+																			quotQty,
+																		//	v.enqUomName,
+																			transCost,
+																			//tollCosta,
+																			otherCost,
+																			itemRateDiv,
+																			v.royaltyRate,
+																			v.totalTaxPer,
+																			taxable,
+																			tax,
+																			costAfTax,
+																			finalAmt,
+																			acButton
+																			 ])
+															.draw();
+												});
 			});	
 	
-	}
+	//}
 		}
 	}
 	function callDelete(itemId,index){
@@ -989,7 +1037,58 @@ calcAll();
 					ajax : 'true',
 				},
 				function(data) {
-					appendTableData(data);
+					//appendTableData(data);
+					
+					alert(data.length);
+					//appendTableData(data);
+					
+					 var dataTable = $('#bootstrap-data-table')
+						.DataTable();
+				 dataTable.clear().draw();
+				$.each(data,function(i, v) {
+				var quotQty = '<input  type="text"  class="form-control" onkeypress="return allowOnlyNumber(event);" id="quot_qty'+v.itemId+'" name="quot_qty'+v.itemId+'"  value="'+v.quotQty+'" />'
+				var finalAmt = '<input  type="text"   class="form-control"   id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
+				var transCost='<input  type="text"  class="form-control" value='+v.transCost+'  onkeypress="return allowOnlyNumber(event);" id="trans_cost'+v.itemId+'" name="trans_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+				var tollCosta='<input  type="text" value='+tollCost+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="toll_cost'+v.itemId+'" name="toll_cost'+v.itemId+'"/>'
+				var otherCost='<input  type="text" value='+v.otherCost+' class="form-control"  onkeypress="return allowOnlyNumber(event);" id="other_cost'+v.itemId+'" name="other_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+				var taxable='<input  type="text" value='+v.taxableValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="taxable_amt'+v.itemId+'" name="taxable_amt'+v.itemId+'"/>'
+				var tax='<input  type="text" value='+v.taxValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="tax_amt'+v.itemId+'" name="tax_amt'+v.itemId+'"/>'
+				var costAfTax='<input  type="text" value='+v.otherCostAfterTax+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+				var finalAmt='<input  type="text" value='+v.finalTotal+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
+				var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
+											+ v.itemId
+											+ ','
+											+ i
+											+ ')" style="color:black"><i class="fa fa-trash-o"></i></a>&nbsp;&nbsp;<a href="#"  class="action_btn" onclick="callItemDetail('
+											+ v.itemId
+											+ ','
+											+ i
+											+ ')" style="color:black"><i class="fa fa-list"></i></a>' 
+											
+											//var itemRateDiv = '<div id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'">+'v.itemRate1+'</div>'
+											var itemRateDiv = '<input  type="text"   class="form-control" value='+v.itemRate1+'  id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'"/>'
+
+									dataTable.row
+											.add(
+													[
+															i + 1,
+															v.itemName,
+															quotQty,
+														//	v.enqUomName,
+															transCost,
+															//tollCosta,
+															otherCost,
+															itemRateDiv,
+															v.royaltyRate,
+															v.totalTaxPer,
+															taxable,
+															tax,
+															costAfTax,
+															finalAmt,
+															acButton
+															 ])
+											.draw();
+								});
 				});	
 		}
 	}
@@ -1090,7 +1189,7 @@ calcAll();
 
  			}
 			 if(valid==true){
-				 //alert("valid==true");
+				 alert("valid==true");
 		 var plantId=${quotHeader.plantIds};
 		 var enqHeadId=${quotHeader.enqHeadId};
 		 $.getJSON('${getItemsAndEnqItemList}', {

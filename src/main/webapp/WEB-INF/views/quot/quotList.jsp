@@ -111,7 +111,7 @@
 
 
 												<td style="text-align: left"><c:out
-														value="${quot.custName}" /></td>
+														value="${quot.custName}" /></td> 
 												<td style="text-align: center">${quot.compName}</td>
 
 												<td style="text-align: left"><c:out
@@ -125,7 +125,19 @@
 													href="${pageContext.request.contextPath}/editQuotationDetail/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
 														class="fa fa-edit" style="color: black"
 														title="Generate Quotation"></i> <span class="text-muted"></span></a>
-												</td>
+													<a
+													href="${pageContext.request.contextPath}/deleteQuot/${quot.quotHeadId}"
+													onClick="return confirm('Are you sure want to delete this record');"><i
+														class="fa fa-trash-o" style="color: black" title="Delete"></i></a>
+													<c:choose>
+														<c:when test="${quot.status==1}">
+
+															<a
+																href="${pageContext.request.contextPath}/addPo/${quot.quotHeadId}/${quot.plantId}"><i
+																class="fa fa-list" title="Create PO"
+																style="color: black"></i> </a>
+														</c:when>
+													</c:choose></td>
 											</tr>
 										</c:forEach>
 									</tbody>
