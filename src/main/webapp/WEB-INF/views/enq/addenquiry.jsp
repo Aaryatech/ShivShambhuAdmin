@@ -314,7 +314,7 @@
 											class="standardSelect" tabindex="1" required
 											oninvalid="setCustomValidity('Please select enquiry source')"
 											onchange="try{setCustomValidity('')}catch(e){}">
-											<option value="0">Select</option>
+
 											<c:forEach items="${enqGenFactList}" var="enqFrom">
 												<option value="${enqFrom.enqGenId}">${enqFrom.enqGenBy}</option>
 											</c:forEach>

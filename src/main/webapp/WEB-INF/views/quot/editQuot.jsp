@@ -1189,7 +1189,7 @@ calcAll();
 
  			}
 			 if(valid==true){
-				 alert("valid==true");
+				// alert("valid==true");
 		 var plantId=${quotHeader.plantIds};
 		 var enqHeadId=${quotHeader.enqHeadId};
 		 $.getJSON('${getItemsAndEnqItemList}', {
