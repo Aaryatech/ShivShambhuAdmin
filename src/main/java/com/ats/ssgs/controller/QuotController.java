@@ -1319,9 +1319,9 @@ public class QuotController {
 		String url = request.getParameter("url");
 		System.out.println("URL " + url);
 
-		File f = new File("/home/lenovo/quot.pdf");
+		//File f = new File("/home/lenovo/quot.pdf");
 
-		// File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf");
+		 File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1340,11 +1340,12 @@ public class QuotController {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 
-		String filename = "/home/lenovo/quot.pdf";
-		// String filename = "/home/ats-11/quot.pdf";
-		// String filePath = "/report.pdf";
-		// String filePath = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
-		String filePath = "/home/lenovo/quot.pdf";
+		//String filename = "/home/lenovo/quot.pdf";
+		 String filename = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
+		
+		
+		String filePath = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
+		//String filePath = "/home/lenovo/quot.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file
@@ -1452,6 +1453,8 @@ public class QuotController {
 						mimeMessage.setContent(multipart);
 
 						Transport.send(mimeMessage);
+						pdfCustId=0;
+						quotHeadIdPdf=0;
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
