@@ -352,7 +352,7 @@
 															+ v.matVehDetailId
 															+ ','
 															+ i
-															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 															+ v.matVehDetailId
 															+ ','
 															+ i
@@ -422,7 +422,7 @@
 															+ v.matVehDetailId
 															+ ','
 															+ i
-															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 															+ v.matVehDetailId
 															+ ','
 															+ i

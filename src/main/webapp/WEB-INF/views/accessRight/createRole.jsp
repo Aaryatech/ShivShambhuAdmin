@@ -112,7 +112,7 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 
-								<a href="${pageContext.request.contextPath}/showRoleList"><strong>Role
+								<a href="${pageContext.request.contextPath}/showRoleList" style="color: black"><strong>Role
 										List</strong></a>
 
 							</div>

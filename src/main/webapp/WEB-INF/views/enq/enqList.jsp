@@ -211,7 +211,7 @@
 												<tr>
 													<th style="text-align: center"><input type="checkbox"
 														name="selAll" id="selAll" /></th>
-													<th style="text-align: center">No.</th>
+													<th style="text-align: center">Sr.</th>
 													<th style="text-align: center">Enquiry No</th>
 													<th style="text-align: center">Enquiry Date</th>
 
