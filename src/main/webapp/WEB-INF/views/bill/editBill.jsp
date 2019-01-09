@@ -20,11 +20,10 @@
 
 <c:url var="getPoDetailForOrderByPoId"
 	value="/getPoDetailForOrderByPoId" />
-	
-	
-<c:url var="getTempOrderHeader"
-	value="/getTempOrderHeader" />
-	
+
+
+<c:url var="getTempOrderHeader" value="/getTempOrderHeader" />
+
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,31 +74,30 @@
 
 <style>
 .alert {
-    padding: 20px;
-    background-color: red;
-    color: white;
-    
+	padding: 20px;
+	background-color: red;
+	color: white;
 }
+
 .alert1 {
-    padding: 20px;
-    background-color: green;
-    color: white;
-    
+	padding: 20px;
+	background-color: green;
+	color: white;
 }
 
 .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: black;
+	color: black;
 }
 </style>
 
@@ -123,31 +121,31 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-			
-			<c:choose>
-							<c:when test="${isError==1}">
-							
-							<div class="alert">
-							
+
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Failed !</strong>     Data not submitted  !!
-				</div>
-							
-							</c:when>
-							
-							<c:when test="${isError==2}">
-							
-							<div class="alert1">
-							
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Success</strong>     Data Submitted !!
-				</div>
-							
-							</c:when>
-							
-							</c:choose>
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -160,7 +158,7 @@
 								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
 										Customer</strong></a>
 							</div> --%>
-							
+
 
 						</div>
 						<div class="card-body card-block">
@@ -172,10 +170,10 @@
 									<div class="col-md-2">Plant</div>
 
 									<div class="col-md-4">
-									
-									<input type="text" readonly  value="${editBill.plantName}"
-												style="width: 100%;" class="form-control"> <span
-												class="error" aria-live="polite"></span>
+
+										<input type="text" readonly value="${editBill.plantName}"
+											style="width: 100%;" class="form-control"> <span
+											class="error" aria-live="polite"></span>
 										<%-- <select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
@@ -189,16 +187,16 @@
 									</div>
 									<div class="col-md-2">Customer</div>
 									<div class="col-md-4">
-										
-									<input type="text" readonly value="${editBill.custName}"
-												style="width: 100%;" class="form-control"> <span
-												class="error" aria-live="polite"></span>
+
+										<input type="text" readonly value="${editBill.custName}"
+											style="width: 100%;" class="form-control"> <span
+											class="error" aria-live="polite"></span>
 									</div>
 
 								</div>
 								<div class="form-group"></div>
-								
-								
+
+
 								<!-- <div id="divCheckbox" style="display: none;">
 									<div class="form-group"></div>
 									<div class="row">
@@ -223,15 +221,15 @@
 
 									</div>
 								</div> -->
-								
+
 								<input type="hidden" name="item_id" id="item_id" value="0">
-								
+
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Bill Date</div>
 									<div class="col-md-4">
-										<input type="text" disabled id="ord_date" name="ord_date" required
-											style="width: 100%;" class="form-control"
+										<input type="text" disabled id="ord_date" name="ord_date"
+											required style="width: 100%;" class="form-control"
 											value="${editBill.billDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
@@ -239,15 +237,16 @@
 									<div class="col-md-4">
 										<input type="text" readonly id="ord_no" name="ord_no"
 											style="width: 100%;" class="form-control"
-											value="${editBill.billNo}"> <span
-											class="error" aria-live="polite"></span>
+											value="${editBill.billNo}"> <span class="error"
+											aria-live="polite"></span>
 									</div>
 
 								</div>
 								<div class="form-group"></div>
 
-								<input type="hidden" id="billHeadId" name="billHeadId" value="${editBill.billHeadId}">
-<div class="row">
+								<input type="hidden" id="billHeadId" name="billHeadId"
+									value="${editBill.billHeadId}">
+								<div class="row">
 
 									<div class="col-md-2">Select Project</div>
 
@@ -258,16 +257,16 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 
 											<c:forEach items="${projList}" var="proj">
-											
-											<c:choose>
-											<c:when test="${editBill.projId==proj.projId}">
-												<option selected value="${proj.projId}">${proj.projName}-${proj.address}</option>
-											</c:when>
-											<c:otherwise>
-												<option value="${proj.projId}">${proj.projName}</option>
-											</c:otherwise>
-											</c:choose>
-											
+
+												<c:choose>
+													<c:when test="${editBill.projId==proj.projId}">
+														<option selected value="${proj.projId}">${proj.projName}-${proj.address}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${proj.projId}">${proj.projName}</option>
+													</c:otherwise>
+												</c:choose>
+
 											</c:forEach>
 
 										</select>
@@ -275,24 +274,38 @@
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-								<div class="col-md-2">Chalans</div>
+									<div class="col-md-2">Chalans</div>
 									<div class="col-md-4">
-										<select id="chalan_id" name="chalan_id"  class="standardSelect" 
-											tabindex="1"  multiple="multiple" 
-											oninvalid="setCustomValidity('Please select Challan')"
-											>
-											
+										<select id="chalan_id" name="chalan_id" class="standardSelect"
+											tabindex="1" multiple="multiple"
+											oninvalid="setCustomValidity('Please select Challan')">
 
-											<c:forEach items="${chalanHeadList}" var="chalanHeadList">
-												<option value="${chalanHeadList.chalanId}" selected>${chalanHeadList.chalanNo}</option>
-											</c:forEach> 
+
+
+											<c:forEach items="${chalanHeadList}" var="chalanHead">
+												<c:forEach items="${editBill.challanId}" var="bill">
+
+													<c:choose>
+														<c:when test="${chalanHead.chalanId==bill}">
+															<option selected value="${chalanHead.chalanId}">${chalanHead.chalanNo}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${chalanHead.chalanId}">${chalanHead.chalanNo}</option>
+														</c:otherwise>
+													</c:choose>
+
+
+
+													<option value="${chalanHeadList.chalanId}" selected>${chalanHeadList.chalanNo}</option>
+												</c:forEach>
+											</c:forEach>
 										</select>
 									</div>
 								</div>
-								
+
 
 								<div class="form-group"></div>
-							<%--	<div class="row">
+								<%--	<div class="row">
 
 									<div class="col-md-2">Select PO</div>
 
@@ -306,9 +319,9 @@
 										</select>
 									</div>
 								</div>--%>
-								
+
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-								
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
@@ -316,7 +329,7 @@
 											<tr>
 												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
-											<!-- 	<th style="text-align: center">UOM</th> -->
+												<!-- 	<th style="text-align: center">UOM</th> -->
 												<th style="text-align: center">Rate</th>
 												<th style="text-align: center">Qty</th>
 												<th style="text-align: center">Taxable Amt</th>
@@ -328,44 +341,70 @@
 											</tr>
 										</thead>
 										<tbody>
-	<c:forEach items="${billDetailList}" var="billDetail" varStatus="count">
-										<tr>
-<input  type="hidden"  class="form-control" value="${billDetail.rate}"  id="orderRate${count.index}${billDetail.itemId}" name="orderRate${count.index}${billDetail.itemId}" oninput="calculation(${count.index},${billDetail.itemId})"/>
-<input  type="hidden"  class="form-control" value="${billDetail.exInt1}"  id="isTaxIncluding${count.index}${billDetail.itemId}" name="isTaxIncluding${count.index}${billDetail.itemId}" oninput="calculation(${count.index},${billDetail.itemId})"/>
-<input  type="hidden"  class="form-control" value="${billDetail.cgstPer+billDetail.sgstPer}"  id="taxPer${count.index}${billDetail.itemId}" name="taxPer${count.index}${billDetail.itemId}" oninput="calculation(${count.index},${billDetail.itemId})"/>
-			
-											<td style="text-align: center">${count.index+1}</td>
+											<c:forEach items="${billDetailList}" var="billDetail"
+												varStatus="count">
+												<tr>
+													<input type="hidden" class="form-control"
+														value="${billDetail.rate}"
+														id="orderRate${count.index}${billDetail.itemId}"
+														name="orderRate${count.index}${billDetail.itemId}"
+														oninput="calculation(${count.index},${billDetail.itemId})" />
+													<input type="hidden" class="form-control"
+														value="${billDetail.exInt1}"
+														id="isTaxIncluding${count.index}${billDetail.itemId}"
+														name="isTaxIncluding${count.index}${billDetail.itemId}"
+														oninput="calculation(${count.index},${billDetail.itemId})" />
+													<input type="hidden" class="form-control"
+														value="${billDetail.cgstPer+billDetail.sgstPer}"
+														id="taxPer${count.index}${billDetail.itemId}"
+														name="taxPer${count.index}${billDetail.itemId}"
+														oninput="calculation(${count.index},${billDetail.itemId})" />
+
+													<td style="text-align: center">${count.index+1}</td>
 
 
-											<td style="text-align: left"><c:out
-													value="${billDetail.itemName}" /></td>
-											<%-- <td style="text-align: center"><c:out
+													<td style="text-align: left"><c:out
+															value="${billDetail.itemName}" /></td>
+													<%-- <td style="text-align: center"><c:out
 													value="${billDetail.itemUom}" /></td>
  --%>
-											<td style="text-align: left"><c:out
-													value="${billDetail.rate}" /></td>
+													<td style="text-align: left"><c:out
+															value="${billDetail.rate}" /></td>
 
-											<td style="text-align: center">
-<input  type="text"  class="form-control" value="${billDetail.qty}"  id="chalanQty${count.index}${billDetail.itemId}" name="chalanQty${count.index}${billDetail.itemId}" oninput="calculation(${count.index},${billDetail.itemId})"/>
-										
-											<td style="text-align: center"><p id="taxableAmt${count.index}${billDetail.itemId}"><c:out
-													value="${billDetail.taxableAmt}" /></p></td>
-												
-														
-											<td style="text-align: center"><input  type="text"  class="form-control" value="${billDetail.qty}"  id="discPer${count.index}${billDetail.itemId}" name="discPer${count.index}${billDetail.itemId}" oninput="calculation(${count.index},${billDetail.itemId})"/>
-</td>
-											<td style="text-align: center"><p id="discAmt${count.index}${billDetail.itemId}"><c:out
-													value="${billDetail.discAmt}" /></p></td>		
-											<td style="text-align: center"><c:out
-													value="${billDetail.cgstPer+billDetail.sgstPer}" /></td>
-											<td style="text-align: center"><p id="taxAmt${count.index}${billDetail.itemId}"><c:out
-													value="${billDetail.taxAmt}" /></p></td>	
-											<td style="text-align: center"><p id="total${count.index}${billDetail.itemId}"><c:out
-													value="${billDetail.totalAmt}" /></p></td>						
-												
-										</tr>
-										</c:forEach> 
+													<td style="text-align: center"><input type="text"
+														class="form-control" value="${billDetail.qty}"
+														id="chalanQty${count.index}${billDetail.itemId}"
+														name="chalanQty${count.index}${billDetail.itemId}"
+														oninput="calculation(${count.index},${billDetail.itemId})" />
+													<td style="text-align: center"><p
+															id="taxableAmt${count.index}${billDetail.itemId}">
+															<c:out value="${billDetail.taxableAmt}" />
+														</p></td>
 
+
+													<td style="text-align: center"><input type="text"
+														class="form-control" value="${billDetail.qty}"
+														id="discPer${count.index}${billDetail.itemId}"
+														name="discPer${count.index}${billDetail.itemId}"
+														oninput="calculation(${count.index},${billDetail.itemId})" />
+													</td>
+													<td style="text-align: center"><p
+															id="discAmt${count.index}${billDetail.itemId}">
+															<c:out value="${billDetail.discAmt}" />
+														</p></td>
+													<td style="text-align: center"><c:out
+															value="${billDetail.cgstPer+billDetail.sgstPer}" /></td>
+													<td style="text-align: center"><p
+															id="taxAmt${count.index}${billDetail.itemId}">
+															<c:out value="${billDetail.taxAmt}" />
+														</p></td>
+													<td style="text-align: center"><p
+															id="total${count.index}${billDetail.itemId}">
+															<c:out value="${billDetail.totalAmt}" />
+														</p></td>
+
+												</tr>
+											</c:forEach>
 									</table>
 								</div>
 								<div class="form-group"></div>
@@ -382,7 +421,7 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-								<!-- 	<div class="col-md-2">Other Cost After Tax</div>
+									<!-- 	<div class="col-md-2">Other Cost After Tax</div>
 
 									<div class="col-md-3">845</div> -->
 									<%-- <div class="col-md-2">Bill Total</div>
@@ -537,7 +576,7 @@
 	}
 	
 	</script>
-	
+
 	<script type="text/javascript">
 	
 	// on plant change function 
@@ -747,7 +786,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 	
 	
 	</script> -->
-	
+
 
 
 	<!-- <script type="text/javascript">
@@ -949,7 +988,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 			
 		});
 	</script> -->
-<script type="text/javascript">
+	<script type="text/javascript">
 
 function calculation(key,itemId){
 	var orderRate=parseFloat(document.getElementById("orderRate"+key+''+itemId).value); //alert(orderRate+"orderRate");

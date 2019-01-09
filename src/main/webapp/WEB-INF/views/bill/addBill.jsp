@@ -18,6 +18,11 @@
 <c:url var="getChalanItems" value="/getChalanItems" />
 <c:url var="getChalanSelectedItems" value="/getChalanSelectedItems" />
 
+
+
+
+<c:url var="getChalanByCustAndProj" value="/getChalanByCustAndProj" />
+
 <c:url var="sendEmailByBillId" value="/sendEmailByBillId" />
 
 <c:url var="getItemsForBill" value="/getItemsForBill" />
@@ -222,7 +227,7 @@
 										<select id="proj_id" name="proj_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select project')"
-											onchange="getOrderHeaders()">
+											onchange="getChalanByCustAndProj()">
 											<option selected value="-1">Select</option>
 
 											<c:forEach items="${projList}" var="proj">
@@ -266,9 +271,9 @@
 
 									</div>
 								</div>
-								<div class="form-group"></div>
+								<!-- <div class="form-group"></div> -->
 
-								<div class="row">
+								<%-- <div class="row">
 
 									<div class="col-md-2">Select PO</div>
 
@@ -287,7 +292,7 @@
 
 										</select>
 									</div>
-								</div>
+								</div> --%>
 								<div class="form-group"></div>
 
 								<div class="row">
@@ -481,7 +486,7 @@
 	    var plantId=document.getElementById("plant_id").value;
 	    var custId=document.getElementById("cust_name").value;
 	    var projId=document.getElementById("proj_id").value;
-	    var poId=document.getElementById("po_id").value;
+	  //  var poId=document.getElementById("po_id").value;
 		var chalanId=document.getElementById("chalan_id").value;
 		
 		
@@ -505,10 +510,10 @@
 	    	okay=false;
 	    	alert("Please select project ");
 	    }
-	    else if(poId<0 || poId=="" || poId==null){
+	   /*  else if(poId<0 || poId=="" || poId==null){
 	    	okay=false;
 	    	alert("Please select PO ");
-	    }
+	    } */
 	  
 	    else if(chalanId<0 || chalanId=="" || chalanId==null){
 	    	okay=false;
@@ -824,8 +829,11 @@ $
 
 	<script type="text/javascript">
 	function getChalanItems(){
+		alert("hii");
 		var chalanId = document.getElementById("chalan_id").value;
 		var isValid = validate();
+		alert("chalanId"+chalanId);
+		
 
 		if (isValid) {
 		$('#loader').show();
@@ -1112,5 +1120,44 @@ function toggle() {
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/init.js"
 		type="text/javascript" charset="utf-8"></script>
+
+
+
+	<script type="text/javascript">
+	// on proj_id  change function show Order Header Select Option List 
+		function getChalanByCustAndProj() {
+			var projId=document.getElementById("proj_id").value;
+			var custId = document.getElementById("cust_name").value;
+		
+			
+				$
+						.getJSON(
+								'${getChalanByCustAndProj}',
+								{
+									projId : projId,
+									custId : custId,
+									ajax : 'true',
+								},
+
+								function(data) {
+									var len = data.length;
+									//alert("data " +JSON.stringify(data));
+									var html='<option value="-1">Select</option>';
+
+									for (var i = 0; i < len; i++) {
+										var challanData=data[i].chalanNo+"--"+data[i].chalanDate
+
+										html += '<option value="' + data[i].chalanId + '">'
+												+challanData+ '</option>';
+
+									}
+									html += '</option>';
+									$('#chalan_id').html(html);
+									$("#chalan_id").trigger("chosen:updated");
+								});
+		}
+	
+	</script>
+
 </body>
 </html>

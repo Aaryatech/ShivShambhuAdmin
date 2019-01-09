@@ -165,6 +165,35 @@ public class BillController {
 		return poHeaderList;
 	}
 
+	//
+
+	@RequestMapping(value = "/getChalanByCustAndProj", method = RequestMethod.GET)
+	public @ResponseBody List<GetChalanHeader> getChalanByCustAndProj(HttpServletRequest request,
+			HttpServletResponse response) {
+		List<GetChalanHeader> chalanHeadList;
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		int projId = Integer.parseInt(request.getParameter("projId"));
+		int custId = Integer.parseInt(request.getParameter("custId"));
+
+		map.add("projId", projId);
+		map.add("custId", custId);
+		map.add("chalanStatus", "1");
+
+		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByCustAndStatusAndProj", map,
+				GetChalanHeader[].class);
+
+		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
+
+		for (int i = 0; i < chalanHeadList.size(); i++) {
+
+			chalanHeadList.get(i).setChalanDate(DateConvertor.convertToDMY(chalanHeadList.get(i).getChalanDate()));
+		}
+
+		System.err.println("Ajax chalanHeadList " + chalanHeadList.toString());
+
+		return chalanHeadList;
+	}
+
 	@RequestMapping(value = "/getChalanByPO", method = RequestMethod.GET)
 	public @ResponseBody List<GetChalanHeader> getChalanListByCustId(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -278,7 +307,7 @@ public class BillController {
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
 			int custId = Integer.parseInt(request.getParameter("cust_name"));
 			int projId = Integer.parseInt(request.getParameter("proj_id"));
-			int poId = Integer.parseInt(request.getParameter("po_id"));
+			// int poId = Integer.parseInt(request.getParameter("po_id"));
 
 			String billDate = request.getParameter("bill_date");
 			String remark = request.getParameter("remark");
@@ -311,7 +340,7 @@ public class BillController {
 			billHeader.setExVar3("");
 
 			billHeader.setPaymentTermId(billItems.get(0).getPoTermId());
-			billHeader.setPoId(poId);
+			billHeader.setPoId(1);
 			billHeader.setProjId(projId);
 
 			HashMap<Integer, String> orderId = new HashMap<Integer, String>();

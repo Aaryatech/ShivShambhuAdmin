@@ -584,7 +584,7 @@ background-color: transparent;
 								},
 
 								function(data) {
-									alert("hi");
+									//alert("hi");
 
 									document.getElementById("totalEnq").innerText = data.totalEnq;
 									document.getElementById("totalQuotPending").innerText = data.totalQuotPending;
@@ -598,9 +598,9 @@ background-color: transparent;
 									document.getElementById("totalTaxBillAmt").innerText = data.totalTaxBillAmt;
 									document
 											.getElementById("totalTaxableBillAmt").innerText = data.totalTaxableBillAmt;
-									document.getElementById("paymentRecPaid").innerText = data.paymentRecPaid;
+									document.getElementById("paymentRecPaid").innerText = (data.paymentRecPaid).toFixed(2);
 									document
-											.getElementById("paymentRecOutstandingPending").innerText = data.paymentRecOutstandingPending;
+											.getElementById("paymentRecOutstandingPending").innerText = (data.paymentRecOutstandingPending).toFixed(2);
 
 								});
 
