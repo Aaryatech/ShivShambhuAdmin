@@ -306,6 +306,16 @@
 					    alert("Select Date Properly!!");
 					}  */
 				
+					
+					
+					// var dat1 = document.getElementById('from_date').value;
+					/* var date1 = new Date(document.getElementById('from_date').value);
+					var date2 = new Date(document.getElementById('to_date').value);
+					var diffDays = date2.getDate() - date1.getDate(); 
+					alert("diff is"+diffDays)
+	                 */
+	                
+	                
 				var listDate = [];
 				
 				var dateMove = new Date(startDate);
