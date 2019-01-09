@@ -221,7 +221,7 @@ public class ChalanController {
 			e.printStackTrace();
 		}
 
-		return "redirect:/showAddContractor";
+		return "redirect:/showChalanList";
 	}
 
 	// setChalanItem;

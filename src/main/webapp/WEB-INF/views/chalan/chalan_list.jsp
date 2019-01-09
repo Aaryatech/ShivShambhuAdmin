@@ -261,8 +261,8 @@
 										<thead>
 											<tr>
 												<th style="text-align: center"><input
-												type="checkbox" name="selAll" id="selAll" /> Select All</th>
-												<th style="text-align: center">Sr.No.</th>
+												type="checkbox" name="selAll" id="selAll" /> </th>
+												<th style="text-align: center">Sr.</th>
 												<th style="text-align: center">Chalan No</th>
 												<th style="text-align: center">Chalan Date</th>
 												<th style="text-align: center">Customer Name</th>
@@ -534,11 +534,7 @@
 										+ v.chalanId
 										+ ','
 										+ i
-										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete1('
-												+ v.chalanId
-												+ ','
-												+ i
-												+ ')" style="color:black"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 													+ v.chalanId
 													+ ','
 													+ i

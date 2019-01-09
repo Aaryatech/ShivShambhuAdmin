@@ -368,8 +368,8 @@
 
 						dataTable.row.add(
 								[ i + 1, v.billDate, v.billNo, v.custName,
-										v.projName, v.taxAmt, v.taxableAmt,
-										v.totalAmt
+										v.projName, v.taxAmt.toFixed(2), v.taxableAmt.toFixed(2),
+										v.totalAmt.toFixed(2)
 
 								]).draw();
 					});

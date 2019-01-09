@@ -376,8 +376,8 @@
 
 						dataTable.row.add(
 								[ i + 1, v.billNo, v.custGstNo, v.custName,
-										v.cgstAmt, v.sgstAmt, v.igstAmt,
-										v.taxableAmt, v.taxAmt, v.totalAmt
+										v.cgstAmt.toFixed(2), v.sgstAmt.toFixed(2), v.igstAmt.toFixed(2),
+										v.taxableAmt.toFixed(2), v.taxAmt.toFixed(2), v.totalAmt.toFixed(2)
 
 								]).draw();
 					});

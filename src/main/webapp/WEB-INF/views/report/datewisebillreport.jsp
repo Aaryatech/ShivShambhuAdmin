@@ -166,7 +166,7 @@
 									class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th style="text-align: center; width: 5%;">Sr No.</th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Bill Date</th>
 
 											<th style="text-align: center">CGST</th>
@@ -296,13 +296,13 @@
 		// onclick of submit to search order 
 		function showQuot() {
 
-			alert("Hi View Orders  ");
+			//alert("Hi View Orders  ");
 
 			var custId = document.getElementById("custId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			alert(custId);
+			//alert(custId);
 
 			var valid = true;
 
@@ -313,7 +313,7 @@
 
 			var plantId = document.getElementById("plantId").value;
 
-			alert("plantId" + plantId);
+			//alert("plantId" + plantId);
 			var valid = true;
 			if (plantId == null || plantId == "") {
 				valid = false;
@@ -389,12 +389,12 @@
 																		[
 																				i + 1,
 																				v.billDate,
-																				v.cgstAmt,
-																				v.sgstAmt,
-																				v.igstAmt,
-																				v.taxAmt,
-																				v.taxableAmt,
-																				v.totalAmt,
+																				v.cgstAmt.toFixed(2),
+																				v.sgstAmt.toFixed(2),
+																				v.igstAmt.toFixed(2),
+																				v.taxAmt.toFixed(2),
+																				v.taxableAmt.toFixed(2),
+																				v.totalAmt.toFixed(2),
 																				acButton
 
 																		])

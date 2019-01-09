@@ -152,7 +152,7 @@
 									class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th style="text-align: center; width: 5%;">Sr No</th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Item Code</th>
 											<th style="text-align: center">Item Name</th>
 											<th style="text-align: center">Total Tax Amount</th>
@@ -350,9 +350,9 @@
 					$.each(data, function(i, v) {
 
 						dataTable.row.add(
-								[ i + 1, v.itemCode, v.itemName, v.taxAmt,
-										v. taxableAmt, v.taxableAmt,v.cgstAmt,
-										v.sgstAmt,v.sgstAmt
+								[ i + 1, v.itemCode, v.itemName, v.taxAmt.toFixed(2),
+										v. taxableAmt.toFixed(2), v.taxableAmt.toFixed(2),v.cgstAmt.toFixed(2),
+										v.sgstAmt.toFixed(2),v.sgstAmt.toFixed(2)
 
 								]).draw();
 					});

@@ -165,7 +165,7 @@
 									class="table table-striped table-bordered">
 									<thead>
 										<tr>
-											<th style="text-align: center; width: 5%;">Sr No.</th>
+											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Bill Month</th>
 											<th style="text-align: center">CGST</th>
 											<th style="text-align: center">SGST</th>
@@ -387,12 +387,12 @@
 																		[
 																				i + 1,
 																				v.month,
-																				v.cgstAmt,
-																				v.sgstAmt,
-																				v.igstAmt,
-																				v.taxAmt,
-																				v.taxableAmt,
-																				v.totalAmt,
+																				v.cgstAmt.toFixed(2),
+																				v.sgstAmt.toFixed(2),
+																				v.igstAmt.toFixed(2),
+																				v.taxAmt.toFixed(2),
+																				v.taxableAmt.toFixed(2),
+																				v.totalAmt.toFixed(2),
 																				acButton
 
 																		])

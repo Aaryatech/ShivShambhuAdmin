@@ -396,9 +396,9 @@
 																				v.custName,
 																				v.custMobNo,
 
-																				v.taxAmt,
-																				v.taxableAmt,
-																				v.totalAmt,
+																				v.taxAmt.toFixed(2),
+																				v.taxableAmt.toFixed(2),
+																				v.totalAmt.toFixed(2),
 																				acButton
 
 																		])
