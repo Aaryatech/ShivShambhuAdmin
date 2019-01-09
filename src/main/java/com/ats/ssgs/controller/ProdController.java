@@ -458,7 +458,8 @@ public class ProdController {
 
 	}
 
-	GetProdPlanHeader prodHeader;
+	GetProdPlanHeader prodHeader=new GetProdPlanHeader();
+	
 
 	@RequestMapping(value = "/getProdDetail", method = RequestMethod.POST)
 	public ModelAndView getProdDetail(HttpServletRequest request, HttpServletResponse response) {
@@ -693,7 +694,7 @@ public class ProdController {
 	public ModelAndView showBOM(HttpServletRequest request, HttpServletResponse response) {
 //			//get response in session and get to showBom Disp Controller
 
-		if (prodHeader == null) {
+		if (prodHeader.getProductionHeaderId()==0) {
 
 			System.err.println("prodHeader==null");
 
@@ -737,6 +738,8 @@ public class ProdController {
 			model.addObject("isError", isError);
 			isError = 0;
 
+			prodHeader=new GetProdPlanHeader();
+			
 		} catch (Exception e) {
 
 			System.err.println("Exce in showBOM   " + e.getMessage());

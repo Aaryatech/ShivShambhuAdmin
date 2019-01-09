@@ -212,28 +212,8 @@
 											value="${prodHeader.productionDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
-									<div class="col-md-2">Start Date</div>
-									<div class="col-md-4">
-										<input type="text" readonly id="ord_no" name="ord_no"
-											style="width: 100%;" class="form-control"
-											value="${prodHeader.productionStartDate}"> <span
-											class="error" aria-live="polite"></span>
-									</div>
-
-								</div>
-								<div class="form-group"></div>
-								
-								<div class="row">
-									<div class="col-md-2">End Date</div>
-									<div class="col-md-4">
-										<input type="text" disabled id="ord_date" name="ord_date" required
-											style="width: 100%;" class="form-control"
-											value="${prodHeader.productionEndDate}"> <span class="error"
-											aria-live="polite"></span>
-									</div>
 									
-								
-								<c:if test="${prodHeader.productionStatus==1}">
+									<c:if test="${prodHeader.productionStatus==1}">
 									<c:set var="status" value="Planned"></c:set>
 								</c:if>
 								
@@ -251,6 +231,28 @@
 											value="${status}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
+									<%-- <div class="col-md-2">Start Date</div>
+									<div class="col-md-4">
+										<input type="text" readonly id="ord_no" name="ord_no"
+											style="width: 100%;" class="form-control"
+											value="${prodHeader.productionStartDate}"> <span
+											class="error" aria-live="polite"></span>
+									</div> --%>
+
+								</div>
+								<div class="form-group"></div>
+								
+								<div class="row">
+									<%-- <div class="col-md-2">End Date</div>
+									<div class="col-md-4">
+										<input type="text" disabled id="ord_date" name="ord_date" required
+											style="width: 100%;" class="form-control"
+											value="${prodHeader.productionEndDate}"> <span class="error"
+											aria-live="polite"></span>
+									</div> --%>
+									
+								
+								
 
 								</div>
 
@@ -398,7 +400,7 @@
 			var status=${prodHeader.productionStatus}
 			
 			if(status==1){
-				alert("Status" +status);
+				//alert("Status" +status);
 				 $('#table_grid1 tbody input[type="number"]').prop('readonly', true);			
 				 }
 		});
