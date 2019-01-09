@@ -591,7 +591,7 @@
 	 <script type="text/javascript">
 	 function onDateChange(index,key)
 		{
-		 alert(key);	alert(index);
+		
 			var plantId=document.getElementById("plant_id").value;
 			var date=document.getElementById("from_date"+index).value;
 		

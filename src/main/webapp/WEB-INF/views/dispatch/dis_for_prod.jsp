@@ -292,6 +292,20 @@
 				var plantId = $("#plant_id").val();
 				var startDate = reformatDateString($("#from_date").val());
 				var endDate=reformatDateString($("#to_date").val());
+				
+				var fromDate = $("#from_date").val();
+				var toDate = $("#to_date").val();
+				var d1 = fromDate.split("-");
+				var d2 = toDate.split("-");
+				d1 = d1[2].concat(d1[1], d1[0]);
+				d2 = d2[2].concat(d2[1], d2[0]);
+				var x= parseInt(d2)-parseInt(d1);
+				alert("x= "+x);
+				  if (x>5) {
+						isValid = false;
+					    alert("Select Date Properly!!");
+					} 
+				
 				var listDate = [];
 				
 				var dateMove = new Date(startDate);
@@ -306,6 +320,12 @@
 				    dateMove.setDate(dateMove.getDate()+1);
 				};
 			 
+				if((strDate - endDate)<=5){
+					alert("Hi 5 ");
+				}else{
+					alert("hi else 5");
+				}
+				
 		      
 				$.getJSON('${getItemList}',{
 					
@@ -659,7 +679,7 @@
 	<script type="text/javascript">
 	 function onDateChange(index,key)
 		{
-		 alert(key);	alert(index);
+		 //alert(key);	alert(index);
 			var plantId=document.getElementById("plant_id").value;
 			var date=document.getElementById("from_date"+index).value;
 		
