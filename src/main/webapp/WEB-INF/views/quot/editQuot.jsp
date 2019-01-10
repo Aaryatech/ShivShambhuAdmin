@@ -251,11 +251,8 @@ body {
 										</select>
 									</div>
 
-									<input type="hidden" name="quotHeadStatus" id="quotHeadStatus"
-										value="0"> <input type="hidden" name="quotHeadIdPdf"
-										id="quotHeadIdPdf" value="${quotHeadIdPdf}"> <input
-										type="hidden" name="pdfCustId" id="pdfCustId"
-										value="${pdfCustId}">
+
+
 
 								</div>
 								<input type="hidden" name="item_id" id="item_id" value="0">
@@ -359,7 +356,7 @@ body {
 								<div id="myModal" class="modal1">
 
 									<div class="modal-content" style="color: black;">
-										<span class="close" id="close"  style="text-align: right;">&times;</span>
+										<span class="close" id="close" style="text-align: right;">&times;</span>
 										<h5 style="text-align: left;">Quotation Terms And
 											Conditions</h5>
 										<div class=" box-content">
@@ -401,7 +398,7 @@ body {
 												<table style="width: 100%;" id="table_grid2" border="1">
 													<thead>
 														<tr>
-															<th width="2%">Sr.No.</th>
+															<th width="2%">Sr.</th>
 															<th class="col-md-2">Material</th>
 
 															<th class="col-md-1">Unit</th>
@@ -428,6 +425,7 @@ body {
 									</div>
 
 								</div>
+
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -594,41 +592,33 @@ body {
 								<div class="card-body card-block"
 									style="overflow: auto; width: 100%;">
 
-									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered"
-										style="table-layout: none; width: 80%;">
+									<table class="table table-striped table-bordered"
+										style="table-layout: none; width: 100%;">
 
 										<thead>
 
 											<tr>
 
-												<th style="text-align: center" width="2%">Sr</th>
+												<th style="text-align: center" width="5%">Sr.</th>
 
 												<th>Item name</th>
-												<th style="text-align: center" class="col-md-1">Quantity</th>
-												<!-- <th style="text-align: center" class="col-md-1">UOM</th> -->
+												<th style="text-align: center" width="10%">Quantity</th>
 
-												<th style="text-align: center" class="col-md-1">Trans
-													cost</th>
-												<!-- <th style="text-align: center" class="col-md-2">Toll
-													Cost</th> -->
-												<th style="text-align: center" class="col-md-1">Other
-													Cost</th>
 
-												<th style="text-align: center" class="col-md-1">Item
-													Rate</th>
-												<th style="text-align: center" class="col-md-1">Roy
-													Rate</th>
-												<th style="text-align: center" class="col-md-1">GST</th>
+												<th style="text-align: center" width="10%">Trans cost</th>
 
-												<th style="text-align: center" class="col-md-1">Taxable</th>
-												<th style="text-align: center" class="col-md-1">Tax
-													value</th>
-												<th style="text-align: center" class="col-md-1">Cost
-													After Tax</th>
+												<th style="text-align: center" width="10%">Other Cost</th>
 
-												<th style="text-align: center" class="col-md-1">Final</th>
-												<th style="text-align: center" class="col-md-1">Action</th>
+												<th style="text-align: center" width="10%">Item Rate</th>
+												<th style="text-align: center" width="5%">Roy Rate</th>
+												<th style="text-align: center" width="10%">GST</th>
+
+												<th style="text-align: center" width="10%">Taxable</th>
+												<th style="text-align: center" width="10%">Tax value</th>
+												<th style="text-align: center" width="10%">Cost After
+													Tax</th>
+												<th style="text-align: center" width="5%">Final</th>
+												<th style="text-align: center" width="5%">Action</th>
 
 
 											</tr>
@@ -678,22 +668,13 @@ body {
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														name="trans_cost${item.itemId}" class="form-control"></td>
 
-													<%-- <td class="col-md-1" style="text-align: center"><input
-														type="text" id="toll_cost${item.itemId}" readonly
-														value="${quotHeader.tollCost}"
-														name="toll_cost${item.itemId}" class="form-control"></td>
- --%>
+
 													<td class="col-md-1" style="text-align: center"><input
 														type="text" min="0"
 														onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														id="other_cost${item.itemId}" value="${item.otherCost}"
 														name="other_cost${item.itemId}" class="form-control"></td>
-													<!-- 
-													<td style="text-align: center"><input type="text"
-														id="trans_cost" name="trans_cost" class="form-control"
-														style="width: 100%;"></td>
- -->
 
 													<td class="col-md-1" id="rate" style="text-align: left"><input
 														type="text" id="itemRate${item.itemId}"
@@ -734,10 +715,11 @@ body {
 														href="#"
 														onclick="callDelete(${item.itemId},${count.index})"
 														class="action_btn"><i class="fa fa-trash-o"
-															title="Delete"></i></a>&nbsp;&nbsp;<a href="#"
-														onclick="callItemDetail(${item.itemId},${count.index})"
+															style="color: black" title="Delete"></i></a>&nbsp;&nbsp;<a
+														href="#"
+														onclick="callItemDetail(${item.itemId},${count.index},${item.quotDetailId})"
 														class="action_btn"><i class="fa fa-list"
-															title="Item Detail"></i></a></td>
+															style="color: black" title="Item Detail"></i></a></td>
 
 
 												</tr>
@@ -871,64 +853,7 @@ body {
 		});
 	</script>
 
-	<script type="text/javascript">
-	//SACHIN : - Common function to append table data for getNewItems() and callDelete() 
-	
-	function appendTableData(data) {
-		//alert("length " +data.length);
-		 var dataTable = $('#bootstrap-data-table')
-		.DataTable();
- dataTable.clear().draw();
-$.each(data,function(i, v) {
-var quotQty = '<input  type="text"  class="form-control" onkeypress="return allowOnlyNumber(event);" id="quot_qty'+v.itemId+'" name="quot_qty'+v.itemId+'"  value="'+v.quotQty+'" />'
-var finalAmt = '<input  type="text"   class="form-control"   id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
-var transCost='<input  type="text"  class="form-control" value='+v.transCost+'  onkeypress="return allowOnlyNumber(event);" id="trans_cost'+v.itemId+'" name="trans_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
-var tollCosta='<input  type="text" value='+tollCost+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="toll_cost'+v.itemId+'" name="toll_cost'+v.itemId+'"/>'
-var otherCost='<input  type="text" value='+v.otherCost+' class="form-control"  onkeypress="return allowOnlyNumber(event);" id="other_cost'+v.itemId+'" name="other_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
-var taxable='<input  type="text" value='+v.taxableValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="taxable_amt'+v.itemId+'" name="taxable_amt'+v.itemId+'"/>'
-var tax='<input  type="text" value='+v.taxValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="tax_amt'+v.itemId+'" name="tax_amt'+v.itemId+'"/>'
-var costAfTax='<input  type="text" value='+v.otherCostAfterTax+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
-var finalAmt='<input  type="text" value='+v.finalTotal+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
-var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
-							+ v.itemId
-							+ ','
-							+ i
-							+ ')" style="color:black"><i class="fa fa-trash-o"></i></a>&nbsp;&nbsp;<a href="#"  class="action_btn" onclick="callItemDetail('
-							+ v.itemId
-							+ ','
-							+ i
-							+ ')" style="color:black"><i class="fa fa-list"></i></a>' 
-							
-							//var itemRateDiv = '<div id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'">+'v.itemRate1+'</div>'
-							var itemRateDiv = '<input  type="text"   class="form-control" value='+v.itemRate1+'  id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'"/>'
 
-					dataTable.row
-							.add(
-									[
-											i + 1,
-											v.itemName,
-											quotQty,
-										//	v.enqUomName,
-											transCost,
-											//tollCosta,
-											otherCost,
-											itemRateDiv,
-											v.royaltyRate,
-											v.totalTaxPer,
-											taxable,
-											tax,
-											costAfTax,
-											finalAmt,
-											acButton
-											 ])
-							.draw();
-				}); 
-
-calcAll();
-
-		
-	}
-	</script>
 	<script type="text/javascript">
 	
 	function getNewItems(args){
@@ -1336,11 +1261,13 @@ calcAll();
 
 	<script type="text/javascript">
 	
-	function callItemDetail(itemId,indexKey){
+	function callItemDetail(itemId,indexKey,quotDetailId){
+		
 		
 		 $.getJSON('${getRmcQuotItemDetail}', {
 			 itemId : itemId,
 			 indexKey :indexKey,
+			 quotDetailId : quotDetailId,
 				ajax : 'true',
 			},
 
@@ -1381,6 +1308,11 @@ calcAll();
 	}); 
 		 
 	}
+	
+	
+	
+	
+	
 	function calcAmt(detailId,itemWt,index){
 				var opRate=document.getElementById('op_rate'+detailId).value;
 		
@@ -1406,7 +1338,8 @@ calcAll();
 	</script>
 	<script type="text/javascript">
 function submitAmt(){
-		
+	
+	
 		 $.getJSON('${getMixItemRate}', {
 				ajax : 'true',
 
@@ -1553,42 +1486,6 @@ function submitAmt(){
 	}
 	</script>
 
-	<script type="text/javascript">
-	function sendEmailByBillHeadId(billHeadId,custId){
-		var isValid=true;
-		if(billHeadId==0){
-			
-		}
-		else{
-			
-			
-		
-				window
-				.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-						+ billHeadId);
-				
-				$
-				/* .getJSON(
-						'${sendEmailByBillId}',
-						{
-							billHeadId : billHeadId,
-							custId : custId,
-							ajax : 'true',
-
-						},
-						function(data) {
-							
-						});
-				
-				
-				 */
-			
-			
-			
-			
-		}
-	}
-	</script>
 
 
 	<script type="text/javascript">
@@ -1625,364 +1522,10 @@ function submitAmt(){
 	} 
 	</script>
 
-	<!-- 	<script type="text/javascript">
-
-        $(document).ready(function(){
-
-            $('input[type="checkbox"]').click(function(){
-
-                if($(this).prop("checked") == true){
-
-                   // alert("Checkbox is checked.");
-
-                }
-
-                else if($(this).prop("checked") == false){
-
-                    // alert("Checkbox is unchecked.");
-
-                }
-
-            });
-            
-            
-            
-
-        });
-
-    </script> -->
 
 
-	<!-- <script type="text/javascript">
-		function getData() {
-			var plantId = document.getElementById("plant_id").value;
-			document.getElementById("isEdit").value = 0;
-			var valid = true;
 
-			if (plantId == null || plantId == "") {
-				valid = false;
-				alert("Please Select plant");
-			}
 
-			if (valid == true) {
-
-				$.getJSON('${getItemsByPlantId}', {
-
-					plantId : plantId,
-					ajax : 'true',
-
-				},
-
-				function(data) {
-					var html;
-					var len = data.length;
-					var html = '<option value="-1"  >Select Item</option>';
-					for (var i = 0; i < len; i++) {
-
-						html += '<option value="' + data[i].itemId + '">'
-								+ data[i].itemName + '</option>';
-					}
-					html += '</option>';
-
-					$('#item_name').html(html);
-					$("#item_name").trigger("chosen:updated");
-
-				});
-
-				$.getJSON('${getCustByPlantId}', {
-					plantId : plantId,
-					ajax : 'true',
-				},
-
-				function(data) {
-					var html;
-					var len = data.length;
-					for (var i = 0; i < len; i++) {
-
-						html += '<option value="' + data[i].custId + '">'
-								+ data[i].custName + '</option>';
-
-					}
-					html += '</option>';
-
-					$('#cust_name').html(html);
-					$("#cust_name").trigger("chosen:updated");
-
-				});
-
-			}//end of if
-
-		}
-	</script>
-
-	<script type="text/javascript">
-		function setSelectedUom(itemId) {
-
-			if (itemId == -1) {
-				document.getElementById("qty").value = "";
-				document.getElementById("item_remark").value = "";
-				document.getElementById("item_name").options.selectedIndex = "0";
-				document.getElementById("uomId").options.selectedIndex = "0";
-				$("#uomId").trigger("chosen:updated");
-				$("#item_name").trigger("chosen:updated");
-				document.getElementById("isEdit").value = "0";
-				document.getElementById("itemUomId").value = "0";
-				document.getElementById("item_rate").value = "0"
-			} else {
-				$
-						.getJSON(
-								'${getItemByItemId}',
-								{
-									itemId : itemId,
-									ajax : 'true',
-								},
-
-								function(data) {
-									document.getElementById("uomId").value = data.uomId;
-									$("#uomId").trigger("chosen:updated");
-									document.getElementById("itemUomId").value = data.uomId;
-									document.getElementById("item_rate").value = data.itemRate1;
-								});
-			}
-		}
-	</script> -->
-
-	<!-- <script type="text/javascript">
-		function addItem() {
-			//alert("in add Item ");
-			var itemId = document.getElementById("item_name").value;
-			var itemName = $("#item_name option:selected").html();
-			var uomId = document.getElementById("uomId").value;
-			var uomName = $("#uomId option:selected").html();
-			var qty = document.getElementById("qty").value;
-			var isEdit = document.getElementById("isEdit").value;
-			var itemRemark = document.getElementById("item_remark").value;
-			var itemUomId = document.getElementById("itemUomId").value;
-			var x = false;
-			var y = false;
-			x = isNaN(qty);
-
-			var plantId = document.getElementById("plant_id").value;
-			var valid = false;
-
-			if (plantId == null || plantId == "") {
-				valid = true;
-				var msg = "Please Select plant";
-				callAlert(msg);
-			}
-
-			else if (itemId == "" || itemId < 0) {
-				valid = true;
-				var msg = "Please Select Item Name";
-				callAlert(msg);
-			} else if ((x == true) || (qty == null) || (qty == "") || (qty < 0)) {
-				var msg = "Please Enter Valid Quantity";
-				valid = true;
-				callAlert(msg);
-			}
-
-			//alert("x=" +x + "y= " +y);
-			if (valid == false) {
-				alert("Inside add ajax");
-				$
-						.getJSON(
-								'${addEnqItem}',
-								{
-									isEdit : isEdit,
-									key : -1,
-									itemId : itemId,
-									itemName : itemName,
-									uomId : uomId,
-									uomName : uomName,
-									qty : qty,
-									itemRemark : itemRemark,
-									itemUomId : itemUomId,
-									ajax : 'true',
-
-								},
-
-								function(data) {
-									var dataTable = $('#bootstrap-data-table')
-											.DataTable();
-									dataTable.clear().draw();
-
-									$
-											.each(
-													data,
-													function(i, v) {
-														if (v.isDuplicate == 1) {
-															alert("Item Already Added in Enquiry");
-														}
-														//var str = '<input  type="button"  class="fa  fa-stack-exchange" onclick="callEdit('+v.itemId+','+i+')" style="width:100%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:100%;"/> ';
-
-														var str = '<a href="#" class="action_btn" onclick="callDelete('
-																+ v.itemId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-																+ v.itemId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-edit"></i></a>'
-
-														dataTable.row
-																.add(
-																		[
-																				i + 1,
-																				v.itemName,
-																				v.uomName,
-																				v.enqQty,
-																				str ])
-																.draw();
-													});
-									document.getElementById("qty").value = "";
-									document.getElementById("item_remark").value = "";
-									document.getElementById("item_name").options.selectedIndex = "0";
-									document.getElementById("uomId").options.selectedIndex = "0";
-									$("#uomId").trigger("chosen:updated");
-									$("#item_name").trigger("chosen:updated");
-									document.getElementById("isEdit").value = 0;
-									document.getElementById("itemUomId").value = "0";
-									document.getElementById("item_rate").value = "0"
-								});
-
-			}//end of if
-			else {
-
-			}
-		}
-
-		function callEdit(itemId, index) {
-			$
-					.getJSON(
-							'${getItemForEdit}',
-							{
-								itemId : itemId,
-								index : index,
-								ajax : 'true',
-
-							},
-							function(data) {
-
-								document.getElementById("uomId").value = data.uomId;
-								$("#uomId").trigger("chosen:updated");
-								document.getElementById("qty").value = data.enqQty;
-								document.getElementById("item_remark").value = data.itemEnqRemark;
-								document.getElementById("item_name").value = data.itemId;
-								$("#item_name").trigger("chosen:updated");
-								document.getElementById("isEdit").value = 1;
-								document.getElementById("itemUomId").value = data.itemUomId;
-								document.getElementById("item_rate").value = data.itemRate1;
-							});
-
-		}
-
-		function callDelete(itemId, index) {
-			document.getElementById("isEdit").value = 0;
-
-			$
-					.getJSON(
-							'${addEnqItem}',
-							{
-								isEdit : 0,
-								key : index,
-								ajax : 'true',
-
-							},
-
-							function(data) {
-								var dataTable = $('#bootstrap-data-table')
-										.DataTable();
-								dataTable.clear().draw();
-								$
-										.each(
-												data,
-												function(i, v) {
-													//	var str = '<input  type="button" value="callEdit" onclick="callEdit('+v.itemId+','+i+')" style="width:30%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:30%;"/> ';
-													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.itemId
-															+ ','
-															+ i
-															+ ')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.itemId
-															+ ','
-															+ i
-															+ ')"><abbr title="Edit"><i class="fa fa-edit"></i></abbr></a>'
-
-													dataTable.row.add(
-															[ i + 1,
-																	v.itemName,
-																	v.uomName,
-																	v.enqQty,
-																	str ])
-															.draw();
-												});
-							});
-
-			document.getElementById("qty").value = "";
-			document.getElementById("item_remark").value = "";
-			document.getElementById("item_name").options.selectedIndex = "0";
-			document.getElementById("uomId").options.selectedIndex = "0";
-			$("#uomId").trigger("chosen:updated");
-			$("#item_name").trigger("chosen:updated");
-			document.getElementById("item_rate").value = "0";
-		}
-		function validate(s) {
-			var rgx = /^[0-9]*\.?[0-9]*$/;
-			return s.match(rgx);
-		}
-		function callAlert(msg) {
-			alert(msg);
-		}
-		
-	</script> -->
-
-	<!-- <script type="text/javascript">
-		$(document).ready(function() {
-			var dataTable = $('#bootstrap-data-table').DataTable();
-				columnDefs : [ {
-					targets : [ 1,2],
-					className : "right"
-				}, ]
-			
-		});
-	</script> -->
-
-	<!-- <script>
-// Get the modal
-var modal = document.getElementById('myModal');
-
-// Get the button that opens the modal
-var btn = document.getElementById("quot_doc_term_id");
-
-// Get the <span> element that closes the modal
- var span = document.getElementById("close");
-
-// When the user clicks the button, open the modal 
-btn.change = function() {
-	
-		modal.style.display = "block";
-	    //itemByIntendId(); 
-	    //getValue();
-	
-    
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    modal.style.display = "none"; 
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-        
-    }
-}
-
-</script>
- -->
 
 	<script type="text/javascript">
 	

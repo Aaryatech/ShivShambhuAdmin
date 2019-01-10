@@ -71,6 +71,7 @@ import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.master.User;
 import com.ats.ssgs.model.order.GetOrder;
 import com.ats.ssgs.model.prodrm.RmcQuotItemDetail;
+import com.ats.ssgs.model.prodrm.RmcQuotTemp;
 import com.ats.ssgs.model.quot.GetItemWithEnq;
 import com.ats.ssgs.model.quot.GetQuotHeads;
 import com.ats.ssgs.model.quot.QuotDetail;
@@ -105,8 +106,10 @@ public class QuotController {
 	List<DocTermHeader> docTermList;
 	int quotHeadIdPdf = 0;
 	int pdfCustId = 0;
+	int quotDetailId = 0;
 
 	List<RmcQuotItemDetail> rmcQuotItemList;
+	List<RmcQuotTemp> rmcQuotTempList;
 
 	// Ajax call 4 Jan 2019
 	@RequestMapping(value = "/getRmcQuotItemDetail", method = RequestMethod.GET)
@@ -117,13 +120,46 @@ public class QuotController {
 
 		int itemId = Integer.parseInt(request.getParameter("itemId"));
 		int indexKey = Integer.parseInt(request.getParameter("indexKey"));
+		quotDetailId = Integer.parseInt(request.getParameter("quotDetailId"));
 
+		System.out.println("quotDetailId" + quotDetailId);
+		rmcQuotItemList = new ArrayList<>();
 		if (indexKey >= 0) {
-			map.add("itemId", itemId);
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("quotDetailId", quotDetailId);
 
-			RmcQuotItemDetail[] rmcItem = rest.postForObject(Constants.url + "getRmcQuotItemDetail", map,
-					RmcQuotItemDetail[].class);
-			rmcQuotItemList = new ArrayList<RmcQuotItemDetail>(Arrays.asList(rmcItem));
+			RmcQuotTemp[] rmcItemQuot = rest.postForObject(Constants.url + "getTempItemDetailByQuotDetailId", map,
+					RmcQuotTemp[].class);
+			rmcQuotTempList = new ArrayList<RmcQuotTemp>(Arrays.asList(rmcItemQuot));
+
+			for (int i = 0; i < rmcQuotTempList.size(); i++) {
+
+				RmcQuotItemDetail rmc = new RmcQuotItemDetail();
+				rmc.setAmt(rmcQuotTempList.get(i).getAmt());
+				rmc.setItemCode(rmcQuotTempList.get(i).getItemCode());
+				rmc.setItemDesc(rmcQuotTempList.get(i).getItemDesc());
+				rmc.setItemDetailId(rmcQuotTempList.get(i).getItemDetailId());
+				rmc.setItemId(rmcQuotTempList.get(i).getItemId());
+				rmc.setItemName(rmcQuotTempList.get(i).getItemName());
+				rmc.setItemOpRate(rmcQuotTempList.get(i).getItemOpRate());
+				rmc.setItemWt(rmcQuotTempList.get(i).getItemWt());
+				rmc.setRmId(rmcQuotTempList.get(i).getRmId());
+				rmc.setRmQty(rmcQuotTempList.get(i).getRmQty());
+				rmc.setUnitRate(rmcQuotTempList.get(i).getUnitRate());
+				rmc.setUom(rmcQuotTempList.get(i).getUom());
+				rmcQuotItemList.add(rmc);
+
+			}
+
+			if (rmcQuotItemList.isEmpty()) {
+
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("itemId", itemId);
+
+				RmcQuotItemDetail[] rmcItem = rest.postForObject(Constants.url + "getRmcQuotItemDetail", map,
+						RmcQuotItemDetail[].class);
+				rmcQuotItemList = new ArrayList<RmcQuotItemDetail>(Arrays.asList(rmcItem));
+			}
 		}
 		System.err.println("Ajax rmcQuotItemList  List " + rmcQuotItemList.toString());
 
@@ -177,6 +213,38 @@ public class QuotController {
 			}
 
 			itemEnq.setItemRate1(itemRate);
+
+			if (quotDetailId != 0) {
+
+				for (int i = 0; i < rmcQuotItemList.size(); i++) {
+					RmcQuotTemp rmc = new RmcQuotTemp();
+
+					rmc.setAmt(rmcQuotItemList.get(i).getAmt());
+					rmc.setItemCode(rmcQuotItemList.get(i).getItemCode());
+					rmc.setItemDesc(rmcQuotItemList.get(i).getItemDesc());
+					rmc.setItemDetailId(rmcQuotItemList.get(i).getItemDetailId());
+					rmc.setItemId(rmcQuotItemList.get(i).getItemId());
+					rmc.setItemName(rmcQuotItemList.get(i).getItemName());
+					rmc.setItemOpRate(rmcQuotItemList.get(i).getItemOpRate());
+					rmc.setItemWt(rmcQuotItemList.get(i).getItemWt());
+					rmc.setRmId(rmcQuotItemList.get(i).getRmId());
+					rmc.setRmQty(rmcQuotItemList.get(i).getRmQty());
+					rmc.setUnitRate(rmcQuotItemList.get(i).getUnitRate());
+					rmc.setUom(rmcQuotItemList.get(i).getUom());
+					rmc.setQuotDetailId(quotDetailId);
+					rmc.setDelStatus(1);
+
+					rmcQuotTempList.add(rmc);
+
+				}
+
+				System.out.println(rmcQuotTempList.toString());
+
+				List<RmcQuotTemp> rmcItemQuot = rest.postForObject(Constants.url + "saveTempItemDetail",
+						rmcQuotTempList, List.class);
+				System.out.println("rmcItemQuot" + rmcItemQuot.toString());
+			}
+
 		} catch (Exception e) {
 			System.err.println("Exce in getMixItemRate " + e.getMessage());
 			e.printStackTrace();
@@ -253,7 +321,7 @@ public class QuotController {
 
 			model = new ModelAndView("quot/quotListNew");
 
-			model.addObject("title", "Quotation List CustomerWise");
+			model.addObject("title", "Quotation List");
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
@@ -1319,9 +1387,9 @@ public class QuotController {
 		String url = request.getParameter("url");
 		System.out.println("URL " + url);
 
-		//File f = new File("/home/lenovo/quot.pdf");
+		// File f = new File("/home/lenovo/quot.pdf");
 
-		 File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf");
+		File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1340,12 +1408,11 @@ public class QuotController {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 
-		//String filename = "/home/lenovo/quot.pdf";
-		 String filename = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
-		
-		
+		// String filename = "/home/lenovo/quot.pdf";
+		String filename = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
+
 		String filePath = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
-		//String filePath = "/home/lenovo/quot.pdf";
+		// String filePath = "/home/lenovo/quot.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file
@@ -1453,8 +1520,8 @@ public class QuotController {
 						mimeMessage.setContent(multipart);
 
 						Transport.send(mimeMessage);
-						pdfCustId=0;
-						quotHeadIdPdf=0;
+						pdfCustId = 0;
+						quotHeadIdPdf = 0;
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

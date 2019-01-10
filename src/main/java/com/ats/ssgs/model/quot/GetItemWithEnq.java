@@ -1,8 +1,7 @@
 package com.ats.ssgs.model.quot;
 
-
 public class GetItemWithEnq {
-	
+
 	private int itemId;
 
 	private String itemName;
@@ -95,35 +94,33 @@ public class GetItemWithEnq {
 	private String hsnCode;
 	private String uomName;
 	private String plantName;
-	
-	private float enqQty; 
-	
+
+	private float enqQty;
+
 	private float enqUomId;
-	
+
 	private String enqUomName;
-	 
-	
-	private float otherCostAfterTax;//19-11-18
-	private float transCost;//19-11-18
-	private float otherCost;//19-11-18
-	private float quotQty;//19-11-18
-	
-	private float taxableValue;//19-11-18
-	private float taxValue;//19-11-18
-	private float finalTotal;//19-11-18
 
-private String tempMsg;//temp;
+	private float otherCostAfterTax;// 19-11-18
+	private float transCost;// 19-11-18
+	private float otherCost;// 19-11-18
+	private float quotQty;// 19-11-18
 
+	private float taxableValue;// 19-11-18
+	private float taxValue;// 19-11-18
+	private float finalTotal;// 19-11-18
 
-	
-	
+	private String tempMsg;// temp;
+
+	private int quotDetailId;// 2019/01/01
+
 	public String getTempMsg() {
-	return tempMsg;
-}
+		return tempMsg;
+	}
 
-public void setTempMsg(String tempMsg) {
-	this.tempMsg = tempMsg;
-}
+	public void setTempMsg(String tempMsg) {
+		this.tempMsg = tempMsg;
+	}
 
 	public float getTaxableValue() {
 		return taxableValue;
@@ -190,7 +187,7 @@ public void setTempMsg(String tempMsg) {
 	private float sgst;
 
 	private float cess;
-	
+
 	public float getTotalTaxPer() {
 		return totalTaxPer;
 	}
@@ -622,7 +619,7 @@ public void setTempMsg(String tempMsg) {
 	public void setPlantName(String plantName) {
 		this.plantName = plantName;
 	}
- 
+
 	public float getEnqQty() {
 		return enqQty;
 	}
@@ -637,6 +634,14 @@ public void setTempMsg(String tempMsg) {
 
 	public void setEnqUomId(float enqUomId) {
 		this.enqUomId = enqUomId;
+	}
+
+	public int getQuotDetailId() {
+		return quotDetailId;
+	}
+
+	public void setQuotDetailId(int quotDetailId) {
+		this.quotDetailId = quotDetailId;
 	}
 
 	@Override
@@ -658,8 +663,8 @@ public void setTempMsg(String tempMsg) {
 				+ ", enqUomId=" + enqUomId + ", enqUomName=" + enqUomName + ", otherCostAfterTax=" + otherCostAfterTax
 				+ ", transCost=" + transCost + ", otherCost=" + otherCost + ", quotQty=" + quotQty + ", taxableValue="
 				+ taxableValue + ", taxValue=" + taxValue + ", finalTotal=" + finalTotal + ", tempMsg=" + tempMsg
-				+ ", totalTaxPer=" + totalTaxPer + ", cgst=" + cgst + ", igst=" + igst + ", sgst=" + sgst + ", cess="
-				+ cess + "]";
+				+ ", quotDetailId=" + quotDetailId + ", totalTaxPer=" + totalTaxPer + ", cgst=" + cgst + ", igst="
+				+ igst + ", sgst=" + sgst + ", cess=" + cess + "]";
 	}
 
 }

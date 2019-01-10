@@ -1,8 +1,11 @@
 package com.ats.ssgs.model.prodrm;
 
-public class RmcQuotItemDetail {
-
+public class RmcQuotTemp {
+	
 	private int itemDetailId;
+	private int tempDetailId;
+	private int delStatus;
+	private int quotDetailId;
 
 	private int rmId;
 
@@ -121,13 +124,40 @@ public class RmcQuotItemDetail {
 	public void setAmt(float amt) {
 		this.amt = amt;
 	}
+	
+
+	public int getTempDetailId() {
+		return tempDetailId;
+	}
+
+	public void setTempDetailId(int tempDetailId) {
+		this.tempDetailId = tempDetailId;
+	}
+
+	public int getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
+	}
+
+	public int getQuotDetailId() {
+		return quotDetailId;
+	}
+
+	public void setQuotDetailId(int quotDetailId) {
+		this.quotDetailId = quotDetailId;
+	}
 
 	@Override
 	public String toString() {
-		return "RmcQuotItemDetail [itemDetailId=" + itemDetailId + ", rmId=" + rmId + ", rmQty=" + rmQty
-				+ ", itemOpRate=" + itemOpRate + ", itemWt=" + itemWt + ", itemCode=" + itemCode + ", itemDesc="
-				+ itemDesc + ", uom=" + uom + ", itemId=" + itemId + ", itemName=" + itemName + ", unitRate=" + unitRate
-				+ ", amt=" + amt + "]";
+		return "RmcQuotTemp [itemDetailId=" + itemDetailId + ", tempDetailId=" + tempDetailId + ", delStatus="
+				+ delStatus + ", quotDetailId=" + quotDetailId + ", rmId=" + rmId + ", rmQty=" + rmQty + ", itemOpRate="
+				+ itemOpRate + ", itemWt=" + itemWt + ", itemCode=" + itemCode + ", itemDesc=" + itemDesc + ", uom="
+				+ uom + ", itemId=" + itemId + ", itemName=" + itemName + ", unitRate=" + unitRate + ", amt=" + amt
+				+ "]";
 	}
+
 
 }
