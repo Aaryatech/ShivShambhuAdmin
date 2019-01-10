@@ -398,20 +398,20 @@ background-color: transparent;
 								function(data) {
 									alert("hi");
 
-									document.getElementById("totalEnq").innerText = data.totalEnq;
-									document.getElementById("totalQuotPending").innerText = data.totalQuotPending;
+									document.getElementById("totalEnq").innerText = data.totalEnq.toFixed(2);
+									document.getElementById("totalQuotPending").innerText = data.totalQuotPending.toFixed(2);
 									document
-											.getElementById("totalQuotGenerated").innerText = data.totalQuotGenerated;
-									document.getElementById("totalPoPending").innerText = data.totalPoPending;
-									document.getElementById("totalOrderAmount").innerText = data.totalOrderAmount;
-									document.getElementById("totalNoOfOrders").innerText = data.totalNoOfOrders;
-									document.getElementById("totalBillAmount").innerText = data.totalBillAmount;
-									document.getElementById("totalTaxBillAmt").innerText = data.totalTaxBillAmt;
+											.getElementById("totalQuotGenerated").innerText = data.totalQuotGenerated.toFixed(2);
+									document.getElementById("totalPoPending").innerText = data.totalPoPending.toFixed(2);
+									document.getElementById("totalOrderAmount").innerText = data.totalOrderAmoun.toFixed(2)t;
+									document.getElementById("totalNoOfOrders").innerText = data.totalNoOfOrders.toFixed(2);
+									document.getElementById("totalBillAmount").innerText = data.totalBillAmount.toFixed(2);
+									document.getElementById("totalTaxBillAmt").innerText = data.totalTaxBillAmt.toFixed(2);
 									document
-											.getElementById("totalTaxableBillAmt").innerText = data.totalTaxableBillAmt;
-									document.getElementById("paymentRecPaid").innerText = data.paymentRecPaid;
+											.getElementById("totalTaxableBillAmt").innerText = data.totalTaxableBillAmt.toFixed(2);
+									document.getElementById("paymentRecPaid").innerText = data.paymentRecPaid.toFixed(2);
 									document
-											.getElementById("paymentRecOutstandingPending").innerText = data.paymentRecOutstandingPending;
+											.getElementById("paymentRecOutstandingPending").innerText = data.paymentRecOutstandingPending.toFixed(2);
 
 								});
 

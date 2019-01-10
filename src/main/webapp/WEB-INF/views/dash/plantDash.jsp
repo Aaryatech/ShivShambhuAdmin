@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 
 
 <!doctype html>
@@ -131,7 +133,7 @@ background-color: transparent;
 					<div class="card">
 						<div class="card-header">
 							<div class="col-md-2">
-								<strong>Crushing Plant</strong>
+								<strong style="color: black">Crushing Plant</strong>
 							</div>
 
 						</div>
@@ -291,7 +293,7 @@ background-color: transparent;
 					<div class="card">
 						<div class="card-header">
 							<div class="col-md-2">
-								<strong>Rubber Mold Plant</strong>
+								<strong style="color: black">Rubber Mold Plant</strong>
 							</div>
 
 						</div>
@@ -428,7 +430,7 @@ background-color: transparent;
 					<div class="card">
 						<div class="card-header">
 							<div class="col-md-2">
-								<strong>RMC Plant</strong>
+								<strong style="color: black">RMC Plant</strong>
 							</div>
 
 						</div>
@@ -650,23 +652,23 @@ background-color: transparent;
 								function(data) {
 									//alert("hi");
 
-									document.getElementById("totalBillAmount").innerText = data.totalBillAmount;
-									document.getElementById("contrExpenses").innerText = data.contrExpenses;
+									document.getElementById("totalBillAmount").innerText = data.totalBillAmount.toFixed(2);
+									document.getElementById("contrExpenses").innerText = data.contrExpenses.toFixed(2);
 									document
-											.getElementById("vehExpenses").innerText = data.vehExpenses;
-									document.getElementById("totalBillAmtRubber").innerText = data.totalBillAmtRubber;
-									document.getElementById("totalIssueExpenses").innerText = data.totalIssueExpenses;
-									document.getElementById("totalBillAmtRmc").innerText = data.totalBillAmtRmc;
-									document.getElementById("totalIssueExpRmc").innerText = data.totalIssueExpRmc;
+											.getElementById("vehExpenses").innerText = data.vehExpenses.toFixed(2);
+									document.getElementById("totalBillAmtRubber").innerText = data.totalBillAmtRubber.toFixed(2);
+									document.getElementById("totalIssueExpenses").innerText = data.totalIssueExpenses.toFixed(2);
+									document.getElementById("totalBillAmtRmc").innerText = data.totalBillAmtRmc.toFixed(2);
+									document.getElementById("totalIssueExpRmc").innerText = data.totalIssueExpRmc.toFixed(2);
 									document
-											.getElementById("paymentRecPaid").innerText = data.paymentRecPaid;
-									document.getElementById("paymentRecOutstandingPending").innerText = data.paymentRecOutstandingPending;
+											.getElementById("paymentRecPaid").innerText = data.paymentRecPaid.toFixed(2);
+									document.getElementById("paymentRecOutstandingPending").innerText = data.paymentRecOutstandingPending.toFixed(2);
 									document
-											.getElementById("otherExpTotal").innerText = data.otherExpTotal;
+											.getElementById("otherExpTotal").innerText = data.otherExpTotal.toFixed(2);
 									document
-									.getElementById("otherExpTotalRubber").innerText = data.otherExpTotalRubber;
+									.getElementById("otherExpTotalRubber").innerText = data.otherExpTotalRubber.toFixed(2);
 									document
-									.getElementById("otherExpTotalRmc").innerText = data.otherExpTotalRmc;
+									.getElementById("otherExpTotalRmc").innerText = data.otherExpTotalRmc.toFixed(2);
 
 								});
 
