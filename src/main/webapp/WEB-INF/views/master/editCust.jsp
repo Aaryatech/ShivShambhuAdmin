@@ -290,11 +290,11 @@
 
 									<div class="col-md-4">
 										<input type="text" id="dob" name="dob" class="form-control"
-											autocomplete="off" value="${editCust.custDob}"
+											autocomplete="off" value="${DOB}"
 											onchange="checkDOB()" style="width: 100%;">
 									</div>
 
-									<%-- <div class="col-md-2">Customer Code</div>
+									 <div class="col-md-2">Customer Code</div>
 
 									<div class="col-md-4">
 										<input type="text" id="cust_code" name="cust_code"
@@ -303,7 +303,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editCust.custCode}" class="form-control"
 											style="width: 100%;">
-									</div> --%>
+									</div> 
 
 									<div class="col-md-2">Kilometer</div>
 									<div class="col-md-4">
@@ -505,6 +505,24 @@
 
 								</div>
 								<div class="form-group"></div>
+								
+								
+								<div class="row">
+
+									
+									 <div class="col-md-2">Customer Code</div>
+
+									<div class="col-md-4">
+										<input type="text" id="cust_code" name="cust_code"
+											pattern="[0-9]+" maxlength="6" autocomplete="off" readonly
+											oninvalid="setCustomValidity('Please enter Customer code')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											 value="${editCust.custCode}" 
+											class="form-control" style="width: 100%;">
+									</div>
+								</div>	
+
+	<div class="form-group"></div>
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
 									<input type="submit" class="btn btn-primary" value="Submit"

@@ -258,7 +258,8 @@
 									<tr>
 
 										<th style="text-align: center"><input type="checkbox"
-											id="selectAll" /> Sr.No.</th>
+											id="selectAll" /></th>
+												<th style="text-align: center">Sr.</th>
 										<th style="text-align: center">Bill No</th>
 										<th style="text-align: center">Bill Date</th>
 										<th style="text-align: center">Customer Name</th>
@@ -274,9 +275,9 @@
 									<c:forEach items="${getBillList}" var="bill" varStatus="count">
 										<tr>
 											<td><input type="checkbox" class="chk" name="quotIds"
-												id="quotIds${count.index+1}" value="${bill.billHeadId}" />${count.index+1}</td>
+												id="quotIds${count.index+1}" value="${bill.billHeadId}" /></td>
 
-											<%-- 		<td style="text-align: center">${count.index+1}</td> --%>
+													<td style="text-align: center">${count.index+1}</td> 
 
 
 											<td style="text-align: left"><c:out
@@ -541,9 +542,9 @@
 														dataTable.row
 																.add(
 																		[
-																				checkB
-																						+ ''
-																						+ (i + 1),
+																				checkB,
+																						
+																			 (i + 1),
 																				v.billNo,
 																				v.billDate,
 																				v.custName,

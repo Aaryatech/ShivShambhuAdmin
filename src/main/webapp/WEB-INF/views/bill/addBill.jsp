@@ -352,8 +352,8 @@
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
 												<th style="text-align: center">Rate</th>
-												<th style="text-align: center">Chalan Qty</th>
-												<th style="text-align: center">Qty</th>
+												<th style="text-align: center" width="8%">Chalan Qty</th>
+												<th style="text-align: center" width="15%" >Qty</th>
 												<th style="text-align: center">Disc %</th>
 												<th style="text-align: center">Taxable Amt</th>
 												<th style="text-align: center">Disc Amt</th>
@@ -856,11 +856,11 @@ $
 			dataTable.clear().draw();
 			$.each(data,function(i, v) {
 
-		var chalanQty = '<input  type="text" value="0.0"  oninput="calculation('+i+','+v.itemId+')"   class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
+		var chalanQty = '<input  type="text" value="'+v.itemQty+'"  oninput="calculation('+i+','+v.itemId+')"   class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var discPer = '<input  type="text" value="0.0" oninput="calculation('+i+','+v.itemId+')" class="form-control"  id="discPer'+i+''+v.itemId+'" name="discPer'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var taxPer = '<input  type="text" readonly value="'+(v.cgstPer+v.sgstPer)+'" oninput="calculation('+i+','+v.itemId+')" class="form-control"  id="taxPer'+i+''+v.itemId+'" name="taxPer'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var rate = '<input  type="hidden" value="'+v.orderRate+'" class="form-control"  id="orderRate'+i+''+v.itemId+'" name="orderRate'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
-		var isTaxIncluding = '<input  type="hidden" value="'+v.isTaxIncluding+'" class="form-control"  id="isTaxIncluding'+i+''+v.itemId+'" name="isTaxIncluding'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
+		var isTaxIncluding = '<input  type="hidden" value="'+v.orderRate+'" class="form-control"  id="isTaxIncluding'+i+''+v.itemId+'" name="isTaxIncluding'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 
 		var discAmt = '<p id="discAmt'+i+''+v.itemId+'">0.0</p>'
 		var taxAmt = '<p id="taxAmt'+i+''+v.itemId+'">0.0</p>'

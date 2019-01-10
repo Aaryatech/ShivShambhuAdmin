@@ -24,10 +24,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
+import com.ats.ssgs.model.master.Code;
 import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.CustType;
 import com.ats.ssgs.model.master.Dept;
+import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.GetCust;
 import com.ats.ssgs.model.master.GetItem;
 import com.ats.ssgs.model.master.GetPlant;
@@ -1086,6 +1088,8 @@ public class MasterController {
 			custTypeList = new ArrayList<CustType>(Arrays.asList(custTypeArray));
 			System.err.println("custList In showAddPlant at Master Contr" + custTypeList);
 			model.addObject("custTypeList", custTypeList);
+			
+			
 
 		} catch (Exception e) {
 
@@ -1096,6 +1100,69 @@ public class MasterController {
 		}
 
 		return model;
+
+	}
+	
+	
+	
+	@RequestMapping(value = "/getCustCode", method = RequestMethod.GET)
+	public @ResponseBody Code getCustCode(HttpServletRequest request, HttpServletResponse response) {
+
+		Code code1=new Code();
+		ModelAndView model = null;
+		try {
+
+			int plantId=Integer.parseInt(request.getParameter("plantId"));
+			System.out.println("plant data is" + plantId);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			String var=null;
+			
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("plantId", plantId);
+
+			Plant pl = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+			String shortName = pl.getPlantFax1();
+			System.out.println("pl is " + pl.toString());
+			System.out.println("short name  " + shortName);
+
+			
+			
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("docCode", 9);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			
+			
+			System.out.println("doc data is" + doc);
+			int a=doc.getSrNo();
+			if(String.valueOf(a).length()==1) {
+				var="0000".concat(String.valueOf(a));
+				
+			}else if(String.valueOf(a).length()==2) {
+				var="000".concat(String.valueOf(a));
+				
+			}else if(String.valueOf(a).length()==3){
+				var="00".concat(String.valueOf(a));
+				
+			}
+			
+		
+			
+			code1.setCustCode(shortName.concat(var));
+		
+
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddCustomer at Master Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return code1;
 
 	}
 
@@ -1185,7 +1252,11 @@ public class MasterController {
 			cust.setRespPerson(refName);
 			cust.setPlantId(plantId);
 			cust.setIsSameState(sameState);
-
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("docCode", 9);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			
 			try {
 				String dob=request.getParameter("dob");
 				if(!dob.isEmpty())
@@ -1255,6 +1326,14 @@ public class MasterController {
 			// proj.setKm(Float.parseFloat(km));
 
 			Project projInsertRes = rest.postForObject(Constants.url + "saveProject", proj, Project.class);
+			
+			if(projInsertRes!=null) {
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("srNo", doc.getSrNo() + 1);
+			map.add("docCode", 9);
+			Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+			System.out.println("info is   updateDocSr " + updateDocSr);
+			}
 
 		} catch (Exception e) {
 
@@ -1333,6 +1412,11 @@ public class MasterController {
 
 			model.addObject("title", "Edit Customer");
 			model.addObject("editCust", editCust);
+			System.out.println("prev date: "+editCust.getCustDob());
+
+			model.addObject("DOB",DateConvertor.convertToDMY(editCust.getCustDob()));
+			
+			System.out.println("next date: "+DateConvertor.convertToDMY(editCust.getCustDob()));
 
 		} catch (Exception e) {
 

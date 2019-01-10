@@ -257,6 +257,7 @@
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Plant Name</th>
 												<th style="text-align: center">Quotation No</th>
+												<th style="text-align: center">Status</th>
 												<th style="text-align: center">Action</th>
 											</tr>
 										</thead>
@@ -277,7 +278,21 @@
 													<td style="text-align: left"><c:out
 															value="${poList.plantName}" /></td>
 													<td style="text-align: center">${poList.quatationNo}</td>
+														<td style="text-align: center">${poList.quatationNo}</td>
+	
+												<td style="text-align: left"><c:choose>
+														<c:when test="${status==0}">
+														 Pending
+													</c:when>
+														<c:when test="${status==1}">
+														Partial Used
+													</c:when>
+														<c:otherwise>
+														Closed
+													</c:otherwise>
 
+													</c:choose></td>
+												<td>
 
 													<td><a
 														href="${pageContext.request.contextPath}/editPo/${poList.poId}"><i
@@ -478,7 +493,19 @@
 													data,
 													function(i, v) {
 														var chBox;
-
+							                            var status1;
+							                            if(v.status==0){
+							                            	
+							                            	status1="Pending";
+							                            	
+							                            }else if(v.status==1){
+							                            	status1="Partially Used";
+							                            	
+							                            }
+							                            else if(v.status==2){
+							                            	status1="Closed";
+							                            	
+							                            }
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.poId
 																+ ','
@@ -496,6 +523,7 @@
 																				v.custName,
 																				v.plantName,
 																				v.quatationNo,
+																				status1,
 																				acButton ])
 																.draw();
 													});

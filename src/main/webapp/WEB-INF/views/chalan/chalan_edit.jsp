@@ -325,8 +325,8 @@
 									<div class="col-md-2">In Time</div>
 
 									<div class="col-md-4">
-										<input type="time" id="in_time" name="in_time" required
-											style="width: 100%;" class="form-control" value="${curTime}">
+										<input type="time" id="in_time" name="in_time" readonly
+											style="width: 100%;" class="form-control" value="${editChalan.vehTimeOut}">
 									</div>
 									<div class="col-md-2">In Kilometer</div>
 
@@ -334,7 +334,7 @@
 										<input type="text" id="in_km" name="in_km" required
 											onkeypress="return allowOnlyNumber(event);" 
 											style="width: 100%;" class="form-control" maxlength="10">
-										<span class="error" aria-live="polite"></span>
+										<span class="error" aria-live="polite" ></span>
 									</div>
 								</div>
 								<div class="form-group"></div>
@@ -465,7 +465,7 @@
 
 
 									<div class="col-md-2">
-										<input type="submit" class="btn btn-primary" value="Submit">
+										<input type="submit" class="btn btn-primary" value="Submit" onclick="checkKm()">
 
 									</div>
 
@@ -954,6 +954,37 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 			
 		});
 	</script> -->
+	
+	
+	
+	<script>
+		function checkKm(){
+			//alert("hii");
+
+			var out_km= document.getElementById("out_km").value;
+			var in_km= document.getElementById("in_km").value;
+			
+			//alert("out"+out_km);
+			//alert("in_km"+in_km);
+			
+			
+			var valid = true;
+			
+			
+			if (  in_km > out_km ) {
+
+				valid = false;
+			} 
+
+			if (valid == false) {
+				
+				alert("Enter In km less than Out km");
+				document.getElementById("in_km").value="";
+			}
+		}
+
+		
+	</script>
 
 </body>
 </html>

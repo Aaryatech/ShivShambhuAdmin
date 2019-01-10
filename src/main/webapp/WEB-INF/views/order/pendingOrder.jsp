@@ -262,6 +262,7 @@
 												<th style="text-align: center">Delivery Date</th>
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Customer Mobile No</th>
+												<th style="text-align: center">Status</th>
 
 												<!-- 												<th style="text-align: center">Status</th>
  -->
@@ -533,7 +534,13 @@
 													data,
 													function(i, v) {
 														var chBox;
-
+														var status1;
+														if(v.status==0){
+															status1="Pending";
+														}
+														else{
+															status1="Partial Pending";
+														}
 														if (v.status == 0) {
 															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																	+ v.orderId
@@ -568,6 +575,7 @@
 																				v.deliveryDate,
 																				v.custName,
 																				v.custMobNo,
+																				status1,
 
 																				acButton ])
 																.draw();
