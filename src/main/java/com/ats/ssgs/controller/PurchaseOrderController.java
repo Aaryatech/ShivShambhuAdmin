@@ -97,17 +97,17 @@ public class PurchaseOrderController {
 			System.out.println("short name  " + shortName);
 
 			model.addObject("shortName", shortName);
-			
-			int a=doc.getSrNo();
-			if(String.valueOf(a).length()==1) {
-				var="0000".concat(String.valueOf(a));
-				
-			}else if(String.valueOf(a).length()==2) {
-				var="000".concat(String.valueOf(a));
-				
-			}else if(String.valueOf(a).length()==3){
-				var="00".concat(String.valueOf(a));
-				
+
+			int a = doc.getSrNo();
+			if (String.valueOf(a).length() == 1) {
+				var = "0000".concat(String.valueOf(a));
+
+			} else if (String.valueOf(a).length() == 2) {
+				var = "000".concat(String.valueOf(a));
+
+			} else if (String.valueOf(a).length() == 3) {
+				var = "00".concat(String.valueOf(a));
+
 			}
 			System.out.println("doc data is" + doc);
 			model.addObject("var", var);
@@ -197,6 +197,16 @@ public class PurchaseOrderController {
 				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
 				System.out.println("info is   updateDocSr " + updateDocSr);
 
+				for (int i = 0; i < quotHeader.getGetQuotDetailList().size(); i++) {
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("quotDetailId", quotHeader.getGetQuotDetailList().get(i).getQuotDetailId());
+					map.add("quotNo", quotHeader.getQuotNo());
+					map.add("poNo", poNo);
+
+					Info updateQuotNo = rest.postForObject(Constants.url + "/updateQuotNoAndPoNo", map, Info.class);
+
+				}
+
 			}
 
 		} catch (Exception e) {
@@ -204,7 +214,7 @@ public class PurchaseOrderController {
 			e.printStackTrace();
 
 		}
-		return "redirect:/getPoList";
+		return "redirect:/showPoListByStatus";
 	}
 
 	@RequestMapping(value = "/getPoList", method = RequestMethod.GET)

@@ -393,6 +393,16 @@ public class OrderController {
 
 				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
 
+				for (int i = 0; i < poDetailForOrdList.size(); i++) {
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("quotDetailId", poDetailForOrdList.get(i).getQuDetailId());
+					map.add("orderNo", doc.getDocPrefix() + "" + doc.getSrNo());
+
+					Info updateQuotNo = rest.postForObject(Constants.url + "/updateOrderNo", map, Info.class);
+
+				}
+
+
 			} else {
 
 				isError = 1;

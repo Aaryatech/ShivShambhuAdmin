@@ -1,7 +1,7 @@
 package com.ats.ssgs.model.prodrm;
 
 public class RmcQuotTemp {
-	
+
 	private int itemDetailId;
 	private int tempDetailId;
 	private int delStatus;
@@ -28,6 +28,11 @@ public class RmcQuotTemp {
 	private float unitRate = 0;
 
 	private float amt = 0;
+
+	private String quotNo;
+	private String poNo;
+	private String chalanNo;
+	private String orderNo;
 
 	public int getItemDetailId() {
 		return itemDetailId;
@@ -124,7 +129,6 @@ public class RmcQuotTemp {
 	public void setAmt(float amt) {
 		this.amt = amt;
 	}
-	
 
 	public int getTempDetailId() {
 		return tempDetailId;
@@ -150,14 +154,46 @@ public class RmcQuotTemp {
 		this.quotDetailId = quotDetailId;
 	}
 
-	@Override
-	public String toString() {
-		return "RmcQuotTemp [itemDetailId=" + itemDetailId + ", tempDetailId=" + tempDetailId + ", delStatus="
-				+ delStatus + ", quotDetailId=" + quotDetailId + ", rmId=" + rmId + ", rmQty=" + rmQty + ", itemOpRate="
-				+ itemOpRate + ", itemWt=" + itemWt + ", itemCode=" + itemCode + ", itemDesc=" + itemDesc + ", uom="
-				+ uom + ", itemId=" + itemId + ", itemName=" + itemName + ", unitRate=" + unitRate + ", amt=" + amt
-				+ "]";
+	public String getQuotNo() {
+		return quotNo;
 	}
 
+	public void setQuotNo(String quotNo) {
+		this.quotNo = quotNo;
+	}
+
+	public String getPoNo() {
+		return poNo;
+	}
+
+	public void setPoNo(String poNo) {
+		this.poNo = poNo;
+	}
+
+	public String getChalanNo() {
+		return chalanNo;
+	}
+
+	public void setChalanNo(String chalanNo) {
+		this.chalanNo = chalanNo;
+	}
+
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	@Override
+	public String toString() {
+		return "RmcQuotTemp [tempDetailId=" + tempDetailId + ", itemDetailId=" + itemDetailId + ", rmId=" + rmId
+				+ ", rmQty=" + rmQty + ", itemOpRate=" + itemOpRate + ", itemWt=" + itemWt + ", itemCode=" + itemCode
+				+ ", itemDesc=" + itemDesc + ", uom=" + uom + ", itemId=" + itemId + ", itemName=" + itemName
+				+ ", unitRate=" + unitRate + ", amt=" + amt + ", delStatus=" + delStatus + ", quotDetailId="
+				+ quotDetailId + ", quotNo=" + quotNo + ", poNo=" + poNo + ", chalanNo=" + chalanNo + ", orderNo="
+				+ orderNo + "]";
+	}
 
 }

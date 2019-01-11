@@ -217,6 +217,20 @@ public class QuotController {
 			if (quotDetailId != 0) {
 
 				for (int i = 0; i < rmcQuotItemList.size(); i++) {
+					int tempDetailId = 0;
+					System.out.println("rmcQuotTempList" + rmcQuotTempList.toString());
+					for (int j = 0; j < rmcQuotTempList.size(); j++) {
+
+						if (rmcQuotTempList.get(j).getItemDetailId() == rmcQuotItemList.get(i).getItemDetailId()) {
+							try {
+								tempDetailId = rmcQuotTempList.get(j).getTempDetailId();
+
+							} catch (Exception e) {
+								tempDetailId = 0;
+
+							}
+						}
+					}
 					RmcQuotTemp rmc = new RmcQuotTemp();
 
 					rmc.setAmt(rmcQuotItemList.get(i).getAmt());
@@ -233,6 +247,7 @@ public class QuotController {
 					rmc.setUom(rmcQuotItemList.get(i).getUom());
 					rmc.setQuotDetailId(quotDetailId);
 					rmc.setDelStatus(1);
+					rmc.setTempDetailId(tempDetailId);
 
 					rmcQuotTempList.add(rmc);
 
@@ -1519,9 +1534,10 @@ public class QuotController {
 						multipart.addBodyPart(mbodypart);
 						mimeMessage.setContent(multipart);
 
-						Transport.send(mimeMessage);
 						pdfCustId = 0;
 						quotHeadIdPdf = 0;
+						Transport.send(mimeMessage);
+
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

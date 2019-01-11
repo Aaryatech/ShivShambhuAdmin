@@ -362,8 +362,9 @@ body {
 										<div class=" box-content">
 
 											<div
-												style="overflow: scroll; height: 50%; width: 50%; overflow: auto">
-												<table style="width: 100%" id="table_grid1">
+												style="overflow: scroll; height: 100%; width: 100%; overflow: auto">
+												<table style="width: 100%" id="table_grid1"
+													class="table table-striped table-bordered">
 													<thead>
 														<tr>
 															<th class="col-md-10">Terms And Condition</th>
@@ -394,8 +395,9 @@ body {
 										<div class=" box-content">
 
 											<div align="center"
-												style="overflow: scroll; height: 70%; width: 70%; overflow: auto;">
-												<table style="width: 100%;" id="table_grid2" border="1">
+												style="overflow: scroll; height: 100%; width: 100%; overflow: auto;">
+												<table class="table table-striped table-bordered"
+													style="width: 100%;" id="table_grid2" border="1">
 													<thead>
 														<tr>
 															<th width="2%">Sr.</th>
@@ -486,6 +488,8 @@ body {
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 								</div>
+								<input type="hidden" name="quotHeadStatus" id="quotHeadStatus"
+									value="0">
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -747,7 +751,8 @@ body {
 
 										<div class="col-md-1">
 											<input type="button" class="btn btn-primary"
-												onclick="valthisform()" value="Generate Quotation">
+												value="Generate Quotation" onclick="valthisform()">
+
 
 										</div>
 										<div class="col-md-2"></div>
@@ -1432,8 +1437,7 @@ function submitAmt(){
 	function valthisform()
 	{
 	    var okay=true;
-	    var quotHeadIdPdf=document.getElementById("quotHeadId").value;
-	    var quotStatus=document.getElementById("quotStatus").value;
+
 	    var quotTerm=document.getElementById("quot_doc_term_id").value;
 	    var payTerm=document.getElementById("pay_term_id").value;
 	  
@@ -1457,8 +1461,7 @@ function submitAmt(){
 	function valthisformUpdateQuot(){
 		
 		var okay=true;
-	    var quotHeadIdPdf=document.getElementById("quotHeadId").value;
-	    var quotStatus=document.getElementById("quotStatus").value;
+	   
 	    var quotTerm=document.getElementById("quot_doc_term_id").value;
 	    var payTerm=document.getElementById("pay_term_id").value;
 	  
@@ -1473,15 +1476,10 @@ function submitAmt(){
 	    }
 	    else if(okay){
 	    	document.getElementById("quotHeadStatus").value=0;
-
 	    	var form=document.getElementById("updateQuotation");
 	    	form.submit();
 	    	
-	    	
-			
-	    }
-		
-		
+    }
 		
 	}
 	</script>
