@@ -639,6 +639,8 @@ body {
 		         
 	           $("#newdriver").append("<input type='text' id='new_dri_veh' name='new_dri_veh' style='width:100%' oninput='setRemark()'/><br/>");
 			}else{
+				document.getElementById("chalan_remark").value="-";
+
 				  $("#out_div").hide();
 				  $("#newdriver").hide();
 			}

@@ -541,7 +541,7 @@
 														else{
 															status1="Partial Pending";
 														}
-														if (v.status == 0) {
+													
 															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																	+ v.orderId
 																	+ ','
@@ -558,11 +558,7 @@
 
 															chBox = '<input  type="checkbox" class="chk" name="selectOrderToDelete" id='+v.orderId+' class="check"  value='+v.orderId+'>'
 
-														} else {
-															//alert("status>0 " +v.orderNo)
-															chBox = '-'
-															var acButton = '<a href="#" class="action_btn" ><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"><i class="fa fa-trash" title="Delete"></i></a>'
-														}
+														
 
 														//var chBox='<input type="checkbox" id="orderId" class="chk" name="quotIds" value='+v.orderId+'/>'
 														dataTable.row

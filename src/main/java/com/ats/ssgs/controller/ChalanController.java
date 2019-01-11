@@ -522,29 +522,39 @@ public class ChalanController {
 	public @ResponseBody List<GetChalanHeader> getChalanListByPlant(HttpServletRequest request,
 			HttpServletResponse response) {
 		
+		System.out.println("1.....");
+		
+		
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
-		
+		int custId = Integer.parseInt(request.getParameter("custId"));
+
 		String fromDate=request.getParameter("fromDate");
 		String toDate=request.getParameter("toDate");
-		
 		
 		System.err.println("plantId for getChalanListByPlant  " + plantId +"from " +fromDate + "to Date " +toDate);
 
 		 map.add("plantId", plantId);
+		 map.add("custId", custId);
 		 map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		 map.add("toDate", DateConvertor.convertToYMD(toDate));
 
+		 
+		 System.out.println("1.....");
 		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByPlantAndStatus", map,
 				GetChalanHeader[].class);
 
 		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
 
+		 System.out.println("2.....");
+		
+		System.out.println("chalan list is:"+chalanHeadList.toString() );
 		/*for (int i = 0; i < chalanHeadList.size(); i++) {
 
 			chalanHeadList.get(i).setChalanDate(DateConvertor.convertToDMY(chalanHeadList.get(i).getChalanDate()));
 		}
 */
+		 System.out.println("3.....");
 		System.err.println("Ajax chalanHeadList /getChalanListByPlant " + chalanHeadList.toString());
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
@@ -558,6 +568,7 @@ public class ChalanController {
 		rowData.add("Project Name");
 		rowData.add("Vehicle No");
 		rowData.add("Driver Name");
+		rowData.add("Status");
 
 		
 
@@ -582,19 +593,18 @@ public class ChalanController {
 			
 			
 
-			/*String status1 = null;
-			int stat = getOrdList.get(i).getStatus();
+			String status1 = null;
+			float stat = chalanHeadList.get(i).getExFloat1();
 			if (stat == 0) {
 				status1 = "Pending";
 			} else if (stat == 1) {
-				status1 = "Partial Completed";
+				status1 = "Closed";
 			} else {
 
-				status1 = "Completed";
+				status1 = "Bill Generated";
 			}
 
 			rowData.add("" + status1);
-*/
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
@@ -744,13 +754,24 @@ public class ChalanController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				/*cell = new PdfPCell(new Phrase("" + work.getTotal(), headFont));
+				
+				String status1 = null;
+			float stat = work.getExFloat1();
+				if (stat == 0) {
+					status1 = "Pending";
+				} else if (stat == 1) {
+					status1 = "Closed";
+				} else {
+
+					status1 = "Bill Generated";
+				}
+				cell = new PdfPCell(new Phrase("" + status1, headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				*/
+			
 				
 
 			}

@@ -11,6 +11,8 @@
 
 
 <c:url var="getChalanListByPlant" value="/getChalanListByPlant" />
+<c:url var="getCustByPlantId" value="/getCustByPlantId" />
+
 <%-- 
 
 <c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
@@ -212,7 +214,7 @@
 								 --%>
 								 
 								 
-<div class="row">
+<%-- <div class="row">
 
 									<div class="col-md-1">Plant</div>
 
@@ -250,8 +252,71 @@
 								
 
 								<div class="form-group"></div>
-								
+								 --%>
 							
+								<div class="row">
+
+									<div class="col-md-2">Select Plant</div>
+
+									<div class="col-md-4">
+										<select id="plant_id" name="plant_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select plant name')"
+											onchange="getData()">
+											<option value="0">All</option>
+											<c:forEach items="${plantList}" var="plant">
+												<c:choose>
+													<c:when test="${plant.plantId==plantId1}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}">${plant.plantName}
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="col-md-2">Select Customer</div>
+									<div class="col-md-4">
+										<select id="cust_name" name="cust_name" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select customer')"
+											onchange="getCustInfo()">
+											<option value="0">All</option>
+
+										</select>
+									</div>
+
+								</div>
+								<div class="form-group"></div>
+
+								<div class="row">
+									<div class="col-md-2">From Date</div>
+									<div class="col-md-3">
+										<input type="text" autocomplete="off" id="from_date"
+											name="from_date" required style="width: 100%;"
+											class="form-control" value="${fromDate}"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+									<div class="col-md-1">To Date</div>
+									<div class="col-md-3">
+										<input type="text" autocomplete="off" id="to_date"
+											name="to_date" style="width: 100%;" class="form-control"
+											value="${toDate}"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+									<div class="col-md-1"></div>
+									<div class="col-md-2">
+										<input type="button" class="btn btn-primary" id="submitButton"
+											onclick="showQuot()" value="Submit">
+
+									</div>
+
+</div>
+
+
+									<div class="form-group"></div>
+
 								
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
 								
@@ -443,11 +508,12 @@
 
 	<script type="text/javascript">
 	// onclick of submit to search order 
-		function showChalan() {
+		function showQuot() {
 		
-		//alert("Hi View showChalan  ");
+	//alert("Hi View showChalan  ");
 	
 			var plantId = document.getElementById("plant_id").value;
+			var custId = document.getElementById("cust_name").value;
 			var valid = true;
 
 			var fromDate = $("#from_date").val();
@@ -481,6 +547,7 @@
 								'${getChalanListByPlant}',
 								{
 									plantId : plantId,
+									custId  : custId,
 									fromDate : fromDate,
 									toDate : toDate,
 									ajax : 'true',
@@ -528,23 +595,39 @@
 															+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
 															
 															 chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
-								}else{
+								}else if(v.exFloat1==1){
 									status="Closed";	
 									var acButton = '<a href="#" class="action_btn" onclick="callEdit1('
 										+ v.chalanId
 										+ ','
 										+ i
-										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete1('
-													+ v.chalanId
-													+ ','
-													+ i
-													+ ')" style="color:black"><i class="fa fa-times"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
+										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
+														+ v.chalanId
+														+ ','
+														+ i
+														+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+															+ v.chalanId
+															+ ','
+															+ i
+															+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
+									
+									chBox=""
+									
+									
+								}
+								else if(v.exFloat1==2){
+									status="Bill Generated";	
+									var acButton = '<a href="#" class="action_btn" onclick="callEdit1('
+										+ v.chalanId
+										+ ','
+										+ i
+										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
 														+ v.chalanId
 														+ ','
 														+ i
 														+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
 									
-									chBox=""
+														 chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
 									
 									
 								}

@@ -468,7 +468,8 @@ body {
 									<div class="col-md-2">Out Time</div>
 
 									<div class="col-md-4">
-										<input type="time" id="out_time" name="out_time" style="width: 100%;" class="form-control">
+										<input type="time" id="out_time" name="out_time" value="${curTime}"
+										 style="width: 100%;" class="form-control">
 									</div>
 									<div class="col-md-2">Out Kilometer</div>
 

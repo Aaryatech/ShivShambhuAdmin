@@ -1401,21 +1401,32 @@ public class OrderController {
 		ModelAndView model = null;
 		try {
 
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar cal = Calendar.getInstance();
+			
 			System.out.println("inside aaa");
 			model = new ModelAndView("chalan/generateChalan1");
 
 			model.addObject("title", "Add Chalan");
+			
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+
+			String curTime = sdf.format(cal.getTime());
+
+			model.addObject("curTime", curTime);
+			
+
 
 			int id = Integer.parseInt(request.getParameter("orderId"));
 			int key = Integer.parseInt(request.getParameter("key"));
 
 			System.out.println("key are" + id + key);
 
-			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-			Calendar cal = Calendar.getInstance();
 
 			String curDate = dateFormat.format(new Date());
 
+			
 			model.addObject("curDate", curDate);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -1434,10 +1445,11 @@ public class OrderController {
 
 			model.addObject("vehicleList", vehicleList);
 
-			User[] usrArray = rest.getForObject(Constants.url + "getAllUserList", User[].class);
+			User[] usrArray = rest.getForObject(Constants.url + "getDriverList", User[].class);
 			usrList = new ArrayList<User>(Arrays.asList(usrArray));
 
 			model.addObject("usrList", usrList);
+
 
 			model.addObject("title", "Add Chalan");
 
