@@ -738,17 +738,18 @@ public class BillController {
 			map = new LinkedMultiValueMap<String, Object>();
 
 			String chalanIdList = editBill.getChallanId();
-			
-			System.out.println("chalanIdList"+chalanIdList);
 
-			/*StringBuilder sb = new StringBuilder();
+			System.out.println("chalanIdList" + chalanIdList);
 
-			for (int i = 0; i < chalanIdList.length; i++) {
-				sb = sb.append(chalanIdList[i] + ",");
-
-			}
-			String items = sb.toString();
-			items = items.substring(0, items.length() - 1);*/
+			/*
+			 * StringBuilder sb = new StringBuilder();
+			 * 
+			 * for (int i = 0; i < chalanIdList.length; i++) { sb =
+			 * sb.append(chalanIdList[i] + ",");
+			 * 
+			 * } String items = sb.toString(); items = items.substring(0, items.length() -
+			 * 1);
+			 */
 
 			map.add("chalanIdList", chalanIdList);
 
@@ -1187,7 +1188,8 @@ public class BillController {
 						mbodypart.setFileName(filename);
 						multipart.addBodyPart(mbodypart);
 						mimeMessage.setContent(multipart);
-
+						billHeadId = 0;
+						pdfCustId = 0;
 						Transport.send(mimeMessage);
 					} catch (Exception e) {
 						e.printStackTrace();
