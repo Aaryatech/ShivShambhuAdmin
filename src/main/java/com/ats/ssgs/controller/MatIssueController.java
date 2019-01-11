@@ -77,7 +77,7 @@ public class MatIssueController {
 
 			model.addObject("catList", catList);
 
-			model.addObject("title", "Add Material Issue Contractor");
+			model.addObject("title", "Add Material to Issue Contractor");
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("docCode", 8);

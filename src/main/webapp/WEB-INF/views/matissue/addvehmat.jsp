@@ -163,8 +163,7 @@
 											readonly class="form-control" style="width: 100%;"
 											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Vehicle No')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											pattern="[0-9]+">
+											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
 
 									<div class="col-md-2">Reading*</div>

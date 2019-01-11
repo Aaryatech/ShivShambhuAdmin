@@ -278,7 +278,7 @@
 													<td style="text-align: left"><c:out
 															value="${poList.plantName}" /></td>
 													<td style="text-align: center">${poList.quatationNo}</td>
-														<td style="text-align: center">${poList.quatationNo}</td>
+														
 	
 												<td style="text-align: left"><c:choose>
 														<c:when test="${status==0}">
@@ -292,7 +292,7 @@
 													</c:otherwise>
 
 													</c:choose></td>
-												<td>
+												
 
 													<td><a
 														href="${pageContext.request.contextPath}/editPo/${poList.poId}"><i
@@ -300,7 +300,7 @@
 															<span class="text-muted"></span></a> <a
 														href="${pageContext.request.contextPath}/deletePurchaseOrder/${poList.poId}"
 														onClick="return confirm('Are you sure want to delete this record');"><i
-															class="fa fa-trash-o" style="color: black" title="Delete"></i></a>
+															class="fa fa-trash-o" style="color: black" title="Delete"></i></a></td>
 												</tr>
 											</c:forEach>
 										</tbody>

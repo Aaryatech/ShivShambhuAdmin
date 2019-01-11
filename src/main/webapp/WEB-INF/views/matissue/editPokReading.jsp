@@ -172,7 +172,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="end_date" name="end_date" required
-											autocomplete="off" value="${endDate}" onchange="checkDate()"
+											autocomplete="off" value="${endDate}" 
 											oninvalid="setCustomValidity('Please select date')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;">
@@ -318,7 +318,7 @@
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
 									<input type="submit" class="btn btn-primary" value="Submit"
-										id="submitButton"
+										id="submitButton" onclick="checkDate()"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
 								</div>

@@ -121,7 +121,7 @@ public class ChalanController {
 			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map, com.ats.ssgs.model.master.Document.class);
 			model.addObject("doc", doc);
 
-			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
 			System.out.println(sdf.format(cal.getTime()));
 

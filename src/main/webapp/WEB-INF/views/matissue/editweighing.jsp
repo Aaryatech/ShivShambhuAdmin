@@ -267,7 +267,7 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Add Photo1</div>
+									<div class="col-md-2">Add Photo1*</div>
 									<div class="col-md-2">
 										<input type="file" id="imgInp" name="imgInp"
 											style="width: 100%;" class="form-control" autocomplete="off"
@@ -283,7 +283,7 @@
 
 									</div>
 
-									<div class="col-md-2">Add Photo2*</div>
+									<div class="col-md-2">Add Photo2</div>
 									<div class="col-md-2">
 										<input type="file" id="imgInp1" name="imgInp1"
 											style="width: 100%;" class="form-control" autocomplete="off"
@@ -304,14 +304,14 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Remark*</div>
+									<div class="col-md-2">Remark</div>
 
 									<div class="col-md-4">
 										<textarea id="remark" name="remark" class="form-control"
 											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter remark')"
 											maxlength="200"
-											onchange="try{setCustomValidity('')}catch(e){}" required>${editWeigh.remark}</textarea>
+											onchange="try{setCustomValidity('')}catch(e){}" >${editWeigh.remark}</textarea>
 									</div>
 
 
