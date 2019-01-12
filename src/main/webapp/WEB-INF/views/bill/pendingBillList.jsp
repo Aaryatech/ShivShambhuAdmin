@@ -185,24 +185,35 @@
 
 							
 						
+							
 							<div class="row">
-								<div class="col-md-2">From Date</div>
+
+								<div class="col-md-2">Select Plant</div>
+
 								<div class="col-md-4">
-									<input type="text" autocomplete="off" id="from_date"
-										name="from_date" required style="width: 100%;"
-										class="form-control" value="${fromDate}"> <span
-										class="error" aria-live="polite"></span>
+									<select id="plant_id" name="plant_id" class="standardSelect"
+										tabindex="1" required
+										oninvalid="setCustomValidity('Please select plant name')"
+										onchange="getData()">
+										<option value="0">All</option>
+
+										<c:forEach items="${plantList}" var="plant">
+											<option value="${plant.plantId}">${plant.plantName}</option>
+										</c:forEach>
+									</select>
 								</div>
-								<div class="col-md-2">To Date</div>
+								<div class="col-md-2">Select Customer</div>
 								<div class="col-md-4">
-									<input type="text" autocomplete="off" id="to_date"
-										name="to_date" style="width: 100%;" class="form-control"
-										value="${toDate}"> <span class="error"
-										aria-live="polite"></span>
+									<select id="cust_name" name="cust_name" class="standardSelect"
+										tabindex="1" required
+										oninvalid="setCustomValidity('Please select customer')"
+										onchange="getCustInfo()">
+										<option value="0">All</option>
+
+									</select>
 								</div>
 
 							</div>
-
 
 							<div class="form-group"></div>
 							<div class="row">
@@ -232,13 +243,13 @@
 										<th style="text-align: center"><input type="checkbox"
 											id="selectAll" /></th>
 												<th style="text-align: center">Sr.</th>
-										<th style="text-align: center">Bill No</th>
-										<th style="text-align: center">Bill Date</th>
+										<th style="text-align: center">Chalan No.</th>
+										<th style="text-align: center">Chalan Date</th>
 										<th style="text-align: center">Customer Name</th>
 
-										<th style="text-align: center">Total Amount</th>
-										<th style="text-align: center">Taxable Amount</th>
-										<th style="text-align: center">Tax Amount</th>
+										<th style="text-align: center">Customer Mobile</th>
+										<th style="text-align: center">Vehicle No</th>
+										<th style="text-align: center">Driver Name</th>
 										<th style="text-align: center">Action</th>
 									</tr>
 								</thead>

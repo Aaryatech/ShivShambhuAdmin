@@ -1248,5 +1248,87 @@ public class BillController {
 
 		}
 	}
+	
+	///--------------------------Pending Bill--------------------------
+	
+		@RequestMapping(value = "/showPendingBillList", method = RequestMethod.GET)
+		public ModelAndView showPendingBillList(HttpServletRequest request, HttpServletResponse response) {
+
+			ModelAndView model = null;
+			try {
+
+				model = new ModelAndView("bill/pendingBillList");
+
+				model.addObject("title", "Bill List");
+
+				Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+				List<Plant> plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+				model.addObject("plantList", plantList);
+
+				String fromDate = null, toDate = null;
+
+				if (request.getParameter("fromDate") == null || request.getParameter("fromDate") == "") {
+
+					System.err.println("onload call  ");
+
+					Calendar date = Calendar.getInstance();
+					date.set(Calendar.DAY_OF_MONTH, 1);
+
+					Date firstDate = date.getTime();
+
+					DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+					fromDate = dateFormat.format(firstDate);
+
+					toDate = dateFormat.format(new Date());
+					System.err.println("cu Date  " + fromDate + "todays date   " + toDate);
+
+				} else {
+
+					System.err.println("After page load call");
+					fromDate = request.getParameter("fromDate");
+					toDate = request.getParameter("toDate");
+
+				}
+
+				// getOrderListBetDate
+
+				model.addObject("fromDate", fromDate);
+				model.addObject("toDate", toDate);
+
+			} catch (Exception e) {
+
+				System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
+
+				e.printStackTrace();
+
+			}
+
+			return model;
+		}
+		
+		
+
+		@RequestMapping(value = "/getPendingBillListBetDate", method = RequestMethod.GET)
+		public @ResponseBody List<GetBillHeader> getPendingBillListBetDate(HttpServletRequest request,
+				HttpServletResponse response) {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			int plantId = Integer.parseInt(request.getParameter("plantId"));
+			int custId = Integer.parseInt(request.getParameter("custId"));
+
+
+			map.add("plantId", plantId);
+			map.add("custId", custId);
+			
+			GetBillHeader[] ordHeadArray = rest.postForObject(Constants.url + "getBillHeadersByDateAndCustAndPlant", map,
+					GetBillHeader[].class);
+			getBillList = new ArrayList<GetBillHeader>(Arrays.asList(ordHeadArray));
+			System.out.println("getBillList" + getBillList.toString());
+
+			return getBillList;
+		}
 
 }
