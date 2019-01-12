@@ -2,8 +2,6 @@ package com.ats.ssgs.controller;
 
 import java.io.BufferedInputStream;
 
-
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -43,11 +41,7 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.PoHeader;
-import com.ats.ssgs.model.chalan.ChalanDetail;
-import com.ats.ssgs.model.chalan.ChalanHeader;
-import com.ats.ssgs.model.chalan.GetChalanDetail;
-import com.ats.ssgs.model.chalan.GetChalanHeader;
-import com.ats.ssgs.model.enq.GetEnqHeader;
+
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.GetCust;
 //import com.ats.ssgs.model.master.Document;
@@ -396,12 +390,11 @@ public class OrderController {
 				for (int i = 0; i < poDetailForOrdList.size(); i++) {
 					map = new LinkedMultiValueMap<String, Object>();
 					map.add("quotDetailId", poDetailForOrdList.get(i).getQuDetailId());
-					map.add("orderNo", doc.getDocPrefix() + "" + doc.getSrNo());
+					map.add("orderNo", insertOrdHeadRes.getOrderId());
 
 					Info updateQuotNo = rest.postForObject(Constants.url + "/updateOrderNo", map, Info.class);
 
 				}
-
 
 			} else {
 
@@ -583,8 +576,9 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/showOrderListPdf/{fromDate}/{toDate}/{custId}/{plantId}", method = RequestMethod.GET)
-	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,@PathVariable("custId") int custId,@PathVariable("plantId") int plantId,
-			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			@PathVariable("custId") int custId, @PathVariable("plantId") int plantId, HttpServletRequest request,
+			HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showDatewisePdf");
 		Document document = new Document(PageSize.A4);
@@ -667,7 +661,7 @@ public class OrderController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			float tot=0;
+			float tot = 0;
 			int index = 0;
 			for (GetOrder work : getOrdList) {
 				index++;
@@ -721,10 +715,9 @@ public class OrderController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				
-				tot=tot+work.getTotal();
-				System.out.println("total is"+tot);
+
+				tot = tot + work.getTotal();
+				System.out.println("total is" + tot);
 
 				String status1 = null;
 				int stat = work.getStatus();
@@ -750,55 +743,50 @@ public class OrderController {
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			
+
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			
-			String plantname=null;
-			String custName=null;
-			
-			if(plantId==0) {
-				plantname="All";
-				
-			}
-			else {
+
+			String plantname = null;
+			String custName = null;
+
+			if (plantId == 0) {
+				plantname = "All";
+
+			} else {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("plantId", plantId);
 
 				Plant getPlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
-				plantname=getPlant.getPlantName();
-				System.out.println("plantname"+plantname);
-				
-				
-				
+				plantname = getPlant.getPlantName();
+				System.out.println("plantname" + plantname);
+
 			}
-			if(custId==0) {
-				custName="All";
-				
-			}
-			else {
-				
-				
+			if (custId == 0) {
+				custName = "All";
+
+			} else {
+
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("custId", custId);
 
 				GetCust getcus = rest.postForObject(Constants.url + "getCustomerByCustId", map, GetCust.class);
-				custName=getcus.getCustName();
-				System.out.println("custName"+custName);
-				
+				custName = getcus.getCustName();
+				System.out.println("custName" + custName);
+
 			}
-			Paragraph p2 = new Paragraph("FromDate:"+fromDate +" ToDate:"+toDate+"  Plant:" + plantname + "  Customer:" + custName, headFont);
+			Paragraph p2 = new Paragraph(
+					"FromDate:" + fromDate + " ToDate:" + toDate + "  Plant:" + plantname + "  Customer:" + custName,
+					headFont);
 			p2.setAlignment(Element.ALIGN_CENTER);
 			document.add(p2);
 			document.add(new Paragraph("\n"));
-			
-			
-			
+
 			document.add(table);
-			
-			Paragraph p1 = new Paragraph("Total:"+tot, headFont);
+
+			Paragraph p1 = new Paragraph("Total:" + tot, headFont);
 			p1.setAlignment(Element.ALIGN_CENTER);
 			document.add(p1);
 			document.add(new Paragraph("\n"));
@@ -1173,12 +1161,13 @@ public class OrderController {
 	}
 
 	@RequestMapping(value = "/showPendingOrderListPdf/{fromDate}/{toDate}/{custId}/{plantId}", method = RequestMethod.GET)
-	public void showOrderDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,@PathVariable("custId") int custId,@PathVariable("plantId") int plantId,
-			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+	public void showOrderDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			@PathVariable("custId") int custId, @PathVariable("plantId") int plantId, HttpServletRequest request,
+			HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showDatewisePdf");
 		Document document = new Document(PageSize.A4);
-		System.out.println("custId "+custId);
+		System.out.println("custId " + custId);
 
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
@@ -1293,9 +1282,9 @@ public class OrderController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				//tot=tot+work.getTotal();
-				//System.out.println("total is"+tot);
+
+				// tot=tot+work.getTotal();
+				// System.out.println("total is"+tot);
 
 			}
 			document.open();
@@ -1303,63 +1292,55 @@ public class OrderController {
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			
+
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			
-			String plantname=null;
-			String custName=null;
-			
-			
-		
 
-			
-			if(plantId==0) {
-				plantname="All";
-				
-			}
-			else {
+			String plantname = null;
+			String custName = null;
+
+			if (plantId == 0) {
+				plantname = "All";
+
+			} else {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("plantId", plantId);
 
 				Plant getPlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
-				plantname=getPlant.getPlantName();
-				System.out.println("plantname"+plantname);
-				
-				
-				
+				plantname = getPlant.getPlantName();
+				System.out.println("plantname" + plantname);
+
 			}
-			if(custId==0) {
-				custName="All";
-				
-			}
-			else {
-				
-				
+			if (custId == 0) {
+				custName = "All";
+
+			} else {
+
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				System.out.println();
 
 				map.add("custId", custId);
 
 				GetCust getcus1 = rest.postForObject(Constants.url + "getCustomerByCustId", map, GetCust.class);
-				custName=getcus1.getCustName();
-				System.out.println("custName"+custName);
-				
+				custName = getcus1.getCustName();
+				System.out.println("custName" + custName);
+
 			}
-			Paragraph p2 = new Paragraph("FromDate:"+fromDate +" ToDate:"+toDate+"  Plant:" + plantname + "  Customer:" + custName, headFont);
+			Paragraph p2 = new Paragraph(
+					"FromDate:" + fromDate + " ToDate:" + toDate + "  Plant:" + plantname + "  Customer:" + custName,
+					headFont);
 			p2.setAlignment(Element.ALIGN_CENTER);
 			document.add(p2);
 			document.add(new Paragraph("\n"));
-			
-			
-			
+
 			document.add(table);
-			
-			/*Paragraph p1 = new Paragraph("Total:"+tot, headFont);
-			p1.setAlignment(Element.ALIGN_CENTER);
-			document.add(p1);
-			document.add(new Paragraph("\n"));*/
+
+			/*
+			 * Paragraph p1 = new Paragraph("Total:"+tot, headFont);
+			 * p1.setAlignment(Element.ALIGN_CENTER); document.add(p1); document.add(new
+			 * Paragraph("\n"));
+			 */
 
 			int totalPages = writer.getPageNumber();
 
@@ -1413,30 +1394,25 @@ public class OrderController {
 
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Calendar cal = Calendar.getInstance();
-			
+
 			System.out.println("inside aaa");
 			model = new ModelAndView("chalan/generateChalan1");
 
 			model.addObject("title", "Add Chalan");
-			
-			
+
 			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
 
 			String curTime = sdf.format(cal.getTime());
 
 			model.addObject("curTime", curTime);
-			
-
 
 			int id = Integer.parseInt(request.getParameter("orderId"));
 			int key = Integer.parseInt(request.getParameter("key"));
 
 			System.out.println("key are" + id + key);
 
-
 			String curDate = dateFormat.format(new Date());
 
-			
 			model.addObject("curDate", curDate);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -1459,7 +1435,6 @@ public class OrderController {
 			usrList = new ArrayList<User>(Arrays.asList(usrArray));
 
 			model.addObject("usrList", usrList);
-
 
 			model.addObject("title", "Add Chalan");
 
@@ -1496,7 +1471,4 @@ public class OrderController {
 
 	}
 
-	
-
-	
 }

@@ -168,11 +168,11 @@
 											class="form-control" required style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">End Date*</div>
+									<div class="col-md-2">End Date</div>
 
 									<div class="col-md-4">
-										<input type="text" id="end_date" name="end_date" required
-											autocomplete="off" value="${endDate}" 
+										<input type="text" id="end_date" name="end_date"
+											autocomplete="off" value="${endDate}"
 											oninvalid="setCustomValidity('Please select date')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;">
@@ -273,20 +273,19 @@
 									<div class="col-md-4">
 										<input type="text" id="startReading" name="startReading"
 											class="form-control" autocomplete="off" style="width: 100%;"
-											value="${editPRead.startReading}"  onchange="checkReading()"
+											value="${editPRead.startReading}" onchange="checkReading()"
 											oninvalid="setCustomValidity('Please enter correct reading')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
-									<div class="col-md-2">End Reading*</div>
+									<div class="col-md-2">End Reading</div>
 									<div class="col-md-4">
-										<input type="text" id="endReading" name="endReading" required
+										<input type="text" id="endReading" name="endReading"
 											value="${endReading}" class="form-control" autocomplete="off"
-											style="width: 100%;" onchange="checkReading()"
+											style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter correct reading')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 
@@ -304,9 +303,9 @@
 											value="${editPRead.startTime}">
 									</div>
 
-									<div class="col-md-2">End Time*</div>
+									<div class="col-md-2">End Time</div>
 									<div class="col-md-4">
-										<input type="time" id="endTime" name="endTime" required
+										<input type="time" id="endTime" name="endTime"
 											value="${endTime}" class="form-control" autocomplete="off"
 											style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter endtime')"
@@ -318,7 +317,7 @@
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
 									<input type="submit" class="btn btn-primary" value="Submit"
-										id="submitButton" onclick="checkDate()"
+										id="submitButton"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
 								</div>
@@ -326,7 +325,7 @@
 									<input type="reset" class="btn btn-primary" value="Clear"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
-								</div> 
+								</div>
 							</form>
 						</div>
 					</div>
@@ -454,7 +453,7 @@
 
 
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function checkReading() {
 			//In javascript
 			var startReading = document.getElementById("startReading").value;
@@ -470,7 +469,7 @@
 
 		}
 	</script>
-
+ -->
 
 </body>
 </html>

@@ -33,6 +33,7 @@ public class RmcQuotTemp {
 	private String poNo;
 	private String chalanNo;
 	private String orderNo;
+	private String billNo;
 
 	public int getItemDetailId() {
 		return itemDetailId;
@@ -186,14 +187,22 @@ public class RmcQuotTemp {
 		this.orderNo = orderNo;
 	}
 
+	public String getBillNo() {
+		return billNo;
+	}
+
+	public void setBillNo(String billNo) {
+		this.billNo = billNo;
+	}
+
 	@Override
 	public String toString() {
-		return "RmcQuotTemp [tempDetailId=" + tempDetailId + ", itemDetailId=" + itemDetailId + ", rmId=" + rmId
-				+ ", rmQty=" + rmQty + ", itemOpRate=" + itemOpRate + ", itemWt=" + itemWt + ", itemCode=" + itemCode
-				+ ", itemDesc=" + itemDesc + ", uom=" + uom + ", itemId=" + itemId + ", itemName=" + itemName
-				+ ", unitRate=" + unitRate + ", amt=" + amt + ", delStatus=" + delStatus + ", quotDetailId="
-				+ quotDetailId + ", quotNo=" + quotNo + ", poNo=" + poNo + ", chalanNo=" + chalanNo + ", orderNo="
-				+ orderNo + "]";
+		return "RmcQuotTemp [itemDetailId=" + itemDetailId + ", tempDetailId=" + tempDetailId + ", delStatus="
+				+ delStatus + ", quotDetailId=" + quotDetailId + ", rmId=" + rmId + ", rmQty=" + rmQty + ", itemOpRate="
+				+ itemOpRate + ", itemWt=" + itemWt + ", itemCode=" + itemCode + ", itemDesc=" + itemDesc + ", uom="
+				+ uom + ", itemId=" + itemId + ", itemName=" + itemName + ", unitRate=" + unitRate + ", amt=" + amt
+				+ ", quotNo=" + quotNo + ", poNo=" + poNo + ", chalanNo=" + chalanNo + ", orderNo=" + orderNo
+				+ ", billNo=" + billNo + "]";
 	}
 
 }
