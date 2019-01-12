@@ -522,13 +522,11 @@ public class TxnController {
 				pReading.setEndTime("00:00:00");
 			}
 
-			/*if (readingId != 0) {
-				pReading.setExInt1(2);
-			} else {*/
-			
-			
-				pReading.setExInt1(1);
-			
+			/*
+			 * if (readingId != 0) { pReading.setExInt1(2); } else {
+			 */
+
+			pReading.setExInt1(1);
 
 			PoklenReading prInsertRes = rest.postForObject(Constants.url + "savePoklenReading", pReading,
 					PoklenReading.class);
@@ -550,9 +548,7 @@ public class TxnController {
 		return "redirect:/showAddPReading";
 
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/insertPoklenReading", method = RequestMethod.POST)
 	public String insertPoklenReading(HttpServletRequest request, HttpServletResponse response) {
 
@@ -635,13 +631,11 @@ public class TxnController {
 				pReading.setEndTime("00:00:00");
 			}
 
-			/*if (readingId != 0) {
-				pReading.setExInt1(2);
-			} else {*/
-			
-			
-				pReading.setExInt1(1);
-			
+			/*
+			 * if (readingId != 0) { pReading.setExInt1(2); } else {
+			 */
+
+			pReading.setExInt1(1);
 
 			PoklenReading prInsertRes = rest.postForObject(Constants.url + "savePoklenReading", pReading,
 					PoklenReading.class);
@@ -663,9 +657,7 @@ public class TxnController {
 		return "redirect:/showAddPReading";
 
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/endPoklenReading", method = RequestMethod.POST)
 	public String endPoklenReading(HttpServletRequest request, HttpServletResponse response) {
 
@@ -748,10 +740,7 @@ public class TxnController {
 				pReading.setEndTime("00:00:00");
 			}
 
-				pReading.setExInt1(2);
-			
-				
-		
+			pReading.setExInt1(2);
 
 			PoklenReading prInsertRes = rest.postForObject(Constants.url + "savePoklenReading", pReading,
 					PoklenReading.class);
@@ -811,8 +800,7 @@ public class TxnController {
 		GetPoklenReading[] ordHeadArray = rest.postForObject(Constants.url + "getPokReadingListBetweenDate", map,
 				GetPoklenReading[].class);
 		pReading = new ArrayList<GetPoklenReading>(Arrays.asList(ordHeadArray));
-		
-		
+
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		ExportToExcel expoExcel = new ExportToExcel();
@@ -828,7 +816,6 @@ public class TxnController {
 		rowData.add("End Reading");
 		rowData.add("Status");
 
-		
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 		int cnt = 1;
@@ -842,41 +829,38 @@ public class TxnController {
 			rowData.add("" + pReading.get(i).getStartDate());
 
 			rowData.add("" + pReading.get(i).getEndDate());
-            String pokType1=null;
-			
+			String pokType1 = null;
+
 			if (pReading.get(i).getPokType() == 0) {
 				pokType1 = "Breaking";
 			} else if (pReading.get(i).getPokType() == 1) {
 				pokType1 = "Loading";
 			}
-			rowData.add("" +pokType1 );
-			
-			String shiftType1=null;
+			rowData.add("" + pokType1);
+
+			String shiftType1 = null;
 			if (pReading.get(i).getShiftType() == 0) {
 				shiftType1 = "Day";
 			} else if (pReading.get(i).getShiftType() == 1) {
 				shiftType1 = "Night";
 			}
 
-			rowData.add("" +shiftType1 );
+			rowData.add("" + shiftType1);
 
-			
-			
 			rowData.add("" + pReading.get(i).getStartReading());
-			
+
 			rowData.add("" + pReading.get(i).getEndReading());
-			
-			String status=null;
-			if(pReading.get(i).getEndReading()==0  ) {
-				status="Pending";
-				
-			}else {
-				status="Completed";
+
+			String status = null;
+			if (pReading.get(i).getEndReading() == 0) {
+				status = "Pending";
+
+			} else {
+				status = "Completed";
 			}
-			
+
 			rowData.add("" + status);
-			
-			
+
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
@@ -889,7 +873,6 @@ public class TxnController {
 		return pReading;
 	}
 
-	
 	@RequestMapping(value = "/showPoklenListPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
 	public void showPoklenListPdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
 			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
@@ -918,7 +901,7 @@ public class TxnController {
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f,3.2f,3.2f });
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -976,8 +959,6 @@ public class TxnController {
 
 			table.addCell(hcell);
 
-			
-		
 			int index = 0;
 			for (GetPoklenReading work : pReading) {
 				index++;
@@ -1003,27 +984,23 @@ public class TxnController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
 
-				String pokType1=null;
-				
+				String pokType1 = null;
+
 				if (work.getPokType() == 0) {
 					pokType1 = "Breaking";
 				} else if (work.getPokType() == 1) {
 					pokType1 = "Loading";
 				}
-				
-				
-				String shiftType1=null;
-				if (work.getShiftType()== 0) {
+
+				String shiftType1 = null;
+				if (work.getShiftType() == 0) {
 					shiftType1 = "Day";
 				} else if (work.getShiftType() == 1) {
 					shiftType1 = "Night";
 				}
 
-
-				
-				cell = new PdfPCell(new Phrase("" +pokType1, headFont));
+				cell = new PdfPCell(new Phrase("" + pokType1, headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
@@ -1044,29 +1021,26 @@ public class TxnController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-
 				cell = new PdfPCell(new Phrase("" + work.getEndReading(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				String status=null;
-				if(work.getEndReading()==0  ) {
-					status="Pending";
-					
-				}else {
-					status="Completed";
+
+				String status = null;
+				if (work.getEndReading() == 0) {
+					status = "Pending";
+
+				} else {
+					status = "Completed";
 				}
-				cell = new PdfPCell(new Phrase(""+status, headFont));
+				cell = new PdfPCell(new Phrase("" + status, headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-
 
 			}
 			document.open();
@@ -1074,24 +1048,20 @@ public class TxnController {
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			
+
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			
-			String plantname=null;
-			String custName=null;
-			
-			
-			Paragraph p2 = new Paragraph("FromDate:"+fromDate +" ToDate:"+toDate+"  ", headFont);
+
+			String plantname = null;
+			String custName = null;
+
+			Paragraph p2 = new Paragraph("FromDate:" + fromDate + " ToDate:" + toDate + "  ", headFont);
 			p2.setAlignment(Element.ALIGN_CENTER);
 			document.add(p2);
 			document.add(new Paragraph("\n"));
-			
-			
-			
+
 			document.add(table);
-			
-			
+
 			int totalPages = writer.getPageNumber();
 
 			System.out.println("Page no " + totalPages);
@@ -1132,6 +1102,7 @@ public class TxnController {
 
 		}
 	}
+
 	@RequestMapping(value = "/showPendingPoklenReadingList", method = RequestMethod.GET)
 	public ModelAndView showPendingPoklenReadingList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -1213,9 +1184,9 @@ public class TxnController {
 		return "redirect:/showPoklenReadingList";
 	}
 
-	@RequestMapping(value = "/editPReading/{readingId}/{flag}", method = RequestMethod.GET)
+	@RequestMapping(value = "/editPReading/{readingId}", method = RequestMethod.GET)
 	public ModelAndView editPReading(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable int readingId,@PathVariable int flag) {
+			@PathVariable int readingId) {
 
 		ModelAndView model = null;
 		try {
@@ -1231,8 +1202,6 @@ public class TxnController {
 			vehPoklenList = new ArrayList<Vehicle>(Arrays.asList(vehPoklenArray));
 
 			model.addObject("vehPoklenList", vehPoklenList);
-			
-			model.addObject("flag",flag);
 
 			map = new LinkedMultiValueMap<String, Object>();
 
@@ -1266,11 +1235,9 @@ public class TxnController {
 		return model;
 	}
 
-	
-	
 	@RequestMapping(value = "/editPReading1/{readingId}/{flag}", method = RequestMethod.GET)
 	public ModelAndView editPReading1(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable int readingId,@PathVariable int flag) {
+			@PathVariable int readingId, @PathVariable int flag) {
 
 		ModelAndView model = null;
 		try {
@@ -1286,8 +1253,8 @@ public class TxnController {
 			vehPoklenList = new ArrayList<Vehicle>(Arrays.asList(vehPoklenArray));
 
 			model.addObject("vehPoklenList", vehPoklenList);
-			
-			model.addObject("flag",flag);
+
+			model.addObject("flag", flag);
 
 			map = new LinkedMultiValueMap<String, Object>();
 
@@ -1321,11 +1288,9 @@ public class TxnController {
 		return model;
 	}
 
-	
-	
-	@RequestMapping(value = "/endPReading/{readingId}/{flag}", method = RequestMethod.GET)
+	@RequestMapping(value = "/endPReading/{readingId}", method = RequestMethod.GET)
 	public ModelAndView endPReading(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable int readingId,@PathVariable int flag) {
+			@PathVariable int readingId) {
 
 		ModelAndView model = null;
 		try {
@@ -1341,8 +1306,6 @@ public class TxnController {
 			vehPoklenList = new ArrayList<Vehicle>(Arrays.asList(vehPoklenArray));
 
 			model.addObject("vehPoklenList", vehPoklenList);
-			
-			model.addObject("flag",flag);
 
 			map = new LinkedMultiValueMap<String, Object>();
 
@@ -1432,7 +1395,7 @@ public class TxnController {
 		GetWeighing[] ordHeadArray = rest.postForObject(Constants.url + "getWeighListBetweenDate", map,
 				GetWeighing[].class);
 		weighList = new ArrayList<GetWeighing>(Arrays.asList(ordHeadArray));
-		
+
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		ExportToExcel expoExcel = new ExportToExcel();
@@ -1444,9 +1407,9 @@ public class TxnController {
 		rowData.add("Contractor Name");
 		rowData.add("Date");
 		rowData.add("Quantity");
-		//rowData.add("Total");
+		// rowData.add("Total");
 
-		//rowData.add("Status");
+		// rowData.add("Status");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -1466,7 +1429,6 @@ public class TxnController {
 
 			rowData.add("" + weighList.get(i).getDate());
 			rowData.add("" + weighList.get(i).getQuantity());
-			
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -1480,11 +1442,10 @@ public class TxnController {
 		return weighList;
 	}
 
-	
-	
 	@RequestMapping(value = "/showWeighingListPdf/{fromDate}/{toDate}/{contrId}/{vehId}", method = RequestMethod.GET)
-	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,@PathVariable("contrId") int contrId,@PathVariable("vehId") int vehId,
-			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			@PathVariable("contrId") int contrId, @PathVariable("vehId") int vehId, HttpServletRequest request,
+			HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showDatewisePdf");
 		Document document = new Document(PageSize.A4);
@@ -1556,8 +1517,6 @@ public class TxnController {
 
 			table.addCell(hcell);
 
-			
-		
 			int index = 0;
 			for (GetWeighing work : weighList) {
 				index++;
@@ -1583,7 +1542,7 @@ public class TxnController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getContrName(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -1605,63 +1564,54 @@ public class TxnController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-
-
 			}
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu(Datewise Weighing List)\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			
+
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			
-			String plantname=null;
-			String custName=null;
-			
-			if(vehId==0) {
-				plantname="All";
-				
-			}
-			else {
+
+			String plantname = null;
+			String custName = null;
+
+			if (vehId == 0) {
+				plantname = "All";
+
+			} else {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("vehId", vehId);
 
 				Vehicle getPlant = rest.postForObject(Constants.url + "getVehicleById", map, Vehicle.class);
-				plantname=getPlant.getVehicleName();
-				System.out.println("plantname"+plantname);
-				
-				
-				
+				plantname = getPlant.getVehicleName();
+				System.out.println("plantname" + plantname);
+
 			}
-			if(contrId==0) {
-				custName="All";
-				
-			}
-			else {
-				
-				
+			if (contrId == 0) {
+				custName = "All";
+
+			} else {
+
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("contrId", contrId);
 
 				Contractor getcus = rest.postForObject(Constants.url + "getContractorById", map, Contractor.class);
-				custName=getcus.getContrName();
-				System.out.println("custName"+custName);
-				
+				custName = getcus.getContrName();
+				System.out.println("custName" + custName);
+
 			}
-			Paragraph p2 = new Paragraph("FromDate:"+fromDate +" ToDate:"+toDate+"  Vehicle Name:" + plantname + "  Contractor Name:" + custName, headFont);
+			Paragraph p2 = new Paragraph("FromDate:" + fromDate + " ToDate:" + toDate + "  Vehicle Name:" + plantname
+					+ "  Contractor Name:" + custName, headFont);
 			p2.setAlignment(Element.ALIGN_CENTER);
 			document.add(p2);
 			document.add(new Paragraph("\n"));
-			
-			
-			
+
 			document.add(table);
-			
-			
+
 			int totalPages = writer.getPageNumber();
 
 			System.out.println("Page no " + totalPages);

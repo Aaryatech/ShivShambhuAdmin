@@ -117,8 +117,8 @@
 							</div>
 							<div class="col-md-5"></div>
 							<div class="col-md-3" align="left">
-								<a href="${pageContext.request.contextPath}/showAddPReading" style="color:black"><strong>Add
-										Poklen Reading </strong></a>
+								<a href="${pageContext.request.contextPath}/showAddPReading"
+									style="color: black"><strong>Add Poklen Reading </strong></a>
 							</div>
 						</div>
 						<form
@@ -163,7 +163,7 @@
 
 
 
-								
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
@@ -184,25 +184,25 @@
 										</thead>
 
 									</table>
-										<div class="col-md-2"></div>
+									<div class="col-md-2"></div>
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();" disabled="disabled" id="expExcel"
-										style="align-content: center; width: 200px; margin-left: 80px;">
-										Export To Excel</button>
-								</div>
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" disabled="disabled" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
 
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="genPdf()" disabled="disabled" id="PDFButton"
-										style="align-content: center; width: 100px; margin-left: 80px;">
-										PDF</button>
-								</div>
-								&nbsp;
+										<button type="button" class="btn btn-primary"
+											onclick="genPdf()" disabled="disabled" id="PDFButton"
+											style="align-content: center; width: 100px; margin-left: 80px;">
+											PDF</button>
+									</div>
+									&nbsp;
 								</div>
 
 								<input type="submit" class="btn btn-primary" value="Delete"
@@ -330,7 +330,6 @@
 
 								function(data) {
 
-									
 									document.getElementById("expExcel").disabled = false;
 									document.getElementById("PDFButton").disabled = false;
 
@@ -341,7 +340,6 @@
 
 									}
 
-									
 									//alert("Order Data " + JSON.stringify(data));
 
 									var dataTable = $('#bootstrap-data-table')
@@ -353,7 +351,7 @@
 													data,
 													function(i, v) {
 														var chBox;
-				                                        var flag;
+														var flag;
 														var pokType1;
 														if (v.pokType == 0) {
 															pokType1 = "Breaking";
@@ -367,43 +365,40 @@
 														} else if (v.shiftType == 1) {
 															shiftType1 = "Night";
 														}
-														
+
 														var status;
 														if (v.exInt1 == 1) {
-															status= "Pending";
-															flag=1;
-														} else if(v.exInt1 == 2) {
-															status= "Completed";
-															flag=2;
+															status = "Pending";
+															flag = 1;
+														} else if (v.exInt1 == 2) {
+															status = "Completed";
+															flag = 2;
 														}
-														
-														if(v.exInt1 == 2){
 
-														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.readingId
-																+ ','
-																+flag
-																+','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
-														}
-														else if(v.exInt1 == 1){
-															
+														if (v.exInt1 == 2) {
+
+															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																	+ v.readingId
+																	+ ','
+
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
+														} else if (v.exInt1 == 1) {
+
 															var acButton = '<a href="#" class="action_btn" onclick="callClose('
-																+ v.readingId
-																+ ','
-																+flag
-																+','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-close"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit1('
-																+ v.readingId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i></a>'
-															
-															
+																	+ v.readingId
+																	+ ','
+																	+ flag
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-close"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit1('
+																	+ v.readingId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-edit"></i></a>'
+
 														}
-														
+
 														chBox = '<input  type="checkbox" class="chk" name="readingIds" id='+v.readingId+' class="check"  value='+v.readingId+'>'
 
 														//var chBox='<input type="checkbox" id="orderId" class="chk" name="quotIds" value='+v.orderId+'/>'
@@ -430,22 +425,22 @@
 
 		}
 
-		function callEdit(readingId,flag) {
+		function callEdit(readingId) {
 
 			window.open("${pageContext.request.contextPath}/editPReading/"
-					+ readingId + '/' + flag );
+					+ readingId);
 
 		}
-		function callEdit1(readingId,flag) {
+		function callEdit1(readingId, flag) {
 
 			window.open("${pageContext.request.contextPath}/editPReading1/"
-					+ readingId + '/' + flag );
+					+ readingId + '/' + flag);
 
 		}
-		function callClose(readingId,flag) {
+		function callClose(readingId, flag) {
 
 			window.open("${pageContext.request.contextPath}/endPReading/"
-					+ readingId + '/' + flag );
+					+ readingId + '/' + flag);
 
 		}
 	</script>
@@ -468,7 +463,7 @@
 						});
 	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");
@@ -481,9 +476,6 @@
 			//alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-			
-			
-			
 
 			window.open('${pageContext.request.contextPath}/showPoklenListPdf/'
 					+ fromDate + '/' + toDate);

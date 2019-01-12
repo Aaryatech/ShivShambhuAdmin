@@ -200,7 +200,7 @@ public class PurchaseOrderController {
 				for (int i = 0; i < quotHeader.getGetQuotDetailList().size(); i++) {
 					map = new LinkedMultiValueMap<String, Object>();
 					map.add("quotDetailId", quotHeader.getGetQuotDetailList().get(i).getQuotDetailId());
-					map.add("quotNo", quotHeader.getQuotNo());
+					map.add("quotNo", quotHeader.getQuotHeadId());
 					map.add("poNo", poNo);
 
 					Info updateQuotNo = rest.postForObject(Constants.url + "/updateQuotNoAndPoNo", map, Info.class);

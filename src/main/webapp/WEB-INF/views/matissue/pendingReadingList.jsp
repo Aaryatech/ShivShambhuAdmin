@@ -83,8 +83,8 @@
 							</div>
 							<div class="col-md-5"></div>
 							<div class="col-md-3" align="left">
-								<a href="${pageContext.request.contextPath}/showAddPReading" style="color:black"><strong>Add
-										Poklen Reading </strong></a>
+								<a href="${pageContext.request.contextPath}/showAddPReading"
+									style="color: black"><strong>Add Poklen Reading </strong></a>
 							</div>
 
 						</div>
@@ -150,11 +150,11 @@
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editPReading/${pReading.readingId}"><i
-														class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
-													&nbsp; <a
+														class="fa fa-edit" style="color: black"></i> <span
+														class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deletePReading/${pReading.readingId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o" style="color:black"></i></a></td>
+														class="fa fa-trash-o" style="color: black"></i></a></td>
 
 											</tr>
 										</c:forEach>
