@@ -370,8 +370,9 @@
 															[ i + 1,
 																	v.itemName,
 																	v.uomName,
-																	v.itemRate,
 																	v.quantity,
+																	v.itemRate,
+																	
 																	v.value,
 																	str ])
 															.draw();

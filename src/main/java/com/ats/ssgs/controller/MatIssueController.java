@@ -984,7 +984,8 @@ public class MatIssueController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("matVehHeaderId", matVehHeaderId);
-			editVeh = rest.postForObject(Constants.url + "getMatIssueVehicleByHeaderId", map, GetVehHeader.class);
+			editVeh = rest.postForObject(Constants.url + "getMatIssueVehicleByHeaderId1", map, GetVehHeader.class);
+			System.out.println("edit data is"+editVeh);
 			model.addObject("title", "Edit Material Issue to Vehicle");
 			model.addObject("editVeh", editVeh);
 			model.addObject("editVehDetail", editVeh.getVehDetailList());

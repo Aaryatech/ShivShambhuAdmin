@@ -322,6 +322,9 @@
 				valid = false;
 				alert("from date greater than todate ");
 			}
+			
+			
+			
 			if (valid == true) {
 
 				$
@@ -345,6 +348,13 @@
 										document.getElementById("PDFButton").disabled = true;
 
 									}
+									
+									alert("from date"+fromDate);
+									
+									alert("to date"+toDate);
+									
+									
+
 
 									//alert("Order Data " +JSON.stringify(data));
 
@@ -356,6 +366,8 @@
 											.each(
 													data,
 													function(i, v) {
+														
+														
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.vehicleId

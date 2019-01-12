@@ -273,7 +273,7 @@
 									<div class="col-md-4">
 										<input type="text" id="startReading" name="startReading"
 											class="form-control" autocomplete="off" style="width: 100%;"
-											value="${editPRead.startReading}"  onchange="checkReading()"
+											value="${editPRead.startReading}"  
 											oninvalid="setCustomValidity('Please enter correct reading')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
@@ -283,10 +283,9 @@
 									<div class="col-md-4">
 										<input type="text" id="endReading" name="endReading" required
 											value="${endReading}" class="form-control" autocomplete="off"
-											style="width: 100%;" onchange="checkReading()"
+											style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter correct reading')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 

@@ -173,7 +173,7 @@
 									<div class="col-md-4">
 										<input type="text" id="end_date" name="end_date"
 											onchange="checkDate()" autocomplete="off"
-											value="${editPRead.endDate}"
+											value="${editPRead.endDate}"  readonly
 											oninvalid="setCustomValidity('Please select date')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;">
@@ -287,7 +287,7 @@
 											value="${editPRead.endReading}" onchange="checkReading()"
 											oninvalid="setCustomValidity('Please enter correct reading')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" readonly
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 
@@ -310,7 +310,7 @@
 										<input type="time" id="endTime" name="endTime"
 											class="form-control" autocomplete="off" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter time')"
-											onchange="try{setCustomValidity('')}catch(e){}"
+											onchange="try{setCustomValidity('')}catch(e){}"  readonly
 											value="${editPRead.endTime}">
 									</div>
 								</div>
@@ -428,10 +428,7 @@
 			$('input[id$=start_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-			$('input[id$=end_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
-
-			});
+			
 		});
 	</script>
 
