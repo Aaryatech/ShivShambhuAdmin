@@ -123,7 +123,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form
-								action="${pageContext.request.contextPath}/insertPoklenReading"
+								action="${pageContext.request.contextPath}/insertEditedPoklenReading"
 								id="submitForm" method="post">
 								<input type="hidden" name="readingId" id="readingId"
 									value="${editPRead.readingId}">

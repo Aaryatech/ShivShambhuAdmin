@@ -366,6 +366,7 @@
 															shiftType1 = "Night";
 														}
 
+														
 														var status;
 														if (v.exInt1 == 1) {
 															status = "Pending";
@@ -385,10 +386,10 @@
 																	+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 														} else if (v.exInt1 == 1) {
 
+															
+															
 															var acButton = '<a href="#" class="action_btn" onclick="callClose('
 																	+ v.readingId
-																	+ ','
-																	+ flag
 																	+ ','
 																	+ i
 																	+ ')" style="color:black"><i class="fa fa-close"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit1('
@@ -431,16 +432,18 @@
 					+ readingId);
 
 		}
-		function callEdit1(readingId, flag) {
+		function callEdit1(readingId) {
 
 			window.open("${pageContext.request.contextPath}/editPReading1/"
-					+ readingId + '/' + flag);
+					+ readingId);
 
 		}
-		function callClose(readingId, flag) {
+		
+		
+		function callClose(readingId) {
 
 			window.open("${pageContext.request.contextPath}/endPReading/"
-					+ readingId + '/' + flag);
+					+ readingId);
 
 		}
 	</script>

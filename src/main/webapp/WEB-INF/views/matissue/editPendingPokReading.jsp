@@ -168,14 +168,11 @@
 											class="form-control" required style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">End Date*</div>
-
+									<div class="col-md-2">End Date</div>
 									<div class="col-md-4">
 										<input type="text" id="end_date" name="end_date" 
-											autocomplete="off" value="${endDate}" onchange="checkDate()"
-											oninvalid="setCustomValidity('Please select date')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" style="width: 100%;" readonly>
+											class="form-control" autocomplete="off"
+											style="width: 100%;"   readonly>
 									</div>
 
 								</div>
@@ -273,8 +270,7 @@
 									<div class="col-md-4">
 										<input type="text" id="startReading" name="startReading"
 											class="form-control" autocomplete="off" style="width: 100%;"
-											value="${editPRead.startReading}"  onchange="checkReading()"
-											oninvalid="setCustomValidity('Please enter correct reading')"
+											value="${editPRead.startReading}"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
 											onkeypress="return allowOnlyNumber(event);">
@@ -283,8 +279,7 @@
 									<div class="col-md-4">
 										<input type="text" id="endReading" name="endReading" 
 											value="${endReading}" class="form-control" autocomplete="off"
-											style="width: 100%;" onchange="checkReading()"
-											oninvalid="setCustomValidity('Please enter correct reading')"
+											style="width: 100%;" 
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?"
 											onkeypress="return allowOnlyNumber(event);"  readonly>
@@ -427,10 +422,7 @@
 			$('input[id$=start_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-			$('input[id$=end_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
-
-			});
+			
 		});
 	</script>
 
@@ -461,11 +453,15 @@
 			var endReading = document.getElementById("endReading").value;
 			// In JQuery
 
+			alert("Hii");
+			if(endReading.len!=0){
+				alert("inside");
 			if (startReading > endReading) {
 				alert("Please enter correct Start Reading  ");
 				document.getElementById('startReading').value = "";
 				document.getElementById('endReading').value = "";
 
+			}
 			}
 
 		}
