@@ -101,6 +101,69 @@ public class BillController {
 	List<RmcQuotTemp> rmcQuotTempList;
 
 //hii
+
+	@RequestMapping(value = "/showBillByMultiChalanId", method = RequestMethod.POST)
+	public ModelAndView showBillByMultiChalanId(HttpServletRequest request, HttpServletResponse response) {
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("bill/addBill");
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			String curDate = dateFormat.format(new Date());
+			model.addObject("curDate", curDate);
+
+			String[] chalanIdList = request.getParameterValues("chalanIdList");
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < chalanIdList.length; i++) {
+				sb = sb.append(chalanIdList[i] + ",");
+			}
+			String items = sb.toString();
+			items = items.substring(0, items.length() - 1);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("chalanIdList", items);
+
+			GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByChalanIdList", map,
+					GetChalanHeader[].class);
+
+			List<GetChalanHeader> chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
+			model.addObject("chalanHeadList", chalanHeadList);
+			System.out.println("chalanId" + chalanHeadList.get(0).getChalanId());
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("chalanId", chalanHeadList.get(0).getChalanId());
+			GetChalanHeader addBill = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map,
+					GetChalanHeader.class);
+			System.err.println(addBill.toString());
+
+			model.addObject("addBill", addBill);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("docCode", 6);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			model.addObject("doc", doc);
+
+			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
+			List<Company> compList = new ArrayList<Company>(Arrays.asList(compArray));
+
+			model.addObject("compList", compList);
+			model.addObject("title", "Add Bill");
+			model.addObject("billHeadId", billHeadId);
+			model.addObject("custId", pdfCustId);
+			model.addObject("fromChalan", 1);
+
+			model.addObject("compList", compList);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /showBillByMultiChalanId @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return model;
+	}
+
 	@RequestMapping(value = "/showBill", method = RequestMethod.GET)
 	public ModelAndView showBill(HttpServletRequest request, HttpServletResponse response) {
 
@@ -109,14 +172,7 @@ public class BillController {
 
 			model = new ModelAndView("bill/addBill");
 
-			/*
-			 * Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList",
-			 * Plant[].class); List<Plant> plantList = new
-			 * ArrayList<Plant>(Arrays.asList(plantArray)); getChalanSelectedItems
-			 * 
-			 * 
-			 * model.addObject("plantList", plantList);
-			 */DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Calendar cal = Calendar.getInstance();
 
 			String curDate = dateFormat.format(new Date());
@@ -135,7 +191,7 @@ public class BillController {
 			model.addObject("title", "Add Bill");
 			model.addObject("billHeadId", billHeadId);
 			model.addObject("custId", pdfCustId);
-
+			model.addObject("fromChalan", 0);
 		} catch (Exception e) {
 
 			System.err.println("" + e.getMessage());
@@ -761,16 +817,6 @@ public class BillController {
 
 			System.out.println("chalanIdList" + chalanIdList);
 
-			/*
-			 * StringBuilder sb = new StringBuilder();
-			 * 
-			 * for (int i = 0; i < chalanIdList.length; i++) { sb =
-			 * sb.append(chalanIdList[i] + ",");
-			 * 
-			 * } String items = sb.toString(); items = items.substring(0, items.length() -
-			 * 1);
-			 */
-
 			map.add("chalanIdList", chalanIdList);
 
 			GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByChalanIdList", map,
@@ -803,6 +849,60 @@ public class BillController {
 
 		} catch (Exception e) {
 			System.err.println("Exce in edit Bill " + e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+	}
+
+	@RequestMapping(value = "/addBillByChalan/{chalanId}", method = RequestMethod.GET)
+	public ModelAndView addBillByChalan(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int chalanId) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("bill/addBill1");
+			GetChalanHeader addBill = null;
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("chalanId", chalanId);
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar cal = Calendar.getInstance();
+
+			String curDate = dateFormat.format(new Date());
+
+			model.addObject("curDate", curDate);
+
+			addBill = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
+			System.err.println(addBill.toString());
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("docCode", 6);
+			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
+			model.addObject("doc", doc);
+
+			model.addObject("addBill", addBill);
+
+			model.addObject("title", "Add Bill");
+
+			System.out.println("Generte Bill" + addBill.toString());
+
+			int chalanIdList = addBill.getChalanId();
+
+			System.out.println("chalanIdList" + chalanIdList);
+
+			map.add("chalanIdList", chalanIdList);
+
+			GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByChalanIdList", map,
+					GetChalanHeader[].class);
+
+			List<GetChalanHeader> chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
+			model.addObject("chalanHeadList", chalanHeadList);
+
+		} catch (Exception e) {
+			System.err.println("Exce in Add Bill By Chalan " + e.getMessage());
 			e.printStackTrace();
 		}
 		return model;

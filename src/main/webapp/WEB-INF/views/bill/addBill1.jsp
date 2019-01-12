@@ -157,24 +157,12 @@
 									<div class="col-md-4">
 										<select id="companyId" name="companyId" class="standardSelect"
 											tabindex="1" onchange="onCompanyChange(this.value)">
-											<option value="">Select</option>
-											<c:forEach items="${compList}" var="comp">
 
-												<c:choose>
-													<c:when test="${comp.companyId==addBill.companyId}">
-														<option value="${comp.companyId}" selected>${comp.compName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${comp.companyId}">${comp.compName}
-													</c:otherwise>
-												</c:choose>
-												<%-- 	<option value="${comp.companyId}">${comp.compName}</option> --%>
-											</c:forEach>
+											<option>${addBill.compName}</option>
+
+
 										</select>
 									</div>
-
-									<input type="hidden" id="companyId" name="companyId"
-										value="${addBill.companyId}">
 
 									<div class="col-md-2">Select Plant</div>
 
@@ -183,11 +171,8 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant')"
 											onchange="getData()">
-											<option value="-1">Select</option>
 
-
-											<option value="${addBill.plantId}" Selected>${addBill.plantName}</option>
-
+											<option>${addBill.plantName}</option>
 										</select>
 									</div>
 								</div>
@@ -217,13 +202,14 @@
 
 									<div class="col-md-2">Customer</div>
 									<div class="col-md-4">
-										<select id="cust_name" name="cust_name" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select customer')"
-											onchange="getCustInfo()">
-											<option value="${addBill.custId}" Selected>${addBill.custName}</option>
 
-										</select>
+
+										<input type="text" id="cust_name" name="cust_name" readonly
+											value="${addBill.custName}" style="width: 100%;"
+											class="form-control"> <span class="error"
+											aria-live="polite"></span>
+
+
 									</div>
 									<div class="col-md-2">Select Project</div>
 
@@ -232,22 +218,8 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select project')"
 											onchange="getChalanByCustAndProj()">
-											<option selected value="-1">Select</option>
 
-											<option value="${addBill.projId}" Selected>${addBill.projName}</option>
-
-											<%-- <c:forEach items="${projList}" var="proj">
-
-												<c:choose>
-													<c:when test="${quotHeader.projId==proj.projId}">
-														<option selected value="${proj.projId}">${proj.projName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${proj.projId}">${proj.projName}</option>
-													</c:otherwise>
-												</c:choose>
-
-											</c:forEach> --%>
+											<option>${addBill.projName}</option>
 
 										</select>
 									</div>
@@ -274,6 +246,8 @@
 												style="width: 100%;" class="form-control"> <span
 												class="error" aria-live="polite"></span>
 										</div>
+										<input type="hidden" id="companyId" name="companyId"
+											value="${addBill.companyId}">
 
 									</div>
 								</div>
@@ -309,11 +283,7 @@
 										<select id="chalan_id" name="chalan_id" class="standardSelect"
 											tabindex="1" required multiple="multiple"
 											oninvalid="setCustomValidity('Please select Challan')">
-											<option value="-1">Select</option>
-
-											<c:forEach items="${chalanHeadList}" var="chalan">
-												<option value="${chalan.chalanId}" selected>${chalan.chalanNo}</option>
-											</c:forEach>
+											<option value="${addBill.chalanId}" Selected>${addBill.chalanNo}</option>
 										</select>
 									</div>
 								</div>

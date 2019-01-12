@@ -182,120 +182,89 @@
 
 
 						</div>
-						<div class="card-body card-block">
+						<form
+							action="${pageContext.request.contextPath}/showBillByMultiChalanId"
+							method="post">
+							<div class="card-body card-block">
+								<div class="row">
+
+									<div class="col-md-2">Select Plant</div>
+
+									<div class="col-md-2">
+										<select id="plant_id" name="plant_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select plant name')"
+											onchange="getData()">
+											<option value="-1">Select</option>
+
+											<c:forEach items="${plantList}" var="plant">
+												<option value="${plant.plantId}">${plant.plantName}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="col-md-2">Select Customer</div>
+									<div class="col-md-2">
+										<select id="cust_name" name="cust_name" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select customer')"
+											onchange="getCustInfo()">
+											<option value="0">All</option>
+
+										</select>
+									</div>
 
 
 
 
-							<div class="row">
-
-								<div class="col-md-2">Select Plant</div>
-
-								<div class="col-md-2">
-									<select id="plant_id" name="plant_id" class="standardSelect"
-										tabindex="1" required
-										oninvalid="setCustomValidity('Please select plant name')"
-										onchange="getData()">
-										<option value="-1">Select</option>
-
-										<c:forEach items="${plantList}" var="plant">
-											<option value="${plant.plantId}">${plant.plantName}</option>
-										</c:forEach>
-									</select>
+									<div class="col-md-2"></div>
+									<div class="col-md-2">
+										<input type="button" class="btn btn-primary"
+											onclick="showBill()" value="Submit">
+										<button class="buttonload" id="loader">
+											<i class="fa fa-spinner fa-spin"></i>Loading
+										</button>
+									</div>
 								</div>
-								<div class="col-md-2">Select Customer</div>
-								<div class="col-md-2">
-									<select id="cust_name" name="cust_name" class="standardSelect"
-										tabindex="1" required
-										oninvalid="setCustomValidity('Please select customer')"
-										onchange="getCustInfo()">
-										<option value="0">All</option>
 
-									</select>
+
+								<div class="form-group"></div>
+
+
+
+								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
+
+								<div class="card-body card-block">
+									<table id="bootstrap-data-table"
+										class="table table-striped table-bordered">
+										<thead>
+											<tr>
+
+												<th style="text-align: center"><input type="checkbox"
+													id="selectAll" /></th>
+												<th style="text-align: center">Sr.</th>
+												<th style="text-align: center">Chalan No.</th>
+												<th style="text-align: center">Chalan Date</th>
+												<th style="text-align: center">Customer Name</th>
+
+												<th style="text-align: center">Customer Mobile</th>
+												<th style="text-align: center">Vehicle No</th>
+												<th style="text-align: center">Driver Name</th>
+												<th style="text-align: center">Project Name</th>
+												<th style="text-align: center">Action</th>
+											</tr>
+										</thead>
+
+
+
+									</table>
 								</div>
-
-
-
-
-								<div class="col-md-2"></div>
-								<div class="col-md-2">
-									<input type="button" class="btn btn-primary"
-										onclick="showBill()" value="Submit">
-									<button class="buttonload" id="loader">
-										<i class="fa fa-spinner fa-spin"></i>Loading
-									</button>
-								</div>
+								<input type="submit" class="btn btn-primary"
+									value="Generate Bill"
+									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure??');}"
+									style="align-content: center; width: 113px; margin-left: 40px;">
 							</div>
 
-
-							<div class="form-group"></div>
-
-						</div>
-
-						<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-
-						<div class="card-body card-block">
-							<table id="bootstrap-data-table"
-								class="table table-striped table-bordered">
-								<thead>
-									<tr>
-
-										<th style="text-align: center"><input type="checkbox"
-											id="selectAll" /></th>
-										<th style="text-align: center">Sr.</th>
-										<th style="text-align: center">Chalan No.</th>
-										<th style="text-align: center">Chalan Date</th>
-										<th style="text-align: center">Customer Name</th>
-
-										<th style="text-align: center">Customer Mobile</th>
-										<th style="text-align: center">Vehicle No</th>
-										<th style="text-align: center">Driver Name</th>
-										<th style="text-align: center">Project Name</th>
-										<th style="text-align: center">Action</th>
-									</tr>
-								</thead>
-
-								<tbody>
-									<c:forEach items="${getBillList}" var="bill" varStatus="count">
-										<tr>
-											<td><input type="checkbox" class="chk" name="quotIds"
-												id="quotIds${count.index+1}" value="${bill.billHeadId}" /></td>
-
-											<td style="text-align: center">${count.index+1}</td>
-
-
-											<td style="text-align: left"><c:out
-													value="${bill.billNo}" /></td>
-											<td style="text-align: center">${bill.billDate}</td>
-
-											<td style="text-align: left"><c:out
-													value="${bill.custName}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${bill.totalAmt}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${bill.taxableAmt}" /></td>
-
-											<td style="text-align: left"><c:out
-													value="${bill.taxAmt}" /></td>
-
-
-
-
-											<td><a
-												href="${pageContext.request.contextPath}/editBill/${bill.billHeadId}"><i
-													class="fa fa-edit" style="color: black"
-													title="Generate Quotation"></i> <span class="text-muted"></span></a>
-												&nbsp;<input type="button" id="btn_submit"
-												class="btn btn-primary"
-												onclick="singleBillPdf(${bill.billHeadId})" value="Pdf" /></td>
-										</tr>
-									</c:forEach>
-								</tbody>
-
-							</table>
-						</div>
+						</form>
 
 
 
@@ -462,7 +431,6 @@
 
 			}
 
-		
 			if (valid == true) {
 				$('#loader').show();
 				$
@@ -471,7 +439,7 @@
 								{
 									plantId : plantId,
 									custId : custId,
-									
+
 									ajax : 'true',
 								},
 
@@ -490,41 +458,40 @@
 
 														if (data == "") {
 															alert("No records found !!");
-														
 
 														}
 
+														var checkB = '<input  type="checkbox" name=chalanIdList id=chalanIdList'+v.chalanId+' class="chk"  value='+v.chalanId+'>'
 
-														var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v.chalanId+' class="chk"  value='+v.chalanId+'/>'
-													
 														var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"  onclick="callEdit('
 																+ v.chalanId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Bill Pdf" onclick="callPdf('
+																+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Chalan Pdf" onclick="callPdf('
 																+ v.chalanId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-																
-																
+																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Generate Bill" onclick="generateBill('
+																+ v.chalanId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-edit"></i></a>'
 
 														dataTable.row
 																.add(
 																		[
 																				checkB,
-																						
-																			 (i + 1),
+
+																				(i + 1),
 																				v.chalanNo,
 																				v.chalanDate,
 																				v.custName,
 																				v.custMobNo,
-																				
+
 																				v.vehNo,
 																				v.driverName,
 																				v.projName,
-																				acButton
-																		 ])
+																				acButton ])
 																.draw();
 													});
 
@@ -540,10 +507,19 @@
 					+ chalanId);
 
 		}
-		
-		function callPdf(chalanId,key){
+
+		function generateBill(chalanId) {
+
+			window.open("${pageContext.request.contextPath}/addBillByChalan/"
+					+ chalanId);
+
+		}
+
+		function callPdf(chalanId, key) {
 			//alert("call Pdf " +chalanId);
-			   window.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'+chalanId);
+			window
+					.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'
+							+ chalanId);
 
 		}
 	</script>
@@ -645,10 +621,10 @@
 	<script type="text/javascript">
 		function singleBillPdf(id) {
 			window
-			.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-					+ id);
+					.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
+							+ id);
 		}
-		</script>
+	</script>
 	<script type="text/javascript">
 		function billPdf() {
 			var checkedVals = $('input:checkbox:checked').map(function() {
