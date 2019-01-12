@@ -11,7 +11,8 @@
 
 
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
-<c:url var="getPendingBillListBetDate" value="/getPendingBillListBetDate" />
+<c:url var="getPendingBillListBetDate"
+	value="/getPendingBillListBetDate" />
 <%-- 
 
 <c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
@@ -183,19 +184,19 @@
 						</div>
 						<div class="card-body card-block">
 
-							
-						
-							
+
+
+
 							<div class="row">
 
 								<div class="col-md-2">Select Plant</div>
 
-								<div class="col-md-4">
+								<div class="col-md-2">
 									<select id="plant_id" name="plant_id" class="standardSelect"
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select plant name')"
 										onchange="getData()">
-										<option value="0">All</option>
+										<option value="-1">Select</option>
 
 										<c:forEach items="${plantList}" var="plant">
 											<option value="${plant.plantId}">${plant.plantName}</option>
@@ -203,7 +204,7 @@
 									</select>
 								</div>
 								<div class="col-md-2">Select Customer</div>
-								<div class="col-md-4">
+								<div class="col-md-2">
 									<select id="cust_name" name="cust_name" class="standardSelect"
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select customer')"
@@ -213,12 +214,11 @@
 									</select>
 								</div>
 
-							</div>
 
-							<div class="form-group"></div>
-							<div class="row">
-								<div class="col-md-6"></div>
-								<div class="col-md-3">
+
+
+								<div class="col-md-2"></div>
+								<div class="col-md-2">
 									<input type="button" class="btn btn-primary"
 										onclick="showBill()" value="Submit">
 									<button class="buttonload" id="loader">
@@ -242,7 +242,7 @@
 
 										<th style="text-align: center"><input type="checkbox"
 											id="selectAll" /></th>
-												<th style="text-align: center">Sr.</th>
+										<th style="text-align: center">Sr.</th>
 										<th style="text-align: center">Chalan No.</th>
 										<th style="text-align: center">Chalan Date</th>
 										<th style="text-align: center">Customer Name</th>
@@ -250,6 +250,7 @@
 										<th style="text-align: center">Customer Mobile</th>
 										<th style="text-align: center">Vehicle No</th>
 										<th style="text-align: center">Driver Name</th>
+										<th style="text-align: center">Project Name</th>
 										<th style="text-align: center">Action</th>
 									</tr>
 								</thead>
@@ -260,7 +261,7 @@
 											<td><input type="checkbox" class="chk" name="quotIds"
 												id="quotIds${count.index+1}" value="${bill.billHeadId}" /></td>
 
-													<td style="text-align: center">${count.index+1}</td> 
+											<td style="text-align: center">${count.index+1}</td>
 
 
 											<td style="text-align: left"><c:out
@@ -284,9 +285,10 @@
 
 											<td><a
 												href="${pageContext.request.contextPath}/editBill/${bill.billHeadId}"><i
-													class="fa fa-edit" style="color:black" title="Generate Quotation"></i> <span
-													class="text-muted"></span></a> &nbsp;<input type="button"
-												id="btn_submit" class="btn btn-primary"
+													class="fa fa-edit" style="color: black"
+													title="Generate Quotation"></i> <span class="text-muted"></span></a>
+												&nbsp;<input type="button" id="btn_submit"
+												class="btn btn-primary"
 												onclick="singleBillPdf(${bill.billHeadId})" value="Pdf" /></td>
 										</tr>
 									</c:forEach>
@@ -295,10 +297,6 @@
 							</table>
 						</div>
 
-						<center>
-							<input type="button" margin-right: 5px;" id="btn_submit"
-								class="btn btn-primary" onclick="billPdf()" value="Bill Pdf" />
-						</center>
 
 
 					</div>
@@ -443,9 +441,6 @@
 			//alert("Hi View Orders  ");
 
 			var plantId = document.getElementById("plant_id").value;
-			var fromDate = document.getElementById("from_date").value;
-			var toDate = document.getElementById("to_date").value;
-
 			var valid = true;
 
 			if (plantId == null || plantId == "") {
@@ -467,20 +462,7 @@
 
 			}
 
-			else if (fromDate == null || fromDate == "") {
-				valid = false;
-				alert("Please select from date");
-			}
-
-			else if (toDate == null || toDate == "") {
-				valid = false;
-				alert("Please select to date");
-			}
-
-			if (fromDate > toDate) {
-				valid = false;
-				alert("from date greater than todate ");
-			}
+		
 			if (valid == true) {
 				$('#loader').show();
 				$
@@ -489,8 +471,7 @@
 								{
 									plantId : plantId,
 									custId : custId,
-									fromDate : fromDate,
-									toDate : toDate,
+									
 									ajax : 'true',
 								},
 
@@ -506,16 +487,22 @@
 											.each(
 													data,
 													function(i, v) {
-														//alert("hdjfh");
 
-														var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v.billHeadId+' class="chk"  value='+v.billHeadId+'/>'
+														if (data == "") {
+															alert("No records found !!");
+														
+
+														}
+
+
+														var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v.chalanId+' class="chk"  value='+v.chalanId+'/>'
 													
 														var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"  onclick="callEdit('
-																+ v.billHeadId
+																+ v.chalanId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Bill Pdf" onclick="singleBillPdf('
-																+ v.billHeadId
+																+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Bill Pdf" onclick="callPdf('
+																+ v.chalanId
 																+ ','
 																+ i
 																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
@@ -528,12 +515,14 @@
 																				checkB,
 																						
 																			 (i + 1),
-																				v.billNo,
-																				v.billDate,
+																				v.chalanNo,
+																				v.chalanDate,
 																				v.custName,
-																				v.taxableAmt,
-																				v.taxAmt,
-																				v.totalAmt,
+																				v.custMobNo,
+																				
+																				v.vehNo,
+																				v.driverName,
+																				v.projName,
 																				acButton
 																		 ])
 																.draw();
@@ -545,10 +534,16 @@
 
 		}
 
-		function callEdit(billHeadId) {
+		function callEdit(chalanId) {
 
-			window.open("${pageContext.request.contextPath}/editBill/"
-					+ billHeadId);
+			window.open("${pageContext.request.contextPath}/editChalan/"
+					+ chalanId);
+
+		}
+		
+		function callPdf(chalanId,key){
+			//alert("call Pdf " +chalanId);
+			   window.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'+chalanId);
 
 		}
 	</script>

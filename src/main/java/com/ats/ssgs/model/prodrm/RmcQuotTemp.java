@@ -2,10 +2,9 @@ package com.ats.ssgs.model.prodrm;
 
 public class RmcQuotTemp {
 
-	private int itemDetailId;
 	private int tempDetailId;
-	private int delStatus;
-	private int quotDetailId;
+
+	private int itemDetailId;
 
 	private int rmId;
 
@@ -28,12 +27,19 @@ public class RmcQuotTemp {
 	private float unitRate = 0;
 
 	private float amt = 0;
+	private int delStatus;
 
-	private String quotNo;
-	private String poNo;
-	private String chalanNo;
-	private String orderNo;
-	private String billNo;
+	private int quotDetailId;
+
+	private int quotNo;
+
+	private int poNo;
+
+	private int chalanNo;
+
+	private int orderNo;
+
+	private int billNo;
 
 	public int getItemDetailId() {
 		return itemDetailId;
@@ -155,54 +161,54 @@ public class RmcQuotTemp {
 		this.quotDetailId = quotDetailId;
 	}
 
-	public String getQuotNo() {
+	public int getQuotNo() {
 		return quotNo;
 	}
 
-	public void setQuotNo(String quotNo) {
+	public void setQuotNo(int quotNo) {
 		this.quotNo = quotNo;
 	}
 
-	public String getPoNo() {
+	public int getPoNo() {
 		return poNo;
 	}
 
-	public void setPoNo(String poNo) {
+	public void setPoNo(int poNo) {
 		this.poNo = poNo;
 	}
 
-	public String getChalanNo() {
+	public int getChalanNo() {
 		return chalanNo;
 	}
 
-	public void setChalanNo(String chalanNo) {
+	public void setChalanNo(int chalanNo) {
 		this.chalanNo = chalanNo;
 	}
 
-	public String getOrderNo() {
+	public int getOrderNo() {
 		return orderNo;
 	}
 
-	public void setOrderNo(String orderNo) {
+	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
 
-	public String getBillNo() {
+	public int getBillNo() {
 		return billNo;
 	}
 
-	public void setBillNo(String billNo) {
+	public void setBillNo(int billNo) {
 		this.billNo = billNo;
 	}
 
 	@Override
 	public String toString() {
-		return "RmcQuotTemp [itemDetailId=" + itemDetailId + ", tempDetailId=" + tempDetailId + ", delStatus="
-				+ delStatus + ", quotDetailId=" + quotDetailId + ", rmId=" + rmId + ", rmQty=" + rmQty + ", itemOpRate="
-				+ itemOpRate + ", itemWt=" + itemWt + ", itemCode=" + itemCode + ", itemDesc=" + itemDesc + ", uom="
-				+ uom + ", itemId=" + itemId + ", itemName=" + itemName + ", unitRate=" + unitRate + ", amt=" + amt
-				+ ", quotNo=" + quotNo + ", poNo=" + poNo + ", chalanNo=" + chalanNo + ", orderNo=" + orderNo
-				+ ", billNo=" + billNo + "]";
+		return "RmcQuotTemp [tempDetailId=" + tempDetailId + ", itemDetailId=" + itemDetailId + ", rmId=" + rmId
+				+ ", rmQty=" + rmQty + ", itemOpRate=" + itemOpRate + ", itemWt=" + itemWt + ", itemCode=" + itemCode
+				+ ", itemDesc=" + itemDesc + ", uom=" + uom + ", itemId=" + itemId + ", itemName=" + itemName
+				+ ", unitRate=" + unitRate + ", amt=" + amt + ", delStatus=" + delStatus + ", quotDetailId="
+				+ quotDetailId + ", quotNo=" + quotNo + ", poNo=" + poNo + ", chalanNo=" + chalanNo + ", orderNo="
+				+ orderNo + ", billNo=" + billNo + "]";
 	}
 
 }

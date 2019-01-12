@@ -196,12 +196,14 @@ public class PurchaseOrderController {
 				map.add("docCode", 7);
 				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
 				System.out.println("info is   updateDocSr " + updateDocSr);
+				
+				
 
 				for (int i = 0; i < quotHeader.getGetQuotDetailList().size(); i++) {
 					map = new LinkedMultiValueMap<String, Object>();
 					map.add("quotDetailId", quotHeader.getGetQuotDetailList().get(i).getQuotDetailId());
 					map.add("quotNo", quotHeader.getQuotHeadId());
-					map.add("poNo", poNo);
+					map.add("poNo", res.getPoId());
 
 					Info updateQuotNo = rest.postForObject(Constants.url + "/updateQuotNoAndPoNo", map, Info.class);
 

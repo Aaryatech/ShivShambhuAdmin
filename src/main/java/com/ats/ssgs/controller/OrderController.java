@@ -59,6 +59,7 @@ import com.ats.ssgs.model.order.OrderDetail;
 import com.ats.ssgs.model.order.OrderHeader;
 import com.ats.ssgs.model.order.TempOrdDetail;
 import com.ats.ssgs.model.order.TempOrdHeader;
+import com.ats.ssgs.model.prodrm.RmcQuotTemp;
 import com.ats.ssgs.model.quot.QuotHeader;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.DocumentException;
@@ -85,6 +86,7 @@ public class OrderController {
 	RestTemplate rest = new RestTemplate();
 
 	List<PoHeader> poHeadList;
+	List<RmcQuotTemp> rmcQuotTempList;
 
 	List<GetPoForOrder> poDetailForOrdList;
 
@@ -387,9 +389,17 @@ public class OrderController {
 
 				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
 
-				for (int i = 0; i < poDetailForOrdList.size(); i++) {
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("poId", insertOrdHeadRes.getPoId());
+
+				RmcQuotTemp[] rmcItemQuot = rest.postForObject(Constants.url + "getTempItemDetailByPOId", map,
+						RmcQuotTemp[].class);
+				rmcQuotTempList = new ArrayList<RmcQuotTemp>(Arrays.asList(rmcItemQuot));
+
+				for (int i = 0; i < rmcQuotTempList.size(); i++) {
 					map = new LinkedMultiValueMap<String, Object>();
-					map.add("quotDetailId", poDetailForOrdList.get(i).getQuDetailId());
+					map.add("poId", insertOrdHeadRes.getPoId());
 					map.add("orderNo", insertOrdHeadRes.getOrderId());
 
 					Info updateQuotNo = rest.postForObject(Constants.url + "/updateOrderNo", map, Info.class);

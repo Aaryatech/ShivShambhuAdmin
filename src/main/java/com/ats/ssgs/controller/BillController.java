@@ -76,6 +76,7 @@ import com.ats.ssgs.model.order.GetOrder;
 import com.ats.ssgs.model.order.GetOrderDetail;
 import com.ats.ssgs.model.order.OrderDetail;
 import com.ats.ssgs.model.order.OrderHeader;
+import com.ats.ssgs.model.prodrm.RmcQuotTemp;
 import com.ats.ssgs.model.rec.PayRecoveryHead;
 
 @Controller
@@ -97,6 +98,8 @@ public class BillController {
 	List<GetItemsForBill> billItems;
 	int billHeadId = 0;
 	int pdfCustId = 0;
+	List<RmcQuotTemp> rmcQuotTempList;
+
 //hii
 	@RequestMapping(value = "/showBill", method = RequestMethod.GET)
 	public ModelAndView showBill(HttpServletRequest request, HttpServletResponse response) {
@@ -605,6 +608,23 @@ public class BillController {
 					Info updateChalanStatus = rest.postForObject(Constants.url + "updateChalanStatus", map, Info.class);
 
 					System.err.println(updateChalanStatus.toString());
+
+					map = new LinkedMultiValueMap<String, Object>();
+
+					map.add("chalanIdList", insertBillHeadRes.getChallanId());
+
+					RmcQuotTemp[] rmcItemQuot = rest.postForObject(Constants.url + "getTempItemDetailByChalanId", map,
+							RmcQuotTemp[].class);
+					rmcQuotTempList = new ArrayList<RmcQuotTemp>(Arrays.asList(rmcItemQuot));
+
+					for (int i = 0; i < rmcQuotTempList.size(); i++) {
+						map = new LinkedMultiValueMap<String, Object>();
+						map.add("chalanNoList", insertBillHeadRes.getChallanId());
+						map.add("billNo", insertBillHeadRes.getBillHeadId());
+
+						Info updateBillNo = rest.postForObject(Constants.url + "/updateBillNo", map, Info.class);
+
+					}
 
 				} else {
 
@@ -1248,87 +1268,85 @@ public class BillController {
 
 		}
 	}
-	
-	///--------------------------Pending Bill--------------------------
-	
-		@RequestMapping(value = "/showPendingBillList", method = RequestMethod.GET)
-		public ModelAndView showPendingBillList(HttpServletRequest request, HttpServletResponse response) {
 
-			ModelAndView model = null;
-			try {
+	/// --------------------------Pending Bill--------------------------
 
-				model = new ModelAndView("bill/pendingBillList");
+	@RequestMapping(value = "/showPendingBillList", method = RequestMethod.GET)
+	public ModelAndView showPendingBillList(HttpServletRequest request, HttpServletResponse response) {
 
-				model.addObject("title", "Bill List");
+		ModelAndView model = null;
+		try {
 
-				Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
-				List<Plant> plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			model = new ModelAndView("bill/pendingBillList");
 
-				model.addObject("plantList", plantList);
+			model.addObject("title", "Pending Bill List");
 
-				String fromDate = null, toDate = null;
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			List<Plant> plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
-				if (request.getParameter("fromDate") == null || request.getParameter("fromDate") == "") {
+			model.addObject("plantList", plantList);
 
-					System.err.println("onload call  ");
+			String fromDate = null, toDate = null;
 
-					Calendar date = Calendar.getInstance();
-					date.set(Calendar.DAY_OF_MONTH, 1);
+			if (request.getParameter("fromDate") == null || request.getParameter("fromDate") == "") {
 
-					Date firstDate = date.getTime();
+				System.err.println("onload call  ");
 
-					DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+				Calendar date = Calendar.getInstance();
+				date.set(Calendar.DAY_OF_MONTH, 1);
 
-					fromDate = dateFormat.format(firstDate);
+				Date firstDate = date.getTime();
 
-					toDate = dateFormat.format(new Date());
-					System.err.println("cu Date  " + fromDate + "todays date   " + toDate);
+				DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 
-				} else {
+				fromDate = dateFormat.format(firstDate);
 
-					System.err.println("After page load call");
-					fromDate = request.getParameter("fromDate");
-					toDate = request.getParameter("toDate");
+				toDate = dateFormat.format(new Date());
+				System.err.println("cu Date  " + fromDate + "todays date   " + toDate);
 
-				}
+			} else {
 
-				// getOrderListBetDate
-
-				model.addObject("fromDate", fromDate);
-				model.addObject("toDate", toDate);
-
-			} catch (Exception e) {
-
-				System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
-
-				e.printStackTrace();
+				System.err.println("After page load call");
+				fromDate = request.getParameter("fromDate");
+				toDate = request.getParameter("toDate");
 
 			}
 
-			return model;
+			// getOrderListBetDate
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
+
+			e.printStackTrace();
+
 		}
-		
-		
 
-		@RequestMapping(value = "/getPendingBillListBetDate", method = RequestMethod.GET)
-		public @ResponseBody List<GetBillHeader> getPendingBillListBetDate(HttpServletRequest request,
-				HttpServletResponse response) {
+		return model;
+	}
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+	@RequestMapping(value = "/getPendingBillListBetDate", method = RequestMethod.GET)
+	public @ResponseBody List<GetChalanHeader> getPendingBillListBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
 
-			int plantId = Integer.parseInt(request.getParameter("plantId"));
-			int custId = Integer.parseInt(request.getParameter("custId"));
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		int custId = Integer.parseInt(request.getParameter("custId"));
 
-			map.add("plantId", plantId);
-			map.add("custId", custId);
-			
-			GetBillHeader[] ordHeadArray = rest.postForObject(Constants.url + "getBillHeadersByDateAndCustAndPlant", map,
-					GetBillHeader[].class);
-			getBillList = new ArrayList<GetBillHeader>(Arrays.asList(ordHeadArray));
-			System.out.println("getBillList" + getBillList.toString());
+		map.add("plantId", plantId);
+		map.add("custId", custId);
 
-			return getBillList;
-		}
+		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getPendingBillListByPlantAndCust", map,
+				GetChalanHeader[].class);
+
+		List<GetChalanHeader> chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
+		System.out.println("chalanHeadList" + chalanHeadList.toString());
+
+		return chalanHeadList;
+	}
 
 }
