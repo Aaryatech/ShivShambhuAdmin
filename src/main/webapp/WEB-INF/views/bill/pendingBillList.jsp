@@ -202,7 +202,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
-										<!-- 	<option value="0">All</option> -->
+											<option value="0">All</option>
 
 										</select>
 									</div>
@@ -449,13 +449,19 @@
 											.each(
 													data,
 													function(i, v) {
+														var n = document
+																.getElementById("cust_name").value;
 
 														if (data == "") {
 															alert("No records found !!");
 
 														}
+														if (n == 0) {
+															checkB = "";
+														} else {
+															var checkB = '<input  type="checkbox" name=chalanIdList id=chalanIdList'+v.chalanId+' class="chk"  value='+v.chalanId+'>'
 
-														var checkB = '<input  type="checkbox" name=chalanIdList id=chalanIdList'+v.chalanId+' class="chk"  value='+v.chalanId+'>'
+														}
 
 														var acButton = '&nbsp;<a href="#" class="action_btn"  onclick="callEdit('
 																+ v.chalanId

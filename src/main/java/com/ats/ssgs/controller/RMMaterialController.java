@@ -261,6 +261,17 @@ public class RMMaterialController {
 			HttpServletResponse response) {
 
 		int index = Integer.parseInt(request.getParameter("index"));
+		/*
+		 * int itemDetailId = Integer.parseInt(request.getParameter("itemDetailId"));
+		 * int itemDetailId = Integer.parseInt(request.getParameter("itemDetailId"));
+		 * 
+		 * GetExistingItemDetail GetExistingItemDetail = new GetExistingItemDetail();
+		 * 
+		 * for(int i = 0 ; i<itemList.size() ; i++) {
+		 * 
+		 * if(itemDetailId==itemList.get(i).getItemDetailId()) {
+		 * GetExistingItemDetail=itemList.get(i); } }
+		 */
 
 		return itemList.get(index);
 

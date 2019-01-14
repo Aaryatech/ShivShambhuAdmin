@@ -173,6 +173,7 @@
 										<select id="rmName" name="rmName" class="standardSelect">
 											<option value="-1">Select</option>
 
+
 										</select>
 									</div>
 								</div>
@@ -428,6 +429,8 @@
 		
 		
 		function callEdit(itemDetailId, index) {
+		/* 	alert("hii");
+			alert(itemDetailId); */
 
 			document.getElementById("isEdit").value = "1";
 			$.getJSON('${getDetailEditForItemDetail}', {
@@ -436,97 +439,70 @@
 				ajax : 'true',
 
 			}, function(data) {
-			//	alert("data" + data);
-				//alert(data.catId);
-				$("#catId").val(data.catId);
+			// alert("data" + data);
+				//alert(data.int1); 
+				$("#catId").val(data.int1);
 				$("#catId").trigger("chosen:updated");
-				document.getElementById("rmName").value = data.itemId;
-				document.getElementById("qty").value = data.rmQty;
-				document.getElementById("uom").value = data.uomName;
-				document.getElementById("index").value = index;
-
-				$.getJSON('${getRawItemByCatId}', {
-
-					catId : data.catId,
-					ajax : 'true',
-
-				},
-
-				function(data1) {
-					//alert("hiii");
-					var html;
-					var len = data1.length;
-					var html = '<option value="-1"  >Select Item</option>';
-					for (var i = 0; i < len; i++) {
-
-						html += '<option value="' + data1[i].itemId + '">'
-								+ data1[i].itemCode + '</option>';
-					}
-					//html += '</option>';
-
-					$('#rmName').html(html);
-					//$("#itemName").trigger("chosen:updated");
-
-					$("#rmName").val(data1.itemId);
-					$("#rmName").trigger("chosen:updated");
-
-				});
-
-			});
-
-		}
-
-
-		/* function callEdit(itemDetailId, index) {
-
-			document.getElementById("isEdit").value = "1";
-			$.getJSON('${getDetailEditForItemDetail}', {
-				itemDetailId : itemDetailId,
-				index : index,
-				ajax : 'true',
-
-			}, function(data) {
-				//alert("data" + data);
-				//alert(data.exInt1);
-				$("#catId").val(data.catId);
-				$("#catId").trigger("chosen:updated");
-				document.getElementById("rmName").value = data.itemId;
-				document.getElementById("qty").value = data.rmQty;
-				document.getElementById("uom").value = data.uomName;
 				
+				document.getElementById("rmName").value = data.itemId;
+				
+				document.getElementById("qty").value = data.rmQty;
+				
+			
 				document.getElementById("index").value = index;
+				//alert(data.int1); 
+				
+			
 
 				$.getJSON('${getRawItemByCatId}', {
 
-					catId : data.catId,
+					catId :data.int1,
 					ajax : 'true',
 
 				},
 
 				function(data1) {
-					//alert("hiii");
+					 
 					var html;
+					var n="-";
+					
 					var len = data1.length;
+					 
 					var html = '<option value="-1"  >Select Item</option>';
 					for (var i = 0; i < len; i++) {
+		
+						if(data1[i].itemId==data.rmId){
+							 
+							html += '<option value="' + data1[i].itemId + '" selected>'
+							+ data1[i].itemDesc + '</option>';
+							
+						}else{
+							 
+							html += '<option value="' + data1[i].itemId + '">'
+							+ data1[i].itemCode + n 	+ data1[i].itemDesc + '</option>';
+							
+						}
 
-						html += '<option value="' + data1[i].itemId + '">'
-								+ data1[i].itemDesc + '</option>';
+						
 					}
 					//html += '</option>';
 
 					$('#rmName').html(html);
 					//$("#itemName").trigger("chosen:updated");
 
-					$("#rmName").val(data.itemId);
+						//$("#rmName").val(data.rmId);
 					$("#rmName").trigger("chosen:updated");
+					//alert(data.itemId);
 
 				});
+
 
 			});
 
 		}
- */
+
+
+	
 		function callDelete(itemDetailId, index) {
 
 			//alert("hii");
@@ -649,6 +625,7 @@
 				function(data) {
 					//alert("hiii");
 					var html;
+					var n="-";
 					var len = data.length;
 					//alert("length is"+len);
 					var html = '<option selected value="-1"  >Select</option>';
@@ -656,7 +633,7 @@
 						//alert(data[i].itemCode)
 						
 						html += '<option value="' + data[i].itemId + '">'
-								+ data[i].itemCode + '</option>';
+								+ data[i].itemCode + n + data[i].itemDesc + '</option>';
 					}
 					html += '</option>';
 
