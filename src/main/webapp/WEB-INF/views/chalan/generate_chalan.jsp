@@ -519,7 +519,7 @@ body {
 										<input type="time" id="out_time" name="out_time"
 											style="width: 100%;" value="${curTime}" class="form-control">
 									</div>
-									<div class="col-md-2">Out Kilometer</div>
+									<div class="col-md-2">Out Kilometer*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="out_km" name="out_km" required

@@ -1156,6 +1156,7 @@ public class ChalanController {
 			chDetailList = new ArrayList<GetChalanDetail>(Arrays.asList(chDetailArray));
 
 			model.addObject("chDetailList", chDetailList);
+			model.addObject("rstNo", chDetailList.get(0).getExVar1());
 
 			model.addObject("editChalan", editChalan);
 
@@ -1744,6 +1745,8 @@ public class ChalanController {
 			chDetailList = new ArrayList<GetChalanDetail>(Arrays.asList(chDetailArray));
 
 			model.addObject("chDetailList", chDetailList);
+			model.addObject("rstNo", chDetailList.get(0).getExVar1());
+
 
 			model.addObject("editChalan", editChalan);
 

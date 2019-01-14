@@ -383,6 +383,29 @@ body {
 										</select>
 									</div>
 								</div>
+
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Batch No*</div>
+
+									<div class="col-md-4">
+										<input type="text" id="batchNo" name="batchNo"
+											value="${editChalan.exDate1}" autocomplete="off" required
+											style="width: 100%;" class="form-control"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+
+									<div class="col-md-2">RST No*</div>
+
+									<div class="col-md-4">
+										<input type="text" id="rstNo" name="rstNo" required
+											value="${rstNo}" autocomplete="off" style="width: 100%;"
+											class="form-control"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+
+								</div>
 								<div class="form-group"></div>
 
 								<div class="row"></div>
@@ -431,6 +454,29 @@ body {
 								</div>
 								end of myModal div
  -->
+
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Batch No*</div>
+
+									<div class="col-md-4">
+										<input type="text" id="batchNo" name="batchNo"
+											value="${editChalan.exDate1}" autocomplete="off" required
+											style="width: 100%;" class="form-control"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+
+									<div class="col-md-2">RST No*</div>
+
+									<div class="col-md-4">
+										<input type="text" id="rstNo" name="rstNo" required
+											value="${rstNo}" autocomplete="off" style="width: 100%;"
+											class="form-control"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+
+								</div>
 								<input type="hidden" name="item_id" id="item_id" value="0">
 								<div class="form-group"></div>
 								<div class="row">
@@ -450,10 +496,12 @@ body {
 									</div>
 
 								</div>
-								<input type="hidden" id="projId" name="projId" value="${editChalan.projId}">
-								<input type="hidden" id="orderNo" name="orderNo" value="${editChalan.orderNo}">
+								<input type="hidden" id="projId" name="projId"
+									value="${editChalan.projId}"> <input type="hidden"
+									id="orderNo" name="orderNo" value="${editChalan.orderNo}">
 
-								<input type="hidden" id="chalanId" name="chalanId" value="${editChalan.chalanId}">
+								<input type="hidden" id="chalanId" name="chalanId"
+									value="${editChalan.chalanId}">
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -514,13 +562,15 @@ body {
 									<div class="col-md-2">Out Time</div>
 
 									<div class="col-md-4">
-										<input type="time" id="out_time" name="out_time" value="${editChalan.vehTimeOut}"
-											style="width: 100%;" class="form-control">
+										<input type="time" id="out_time" name="out_time"
+											value="${editChalan.vehTimeOut}" style="width: 100%;"
+											class="form-control">
 									</div>
 									<div class="col-md-2">Out Kilometer</div>
 
 									<div class="col-md-4">
-										<input type="text" id="out_km" name="out_km" required  value="${editChalan.outKm}"
+										<input type="text" id="out_km" name="out_km" required
+											value="${editChalan.outKm}"
 											onkeypress="return allowOnlyNumber(event);"
 											style="width: 100%;" class="form-control" maxlength="10">
 										<span class="error" aria-live="polite"></span>
@@ -531,16 +581,18 @@ body {
 									<div class="col-md-2">Chalan Remark</div>
 
 									<div class="col-md-4">
-										<input type="text" id="chalan_remark" name="chalan_remark"  value="${editChalan.chalanRemark}"
-											required style="width: 100%;" class="form-control" value="-">
+										<input type="text" id="chalan_remark" name="chalan_remark"
+											value="${editChalan.chalanRemark}" required
+											style="width: 100%;" class="form-control" value="-">
 										<span class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-2">Cost Segment</div>
 
 									<div class="col-md-4">
-										<input type="text" id="cost_segment" name="cost_segment"  value="${editChalan.costSegment}"
-											value="-" required style="width: 100%;" class="form-control">
-										<span class="error" aria-live="polite"></span>
+										<input type="text" id="cost_segment" name="cost_segment"
+											value="${editChalan.costSegment}" value="-" required
+											style="width: 100%;" class="form-control"> <span
+											class="error" aria-live="polite"></span>
 									</div>
 
 								</div>
@@ -556,7 +608,7 @@ body {
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
 												<th style="text-align: center">Pending Qty</th>
-												
+
 												<th style="text-align: center">Chalan Qty</th>
 												<th style="text-align: center">Width</th>
 												<th style="text-align: center">Height</th>
@@ -566,20 +618,21 @@ body {
 										</thead>
 
 										<tbody>
-										
-										<c:forEach items="${chDetailList}" var="chDetail" varStatus="count">
-										<tr>
 
-											<td style="text-align: center">${count.index+1}</td>
+											<c:forEach items="${chDetailList}" var="chDetail"
+												varStatus="count">
+												<tr>
+
+													<td style="text-align: center">${count.index+1}</td>
 
 
 
-											<td style="text-align: left"><c:out
-													value="${chDetail.itemName}" /></td>
-													
 													<td style="text-align: left"><c:out
-													value="${chDetail.uomName}" /></td>
-											<%-- <td style="text-align: center"><c:out
+															value="${chDetail.itemName}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${chDetail.uomName}" /></td>
+													<%-- <td style="text-align: center"><c:out
 													value="${chDetail.item}" /></td>
 
 											<td style="text-align: left"><c:out
@@ -590,28 +643,46 @@ body {
 													
 											<td style="text-align: center"><c:out
 													value="${chDetail.poRate}" /></td> --%>
-													<td style="text-align: center">
-													<input  type="text" readonly  class="form-control" value="${chDetail.remOrdQty}"  />
+													<td style="text-align: center"><input type="text"
+														readonly class="form-control"
+														value="${chDetail.remOrdQty}" /></td>
+													<td style="text-align: center"><input type="text"
+														onkeypress="return allowOnlyNumber(event);"
+														class="form-control" value="${chDetail.itemQty}"
+														id="chQty${chDetail.chalanDetailId}"
+														name="chQty${chDetail.chalanDetailId}"
+														oninput="setChalanQty(${chDetail.itemId},${chDetail.chalanDetailId},this.value,${chDetail.remOrdQty},${chDetail.orderQty},${chDetail.itemQty})" />
 													</td>
-													<td style="text-align: center">
-													<input  type="text" onkeypress="return allowOnlyNumber(event);" class="form-control" value="${chDetail.itemQty}"  id="chQty${chDetail.chalanDetailId}"  name="chQty${chDetail.chalanDetailId}" oninput="setChalanQty(${chDetail.itemId},${chDetail.chalanDetailId},this.value,${chDetail.remOrdQty},${chDetail.orderQty},${chDetail.itemQty})"/>
+													<td style="text-align: center"><input type="text"
+														onkeypress="return allowOnlyNumber(event);"
+														class="form-control" value="${chDetail.itemWidthPlant}"
+														id="width${chDetail.chalanDetailId}"
+														name="width${chDetail.chalanDetailId}"
+														onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)" />
 													</td>
-													<td style="text-align: center">
-													<input  type="text" onkeypress="return allowOnlyNumber(event);" class="form-control" value="${chDetail.itemWidthPlant}"  id="width${chDetail.chalanDetailId}" name="width${chDetail.chalanDetailId}" onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)"/>
+													<td style="text-align: center"><input type="text"
+														onkeypress="return allowOnlyNumber(event);"
+														class="form-control" value="${chDetail.itemHeightPlant}"
+														id="height${chDetail.chalanDetailId}"
+														name="height${chDetail.chalanDetailId}"
+														onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)" />
 													</td>
-														<td style="text-align: center">
-													<input  type="text" onkeypress="return allowOnlyNumber(event);" class="form-control" value="${chDetail.itemHeightPlant}"  id="height${chDetail.chalanDetailId}" name="height${chDetail.chalanDetailId}" onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)"/>
+													<td style="text-align: center"><input type="text"
+														onkeypress="return allowOnlyNumber(event);"
+														class="form-control" value="${chDetail.itemLengthPlant}"
+														id="length${chDetail.chalanDetailId}"
+														name="length${chDetail.chalanDetailId}"
+														onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)" />
 													</td>
-														<td style="text-align: center">
-													<input  type="text" onkeypress="return allowOnlyNumber(event);" class="form-control" value="${chDetail.itemLengthPlant}"  id="length${chDetail.chalanDetailId}" name="length${chDetail.chalanDetailId}" onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)"/>
-													</td>
-													
-													<td style="text-align: center">
-													<input  type="text" readonly  class="form-control"  id="itemTotal${chDetail.chalanDetailId}" value="${chDetail.itemTotalPlant}" name="itemTotal${chDetail.chalanDetailId}"/>'
-													</td>
-													
-										</tr>
-										</c:forEach>
+
+													<td style="text-align: center"><input type="text"
+														readonly class="form-control"
+														id="itemTotal${chDetail.chalanDetailId}"
+														value="${chDetail.itemTotalPlant}"
+														name="itemTotal${chDetail.chalanDetailId}" />'</td>
+
+												</tr>
+											</c:forEach>
 
 										</tbody>
 
@@ -862,8 +933,8 @@ function allowOnlyNumber1(evt)
 	  return true;
 	} 
 	 </script>
-	 
-	 <script type="text/javascript">
+
+	<script type="text/javascript">
 	 
 	 function setChalanQty(itemId,chDetailId,inputQty,remOrdQty,ordQty,itemQty){
 		 alert("Inside setChalanQty")

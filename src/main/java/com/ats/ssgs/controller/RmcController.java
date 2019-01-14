@@ -67,7 +67,7 @@ public class RmcController {
 	RestTemplate rest = new RestTemplate();
 	String fromDate, toDate;
 	List<GetRmcOrders> rmcOrdList;
-	
+
 	List<Plant> plantList;
 
 	@RequestMapping(value = "/showRmcOrdList", method = RequestMethod.GET)
@@ -107,7 +107,7 @@ public class RmcController {
 			}
 			map.add("plantId", plantId);
 			model = new ModelAndView("rmc/show_rmc_ord");
-			model.addObject("title","RMC Order List");
+			model.addObject("title", "RMC Order List");
 			GetRmcOrders[] rmcOrArray = rest.postForObject(Constants.url + "/getRmcOrdList", map, GetRmcOrders[].class);
 
 			rmcOrdList = new ArrayList<GetRmcOrders>(Arrays.asList(rmcOrArray));
@@ -120,7 +120,7 @@ public class RmcController {
 			model.addObject("rmcOrdList", rmcOrdList);
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
-			model.addObject("plantId",plantId);
+			model.addObject("plantId", plantId);
 			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 			ExportToExcel expoExcel = new ExportToExcel();
@@ -128,7 +128,7 @@ public class RmcController {
 
 			rowData.add("Sr. No");
 			rowData.add("Order No");
-			
+
 			rowData.add("Customer Name");
 			rowData.add("Mobile No");
 			rowData.add("Delivery Date");
@@ -154,7 +154,7 @@ public class RmcController {
 				rowData.add("" + rmcOrdList.get(i).getDispatchTime());
 				rowData.add("" + rmcOrdList.get(i).getItemName());
 				rowData.add("" + rmcOrdList.get(i).getOrderQty());
-				
+
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
 
@@ -163,8 +163,6 @@ public class RmcController {
 			HttpSession session = request.getSession();
 			session.setAttribute("exportExcelList", exportToExcelList);
 			session.setAttribute("excelName", "Order List");
-			
-			
 
 		} catch (Exception e) {
 
@@ -174,11 +172,11 @@ public class RmcController {
 
 		return model;
 	}
-	
-	
+
 	@RequestMapping(value = "/showRmcListPdf/{fromDate}/{toDate}/{plantId}", method = RequestMethod.GET)
-	public void showRmcListPdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,@PathVariable("plantId") int plantId,
-			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+	public void showRmcListPdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			@PathVariable("plantId") int plantId, HttpServletRequest request, HttpServletResponse response)
+			throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showDatewisePdf");
 		Document document = new Document(PageSize.A4);
@@ -204,7 +202,7 @@ public class RmcController {
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f,3.2f });
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -231,7 +229,6 @@ public class RmcController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
 
 			hcell = new PdfPCell(new Phrase("Mobile No ", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -263,8 +260,7 @@ public class RmcController {
 
 			table.addCell(hcell);
 
-			
-			float tot=0;
+			float tot = 0;
 			int index = 0;
 			for (GetRmcOrders work : rmcOrdList) {
 				index++;
@@ -291,7 +287,6 @@ public class RmcController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				
 				cell = new PdfPCell(new Phrase("" + work.getCustMobNo(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -306,33 +301,26 @@ public class RmcController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				
-				
-
 				cell = new PdfPCell(new Phrase("" + work.getDispatchTime(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getItemName(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getOrderQty(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				
-				
 
 			}
 			document.open();
@@ -340,40 +328,35 @@ public class RmcController {
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			
+
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			
-			String plantname=null;
-			String custName=null;
-			
-			if(plantId==0) {
-				plantname="All";
-				
-			}
-			else {
+
+			String plantname = null;
+			String custName = null;
+
+			if (plantId == 0) {
+				plantname = "All";
+
+			} else {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("plantId", plantId);
 
 				Plant getPlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
-				plantname=getPlant.getPlantName();
-				System.out.println("plantname"+plantname);
-				
-				
-				
+				plantname = getPlant.getPlantName();
+				System.out.println("plantname" + plantname);
+
 			}
-			
-			Paragraph p2 = new Paragraph("FromDate:"+fromDate +" ToDate:"+toDate+"  Plant:" + plantname + "  ", headFont);
+
+			Paragraph p2 = new Paragraph("FromDate:" + fromDate + " ToDate:" + toDate + "  Plant:" + plantname + "  ",
+					headFont);
 			p2.setAlignment(Element.ALIGN_CENTER);
 			document.add(p2);
 			document.add(new Paragraph("\n"));
-			
-			
-			
+
 			document.add(table);
-			
-			
+
 			int totalPages = writer.getPageNumber();
 
 			System.out.println("Page no " + totalPages);
@@ -419,25 +402,26 @@ public class RmcController {
 	List<Vehicle> vehicleList;
 	List<User> usrList;
 	GetRmcOrders rmcOrd;
+
 	@RequestMapping(value = "/showAddRmcChalan/{key}", method = RequestMethod.GET)
-	public ModelAndView showAddChalan(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable int key) {
+	public ModelAndView showAddChalan(HttpServletRequest request, HttpServletResponse response, @PathVariable int key) {
 
 		ModelAndView model = null;
 		try {
 
 			model = new ModelAndView("chalan/generate_chalan_rmc");
 
-	/*		Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
-			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
-
-			model.addObject("plantList", plantList);*/
+			/*
+			 * Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList",
+			 * Plant[].class); plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			 * 
+			 * model.addObject("plantList", plantList);
+			 */
 
 			Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
 			vehicleList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
 
 			model.addObject("vehicleList", vehicleList);
-
 
 			User[] usrArray = rest.getForObject(Constants.url + "getDriverList", User[].class);
 			usrList = new ArrayList<User>(Arrays.asList(usrArray));
@@ -445,9 +429,8 @@ public class RmcController {
 			model.addObject("usrList", usrList);
 
 			model.addObject("title", "Add Chalan");
-			//model.addObject("orderId", orderId);
-			
-			
+			// model.addObject("orderId", orderId);
+
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Calendar cal = Calendar.getInstance();
 
@@ -459,21 +442,21 @@ public class RmcController {
 
 			model.addObject("curTime", curTime);
 			String curDate = dateFormat.format(new Date());
-			
-			model.addObject("curDate" ,curDate);
+
+			model.addObject("curDate", curDate);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("docCode", 5);
-			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map, com.ats.ssgs.model.master.Document.class);
-			model.addObject("doc", doc
-					);
-			rmcOrd=new GetRmcOrders();
-			rmcOrd=rmcOrdList.get(key);
-			 
-			System.err.println("rmcOrd " +rmcOrd);
-			
+			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,
+					com.ats.ssgs.model.master.Document.class);
+			model.addObject("doc", doc);
+			rmcOrd = new GetRmcOrders();
+			rmcOrd = rmcOrdList.get(key);
+
+			System.err.println("rmcOrd " + rmcOrd);
+
 			model.addObject("rmcOrd", rmcOrd);
-			
+
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("keyList", "5");
@@ -482,8 +465,6 @@ public class RmcController {
 			List<Setting> settingList = new ArrayList<Setting>(Arrays.asList(settArray));
 
 			model.addObject("settingList", settingList);
-
-
 
 		} catch (Exception e) {
 
@@ -496,7 +477,7 @@ public class RmcController {
 		return model;
 
 	}
-	
+
 	@RequestMapping(value = "/showBillRmc", method = RequestMethod.GET)
 	public ModelAndView showBill(HttpServletRequest request, HttpServletResponse response) {
 
@@ -520,23 +501,26 @@ public class RmcController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("docCode", 6);
-			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,com.ats.ssgs.model.master.Document.class);
+			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,
+					com.ats.ssgs.model.master.Document.class);
 			model.addObject("doc", doc);
 
-			/*Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
-			List<Company> compList = new ArrayList<Company>(Arrays.asList(compArray));
+			/*
+			 * Company[] compArray = rest.getForObject(Constants.url + "getAllCompList",
+			 * Company[].class); List<Company> compList = new
+			 * ArrayList<Company>(Arrays.asList(compArray));
+			 * 
+			 * model.addObject("compList", compList);
+			 */
 
-			model.addObject("compList", compList);*/
-			
 			HttpSession session = request.getSession();
 			ChalanHeader chalan = (ChalanHeader) session.getAttribute("chalanRes");
-			
-			
-			model.addObject("chalan",chalan);
+
+			model.addObject("chalan", chalan);
 			model.addObject("rmcOrd", rmcOrd);
-			
+
 			session.removeAttribute("chalanRes");
-			
+
 			model.addObject("title", "Add Bill");
 		} catch (Exception e) {
 
@@ -549,6 +533,5 @@ public class RmcController {
 		return model;
 
 	}
-
 
 }

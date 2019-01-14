@@ -273,7 +273,7 @@ body {
 
 								<div class="row">
 
-									<div class="col-md-2">Plant</div>
+									<div class="col-md-2">Plant*</div>
 
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
@@ -288,7 +288,7 @@ body {
 											</c:forEach> --%>
 										</select>
 									</div>
-									<div class="col-md-2">Customer</div>
+									<div class="col-md-2">Customer*</div>
 									<div class="col-md-4">
 										<select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required
@@ -328,7 +328,7 @@ body {
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Select Project</div>
+									<div class="col-md-2">Select Project*</div>
 
 									<div class="col-md-4">
 										<select id="proj_id" name="proj_id" class="standardSelect"
@@ -353,7 +353,7 @@ body {
 										</select>
 									</div>
 
-									<div class="col-md-2">Select Order</div>
+									<div class="col-md-2">Select Order*</div>
 
 									<div class="col-md-4">
 										<select id="order_id" name="order_id" class="standardSelect"
@@ -379,9 +379,9 @@ body {
 
 									<div class="col-md-4">
 										<input type="text" id="batchNo" name="batchNo"
-											autocomplete="off" required style="width: 100%;"
-											class="form-control"> <span class="error"
-											aria-live="polite"></span>
+											value="${rmcOrd.exDate1}" autocomplete="off" required
+											style="width: 100%;" class="form-control"> <span
+											class="error" aria-live="polite"></span>
 									</div>
 
 									<div class="col-md-2">RST No*</div>
@@ -446,14 +446,14 @@ body {
 								<input type="hidden" name="item_id" id="item_id" value="0">
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Chalan Date</div>
+									<div class="col-md-2">Chalan Date*</div>
 									<div class="col-md-4">
 										<input type="text" autocomplete="off" id="chalan_date"
 											name="chalan_date" required style="width: 100%;"
 											class="form-control" value="${curDate}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
-									<div class="col-md-2">Chalan No</div>
+									<div class="col-md-2">Chalan No*</div>
 									<div class="col-md-4">
 										<input type="text" readonly id="chalan_no" name="chalan_no"
 											style="width: 100%;" class="form-control"
