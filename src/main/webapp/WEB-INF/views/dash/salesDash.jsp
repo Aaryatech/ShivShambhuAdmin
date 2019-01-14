@@ -337,7 +337,6 @@ background-color: transparent;
 		});
 	</script>
 
-
 	<script type="text/javascript">
 		// onclick of submit to search order 
 		function showQuot() {
@@ -396,22 +395,23 @@ background-color: transparent;
 								},
 
 								function(data) {
-									alert("hi");
+									//alert("hi");
 
 									document.getElementById("totalEnq").innerText = data.totalEnq.toFixed(2);
 									document.getElementById("totalQuotPending").innerText = data.totalQuotPending.toFixed(2);
 									document
 											.getElementById("totalQuotGenerated").innerText = data.totalQuotGenerated.toFixed(2);
 									document.getElementById("totalPoPending").innerText = data.totalPoPending.toFixed(2);
-									document.getElementById("totalOrderAmount").innerText = data.totalOrderAmoun.toFixed(2)t;
+									document.getElementById("poGenerated").innerText = data.poGenerated.toFixed(2);
+									document.getElementById("totalOrderAmount").innerText = data.totalOrderAmount.toFixed(2);
 									document.getElementById("totalNoOfOrders").innerText = data.totalNoOfOrders.toFixed(2);
 									document.getElementById("totalBillAmount").innerText = data.totalBillAmount.toFixed(2);
 									document.getElementById("totalTaxBillAmt").innerText = data.totalTaxBillAmt.toFixed(2);
 									document
 											.getElementById("totalTaxableBillAmt").innerText = data.totalTaxableBillAmt.toFixed(2);
-									document.getElementById("paymentRecPaid").innerText = data.paymentRecPaid.toFixed(2);
+									document.getElementById("paymentRecPaid").innerText = (data.paymentRecPaid).toFixed(2);
 									document
-											.getElementById("paymentRecOutstandingPending").innerText = data.paymentRecOutstandingPending.toFixed(2);
+											.getElementById("paymentRecOutstandingPending").innerText = (data.paymentRecOutstandingPending).toFixed(2);
 
 								});
 
@@ -419,6 +419,9 @@ background-color: transparent;
 
 		}
 	</script>
+
+
+
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 

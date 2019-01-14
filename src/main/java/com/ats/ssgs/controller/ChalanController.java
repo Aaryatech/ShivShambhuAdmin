@@ -366,7 +366,9 @@ public class ChalanController {
 			int orderId = Integer.parseInt(request.getParameter("order_id"));
 
 			String chalanDate = request.getParameter("chalan_date");
+			String batchNo = request.getParameter("batchNo");
 			String chalanRemark = request.getParameter("chalan_remark");
+			String rstNo = request.getParameter("rstNo");
 			String costSegment = request.getParameter("cost_segment");
 
 			int driverId = Integer.parseInt(request.getParameter("driver_id"));
@@ -389,7 +391,7 @@ public class ChalanController {
 				chDetail.setDelStatus(1);
 				chDetail.setExDate1(curDate);
 				chDetail.setExFloat1(0);
-				chDetail.setExVar1("NA");
+				chDetail.setExVar1(rstNo);
 				chDetail.setExVar2("NA");
 				chDetail.setItemHeightPlant(height);
 				chDetail.setItemHeightSite(0);
@@ -430,7 +432,7 @@ public class ChalanController {
 			chHeader.setChalanRemark(chalanRemark);
 			chHeader.setCustId(custId);
 			chHeader.setDriverId(driverId);
-			chHeader.setExDate1(curDate);
+			chHeader.setExDate1(batchNo);
 			// chHeader.setExVar1("save time-" +dateFormat.format(cal.getTime().getTime()));
 			chHeader.setInKm(0);
 			chHeader.setOrderId(orderId);
@@ -1390,12 +1392,12 @@ public class ChalanController {
 				GetChalanHeader[].class);
 
 		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
-	
-		
+
 		for (int i = 0; i < chalanHeadList.size(); i++) {
-			
-			System.out.println("Date is "+chalanHeadList.get(i).getChalanDate());
-			System.out.println(" Converted Date is "+DateConvertor.convertToDMY(chalanHeadList.get(i).getChalanDate()));
+
+			System.out.println("Date is " + chalanHeadList.get(i).getChalanDate());
+			System.out
+					.println(" Converted Date is " + DateConvertor.convertToDMY(chalanHeadList.get(i).getChalanDate()));
 
 			chalanHeadList.get(i).setChalanDate(chalanHeadList.get(i).getChalanDate());
 		}
@@ -1713,7 +1715,7 @@ public class ChalanController {
 			editChalan = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
 			editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate()));
 
-			System.out.println("chalan detail are...:"+editChalan.toString());
+			System.out.println("chalan detail are...:" + editChalan.toString());
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("custId", editChalan.getCustId());
@@ -1723,7 +1725,6 @@ public class ChalanController {
 			model.addObject("projList", projList1);
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
-			
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Calendar cal = Calendar.getInstance();
 

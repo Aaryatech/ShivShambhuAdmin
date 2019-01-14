@@ -6,30 +6,29 @@
 
 <style>
 .tooltip {
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted black;
+	position: relative;
+	display: inline-block;
+	border-bottom: 1px dotted black;
 }
 
 .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-
-    /* Position the tooltip */
-    position: absolute;
-    z-index: 1;
+	visibility: hidden;
+	width: 120px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1;
 }
 
 .tooltip:hover .tooltiptext {
-    visibility: visible;
+	visibility: visible;
 }
 </style>
-	 <style>
+<style>
 body {
 	font-family: Arial, Helvetica, sans-serif;
 }
@@ -96,16 +95,18 @@ body {
 	transform: translate(-50%, -50%);
 	-ms-transform: translate(-50%, -50%);
 }
+
 .bg-overlay {
-    background: linear-gradient(rgba(0,0,0,.7), rgba(0,0,0,.7)), url("${pageContext.request.contextPath}/resources/images/smart.jpeg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    color: #fff;
-    height:auto;
-    width:auto;
-    padding-top: 10px;
-    padding-left:20px;
+	background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
+		url("${pageContext.request.contextPath}/resources/images/smart.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	color: #fff;
+	height: auto;
+	width: auto;
+	padding-top: 10px;
+	padding-left: 20px;
 }
 </style>
 
@@ -171,31 +172,30 @@ body {
 
 <style>
 .alert {
-    padding: 20px;
-    background-color: red;
-    color: white;
-    
+	padding: 20px;
+	background-color: red;
+	color: white;
 }
+
 .alert1 {
-    padding: 20px;
-    background-color: green;
-    color: white;
-    
+	padding: 20px;
+	background-color: green;
+	color: white;
 }
 
 .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: black;
+	color: black;
 }
 </style>
 
@@ -227,31 +227,31 @@ body {
 		<div class="animated fadeIn">
 
 			<div class="row">
-			
-			<c:choose>
-							<c:when test="${isError==1}">
-							
-							<div class="alert">
-							
+
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Failed !</strong>     Data not submitted  !!
-				</div>
-							
-							</c:when>
-							
-							<c:when test="${isError==2}">
-							
-							<div class="alert1">
-							
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Success</strong>     Data Submitted !!
-				</div>
-							
-							</c:when>
-							
-							</c:choose>
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -264,13 +264,12 @@ body {
 								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
 										Customer</strong></a>
 							</div> --%>
-							
+
 
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertChalan"
-							id="insertChalan"
-								method="post">
+								id="insertChalan" method="post">
 
 								<div class="row">
 
@@ -282,7 +281,7 @@ body {
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
 											<option value="${rmcOrd.plantId}">${rmcOrd.plantName}</option>
-											
+
 
 											<%-- <c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
@@ -303,7 +302,7 @@ body {
 								</div>
 								<div class="form-group"></div>
 								<input type="hidden" id="isRmcPage" name="isRmcPage" value="1">
-								
+
 								<!-- <div id="divCheckbox" style="display: none;">
 									<div class="form-group"></div>
 									<div class="row">
@@ -335,7 +334,6 @@ body {
 										<select id="proj_id" name="proj_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select project')"
-										
 											onchange="getOrderHeaders()">
 											<option value="${rmcOrd.projId}">${rmcOrd.projName}</option>
 
@@ -354,7 +352,7 @@ body {
 
 										</select>
 									</div>
-									
+
 									<div class="col-md-2">Select Order</div>
 
 									<div class="col-md-4">
@@ -369,58 +367,91 @@ body {
 											</c:forEach> --%>
 										</select>
 									</div>
-									
-									
-									
-								</div>
-						
-									
-									<div class="row"></div>
-								<div class="form-group"></div>
-								
-									<div id="myModal" class="modal">
-										      
-					<div class="modal-content" style="color: black;">
-						<span class="close" id="close">&times;</span>
-						<h5 style="text-align: left;">Add Chalan Quantity</h5>
-							<div class=" box-content">
-						
-								<div style="overflow:scroll;height:auto;width:auto;overflow:auto" >
-									<table 
-										style="width: 100%" id="table_grid1" class="table table-striped table-bordered">
-										<thead>
-											<tr>
-										<th style=" width: 5%;" align="center">Sr</th>
-										<th style=" width: 20%;"  align="center">Item Name</th>
-										<th style=" width: 20%;" align="center">Unit of Measure</th>
-										<th style=" width: 20%;" align="center">Order Quantity</th>
-										<th style=" width: 20%;" align="center">Remaining Quantity</th>
-										<th style=" width: 10%;" align="center">Chalan Quantity</th>
-									</tr>
-										</thead>
-										<tbody>
- 
-										</tbody>
-									</table>
-								</div>
-							 
-						<input type="button"  id="poupSubButton" onclick="showChalnItems()" class="btn btn-primary" value="Submit">
-				 			 
-						</div><br>
-						
-					</div>
 
-				</div><!-- end of myModal div -->
-								
+
+
+								</div>
+
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Batch No*</div>
+
+									<div class="col-md-4">
+										<input type="text" id="batchNo" name="batchNo"
+											autocomplete="off" required style="width: 100%;"
+											class="form-control"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+
+									<div class="col-md-2">RST No*</div>
+
+									<div class="col-md-4">
+										<input type="text" id="rstNo" name="rstNo" required
+											autocomplete="off" style="width: 100%;" class="form-control">
+										<span class="error" aria-live="polite"></span>
+									</div>
+
+								</div>
+
+
+
+
+								<div class="row"></div>
+								<div class="form-group"></div>
+
+								<div id="myModal" class="modal">
+
+									<div class="modal-content" style="color: black;">
+										<span class="close" id="close">&times;</span>
+										<h5 style="text-align: left;">Add Chalan Quantity</h5>
+										<div class=" box-content">
+
+											<div
+												style="overflow: scroll; height: auto; width: auto; overflow: auto">
+												<table style="width: 100%" id="table_grid1"
+													class="table table-striped table-bordered">
+													<thead>
+														<tr>
+															<th style="width: 5%;" align="center">Sr</th>
+															<th style="width: 20%;" align="center">Item Name</th>
+															<th style="width: 20%;" align="center">Unit of
+																Measure</th>
+															<th style="width: 20%;" align="center">Order
+																Quantity</th>
+															<th style="width: 20%;" align="center">Remaining
+																Quantity</th>
+															<th style="width: 10%;" align="center">Chalan
+																Quantity</th>
+														</tr>
+													</thead>
+													<tbody>
+
+													</tbody>
+												</table>
+											</div>
+
+											<input type="button" id="poupSubButton"
+												onclick="showChalnItems()" class="btn btn-primary"
+												value="Submit">
+
+										</div>
+										<br>
+
+									</div>
+
+								</div>
+								<!-- end of myModal div -->
+
 								<input type="hidden" name="item_id" id="item_id" value="0">
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Chalan Date</div>
 									<div class="col-md-4">
-										<input type="text" autocomplete="off"  id="chalan_date" name="chalan_date" required
-											style="width: 100%;" class="form-control"
-											value="${curDate}"> <span class="error"
-											aria-live="polite"></span>
+										<input type="text" autocomplete="off" id="chalan_date"
+											name="chalan_date" required style="width: 100%;"
+											class="form-control" value="${curDate}"> <span
+											class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-2">Chalan No</div>
 									<div class="col-md-4">
@@ -435,13 +466,13 @@ body {
 								<input type="hidden" id="itemName" value="${rmcOrd.itemName}">
 
 								<input type="hidden" id="uomName" value="${rmcOrd.uomName}">
-								
-								
+
+
 								<div class="form-group"></div>
 								<div class="row">
-								<div class="col-md-2">Select Driver</div>
+									<div class="col-md-2">Select Driver</div>
 									<div class="col-md-4">
-									<select id="driver_id" name="driver_id" style="width: 100%;"
+										<select id="driver_id" name="driver_id" style="width: 100%;"
 											class="standardSelect" tabindex="1" required>
 											<option value="-1">Select</option>
 											<c:forEach items="${usrList}" var="usr">
@@ -465,70 +496,72 @@ body {
 
 									<div class="col-md-4">
 										<select id="veh_id" name="veh_id" style="width: 100%;"
-											class="standardSelect" tabindex="1" required onchange="checkVehicle(this.value)">
+											class="standardSelect" tabindex="1" required
+											onchange="checkVehicle(this.value)">
 											<option value="-1">Select</option>
 											<c:forEach items="${vehicleList}" var="veh">
-											
-														<option value="${veh.vehicleId}">${veh.vehNo}-${veh.vehicleName}</option>
-												
+
+												<option value="${veh.vehicleId}">${veh.vehNo}-${veh.vehicleName}</option>
+
 											</c:forEach>
 										</select>
 									</div>
-									
+
 								</div>
-								
-								<div class="form-group"></div>
-								<div class="row">
-
-									
-									<div class="col-md-2" id="out_div" style="display: none; width: 100%" >Outside Vehicle</div>
-
-									<div class="col-md-10" id="newdriver" ></div>
-									</div>
-								
-								
-								
 
 								<div class="form-group"></div>
 								<div class="row">
 
-									
+
+									<div class="col-md-2" id="out_div"
+										style="display: none; width: 100%">Outside Vehicle</div>
+
+									<div class="col-md-10" id="newdriver"></div>
+								</div>
+
+
+
+
+								<div class="form-group"></div>
+								<div class="row">
+
+
 									<div class="col-md-2">Out Time</div>
 
 									<div class="col-md-4">
-										<input type="time" id="out_time" name="out_time" style="width: 100%;" value="${curTime}" class="form-control">
+										<input type="time" id="out_time" name="out_time"
+											style="width: 100%;" value="${curTime}" class="form-control">
 									</div>
 									<div class="col-md-2">Out Kilometer</div>
 
 									<div class="col-md-4">
-										<input type="text" id="out_km" name="out_km" required onkeypress="return allowOnlyNumber(event);"
-											style="width: 100%;" class="form-control"  maxlength="10"
-											> <span class="error"
-											aria-live="polite"></span>
+										<input type="text" id="out_km" name="out_km" required
+											onkeypress="return allowOnlyNumber(event);"
+											style="width: 100%;" class="form-control" maxlength="10">
+										<span class="error" aria-live="polite"></span>
 									</div>
 								</div>
-									<div class="form-group"></div>
+								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Chalan Remark</div>
 
 									<div class="col-md-4">
-										<input type="text" id="chalan_remark" name="chalan_remark" required
-											style="width: 100%;" class="form-control"
-											value="-"> <span class="error"
-											aria-live="polite"></span>
+										<input type="text" id="chalan_remark" name="chalan_remark"
+											required style="width: 100%;" class="form-control" value="-">
+										<span class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-2">Cost Segment</div>
 
-										<div class="col-md-4">
-											<input type="text" id="cost_segment" name="cost_segment"
-												 value="-" required style="width: 100%;" class="form-control">
-											<span class="error" aria-live="polite"></span>
-										</div>
-									
+									<div class="col-md-4">
+										<input type="text" id="cost_segment" name="cost_segment"
+											value="-" required style="width: 100%;" class="form-control">
+										<span class="error" aria-live="polite"></span>
 									</div>
-								
+
+								</div>
+
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-								
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
@@ -544,12 +577,12 @@ body {
 												<th style="text-align: center">Chalan Total</th>
 											</tr>
 										</thead>
-										
+
 										<tbody>
-										
-										
+
+
 										</tbody>
-										
+
 									</table>
 								</div>
 								<div class="form-group"></div>
@@ -566,7 +599,7 @@ body {
 								<div class="form-group"></div>
 								<div class="row">
 
-								<!-- 	<div class="col-md-2">Other Cost After Tax</div>
+									<!-- 	<div class="col-md-2">Other Cost After Tax</div>
 
 									<div class="col-md-3">845</div> -->
 									<!-- <div class="col-md-2">Total</div>
@@ -574,7 +607,8 @@ body {
 									<div class="col-md-3" id="ordTotal">0</div>
  -->
 									<div class="col-md-2">
-										<input type="button"  onclick="validateForm()" class="btn btn-primary" value="Submit">
+										<input type="button" onclick="validateForm()"
+											class="btn btn-primary" value="Submit">
 
 									</div>
 
@@ -637,8 +671,8 @@ body {
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
-		
-		<script type="text/javascript">
+
+	<script type="text/javascript">
 		
 		function checkVehicle(vehId){
 		//	alert(vehId);
@@ -668,7 +702,7 @@ body {
 			//$("#chalan_remark").value=remark;
 		}
 		</script>
-		
+
 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({
@@ -688,7 +722,7 @@ body {
 			 
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 	
 	function validateForm()
@@ -819,7 +853,7 @@ body {
 	}
 	
 	</script>
-<script type="text/javascript">
+	<script type="text/javascript">
 function allowOnlyNumber1(evt)
 	{
 	  var charCode = (evt.which) ? evt.which : event.keyCode
@@ -981,7 +1015,7 @@ function allowOnlyNumber1(evt)
 		}
 	
 	</script>
-	
+
 	<script type="text/javascript">
 	function showOrderItemPopup(orderId){
 		//alert(JSON.stringify(rmcOrd));
@@ -1059,9 +1093,9 @@ var no=1;
 	
 	
 </script>
-		
-	
-	
+
+
+
 	<script type="text/javascript">
 	function allowOnlyNumber(evt){
 	    var charCode = (evt.which) ? evt.which : event.keyCode
@@ -1183,8 +1217,8 @@ var no=1;
 	}
 	
 	</script>
-	
-	
+
+
 
 	<!-- <script type="text/javascript">
 		function addItem() {
@@ -1395,8 +1429,8 @@ var no=1;
 					});
 		});
 	</script>
-	
-	
+
+
 	<script type="text/javascript">
 function toggle() {
 			  checkboxes = document.getElementsByName('selChalanItem');
@@ -1406,6 +1440,6 @@ function toggle() {
 			  }
 				  
 			
-			</script> 
+			</script>
 </body>
 </html>
