@@ -1390,10 +1390,14 @@ public class ChalanController {
 				GetChalanHeader[].class);
 
 		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
-
+	
+		
 		for (int i = 0; i < chalanHeadList.size(); i++) {
+			
+			System.out.println("Date is "+chalanHeadList.get(i).getChalanDate());
+			System.out.println(" Converted Date is "+DateConvertor.convertToDMY(chalanHeadList.get(i).getChalanDate()));
 
-			chalanHeadList.get(i).setChalanDate(DateConvertor.convertToDMY(chalanHeadList.get(i).getChalanDate()));
+			chalanHeadList.get(i).setChalanDate(chalanHeadList.get(i).getChalanDate());
 		}
 		System.out.println("open chalan " + chalanHeadList.toString());
 		System.err.println("Ajax chalanHeadList /getChalanListByPlant " + chalanHeadList.toString());
@@ -1700,12 +1704,6 @@ public class ChalanController {
 
 			GetChalanHeader editChalan = new GetChalanHeader();
 
-			/*
-			 * for (int i = 0; i < getOrdList.size(); i++) {
-			 * 
-			 * if (getOrdList.get(i).getOrderId() == orderId) { editOrder = new GetOrder();
-			 * editOrder = getOrdList.get(i); break; } }
-			 */
 			List<Project> projList1;
 			MultiValueMap<String, Object>
 
@@ -1715,6 +1713,7 @@ public class ChalanController {
 			editChalan = rest.postForObject(Constants.url + "getChalanHeadersByChalanId", map, GetChalanHeader.class);
 			editChalan.setChalanDate(DateConvertor.convertToDMY(editChalan.getChalanDate()));
 
+			System.out.println("chalan detail are...:"+editChalan.toString());
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("custId", editChalan.getCustId());
@@ -1722,6 +1721,19 @@ public class ChalanController {
 			projList1 = new ArrayList<Project>(Arrays.asList(projArray));
 
 			model.addObject("projList", projList1);
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+
+			
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar cal = Calendar.getInstance();
+
+			String curDate = dateFormat.format(new Date());
+
+			System.out.println(sdf.format(cal.getTime()));
+
+			String curTime = sdf.format(cal.getTime());
+
+			model.addObject("curTime", curTime);
 
 			map = new LinkedMultiValueMap<String, Object>();
 

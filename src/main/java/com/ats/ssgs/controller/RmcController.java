@@ -438,7 +438,8 @@ public class RmcController {
 
 			model.addObject("vehicleList", vehicleList);
 
-			User[] usrArray = rest.getForObject(Constants.url + "getAllUserList", User[].class);
+
+			User[] usrArray = rest.getForObject(Constants.url + "getDriverList", User[].class);
 			usrList = new ArrayList<User>(Arrays.asList(usrArray));
 
 			model.addObject("usrList", usrList);

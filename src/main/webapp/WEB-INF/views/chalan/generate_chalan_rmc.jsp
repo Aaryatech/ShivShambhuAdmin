@@ -445,9 +445,19 @@ body {
 											class="standardSelect" tabindex="1" required>
 											<option value="-1">Select</option>
 											<c:forEach items="${usrList}" var="usr">
-											
+												<c:choose>
+													<c:when test="${editChalan.driverId== usr.userId}">
+
+														<option selected value="${usr.userId}">${usr.usrName}</option>
+
+													</c:when>
+													<c:otherwise>
 														<option value="${usr.userId}">${usr.usrName}</option>
-												
+
+
+													</c:otherwise>
+												</c:choose>
+
 											</c:forEach>
 										</select>
 									</div>

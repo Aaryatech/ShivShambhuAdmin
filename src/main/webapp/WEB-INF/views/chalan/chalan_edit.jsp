@@ -196,23 +196,12 @@
 									<div class="col-md-2">Project</div>
 
 									<div class="col-md-10">
-										<select id="proj_id" name="proj_id" class="standardSelect"
+										<select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required
-											oninvalid="setCustomValidity('Please select project')"
-											onchange="try{setCustomValidity('')}catch(e){}">
+											oninvalid="setCustomValidity('Please select customer')"
+											onchange="getCustInfo()">
+											<option selected value="${editChalan.projId}">${editChalan.projName}</option>
 
-											<c:forEach items="${projList}" var="proj">
-
-												<c:choose>
-													<c:when test="${editChalan.projId==proj.projId}">
-														<option selected value="${proj.projId}">${proj.projName}-${proj.address}</option>
-													</c:when>
-													<%-- <c:otherwise>
-														<option value="${proj.projId}">${proj.projName}</option>
-													</c:otherwise> --%>
-												</c:choose>
-
-											</c:forEach>
 
 										</select>
 									</div>
@@ -326,13 +315,13 @@
 
 									<div class="col-md-4">
 										<input type="time" id="in_time" name="in_time" readonly
-											style="width: 100%;" class="form-control" value="${editChalan.vehTimeOut}">
+											style="width: 100%;" class="form-control" value="${curTime}">
 									</div>
 									<div class="col-md-2">In Kilometer</div>
 
 									<div class="col-md-4">
 										<input type="text" id="in_km" name="in_km" required
-											onkeypress="return allowOnlyNumber(event);" 
+											onkeypress="return allowOnlyNumber(event);" onchange="checkKm()"
 											style="width: 100%;" class="form-control" maxlength="10">
 										<span class="error" aria-live="polite" ></span>
 									</div>
@@ -971,14 +960,14 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 			var valid = true;
 			
 			
-			if (  in_km > out_km ) {
+			if (  in_km < out_km ) {
 
 				valid = false;
 			} 
 
 			if (valid == false) {
 				
-				alert("Enter In km less than Out km");
+				alert("Enter In km Greater than Out km");
 				document.getElementById("in_km").value="";
 			}
 		}

@@ -729,7 +729,6 @@ body {
 	
 	function validateForm()
 	{
-		alert("hi");
 	    //var checkboxs=document.getElementsByName("selectItem");
 	    var okay=true;
 	   /*  for(var i=0,l=checkboxs.length;i<l;i++)
@@ -743,19 +742,19 @@ body {
 	   // alert("Okay " +okay);
 
 	    var plantId=document.getElementById("plant_id").value;
-		 alert("plantId" + plantId);
+		// alert("plantId" + plantId);
 
 	    var custId=document.getElementById("cust_name").value;
-		 alert("plantId" + plantId);
+		 //alert("plantId" + plantId);
 
 		var orderId=document.getElementById("order_id").value;
-		 alert("plantId" + plantId);
+		// alert("plantId" + plantId);
 
 		 var driverId=document.getElementById("driver_id").value;
-		 alert("plantId" + plantId);
+		 //alert("plantId" + plantId);
 
 		 var vehId=document.getElementById("veh_id").value;
-		 alert("plantId" + plantId);
+		// alert("plantId" + plantId);
 
 		
 		 var chalanDate=document.getElementById("chalan_date").value;

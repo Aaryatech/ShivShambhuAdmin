@@ -282,27 +282,22 @@
 		}
 		function searchItem() {
 			
-		/* 	var date = "03-11-2014";
-			var newdate1 = date.split("-").reverse().join("-"); */
-			//alert("result:"+newdate1);
-			
+		
             var dat1 = document.getElementById('from_date').value;
 			  var dat2 = document.getElementById('to_date').value;
 			  
-          //  alert("old date:"+dat1);
+        
             
             var newdate1 = dat1.split("-").reverse().join("-");
             var newdate2 = dat2.split("-").reverse().join("-");
             
-            //alert("new date:"+newdate1);
-          //  alert("new date:"+newdate2);
-            
+          
              var start = moment(newdate1);
             
             var end = moment(newdate2);
           
            var n=end.diff(start, "days");
-          // alert(n);
+      
            
 			var isValid = validate();
 

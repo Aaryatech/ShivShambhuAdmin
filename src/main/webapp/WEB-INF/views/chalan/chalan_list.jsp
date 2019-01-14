@@ -293,14 +293,14 @@
 								<div class="row">
 									<div class="col-md-2">From Date</div>
 									<div class="col-md-3">
-										<input type="text" autocomplete="off" id="from_date"
+										<input type="text" autocomplete="off"  id="from_date"
 											name="from_date" required style="width: 100%;"
 											class="form-control" value="${fromDate}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-1">To Date</div>
 									<div class="col-md-3">
-										<input type="text" autocomplete="off" id="to_date"
+										<input type="text" autocomplete="off"  id="to_date"
 											name="to_date" style="width: 100%;" class="form-control"
 											value="${toDate}"> <span class="error"
 											aria-live="polite"></span>
@@ -597,7 +597,7 @@
 															 chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
 								}else if(v.exFloat1==1){
 									status="Closed";	
-									var acButton = '<a href="#" class="action_btn" onclick="callEdit1('
+									var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 										+ v.chalanId
 										+ ','
 										+ i
