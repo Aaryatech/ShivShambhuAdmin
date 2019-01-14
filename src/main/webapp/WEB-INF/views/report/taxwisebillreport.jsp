@@ -121,25 +121,26 @@
 
 								<div class="col-md-4">
 									<select id="plantId" name="plantId" class="standardSelect"
-										multiple tabindex="1" required onchange="getData()">
-
-
+										tabindex="1" multiple="multiple" required
+										oninvalid="setCustomValidity('Please select Challan')">
 										<option value="0">All</option>
 										<c:forEach items="${plantList}" var="plant">
+
 											<option value="${plant.plantId}">${plant.plantName}</option>
 
 										</c:forEach>
+
+
 									</select>
 								</div>
+
 
 								<div class="col-md-2">Select Customer*</div>
 
 								<div class="col-md-4">
 									<select id="custId" name="custId" class="standardSelect"
-										multiple tabindex="1" required
-										oninvalid="setCustomValidity('Please select company')"
-										onchange="getData()">
-
+										tabindex="1" multiple="multiple" required
+										oninvalid="setCustomValidity('Please select Challan')">
 										<option value="0">All</option>
 
 										<c:forEach items="${custList}" var="cust">
@@ -149,6 +150,7 @@
 
 									</select>
 								</div>
+
 
 							</div>
 

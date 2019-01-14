@@ -11,6 +11,8 @@
 
 
 <c:url var="getCustListBetweenDate" value="/getCustListBetweenDate" />
+<c:url var="getCustByPlantId" value="/getCustByPlantId" />
+
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -117,40 +119,37 @@
 
 							<div class="row">
 
-								<div class="col-md-2">Select Plant*</div>
+								
+									<div class="col-md-2">Select Plant</div>
 
-								<div class="col-md-4">
-									<select id="plantId" name="plantId" class="standardSelect"
-										tabindex="1" multiple="multiple" required
-										oninvalid="setCustomValidity('Please select Challan')">
-										<option value="0">All</option>
-										<c:forEach items="${plantList}" var="plant">
+									<div class="col-md-4">
+										<select id="plantId" name="plantId" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select plant name')"
+											onchange="getData()">
+											<option value="0">All</option>
+											<c:forEach items="${plantList}" var="plant">
+												<c:choose>
+													<c:when test="${plant.plantId==plantId1}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}">${plant.plantName}
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="col-md-2">Select Customer</div>
+									<div class="col-md-4">
+										<select id="custId" name="custId" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select customer')"
+											onchange="getCustInfo()"  multiple="multiple">
+											<option value="0">All</option>
 
-											<option value="${plant.plantId}">${plant.plantName}</option>
-
-										</c:forEach>
-
-
-									</select>
-								</div>
-
-
-								<div class="col-md-2">Select Customer*</div>
-
-								<div class="col-md-4">
-									<select id="custId" name="custId" class="standardSelect"
-										tabindex="1" multiple="multiple" required
-										oninvalid="setCustomValidity('Please select Challan')">
-										<option value="0">All</option>
-
-										<c:forEach items="${custList}" var="cust">
-											<option value="${cust.custId}">${cust.custName}</option>
-										</c:forEach>
-
-
-									</select>
-								</div>
-
+										</select>
+									</div>
 
 							</div>
 
@@ -309,7 +308,8 @@
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			//alert(custId);
+			alert("cust id are"+custId);
+			
 
 			var valid = true;
 
@@ -319,6 +319,7 @@
 			}
 
 			var plantId = document.getElementById("plantId").value;
+			alert("plant id are"+plantId);
 
 			//alert("plantId" + plantId);
 			var valid = true;
@@ -420,6 +421,57 @@
 
 		}
 	</script>
+	
+	
+	<script type="text/javascript">
+	
+	// on plant change function 
+		function getData() { 
+			var plantId = document.getElementById("plantId").value;
+			var valid = true;
+
+			if (plantId == null || plantId == "") {
+				valid = false;
+				alert("Please select plant");
+			}
+
+			if (valid == true) {
+
+				$.getJSON('${getCustByPlantId}', {
+					plantId : plantId,
+					ajax : 'true',
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option selected value="-1"  >Select</option>';
+
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].custId + '">'
+								+ data[i].custName + '</option>';
+
+					}
+					html += '</option>';
+
+					$('#custId').html(html);
+					$("#custId").trigger("chosen:updated");
+					/* getCustInfo();
+
+					$('#po_id').html("-1");
+					$("#po_id").trigger("chosen:updated");
+					 */
+					var dataTable = $('#bootstrap-data-table')
+					.DataTable();
+			dataTable.clear().draw();
+
+				});
+			}//end of if
+
+		}
+	</script>
+	
 
 
 	<script type="text/javascript">

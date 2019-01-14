@@ -1439,9 +1439,9 @@ public class BillReportController {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		String[] custIdList = request.getParameterValues("custId");
-		String[] plantIdList = request.getParameterValues("plantId");
+		int plantId =Integer.parseInt(request.getParameter("plantId")) ;
 
-		System.out.println("plantIdList lengtr" + plantIdList.toString());
+		System.out.println("plantIdList lengtr" + plantId);
 
 		StringBuilder sb = new StringBuilder();
 
@@ -1452,21 +1452,21 @@ public class BillReportController {
 		String items = sb.toString();
 		items = items.substring(0, items.length() - 1);
 
-		StringBuilder sb1 = new StringBuilder();
+		//StringBuilder sb1 = new StringBuilder();
 
-		for (int i = 0; i < plantIdList.length; i++) {
+		/*for (int i = 0; i < plantIdList.length; i++) {
 			sb1 = sb1.append(plantIdList[i] + ",");
 
 		}
 		String items1 = sb1.toString();
 		items1 = items1.substring(0, items1.length() - 1);
 
-		System.out.println("plantIdList" + items1);
+		System.out.println("plantIdList" + items1);*/
 
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
 
-		map.add("plantIdList", items1);
+		map.add("plantId", plantId);
 		map.add("custIdList", items);
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
