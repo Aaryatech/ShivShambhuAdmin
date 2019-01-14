@@ -151,7 +151,8 @@
 									<div class="col-md-2">Date*</div>
 									<div class="col-md-4">
 										<input type="text" id="date" name="date" autocomplete="off"
-											required class="form-control" required style="width: 100%;">
+											value="${todayDate}" required class="form-control" required
+											style="width: 100%;">
 									</div>
 								</div>
 								<div class="form-group"></div>
@@ -372,7 +373,7 @@
 																	v.uomName,
 																	v.quantity,
 																	v.itemRate,
-																	
+
 																	v.value,
 																	str ])
 															.draw();

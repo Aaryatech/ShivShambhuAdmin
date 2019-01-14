@@ -85,7 +85,7 @@
 							<div class="col-md-4" align="left">
 								<a
 									href="${pageContext.request.contextPath}/showAddMatIssueContractor"
-									style="color: black"><strong>Add Material Issue 
+									style="color: black"><strong>Add Material Issue
 										Contractor </strong></a>
 							</div>
 
@@ -103,8 +103,10 @@
 												type="checkbox" name="selAll" id="selAll" /></th>
 											<th style="text-align: center; width: 5%;"">Sr.</th>
 											<th style="text-align: center">Contractor Name</th>
+											<th style="text-align: center">Mobile No.</th>
 											<th style="text-align: center">Date</th>
-											<th style="text-align: center">Issue No</th>
+											<th style="text-align: center">Total Value</th>
+
 											<th style="text-align: center">Action</th>
 
 										</tr>
@@ -123,10 +125,14 @@
 														value="${matIssue.contrName}" /></td>
 
 												<td style="text-align: center"><c:out
-														value="${matIssue.date}" /></td>
+														value="${matIssue.contrMob}" /></td>
 
 												<td style="text-align: center"><c:out
-														value="${matIssue.issueNo}" /></td>
+														value="${matIssue.date}" /></td>
+												<td style="text-align: right"><c:out
+														value="${matIssue.total}" /></td>
+
+
 
 
 												<td style="text-align: center"><a

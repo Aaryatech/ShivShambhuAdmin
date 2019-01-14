@@ -47,6 +47,7 @@ import com.ats.ssgs.model.master.GetWeighing;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.PoklenReading;
+import com.ats.ssgs.model.master.Subplant;
 import com.ats.ssgs.model.master.Vehicle;
 import com.ats.ssgs.model.master.Weighing;
 import com.ats.ssgs.model.mat.Contractor;
@@ -78,6 +79,7 @@ public class TxnController {
 	List<Vehicle> vehPoklenList;
 	List<PoklenReading> pReadingList;
 	List<GetPoklenReading> pReading;
+	List<Subplant> subPlantList;
 
 	@RequestMapping(value = "/showAddWeighing", method = RequestMethod.GET)
 	public ModelAndView showAddWeighing(HttpServletRequest request, HttpServletResponse response) {
@@ -89,6 +91,10 @@ public class TxnController {
 			model.addObject("isError", isError);
 			isError = 0;
 			model.addObject("title", "Add Weighing");
+
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+			model.addObject("todayDate", sf.format(date));
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -113,6 +119,13 @@ public class TxnController {
 			conList = new ArrayList<Contractor>(Arrays.asList(conArray));
 
 			model.addObject("conList", conList);
+
+			Subplant[] subArray = rest.getForObject(Constants.url + "getAllSubPlantList", Subplant[].class);
+			subPlantList = new ArrayList<Subplant>(Arrays.asList(subArray));
+
+			model.addObject("subPlantList", subPlantList);
+
+			// getAllSubPlantList
 
 			model.addObject("weighImageUrl", Constants.WEIGHT_READING_URL);
 
@@ -153,14 +166,12 @@ public class TxnController {
 			int contraId = Integer.parseInt(request.getParameter("contr_id"));
 
 			int poklenId = Integer.parseInt(request.getParameter("poklenId"));
+			int subPlantId = Integer.parseInt(request.getParameter("subPlantId"));
 
 			float qty = Float.parseFloat(request.getParameter("qty"));
 
-			float vehKm = Float.parseFloat(request.getParameter("vehKm"));
-			float poklenKm = Float.parseFloat(request.getParameter("poklenKm"));
-
-			float contRate = Float.parseFloat(request.getParameter("rate"));
 			String date = request.getParameter("date");
+			String rtsNo = request.getParameter("rtsNo");
 
 			System.out.println("Previous Image1" + file.get(0).getOriginalFilename());
 			System.out.println("Previous Image2" + file1.get(0).getOriginalFilename());
@@ -204,25 +215,30 @@ public class TxnController {
 				e.printStackTrace();
 
 			}
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("contrId", contraId);
+
+			Contractor conArray = rest.postForObject(Constants.url + "getContractorById", map, Contractor.class);
 
 			Weighing weigh = new Weighing();
 			weigh.setContraId(contraId);
-			weigh.setContRate(contRate);
+			weigh.setContRate(conArray.getContrRate());
 			weigh.setDate(DateConvertor.convertToYMD(date));
 			weigh.setDelStatus(1);
 			weigh.setExBool1(1);
 			weigh.setExBool2(1);
 			weigh.setExDate1(curDate);
 			weigh.setExDate2(curDate);
-			weigh.setExInt1(1);
+			weigh.setExInt1(subPlantId);
 			weigh.setExInt2(1);
 			weigh.setExInt3(1);
-			weigh.setExVar1("NA");
+			weigh.setExVar1(rtsNo);
 			weigh.setExVar2("NA");
 			weigh.setExVar3("NA");
 			weigh.setPoklenId(poklenId);
-			weigh.setPoklenKm(poklenKm);
-			weigh.setVehKm(vehKm);
+			weigh.setPoklenKm(0);
+			weigh.setVehKm(0);
 			weigh.setQuantity(qty);
 			weigh.setVehId(vehId);
 			weigh.setUserId(1);
@@ -320,6 +336,11 @@ public class TxnController {
 			conList = new ArrayList<Contractor>(Arrays.asList(conArray));
 
 			model.addObject("conList", conList);
+
+			Subplant[] subArray = rest.getForObject(Constants.url + "getAllSubPlantList", Subplant[].class);
+			subPlantList = new ArrayList<Subplant>(Arrays.asList(subArray));
+
+			model.addObject("subPlantList", subPlantList);
 
 			map = new LinkedMultiValueMap<String, Object>();
 
@@ -548,8 +569,7 @@ public class TxnController {
 		return "redirect:/showAddPReading";
 
 	}
-	
-	
+
 	@RequestMapping(value = "/insertEditedPoklenReading", method = RequestMethod.POST)
 	public String insertEditedPoklenReading(HttpServletRequest request, HttpServletResponse response) {
 
@@ -579,8 +599,8 @@ public class TxnController {
 
 			// String endDate = request.getParameter("end_date");
 			String startTime = request.getParameter("startTime");
-			 String endTime = request.getParameter("endTime");
-			 System.out.println("end time :"+endTime); 
+			String endTime = request.getParameter("endTime");
+			System.out.println("end time :" + endTime);
 
 			PoklenReading pReading = new PoklenReading();
 
@@ -627,8 +647,6 @@ public class TxnController {
 
 			}
 
-			
-
 			/*
 			 * if (readingId != 0) { pReading.setExInt1(2); } else {
 			 */
@@ -655,7 +673,6 @@ public class TxnController {
 		return "redirect:/showAddPReading";
 
 	}
-
 
 	@RequestMapping(value = "/insertPoklenReading", method = RequestMethod.POST)
 	public String insertPoklenReading(HttpServletRequest request, HttpServletResponse response) {
@@ -696,7 +713,7 @@ public class TxnController {
 			pReading.setExDate1(curDate);
 //
 			pReading.setExInt2(1);
-			
+
 			pReading.setPoklenId(poklenId);
 
 			pReading.setExVar1("NA");
@@ -849,9 +866,7 @@ public class TxnController {
 				pReading.setEndTime("00:00:00");
 			}
 ////
-			
-			
-			
+
 			pReading.setExInt1(2);
 
 			PoklenReading prInsertRes = rest.postForObject(Constants.url + "savePoklenReading", pReading,
@@ -1365,8 +1380,6 @@ public class TxnController {
 			vehPoklenList = new ArrayList<Vehicle>(Arrays.asList(vehPoklenArray));
 
 			model.addObject("vehPoklenList", vehPoklenList);
-
-		
 
 			map = new LinkedMultiValueMap<String, Object>();
 

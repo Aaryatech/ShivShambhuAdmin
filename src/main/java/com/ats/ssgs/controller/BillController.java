@@ -303,11 +303,12 @@ public class BillController {
 		items = items.substring(0, items.length() - 1);
 
 		map.add("chalanId", items);
+		System.out.println("items" + items);
 
 		GetItemsForBill[] chArray = rest.postForObject(Constants.url + "getItemsForBill", map, GetItemsForBill[].class);
 
 		billItems = new ArrayList<GetItemsForBill>(Arrays.asList(chArray));
-		System.err.println(billItems.toString());
+		System.err.println("=======================" + billItems.toString());
 		return billItems;
 	}
 

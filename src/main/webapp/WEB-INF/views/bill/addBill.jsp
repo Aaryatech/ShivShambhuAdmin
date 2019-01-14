@@ -838,7 +838,7 @@ $
 		//alert("hii");
 		var chalanId = document.getElementById("chalan_id").value;
 		var isValid = validate();
-		//alert("chalanId"+chalanId);
+		alert("chalanId"+chalanId);
 		
 
 		if (isValid) {

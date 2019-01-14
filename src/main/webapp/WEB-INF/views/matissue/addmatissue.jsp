@@ -151,7 +151,8 @@
 									<div class="col-md-1">Date*</div>
 									<div class="col-md-2">
 										<input type="text" id="date" name="date" autocomplete="off"
-											required class="form-control" required style="width: 100%;">
+											value="${todayDate}" required class="form-control" required
+											style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">Issue No*</div>

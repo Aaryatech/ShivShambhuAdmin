@@ -115,8 +115,8 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showWeighList" style="color:black"><strong>Weighing
-										List</strong></a>
+								<a href="${pageContext.request.contextPath}/showWeighList"
+									style="color: black"><strong>Weighing List</strong></a>
 							</div>
 
 						</div>
@@ -204,18 +204,29 @@
 											</c:forEach>
 										</select>
 									</div>
+									<div class="col-md-2">Select Sub Plant*</div>
 
-									<div class="col-md-2">Contractor Rate*</div>
 									<div class="col-md-4">
-										<input type="text" id="rate" name="rate" class="form-control"
-											autocomplete="off" style="width: 100%;"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											value="${editWeigh.contRate}" readonly
-											onkeypress="return allowOnlyNumber(event);">
+										<select id="subPlantId" name="subPlantId"
+											class="standardSelect" tabindex="1">
+											<option value="-1">Select</option>
+											<c:forEach items="${subPlantList}" var="subPlant">
+
+												<c:choose>
+													<c:when test="${subPlant.subplantId==editWeigh.subplantId}">
+														<option value="${subPlant.subplantId}" selected>${subPlant.subplantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${subPlant.subplantId}">${subPlant.subplantName}
+													</c:otherwise>
+												</c:choose>
+
+
+											</c:forEach>
+										</select>
 									</div>
-
-
 								</div>
+
 
 
 								<div class="form-group"></div>
@@ -234,13 +245,13 @@
 										<input type="text" id="date" name="date" autocomplete="off"
 											oninvalid="setCustomValidity('Please select date')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editWeigh.date}" required class="form-control"
-											required style="width: 100%;">
+											value="${todayDate}" required class="form-control" required
+											style="width: 100%;">
 									</div>
 
 								</div>
 
-								<div class="form-group"></div>
+								<%-- <div class="form-group"></div>
 								<div class="row">
 
 									<div class="col-md-2">Vehicle Kilometer*</div>
@@ -262,7 +273,7 @@
 											onchange="try{setCustomValidity('')}catch(e){}"
 											value="${editWeigh.poklenKm}" required>
 									</div>
-								</div>
+								</div> --%>
 
 								<div class="form-group"></div>
 
@@ -306,6 +317,18 @@
 								<div class="form-group"></div>
 
 								<div class="row">
+
+
+
+									<div class="col-md-2">RTS No*</div>
+									<div class="col-md-4">
+										<input type="text" id="rtsNo" name="rtsNo" required
+											class="form-control" autocomplete="off" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter RTS No')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+
+
 
 									<div class="col-md-2">Remark</div>
 
@@ -390,7 +413,7 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
 
-<!-- 	<script type="text/javascript">
+	<!-- 	<script type="text/javascript">
 		function validateFileType(fileName) {
 			var fileName = document.getElementById("" + fileName).value;
 			var idxDot = fileName.lastIndexOf(".") + 1;
@@ -452,7 +475,7 @@
 
 
 
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		function getContractRate() {
 			//	alert("hiiiii");
 			var contrId = document.getElementById("contr_id").value;
@@ -472,7 +495,7 @@
 			});
 
 		}
-	</script>
+	</script> -->
 
 	<script type="text/javascript">
 		function readURL(input) {

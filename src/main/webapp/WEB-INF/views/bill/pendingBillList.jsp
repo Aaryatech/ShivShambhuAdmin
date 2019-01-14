@@ -174,12 +174,6 @@
 							<div class="col-md-2">
 								<strong>${title}</strong>
 							</div>
-							<%-- <div class="col-md-8"></div>
-							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
-										Customer</strong></a>
-							</div> --%>
-
 
 						</div>
 						<form
@@ -195,7 +189,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="-1">Select</option>
+											<option value="">Select</option>
 
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
@@ -208,7 +202,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
-											<option value="0">All</option>
+										<!-- 	<option value="0">All</option> -->
 
 										</select>
 									</div>
@@ -463,15 +457,15 @@
 
 														var checkB = '<input  type="checkbox" name=chalanIdList id=chalanIdList'+v.chalanId+' class="chk"  value='+v.chalanId+'>'
 
-														var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"  onclick="callEdit('
+														var acButton = '&nbsp;<a href="#" class="action_btn"  onclick="callEdit('
 																+ v.chalanId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Chalan Pdf" onclick="callPdf('
+																+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Chalan Pdf" onclick="callPdf('
 																+ v.chalanId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Generate Bill" onclick="generateBill('
+																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;<a href="#" class="fa fa-file" title="Generate Bill" onclick="generateBill('
 																+ v.chalanId
 																+ ','
 																+ i
@@ -524,125 +518,9 @@
 		}
 	</script>
 
-	<!-- <script type="text/javascript">
-	// on cust change function 
-		function showOrder() {
-			$('#divCheckbox').show();
-			var custId = document.getElementById("cust_name").value;
-			var valid = true;
-			if (custId == null || custId == "") {
-				valid = false;
-				alert("Please Select Customer");
-				
-				$('#po_id').html("-1");
-				$("#po_id").trigger("chosen:updated");
-				
-				var dataTable = $('#bootstrap-data-table')
-				.DataTable();
-		dataTable.clear().draw();
 
-			}
-			else if(custId<0){
-				valid = false;
-				
-				$('#po_id').html("-1");
-				$("#po_id").trigger("chosen:updated");
-				
-				var dataTable = $('#bootstrap-data-table')
-				.DataTable();
-		dataTable.clear().draw();
 
-			}
-			if (valid == true) {
 
-				$
-						.getJSON(
-								'${getCustInfoByCustId}',
-								{
-									custId : custId,
-									ajax : 'true',
-
-								},
-								function(data) {
-									document.getElementById("custTypeName").value = data.custTypeName;
-									document.getElementById("custMobNo").value = data.custMobNo;
-								});
-
-				$	.getJSON(
-						'${getPOHeaderByCustId}',
-						{
-							custId : custId,
-							ajax : 'true',
-						},
-						function(data) {
-							var html;
-							var len = data.length;
-							//alert("data " +JSON.stringify(data));
-							for (var i = 0; i < len; i++) {
-								var PNo=data[i].poNo+"-"+ data[i].poDate 
-
-								html += '<option value="' + data[i].poId + '">'
-										+PNo+ '</option>';
-
-							}
-							html += '</option>';
-							$('#po_id').html(html);
-							$("#po_id").trigger("chosen:updated");
-						});
-				
-				
-				$	.getJSON(
-						'${getProjectByCustId}',
-						{
-							custId : custId,
-							ajax : 'true',
-						},
-						function(data) {
-							var html;
-							var len = data.length;
-							//alert("data " +JSON.stringify(data));
-							for (var i = 0; i < len; i++) {
-								var projData=data[i].projName+"-"+data[i].address
-
-								html += '<option value="' + data[i].projId + '">'
-										+projData+ '</option>';
-
-							}
-							html += '</option>';
-							$('#proj_id').html(html);
-							$("#proj_id").trigger("chosen:updated");
-						});
-				
-				
-			}// end of if valid= true
-			
-		}
-	</script> -->
-	<script type="text/javascript">
-		function singleBillPdf(id) {
-			window
-					.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-							+ id);
-		}
-	</script>
-	<script type="text/javascript">
-		function billPdf() {
-			var checkedVals = $('input:checkbox:checked').map(function() {
-				return this.value;
-			}).get();
-			//checkedVals=checkedVals.slice(0,- 1);alert(checkedVals);
-			checkedVals = checkedVals.join(",");
-			var str2 = checkedVals.replace('/', "");
-
-			if (checkedVals == "") {
-				alert("Please Select Bill")
-			} else {
-				window
-						.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-								+ str2);
-			}
-		}
-	</script>
 	<script type="text/javascript">
 		$('#selectAll').click(
 				function(e) {

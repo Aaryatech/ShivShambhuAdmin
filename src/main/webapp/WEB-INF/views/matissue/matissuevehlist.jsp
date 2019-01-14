@@ -84,8 +84,9 @@
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
 								<a
-									href="${pageContext.request.contextPath}/showAddMatIssueVehicle" style="color:black"><strong>Add
-										Material Issue Vehicle </strong></a>
+									href="${pageContext.request.contextPath}/showAddMatIssueVehicle"
+									style="color: black"><strong>Add Material Issue
+										Vehicle </strong></a>
 							</div>
 
 						</div>
@@ -102,9 +103,11 @@
 												type="checkbox" name="selAll" id="selAll" /></th>
 											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Vehicle Name</th>
-											<th style="text-align: center">Date</th>
 											<th style="text-align: center">Vehicle No</th>
+											<th style="text-align: center">Date</th>
+
 											<th style="text-align: center">Reading</th>
+											<th style="text-align: center">Total Value</th>
 											<th style="text-align: center">Action</th>
 
 										</tr>
@@ -121,24 +124,30 @@
 
 												<td style="text-align: left"><c:out
 														value="${matIssue.vehicleName}" /></td>
+												<td style="text-align: center"><c:out
+														value="${matIssue.vehNo}" /></td>
 
-												<td style="text-align: left"><c:out
+
+												<td style="text-align: center"><c:out
 														value="${matIssue.date}" /></td>
 
-												<td style="text-align: right"><c:out
-														value="${matIssue.vehNo}" /></td>
 
 												<td style="text-align: right"><c:out
 														value="${matIssue.reading}" /></td>
 
 
+
+												<td style="text-align: right"><c:out
+														value="${matIssue.vehTotal}" /></td>
+
+
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editMatIssueVeh/${matIssue.matVehHeaderId}"><i
-														class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
-													&nbsp; <a
+														class="fa fa-edit" style="color: black"></i> <span
+														class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deleteMatVehicle/${matIssue.matVehHeaderId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o" style="color:black"></i></a></td>
+														class="fa fa-trash-o" style="color: black"></i></a></td>
 
 											</tr>
 										</c:forEach>

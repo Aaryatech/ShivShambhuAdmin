@@ -205,16 +205,27 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Contractor Rate*</div>
+									<div class="col-md-2">Select Sub Plant*</div>
+
 									<div class="col-md-4">
-										<input type="text" id="rate" name="rate" class="form-control"
-											autocomplete="off" style="width: 100%;"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											value="${editWeigh.contRate}" readonly
-											onkeypress="return allowOnlyNumber(event);">
+										<select id="subPlantId" name="subPlantId"
+											class="standardSelect" tabindex="1">
+											<option value="-1">Select</option>
+											<c:forEach items="${subPlantList}" var="subPlant">
+
+												<c:choose>
+													<c:when test="${subPlant.subplantId==editWeigh.exInt1}">
+														<option value="${subPlant.subplantId}" selected>${subPlant.subplantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${subPlant.subplantId}">${subPlant.subplantName}
+													</c:otherwise>
+												</c:choose>
+
+
+											</c:forEach>
+										</select>
 									</div>
-
-
 								</div>
 
 
@@ -239,7 +250,7 @@
 									</div>
 
 								</div>
-
+<%-- 
 								<div class="form-group"></div>
 								<div class="row">
 
@@ -263,7 +274,7 @@
 											value="${editWeigh.poklenKm}" required>
 									</div>
 								</div>
-
+ --%>
 								<div class="form-group"></div>
 
 								<div class="row">
@@ -278,8 +289,8 @@
 									</div>
 									<div class="col-md-2">
 										<img id="image1" name="image1"
-											src="${weighImageUrl}${editWeigh.photo1}"
-											alt="l" height="50px;" width="50px;">
+											src="${weighImageUrl}${editWeigh.photo1}" alt="l"
+											height="50px;" width="50px;">
 
 									</div>
 
@@ -294,8 +305,8 @@
 									</div>
 									<div class="col-md-2">
 										<img id="image2" name="image2"
-											src="${weighImageUrl}${editWeigh.photo2}"
-											alt="l" height="50px;" width="50px;">
+											src="${weighImageUrl}${editWeigh.photo2}" alt="l"
+											height="50px;" width="50px;">
 
 									</div>
 								</div>
@@ -304,6 +315,15 @@
 
 								<div class="row">
 
+									<div class="col-md-2">RTS No*</div>
+									<div class="col-md-4">
+										<input type="text" id="rtsNo" name="rtsNo" required
+											value="${editWeigh.exVar1}" class="form-control"
+											autocomplete="off" style="width: 100%;"
+											oninvalid="setCustomValidity('Please enter RTS No')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+									</div>
+
 									<div class="col-md-2">Remark</div>
 
 									<div class="col-md-4">
@@ -311,7 +331,7 @@
 											style="width: 100%;" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter remark')"
 											maxlength="200"
-											onchange="try{setCustomValidity('')}catch(e){}" >${editWeigh.remark}</textarea>
+											onchange="try{setCustomValidity('')}catch(e){}">${editWeigh.remark}</textarea>
 									</div>
 
 

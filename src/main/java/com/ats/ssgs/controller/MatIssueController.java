@@ -65,6 +65,9 @@ public class MatIssueController {
 			model = new ModelAndView("matissue/addmatissue");
 			model.addObject("isError", isError);
 			isError = 0;
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+			model.addObject("todayDate", sf.format(date));
 			tempList = new ArrayList<TempMatIssueDetail>();
 
 			Contractor[] conArray = rest.getForObject(Constants.url + "getAllContractorList", Contractor[].class);
@@ -772,6 +775,9 @@ public class MatIssueController {
 			model = new ModelAndView("matissue/addvehmat");
 			model.addObject("isError", isError);
 			isError = 0;
+			Date date = new Date();
+			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+			model.addObject("todayDate", sf.format(date));
 			tempList = new ArrayList<TempMatIssueDetail>();
 
 			Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
@@ -985,7 +991,7 @@ public class MatIssueController {
 
 			map.add("matVehHeaderId", matVehHeaderId);
 			editVeh = rest.postForObject(Constants.url + "getMatIssueVehicleByHeaderId1", map, GetVehHeader.class);
-			System.out.println("edit data is"+editVeh);
+			System.out.println("edit data is" + editVeh);
 			model.addObject("title", "Edit Material Issue to Vehicle");
 			model.addObject("editVeh", editVeh);
 			model.addObject("editVehDetail", editVeh.getVehDetailList());
@@ -1112,37 +1118,34 @@ public class MatIssueController {
 						editVeh.getVehDetailList().add(matIssueDetail);
 
 					} else {
-						
+
 						System.err.println("ELSE ");
-						/*GetVehDetail matIssueDetail = new GetVehDetail();
-						matIssueDetail.setDelStatus(1);
-						matIssueDetail.setExBool1(1);
-						matIssueDetail.setExDate1(curDate);
-						matIssueDetail.setExInt1(catId);
-
-						matIssueDetail.setExVar1("NA");
-						matIssueDetail.setExVar2("NA");
-						matIssueDetail.setItemCode(getSingleItem.getItemCode());
-						matIssueDetail.setItemDesc(getSingleItem.getItemDesc());
-						matIssueDetail.setRate(getSingleItem.getItemClRate());
-						matIssueDetail.setMatVehHeaderId(matVehHeaderId);
-						matIssueDetail.setQuantity(qty);
-						matIssueDetail.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
-						matIssueDetail.setValue(getSingleItem.getItemClRate() * qty);
-						matIssueDetail.setItemId(itemId);
-
-						Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
-						uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
-
-						for (int i = 0; i < uomList.size(); i++) {
-							if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
-
-							{
-								matIssueDetail.setUomName(uomList.get(i).getUomName());
-								System.out.println("---getItemUom2--------------" + getSingleItem.getItemUom2());
-							}
-						}
-						editVeh.getVehDetailList().add(matIssueDetail);*/
+						/*
+						 * GetVehDetail matIssueDetail = new GetVehDetail();
+						 * matIssueDetail.setDelStatus(1); matIssueDetail.setExBool1(1);
+						 * matIssueDetail.setExDate1(curDate); matIssueDetail.setExInt1(catId);
+						 * 
+						 * matIssueDetail.setExVar1("NA"); matIssueDetail.setExVar2("NA");
+						 * matIssueDetail.setItemCode(getSingleItem.getItemCode());
+						 * matIssueDetail.setItemDesc(getSingleItem.getItemDesc());
+						 * matIssueDetail.setRate(getSingleItem.getItemClRate());
+						 * matIssueDetail.setMatVehHeaderId(matVehHeaderId);
+						 * matIssueDetail.setQuantity(qty);
+						 * matIssueDetail.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
+						 * matIssueDetail.setValue(getSingleItem.getItemClRate() * qty);
+						 * matIssueDetail.setItemId(itemId);
+						 * 
+						 * Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList",
+						 * Uom[].class); uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+						 * 
+						 * for (int i = 0; i < uomList.size(); i++) { if (uomList.get(i).getUomId() ==
+						 * Integer.parseInt(getSingleItem.getItemUom2()))
+						 * 
+						 * { matIssueDetail.setUomName(uomList.get(i).getUomName());
+						 * System.out.println("---getItemUom2--------------" +
+						 * getSingleItem.getItemUom2()); } }
+						 * editVeh.getVehDetailList().add(matIssueDetail);
+						 */
 					}
 				}
 			}
