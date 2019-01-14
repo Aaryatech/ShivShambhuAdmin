@@ -162,7 +162,7 @@
 									<div class="col-md-2">Start Date*</div>
 									<div class="col-md-4">
 										<input type="text" id="start_date" name="start_date"
-											autocomplete="off" value="${editPRead.startDate}"
+											autocomplete="off" value="${curDate}"
 											oninvalid="setCustomValidity('Please select date')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" required style="width: 100%;">
@@ -302,7 +302,7 @@
 											class="form-control" autocomplete="off" style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter time')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
-											value="${editPRead.startTime}">
+											value="${curTime}">
 									</div>
 
 									<div class="col-md-2">End Time</div>

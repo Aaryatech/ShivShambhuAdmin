@@ -258,13 +258,13 @@
 									<div class="col-md-1">Payment Date*</div>
 									<div class="col-md-3">
 										<input type="text" id="paymentDate" name="paymentDate"
-											required class="form-control" autocomplete="off"
+											required class="form-control" autocomplete="off" value="${curDate}"
 											style="width: 100%;">
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">
 										<input type="button" value="Add" class="btn btn-primary"
-											style="align-content: center; width: 113px;" onclick=" validatedate(); add(); " />
+											style="align-content: center; width: 113px;" onclick="add()" />
 									</div>
 								</div>
 

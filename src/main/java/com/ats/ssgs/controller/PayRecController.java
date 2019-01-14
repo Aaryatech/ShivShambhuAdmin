@@ -803,6 +803,8 @@ public class PayRecController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("payHeadIds", items);
+			
+
 
 			Info errMsg = rest.postForObject(Constants.url + "deleteMultiPayRec", map, Info.class);
 
@@ -833,6 +835,12 @@ public class PayRecController {
 			model.addObject("title", "Edit Payment Recovery");
 			model.addObject("editRec", editRec);
 			model.addObject("editRecDetail", editRec.getPayRecoveryDetailList());
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		   String curDate = (dateFormat.format(new Date()));
+			String date=DateConvertor.convertToDMY(curDate);
+			System.out.println("dateeee"+date);
+			model.addObject("curDate", date);
 
 		} catch (Exception e) {
 			System.err.println("exception In editMat at Mat Contr" + e.getMessage());

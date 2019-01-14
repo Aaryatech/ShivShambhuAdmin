@@ -406,7 +406,7 @@
 			var status=${prodHeader.productionStatus}
 			
 			if(status==3){
-				alert("Status" +status);
+				//alert("Status" +status);
 				 $('#bootstrap-data-table tbody input[type="number"]').prop('readonly', true);			
 				 }
 		});

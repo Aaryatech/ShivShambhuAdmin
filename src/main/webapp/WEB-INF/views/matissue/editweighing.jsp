@@ -283,7 +283,7 @@
 										<input type="file" id="imgInp" name="imgInp"
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please Select photo')" readonly
-											src="${weighImageUrl}${editWeigh.photo1}"
+											src="${weighImageUrl}${editWeigh.photo1}" accept="image/*" 
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -299,7 +299,7 @@
 										<input type="file" id="imgInp1" name="imgInp1"
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter photo')"
-											value="${editWeigh.photo2}"
+											value="${editWeigh.photo2}" accept="image/*" 
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>

@@ -442,10 +442,26 @@ public class TxnController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("vehicleType", 3);
-
+			
+			
 			Vehicle[] vehPoklenArray = rest.postForObject(Constants.url + "getVehListByVehicleType", map,
 					Vehicle[].class);
 			vehPoklenList = new ArrayList<Vehicle>(Arrays.asList(vehPoklenArray));
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			
+			String curDate = (dateFormat.format(new Date()));
+			String date=DateConvertor.convertToDMY(curDate);
+			System.out.println("dateeee"+date);
+			model.addObject("curDate", date);
+			
+			Calendar cal = Calendar.getInstance();
+			System.out.println(sdf.format(cal.getTime()));
+
+			String curTime = sdf.format(cal.getTime());
+
+			model.addObject("curTime", curTime);
 
 			model.addObject("vehPoklenList", vehPoklenList);
 
@@ -1431,6 +1447,22 @@ public class TxnController {
 			vehPoklenList = new ArrayList<Vehicle>(Arrays.asList(vehPoklenArray));
 
 			model.addObject("vehPoklenList", vehPoklenList);
+			
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+			
+			String curDate = (dateFormat.format(new Date()));
+			String date=DateConvertor.convertToDMY(curDate);
+			System.out.println("dateeee"+date);
+			model.addObject("curDate", date);
+			
+			Calendar cal = Calendar.getInstance();
+			System.out.println(sdf.format(cal.getTime()));
+
+			String curTime = sdf.format(cal.getTime());
+
+			model.addObject("curTime", curTime);
+
 
 			map = new LinkedMultiValueMap<String, Object>();
 

@@ -1794,7 +1794,7 @@ public class BillReportController {
 
 			model.addObject("plantList", plantList);
 
-			model.addObject("title", "Itemwisewise Bill Report");
+			model.addObject("title", "Itemwise Bill Report");
 
 		} catch (Exception e) {
 

@@ -172,7 +172,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="end_date" name="end_date" required
-											autocomplete="off" value="${endDate}" onchange="checkDate()"
+											autocomplete="off" value="${curDate}" onchange="checkDate()"
 											oninvalid="setCustomValidity('Please select date')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;">
@@ -306,7 +306,7 @@
 									<div class="col-md-2">End Time*</div>
 									<div class="col-md-4">
 										<input type="time" id="endTime" name="endTime" required
-											value="${endTime}" class="form-control" autocomplete="off"
+											value="${curTime}" class="form-control" autocomplete="off"
 											style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter endtime')"
 											onchange="try{setCustomValidity('')}catch(e){}">

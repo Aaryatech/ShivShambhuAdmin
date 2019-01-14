@@ -412,10 +412,7 @@
 											.each(
 													data,
 													function(i, v) {
-														//alert("hdjfh");
-														//var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-														//var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
-														//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
+														
 														var acButton = '<a href="#" class="action_btn" onclick="viewProdDetail('
 																+ v.productionHeaderId
 																+ ','
