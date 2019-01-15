@@ -922,6 +922,7 @@ public class ChalanController {
 			model.addObject("chDetailList", chDetailList);
 
 			model.addObject("editChalan", editChalan);
+			model.addObject("rstNo", chDetailList.get(0).getExVar1());
 
 			model.addObject("title", "Close Chalan");
 			Calendar cal = Calendar.getInstance();
@@ -1746,7 +1747,6 @@ public class ChalanController {
 
 			model.addObject("chDetailList", chDetailList);
 			model.addObject("rstNo", chDetailList.get(0).getExVar1());
-
 
 			model.addObject("editChalan", editChalan);
 

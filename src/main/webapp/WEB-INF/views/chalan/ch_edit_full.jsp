@@ -384,31 +384,7 @@ body {
 									</div>
 								</div>
 
-								<div class="form-group"></div>
-								<div class="row">
 
-									<div class="col-md-2">Batch No*</div>
-
-									<div class="col-md-4">
-										<input type="text" id="batchNo" name="batchNo"
-											value="${editChalan.exDate1}" autocomplete="off" required
-											style="width: 100%;" class="form-control"> <span
-											class="error" aria-live="polite"></span>
-									</div>
-
-									<div class="col-md-2">RST No*</div>
-
-									<div class="col-md-4">
-										<input type="text" id="rstNo" name="rstNo" required
-											value="${rstNo}" autocomplete="off" style="width: 100%;"
-											class="form-control"> <span class="error"
-											aria-live="polite"></span>
-									</div>
-
-								</div>
-								<div class="form-group"></div>
-
-								<div class="row"></div>
 								<div class="form-group"></div>
 								<!-- 
 								<div id="myModal" class="modal">

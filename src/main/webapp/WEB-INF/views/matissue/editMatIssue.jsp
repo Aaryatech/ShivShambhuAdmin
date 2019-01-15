@@ -302,11 +302,11 @@
 
 													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${matDetail.matDetailId},${count.index})"><i
-															class="fa fa-edit" style="color: black"></i> <span 
+															class="fa fa-edit" style="color: black"></i> <span
 															class="text-muted"></span></a> <a href="#"
 														onclick="callDelete(${matDetail.matDetailId},${count.index})"><i
-															class="fa fa fa-trash-o" style="color: black"></i> <span class="text-muted"
-															></span></a></td>
+															class="fa fa fa-trash-o" style="color: black"></i> <span
+															class="text-muted"></span></a></td>
 
 
 
@@ -487,7 +487,7 @@
 					//alert("hiii");
 					var html;
 					var len = data1.length;
-					var html = '<option value="-1"  >Select</option>';
+					var html = '<option value="-1"  >Select Item</option>';
 					for (var i = 0; i < len; i++) {
 
 						html += '<option value="' + data1[i].itemId + '">'
@@ -497,7 +497,7 @@
 
 					$('#itemName').html(html);
 					//$("#itemName").trigger("chosen:updated");
-					
+
 					$("#itemName").val(data.itemId);
 					$("#itemName").trigger("chosen:updated");
 

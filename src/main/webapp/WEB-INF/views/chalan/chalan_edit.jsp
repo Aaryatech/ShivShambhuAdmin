@@ -231,9 +231,9 @@
 
 									</div>
 								</div> -->
-								<input type="hidden" name="order_id" id="order_id" value="${editChalan.orderId}">
-
-								<input type="hidden" name="chalan_id" id="chalan_id" value="${editChalan.chalanId}">
+								<input type="hidden" name="order_id" id="order_id"
+									value="${editChalan.orderId}"> <input type="hidden"
+									name="chalan_id" id="chalan_id" value="${editChalan.chalanId}">
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -243,6 +243,29 @@
 										<input type="text" readonly id="ord_no" name="ord_no"
 											style="width: 100%;" class="form-control"
 											value="${editChalan.orderNo}"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+
+								</div>
+
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Batch No*</div>
+
+									<div class="col-md-4">
+										<input type="text" id="batchNo" name="batchNo"
+											value="${editChalan.exDate1}" autocomplete="off" required
+											style="width: 100%;" class="form-control"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+
+									<div class="col-md-2">RST No*</div>
+
+									<div class="col-md-4">
+										<input type="text" id="rstNo" name="rstNo" required
+											value="${rstNo}" autocomplete="off" style="width: 100%;"
+											class="form-control"> <span class="error"
 											aria-live="polite"></span>
 									</div>
 
@@ -321,13 +344,14 @@
 
 									<div class="col-md-4">
 										<input type="text" id="in_km" name="in_km" required
-											onkeypress="return allowOnlyNumber(event);" onchange="checkKm()"
-											style="width: 100%;" class="form-control" maxlength="10">
-										<span class="error" aria-live="polite" ></span>
+											onkeypress="return allowOnlyNumber(event);"
+											onchange="checkKm()" style="width: 100%;"
+											class="form-control" maxlength="10"> <span
+											class="error" aria-live="polite"></span>
 									</div>
 								</div>
-								
-								
+
+
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Chalan Remark</div>
@@ -361,7 +385,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="site_per_mob" name="site_per_mob"
-										onkeypress="return allowOnlyNumber(event);"  maxlength="10"
+											onkeypress="return allowOnlyNumber(event);" maxlength="10"
 											value="-" required style="width: 100%;" class="form-control">
 										<span class="error" aria-live="polite"></span>
 									</div>
@@ -377,7 +401,7 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<tr>
+											<tr>
 												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
@@ -387,22 +411,23 @@
 												<th style="text-align: center">Length</th>
 												<th style="text-align: center">Chalan Total</th>
 											</tr>
-											
+
 										</thead>
 										<tbody>
-											<c:forEach items="${chDetailList}" var="chDetail" varStatus="count">
-										<tr>
+											<c:forEach items="${chDetailList}" var="chDetail"
+												varStatus="count">
+												<tr>
 
-											<td style="text-align: center">${count.index+1}</td>
+													<td style="text-align: center">${count.index+1}</td>
 
 
 
-											<td style="text-align: left"><c:out
-													value="${chDetail.itemName}" /></td>
-													
 													<td style="text-align: left"><c:out
-													value="${chDetail.uomName}" /></td>
-											<%-- <td style="text-align: center"><c:out
+															value="${chDetail.itemName}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${chDetail.uomName}" /></td>
+													<%-- <td style="text-align: center"><c:out
 													value="${chDetail.item}" /></td>
 
 											<td style="text-align: left"><c:out
@@ -413,26 +438,44 @@
 													
 											<td style="text-align: center"><c:out
 													value="${chDetail.poRate}" /></td> --%>
-												
-													<td style="text-align: center">
-													<input  type="text" onkeypress="return allowOnlyNumber(event);" class="form-control" value="${chDetail.itemQty}"  id="chQty${chDetail.chalanDetailId}" name="chQty${chDetail.chalanDetailId}" onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)"/>
+
+													<td style="text-align: center"><input type="text"
+														onkeypress="return allowOnlyNumber(event);"
+														class="form-control" value="${chDetail.itemQty}"
+														id="chQty${chDetail.chalanDetailId}"
+														name="chQty${chDetail.chalanDetailId}"
+														onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)" />
 													</td>
-													<td style="text-align: center">
-													<input  type="text" onkeypress="return allowOnlyNumber(event);" class="form-control" value="${chDetail.itemWidthPlant}"  id="width${chDetail.chalanDetailId}" name="width${chDetail.chalanDetailId}" onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)"/>
+													<td style="text-align: center"><input type="text"
+														onkeypress="return allowOnlyNumber(event);"
+														class="form-control" value="${chDetail.itemWidthPlant}"
+														id="width${chDetail.chalanDetailId}"
+														name="width${chDetail.chalanDetailId}"
+														onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)" />
 													</td>
-														<td style="text-align: center">
-													<input  type="text" onkeypress="return allowOnlyNumber(event);" class="form-control" value="${chDetail.itemHeightPlant}"  id="height${chDetail.chalanDetailId}" name="height${chDetail.chalanDetailId}" onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)"/>
+													<td style="text-align: center"><input type="text"
+														onkeypress="return allowOnlyNumber(event);"
+														class="form-control" value="${chDetail.itemHeightPlant}"
+														id="height${chDetail.chalanDetailId}"
+														name="height${chDetail.chalanDetailId}"
+														onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)" />
 													</td>
-														<td style="text-align: center">
-													<input  type="text" onkeypress="return allowOnlyNumber(event);" class="form-control" value="${chDetail.itemLengthPlant}"  id="length${chDetail.chalanDetailId}" name="length${chDetail.chalanDetailId}" onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)"/>
+													<td style="text-align: center"><input type="text"
+														onkeypress="return allowOnlyNumber(event);"
+														class="form-control" value="${chDetail.itemLengthPlant}"
+														id="length${chDetail.chalanDetailId}"
+														name="length${chDetail.chalanDetailId}"
+														onchange="calTotal(${chDetail.itemId},${chDetail.chalanDetailId},this.value)" />
 													</td>
-													
-													<td style="text-align: center">
-													<input  type="text" readonly  class="form-control"  id="itemTotal${chDetail.chalanDetailId}" value="${chDetail.itemTotalPlant}" name="itemTotal${chDetail.chalanDetailId}"/>'
-													</td>
-													
-										</tr>
-										</c:forEach>
+
+													<td style="text-align: center"><input type="text"
+														readonly class="form-control"
+														id="itemTotal${chDetail.chalanDetailId}"
+														value="${chDetail.itemTotalPlant}"
+														name="itemTotal${chDetail.chalanDetailId}" />'</td>
+
+												</tr>
+											</c:forEach>
 									</table>
 								</div>
 								<div class="form-group"></div>
@@ -456,7 +499,8 @@
 
 
 									<div class="col-md-2">
-										<input type="submit" class="btn btn-primary" value="Submit" onclick="checkKm()">
+										<input type="submit" class="btn btn-primary" value="Submit"
+											onclick="checkKm()">
 
 									</div>
 
@@ -601,7 +645,7 @@
 			} */
 		}
 	</script>
-	
+
 	<script type="text/javascript">
 	
 		function allowOnlyNumber(evt){
@@ -945,9 +989,9 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 			
 		});
 	</script> -->
-	
-	
-	
+
+
+
 	<script>
 		function checkKm(){
 			//alert("hii");
