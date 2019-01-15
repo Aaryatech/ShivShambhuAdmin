@@ -20,11 +20,10 @@
 
 <c:url var="getPoDetailForOrderByPoId"
 	value="/getPoDetailForOrderByPoId" />
-	
-	
-<c:url var="getTempOrderHeader"
-	value="/getTempOrderHeader" />
-	
+
+
+<c:url var="getTempOrderHeader" value="/getTempOrderHeader" />
+
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,31 +74,30 @@
 
 <style>
 .alert {
-    padding: 20px;
-    background-color: red;
-    color: white;
-    
+	padding: 20px;
+	background-color: red;
+	color: white;
 }
+
 .alert1 {
-    padding: 20px;
-    background-color: green;
-    color: white;
-    
+	padding: 20px;
+	background-color: green;
+	color: white;
 }
 
 .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: black;
+	color: black;
 }
 </style>
 
@@ -123,31 +121,31 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-			
-			<c:choose>
-							<c:when test="${isError==1}">
-							
-							<div class="alert">
-							
+
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Failed !</strong>     Data not submitted  !!
-				</div>
-							
-							</c:when>
-							
-							<c:when test="${isError==2}">
-							
-							<div class="alert1">
-							
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Success</strong>     Data Submitted !!
-				</div>
-							
-							</c:when>
-							
-							</c:choose>
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -160,7 +158,7 @@
 								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
 										Customer</strong></a>
 							</div> --%>
-							
+
 
 						</div>
 						<div class="card-body card-block">
@@ -172,10 +170,10 @@
 									<div class="col-md-2">Plant</div>
 
 									<div class="col-md-4">
-									
-									<input type="text" readonly value="${prodHeader.plantName}"
-												style="width: 100%;" class="form-control"> <span
-												class="error" aria-live="polite"></span>
+
+										<input type="text" readonly value="${prodHeader.plantName}"
+											style="width: 100%;" class="form-control"> <span
+											class="error" aria-live="polite"></span>
 										<%-- <select id="plant_id" name="plant_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
@@ -189,50 +187,50 @@
 									</div>
 									<div class="col-md-2">Production ID</div>
 									<div class="col-md-4">
-										
-									<input type="text" readonly value="${prodHeader.productionHeaderId}"
-												style="width: 100%;" class="form-control"> <span
-												class="error" aria-live="polite"></span>
+
+										<input type="text" readonly
+											value="${prodHeader.productionHeaderId}" style="width: 100%;"
+											class="form-control"> <span class="error"
+											aria-live="polite"></span>
 									</div>
 
 								</div>
 								<div class="form-group"></div>
-								
-								
-								
-								
+
+
+
+
 								<input type="hidden" name="item_id" id="item_id" value="0">
-								
+
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Production Date</div>
 									<div class="col-md-4">
-										<input type="text" disabled id="ord_date" name="ord_date" required
-											style="width: 100%;" class="form-control"
-											value="${prodHeader.productionDate}"> <span class="error"
-											aria-live="polite"></span>
+										<input type="text" disabled id="ord_date" name="ord_date"
+											required style="width: 100%;" class="form-control"
+											value="${prodHeader.productionDate}"> <span
+											class="error" aria-live="polite"></span>
 									</div>
-									
+
 									<c:if test="${prodHeader.productionStatus==1}">
-									<c:set var="status" value="Planned"></c:set>
-								</c:if>
-								
-								<c:if test="${prodHeader.productionStatus==2}">
-									<c:set var="status" value="Started"></c:set>
-								</c:if>
-								
-								<c:if test="${prodHeader.productionStatus==3}">
-									<c:set var="status" value="Completed"></c:set>
-								</c:if>
+										<c:set var="status" value="Planned"></c:set>
+									</c:if>
+
+									<c:if test="${prodHeader.productionStatus==2}">
+										<c:set var="status" value="Started"></c:set>
+									</c:if>
+
+									<c:if test="${prodHeader.productionStatus==3}">
+										<c:set var="status" value="Completed"></c:set>
+									</c:if>
 									<div class="col-md-2">Production Status</div>
 									<div class="col-md-4">
 										<input type="text" readonly id="ord_no" name="ord_no"
-											style="width: 100%;" class="form-control"
-											value="${status}"> <span
-											class="error" aria-live="polite"></span>
+											style="width: 100%;" class="form-control" value="${status}">
+										<span class="error" aria-live="polite"></span>
 									</div>
-									
-									
+
+
 									<%-- <div class="col-md-2">Start Date</div>
 									<div class="col-md-4">
 										<input type="text" readonly id="ord_no" name="ord_no"
@@ -243,7 +241,7 @@
 
 								</div>
 								<div class="form-group"></div>
-								
+
 								<div class="row">
 									<%-- <div class="col-md-2">End Date</div>
 									<div class="col-md-4">
@@ -253,13 +251,13 @@
 											aria-live="polite"></span>
 									</div>
 									 --%>
-								
-								
+
+
 
 								</div>
 
 								<div class="form-group"></div>
-			
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
@@ -274,25 +272,32 @@
 											</tr>
 										</thead>
 										<tbody>
-									<c:forEach items="${prodHeader.getProdPlanDetList}" var="prodDetail" varStatus="count">
-										<tr>
-											<td style="text-align: center">${count.index+1}</td>
-											<td style="text-align: left"><c:out
-													value="${prodDetail.itemName}" /></td>
-											<td style="text-align: center"><c:out
-													value="${prodDetail.uomName}" /></td>
-										<td style="text-align: center">
-										<input  type="text" readonly class="form-control" value="${prodDetail.planQty}"  id="planQty${prodDetail.productionDetailId}" name="planQty${prodDetail.productionDetailId}" />
-										</td>
-										<td style="text-align: center">
-											<input  type="number"   class="form-control"  id="prodQty${prodDetail.productionDetailId}" value="${prodDetail.planQty}" onkeypress="return allowOnlyNumber(event);" name="prodQty${prodDetail.productionDetailId}"/>
-										</td>
-										<td style="text-align: center">
-											<input  type="text"   class="form-control"  id="rejQty${prodDetail.productionDetailId}" value="0" onkeypress="return allowOnlyNumber(event);" name="rejQty${prodDetail.productionDetailId}"/>
-										</td>
-										</tr>
-										</c:forEach>
-
+											<c:forEach items="${prodHeader.getProdPlanDetList}"
+												var="prodDetail" varStatus="count">
+												<tr>
+													<td style="text-align: center">${count.index+1}</td>
+													<td style="text-align: left"><c:out
+															value="${prodDetail.itemName}" /></td>
+													<td style="text-align: center"><c:out
+															value="${prodDetail.uomName}" /></td>
+													<td style="text-align: center"><input type="text"
+														readonly class="form-control"
+														value="${prodDetail.planQty}"
+														id="planQty${prodDetail.productionDetailId}"
+														name="planQty${prodDetail.productionDetailId}" /></td>
+													<td style="text-align: center"><input type="number"
+														class="form-control"
+														id="prodQty${prodDetail.productionDetailId}"
+														value="${prodDetail.planQty}"
+														onkeypress="return allowOnlyNumber(event);"
+														name="prodQty${prodDetail.productionDetailId}" /></td>
+													<td style="text-align: center"><input type="text"
+														class="form-control"
+														id="rejQty${prodDetail.productionDetailId}" value="0"
+														onkeypress="return allowOnlyNumber(event);"
+														name="rejQty${prodDetail.productionDetailId}" /></td>
+												</tr>
+											</c:forEach>
 									</table>
 								</div>
 								<div class="form-group"></div>
@@ -309,26 +314,32 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-								<!-- 	<div class="col-md-2">Other Cost After Tax</div>
+									<!-- 	<div class="col-md-2">Other Cost After Tax</div>
 
 									<div class="col-md-3">845</div> -->
-									
-										<c:if test="${prodHeader.productionStatus==2}">
-									<div class="col-md-2">
-										<input type="submit" class="btn btn-primary" value="Complete Production">
-									</div>
-								</c:if>
+
+									<c:if test="${prodHeader.productionStatus==2}">
+										<div class="col-md-2">
+											<input type="submit" class="btn btn-primary"
+												value="Complete Production">
+										</div>
+									</c:if>
 									<c:if test="${prodHeader.productionStatus!=3}">
-									<div class="col-md-2">
-										<input type="button" class="btn btn-primary" id="manBomButton" onclick="showManualBOM()" value="Manual BOM">
-									</div>
+										<div class="col-md-2"></div>
+										<div class="col-md-2">
+											<input type="button" class="btn btn-primary"
+												id="manBomButton" onclick="showManualBOM()"
+												value="Manual BOM">
+										</div>
 									</c:if>
 									<c:if test="${prodHeader.productionStatus==1}">
-									
-									<div class="col-md-2">
-										<input type="button" class="btn btn-primary" id="bomButton" onclick="showBOM()" value="Add BOM">
+										<div class="col-md-2"></div>
 
-									</div>
+										<div class="col-md-2">
+											<input type="button" class="btn btn-primary" id="bomButton"
+												onclick="showBOM()" value="Add BOM">
+
+										</div>
 									</c:if>
 
 								</div>
@@ -426,7 +437,7 @@
 
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 	function showManualBOM(){
 		
@@ -439,7 +450,7 @@
 	}
 	
 	</script>
-	
+
 	<script type="text/javascript">
 
 	function allowOnlyNumber(evt){
@@ -538,7 +549,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 	
 	
 	</script> -->
-	
+
 
 
 	<!-- <script type="text/javascript">
