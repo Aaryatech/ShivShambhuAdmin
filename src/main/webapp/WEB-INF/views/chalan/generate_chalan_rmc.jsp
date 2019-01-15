@@ -372,6 +372,7 @@ body {
 
 								</div>
 
+
 								<div class="form-group"></div>
 								<div class="row">
 
@@ -379,7 +380,7 @@ body {
 
 									<div class="col-md-4">
 										<input type="text" id="batchNo" name="batchNo"
-											value="${rmcOrd.exDate1}" autocomplete="off" required
+											 autocomplete="off" required
 											style="width: 100%;" class="form-control"> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -388,14 +389,12 @@ body {
 
 									<div class="col-md-4">
 										<input type="text" id="rstNo" name="rstNo" required
-											autocomplete="off" style="width: 100%;" class="form-control">
-										<span class="error" aria-live="polite"></span>
+											 autocomplete="off" style="width: 100%;"
+											class="form-control"> <span class="error"
+											aria-live="polite"></span>
 									</div>
 
 								</div>
-
-
-
 
 								<div class="row"></div>
 								<div class="form-group"></div>
