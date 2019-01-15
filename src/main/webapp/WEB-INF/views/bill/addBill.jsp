@@ -307,8 +307,7 @@
 
 									<div class="col-md-10">
 										<select id="chalan_id" name="chalan_id" class="standardSelect"
-											tabindex="1" required multiple="multiple"
-											oninvalid="setCustomValidity('Please select Challan')">
+											tabindex="1" required multiple="multiple">
 											<option value="-1">Select</option>
 
 											<c:forEach items="${chalanHeadList}" var="chalan">
@@ -835,17 +834,19 @@ $
 
 	<script type="text/javascript">
 	function getChalanItems(){
-		//alert("hii");
-		var chalanId = document.getElementById("chalan_id").value;
+		alert("hii");
+		//var chalanId = document.getElementById("chalan_id").value;
+		
+		var chalanId=$('#chalan_id').val();
 		var isValid = validate();
-		alert("chalanId"+chalanId);
+		alert(chalanId);
 		
 
 		if (isValid) {
 		$('#loader').show();
 		$.getJSON('${getItemsForBill}', {
 			 
-			  chalanId : chalanId,
+			values : JSON.stringify(chalanId),
 					ajax : 'true',
 
 				},

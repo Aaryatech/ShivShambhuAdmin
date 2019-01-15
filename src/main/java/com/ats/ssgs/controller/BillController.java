@@ -283,27 +283,15 @@ public class BillController {
 			HttpServletResponse response) {
 		System.err.println("HI");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		String[] chalanId = request.getParameterValues("chalanId");
-		System.err.println(chalanId[0]);
-		/*
-		 * List<String> chalanIdList = new ArrayList<String>(Arrays.asList(chalanId));
-		 * List<Integer> cId=new ArrayList<>(); for(int i=0;i<chalanIdList.size();i++)
-		 * {System.err.println(chalanIdList.get(i));
-		 * cId.add(Integer.parseInt(chalanIdList.get(i))); }
-		 * System.err.println(cId.toString());
-		 */
 
-		StringBuilder sb = new StringBuilder();
+		String selectedFr = request.getParameter("values");
 
-		for (int i = 0; i < chalanId.length; i++) {
-			sb = sb.append(chalanId[i] + ",");
+		selectedFr = selectedFr.substring(1, selectedFr.length() - 1);
+		selectedFr = selectedFr.replaceAll("\"", "");
 
-		}
-		String items = sb.toString();
-		items = items.substring(0, items.length() - 1);
+		System.out.println("cust:::::" + selectedFr);
 
-		map.add("chalanId", items);
-		System.out.println("items" + items);
+		map.add("chalanId", selectedFr);
 
 		GetItemsForBill[] chArray = rest.postForObject(Constants.url + "getItemsForBill", map, GetItemsForBill[].class);
 
