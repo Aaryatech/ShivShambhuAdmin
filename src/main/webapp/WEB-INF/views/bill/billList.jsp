@@ -264,9 +264,10 @@
 										<th style="text-align: center">Bill Date</th>
 										<th style="text-align: center">Customer Name</th>
 
-										<th style="text-align: center">Total Amount</th>
-										<th style="text-align: center">Taxable Amount</th>
+											<th style="text-align: center">Taxable Amount</th>
 										<th style="text-align: center">Tax Amount</th>
+										<th style="text-align: center">Total Amount</th>
+										
 										<th style="text-align: center">Action</th>
 									</tr>
 								</thead>

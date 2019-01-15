@@ -351,7 +351,7 @@
 
 						dataTable.row.add(
 								[ i + 1, v.itemCode, v.itemName, v.taxAmt.toFixed(2),
-										v. taxableAmt.toFixed(2), v.taxableAmt.toFixed(2),v.cgstAmt.toFixed(2),
+										v. taxableAmt.toFixed(2), v.totalAmt.toFixed(2),v.cgstAmt.toFixed(2),
 										v.sgstAmt.toFixed(2),v.sgstAmt.toFixed(2)
 
 								]).draw();

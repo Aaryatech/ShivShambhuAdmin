@@ -294,17 +294,7 @@
 											onchange="checkDOB()" style="width: 100%;">
 									</div>
 
-									 <div class="col-md-2">Customer Code</div>
-
-									<div class="col-md-4">
-										<input type="text" id="cust_code" name="cust_code"
-											autocomplete="off" pattern="[0-9]+" maxlength="6"
-											oninvalid="setCustomValidity('Please enter Customer code')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											value="${editCust.custCode}" class="form-control"
-											style="width: 100%;">
-									</div> 
-
+									 
 									<div class="col-md-2">Kilometer</div>
 									<div class="col-md-4">
 										<input type="text" id="km" name="km" class="form-control"

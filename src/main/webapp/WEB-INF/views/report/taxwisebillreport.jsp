@@ -115,30 +115,32 @@
 
 							<div class="form-group"></div>
 
-							<div class="row">
+								<div class="row">
 
-								<div class="col-md-2">Select Plant*</div>
+								
+									<div class="col-md-2">Select Plant</div>
 
-								<div class="col-md-4">
-									<select id="plantId" name="plantId" class="standardSelect"
-										tabindex="1" multiple="multiple" required
-										oninvalid="setCustomValidity('Please select Challan')">
-										<option value="0">All</option>
-										<c:forEach items="${plantList}" var="plant">
-
-											<option value="${plant.plantId}">${plant.plantName}</option>
-
-										</c:forEach>
-
-
-									</select>
-								</div>
-
-
-								<div class="col-md-2">Select Customer*</div>
-
-								<div class="col-md-4">
-									<select id="custId" name="custId" class="standardSelect"
+									<div class="col-md-4">
+										<select id="plantId" name="plantId" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select plant name')"
+											onchange="getData()">
+											
+											<c:forEach items="${plantList}" var="plant">
+												<c:choose>
+													<c:when test="${plant.plantId==plantId1}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}">${plant.plantName}
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="col-md-2">Select Customer</div>
+									<div class="col-md-4">
+										<select id="custId" name="custId" class="standardSelect"
 										tabindex="1" multiple="multiple" required
 										oninvalid="setCustomValidity('Please select Challan')">
 										<option value="0">All</option>
@@ -149,11 +151,9 @@
 
 
 									</select>
-								</div>
-
+									</div>
 
 							</div>
-
 
 							<div class="form-group"></div>
 							<div class="row">
@@ -317,7 +317,7 @@
 				valid = false;
 				alert("Please select customer");
 			}
-
+			var values = $('#custId').val();
 			var plantId = document.getElementById("plantId").value;
 
 			//alert("plantId" + plantId);
@@ -351,7 +351,7 @@
 			if (valid == true) {
 
 				$.getJSON('${getTaxListBetweenDate}', {
-					custId : custId,
+					values : JSON.stringify(values),
 					plantId : plantId,
 					fromDate : fromDate,
 					toDate : toDate,

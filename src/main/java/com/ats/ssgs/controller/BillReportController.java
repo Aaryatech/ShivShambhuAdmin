@@ -1435,23 +1435,48 @@ public class BillReportController {
 	public @ResponseBody List<GetBillReport> getCustListBetweenDate(HttpServletRequest request,
 			HttpServletResponse response) {
 
+		String selectedFr = request.getParameter("values");
+	
+		
+
+		selectedFr = selectedFr.substring(1, selectedFr.length() - 1);
+		selectedFr = selectedFr.replaceAll("\"", "");
+
+		
+		System.out.println("cust:::::"+selectedFr);
+		
+		
+		
+		
+		
+		  //String[] custIdList = request.getParameterValues("values");
+		 // System.out.println("cust:::::"+arr1);
+		    
+		   //String[] custIdList1 = arr1.split(",");
+		  // System.out.println("custId is:::::"+arr1[0]+""+arr1[1]);
+		    
+		  /*  for(int i=0;i<arr1.length;i++) {
+		    	System.err.println("arr [] " +arr1[i]);
+		    }*/
+		    
 		System.err.println(" in getCustListBetweenDate");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-		String[] custIdList = request.getParameterValues("custId");
+		//	String rs=request.getParameter("values");
+		//String[] custIdList = request.getParameterValues("values");
+		
 		int plantId =Integer.parseInt(request.getParameter("plantId")) ;
 
 		System.out.println("plantIdList lengtr" + plantId);
 
-		StringBuilder sb = new StringBuilder();
+		/*StringBuilder sb = new StringBuilder();
 
-		for (int i = 0; i < custIdList.length; i++) {
-			sb = sb.append(custIdList[i] + ",");
+		for (int i = 0; i < selectedFr.length; i++) {
+			sb = sb.append(selectedFr[i] + ",");
 
 		}
 		String items = sb.toString();
 		items = items.substring(0, items.length() - 1);
-
+*/
 		//StringBuilder sb1 = new StringBuilder();
 
 		/*for (int i = 0; i < plantIdList.length; i++) {
@@ -1467,7 +1492,7 @@ public class BillReportController {
 		String toDate = request.getParameter("toDate");
 
 		map.add("plantId", plantId);
-		map.add("custIdList", items);
+		map.add("custIdList", selectedFr);
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
 
@@ -2147,41 +2172,30 @@ public class BillReportController {
 	@RequestMapping(value = "/getTaxListBetweenDate", method = RequestMethod.GET)
 	public @ResponseBody List<TaxWiseBill> getTaxListBetweenDate(HttpServletRequest request,
 			HttpServletResponse response) {
+		
+		
+
+		String selectedFr = request.getParameter("values");
+	
+		
+
+		selectedFr = selectedFr.substring(1, selectedFr.length() - 1);
+		selectedFr = selectedFr.replaceAll("\"", "");
+
+		
+		System.out.println("cust:::::"+selectedFr);
+		
 
 		System.err.println(" in getTaxListBetweenDate");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-		String[] plantIdList = request.getParameterValues("plantId");
-		String[] custIdList = request.getParameterValues("custId");
-
-		System.out.println("plantIdList lengtr" + plantIdList.toString());
-		System.out.println("custIdList lengtr" + custIdList.toString());
-
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < custIdList.length; i++) {
-			sb = sb.append(custIdList[i] + ",");
-
-		}
-		String items = sb.toString();
-		items = items.substring(0, items.length() - 1);
-
-		StringBuilder sb1 = new StringBuilder();
-
-		for (int i = 0; i < plantIdList.length; i++) {
-			sb1 = sb1.append(plantIdList[i] + ",");
-
-		}
-		String items1 = sb1.toString();
-		items1 = items1.substring(0, items1.length() - 1);
-
-		System.out.println("plantIdList" + items1);
-		System.out.println("custIdList" + items);
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
 		System.out.println("data is: " + fromDate + toDate);
-		map.add("custIdList", items);
-		map.add("plantIdList", items1);
+		map.add("custIdList",selectedFr );
+		map.add("plantId", plantId);
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
 

@@ -127,7 +127,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="0">All</option>
+											
 											<c:forEach items="${plantList}" var="plant">
 												<c:choose>
 													<c:when test="${plant.plantId==plantId1}">
@@ -143,12 +143,16 @@
 									<div class="col-md-2">Select Customer</div>
 									<div class="col-md-4">
 										<select id="custId" name="custId" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select customer')"
-											onchange="getCustInfo()"  multiple="multiple">
-											<option value="0">All</option>
+										tabindex="1" multiple="multiple" required
+										oninvalid="setCustomValidity('Please select Challan')">
+										<option value="0">All</option>
 
-										</select>
+										<c:forEach items="${custList}" var="cust">
+											<option value="${cust.custId}">${cust.custName}</option>
+										</c:forEach>
+
+
+									</select>
 									</div>
 
 							</div>
@@ -305,6 +309,12 @@
 			//alert("Hi View Orders  ");
 
 			var custId = document.getElementById("custId").value;
+			
+			var values = $('#custId').val();
+			
+			
+			alert("custId:"+custId);
+			alert("list is:"+values);
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
@@ -355,10 +365,12 @@
 						.getJSON(
 								'${getCustListBetweenDate}',
 								{
-									custId : custId,
+									values : values,
 									plantId : plantId,
 									fromDate : fromDate,
 									toDate : toDate,
+									values : JSON.stringify(values),
+									//fr_id_list : JSON.stringify(selectedFr),
 									ajax : 'true',
 
 								},
