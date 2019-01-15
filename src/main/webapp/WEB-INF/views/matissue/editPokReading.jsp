@@ -170,11 +170,11 @@
 
 									<div class="col-md-2">End Date</div>
 
-									<div class="col-md-4">
+									<div class="col-mdcheckDate-4">
 										<input type="text" id="end_date" name="end_date"
-											autocomplete="off" value="${endDate}"
+											autocomplete="off" value="${endDate}" 
 											oninvalid="setCustomValidity('Please select date')"
-											onchange="try{setCustomValidity('')}catch(e){}"
+											onchange="checkDate()"
 											class="form-control" style="width: 100%;">
 									</div>
 
@@ -442,7 +442,7 @@
 
 			if (start_date > end_date) {
 				alert("Please enter startdate less than end Date ");
-				document.getElementById('start_date').value = "";
+				//document.getElementById('start_date').value = "";
 				document.getElementById('end_date').value = "";
 
 			}

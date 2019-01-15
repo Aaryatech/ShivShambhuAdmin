@@ -400,7 +400,7 @@
 			var status=${prodHeader.productionStatus}
 			
 			if(status==1){
-				alert("Status" +status);
+				//alert("Status" +status);
 				 $('#table_grid1 tbody input[type="number"]').prop('readonly', true);			
 				 }
 		});

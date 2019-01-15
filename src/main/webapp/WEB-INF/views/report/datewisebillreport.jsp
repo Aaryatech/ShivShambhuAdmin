@@ -66,7 +66,7 @@
 
 
 </head>
-<body>
+<body onload="showQuot1()">
 
 
 	<!-- Left Panel -->
@@ -125,7 +125,7 @@
 								<div class="col-md-4">
 									<select id="plantId" name="plantId" class="standardSelect"
 										tabindex="1" required onchange="getData()">
-										<option value="">Select</option>
+									
 
 										<option value="0">All</option>
 										<c:forEach items="${plantList}" var="plant">
@@ -142,7 +142,8 @@
 									<select id="custId" name="custId" class="standardSelect"
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select company')">
-										<option value="">Select</option>
+										
+										<option value="0">All</option>
 									</select>
 								</div>
 
@@ -507,6 +508,160 @@
 
 		}
 	</script>
+	
+	
+	
+	<script type="text/javascript">
+		// onclick of submit to search order 
+		function showQuot1() {
+
+			//alert("Hi View Orders  ");
+			var custId=0;
+			var plantId=0;
+			//var custId = document.getElementById("custId").value;
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
+		
+
+			/* if (custId == null || custId == "") {
+				valid = false;
+				alert("Please select customer");
+			}
+ */
+			//var plantId = document.getElementById("plantId").value;
+/// alert("custd" + custId);
+			//alert("plantId" + plantId);
+			var valid = true;
+			/* if (plantId == null || plantId == "") {
+				valid = false;
+				alert("Please Select Plant");
+
+				var dataTable = $('#bootstrap-data-table').DataTable();
+				dataTable.clear().draw();
+
+			} else if (plantId < 0) {
+				valid = false;
+
+			}
+ */
+		 if (fromDate == null || fromDate == "") {
+				valid = false;
+				alert("Please select from date");
+			}
+
+			else if (toDate == null || toDate == "") {
+				valid = false;
+				alert("Please select to date");
+			}
+
+			if (fromDate > toDate) {
+				valid = false;
+				alert("from date greater than todate ");
+			}
+			if (valid == true) {
+
+				$
+						.getJSON(
+								'${getDatewiseBillList}',
+								{
+									custId : custId,
+									plantId : plantId,
+									fromDate : fromDate,
+									toDate : toDate,
+									ajax : 'true',
+
+								},
+
+								function(data) {
+
+									document.getElementById("expExcel").disabled = false;
+									document.getElementById("PDFButton").disabled = false;
+
+									if (data == "") {
+										alert("No records found !!");
+										document.getElementById("expExcel").disabled = true;
+										document.getElementById("PDFButton").disabled = true;
+
+									}
+
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
+
+									$
+											.each(
+													data,
+													function(i, v) {
+
+														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																+ v.billHeadId
+																+ ',/'
+																+ v.billDate
+																+ '/,'
+																+ i
+																+ ')" style="color:black"><i class="fa fa-list"></i></a>'
+
+														dataTable.row
+																.add(
+																		[
+																				i + 1,
+																				v.billDate,
+																				v.cgstAmt.toFixed(2),
+																				v.sgstAmt.toFixed(2),
+																				v.igstAmt.toFixed(2),
+																				v.taxAmt.toFixed(2),
+																				v.taxableAmt.toFixed(2),
+																				v.totalAmt.toFixed(2),
+																				acButton
+
+																		])
+																.draw();
+													});
+
+								});
+
+			}//end of if valid ==true
+
+		}
+		function callEdit(billHeadId, billDate) {
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+			/* 	
+				alert("Bill Head id is"+billDate);
+				alert("date is"+billDate); */
+
+			window
+					.open("${pageContext.request.contextPath}/showDateBillDetailReport/"
+							+ billHeadId
+							+ billDate
+							+ '/'
+							+ fromDate
+							+ '/'
+							+ toDate);
+
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table').DataTable();
+
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
+	</script>
+
+	
 
 </body>
 </html>

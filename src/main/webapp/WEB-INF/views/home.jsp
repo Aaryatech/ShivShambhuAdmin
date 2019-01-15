@@ -123,8 +123,8 @@ background-color: transparent;
 
 						<div class="col-md-2" style="color: black;">Select Plant*</div>
 						<div class="col-md-2">
-							<select id="plantId" name="plantId" class="standardSelect"
-								tabindex="1" required>
+							<select id="plantId" name="plantId" class="standardSelect" 
+								tabindex="1"  style="color: black;" required>
 								<option value="0">All</option>
 								<c:forEach items="${plantList}" var="plant">
 									<option value="${plant.plantId}">${plant.plantName}</option>
