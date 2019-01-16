@@ -345,7 +345,7 @@
 									<div class="col-md-4">
 										<input type="text" id="in_km" name="in_km" required
 											onkeypress="return allowOnlyNumber(event);"
-										style="width: 100%;"
+										style="width: 100%;"  onchange="checkKm()"
 											class="form-control" maxlength="10"> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -499,7 +499,7 @@
 
 
 									<div class="col-md-2">
-										<input type="submit" class="btn btn-primary" value="Submit" onclick="checkKm()"
+										<input type="submit" class="btn btn-primary" value="Submit"
 										>
 
 									</div>
@@ -1006,7 +1006,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 			var valid = true;
 			
 			
-			if ( in_km < out_km ) {
+			if ( parseFloat(in_km) < parseFloat(out_km) ) {
 
 				valid = false;
 			} 

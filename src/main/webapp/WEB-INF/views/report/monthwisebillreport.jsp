@@ -405,12 +405,16 @@
 
 		}
 		function callDetail(monthNo,year){
+			
+			var plantId = document.getElementById("plantId").value;
+
+			var custId = document.getElementById("custId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
 			window
 					.open("${pageContext.request.contextPath}/showDatewiseBillReport1/"
-							+ monthNo + '/' + year);
+							+ monthNo + '/' + year+ '/' + plantId+ '/' + custId);
 
 		}
 	</script>

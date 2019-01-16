@@ -407,29 +407,49 @@ public class BillReportController {
 
 	}
 
-	@RequestMapping(value = "/showDatewiseBillReport1/{monthNo}/{year}", method = RequestMethod.GET)
-	public ModelAndView showDatewiseBillReport1(@PathVariable("monthNo") int monthNo, @PathVariable("year") int year,
-			HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/showDatewiseBillReport1/{monthNo}/{year}/{plantId}/{custId}", method = RequestMethod.GET)
+	public ModelAndView showDatewiseBillReport1(@PathVariable("monthNo") int monthNo, @PathVariable("year") int year,@PathVariable("plantId") int plantId,@PathVariable("custId") int custId
+			,HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = null;
 		try {
 
-			/*
-			 * int month=Integer.parseInt("monthNo");
-			 * 
-			 * int year1=Integer.parseInt("year");
-			 * 
-			 */
+			
 
 			System.out.println("mon is" + monthNo);
 			System.out.println("year" + year);
 			model = new ModelAndView("report/datewisebillreport");
+			
+			
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
+			
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
+		
+			
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("plantId", plantId);
+
+			Plant pl = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+			String pname = pl.getPlantName();
+			System.out.println(pname);
+			model.addObject("pname", pname);
+			model.addObject("plantId", plantId);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("custId", custId);
+
+			Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
+			String cname=editCust.getCustName(); 
+			model.addObject("cname", cname);
+			model.addObject("custId", custId);
+			
 			Calendar cal = Calendar.getInstance();
 			cal.set(year, monthNo - 1, 1);
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
