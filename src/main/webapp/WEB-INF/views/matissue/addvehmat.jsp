@@ -398,8 +398,9 @@
 				ajax : 'true',
 
 			}, function(data) {
-				/* 	alert("data" + data);
-					alert(data.exInt1); */
+				if (data.isDuplicate == 1) {
+					alert("Item Already Added");
+				}
 				$("#catId").val(data.catId);
 				$("#catId").trigger("chosen:updated");
 				document.getElementById("itemName").value = data.itemId;

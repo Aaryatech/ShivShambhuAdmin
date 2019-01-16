@@ -140,19 +140,34 @@ public class MatIssueController {
 				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
 						RawMatItem.class);
 
-				int catId = Integer.parseInt(request.getParameter("catId"));
-				int index = Integer.parseInt(request.getParameter("index"));
+				if (tempList.size() > 0) {
+					int flag = 0;
+					for (int i = 0; i < tempList.size(); i++) {
+						tempList.get(i).setIsDuplicate(0);
+						if (tempList.get(i).getItemId() == itemId) {
+							tempList.get(i).setIsDuplicate(1);
+							flag = 1;
 
-				float quantity = Float.parseFloat(request.getParameter("qty"));
+						} // end of if item exist
 
-				tempList.get(index).setQuantity(quantity);
-				tempList.get(index).setItemName(getSingleItem.getItemDesc());
-				tempList.get(index).setItemId(itemId);
+					} // end of for
+					if (flag == 0) {
 
-				tempList.get(index).setValue(tempList.get(index).getItemRate() * quantity);
-				tempList.get(index).setCatId(catId);
+						int catId = Integer.parseInt(request.getParameter("catId"));
+						int index = Integer.parseInt(request.getParameter("index"));
 
-				System.out.println("templist  =====" + tempList.toString());
+						float quantity = Float.parseFloat(request.getParameter("qty"));
+
+						tempList.get(index).setQuantity(quantity);
+						tempList.get(index).setItemName(getSingleItem.getItemDesc());
+						tempList.get(index).setItemId(itemId);
+
+						tempList.get(index).setValue(tempList.get(index).getItemRate() * quantity);
+						tempList.get(index).setCatId(catId);
+
+						System.out.println("templist  =====" + tempList.toString());
+					}
+				}
 
 			}
 
@@ -188,7 +203,7 @@ public class MatIssueController {
 						temp.setItemId(getSingleItem.getItemId());
 						temp.setQuantity(qty);
 						temp.setItemRate(getSingleItem.getItemClRate());
-
+						temp.setIsDuplicate(0);
 						temp.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
 						temp.setCatId(Integer.parseInt(catId));
 						Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
@@ -219,6 +234,7 @@ public class MatIssueController {
 					temp.setItemId(getSingleItem.getItemId());
 					temp.setQuantity(qty);
 					temp.setItemRate(getSingleItem.getItemClRate());
+					temp.setIsDuplicate(0);
 
 					temp.setUomId(Integer.parseInt(getSingleItem.getItemUom2()));
 					temp.setCatId(Integer.parseInt(catId));
