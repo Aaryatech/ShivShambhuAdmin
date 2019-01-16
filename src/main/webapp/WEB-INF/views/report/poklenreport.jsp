@@ -151,16 +151,7 @@
 
 
 
-							<!-- <div class="form-group"></div>
-							<div class="row">
-								<div class="col-md-6"></div>
-								<div class="col-md-2">
-									<input type="button" class="btn btn-primary"
-										onclick="showReport()" value="Submit">
-								</div>
-							</div>
-
- -->
+						
 							<div class="form-group"></div>
 
 						</div>
