@@ -612,7 +612,7 @@
 																+ v.quotHeadId
 																+ ','
 																+ i
-																+ ')" style="color:red"><i class="fa fa-edit"  title="Edit"></i></a>'
+																+ ')" style="color:black"><i class="fa fa-file"  title="Edit"></i></a>'
 
 														chBox = '<input  type="checkbox" class="chk" name="selectQuatationToDelete" id='+v.quotHeadId+' class="check"  value='+v.quotHeadId+'>'
 

@@ -751,7 +751,7 @@ body {
 
 										<div class="col-md-1">
 											<input type="button" class="btn btn-primary"
-												value="Generate Quotation" onclick="valthisform()">
+												value="Generate" onclick="valthisform()">
 
 
 										</div>

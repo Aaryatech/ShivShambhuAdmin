@@ -285,7 +285,7 @@
 											value="${endReading}" class="form-control" autocomplete="off"
 											style="width: 100%;"
 											oninvalid="setCustomValidity('Please enter correct reading')"
-											onchange="try{setCustomValidity('')}catch(e){}"
+											onchange="checkReading()"
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 
@@ -461,8 +461,8 @@
 			// In JQuery
 
 			if (startReading > endReading) {
-				alert("Please enter correct Start Reading  ");
-				document.getElementById('startReading').value = "";
+				alert("Please enter correct End Reading  ");
+				//document.getElementById('startReading').value = "";
 				document.getElementById('endReading').value = "";
 
 			}
