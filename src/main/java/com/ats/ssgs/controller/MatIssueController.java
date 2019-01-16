@@ -111,6 +111,8 @@ public class MatIssueController {
 		return model;
 	}
 
+	RawMatItem getSingleItem;
+
 	@RequestMapping(value = "/addMatIssueDetail", method = RequestMethod.GET)
 	public @ResponseBody List<TempMatIssueDetail> addMatIssueDetail(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -130,6 +132,7 @@ public class MatIssueController {
 				tempList.remove(key);
 
 			} else if (isEdit == 1) {
+				System.out.println("isEdit=1");
 
 				int itemId = Integer.parseInt(request.getParameter("itemName"));
 
@@ -137,10 +140,11 @@ public class MatIssueController {
 
 				map.add("itemId", itemId);
 
-				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
-						RawMatItem.class);
+				getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map, RawMatItem.class);
 
 				if (tempList.size() > 0) {
+					System.out.println("if (tempList.size() > 0)");
+
 					int flag = 0;
 					for (int i = 0; i < tempList.size(); i++) {
 						tempList.get(i).setIsDuplicate(0);
@@ -152,7 +156,7 @@ public class MatIssueController {
 
 					} // end of for
 					if (flag == 0) {
-
+						System.out.println("flag == 0");
 						int catId = Integer.parseInt(request.getParameter("catId"));
 						int index = Integer.parseInt(request.getParameter("index"));
 
@@ -166,6 +170,20 @@ public class MatIssueController {
 						tempList.get(index).setCatId(catId);
 
 						System.out.println("templist  =====" + tempList.toString());
+					} else
+
+					{
+						System.out.println("else of flag == 0");
+						int index = Integer.parseInt(request.getParameter("index"));
+
+						float quantity = Float.parseFloat(request.getParameter("qty"));
+
+						tempList.get(index).setQuantity(quantity);
+
+						tempList.get(index).setItemId(itemId);
+
+						tempList.get(index).setValue(tempList.get(index).getItemRate() * quantity);
+						tempList.get(index).setIsDuplicate(0);
 					}
 				}
 
@@ -179,8 +197,7 @@ public class MatIssueController {
 
 				map.add("itemId", itemId);
 
-				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
-						RawMatItem.class);
+				getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map, RawMatItem.class);
 
 				if (tempList.size() > 0) {
 					int flag = 0;
@@ -220,9 +237,9 @@ public class MatIssueController {
 						temp.setValue(getSingleItem.getItemClRate() * qty);
 						tempList.add(temp);
 
-					}
+						System.out.println("tempList in if " + tempList.toString());
 
-					System.out.println("Inside Add Raw Material");
+					}
 
 				} else {
 
@@ -251,6 +268,8 @@ public class MatIssueController {
 
 					temp.setValue(getSingleItem.getItemClRate() * qty);
 					tempList.add(temp);
+
+					System.err.println("tempList in else " + tempList.toString());
 
 				}
 
@@ -386,7 +405,7 @@ public class MatIssueController {
 				dDetail.setExInt1(0);
 				dDetail.setExBool1(1);
 				dDetail.setExDate1(curDate);
-				dDetail.setExInt1(1);
+				dDetail.setExInt1(tempList.get(i).getCatId());
 				dDetail.setExInt2(1);
 				dDetail.setExVar1("NA");
 				dDetail.setExVar2("NA");
@@ -580,17 +599,42 @@ public class MatIssueController {
 						RawMatItem.class);
 
 				System.out.println("isedit" + isEdit);
-				int catId = Integer.parseInt(request.getParameter("catId"));
-				int index = Integer.parseInt(request.getParameter("index"));
-				float quantity = Float.parseFloat(request.getParameter("qty"));
 
-				editMat.getMatIssueDetailList().get(index).setQuantity(quantity);
-				editMat.getMatIssueDetailList().get(index)
-						.setValue(editMat.getMatIssueDetailList().get(index).getItemRate() * quantity);
-				editMat.getMatIssueDetailList().get(index).setItemId(itemId);
-				editMat.getMatIssueDetailList().get(index).setItemDesc(getSingleItem.getItemDesc());
-				editMat.getMatIssueDetailList().get(index).setExInt1(catId);
+				if (editMat.getMatIssueDetailList().size() > 0) {
+					int flag = 0;
+					for (int i = 0; i < editMat.getMatIssueDetailList().size(); i++) {
+						editMat.getMatIssueDetailList().get(i).setExInt2(0);
+						if (editMat.getMatIssueDetailList().get(i).getItemId() == itemId) {
+							editMat.getMatIssueDetailList().get(i).setExInt2(1);
+							flag = 1;
 
+						} // end of if item exist
+
+					} // end of foreditInAddMatVehicleDetail
+
+					if (flag == 0) {
+
+						int catId = Integer.parseInt(request.getParameter("catId"));
+						int index = Integer.parseInt(request.getParameter("index"));
+						float quantity = Float.parseFloat(request.getParameter("qty"));
+
+						editMat.getMatIssueDetailList().get(index).setQuantity(quantity);
+						editMat.getMatIssueDetailList().get(index)
+								.setValue(editMat.getMatIssueDetailList().get(index).getItemRate() * quantity);
+						editMat.getMatIssueDetailList().get(index).setItemId(itemId);
+						editMat.getMatIssueDetailList().get(index).setItemDesc(getSingleItem.getItemDesc());
+						editMat.getMatIssueDetailList().get(index).setExInt1(catId);
+					} else {
+						int index = Integer.parseInt(request.getParameter("index"));
+						float quantity = Float.parseFloat(request.getParameter("qty"));
+
+						editMat.getMatIssueDetailList().get(index).setQuantity(quantity);
+						editMat.getMatIssueDetailList().get(index)
+								.setValue(editMat.getMatIssueDetailList().get(index).getItemRate() * quantity);
+						editMat.getMatIssueDetailList().get(index).setExInt2(0);
+
+					}
+				}
 			}
 
 			else {
@@ -868,7 +912,7 @@ public class MatIssueController {
 				dDetail.setExInt1(0);
 				dDetail.setExBool1(1);
 				dDetail.setExDate1(curDate);
-				dDetail.setExInt1(1);
+				dDetail.setExInt1(tempList.get(i).getCatId());
 				dDetail.setExInt2(1);
 				dDetail.setExVar1("NA");
 				dDetail.setExVar2("NA");
@@ -1054,16 +1098,42 @@ public class MatIssueController {
 				RawMatItem getSingleItem = rest.postForObject(Constants.url + "getRawItemLByItemId", map,
 						RawMatItem.class);
 
-				int catId = Integer.parseInt(request.getParameter("catId"));
-				int index = Integer.parseInt(request.getParameter("index"));
-				float quantity = Float.parseFloat(request.getParameter("qty"));
+				if (editVeh.getVehDetailList().size() > 0) {
+					int flag = 0;
+					for (int i = 0; i < editVeh.getVehDetailList().size(); i++) {
+						editVeh.getVehDetailList().get(i).setExInt2(0);
+						if (editVeh.getVehDetailList().get(i).getItemId() == itemId) {
+							editVeh.getVehDetailList().get(i).setExInt2(1);
+							flag = 1;
+							System.err.println("flag ==1");
 
-				editVeh.getVehDetailList().get(index).setQuantity(quantity);
-				editVeh.getVehDetailList().get(index)
-						.setValue(editVeh.getVehDetailList().get(index).getRate() * quantity);
-				editVeh.getVehDetailList().get(index).setItemId(itemId);
-				editVeh.getVehDetailList().get(index).setItemDesc(getSingleItem.getItemDesc());
-				editVeh.getVehDetailList().get(index).setExInt1(catId);
+						} // end of if item exist
+
+					} // end of for
+
+					if (flag == 0) {
+						System.err.println("flag ==0");
+
+						int catId = Integer.parseInt(request.getParameter("catId"));
+						int index = Integer.parseInt(request.getParameter("index"));
+						float quantity = Float.parseFloat(request.getParameter("qty"));
+
+						editVeh.getVehDetailList().get(index).setQuantity(quantity);
+						editVeh.getVehDetailList().get(index)
+								.setValue(editVeh.getVehDetailList().get(index).getRate() * quantity);
+						editVeh.getVehDetailList().get(index).setItemId(itemId);
+						editVeh.getVehDetailList().get(index).setItemDesc(getSingleItem.getItemDesc());
+						editVeh.getVehDetailList().get(index).setExInt1(catId);
+					} else {
+						int index = Integer.parseInt(request.getParameter("index"));
+						float quantity = Float.parseFloat(request.getParameter("qty"));
+						editVeh.getVehDetailList().get(index).setQuantity(quantity);
+						editVeh.getVehDetailList().get(index)
+								.setValue(editVeh.getVehDetailList().get(index).getRate() * quantity);
+						editVeh.getVehDetailList().get(index).setExInt2(0);
+
+					}
+				}
 
 			}
 

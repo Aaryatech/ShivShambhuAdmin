@@ -312,11 +312,11 @@
 
 													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${matDetail.matVehDetailId},${count.index})"><i
-															class="fa fa-edit"></i> <span class="text-muted"
-															style="color: black"></span></a> <a href="#"
+															class="fa fa-edit" style="color: black"></i> <span
+															class="text-muted"></span></a> <a href="#"
 														onclick="callDelete(${matDetail.matVehDetailId},${count.index})"><i
-															class="fa fa fa-trash-o"></i> <span class="text-muted"
-															style="color: black"></span></a></td>
+															class="fa fa fa-trash-o" style="color: black"></i> <span
+															class="text-muted"></span></a></td>
 
 
 
@@ -400,7 +400,7 @@
 
 	<script type="text/javascript">
 		function add() {
-			alert("in add  ");
+		//	alert("in add  ");
 			var itemName = document.getElementById("itemName").value;
 			var qty = document.getElementById("qty").value;
 			var isEdit = document.getElementById("isEdit").value;

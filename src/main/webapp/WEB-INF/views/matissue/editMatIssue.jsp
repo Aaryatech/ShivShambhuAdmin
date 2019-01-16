@@ -470,15 +470,14 @@
 				ajax : 'true',
 
 			}, function(data) {
-				alert(data.exInt1)
+				//alert(" cat Id" + data.exInt1);
+				//alert(data.itemId);
 				$("#catId").val(data.exInt1);
 				$("#catId").trigger("chosen:updated");
 				document.getElementById("itemName").value = data.itemId;
 				document.getElementById("qty").value = data.quantity;
 				document.getElementById("index").value = index;
-				alert(data.itemId);
-				alert(data.quantity);
-				alert(index);
+				
 				$.getJSON('${getRawItemByCatId}', {
 
 					catId : data.exInt1,
@@ -487,21 +486,25 @@
 				},
 
 				function(data1) {
-					alert("hiii");
-					alert(data.itemId);
-					alert(data1.itemId);
+					
+				
 					var html;
 					var len = data1.length;
 					var html = '<option value="-1"  >Select Item</option>';
 					
 					for (var i = 0; i < len; i++) {
-						
 
 						if(data1[i].itemId==data.itemId){
+							
 
-						html += '<option value="' + data1[i].itemId + '">'
+						html += '<option value="' + data1[i].itemId + '" selected>'
 								+ data1[i].itemDesc + '</option>';
 						}
+						  else
+							{
+							  html += '<option value="' + data1[i].itemId + '">'
+								+ data1[i].itemDesc + '</option>';
+							}  
 					}
 					//html += '</option>';
 
