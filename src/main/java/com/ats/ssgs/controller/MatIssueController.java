@@ -631,9 +631,9 @@ public class MatIssueController {
 						float quantity = Float.parseFloat(request.getParameter("qty"));
 
 						editMat.getMatIssueDetailList().get(index).setQuantity(quantity);
-						editMat.getMatIssueDetailList().get(index).setValue(getSingleItem.getItemClRate() * quantity);
+						editMat.getMatIssueDetailList().get(index)
+								.setValue(editMat.getMatIssueDetailList().get(index).getItemRate() * quantity);
 						editMat.getMatIssueDetailList().get(index).setExInt2(0);
-						editMat.getMatIssueDetailList().get(index).setItemRate(getSingleItem.getItemClRate());
 
 					}
 				}
@@ -1129,7 +1129,8 @@ public class MatIssueController {
 						int index = Integer.parseInt(request.getParameter("index"));
 						float quantity = Float.parseFloat(request.getParameter("qty"));
 						editVeh.getVehDetailList().get(index).setQuantity(quantity);
-						editVeh.getVehDetailList().get(index).setValue(getSingleItem.getItemClRate() * quantity);
+						editVeh.getVehDetailList().get(index)
+								.setValue(editVeh.getVehDetailList().get(index).getRate() * quantity);
 						editVeh.getVehDetailList().get(index).setExInt2(0);
 
 					}
