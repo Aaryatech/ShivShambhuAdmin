@@ -173,7 +173,8 @@
 
 									<div class="col-md-4">
 										<input type="text" id="mob_no" name="mob_no" required
-											onblur="getCheck()" style="width: 100%;" class="form-control"
+											oninput="getCheck()" style="width: 100%;"
+											class="form-control"
 											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" value="${editComp.contactNo1}"
 											pattern="^[1-9]{1}[0-9]{9}$" autocomplete="off"

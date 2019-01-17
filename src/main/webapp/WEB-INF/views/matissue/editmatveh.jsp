@@ -559,8 +559,9 @@
 															[ i + 1,
 																	v.itemDesc,
 																	v.uomName,
-																	v.rate,
 																	v.quantity,
+																	v.rate,
+																	
 																	v.value,
 																	str ])
 															.draw();

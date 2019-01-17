@@ -265,13 +265,13 @@
 															value="${matDetail.uomName}" /></td>
 
 
+													<td style="text-align: left"><c:out
+															value="${matDetail.quantity}" /></td>
 
 													<td style="text-align: left"><c:out
 															value="${matDetail.itemRate}" /></td>
 
 
-													<td style="text-align: left"><c:out
-															value="${matDetail.quantity}" /></td>
 
 
 													<td style="text-align: left"><c:out
@@ -446,7 +446,6 @@
 																	v.uomName,
 																	v.quantity,
 																	v.itemRate,
-																
 																	v.value,
 																	str ])
 															.draw();
@@ -558,8 +557,8 @@
 															[ i + 1,
 																	v.itemDesc,
 																	v.uomName,
-																	v.itemRate,
 																	v.quantity,
+																	v.itemRate,	
 																	v.value,
 																	str ])
 															.draw();

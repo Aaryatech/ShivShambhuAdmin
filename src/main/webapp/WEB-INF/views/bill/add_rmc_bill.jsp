@@ -797,12 +797,12 @@ $
 		//var chalanId = document.getElementById("chalan_id").value;
 		
 		var chalanId=$('#chalan_id').val();
-		var isValid = validate();
+		var isValid =true;
 		//alert(chalanId);
 		
 
 		if (isValid) {
-		$('#loader').show();
+		//$('#loader').show();
 		$.getJSON('${getItemsForBill}', {
 			 
 			values : JSON.stringify(chalanId),
@@ -816,11 +816,12 @@ $
 						alert("data not found")
 					}else{
 					}
+					//alert("Data length " +data.length);
 					var len = data.length;
 								var dataTable = $('#bootstrap-data-table').DataTable();
 								
 			dataTable.clear().draw();
-			$.each(data,function(i, v) {
+	 	$.each(data,function(i, v) {
 
 		var chalanQty = '<input  type="text" value="'+v.itemQty+'" readonly oninput="calculation('+i+','+v.itemId+')"   class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var discPer = '<input  type="text" value="0.0" oninput="calculation('+i+','+v.itemId+')" class="form-control"  id="discPer'+i+''+v.itemId+'" name="discPer'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
@@ -848,15 +849,15 @@ $
     		var taxAmt = '<p id="taxAmt'+i+''+v.itemId+'">'+taxAmt.toFixed(2)+'</p>'
     		var total = '<p id="total'+i+''+v.itemId+'">'+total.toFixed(2)+'</p>'
     		var taxableAmt = '<p id="taxableAmt'+i+''+v.itemId+'">'+taxableAmt.toFixed(2)+'</p>'
-    		} 
+    		}  
 		
 		
 
 		var index=i+1;
 		dataTable.row.add([ index,v.itemName,v.itemUom,v.orderRate+""+rate+""+isTaxIncluding,v.itemQty,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
-		$('#loader').hide();
+		//$('#loader').hide();
 			
-			});
+			} );
 		});
 		}
 		}

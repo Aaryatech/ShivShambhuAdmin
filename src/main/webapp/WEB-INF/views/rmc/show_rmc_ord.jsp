@@ -20,11 +20,10 @@
 
 <c:url var="getPoDetailForOrderByPoId"
 	value="/getPoDetailForOrderByPoId" />
-	
-	
-<c:url var="getTempOrderHeader"
-	value="/getTempOrderHeader" />
-	
+
+
+<c:url var="getTempOrderHeader" value="/getTempOrderHeader" />
+
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,31 +74,30 @@
 
 <style>
 .alert {
-    padding: 20px;
-    background-color: red;
-    color: white;
-    
+	padding: 20px;
+	background-color: red;
+	color: white;
 }
+
 .alert1 {
-    padding: 20px;
-    background-color: green;
-    color: white;
-    
+	padding: 20px;
+	background-color: green;
+	color: white;
 }
 
 .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: black;
+	color: black;
 }
 </style>
 
@@ -123,31 +121,31 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-			
-			<c:choose>
-							<c:when test="${isError==1}">
-							
-							<div class="alert">
-							
+
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Failed !</strong>     Data not submitted  !!
-				</div>
-							
-							</c:when>
-							
-							<c:when test="${isError==2}">
-							
-							<div class="alert1">
-							
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Success</strong>     Data Submitted !!
-				</div>
-							
-							</c:when>
-							
-							</c:choose>
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -160,7 +158,7 @@
 								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
 										Customer</strong></a>
 							</div> --%>
-							
+
 
 						</div>
 						<div class="card-body card-block">
@@ -168,8 +166,7 @@
 								method="get">
 
 								<div class="row">
-									<input type="hidden" name="itemId" id="itemId"
-										value="0" />
+									<input type="hidden" name="itemId" id="itemId" value="0" />
 
 									<div class="col-md-1">Plant</div>
 
@@ -181,7 +178,7 @@
 											<option value="">Select</option>
 
 
-									<c:forEach items="${plantList}" var="plant">
+											<c:forEach items="${plantList}" var="plant">
 												<c:choose>
 													<c:when test="${plant.plantId==plantId}">
 														<option value="${plant.plantId}" selected>${plant.plantName}</option>
@@ -190,8 +187,8 @@
 													<option value="${plant.plantId}">${plant.plantName}</option>
 													</c:otherwise>
 												</c:choose>
-									</c:forEach>
-										<%-- 	</c:forEach>
+											</c:forEach>
+											<%-- 	</c:forEach>
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
 											</c:forEach> --%>
@@ -200,22 +197,21 @@
 
 									<div class="col-md-1">From</div>
 									<div class="col-md-2">
-										<input type="text" autocomplete="off" id="from_date" 
+										<input type="text" autocomplete="off" id="from_date"
 											name="from_date" required style="width: 100%;"
 											class="form-control" value="${fromDate}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-1">To</div>
 									<div class="col-md-2">
-										<input type="text" autocomplete="off" id="to_date" 
+										<input type="text" autocomplete="off" id="to_date"
 											name="to_date" style="width: 100%;" class="form-control"
 											value="${toDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
 
 									<div class="col-md-1">
-										<input type="submit" class="btn btn-primary"
-											 value="Submit">
+										<input type="submit" class="btn btn-primary" value="Submit">
 									</div>
 
 								</div>
@@ -228,7 +224,7 @@
 								</div>
 
 								<div class="form-group"></div>
-			
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
@@ -246,59 +242,64 @@
 											</tr>
 										</thead>
 										<tbody>
-									<c:forEach items="${rmcOrdList}" var="orderDet" varStatus="count">
-										<tr>
-											<td style="text-align: center">${count.index+1}</td>
-											
-											<td style="text-align: left"><c:out
-													value="${orderDet.orderNo}" /></td>
-											<td style="text-align: center"><c:out
-													value="${orderDet.custName}" /></td>
-											<td style="text-align: left"><c:out
-													value="${orderDet.custMobNo}" /></td>
-											<td style="text-align: center"><c:out
-													value="${orderDet.deliveryDate}" /></td>
-													
-													<td style="text-align: center"><c:out
-													value="${orderDet.dispatchTime}" /></td>
-											<td style="text-align: left"><c:out
-													value="${orderDet.itemName}" /></td>
-											<td style="text-align: center"><c:out
-													value="${orderDet.remOrdQty}" /></td>
-													
-													
-											<td style="text-align: center;"><%-- <a href="#" class="action_btn" onclick="callEdit(${orderDet.orderId})"><i class="fa fa-edit"   title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; --%><a href="#" class="action_btn" onclick="callChalanPage(${orderDet.orderDetId},${orderDet.orderId},${count.index})"><i class="fa fa-list" style="color: black"   title="Chalan"></i></a></td>
-													
-										
-										</tr>
-										</c:forEach>
+											<c:forEach items="${rmcOrdList}" var="orderDet"
+												varStatus="count">
+												<tr>
+													<td style="text-align: center">${count.index+1}</td>
 
+													<td style="text-align: left"><c:out
+															value="${orderDet.orderNo}" /></td>
+													<td style="text-align: center"><c:out
+															value="${orderDet.custName}" /></td>
+													<td style="text-align: left"><c:out
+															value="${orderDet.custMobNo}" /></td>
+													<td style="text-align: center"><c:out
+															value="${orderDet.deliveryDate}" /></td>
+
+													<td style="text-align: center"><c:out
+															value="${orderDet.dispatchTime}" /></td>
+													<td style="text-align: left"><c:out
+															value="${orderDet.itemName}" /></td>
+													<td style="text-align: center"><c:out
+															value="${orderDet.remOrdQty}" /></td>
+
+
+													<td style="text-align: center;">
+														<%-- <a href="#" class="action_btn" onclick="callEdit(${orderDet.orderId})"><i class="fa fa-edit"   title="Edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; --%>
+														<a href="#" class="action_btn"
+														onclick="callChalanPage(${orderDet.orderDetId},${orderDet.orderId},${count.index})"><i
+															class="fa fa-list" style="color: black" title="Chalan"></i></a>
+													</td>
+
+
+												</tr>
+											</c:forEach>
 									</table>
 									<div class="col-md-2"></div>
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();"  id="expExcel"
-										style="align-content: center; width: 200px; margin-left: 80px;">
-										Export To Excel</button>
-								</div>
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
 
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="genPdf()"  id="PDFButton"
-										style="align-content: center; width: 100px; margin-left: 80px;">
-										PDF</button>
-								</div>
-								&nbsp;
+										<button type="button" class="btn btn-primary"
+											onclick="genPdf()" id="PDFButton"
+											style="align-content: center; width: 100px; margin-left: 80px;">
+											PDF</button>
+									</div>
+									&nbsp;
 								</div>
 								<div class="form-group"></div>
 
-								
+
 								<div class="form-group"></div>
-					
+
 
 							</form>
 						</div>
@@ -382,7 +383,7 @@
 
 		}
 	</script>
-<script type="text/javascript">
+	<script type="text/javascript">
 
 function callChalanPage(orderId,orderDetId,key) {
 	//alert("jkdhfj");
@@ -404,7 +405,7 @@ function callChalanPage(orderId,orderDetId,key) {
 
 		});
 	</script>
-	
+
 	<!-- <script type="text/javascript">
 	function showManualBOM(){
 		
@@ -417,7 +418,7 @@ function callChalanPage(orderId,orderDetId,key) {
 	}
 	
 	</script> -->
-	
+
 	<script type="text/javascript">
 
 	function allowOnlyNumber(evt){
@@ -541,7 +542,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 	
 	
 	</script> -->
-	
+
 
 
 	<!-- <script type="text/javascript">

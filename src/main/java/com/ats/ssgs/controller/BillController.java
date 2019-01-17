@@ -72,6 +72,7 @@ import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
+import com.ats.ssgs.model.master.Setting;
 import com.ats.ssgs.model.order.GetOrder;
 import com.ats.ssgs.model.order.GetOrderDetail;
 import com.ats.ssgs.model.order.OrderDetail;
@@ -99,6 +100,7 @@ public class BillController {
 	int billHeadId = 0;
 	int pdfCustId = 0;
 	List<RmcQuotTemp> rmcQuotTempList;
+	List<Setting> settingList;
 
 //hii
 
@@ -230,9 +232,18 @@ public class BillController {
 	public @ResponseBody List<GetChalanHeader> getChalanByCustAndProj(HttpServletRequest request,
 			HttpServletResponse response) {
 		List<GetChalanHeader> chalanHeadList;
-		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
 		int projId = Integer.parseInt(request.getParameter("projId"));
 		int custId = Integer.parseInt(request.getParameter("custId"));
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		/*map.add("keyList", "10");
+
+		Setting settArray = rest.postForObject(Constants.url + "getSettingValueByKeyList", map, Setting.class);
+		settingList = new ArrayList<Setting>(Arrays.asList(settArray));*/
+		
+		
+		map = new LinkedMultiValueMap<String, Object>();
 
 		map.add("projId", projId);
 		map.add("custId", custId);
@@ -306,26 +317,14 @@ public class BillController {
 			HttpServletResponse response) {
 		System.err.println("HI");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		String[] chalanId = request.getParameterValues("chalanId");
-		System.err.println(chalanId[0]);
-		/*
-		 * List<String> chalanIdList = new ArrayList<String>(Arrays.asList(chalanId));
-		 * List<Integer> cId=new ArrayList<>(); for(int i=0;i<chalanIdList.size();i++)
-		 * {System.err.println(chalanIdList.get(i));
-		 * cId.add(Integer.parseInt(chalanIdList.get(i))); }
-		 * System.err.println(cId.toString());
-		 */
+		String selectedFr = request.getParameter("values");
 
-		StringBuilder sb = new StringBuilder();
+		selectedFr = selectedFr.substring(1, selectedFr.length() - 1);
+		selectedFr = selectedFr.replaceAll("\"", "");
 
-		for (int i = 0; i < chalanId.length; i++) {
-			sb = sb.append(chalanId[i] + ",");
+		System.out.println("cust:::::" + selectedFr);
 
-		}
-		String items = sb.toString();
-		items = items.substring(0, items.length() - 1);
-
-		map.add("chalanId", items);
+		map.add("chalanId", selectedFr);
 
 		GetItemsForBill[] chArray = rest.postForObject(Constants.url + "getItemsForRmcBill", map,
 				GetItemsForBill[].class);

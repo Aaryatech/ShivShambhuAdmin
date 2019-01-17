@@ -79,11 +79,15 @@ public class RmcController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			// String fromDate,toDate;
-			int plantId = 67;
+			int plantId = 70;
 			if (request.getParameter("from_date") == null || request.getParameter("to_date") == null) {
 				Date date = new Date();
 				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-				fromDate = df.format(date);
+				Calendar cal = Calendar.getInstance();
+				Calendar cal1 = Calendar.getInstance();
+				cal.set(cal1.get(Calendar.YEAR), cal1.get(Calendar.MONTH), 1);
+				// String firstDate = df.format(cal.getTimeInMillis());
+				fromDate = df.format(cal.getTimeInMillis());
 				toDate = df.format(date);
 				System.out.println("From Date And :" + fromDate + "ToDATE" + toDate);
 
