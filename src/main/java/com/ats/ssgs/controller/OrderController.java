@@ -1410,7 +1410,7 @@ public class OrderController {
 
 			model.addObject("title", "Add Chalan");
 
-			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
 			String curTime = sdf.format(cal.getTime());
 

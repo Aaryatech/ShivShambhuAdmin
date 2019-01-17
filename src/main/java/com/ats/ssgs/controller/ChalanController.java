@@ -927,7 +927,7 @@ public class ChalanController {
 			model.addObject("title", "Close Chalan");
 			Calendar cal = Calendar.getInstance();
 
-			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
 			System.out.println(sdf.format(cal.getTime()));
 
