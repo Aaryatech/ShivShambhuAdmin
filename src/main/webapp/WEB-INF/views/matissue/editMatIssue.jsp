@@ -236,7 +236,7 @@
 
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
-							
+
 										<thead>
 											<tr>
 
