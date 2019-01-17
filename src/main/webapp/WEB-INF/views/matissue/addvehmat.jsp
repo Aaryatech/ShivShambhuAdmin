@@ -465,6 +465,7 @@
 												data,
 												function(i, v) {
 
+													
 													var str = '<a href="#" class="action_btn" onclick="callEdit('
 															+ v.matVehDetailId
 															+ ','

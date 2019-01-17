@@ -313,7 +313,7 @@
 													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${matDetail.matVehDetailId},${count.index})"><i
 															class="fa fa-edit" style="color: black"></i> <span
-															class="text-muted"></span></a> <a href="#"
+														 	class="text-muted"></span></a> <a href="#"
 														onclick="callDelete(${matDetail.matVehDetailId},${count.index})"><i
 															class="fa fa fa-trash-o" style="color: black"></i> <span
 															class="text-muted"></span></a></td>
