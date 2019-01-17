@@ -461,7 +461,7 @@
 			var endReading = document.getElementById("endReading").value;
 			// In JQuery
 
-			if (startReading > endReading) {
+			if (parseFloat(startReading) > parseFloat(endReading)) {
 				alert("Please enter correct End Reading  ");
 				//document.getElementById('startReading').value = "";
 				document.getElementById('endReading').value = "";

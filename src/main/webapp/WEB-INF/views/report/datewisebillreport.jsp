@@ -66,7 +66,7 @@
 
 
 </head>
-<body onload="showQuot1()">
+<body onload="showQuot()">
 
 
 	<!-- Left Panel -->
@@ -126,7 +126,7 @@
 									<select id="plantId" name="plantId" class="standardSelect"
 										tabindex="1" required onchange="getData()">
 									
-
+<option value="${plantId}">${pname}</option>
 										<option value="0">All</option>
 										<c:forEach items="${plantList}" var="plant">
 
@@ -142,6 +142,7 @@
 									<select id="custId" name="custId" class="standardSelect"
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select company')">
+										<option value="${custId}">${cname}</option>
 										
 										<option value="0">All</option>
 									</select>

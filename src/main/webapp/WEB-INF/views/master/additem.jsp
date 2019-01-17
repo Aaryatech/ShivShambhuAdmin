@@ -392,7 +392,7 @@
 			var valid = true;
 			
 			if(len!=0){
-			if (  min_stock > max_stock  ) {
+			if (  parseFloat(min_stock) > parseFloat(max_stock)  ) {
 
 				valid = false;
 			} 
@@ -400,7 +400,7 @@
 			if (valid == false) {
 				
 				alert("Enter Minimum Stock less than Maximum ");
-				document.getElementById("pmin_stock").value="";
+				//document.getElementById("pmin_stock").value="";
 				document.getElementById("pmax_stock").value="";
 			}
 		}

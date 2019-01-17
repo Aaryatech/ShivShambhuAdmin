@@ -58,7 +58,7 @@
 }
 </style>
 </head>
-<body>
+<body onload="checkReading()">
 
 
 	<!-- Left Panel -->
@@ -273,7 +273,7 @@
 									<div class="col-md-4">
 										<input type="text" id="startReading" name="startReading"
 											class="form-control" autocomplete="off" style="width: 100%;"
-											value="${editPRead.startReading}" onchange="checkReading()"
+											value="${editPRead.startReading}" 
 											oninvalid="setCustomValidity('Please enter correct reading')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" required
@@ -283,9 +283,9 @@
 									<div class="col-md-4">
 										<input type="text" id="endReading" name="endReading"
 											value="${endReading}" class="form-control" autocomplete="off"
-											style="width: 100%;"
+											style="width: 100%;" onchange="checkReading()"
 											oninvalid="setCustomValidity('Please enter correct reading')"
-											onchange="try{setCustomValidity('')}catch(e){}"
+											
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 
@@ -453,23 +453,23 @@
 
 
 
-	<!-- <script type="text/javascript">
+	 <script type="text/javascript">
 		function checkReading() {
 			//In javascript
 			var startReading = document.getElementById("startReading").value;
 			var endReading = document.getElementById("endReading").value;
-			// In JQuery
+			//alert( "In JQuery");
 
-			if (startReading > endReading) {
+			if (parseFloat(startReading) > parseFloat(endReading)) {
 				alert("Please enter correct Start Reading  ");
-				document.getElementById('startReading').value = "";
+				//document.getElementById('startReading').value = "";
 				document.getElementById('endReading').value = "";
 
 			}
 
 		}
 	</script>
- -->
+
 
 </body>
 </html>
