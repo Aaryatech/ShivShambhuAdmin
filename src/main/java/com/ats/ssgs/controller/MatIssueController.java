@@ -229,7 +229,7 @@ public class MatIssueController {
 
 						for (int i = 0; i < uomList.size(); i++) {
 							if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
-								;
+								
 							{
 								temp.setUomName(uomList.get(i).getUomName());
 							}
@@ -261,7 +261,7 @@ public class MatIssueController {
 
 					for (int i = 0; i < uomList.size(); i++) {
 						if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
-							;
+						
 						{
 							temp.setUomName(uomList.get(i).getUomName());
 						}
