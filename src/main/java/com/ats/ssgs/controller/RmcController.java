@@ -438,7 +438,7 @@ public class RmcController {
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Calendar cal = Calendar.getInstance();
 
-			SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
 			System.out.println(sdf.format(cal.getTime()));
 

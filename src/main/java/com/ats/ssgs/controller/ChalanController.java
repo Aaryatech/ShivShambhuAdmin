@@ -1774,7 +1774,6 @@ public class ChalanController {
 			chHeader.setSitePersonMob(sitePerMob);
 			chHeader.setOrderId(orderId);
 
-			chHeader.setStatus(1);
 			chHeader.setExFloat1(1);// set to 1 while close
 
 			List<ChalanDetail> chalanDList = new ArrayList<>();

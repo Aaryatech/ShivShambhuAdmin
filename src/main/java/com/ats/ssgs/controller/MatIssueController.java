@@ -229,7 +229,7 @@ public class MatIssueController {
 
 						for (int i = 0; i < uomList.size(); i++) {
 							if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
-								
+
 							{
 								temp.setUomName(uomList.get(i).getUomName());
 							}
@@ -261,7 +261,7 @@ public class MatIssueController {
 
 					for (int i = 0; i < uomList.size(); i++) {
 						if (uomList.get(i).getUomId() == Integer.parseInt(getSingleItem.getItemUom2()))
-						
+
 						{
 							temp.setUomName(uomList.get(i).getUomName());
 						}
@@ -1124,6 +1124,7 @@ public class MatIssueController {
 						editVeh.getVehDetailList().get(index).setValue(getSingleItem.getItemClRate() * quantity);
 						editVeh.getVehDetailList().get(index).setItemId(itemId);
 						editVeh.getVehDetailList().get(index).setItemDesc(getSingleItem.getItemDesc());
+						editVeh.getVehDetailList().get(index).setRate(getSingleItem.getItemClRate());
 						editVeh.getVehDetailList().get(index).setExInt1(catId);
 					} else {
 						int index = Integer.parseInt(request.getParameter("index"));
@@ -1131,6 +1132,7 @@ public class MatIssueController {
 						editVeh.getVehDetailList().get(index).setQuantity(quantity);
 						editVeh.getVehDetailList().get(index)
 								.setValue(editVeh.getVehDetailList().get(index).getRate() * quantity);
+
 						editVeh.getVehDetailList().get(index).setExInt2(0);
 
 					}
