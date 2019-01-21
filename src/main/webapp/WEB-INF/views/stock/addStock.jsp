@@ -160,7 +160,7 @@
 
 								<div>
 									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered" >
+										class="table table-striped table-bordered" data-page-length='-1'>
 										<thead>
 											<tr>
 												<th style="text-align: center; width: 5%;">Sr.</th>
@@ -213,7 +213,7 @@
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
-	<script
+	 <script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
@@ -225,7 +225,7 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/jszip.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/pdfmake.min.js"></script>
-	<script
+ 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/vfs_fonts.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.html5.min.js"></script>
