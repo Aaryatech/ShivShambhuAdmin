@@ -66,7 +66,7 @@
 
 
 </head>
-<body onload="showQuot()1">
+<body onload="showQuot1()">
 
 
 	<!-- Left Panel -->
@@ -528,20 +528,7 @@
 
 			var valid = true;
 			
-		 if (fromDate == null || fromDate == "") {
-				valid = false;
-				alert("Please select from date");
-			}
-
-			else if (toDate == null || toDate == "") {
-				valid = false;
-				alert("Please select to date");
-			}
-
-			if (fromDate > toDate) {
-				valid = false;
-				alert("from date greater than todate ");
-			}
+		
 			if (valid == true) {
 
 				$
