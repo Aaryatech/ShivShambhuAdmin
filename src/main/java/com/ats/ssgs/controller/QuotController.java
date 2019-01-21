@@ -799,8 +799,10 @@ public class QuotController {
 			GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map,
 					GetItemWithEnq[].class);
 			itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
+			
 			newItemList = new ArrayList<GetItemWithEnq>();
 			enqItemList = new ArrayList<GetItemWithEnq>();
+			
 			System.err.println(" Original Item List " + itemList.toString());
 
 			List<Integer> indexList = new ArrayList<>();

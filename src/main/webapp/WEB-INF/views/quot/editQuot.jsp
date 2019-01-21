@@ -319,7 +319,7 @@ body {
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Select</div>
+									<div class="col-md-2">Select Term & Condition</div>
 
 									<div class="col-md-4">
 										<select id="quot_doc_term_id" name="quot_doc_term_id"
@@ -608,20 +608,21 @@ body {
 												<th>Item name</th>
 												<th style="text-align: center" width="10%">Quantity</th>
 
+												<th style="text-align: center" width="10%">UOM</th>
 
 												<th style="text-align: center" width="10%">Trans cost</th>
 
 												<th style="text-align: center" width="10%">Other Cost</th>
 
-												<th style="text-align: center" width="10%">Item Rate</th>
+												<th style="text-align: center" width="10%">Item Rate/Unit</th>
 												<th style="text-align: center" width="5%">Roy Rate</th>
-												<th style="text-align: center" width="10%">GST</th>
+												<th style="text-align: center" width="8%">GST</th>
 
 												<th style="text-align: center" width="10%">Taxable</th>
 												<th style="text-align: center" width="10%">Tax value</th>
 												<th style="text-align: center" width="10%">Cost After
 													Tax</th>
-												<th style="text-align: center" width="5%">Final</th>
+												<th style="text-align: center" width="5%">Final Rate/Unit</th>
 												<th style="text-align: center" width="5%">Action</th>
 
 
@@ -661,9 +662,12 @@ body {
 													<c:if test="${item.enqQty > 0}">
 														<c:set var="uomName" value="${item.enqUomName}"></c:set>
 													</c:if>
-													<%-- <td class="col-md-1" style="text-align: left"><c:out
-															value="${uomName}" /></td> --%>
-
+													
+													<td class="col-md-1" style="text-align: left"><input
+														type="text" 
+														id="uom_name${item.itemId}" name="uom_name${item.itemId}"
+														value="${uomName}" class="form-control"></td>
+													
 
 													<td class="col-md-1" style="text-align: center"><input
 														type="text" id="trans_cost${item.itemId}"
@@ -904,13 +908,17 @@ body {
 								 dataTable.clear().draw();
 								$.each(data,function(i, v) {
 								var quotQty = '<input  type="text"  class="form-control" onkeypress="return allowOnlyNumber(event);" id="quot_qty'+v.itemId+'" name="quot_qty'+v.itemId+'"  value="'+v.quotQty+'" />'
+								var uom = '<input  type="text"  class="form-control" onkeypress="return allowOnlyNumber(event);" id="uom_name'+v.itemId+'" name="uom_name'+v.itemId+'"  value="'+v.enqUomName+'" />'
+
 								var finalAmt = '<input  type="text"   class="form-control"   id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
 								var transCost='<input  type="text"  class="form-control" value='+v.transCost+'  onkeypress="return allowOnlyNumber(event);" id="trans_cost'+v.itemId+'" name="trans_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
 								var tollCosta='<input  type="text" value='+tollCost+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="toll_cost'+v.itemId+'" name="toll_cost'+v.itemId+'"/>'
 								var otherCost='<input  type="text" value='+v.otherCost+' class="form-control"  onkeypress="return allowOnlyNumber(event);" id="other_cost'+v.itemId+'" name="other_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
 								var taxable='<input  type="text" value='+v.taxableValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="taxable_amt'+v.itemId+'" name="taxable_amt'+v.itemId+'"/>'
 								var tax='<input  type="text" value='+v.taxValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="tax_amt'+v.itemId+'" name="tax_amt'+v.itemId+'"/>'
+								//alert("tax val:"+tax);
 								var costAfTax='<input  type="text" value='+v.otherCostAfterTax+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+								//alert("costAfTax:"+costAfTax);
 								var finalAmt='<input  type="text" value='+v.finalTotal+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
 								var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
 															+ v.itemId
@@ -931,9 +939,8 @@ body {
 																			i + 1,
 																			v.itemName,
 																			quotQty,
-																		//	v.enqUomName,
+																			uom,
 																			transCost,
-																			//tollCosta,
 																			otherCost,
 																			itemRateDiv,
 																			v.royaltyRate,
