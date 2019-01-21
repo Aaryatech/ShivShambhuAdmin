@@ -237,12 +237,14 @@ public class BillController {
 		int custId = Integer.parseInt(request.getParameter("custId"));
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		/*map.add("keyList", "10");
+		/*
+		 * map.add("keyList", "10");
+		 * 
+		 * Setting settArray = rest.postForObject(Constants.url +
+		 * "getSettingValueByKeyList", map, Setting.class); settingList = new
+		 * ArrayList<Setting>(Arrays.asList(settArray));
+		 */
 
-		Setting settArray = rest.postForObject(Constants.url + "getSettingValueByKeyList", map, Setting.class);
-		settingList = new ArrayList<Setting>(Arrays.asList(settArray));*/
-		
-		
 		map = new LinkedMultiValueMap<String, Object>();
 
 		map.add("projId", projId);
@@ -1168,7 +1170,7 @@ public class BillController {
 		// File f = new File("/report.pdf");
 		// File f = new File("/home/lenovo/bill.pdf");
 
-		File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/bill.pdf");
+		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1187,9 +1189,9 @@ public class BillController {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 		// String filename = "/home/lenovo/bill.pdf";
-		String filename = "/opt/apache-tomcat-9.0.4/webapps/uploads/bill.pdf";
+		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 		// String filePath = "/report.pdf";
-		String filePath = "/opt/apache-tomcat-9.0.4/webapps/uploads/bill.pdf";
+		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 		// String filePath = "/home/lenovo/bill.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 

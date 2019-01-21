@@ -12,8 +12,10 @@
 
 <c:url var="getPlantByCompId" value="/getPlantByCompId" />
 <c:url var="getStockItemByPlantId" value="/getStockItemByPlantId" />
-<c:url var="getStockHeaderByPlantId" value="/getStockHeaderByPlantId" />
+<c:url var="getStockItemByPlantIdAndCurDate"
+	value="/getStockItemByPlantIdAndCurDate" />
 
+<c:url var="getStockBetDate" value="/getStockBetDate" />
 
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
@@ -140,11 +142,9 @@
 
 									<div class="col-md-3">
 										<select id="plantId" name="plantId" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select plant name')"
-											onchange="getData()">
+											tabindex="1" required onchange="callDate()"
+											oninvalid="setCustomValidity('Please select Plant')">
 											<option value="">Select</option>
-
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
 											</c:forEach>
@@ -153,18 +153,48 @@
 									<!-- <input type="text" id="plantId" name="plantId"> <input
 										type="text" id="stockId" name="stockId"> -->
 
-									<div class="col-md-1">Date</div>
-									<div class="col-md-2">
-										<input type="text" id="date" name="date" required
-											style="width: 100%;" class="form-control" autocomplete="off"
-											readonly /> <span class="error" aria-live="polite"></span>
+									<div class="col-md-1">Select</div>
 
+									<div class="col-md-3">
+										<select id="selectDate" name="selectDate"
+											class="standardSelect" tabindex="1" required
+											onchange="hideDiv(this.value)"
+											oninvalid="setCustomValidity('Please select Status')">
+											<option value="">Select</option>
+											<option value="1">Get Current Stock</option>
+											<option value="2">Stock Between Date</option>
+
+										</select>
 									</div>
-
+									<div class="col-md-1"></div>
 									<div class="col-md-2">
-										<input type="button" class="btn btn-primary"
+										<input type="button" class="btn btn-primary" id="searchButton"
 											onclick="showQuot()" value="Search">
 									</div>
+								</div>
+
+								<div class="form-group"></div>
+
+								<div class="row" id="hide_div" style="visibility: hidden">
+									<div class="col-md-2">From Date</div>
+									<div class="col-md-3">
+										<input type="text" autocomplete="off" id="from_date"
+											name="from_date" required style="width: 100%;"
+											class="form-control" value="${fromDate}"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+									<div class="col-md-2">To Date</div>
+									<div class="col-md-3">
+										<input type="text" autocomplete="off" id="to_date"
+											name="to_date" style="width: 100%;" class="form-control"
+											value="${toDate}"> <span class="error"
+											aria-live="polite"></span>
+									</div>
+									<div class="col-md-2">
+										<input type="button" class="btn btn-primary"
+											onclick="showQuotBetDate()" value="Search">
+									</div>
+
 								</div>
 
 								<div class="form-group"></div>
@@ -178,6 +208,9 @@
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">Measurement Unit</th>
 												<th style="text-align: center">Opening Quantity</th>
+												<th style="text-align: center">Production Quantity</th>
+												<th style="text-align: center">Chalan Quantity</th>
+												<th style="text-align: center">Closing Quantity</th>
 											</tr>
 										</thead>
 
@@ -185,7 +218,7 @@
 
 									<div class="col-md-2"></div>
 									<div class="col-md-2">
-										<input type="submit" class="btn btn-primary" value="Submit">
+										<input type="submit" class="btn btn-primary" value="Day End">
 									</div>
 
 								</div>
@@ -210,7 +243,6 @@
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	<!-- Footer -->
-
 
 
 
@@ -258,6 +290,7 @@
 		});
 	</script>
 
+
 	<script type="text/javascript">
 		// onclick of submit to search order 
 		function showQuot() {
@@ -280,7 +313,7 @@
 
 				$
 						.getJSON(
-								'${getStockItemByPlantId}',
+								'${getStockItemByPlantIdAndCurDate}',
 								{
 									plantId : plantId,
 									ajax : 'true',
@@ -297,24 +330,9 @@
 											.each(
 													data,
 													function(i, v) {
-														
-														/* document.getElementById("stockId").value = data.stockId;
-														
-														document.getElementById("plantId").value = data.plantId; */
+													
 														
 														var opQty1 = '<input  type="text" value="'+v.opQty+'"  class="form-control"  id="opQty'+v.itemId+'" name="opQty'+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
-
-														/* var opQty = '<input  type="text" value="'
-																+ v.opQty
-																+ '"class="form-control"  id="opQty'
-																+ i
-																+ ''
-																+ v.stockDetId
-																+ '" name="opQty'
-																+ i
-																+ ''
-																+ v.stockDetId
-																+ '"  onkeypress="return allowOnlyNumber(event);"/>' */
 
 														dataTable.row
 																.add(
@@ -322,22 +340,106 @@
 																				i + 1,
 																				v.itemName,
 																				v.uomName,
-																				opQty1 ])
+																				v.opQty,
+																				v.prodQty,
+																				v.chalanQty,v.closingQty
+																				 ])
 																.draw();
 													});
 
 								});
 				
-			//	function callDate(plantId);
-				
+			
 				
 
 			}//end of if valid ==true
 
 		}
 		</script>
+
 	<script type="text/javascript">
-		function getData() {
+		// onclick of submit to search order 
+		
+				function showQuotBetDate() {
+
+			alert("Hi View Orders  ");
+
+			var plantId = document.getElementById("plantId").value;
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
+			alert(plantId);
+
+			var valid = true;
+
+			//alert("plantId" + plantId);
+			var valid = true;
+			if (plantId == null || plantId == "") {
+				valid = false;
+				alert("Please Select Plant");
+
+				var dataTable = $('#bootstrap-data-table').DataTable();
+				dataTable.clear().draw();
+
+			} else if (plantId < 0) {
+				valid = false;
+
+			}
+
+			else if (fromDate == null || fromDate == "") {
+				valid = false;
+				alert("Please select from date");
+			}
+
+			else if (toDate == null || toDate == "") {
+				valid = false;
+				alert("Please select to date");
+			}
+
+			if (fromDate > toDate) {
+				valid = false;
+				alert("from date greater than todate ");
+			}
+			if (valid == true) {
+
+				$.getJSON('${getStockBetDate}', {
+
+					plantId : plantId,
+					fromDate : fromDate,
+					toDate : toDate,
+					ajax : 'true',
+
+				},
+
+				function(data) {
+
+					//alert(data);
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
+
+					$.each(data, function(i, v) {
+
+						dataTable.row.add(
+								[ i + 1,
+									v.itemName,
+									v.uomName,
+									v.opQty,
+									v.prodQty,
+									v.chalanQty,v.closingQty
+
+								]).draw();
+					});
+
+				});
+
+			}//end of if valid ==true
+
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		function callDate() {
 			alert(hii);
 			var plantId = document.getElementById("plantId").value;
 			$
@@ -380,6 +482,35 @@
 		    }
 		    return true;
 		}
+	</script>
+
+	<script type="text/javascript">
+		function hideDiv(type) {
+
+			if (type == 1) {
+
+				document.getElementById("hide_div").style = "display:none"
+					document.getElementById("searchButton").style = "visible"
+			} else {
+				document.getElementById("hide_div").style = "visible"
+					document.getElementById("searchButton").style = "display:none"
+
+			}
+		}
+	</script>
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$('input[id$=from_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+
+			$('input[id$=to_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+
+		});
 	</script>
 
 </body>
