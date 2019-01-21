@@ -225,7 +225,7 @@
 									<div class="col-md-2">Start Date*</div>
 									<div class="col-md-4">
 										<input type="text" id="start_date" name="start_date"
-											autocomplete="off" value="${editPro.startDate}"
+											autocomplete="off" value="${editPro.startDate}" readonly
 											class="form-control" required style="width: 100%;">
 									</div>
 
@@ -234,7 +234,7 @@
 									<div class="col-md-4">
 										<input type="text" id="end_date" name="end_date"
 											autocomplete="off" value="${editPro.endDate}"
-											onchange="checkDate()" class="form-control" required
+											onchange="checkDate()" class="form-control" required readonly
 											style="width: 100%;">
 									</div>
 
@@ -427,10 +427,16 @@
 	<script>
 		$(function() {
 			$('input[id$=start_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
+				dateFormat : 'dd-mm-yy',
+				changeMonth:true,
+				changeYear:true
+				
+				
 			});
 			$('input[id$=end_date]').datepicker({
-				dateFormat : 'dd-mm-yy'
+				dateFormat : 'dd-mm-yy',
+				changeMonth:true,
+				changeYear:true
 
 			});
 		});

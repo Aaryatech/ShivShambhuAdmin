@@ -394,6 +394,20 @@ public class BillReportController {
 			model.addObject("plantList", plantList);
 
 			model.addObject("title", "Datewise Bill Report");
+			
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+			
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
 
 		} catch (Exception e) {
 
@@ -414,11 +428,9 @@ public class BillReportController {
 		ModelAndView model = null;
 		try {
 
-			
-
-			System.out.println("mon is" + monthNo);
-			System.out.println("year" + year);
-			model = new ModelAndView("report/datewisebillreport");
+			   System.out.println("mon is" + monthNo);
+			   System.out.println("year" + year);
+			   model = new ModelAndView("report/datewisebillreport");
 			
 			
 
@@ -429,9 +441,6 @@ public class BillReportController {
 			
 			
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-		
-			
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("plantId", plantId);
@@ -1096,6 +1105,21 @@ public class BillReportController {
 			model.addObject("compList", compList);
 
 			model.addObject("title", "Billwise Report");
+			
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+			
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
 
 		} catch (Exception e) {
 
@@ -1438,6 +1462,22 @@ public class BillReportController {
 			model.addObject("custList", custList);
 
 			model.addObject("title", "Customerwise Report");
+			
+
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+			
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
 
 		} catch (Exception e) {
 
@@ -1840,6 +1880,20 @@ public class BillReportController {
 			model.addObject("plantList", plantList);
 
 			model.addObject("title", "Itemwise Bill Report");
+			
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+			
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
 
 		} catch (Exception e) {
 
@@ -2161,6 +2215,8 @@ public class BillReportController {
 		ModelAndView model = null;
 		try {
 
+			
+			
 			model = new ModelAndView("report/taxwisebillreport");
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
@@ -2174,6 +2230,21 @@ public class BillReportController {
 			model.addObject("custList", custList);
 
 			model.addObject("title", "Taxwise Bill Report");
+			
+			
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+			
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
 
 		} catch (Exception e) {
 
@@ -2523,6 +2594,19 @@ public class BillReportController {
 			model.addObject("plantList", plantList);
 
 			model.addObject("title", "Monthwise Bill Report");
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+			
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
 
 		} catch (Exception e) {
 

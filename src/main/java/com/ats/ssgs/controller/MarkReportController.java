@@ -189,6 +189,21 @@ public class MarkReportController {
 			model.addObject("custList", custList);
 
 			model.addObject("title", "PO Pending Report");
+			
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+			
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+			
 
 		} catch (Exception e) {
 
@@ -683,6 +698,20 @@ public class MarkReportController {
 			model.addObject("custList", custList);
 
 			model.addObject("title", "Chalan Pending Report");
+			
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+			
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
 
 		} catch (Exception e) {
 
@@ -966,6 +995,21 @@ public class MarkReportController {
 			model.addObject("custList", custList);
 
 			model.addObject("title", "Bill Pending Report");
+			
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+			
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
 
 		} catch (Exception e) {
 

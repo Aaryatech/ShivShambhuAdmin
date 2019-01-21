@@ -383,6 +383,20 @@ public class PurchaseOrderController {
 			System.out.println("plant is" + plantList);
 
 			model.addObject("plantList", plantList);
+			
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+			
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
 
 		} catch (Exception e) {
 			System.err.println("Exce in /Po" + e.getMessage());

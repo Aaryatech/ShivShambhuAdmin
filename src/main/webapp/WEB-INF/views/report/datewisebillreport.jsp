@@ -66,7 +66,7 @@
 
 
 </head>
-<body onload="showQuot()">
+<body onload="showQuot()1">
 
 
 	<!-- Left Panel -->
@@ -126,7 +126,7 @@
 									<select id="plantId" name="plantId" class="standardSelect"
 										tabindex="1" required onchange="getData()">
 									
-<option value="${plantId}">${pname}</option>
+                                   <option value="${plantId}">${pname}</option>
 										<option value="0">All</option>
 										<c:forEach items="${plantList}" var="plant">
 
@@ -517,35 +517,17 @@
 		function showQuot1() {
 
 			//alert("Hi View Orders  ");
-			var custId=0;
-			var plantId=0;
+			//var custId=0;
+			//var plantId=0;
 			//var custId = document.getElementById("custId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-
+			var plantId = document.getElementById("plantId").value;
+			var custId = document.getElementById("custId").value;
 		
 
-			/* if (custId == null || custId == "") {
-				valid = false;
-				alert("Please select customer");
-			}
- */
-			//var plantId = document.getElementById("plantId").value;
-/// alert("custd" + custId);
-			//alert("plantId" + plantId);
 			var valid = true;
-			/* if (plantId == null || plantId == "") {
-				valid = false;
-				alert("Please Select Plant");
-
-				var dataTable = $('#bootstrap-data-table').DataTable();
-				dataTable.clear().draw();
-
-			} else if (plantId < 0) {
-				valid = false;
-
-			}
- */
+			
 		 if (fromDate == null || fromDate == "") {
 				valid = false;
 				alert("Please select from date");
@@ -660,8 +642,11 @@
 																this.checked);
 											});
 						});
-	</script>
-
+		
+		
+		
+		
+		
 	
 
 </body>

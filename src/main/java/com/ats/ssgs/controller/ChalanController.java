@@ -521,6 +521,21 @@ public class ChalanController {
 			model.addObject("plantList", plantList);
 
 			model.addObject("title", "Chalan List");
+			
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+			
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
 
 		} catch (Exception e) {
 			System.err.println("Exce in /showChalanList   " + e.getMessage());

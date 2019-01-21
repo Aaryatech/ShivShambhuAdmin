@@ -148,16 +148,17 @@
 									<div class="col-md-2">HSN Code*</div>
 
 									<div class="col-md-4">
-										<input type="text" id="hsnCode" name="hsnCode" maxLength="10"
+										<input type="text" id="hsnCode" name="hsnCode" maxLength="8"
 											autocomplete="off" value="${editTax.hsnCode}"
 											class="form-control" pattern="[0-9]+"
-											onchange="getHsnCodeCheck()"
+											onchange="getHsnCodeCheck();"
 											oninvalid="setCustomValidity('Please enter correct hsn code')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;" required>
 									</div>
 
 								</div>
+								
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -231,7 +232,7 @@
 								<div class="col-lg-4"></div>
 								<div class="col-lg-3">
 									<input type="submit" class="btn btn-primary" value="Submit"
-										id="submitButton"
+										id="submitButton" onclick="checkHSNcodeLength"
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
 								</div>
@@ -395,8 +396,21 @@
 
 	<script type="text/javascript">
 		function getHsnCodeCheck() {
+			
+			
+			var hsnCode1 = document.getElementById("hsnCode").value;
+			//alert("hsnCode"+hsnCode1);
+			//alert("hsnCode"+hsnCode1.length);
+
+			if (hsnCode1.length < 2 || hsnCode1.length >8 ) {
+				alert("Please enter correct Hsncode ");
+				document.getElementById("hsnCode").value = "";
+			}
 
 			var hsnCode = $("#hsnCode").val();
+			
+			
+			
 			//alert(hsnCode);
 
 			$.getJSON('${getUniqueTaxCheck}', {
@@ -414,11 +428,16 @@
 
 				} else {
 					document.getElementById("submitButton").disabled = false;
-
+					
+					var hsnCode = document.getElementById("hsnCode").value;
+				
+					
 				}
 			}
 
 			);
+			
+			
 
 		}
 	</script>
@@ -434,6 +453,20 @@
 		});
 	</script>
 
+<!-- 
+	<script type="text/javascript">
+		function checkHSNcodeLength {
+			
+			alert("hi........2222");
+			var hsnCode = document.getElementById("hsnCode").value;
+			alert("hsnCode"+hsnCode);
+
+			if (hsnCode.length >=2 && hsnCode.length <=8 ) {
+				alert("Please enter correct Hsncode ");
+				document.getElementById("hsnCode").value = "";
+			}
+		}
+	</script> -->
 
 </body>
 </html>
