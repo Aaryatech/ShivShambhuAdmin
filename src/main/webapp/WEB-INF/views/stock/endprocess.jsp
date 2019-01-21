@@ -130,7 +130,7 @@
 
 						<div class="card-body card-block">
 							<form
-								action="${pageContext.request.contextPath}/insertStockDetail"
+								action="${pageContext.request.contextPath}/updateStockDetail"
 								id="submitForm" method="post">
 
 
@@ -294,9 +294,11 @@
 	<script type="text/javascript">
 		// onclick of submit to search order 
 		function showQuot() {
+			//alert("hii");
 
 			var plantId = document.getElementById("plantId").value;
 			var valid = true;
+			//alert("plantId"+plantId);
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please Select Plant");
@@ -418,6 +420,8 @@
 					dataTable.clear().draw();
 
 					$.each(data, function(i, v) {
+						
+						alert(data);
 
 						dataTable.row.add(
 								[ i + 1,
