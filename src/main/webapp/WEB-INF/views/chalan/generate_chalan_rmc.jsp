@@ -380,7 +380,7 @@ body {
 
 									<div class="col-md-4">
 										<input type="text" id="batchNo" name="batchNo"
-											 autocomplete="off" required
+											 autocomplete="off" required value="-"
 											style="width: 100%;" class="form-control"> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -389,7 +389,7 @@ body {
 
 									<div class="col-md-4">
 										<input type="text" id="rstNo" name="rstNo" required
-											 autocomplete="off" style="width: 100%;"
+											 autocomplete="off" style="width: 100%;" value="-"
 											class="form-control"> <span class="error"
 											aria-live="polite"></span>
 									</div>

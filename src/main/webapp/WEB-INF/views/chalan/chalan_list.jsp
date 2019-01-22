@@ -477,7 +477,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option selected value="-1"  >Select</option>';
+					var html = '<option selected value="0"  >All</option>';
 
 					for (var i = 0; i < len; i++) {
 

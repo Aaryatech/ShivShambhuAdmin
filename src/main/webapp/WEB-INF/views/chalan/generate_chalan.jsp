@@ -379,18 +379,23 @@ body {
 									<div class="col-md-2">Batch No*</div>
 
 									<div class="col-md-4">
-										<input type="text" id="batchNo" name="batchNo"
-											autocomplete="off" required style="width: 100%;"
-											class="form-control"> <span class="error"
-											aria-live="polite"></span>
+										<input type="text" id="batchNo" name="batchNo" value="-"
+											autocomplete="off" style="width: 100%;" required
+											oninvalid="setCustomValidity('Please enter Batch No')"
+											onchange="showOrderItemPopup(this.value)"
+											class="form-control"> <span class="error" 
+											
+											aria-live="polite" ></span>
 									</div>
 
 									<div class="col-md-2">RST No*</div>
 
 									<div class="col-md-4">
-										<input type="text" id="rstNo" name="rstNo" required
+										<input type="text" id="rstNo" name="rstNo"  required value="-"
+											oninvalid="setCustomValidity('Please enter RST No')"
+											onchange="showOrderItemPopup(this.value)"
 											autocomplete="off" style="width: 100%;" class="form-control">
-										<span class="error" aria-live="polite"></span>
+										<span class="error" aria-live="polite" ></span>
 									</div>
 
 								</div>
