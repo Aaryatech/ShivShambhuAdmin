@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 <!doctype html>
@@ -141,6 +142,7 @@ background-color: transparent;
 					</div>
 					<div class="form-group"></div>
 
+
 					<div class="col-xs-12 col-sm-12">
 
 
@@ -155,7 +157,11 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;" id="totalEnq">${dashBoard.totalEnq}</span>
+										<span class="count" style="font-size: 30px;" id="totalEnq">
+											<fmt:formatNumber type="number" maxFractionDigits="2"
+												value="${dashBoard.totalEnq}" />
+
+										</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -180,7 +186,8 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="totalQuotPending">${dashBoard.totalQuotPending}</span>
+											id="totalQuotPending"><fmt:formatNumber type="number"
+												maxFractionDigits="2" value="${dashBoard.totalQuotPending}" /></span>
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
 										<font color="white">Pending Quotations</font>
@@ -202,7 +209,10 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="totalQuotGenerated">${dashBoard.totalQuotGenerated}</span>
+											id="totalQuotGenerated"> <fmt:formatNumber
+												type="number" maxFractionDigits="2"
+												value="${dashBoard.totalQuotGenerated}" />
+										</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -229,7 +239,10 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="totalPoPending">${dashBoard.totalPoPending}</span>
+											id="totalPoPending"> <fmt:formatNumber type="number"
+												maxFractionDigits="2" value="${dashBoard.totalPoPending}" />
+
+										</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -253,15 +266,25 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;" id="poGenerated">${dashBoard.poGenerated}</span>
+										<span class="count" style="font-size: 30px;" id="poGenerated">
+											<fmt:formatNumber type="number" maxFractionDigits="2"
+												value="${dashBoard.poGenerated}" />
+										</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
 										<font color="white">PO Generated</font>
 									</p>
+
+
 								</div>
 							</div>
+
 						</div>
+
+
+
+
 
 						<div class="col-sm-6 col-lg-4"
 							style="cursor: pointer; max-width: 27.333333%;"
@@ -274,7 +297,8 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="totalNoOfOrders">${dashBoard.totalNoOfOrders}</span>
+											id="totalNoOfOrders"><fmt:formatNumber type="number"
+												maxFractionDigits="2" value="${dashBoard.totalNoOfOrders}" /></span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">

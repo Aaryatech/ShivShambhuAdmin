@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 <!doctype html>
@@ -123,8 +124,8 @@ background-color: transparent;
 
 						<div class="col-md-2" style="color: black;">Select Plant*</div>
 						<div class="col-md-2">
-							<select id="plantId" name="plantId" class="standardSelect" 
-								tabindex="1"  style="color: black;" required>
+							<select id="plantId" name="plantId" class="standardSelect"
+								tabindex="1" style="color: black;" required>
 								<option value="0">All</option>
 								<c:forEach items="${plantList}" var="plant">
 									<option value="${plant.plantId}">${plant.plantName}</option>
@@ -157,7 +158,11 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;" id="totalEnq">${dashBoard.totalEnq}</span>
+										<span class="count" style="font-size: 30px;" id="totalEnq">
+											<fmt:formatNumber type="number" maxFractionDigits="2"
+												value="${dashBoard.totalEnq}" />
+
+										</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -182,7 +187,8 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="totalQuotPending">${dashBoard.totalQuotPending}</span>
+											id="totalQuotPending"><fmt:formatNumber type="number"
+												maxFractionDigits="2" value="${dashBoard.totalQuotPending}" /></span>
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
 										<font color="white">Pending Quotations</font>
@@ -204,7 +210,10 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="totalQuotGenerated">${dashBoard.totalQuotGenerated}</span>
+											id="totalQuotGenerated"> <fmt:formatNumber
+												type="number" maxFractionDigits="2"
+												value="${dashBoard.totalQuotGenerated}" />
+										</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -231,7 +240,10 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="totalPoPending">${dashBoard.totalPoPending}</span>
+											id="totalPoPending"> <fmt:formatNumber type="number"
+												maxFractionDigits="2" value="${dashBoard.totalPoPending}" />
+
+										</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -255,7 +267,10 @@ background-color: transparent;
 
 									<h4 class="mb-0">
 
-										<span class="count" style="font-size: 30px;" id="poGenerated">${dashBoard.poGenerated}</span>
+										<span class="count" style="font-size: 30px;" id="poGenerated">
+											<fmt:formatNumber type="number" maxFractionDigits="2"
+												value="${dashBoard.poGenerated}" />
+										</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -281,7 +296,8 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="totalOrderAmount">${dashBoard.totalOrderAmount}</span>
+											id="totalOrderAmount"><fmt:formatNumber type="number"
+												maxFractionDigits="2" value="${dashBoard.totalOrderAmount}" /></span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -306,7 +322,8 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="totalNoOfOrders">${dashBoard.totalNoOfOrders}</span>
+											id="totalNoOfOrders"><fmt:formatNumber type="number"
+												maxFractionDigits="2" value="${dashBoard.totalNoOfOrders}" /></span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -333,7 +350,8 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="totalBillAmount">${dashBoard.totalBillAmount}</span>
+											id="totalBillAmount"><fmt:formatNumber type="number"
+												maxFractionDigits="2" value="${dashBoard.totalBillAmount}" /></span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -356,7 +374,8 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="totalTaxBillAmt">${dashBoard.totalTaxBillAmt}</span>
+											id="totalTaxBillAmt"><fmt:formatNumber type="number"
+												maxFractionDigits="2" value="${dashBoard.totalTaxBillAmt}" /></span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -382,7 +401,9 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="totalTaxableBillAmt">${dashBoard.totalTaxableBillAmt}</span>
+											id="totalTaxableBillAmt"><fmt:formatNumber
+												type="number" maxFractionDigits="2"
+												value="${dashBoard.totalTaxableBillAmt}" /></span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -408,7 +429,11 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="paymentRecPaid">${dashBoard.paymentRecPaid}</span>
+											id="paymentRecPaid"> <fmt:formatNumber type="number"
+												maxFractionDigits="2" value="${dashBoard.paymentRecPaid}" />
+
+
+										</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
@@ -435,7 +460,11 @@ background-color: transparent;
 									<h4 class="mb-0">
 
 										<span class="count" style="font-size: 30px;"
-											id="paymentRecOutstandingPending">${dashBoard.paymentRecOutstandingPending}</span>
+											id="paymentRecOutstandingPending"> <fmt:formatNumber
+												type="number" maxFractionDigits="2"
+												value="${dashBoard.paymentRecOutstandingPending}" />
+
+										</span>
 
 									</h4>
 									<p style="font-size: 15px; font-weight: bold; color: white;">
