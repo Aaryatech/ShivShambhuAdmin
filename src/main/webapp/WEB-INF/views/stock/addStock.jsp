@@ -280,6 +280,10 @@
 								 	var dataTable = $('#bootstrap-data-table')
 											.DataTable();
 									dataTable.clear().draw(); 
+
+									if (data == "") {
+										alert("No records found !!");						
+								}
 									
 
 									$
@@ -327,7 +331,7 @@
 		</script>
 	<script type="text/javascript">
 		function getData() {
-			alert(hii);
+		//	alert("hii");
 			var plantId = document.getElementById("plantId").value;
 			$
 			.getJSON(

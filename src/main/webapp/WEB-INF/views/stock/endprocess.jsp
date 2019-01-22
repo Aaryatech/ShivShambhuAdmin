@@ -11,7 +11,8 @@
 
 
 <c:url var="getPlantByCompId" value="/getPlantByCompId" />
-<c:url var="getStockItemByPlantId" value="/getStockItemByPlantId" />
+<c:url var="getStockHeaderByPlantId" value="/getStockHeaderByPlantId" />
+
 <c:url var="getStockItemByPlantIdAndCurDate"
 	value="/getStockItemByPlantIdAndCurDate" />
 
@@ -142,7 +143,7 @@
 
 									<div class="col-md-3">
 										<select id="plantId" name="plantId" class="standardSelect"
-											tabindex="1" required onchange="callDate()"
+											tabindex="1" required onchange="getData()"
 											oninvalid="setCustomValidity('Please select Plant')">
 											<option value="">Select</option>
 											<c:forEach items="${plantList}" var="plant">
@@ -172,6 +173,8 @@
 											onclick="showQuot()" value="Search">
 									</div>
 								</div>
+
+								<input type="hidden" id="date" name="date">
 
 								<div class="form-group"></div>
 
@@ -218,7 +221,8 @@
 
 									<div class="col-md-2"></div>
 									<div class="col-md-2">
-										<input type="submit" class="btn btn-primary" value="Day End">
+										<input type="submit" class="btn btn-primary" value="Day End"
+											id="dayEnd">
 									</div>
 
 								</div>
@@ -325,6 +329,11 @@
 									dataTable.clear().draw(); 
 									
 
+									if (data == "") {
+										alert("No records found !!");						
+								}
+									
+
 									$
 											.each(
 													data,
@@ -359,7 +368,7 @@
 	<script type="text/javascript">
 		// onclick of submit to search order 
 		
-				function showQuotBetDate() {
+		function showQuotBetDate() {
 
 			//alert("Hi View Orders  ");
 
@@ -415,11 +424,17 @@
 					//alert(data);
 					var dataTable = $('#bootstrap-data-table').DataTable();
 					dataTable.clear().draw();
+					
+					if (data == "") {
+						alert("No records found !!");						
+				}
+
 
 					$.each(data, function(i, v) {
 						
 						//alert(data);
-
+						
+							
 						dataTable.row.add(
 								[ i + 1,
 									v.itemName,
@@ -440,9 +455,11 @@
 
 
 	<script type="text/javascript">
-		function callDate() {
-			alert(hii);
+		function getData() {
+		//alert("hii");
 			var plantId = document.getElementById("plantId").value;
+			var currDate = document.getElementById("to_date").value;
+			//alert(currDate);
 			$
 			.getJSON(
 					'${getStockHeaderByPlantId}',
@@ -453,7 +470,17 @@
 					},
 					function(data) {
 						
+						//alert("StartDate"+data.startDate);
+						
 						document.getElementById("date").value = data.startDate;
+						if(data.startDate > currDate)
+							{
+							document.getElementById("dayEnd").style = "display:none"
+							}
+						else
+							{
+							document.getElementById("dayEnd").style = "visible"
+							}
 
 						
 					});
@@ -492,9 +519,11 @@
 
 				document.getElementById("hide_div").style = "display:none"
 					document.getElementById("searchButton").style = "visible"
+						document.getElementById("dayEnd").style = "visible"
 			} else {
 				document.getElementById("hide_div").style = "visible"
 					document.getElementById("searchButton").style = "display:none"
+						document.getElementById("dayEnd").style = "display:none"
 
 			}
 		}

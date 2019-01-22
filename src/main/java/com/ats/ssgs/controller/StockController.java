@@ -133,12 +133,12 @@ public class StockController {
 
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
 
-		SimpleDateFormat dd = new SimpleDateFormat("yyyy-MM-dd");
-
-		String curDate = dd.format(new Date());
-
+		/*
+		 * SimpleDateFormat dd = new SimpleDateFormat("yyyy-MM-dd");
+		 * 
+		 * String curDate = dd.format(new Date());
+		 */
 		map.add("plantId", plantId);
-		map.add("currDate", curDate);
 
 		GetStockDetail[] chArray = rest.postForObject(Constants.url + "getStockDetailByPlantIdAndCurDate", map,
 				GetStockDetail[].class);
@@ -372,8 +372,6 @@ public class StockController {
 
 		}
 
-		
-
 		return "redirect:/showStockHeader";
 
 	}
@@ -383,31 +381,80 @@ public class StockController {
 	public String updateStockDetail(HttpServletRequest request, HttpServletResponse response) {
 
 		try {
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("stockId", stockdetailList.get(0).getStockId());
 
-			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-			String curDate = dateFormat.format(new Date());
-
 			StockHeader stockHeader = rest.postForObject(Constants.url + "getStockHeaderByStockId", map,
 					StockHeader.class);
 			stockHeader.setStatus(1);
-			stockHeader.setClosingDate(curDate);
-
 			List<GetStockDetail> detailList = stockdetailList;
-
 			List<StockDetail> docInsertResDetail = rest.postForObject(Constants.url + "saveStockDetailList", detailList,
 					List.class);
 
 			stockHeader.setStockDetailList(docInsertResDetail);
-
 			StockHeader docInsertRes = rest.postForObject(Constants.url + "saveStockHeaderDetail", stockHeader,
 					StockHeader.class);
 
-			System.out.println("docInsertRes" + docInsertRes.toString());
+			int plantId = Integer.parseInt(request.getParameter("plantId"));
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+			String curDate = dateFormat.format(new Date());
+			Calendar cal = Calendar.getInstance();
+			int month = cal.get(Calendar.MONTH);
+			System.out.println("month" + month + 1);
+
+			StockHeader stockHeader1 = new StockHeader();
+			stockHeader1.setClosingDate(curDate);
+			stockHeader1.setDelStatus(1);
+			stockHeader1.setExBool1(1);
+			stockHeader1.setExDate1(curDate);
+			stockHeader1.setExFloat1(0);
+			stockHeader1.setExFloat2(0);
+			stockHeader1.setExInt1(0);
+			stockHeader1.setExInt2(0);
+			stockHeader1.setExVar1("");
+			stockHeader1.setExVar2("");
+			stockHeader1.setMonth(month + 1);
+			stockHeader1.setPlantId(plantId);
+			stockHeader1.setRemark("-");
+			stockHeader1.setStatus(0);
+			stockHeader1.setUserId(login.getUser().getUserId());
+			stockHeader1.setStartDate(curDate);
+			List<StockDetail> sList = new ArrayList<>();
+
+			for (int i = 0; i < stockdetailList.size(); i++) {
+
+				StockDetail dDetail = new StockDetail();
+
+				dDetail.setChalanQty(0);
+				dDetail.setClosingQty(0);
+				dDetail.setDelStatus(1);
+				dDetail.setDetailDate(curDate);
+				dDetail.setExBool1(1);
+				dDetail.setExDate1(curDate);
+				dDetail.setExFloat1(1);
+				dDetail.setExFloat2(1);
+				dDetail.setExInt1(1);
+				dDetail.setExInt2(1);
+				dDetail.setExVar1("");
+				dDetail.setExVar2("");
+				dDetail.setItemId(stockdetailList.get(i).getItemId());
+				dDetail.setOpQty(stockdetailList.get(i).getClosingQty());
+				dDetail.setProdQty(0);
+
+				dDetail.setUserId(login.getUser().getUserId());
+				sList.add(dDetail);
+			}
+			stockHeader1.setStockDetailList(sList);
+
+			StockHeader docInsertRes1 = rest.postForObject(Constants.url + "saveStockHeaderDetail", stockHeader1,
+					StockHeader.class);
+
+			System.out.println("docInsertRes" + docInsertRes1.toString());
 
 		} catch (Exception e) {
 
