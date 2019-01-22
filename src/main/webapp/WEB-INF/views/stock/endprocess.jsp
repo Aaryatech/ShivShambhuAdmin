@@ -160,7 +160,7 @@
 											class="standardSelect" tabindex="1" required
 											onchange="hideDiv(this.value)"
 											oninvalid="setCustomValidity('Please select Status')">
-											<option value="">Select</option>
+
 											<option value="1">Get Current Stock</option>
 											<option value="2">Stock Between Date</option>
 
@@ -233,9 +233,6 @@
 		</div>
 
 	</div>
-	<!-- .animated -->
-	<!-- .content -->
-
 	<!-- .animated -->
 	<!-- .content -->
 
@@ -364,13 +361,13 @@
 		
 				function showQuotBetDate() {
 
-			alert("Hi View Orders  ");
+			//alert("Hi View Orders  ");
 
 			var plantId = document.getElementById("plantId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			alert(plantId);
+			//alert(plantId);
 
 			var valid = true;
 
@@ -421,7 +418,7 @@
 
 					$.each(data, function(i, v) {
 						
-						alert(data);
+						//alert(data);
 
 						dataTable.row.add(
 								[ i + 1,

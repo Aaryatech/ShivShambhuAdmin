@@ -73,6 +73,37 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
+
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -82,8 +113,8 @@
 							</div>
 							<div class="col-md-6"></div>
 							<div class="col-md-3" align="left">
-								<a href="${pageContext.request.contextPath}/showItemList" style="color:black"><strong>Item
-										List</strong></a>
+								<a href="${pageContext.request.contextPath}/showItemList"
+									style="color: black"><strong>Item List</strong></a>
 							</div>
 						</div>
 						<div class="card-body card-block">
@@ -253,7 +284,7 @@
 									<div class="col-md-4">
 										<input type="text" id="freight_rate" name="freight_rate"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
-											class="form-control"
+											class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter freight rate')"
 											onchange="try{setCustomValidity('')}catch(e){}" required />
 									</div>
@@ -263,7 +294,7 @@
 									<div class="col-md-4">
 										<input type="text" id="royalty_rate" name="royalty_rate"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
-											class="form-control"
+											class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter  Royalty rate')"
 											onchange="try{setCustomValidity('')}catch(e){}" required />
 									</div>
@@ -275,6 +306,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="sort_no" name="sort_no" maxlength="3"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter Sort No')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											pattern="[0-9]+" class="form-control" style="width: 100%;">

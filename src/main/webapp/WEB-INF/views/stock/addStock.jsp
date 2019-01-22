@@ -140,18 +140,14 @@
 
 									<div class="col-md-3">
 										<select id="plantId" name="plantId" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select plant name')"
-											onchange="getData()">
+											tabindex="1" required onchange="getData()">
 											<option value="">Select</option>
-
 											<c:forEach items="${plantList}" var="plant">
 												<option value="${plant.plantId}">${plant.plantName}</option>
 											</c:forEach>
 										</select>
 									</div>
-									<!-- <input type="text" id="plantId" name="plantId"> <input
-										type="text" id="stockId" name="stockId"> -->
+
 
 									<div class="col-md-1">Date</div>
 									<div class="col-md-2">
@@ -203,16 +199,9 @@
 	<!-- .animated -->
 	<!-- .content -->
 
-	<!-- .animated -->
-	<!-- .content -->
-
-
 	<!-- Footer -->
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	<!-- Footer -->
-
-
-
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>

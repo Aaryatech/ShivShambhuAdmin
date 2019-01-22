@@ -74,6 +74,38 @@
 
 			<div class="row">
 
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
+
+
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
@@ -239,9 +271,9 @@
 
 
 								<div class="form-group"></div>
-								
-								
-								
+
+
+
 								<div class="row">
 
 									<div class="col-md-2">Plant Min Stock*</div>
@@ -271,7 +303,8 @@
 										<input type="text" id="prol_stock" name="prol_stock"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter prol stock')"
-											onkeypress="return allowOnlyNumber(event);" value="${editItem.plantRolStock}"
+											onkeypress="return allowOnlyNumber(event);"
+											value="${editItem.plantRolStock}"
 											onchange="checkstockvalue()"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;" required>
@@ -288,8 +321,9 @@
 
 									<div class="col-md-4">
 										<input type="text" id="freight_rate" name="freight_rate"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
-											class="form-control" value="${editItem.freightRate}"
+											autocomplete="off" pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											style="width: 100%;" class="form-control"
+											value="${editItem.freightRate}"
 											oninvalid="setCustomValidity('Please enter rate')"
 											onchange="try{setCustomValidity('')}catch(e){}" />
 									</div>
@@ -298,8 +332,9 @@
 
 									<div class="col-md-4">
 										<input type="text" id="royalty_rate" name="royalty_rate"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
-											class="form-control" value="${editItem.royaltyRate}"
+											autocomplete="off" pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											style="width: 100%;" class="form-control"
+											value="${editItem.royaltyRate}"
 											oninvalid="setCustomValidity('Please enter rate')"
 											onchange="try{setCustomValidity('')}catch(e){}" />
 									</div>
@@ -314,8 +349,8 @@
 
 									<div class="col-md-4">
 										<input type="text" id="sort_no" name="sort_no"
-											value="${editItem.sortNo}" class="form-control"
-											style="width: 100%;">
+											autocomplete="off" value="${editItem.sortNo}"
+											class="form-control" style="width: 100%;">
 									</div>
 
 								</div>
@@ -446,7 +481,7 @@
 
 		}
 	</script>
-<script>
+	<script>
 		
 		function allowOnlyNumber(evt){
 		    var charCode = (evt.which) ? evt.which : event.keyCode
