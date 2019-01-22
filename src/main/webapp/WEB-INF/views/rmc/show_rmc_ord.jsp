@@ -183,7 +183,7 @@
 													<c:when test="${plant.plantId==plantId}">
 														<option value="${plant.plantId}" selected>${plant.plantName}</option>
 													</c:when>
-													<c:otherwise>s
+													<c:otherwise>
 													<option value="${plant.plantId}">${plant.plantName}</option>
 													</c:otherwise>
 												</c:choose>

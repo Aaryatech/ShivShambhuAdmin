@@ -607,6 +607,8 @@
 																+ ','
 																+ v.enqHeadId
 																+ ','
+																+ v.status
+																+ ','
 																+ i
 																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callSinglePdf('
 																+ v.quotHeadId
@@ -637,7 +639,7 @@
 
 		}
 
-		function callEdit(quotHeadId, plantId, custId, enqHeadId) {
+		function callEdit(quotHeadId, plantId, custId, enqHeadId,stat) {
 
 			window
 					.open("${pageContext.request.contextPath}/editQuotationDetail/"
@@ -647,7 +649,9 @@
 							+ '/'
 							+ custId
 							+ '/'
-							+ enqHeadId);
+							+ enqHeadId
+							+ '/'
+							+ stat);
 
 		}
 		function callSinglePdf(quotIdList) {

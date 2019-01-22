@@ -780,6 +780,115 @@ public class QuotController {
 	 * }
 	 */
 
+	//with flag 
+	@RequestMapping(value = "/editQuotationDetail/{quotHeadId}/{plantId}/{custId}/{enqHeadId}/{stat}", method = RequestMethod.GET)
+	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotHeadId,
+			@PathVariable int plantId, @PathVariable int custId, @PathVariable int enqHeadId, @PathVariable int stat) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("quot/editQuot");
+
+			model.addObject("title", "Quotation Edit");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("plantId", plantId);
+			map.add("enqHeadId", enqHeadId);
+
+			GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map,
+					GetItemWithEnq[].class);
+			itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
+			
+			newItemList = new ArrayList<GetItemWithEnq>();
+			enqItemList = new ArrayList<GetItemWithEnq>();
+			
+			System.err.println(" Original Item List " + itemList.toString());
+
+			List<Integer> indexList = new ArrayList<>();
+			for (int i = 0; i < itemList.size(); i++) {
+
+				if (itemList.get(i).getQuotQty() == 0) {
+
+					newItemList.add(itemList.get(i));
+				} else {
+
+					enqItemList.add(itemList.get(i));
+				}
+
+			}
+
+			System.err.println("enqItemList " + enqItemList.toString());
+
+			System.err.println("newItemList " + newItemList.toString());
+
+			model.addObject("itemList", enqItemList);
+			model.addObject("newItemList", newItemList);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("plantId", plantId);
+
+			Cust[] custArray = rest.postForObject(Constants.url + "getCustListByPlant", map, Cust[].class);
+			custList = new ArrayList<Cust>(Arrays.asList(custArray));
+			model.addObject("custList", custList);
+			model.addObject("stat", stat);
+
+			// System.err.println("cust List " + custList.toString());
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			model.addObject("plantList", plantList);
+
+			// System.err.println("Plant List " + plantList.toString());
+
+			model.addObject("plantId", plantId);
+			model.addObject("custId", custId);
+			/*
+			 * model.addObject("custName", custName);
+			 * model.addObject("plantName",plantName);
+			 */
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("custId", custId);
+			Project[] projArray = rest.postForObject(Constants.url + "getProjectByCustId", map, Project[].class);
+			projList = new ArrayList<Project>(Arrays.asList(projArray));
+
+			model.addObject("projList", projList);
+
+			PaymentTerm[] payTermArray = rest.getForObject(Constants.url + "getAllPaymentTermList",
+					PaymentTerm[].class);
+			payTermList = new ArrayList<PaymentTerm>(Arrays.asList(payTermArray));
+
+			model.addObject("payTermList", payTermList);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("docId", 2);
+
+			DocTermHeader[] docTermArray = rest.postForObject(Constants.url + "getDocHeaderByDocId", map,
+					DocTermHeader[].class);
+			docTermList = new ArrayList<DocTermHeader>(Arrays.asList(docTermArray));
+
+			model.addObject("docTermList", docTermList);
+
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("quotHeadId", quotHeadId);
+
+			QuotHeader quotHeader = rest.postForObject(Constants.url + "getQuotHeaderByQuotHeadId", map,
+					QuotHeader.class);
+			quotHeader.setQuotDate(DateConvertor.convertToDMY(quotHeader.getQuotDate()));
+			model.addObject("quotHeader", quotHeader);
+
+		} catch (Exception e) {
+			System.err.println("Exce in /showQuotations" + e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+	
+	
+	//without flag 
+
 	@RequestMapping(value = "/editQuotationDetail/{quotHeadId}/{plantId}/{custId}/{enqHeadId}", method = RequestMethod.GET)
 	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotHeadId,
 			@PathVariable int plantId, @PathVariable int custId, @PathVariable int enqHeadId) {
@@ -831,6 +940,7 @@ public class QuotController {
 			Cust[] custArray = rest.postForObject(Constants.url + "getCustListByPlant", map, Cust[].class);
 			custList = new ArrayList<Cust>(Arrays.asList(custArray));
 			model.addObject("custList", custList);
+			
 
 			// System.err.println("cust List " + custList.toString());
 

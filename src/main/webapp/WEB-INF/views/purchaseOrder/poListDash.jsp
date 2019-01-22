@@ -79,7 +79,7 @@
 
 
 </head>
-<body>
+<body onload="showQuot1()">
 
 
 	<!-- Left Panel -->
@@ -658,7 +658,121 @@
 		});
 	</script>
 
+<script>
+function showQuot1() {
 
+	//alert("Hi View Orders  ");
+
+	var plantId = document.getElementById("plant_id").value;
+	//alert("plantId: "+plantId);
+	var fromDate = document.getElementById("from_date").value;
+	var toDate = document.getElementById("to_date").value;
+	var statusList = document.getElementById("statusList").value;
+	var custId = document.getElementById("cust_name").value;
+
+
+	var valid = true;
+/* /
+	if (plantId == null || plantId == "") {
+		valid = false;
+		alert("Please select plant");
+	}
+
+
+	if (custId == null || custId == "") {
+		valid = false;
+		alert("Please Select Customer");
+
+		var dataTable = $('#bootstrap-data-table').DataTable();
+		dataTable.clear().draw();
+
+	} else if (custId < 0) {
+		valid = false;
+
+	}
+
+	else if (fromDate == null || fromDate == "") {
+		valid = false;
+		alert("Please select from date");
+	}
+
+	else if (toDate == null || toDate == "") {
+		valid = false;
+		alert("Please select to date");
+	}
+
+	if (fromDate > toDate) {
+		valid = false;
+		alert("from date greater than todate ");
+	}  */
+	if (valid == true) {
+
+		$
+				.getJSON(
+						'${getPOListBetDateAndPlantId}',
+						{
+							plantId : plantId,
+							custId : custId,
+							fromDate : fromDate,
+							toDate : toDate,
+							statusList : statusList,
+							ajax : 'true',
+						},
+
+						function(data) {
+
+							//alert("Order Data " + JSON.stringify(data));
+
+							var dataTable = $('#bootstrap-data-table')
+									.DataTable();
+							dataTable.clear().draw();
+
+							$
+									.each(
+											data,
+											function(i, v) {
+												var chBox;
+					                            var status1;
+					                            if(v.status==0){
+					                            	
+					                            	status1="Pending";
+					                            	
+					                            }else if(v.status==1){
+					                            	status1="Partially Used";
+					                            	
+					                            }
+					                            else if(v.status==2){
+					                            	status1="Closed";
+					                            	
+					                            }
+												var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+														+ v.poId
+														+ ','
+														+ i
+														+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
+
+												chBox = '<input  type="checkbox" class="chk" name="poIds" id='+v.poId+' class="check"  value='+v.poId+'>'
+												dataTable.row
+														.add(
+																[
+																		chBox,
+																		i + 1,
+																		v.poNo,
+																		v.poDate,
+																		v.custName,
+																		v.plantName,
+																		v.quatationNo,
+																		status1,
+																		acButton ])
+														.draw();
+											});
+
+						});
+
+	}//end of if valid ==true
+
+}
+</script>
 
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>

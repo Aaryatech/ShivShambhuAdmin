@@ -122,7 +122,7 @@
 
 
 												<td><a
-													href="${pageContext.request.contextPath}/editQuotationDetail/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}"><i
+													href="${pageContext.request.contextPath}/editQuotationDetail/${quot.quotHeadId}/${quot.plantId}/${quot.custId}/${quot.enqHeadId}/"><i
 														class="fa fa-edit" style="color: black"
 														title="Generate Quotation"></i> <span class="text-muted"></span></a>
 
