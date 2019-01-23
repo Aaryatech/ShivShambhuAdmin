@@ -465,13 +465,13 @@ function callChalanPage(orderId,orderDetId,key) {
 
 	<script type="text/javascript">
 		function genPdf() {
-			alert("hiii");
+			//alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 			var plantId = document.getElementById("plant_id").value;
 		
 			
-			alert("PlantId is"+plantId);
+			//alert("PlantId is"+plantId);
 
 			window.open('${pageContext.request.contextPath}/showRmcListPdf/'
 					+ fromDate + '/' + toDate +'/'  + plantId);

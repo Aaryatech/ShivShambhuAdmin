@@ -262,7 +262,7 @@
 													<td style="text-align: center">${count.index+1}</td>
 
 													<td style="text-align: center"><c:out
-															value="${editVeh.date}" /></td>
+															value="${weighing.date}" /></td>
 
 
 													<td style="text-align: left"><c:out

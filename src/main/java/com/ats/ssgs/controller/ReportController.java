@@ -80,7 +80,7 @@ public class ReportController {
 			model.addObject("conList", conList);
 
 			model.addObject("title", "Contractorwise Report");
-			
+
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -91,10 +91,9 @@ public class ReportController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
-
 
 		} catch (Exception e) {
 
@@ -219,10 +218,9 @@ public class ReportController {
 			rowData.add("Sr. No");
 			rowData.add("Date");
 			rowData.add("Item Name");
-			rowData.add("Measurement of unit");
-			rowData.add("Item Rate");
-
+			rowData.add("Measurement Unit");
 			rowData.add("Item Quantity");
+			rowData.add("Item Rate");
 			rowData.add("Total Value");
 
 			expoExcel.setRowData(rowData);
@@ -236,8 +234,9 @@ public class ReportController {
 				rowData.add("" + editMat.getDate());
 				rowData.add("" + editMat.getMatIssueDetailList().get(i).getItemCode());
 				rowData.add("" + editMat.getMatIssueDetailList().get(i).getUomName());
-				rowData.add("" + editMat.getMatIssueDetailList().get(i).getItemRate());
 				rowData.add("" + editMat.getMatIssueDetailList().get(i).getQuantity());
+				rowData.add("" + editMat.getMatIssueDetailList().get(i).getItemRate());
+
 				rowData.add("" + editMat.getMatIssueDetailList().get(i).getValue());
 
 				expoExcel.setRowData(rowData);
@@ -256,10 +255,11 @@ public class ReportController {
 
 			rowData1.add("Sr. No");
 			rowData1.add("Date");
-			rowData1.add("Quantity");
+
 			rowData1.add("Contractor Name");
 			rowData1.add("Vehicle Name");
 			rowData1.add("Vehicle No");
+			rowData1.add("Quantity");
 
 			expoExcel1.setRowData(rowData1);
 			exportToExcelList1.add(expoExcel1);
@@ -269,11 +269,12 @@ public class ReportController {
 				rowData1 = new ArrayList<String>();
 				cnt2 = cnt2 + i;
 				rowData1.add("" + (i + 1));
-				rowData1.add("" + editMat.getDate());
-				rowData1.add("" + weighing.get(i).getQuantity());
+				rowData1.add("" + weighing.get(i).getDate());
+
 				rowData1.add("" + weighing.get(i).getContrName());
 				rowData1.add("" + weighing.get(i).getVehicleName());
 				rowData1.add("" + weighing.get(i).getVehicleNo());
+				rowData1.add("" + weighing.get(i).getQuantity());
 
 				expoExcel1.setRowData(rowData1);
 				exportToExcelList1.add(expoExcel1);
@@ -520,17 +521,18 @@ public class ReportController {
 
 			table.addCell(hcell);
 
+			hcell = new PdfPCell(new Phrase("Item Quantity", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
 			hcell = new PdfPCell(new Phrase("Item Rate", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(new Phrase("Item Quantity", headFont1));
-			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell.setBackgroundColor(BaseColor.PINK);
-
-			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Total Value", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
@@ -570,14 +572,14 @@ public class ReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getItemRate(), headFont));
+				cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFont));
+				cell = new PdfPCell(new Phrase("" + work.getItemRate(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
@@ -661,7 +663,7 @@ public class ReportController {
 					cell.setPaddingRight(2);
 					table1.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("" + editMat.getDate(), headFont));
+					cell = new PdfPCell(new Phrase("" + work.getDate(), headFont));
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 					cell.setPaddingRight(2);
@@ -792,7 +794,7 @@ public class ReportController {
 			model.addObject("conList", conList);
 
 			model.addObject("title", "Vehiclewise Report");
-			
+
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -803,7 +805,7 @@ public class ReportController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
@@ -927,7 +929,7 @@ public class ReportController {
 			rowData.add("Sr. No");
 			rowData.add("Date");
 			rowData.add("Item Name");
-			rowData.add("Measurement of unit");
+			rowData.add("Measurement unit");
 			rowData.add("Item Rate");
 
 			rowData.add("Item Quantity");
@@ -964,10 +966,12 @@ public class ReportController {
 
 			rowData1.add("Sr. No");
 			rowData1.add("Date");
-			rowData1.add("Quantity");
+
 			rowData1.add("Contractor Name");
 			rowData1.add("Vehicle Name");
 			rowData1.add("Vehicle No");
+
+			rowData1.add("Quantity");
 
 			expoExcel1.setRowData(rowData1);
 			exportToExcelList1.add(expoExcel1);
@@ -977,11 +981,12 @@ public class ReportController {
 				rowData1 = new ArrayList<String>();
 				cnt2 = cnt2 + i;
 				rowData1.add("" + (i + 1));
-				rowData1.add("" + editVeh.getDate());
-				rowData1.add("" + weighing.get(i).getQuantity());
+				rowData1.add("" + weighing.get(i).getDate());
+
 				rowData1.add("" + weighing.get(i).getContrName());
 				rowData1.add("" + weighing.get(i).getVehicleName());
 				rowData1.add("" + weighing.get(i).getVehicleNo());
+				rowData1.add("" + weighing.get(i).getQuantity());
 
 				expoExcel1.setRowData(rowData1);
 				exportToExcelList1.add(expoExcel1);
@@ -1236,7 +1241,13 @@ public class ReportController {
 
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(new Phrase("Measurement of Unit", headFont1));
+			hcell = new PdfPCell(new Phrase("Measurement Unit", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Item Quantity", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
@@ -1248,11 +1259,6 @@ public class ReportController {
 
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(new Phrase("Item Quantity", headFont1));
-			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell.setBackgroundColor(BaseColor.PINK);
-
-			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Total Value", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
@@ -1292,14 +1298,14 @@ public class ReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getRate(), headFont));
+				cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFont));
+				cell = new PdfPCell(new Phrase("" + work.getRate(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
@@ -1342,12 +1348,6 @@ public class ReportController {
 
 				table1.addCell(hcell1);
 
-				hcell1 = new PdfPCell(new Phrase("Quantity", headFont1Second));
-				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-				hcell1.setBackgroundColor(BaseColor.PINK);
-
-				table1.addCell(hcell1);
-
 				hcell1 = new PdfPCell(new Phrase("Vehicle Name", headFont1Second));
 				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 				hcell1.setBackgroundColor(BaseColor.PINK);
@@ -1372,6 +1372,12 @@ public class ReportController {
 
 				table1.addCell(hcell1);
 
+				hcell1 = new PdfPCell(new Phrase("Quantity", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
 				int index1 = 0;
 				for (GetWeighing work : weighing) {
 					index1++;
@@ -1384,16 +1390,9 @@ public class ReportController {
 					cell.setPaddingRight(2);
 					table1.addCell(cell);
 
-					cell = new PdfPCell(new Phrase("" + editVeh.getDate(), headFont));
+					cell = new PdfPCell(new Phrase("" + work.getDate(), headFont));
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					cell.setHorizontalAlignment(Element.ALIGN_LEFT);
-					cell.setPaddingRight(2);
-					cell.setPadding(3);
-					table1.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFontFirst));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					cell.setPaddingRight(2);
 					cell.setPadding(3);
 					table1.addCell(cell);
@@ -1420,6 +1419,13 @@ public class ReportController {
 					table1.addCell(cell);
 
 					cell = new PdfPCell(new Phrase(work.getPokeNo(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFontFirst));
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					cell.setPaddingRight(2);
@@ -1513,7 +1519,7 @@ public class ReportController {
 			model = new ModelAndView("report/poklenreport");
 
 			model.addObject("title", "Poklenwise Report");
-			
+
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -1524,7 +1530,7 @@ public class ReportController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
@@ -1851,10 +1857,9 @@ public class ReportController {
 			rowData.add("Sr. No");
 
 			rowData.add("Item Name");
-			rowData.add("Measurement of unit");
-			rowData.add("Item Rate");
-
+			rowData.add("Measurement Unit");
 			rowData.add("Item Quantity");
+			rowData.add("Item Rate");
 			rowData.add("Total Value");
 
 			expoExcel.setRowData(rowData);
@@ -1867,8 +1872,8 @@ public class ReportController {
 				rowData.add("" + (i + 1));
 				rowData.add("" + detailList.get(i).getItemCode());
 				rowData.add("" + detailList.get(i).getUomName());
-				rowData.add("" + detailList.get(i).getRate());
 				rowData.add("" + detailList.get(i).getQuantity());
+				rowData.add("" + detailList.get(i).getRate());
 				rowData.add("" + detailList.get(i).getValue());
 
 				expoExcel.setRowData(rowData);
@@ -1923,10 +1928,10 @@ public class ReportController {
 			List<String> rowData2 = new ArrayList<String>();
 
 			rowData2.add("Sr. No");
-			rowData2.add("Quantity");
 			rowData2.add("Contractor Name");
 			rowData2.add("Poklen Name");
 			rowData2.add("poklen No");
+			rowData2.add("Quantity");
 
 			expoExcel2.setRowData(rowData2);
 			exportToExcelList2.add(expoExcel2);
@@ -1937,10 +1942,10 @@ public class ReportController {
 				cnt2 = cnt2 + i;
 				rowData2.add("" + (i + 1));
 
-				rowData2.add("" + weighing.get(i).getQuantity());
 				rowData2.add("" + weighing.get(i).getContrName());
 				rowData2.add("" + weighing.get(i).getVehicleName());
 				rowData2.add("" + weighing.get(i).getVehicleNo());
+				rowData2.add("" + weighing.get(i).getQuantity());
 
 				expoExcel2.setRowData(rowData2);
 				exportToExcelList2.add(expoExcel2);
@@ -2009,7 +2014,13 @@ public class ReportController {
 
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(new Phrase("Measurement of Unit", headFont1));
+			hcell = new PdfPCell(new Phrase("Measurement Unit", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Item Quantity", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
@@ -2021,11 +2032,6 @@ public class ReportController {
 
 			table.addCell(hcell);
 
-			hcell = new PdfPCell(new Phrase("Item Quantity", headFont1));
-			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell.setBackgroundColor(BaseColor.PINK);
-
-			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Total Value", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
@@ -2058,14 +2064,14 @@ public class ReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getRate(), headFont));
+				cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFont));
+				cell = new PdfPCell(new Phrase("" + work.getRate(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
@@ -2102,12 +2108,6 @@ public class ReportController {
 
 				table1.addCell(hcell1);
 
-				hcell1 = new PdfPCell(new Phrase("Quantity", headFont1Second));
-				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
-				hcell1.setBackgroundColor(BaseColor.PINK);
-
-				table1.addCell(hcell1);
-
 				hcell1 = new PdfPCell(new Phrase("Contractor Name", headFont1Second));
 				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
 				hcell1.setBackgroundColor(BaseColor.PINK);
@@ -2126,6 +2126,12 @@ public class ReportController {
 
 				table1.addCell(hcell1);
 
+				hcell1 = new PdfPCell(new Phrase("Quantity", headFont1Second));
+				hcell1.setHorizontalAlignment(Element.ALIGN_CENTER);
+				hcell1.setBackgroundColor(BaseColor.PINK);
+
+				table1.addCell(hcell1);
+
 				int index1 = 0;
 				for (GetWeighing work : weighing) {
 					index1++;
@@ -2136,13 +2142,6 @@ public class ReportController {
 					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					cell.setPadding(3);
 					cell.setPaddingRight(2);
-					table1.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFontFirst));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-					cell.setPaddingRight(2);
-					cell.setPadding(3);
 					table1.addCell(cell);
 
 					cell = new PdfPCell(new Phrase("" + work.getContrName(), headFontFirst));
@@ -2160,6 +2159,13 @@ public class ReportController {
 					table1.addCell(cell);
 
 					cell = new PdfPCell(new Phrase(work.getPokeNo(), headFontFirst));
+					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+					cell.setPaddingRight(2);
+					cell.setPadding(3);
+					table1.addCell(cell);
+
+					cell = new PdfPCell(new Phrase("" + work.getQuantity(), headFontFirst));
 					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 					cell.setPaddingRight(2);
