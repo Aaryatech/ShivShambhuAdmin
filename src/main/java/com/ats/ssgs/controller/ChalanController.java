@@ -364,7 +364,7 @@ public class ChalanController {
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
 			int custId = Integer.parseInt(request.getParameter("cust_name"));
 			int orderId = Integer.parseInt(request.getParameter("order_id"));
-
+		
 			String chalanDate = request.getParameter("chalan_date");
 			String batchNo = request.getParameter("batchNo");
 			String chalanRemark = request.getParameter("chalan_remark");
@@ -385,7 +385,12 @@ public class ChalanController {
 				float width = Float.parseFloat(request.getParameter("width" + tempChItemList.get(i).getItemId()));
 				float height = Float.parseFloat(request.getParameter("height" + tempChItemList.get(i).getItemId()));
 				float length = Float.parseFloat(request.getParameter("length" + tempChItemList.get(i).getItemId()));
-
+				
+				int chalanQty=Integer.parseInt(request.getParameter("chalanQty" + tempChItemList.get(i).getItemId()));
+				
+				System.out.println("Qty is::"+chalanQty);
+				float total= Float.parseFloat(request.getParameter("itemChalanTotal" + tempChItemList.get(i).getItemId()));
+				System.out.println("total is::"+total);
 				ChalanDetail chDetail = new ChalanDetail();
 
 				chDetail.setDelStatus(1);
@@ -398,13 +403,13 @@ public class ChalanController {
 				chDetail.setItemId(tempChItemList.get(i).getItemId());
 				chDetail.setItemLengthPlant(length);
 				chDetail.setItemLengthSite(0);
-				chDetail.setItemQty(tempChItemList.get(i).getChalanQty());
+				chDetail.setItemQty(chalanQty);
 				chDetail.setItemTotalSite(0);
 				chDetail.setItemUom(tempChItemList.get(i).getUomId());
 				chDetail.setItemWidthPlant(width);
 				chDetail.setItemWidthSite(0);
 				chDetail.setStatus(0);
-				chDetail.setItemTotalPlant(tempChItemList.get(i).getChalanQty());
+				chDetail.setItemTotalPlant(total);
 
 				chDetail.setOrderDetailId(tempChItemList.get(i).getOrderDetId());
 				chDetailList.add(chDetail);
