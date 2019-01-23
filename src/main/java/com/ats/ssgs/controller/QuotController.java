@@ -343,7 +343,7 @@ public class QuotController {
 			System.out.println("plant is" + plantList);
 
 			model.addObject("plantList", plantList);
-			
+
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -354,7 +354,7 @@ public class QuotController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
@@ -780,7 +780,7 @@ public class QuotController {
 	 * }
 	 */
 
-	//with flag 
+	// with flag
 	@RequestMapping(value = "/editQuotationDetail/{quotHeadId}/{plantId}/{custId}/{enqHeadId}/{stat}", method = RequestMethod.GET)
 	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotHeadId,
 			@PathVariable int plantId, @PathVariable int custId, @PathVariable int enqHeadId, @PathVariable int stat) {
@@ -800,10 +800,10 @@ public class QuotController {
 			GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map,
 					GetItemWithEnq[].class);
 			itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
-			
+
 			newItemList = new ArrayList<GetItemWithEnq>();
 			enqItemList = new ArrayList<GetItemWithEnq>();
-			
+
 			System.err.println(" Original Item List " + itemList.toString());
 
 			List<Integer> indexList = new ArrayList<>();
@@ -885,9 +885,8 @@ public class QuotController {
 		return model;
 
 	}
-	
-	
-	//without flag 
+
+	// without flag
 
 	@RequestMapping(value = "/editQuotationDetail/{quotHeadId}/{plantId}/{custId}/{enqHeadId}", method = RequestMethod.GET)
 	public ModelAndView editQuot(HttpServletRequest request, HttpServletResponse response, @PathVariable int quotHeadId,
@@ -908,10 +907,10 @@ public class QuotController {
 			GetItemWithEnq[] itemArray = rest.postForObject(Constants.url + "getItemsAndEnqItemList", map,
 					GetItemWithEnq[].class);
 			itemList = new ArrayList<GetItemWithEnq>(Arrays.asList(itemArray));
-			
+
 			newItemList = new ArrayList<GetItemWithEnq>();
 			enqItemList = new ArrayList<GetItemWithEnq>();
-			
+
 			System.err.println(" Original Item List " + itemList.toString());
 
 			List<Integer> indexList = new ArrayList<>();
@@ -940,7 +939,6 @@ public class QuotController {
 			Cust[] custArray = rest.postForObject(Constants.url + "getCustListByPlant", map, Cust[].class);
 			custList = new ArrayList<Cust>(Arrays.asList(custArray));
 			model.addObject("custList", custList);
-			
 
 			// System.err.println("cust List " + custList.toString());
 
@@ -1530,7 +1528,7 @@ public class QuotController {
 
 		// File f = new File("/home/lenovo/quot.pdf");
 
-		File f = new File("/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf");
+		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1550,9 +1548,9 @@ public class QuotController {
 		String appPath = context.getRealPath("");
 
 		// String filename = "/home/lenovo/quot.pdf";
-		String filename = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
+		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
 
-		String filePath = "/opt/apache-tomcat-9.0.4/webapps/uploads/quotation.pdf";
+		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
 		// String filePath = "/home/lenovo/quot.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
