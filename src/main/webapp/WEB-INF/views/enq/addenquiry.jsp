@@ -92,6 +92,37 @@
 
 			<div class="row">
 
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
+
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
@@ -213,8 +244,7 @@
 										</div>
 
 
-										<div class="col-md-2">Unit Of Measurement</div>
-
+										<div class="col-md-2">Measurement Unit</div>
 										<div class="col-md-4">
 											<select id="uomId" name="uomId" class="standardSelect"
 												tabindex="1"
@@ -482,6 +512,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
+					
 					for (var i = 0; i < len; i++) {
 
 						html += '<option value="' + data[i].custId + '">'

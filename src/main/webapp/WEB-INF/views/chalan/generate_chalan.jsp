@@ -336,7 +336,7 @@ body {
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select project')"
 											onchange="getOrderHeaders()">
-											<option selected value="-1">Select All</option>
+											<option selected value="-1">Select</option>
 
 											<c:forEach items="${projList}" var="proj">
 
@@ -383,19 +383,18 @@ body {
 											autocomplete="off" style="width: 100%;" required
 											oninvalid="setCustomValidity('Please enter Batch No')"
 											onchange="showOrderItemPopup(this.value)"
-											class="form-control"> <span class="error" 
-											
-											aria-live="polite" ></span>
+											class="form-control"> <span class="error"
+											aria-live="polite"></span>
 									</div>
 
 									<div class="col-md-2">RST No*</div>
 
 									<div class="col-md-4">
-										<input type="text" id="rstNo" name="rstNo"  required value="-"
+										<input type="text" id="rstNo" name="rstNo" required value="-"
 											oninvalid="setCustomValidity('Please enter RST No')"
-											onchange="showOrderItemPopup(this.value)"
-											autocomplete="off" style="width: 100%;" class="form-control">
-										<span class="error" aria-live="polite" ></span>
+											onchange="showOrderItemPopup(this.value)" autocomplete="off"
+											style="width: 100%;" class="form-control"> <span
+											class="error" aria-live="polite"></span>
 									</div>
 
 								</div>

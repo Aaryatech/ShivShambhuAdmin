@@ -20,11 +20,10 @@
 
 <c:url var="getPoDetailForOrderByPoId"
 	value="/getPoDetailForOrderByPoId" />
-	
-	
-<c:url var="getTempOrderHeader"
-	value="/getTempOrderHeader" />
-	
+
+
+<c:url var="getTempOrderHeader" value="/getTempOrderHeader" />
+
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,31 +74,30 @@
 
 <style>
 .alert {
-    padding: 20px;
-    background-color: red;
-    color: white;
-    
+	padding: 20px;
+	background-color: red;
+	color: white;
 }
+
 .alert1 {
-    padding: 20px;
-    background-color: green;
-    color: white;
-    
+	padding: 20px;
+	background-color: green;
+	color: white;
 }
 
 .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: black;
+	color: black;
 }
 </style>
 
@@ -132,31 +130,36 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-			
-			<c:choose>
-							<c:when test="${isError==1}">
-							
-							<div class="alert">
-							
-							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Failed !</strong>     Data not submitted  !!
-				</div>
-							
-							</c:when>
-							
-							<c:when test="${isError==2}">
-							
-							<div class="alert1">
-							
-							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Success</strong>     Data Submitted !!
-				</div>
-							
-							</c:when>
-							
-							</c:choose>
+				<c:choose>
+					<c:when test="${isError==1}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-danger alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data not submitted</strong>
+							</div>
+						</div>
+					</c:when>
+
+					<c:when test="${isError==2}">
+						<div class="col-sm-12">
+							<div
+								class="sufee-alert alert with-close alert-success alert-dismissible fade show">
+
+								<button type="button" class="close" data-dismiss="alert"
+									aria-label="Close">
+									<span aria-hidden="true">×</span>
+								</button>
+								<strong>Data Submitted Successfully</strong>
+							</div>
+						</div>
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
@@ -169,7 +172,7 @@
 								<a href="${pageContext.request.contextPath}/showAddCustomer"><strong>Add
 										Customer</strong></a>
 							</div> --%>
-							
+
 
 						</div>
 						<div class="card-body card-block">
@@ -178,7 +181,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+									<div class="col-md-2">Select Plant*</div>
 
 									<div class="col-md-4">
 										<select id="plant_id" name="plant_id" class="standardSelect"
@@ -192,13 +195,13 @@
 											</c:forEach>
 										</select>
 									</div>
-									<div class="col-md-2">Customer</div>
+									<div class="col-md-2">Customer*</div>
 									<div class="col-md-4">
 										<select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select customer')"
 											onchange="getCustInfo()">
-											<option selected value="-1"  >Select</option>
+											<option selected value="-1">Select</option>
 
 										</select>
 									</div>
@@ -210,40 +213,40 @@
 
 									
 								</div> -->
-								
-								
+
+
 								<div class="form-group"></div>
-								
-								
-								
+
+
+
 								<div class="row">
 
-									<div class="col-md-2">Select Project</div>
+									<div class="col-md-2">Select Project*</div>
 
 									<div class="col-md-4">
 										<select id="proj_id" name="proj_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select project')"
 											onchange="try{setCustomValidity('')}catch(e){}">
-												<option selected value="-1">Select All</option>
+											<option selected value="-1">Select</option>
 
 											<c:forEach items="${projList}" var="proj">
-											
-											<c:choose>
-											<c:when test="${quotHeader.projId==proj.projId}">
-												<option selected value="${proj.projId}">${proj.projName}</option>
-											</c:when>
-											<c:otherwise>
-												<option value="${proj.projId}">${proj.projName}</option>
-											</c:otherwise>
-											</c:choose>
-											
+
+												<c:choose>
+													<c:when test="${quotHeader.projId==proj.projId}">
+														<option selected value="${proj.projId}">${proj.projName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${proj.projId}">${proj.projName}</option>
+													</c:otherwise>
+												</c:choose>
+
 											</c:forEach>
 
 										</select>
 									</div>
-									
-									<div class="col-md-2">Select Purchase Order</div>
+
+									<div class="col-md-2">Select Purchase Order*</div>
 
 									<div class="col-md-4">
 										<select id="po_id" name="po_id" class="standardSelect"
@@ -255,14 +258,14 @@
 										</select>
 									</div>
 								</div>
-								
+
 								<div id="divCheckbox" style="display: none;">
 									<div class="form-group"></div>
 									<div class="row">
 
 
 
-										<div class="col-md-2">Customer Type</div>
+										<div class="col-md-2">Customer Type*</div>
 
 										<div class="col-md-4">
 											<input type="text" id="custTypeName" name="custTypeName"
@@ -270,7 +273,7 @@
 											<span class="error" aria-live="polite"></span>
 										</div>
 
-										<div class="col-md-2">Customer Mobile No.</div>
+										<div class="col-md-2">Customer Mobile No.*</div>
 
 										<div class="col-md-4">
 											<input type="text" readonly id="custMobNo" name="custMobNo"
@@ -283,14 +286,14 @@
 								<input type="hidden" name="item_id" id="item_id" value="0">
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Order Date</div>
+									<div class="col-md-2">Order Date*</div>
 									<div class="col-md-4">
-										<input type="text" id="ord_date" autocomplete="off" required readonly name="ord_date" required
-											style="width: 100%;" class="form-control"
-											value="${curDate}"> <span class="error"
-											aria-live="polite"></span>
+										<input type="text" id="ord_date" autocomplete="off" required
+											readonly name="ord_date" required style="width: 100%;"
+											class="form-control" value="${curDate}"> <span
+											class="error" aria-live="polite"></span>
 									</div>
-									<div class="col-md-2">Order No</div>
+									<div class="col-md-2">Order No*</div>
 									<div class="col-md-4">
 										<input type="text" readonly id="ord_no" name="ord_no"
 											style="width: 100%;" class="form-control"
@@ -303,33 +306,34 @@
 								<input type="hidden" id="isEdit" name="isEdit" value="0">
 
 								<input type="hidden" id="itemUomId" name="itemUomId" value="0">
-								
-								
-								<div class="form-group"></div>
-								<div class="row">
-								<div class="col-md-2">Delivery Date</div>
-									<div class="col-md-4">
-										<input type="text" id="del_date" name="del_date" autocomplete="off" required readonly
-											style="width: 100%;" class="form-control"
-											value="${curDate}"> <span class="error"
-											aria-live="polite"></span>
-									</div>
-									
-									<div class="col-md-2">Dispatch Time</div>
-									<div class="col-md-4">
-										<input type="time" id="disp_time" name="disp_time" autocomplete="off" required 
-											style="width: 100%;" class="form-control" onkeypress="return allowOnlyNumber(event);"
-											value="0"> <span class="error"
-											aria-live="polite"></span>
-									</div>
-									
-								</div>
-								
+
 
 								<div class="form-group"></div>
-								
+								<div class="row">
+									<div class="col-md-2">Delivery Date*</div>
+									<div class="col-md-4">
+										<input type="text" id="del_date" name="del_date"
+											autocomplete="off" required readonly style="width: 100%;"
+											class="form-control" value="${curDate}"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+
+									<div class="col-md-2">Dispatch Time*</div>
+									<div class="col-md-4">
+										<input type="time" id="disp_time" name="disp_time"
+											autocomplete="off" required style="width: 100%;"
+											class="form-control"
+											onkeypress="return allowOnlyNumber(event);" value="0">
+										<span class="error" aria-live="polite"></span>
+									</div>
+
+								</div>
+
+
+								<div class="form-group"></div>
+
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-								
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table1"
 										class="table table-striped table-bordered">
@@ -350,11 +354,11 @@
 								</div>
 								<div class="form-group"></div>
 
-								
+
 								<div class="form-group"></div>
 								<div class="row">
 
-								<!-- 	<div class="col-md-2">Other Cost After Tax</div>
+									<!-- 	<div class="col-md-2">Other Cost After Tax</div>
 
 									<div class="col-md-3">845</div> -->
 									<div class="col-md-2">Order Total</div>
@@ -362,7 +366,8 @@
 									<div class="col-md-3" id="ordTotal">0</div>
 
 									<div class="col-md-2">
-										<input type="submit" disabled id="submitButton" class="btn btn-primary" value="Submit">
+										<input type="submit" disabled id="submitButton"
+											class="btn btn-primary" value="Submit">
 
 									</div>
 
@@ -390,7 +395,7 @@
 	<!-- Footer -->
 
 
-<script
+	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/popper.min.js"></script>
@@ -424,7 +429,7 @@
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
-		
+
 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({
@@ -682,7 +687,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 	
 	
 	</script>
-	
+
 	<script type="text/javascript">
 	function placeTempOrder(itemId,poRate,poDetailId,poRemainingQty){
 		//alert("Hi");
@@ -746,7 +751,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 		}
 	}
 	</script>
-	
+
 	<script type="text/javascript">
 	
 		function allowOnlyNumber(evt){
@@ -973,7 +978,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 	</script> -->
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#bootstrap-data-table1').DataTable({
 				columnDefs : [ {
