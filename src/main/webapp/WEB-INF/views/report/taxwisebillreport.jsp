@@ -115,32 +115,32 @@
 
 							<div class="form-group"></div>
 
-								<div class="row">
+							<div class="row">
 
-								
-									<div class="col-md-2">Select Plant</div>
 
-									<div class="col-md-4">
-										<select id="plantId" name="plantId" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select plant name')"
-											onchange="getData()">
-											
-											<c:forEach items="${plantList}" var="plant">
-												<c:choose>
-													<c:when test="${plant.plantId==plantId1}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
-													</c:otherwise>
-												</c:choose>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-md-2">Select Customer</div>
-									<div class="col-md-4">
-										<select id="custId" name="custId" class="standardSelect"
+								<div class="col-md-2">Select Plant</div>
+
+								<div class="col-md-4">
+									<select id="plantId" name="plantId" class="standardSelect"
+										tabindex="1" required
+										oninvalid="setCustomValidity('Please select plant name')"
+										onchange="getData()">
+
+										<c:forEach items="${plantList}" var="plant">
+											<c:choose>
+												<c:when test="${plant.plantId==plantId1}">
+													<option value="${plant.plantId}" selected>${plant.plantName}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${plant.plantId}">${plant.plantName}
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="col-md-2">Select Customer</div>
+								<div class="col-md-4">
+									<select id="custId" name="custId" class="standardSelect"
 										tabindex="1" multiple="multiple" required
 										oninvalid="setCustomValidity('Please select Challan')">
 										<option value="0">All</option>
@@ -151,7 +151,7 @@
 
 
 									</select>
-									</div>
+								</div>
 
 							</div>
 
@@ -378,8 +378,12 @@
 
 						dataTable.row.add(
 								[ i + 1, v.billNo, v.custGstNo, v.custName,
-										v.cgstAmt.toFixed(2), v.sgstAmt.toFixed(2), v.igstAmt.toFixed(2),
-										v.taxableAmt.toFixed(2), v.taxAmt.toFixed(2), v.totalAmt.toFixed(2)
+										v.cgstAmt.toFixed(2),
+										v.sgstAmt.toFixed(2),
+										v.igstAmt.toFixed(2),
+										v.taxableAmt.toFixed(2),
+										v.taxAmt.toFixed(2),
+										v.totalAmt.toFixed(2)
 
 								]).draw();
 					});
@@ -439,7 +443,7 @@
 
 	<script type="text/javascript">
 		function genPdf() {
-			alert("hiii");
+			//	alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 			var plantId = document.getElementById("plantId").value;

@@ -125,8 +125,8 @@
 								<div class="col-md-4">
 									<select id="plantId" name="plantId" class="standardSelect"
 										tabindex="1" required onchange="getData()">
-									
-                                   <option value="${plantId}">${pname}</option>
+
+										<option value="${plantId}">${pname}</option>
 										<option value="0">All</option>
 										<c:forEach items="${plantList}" var="plant">
 
@@ -143,7 +143,7 @@
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select company')">
 										<option value="${custId}">${cname}</option>
-										
+
 										<option value="0">All</option>
 									</select>
 								</div>
@@ -391,12 +391,18 @@
 																		[
 																				i + 1,
 																				v.billDate,
-																				v.cgstAmt.toFixed(2),
-																				v.sgstAmt.toFixed(2),
-																				v.igstAmt.toFixed(2),
-																				v.taxAmt.toFixed(2),
-																				v.taxableAmt.toFixed(2),
-																				v.totalAmt.toFixed(2),
+																				v.cgstAmt
+																						.toFixed(2),
+																				v.sgstAmt
+																						.toFixed(2),
+																				v.igstAmt
+																						.toFixed(2),
+																				v.taxAmt
+																						.toFixed(2),
+																				v.taxableAmt
+																						.toFixed(2),
+																				v.totalAmt
+																						.toFixed(2),
 																				acButton
 
 																		])
@@ -509,9 +515,9 @@
 
 		}
 	</script>
-	
-	
-	
+
+
+
 	<script type="text/javascript">
 		// onclick of submit to search order 
 		function showQuot1() {
@@ -524,11 +530,9 @@
 			var toDate = document.getElementById("to_date").value;
 			var plantId = document.getElementById("plantId").value;
 			var custId = document.getElementById("custId").value;
-		
 
 			var valid = true;
-			
-		
+
 			if (valid == true) {
 
 				$
@@ -577,12 +581,18 @@
 																		[
 																				i + 1,
 																				v.billDate,
-																				v.cgstAmt.toFixed(2),
-																				v.sgstAmt.toFixed(2),
-																				v.igstAmt.toFixed(2),
-																				v.taxAmt.toFixed(2),
-																				v.taxableAmt.toFixed(2),
-																				v.totalAmt.toFixed(2),
+																				v.cgstAmt
+																						.toFixed(2),
+																				v.sgstAmt
+																						.toFixed(2),
+																				v.igstAmt
+																						.toFixed(2),
+																				v.taxAmt
+																						.toFixed(2),
+																				v.taxableAmt
+																						.toFixed(2),
+																				v.totalAmt
+																						.toFixed(2),
 																				acButton
 
 																		])
@@ -629,12 +639,10 @@
 																this.checked);
 											});
 						});
-		
-		
-		
-		
-		
-	
+	</script>
+
+
+
 
 </body>
 </html>

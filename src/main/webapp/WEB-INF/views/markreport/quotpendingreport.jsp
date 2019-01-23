@@ -280,13 +280,13 @@
 		// onclick of submit to search order 
 		function showQuot() {
 
-			alert("Hi View Orders  ");
+			//alert("Hi View Orders  ");
 
 			var plantId = document.getElementById("plantId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			alert(plantId);
+			//alert(plantId);
 
 			var valid = true;
 

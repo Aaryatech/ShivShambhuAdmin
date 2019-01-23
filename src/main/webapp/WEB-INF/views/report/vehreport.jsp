@@ -397,7 +397,7 @@
 
 		<script type="text/javascript">
 			function genPdf() {
-				alert("hiii");
+				//alert("hiii");
 				var fromDate = document.getElementById("from_date").value;
 				var toDate = document.getElementById("to_date").value;
 
