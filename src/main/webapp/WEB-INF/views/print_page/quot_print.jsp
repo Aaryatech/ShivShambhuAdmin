@@ -135,7 +135,7 @@
 	</c:forEach>
 </body>
 </html>
-
+<!-- .. -->
 
 <%-- <p style="margin-left: 100px;">We also supply material tos
 			following parties.</p>
