@@ -132,17 +132,17 @@
 									</select>
 								</div>
 
-							</div>
-
-
-							<div class="form-group"></div>
-							<div class="row">
-								<div class="col-md-6"></div>
+								<div class="col-md-2"></div>
 								<div class="col-md-2">
 									<input type="button" class="btn btn-primary"
 										onclick="showQuot()" value="Submit">
 								</div>
+
 							</div>
+
+
+							<!-- <div class="form-group"></div>
+							<div class="row"></div> -->
 
 
 							<div class="form-group"></div>
@@ -290,7 +290,6 @@
 
 			//alert(compId);
 
-
 			//var plantId = document.getElementById("plantId").value;
 
 			//alert("plantId" + plantId);
@@ -324,7 +323,7 @@
 			if (valid == true) {
 
 				$.getJSON('${getItemListBetweenDate}', {
-					
+
 					plantId : plantId,
 					fromDate : fromDate,
 					toDate : toDate,
@@ -350,9 +349,13 @@
 					$.each(data, function(i, v) {
 
 						dataTable.row.add(
-								[ i + 1, v.itemCode, v.itemName, v.taxAmt.toFixed(2),
-										v. taxableAmt.toFixed(2), v.totalAmt.toFixed(2),v.cgstAmt.toFixed(2),
-										v.sgstAmt.toFixed(2),v.sgstAmt.toFixed(2)
+								[ i + 1, v.itemCode, v.itemName,
+										v.taxAmt.toFixed(2),
+										v.taxableAmt.toFixed(2),
+										v.totalAmt.toFixed(2),
+										v.cgstAmt.toFixed(2),
+										v.sgstAmt.toFixed(2),
+										v.sgstAmt.toFixed(2)
 
 								]).draw();
 					});
@@ -454,7 +457,7 @@
 			var plantId = document.getElementById("plantId").value;
 
 			window.open('${pageContext.request.contextPath}/showItemwisePdf/'
-					+ fromDate + '/' + toDate +'/' + plantId);
+					+ fromDate + '/' + toDate + '/' + plantId);
 			document.getElementById("expExcel").disabled = true;
 
 		}

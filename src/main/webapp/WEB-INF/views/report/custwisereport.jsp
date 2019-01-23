@@ -98,51 +98,31 @@
 							<div class="form-group"></div>
 
 							<div class="row">
-								<div class="col-md-2">From Date*</div>
+
+
+								<div class="col-md-2">Select Plant</div>
+
 								<div class="col-md-4">
-									<input type="text" autocomplete="off" id="from_date"
-										name="from_date" required style="width: 100%;"
-										class="form-control" value="${fromDate}"> <span
-										class="error" aria-live="polite"></span>
+									<select id="plantId" name="plantId" class="standardSelect"
+										tabindex="1" required
+										oninvalid="setCustomValidity('Please select plant name')"
+										onchange="getData()">
+
+										<c:forEach items="${plantList}" var="plant">
+											<c:choose>
+												<c:when test="${plant.plantId==plantId1}">
+													<option value="${plant.plantId}" selected>${plant.plantName}</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${plant.plantId}">${plant.plantName}
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</select>
 								</div>
-								<div class="col-md-2">To Date*</div>
+								<div class="col-md-2">Select Customer</div>
 								<div class="col-md-4">
-									<input type="text" autocomplete="off" id="to_date"
-										name="to_date" style="width: 100%;" class="form-control"
-										value="${toDate}"> <span class="error"
-										aria-live="polite"></span>
-								</div>
-
-							</div>
-
-							<div class="form-group"></div>
-
-							<div class="row">
-
-								
-									<div class="col-md-2">Select Plant</div>
-
-									<div class="col-md-4">
-										<select id="plantId" name="plantId" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select plant name')"
-											onchange="getData()">
-											
-											<c:forEach items="${plantList}" var="plant">
-												<c:choose>
-													<c:when test="${plant.plantId==plantId1}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
-													</c:otherwise>
-												</c:choose>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-md-2">Select Customer</div>
-									<div class="col-md-4">
-										<select id="custId" name="custId" class="standardSelect"
+									<select id="custId" name="custId" class="standardSelect"
 										tabindex="1" multiple="multiple" required
 										oninvalid="setCustomValidity('Please select Challan')">
 										<option value="0">All</option>
@@ -153,19 +133,44 @@
 
 
 									</select>
-									</div>
+								</div>
 
 							</div>
 
 							<div class="form-group"></div>
+
 							<div class="row">
-								<div class="col-md-6"></div>
+								<div class="col-md-2">From Date*</div>
+								<div class="col-md-2">
+									<input type="text" autocomplete="off" id="from_date"
+										name="from_date" required style="width: 100%;"
+										class="form-control" value="${fromDate}"> <span
+										class="error" aria-live="polite"></span>
+								</div>
+								<div class="col-md-1">To Date*</div>
+								<div class="col-md-2">
+									<input type="text" autocomplete="off" id="to_date"
+										name="to_date" style="width: 100%;" class="form-control"
+										value="${toDate}"> <span class="error"
+										aria-live="polite"></span>
+								</div>
+								<div class="col-md-2"></div>
+
 								<div class="col-md-2">
 									<input type="button" class="btn btn-primary"
 										onclick="showQuot()" value="Submit">
 								</div>
+
 							</div>
 
+
+							<!-- 
+							<div class="form-group"></div>
+							<div class="row">
+								<div class="col-md-6"></div>
+								
+							</div>
+ -->
 
 							<div class="form-group"></div>
 
@@ -309,17 +314,15 @@
 			//alert("Hi View Orders  ");
 
 			var custId = document.getElementById("custId").value;
-			
+
 			var values = $('#custId').val();
-			
-			
-			alert("custId:"+custId);
-			alert("list is:"+values);
+
+			alert("custId:" + custId);
+			alert("list is:" + values);
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
 			//alert("cust id are"+custId);
-			
 
 			var valid = true;
 
@@ -329,7 +332,7 @@
 			}
 
 			var plantId = document.getElementById("plantId").value;
-			alert("plant id are"+plantId);
+			alert("plant id are" + plantId);
 
 			//alert("plantId" + plantId);
 			var valid = true;
@@ -409,9 +412,12 @@
 																				v.custName,
 																				v.custMobNo,
 
-																				v.taxAmt.toFixed(2),
-																				v.taxableAmt.toFixed(2),
-																				v.totalAmt.toFixed(2),
+																				v.taxAmt
+																						.toFixed(2),
+																				v.taxableAmt
+																						.toFixed(2),
+																				v.totalAmt
+																						.toFixed(2),
 																				acButton
 
 																		])
@@ -433,12 +439,11 @@
 
 		}
 	</script>
-	
-	
+
+
 	<script type="text/javascript">
-	
-	// on plant change function 
-		function getData() { 
+		// on plant change function 
+		function getData() {
 			var plantId = document.getElementById("plantId").value;
 			var valid = true;
 
@@ -474,16 +479,15 @@
 					$('#po_id').html("-1");
 					$("#po_id").trigger("chosen:updated");
 					 */
-					var dataTable = $('#bootstrap-data-table')
-					.DataTable();
-			dataTable.clear().draw();
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
 
 				});
 			}//end of if
 
 		}
 	</script>
-	
+
 
 
 	<script type="text/javascript">
