@@ -10,8 +10,10 @@
 <title>Shiv Admin</title>
 
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
-<c:url var="getPayRecoveryDoneBetDate" value="/getPayRecoveryDoneBetDate" />
-<c:url var="getPayRecoveryBetDateVyPlantId" value="/getPayRecoveryBetDateVyPlantId" />
+<c:url var="getPayRecoveryDoneBetDate"
+	value="/getPayRecoveryDoneBetDate" />
+<c:url var="getPayRecoveryBetDateVyPlantId"
+	value="/getPayRecoveryBetDateVyPlantId" />
 
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
@@ -133,33 +135,36 @@
 
 								<div class="row">
 									<div class="col-md-2">From Date</div>
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="text" autocomplete="off" id="from_date"
 											name="from_date" required style="width: 100%;"
 											class="form-control" value="${fromDate}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-2">To Date</div>
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="text" autocomplete="off" id="to_date"
 											name="to_date" style="width: 100%;" class="form-control"
 											value="${toDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
+									<div class="col-md-1"></div>
+
+									<div class="col-md-2">
+										<input type="button" class="btn btn-primary"
+											onclick="showQuot()" value="Submit">
+									</div>
 
 								</div>
 
 
-								<div class="form-group"></div>
-								
-								
+								<!-- 	<div class="form-group"></div>
+
+
 								<div class="row">
-								<div class="col-md-6"></div>
-								<div class="col-md-2">
-									<input type="button" class="btn btn-primary"
-										onclick="showQuot()" value="Submit">
-								</div>
-							</div>
+									<div class="col-md-6"></div>
+
+								</div> -->
 								<!-- 	<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-6"></div>
@@ -178,15 +183,16 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-<!-- 												<th class="check" style="text-align: center; width: 5%;">
- -->												<th style="text-align: center; width: 5%;">Sr.</th>
+												<!-- 												<th class="check" style="text-align: center; width: 5%;">
+ -->
+												<th style="text-align: center; width: 5%;">Sr.</th>
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Bill No</th>
 												<th style="text-align: center">Bill Date</th>
 												<th style="text-align: center">Billing Amount</th>
 												<th style="text-align: center">Paid Amount</th>
 												<th style="text-align: center">Pending Amount</th>
-											
+
 											</tr>
 										</thead>
 
@@ -200,11 +206,11 @@
 
 													<td style="text-align: center">${count.index+1}</td>
 
-													
-													
-														<td style="text-align: left"><c:out
+
+
+													<td style="text-align: left"><c:out
 															value="${rec.custName}" /></td>
-															
+
 													<td style="text-align: left"><c:out
 															value="${rec.billNo}" /></td>
 
@@ -212,10 +218,10 @@
 													<td style="text-align: left"><c:out
 															value="${rec.billDate}" /></td>
 
-													
+
 													<td style="text-align: left"><c:out
 															value="${rec.billTotal}" /></td>
-													
+
 													<td style="text-align: left"><c:out
 															value="${rec.paidAmt}" /></td>
 
@@ -223,13 +229,13 @@
 															value="${rec.pendingAmt}" /></td>
 
 
-													
+
 
 
 													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${rec.payHeadId},${count.index})"><i
-															class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
-													</td>
+															class="fa fa-edit" style="color: black"></i> <span
+															class="text-muted"></span></a></td>
 
 
 
@@ -239,27 +245,27 @@
 										</tbody>
 
 									</table>
-									
+
 									<div class="col-md-2"></div>
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();" disabled="disabled"  id="expExcel"
-										style="align-content: center; width: 200px; margin-left: 80px;">
-										Export To Excel</button>
-								</div>
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" disabled="disabled" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
 
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="genPdf()" disabled="disabled"  id="PDFButton"
-										style="align-content: center; width: 100px; margin-left: 80px;">
-										PDF</button>
-								</div>
-								&nbsp;
-									
+										<button type="button" class="btn btn-primary"
+											onclick="genPdf()" disabled="disabled" id="PDFButton"
+											style="align-content: center; width: 100px; margin-left: 80px;">
+											PDF</button>
+									</div>
+									&nbsp;
+
 								</div>
 
 								<!-- <input type="submit" class="btn btn-primary" value="Delete"
@@ -274,7 +280,7 @@
 
 			</div>
 		</div>
-<!-- disabled="disabled" -->
+		<!-- disabled="disabled" -->
 	</div>
 	<!-- .animated -->
 	<!-- .content -->
@@ -347,7 +353,7 @@
 
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		// on plant change function 
 		function getData() {
 			var plantId = document.getElementById("plant_id").value;
@@ -534,7 +540,7 @@
 		}
 	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");

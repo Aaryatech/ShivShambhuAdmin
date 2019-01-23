@@ -2,7 +2,6 @@ package com.ats.ssgs.controller;
 
 import java.io.BufferedInputStream;
 
-
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -79,6 +78,7 @@ public class EnqController {
 	RestTemplate rest = new RestTemplate();
 
 	List<EnqGenFact> enqGenFactList;
+	int isError = 0;
 
 	@RequestMapping(value = "/showAddEnquiry", method = RequestMethod.GET)
 	public ModelAndView showAddItem(HttpServletRequest request, HttpServletResponse response) {
@@ -87,6 +87,8 @@ public class EnqController {
 		try {
 			enqItemList = new ArrayList<>();
 			model = new ModelAndView("enq/addenquiry");
+			model.addObject("isError", isError);
+			isError = 0;
 
 			model.addObject("title", "Add Enquiry");
 
@@ -107,7 +109,8 @@ public class EnqController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("docCode", 1);
-			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map, com.ats.ssgs.model.master.Document.class);
+			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,
+					com.ats.ssgs.model.master.Document.class);
 			model.addObject("doc", doc);
 
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -143,8 +146,7 @@ public class EnqController {
 			System.out.println("plant is" + plantList);
 
 			model.addObject("plantList", plantList);
-			
-		
+
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -195,9 +197,7 @@ public class EnqController {
 		getEnqList = new ArrayList<GetEnqHeader>(Arrays.asList(ordHeadArray));
 
 		System.out.println("enq list is" + getEnqList.toString());
-		
-		
-		
+
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		ExportToExcel expoExcel = new ExportToExcel();
@@ -209,7 +209,6 @@ public class EnqController {
 		rowData.add("Customer Name");
 		rowData.add("Mobile No");
 		rowData.add("Status");
-		
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -225,10 +224,10 @@ public class EnqController {
 			rowData.add("" + getEnqList.get(i).getEnqDate());
 			rowData.add("" + getEnqList.get(i).getCustName());
 			rowData.add("" + getEnqList.get(i).getCustMobNo());
-			
-			String status1=null;
-			int stat=getEnqList.get(i).getEnqStatus();
-			if (stat== 0) {
+
+			String status1 = null;
+			int stat = getEnqList.get(i).getEnqStatus();
+			if (stat == 0) {
 				status1 = "Enquiry Generated";
 			} else if (stat == 1) {
 				status1 = "Quotation Generated";
@@ -237,8 +236,7 @@ public class EnqController {
 				status1 = "PO Generated";
 			}
 
-			rowData.add("" + status1 );
-		
+			rowData.add("" + status1);
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -249,16 +247,13 @@ public class EnqController {
 		session.setAttribute("exportExcelList", exportToExcelList);
 		session.setAttribute("excelName", "Enquiry List");
 
-		
-
 		return getEnqList;
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/showEnqListPdf/{fromDate}/{toDate}/{custId}/{plantId}", method = RequestMethod.GET)
-	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,@PathVariable("custId") int custId,@PathVariable("plantId") int plantId,
-			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+	public void showDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			@PathVariable("custId") int custId, @PathVariable("plantId") int plantId, HttpServletRequest request,
+			HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showDatewisePdf");
 		Document document = new Document(PageSize.A4);
@@ -284,7 +279,7 @@ public class EnqController {
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f});
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -329,7 +324,7 @@ public class EnqController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
+
 			int index = 0;
 			for (GetEnqHeader work : getEnqList) {
 				index++;
@@ -370,11 +365,9 @@ public class EnqController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				
-				
-				String status1=null;
-				int stat=work.getEnqStatus();
-				if (stat== 0) {
+				String status1 = null;
+				int stat = work.getEnqStatus();
+				if (stat == 0) {
 					status1 = "Enquiry Generated";
 				} else if (stat == 1) {
 					status1 = "Quotation Generated";
@@ -390,71 +383,61 @@ public class EnqController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				
-
 			}
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu(Datewise Equiry List)\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
 			document.add(name);
 			document.add(new Paragraph(" "));
-			
+
 			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
 			String reportDate = DF.format(new Date());
-			
-			String plantname=null;
-			String custName=null;
-			
-			
-		
 
-			
-			if(plantId==0) {
-				plantname="All";
-				
-			}
-			else {
+			String plantname = null;
+			String custName = null;
+
+			if (plantId == 0) {
+				plantname = "All";
+
+			} else {
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("plantId", plantId);
 
 				Plant getPlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
-				plantname=getPlant.getPlantName();
-				System.out.println("plantname"+plantname);
-				
-				
-				
+				plantname = getPlant.getPlantName();
+				System.out.println("plantname" + plantname);
+
 			}
-			if(custId==0) {
-				custName="All";
-				
-			}
-			else {
-				
-				
+			if (custId == 0) {
+				custName = "All";
+
+			} else {
+
 				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 				System.out.println();
 
 				map.add("custId", custId);
 
 				GetCust getcus1 = rest.postForObject(Constants.url + "getCustomerByCustId", map, GetCust.class);
-				custName=getcus1.getCustName();
-				System.out.println("custName"+custName);
-				
+				custName = getcus1.getCustName();
+				System.out.println("custName" + custName);
+
 			}
-			Paragraph p2 = new Paragraph("FromDate:"+fromDate +" ToDate:"+toDate+"  Plant:" + plantname + "  Customer:" + custName, headFont);
+			Paragraph p2 = new Paragraph(
+					"FromDate:" + fromDate + " ToDate:" + toDate + "  Plant:" + plantname + "  Customer:" + custName,
+					headFont);
 			p2.setAlignment(Element.ALIGN_CENTER);
 			document.add(p2);
 			document.add(new Paragraph("\n"));
-			
-			
-			
+
 			document.add(table);
-			
-			/*Paragraph p1 = new Paragraph("Total:"+tot, headFont);
-			p1.setAlignment(Element.ALIGN_CENTER);
-			document.add(p1);
-			document.add(new Paragraph("\n"));*/
+
+			/*
+			 * Paragraph p1 = new Paragraph("Total:"+tot, headFont);
+			 * p1.setAlignment(Element.ALIGN_CENTER); document.add(p1); document.add(new
+			 * Paragraph("\n"));
+			 */
 
 			int totalPages = writer.getPageNumber();
 
@@ -495,7 +478,6 @@ public class EnqController {
 			ex.printStackTrace();
 
 		}
-
 
 	}
 
@@ -824,7 +806,8 @@ public class EnqController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("docCode", 1);
-			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map, com.ats.ssgs.model.master.Document.class);
+			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,
+					com.ats.ssgs.model.master.Document.class);
 
 			enqHead.setEnqNo(doc.getDocPrefix() + "" + doc.getSrNo());
 			enqHead.setEnqDetailList(enqDetList);
@@ -841,6 +824,12 @@ public class EnqController {
 
 				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
 
+				isError = 2;
+
+			}
+
+			else {
+				isError = 1;
 			}
 
 			QuotHeader quotHeader = new QuotHeader();
@@ -884,7 +873,8 @@ public class EnqController {
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("docCode", 2);
-			com.ats.ssgs.model.master.Document docs = rest.postForObject(Constants.url + "getDocument", map, com.ats.ssgs.model.master.Document.class);
+			com.ats.ssgs.model.master.Document docs = rest.postForObject(Constants.url + "getDocument", map,
+					com.ats.ssgs.model.master.Document.class);
 
 			quotHeader.setQuotNo(docs.getDocPrefix() + "" + docs.getSrNo());
 

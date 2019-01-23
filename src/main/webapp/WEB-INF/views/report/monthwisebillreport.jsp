@@ -95,25 +95,7 @@
 
 						<div class="card-body card-block">
 
-							<div class="form-group"></div>
 
-							<div class="row">
-								<div class="col-md-2">From Date</div>
-								<div class="col-md-4">
-									<input type="text" autocomplete="off" id="from_date"
-										name="from_date" required style="width: 100%;"
-										class="form-control" value="${fromDate}"> <span
-										class="error" aria-live="polite"></span>
-								</div>
-								<div class="col-md-2">To Date</div>
-								<div class="col-md-4">
-									<input type="text" autocomplete="off" id="to_date"
-										name="to_date" style="width: 100%;" class="form-control"
-										value="${toDate}"> <span class="error"
-										aria-live="polite"></span>
-								</div>
-
-							</div>
 
 							<div class="form-group"></div>
 
@@ -147,15 +129,35 @@
 
 							</div>
 
-
 							<div class="form-group"></div>
+
 							<div class="row">
-								<div class="col-md-6"></div>
+								<div class="col-md-2">From Date</div>
+								<div class="col-md-2">
+									<input type="text" autocomplete="off" id="from_date"
+										name="from_date" required style="width: 100%;"
+										class="form-control" value="${fromDate}"> <span
+										class="error" aria-live="polite"></span>
+								</div>
+								<div class="col-md-1">To Date</div>
+								<div class="col-md-2">
+									<input type="text" autocomplete="off" id="to_date"
+										name="to_date" style="width: 100%;" class="form-control"
+										value="${toDate}"> <span class="error"
+										aria-live="polite"></span>
+								</div>
+
+								<div class="col-md-2"></div>
 								<div class="col-md-2">
 									<input type="button" class="btn btn-primary"
 										onclick="showQuot()" value="Submit">
 								</div>
+
 							</div>
+
+
+							<div class="form-group"></div>
+							<div class="row"></div>
 
 
 							<div class="form-group"></div>
@@ -387,12 +389,18 @@
 																		[
 																				i + 1,
 																				v.month,
-																				v.cgstAmt.toFixed(2),
-																				v.sgstAmt.toFixed(2),
-																				v.igstAmt.toFixed(2),
-																				v.taxAmt.toFixed(2),
-																				v.taxableAmt.toFixed(2),
-																				v.totalAmt.toFixed(2),
+																				v.cgstAmt
+																						.toFixed(2),
+																				v.sgstAmt
+																						.toFixed(2),
+																				v.igstAmt
+																						.toFixed(2),
+																				v.taxAmt
+																						.toFixed(2),
+																				v.taxableAmt
+																						.toFixed(2),
+																				v.totalAmt
+																						.toFixed(2),
 																				acButton
 
 																		])
@@ -404,8 +412,8 @@
 			}//end of if valid ==true
 
 		}
-		function callDetail(monthNo,year){
-			
+		function callDetail(monthNo, year) {
+
 			var plantId = document.getElementById("plantId").value;
 
 			var custId = document.getElementById("custId").value;
@@ -414,7 +422,13 @@
 
 			window
 					.open("${pageContext.request.contextPath}/showDatewiseBillReport1/"
-							+ monthNo + '/' + year+ '/' + plantId+ '/' + custId);
+							+ monthNo
+							+ '/'
+							+ year
+							+ '/'
+							+ plantId
+							+ '/'
+							+ custId);
 
 		}
 	</script>

@@ -129,7 +129,7 @@
 
 								<div class="col-md-2">Select Plant</div>
 
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<select id="plant_id" name="plant_id" class="standardSelect"
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select plant name')"
@@ -148,7 +148,7 @@
 									</select>
 								</div>
 								<div class="col-md-2">Select Customer</div>
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<select id="cust_name" name="cust_name" class="standardSelect"
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select customer')"
@@ -156,41 +156,42 @@
 										<option value="0">All</option>
 									</select>
 								</div>
-</div>
-
-								<div class="form-group"></div>
-
-
-								<div class="row">
-									<div class="col-md-6"></div>
-									<div class="col-md-2">
-										<input type="button" class="btn btn-primary"
-											onclick="showQuot()" value="Submit">
-									</div>
+								<div class="col-md-2">
+									<input type="button" class="btn btn-primary"
+										onclick="showQuot()" value="Submit">
 								</div>
-
-								<div class="form-group"></div>
-								
-								
-								<div class="card-body card-block">
-									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
-										<thead>
-											<tr>
-												<!-- <th class="check" style="text-align: center; width: 5%;"> -->
-												<th style="text-align: center; width: 5%;">Sr.</th>
-												<th style="text-align: center">Customer Name</th>
-												<th style="text-align: center">Mobile No.</th>
-												<th style="text-align: center">Billing Amount</th>
-												<th style="text-align: center">Paid Amount</th>
-												<th style="text-align: center">Pending Amount</th>
-												<th style="text-align: center">Action</th>
-
-											</tr>
-										</thead>
+							</div>
+							<!-- 
+							<div class="form-group"></div>
 
 
-										<%-- 	<tbody>
+							<div class="row">
+								<div class="col-md-6"></div>
+
+							</div> -->
+
+							<div class="form-group"></div>
+
+
+							<div class="card-body card-block">
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<!-- <th class="check" style="text-align: center; width: 5%;"> -->
+											<th style="text-align: center; width: 5%;">Sr.</th>
+											<th style="text-align: center">Customer Name</th>
+											<th style="text-align: center">Mobile No.</th>
+											<th style="text-align: center">Billing Amount</th>
+											<th style="text-align: center">Paid Amount</th>
+											<th style="text-align: center">Pending Amount</th>
+											<th style="text-align: center">Action</th>
+
+										</tr>
+									</thead>
+
+
+									<%-- 	<tbody>
 											<c:forEach items="${recList}" var="rec" varStatus="count">
 												<tr>
 													<td><input type="checkbox" class="chk"
@@ -229,35 +230,35 @@
 											</c:forEach>
 										</tbody> --%>
 
-									</table>
+								</table>
 
-									<div class="col-md-2"></div>
+								<div class="col-md-2"></div>
 
-									<div class="col-md-3">
+								<div class="col-md-3">
 
-										<button type="button" class="btn btn-primary"
-											onclick="exportToExcel();" disabled="disabled" id="expExcel"
-											style="align-content: center; width: 200px; margin-left: 80px;">
-											Export To Excel</button>
-									</div>
-
-
-									<div class="col-md-3">
-
-										<button type="button" class="btn btn-primary"
-											onclick="genPdf()" disabled="disabled" id="PDFButton"
-											style="align-content: center; width: 100px; margin-left: 80px;">
-											PDF</button>
-									</div>
-									&nbsp;
-
+									<button type="button" class="btn btn-primary"
+										onclick="exportToExcel();" disabled="disabled" id="expExcel"
+										style="align-content: center; width: 200px; margin-left: 80px;">
+										Export To Excel</button>
 								</div>
 
-								<!-- <input type="submit" class="btn btn-primary" value="Delete"
+
+								<div class="col-md-3">
+
+									<button type="button" class="btn btn-primary"
+										onclick="genPdf()" disabled="disabled" id="PDFButton"
+										style="align-content: center; width: 100px; margin-left: 80px;">
+										PDF</button>
+								</div>
+								&nbsp;
+
+							</div>
+
+							<!-- <input type="submit" class="btn btn-primary" value="Delete"
 									id="deleteId"
 									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 									style="align-content: center; width: 113px; margin-left: 40px;"> -->
-							
+
 
 						</div>
 					</div>
@@ -266,288 +267,283 @@
 			</div>
 			<!-- disabled="disabled" -->
 		</div>
-		</div>
-		<!-- .animated -->
-		<!-- .content -->
+	</div>
+	<!-- .animated -->
+	<!-- .content -->
 
 
-		<!-- Footer -->
-		<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
-		<!-- Footer -->
+	<!-- Footer -->
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+	<!-- Footer -->
 
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/popper.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/popper.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/jszip.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/pdfmake.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/vfs_fonts.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.html5.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.print.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.colVis.min.js"></script>
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables-init.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/jszip.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/pdfmake.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/vfs_fonts.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.html5.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.print.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables-init.js"></script>
 
-		<script
-			src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
-		<script>
-			jQuery(document).ready(function() {
-				jQuery(".standardSelect").chosen({
-					disable_search_threshold : 1,
-					no_results_text : "Oops, nothing found!",
-					width : "100%"
-				});
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
+	<script>
+		jQuery(document).ready(function() {
+			jQuery(".standardSelect").chosen({
+				disable_search_threshold : 1,
+				no_results_text : "Oops, nothing found!",
+				width : "100%"
 			});
-		</script>
+		});
+	</script>
 
 
 
-		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<script>
-			$(function() {
-				$('input[id$=from_date]').datepicker({
-					dateFormat : 'dd-mm-yy'
-				});
-
-				$('input[id$=to_date]').datepicker({
-					dateFormat : 'dd-mm-yy'
-				});
-
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$('input[id$=from_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
 			});
-		</script>
+
+			$('input[id$=to_date]').datepicker({
+				dateFormat : 'dd-mm-yy'
+			});
+
+		});
+	</script>
 
 
 
 
-		<script type="text/javascript">
-			// on plant change function 
-			function getData() {
-				var plantId = document.getElementById("plant_id").value;
-				var valid = true;
+	<script type="text/javascript">
+		// on plant change function 
+		function getData() {
+			var plantId = document.getElementById("plant_id").value;
+			var valid = true;
 
-				if (plantId == null || plantId == "") {
-					valid = false;
-					alert("Please select plant");
-				}
-
-				if (valid == true) {
-
-					$.getJSON('${getCustByPlantId}', {
-						plantId : plantId,
-						ajax : 'true',
-					},
-
-					function(data) {
-						var html;
-						var len = data.length;
-						var html = '<option selected value="0"  >All</option>';
-
-						for (var i = 0; i < len; i++) {
-
-							html += '<option value="' + data[i].custId + '">'
-									+ data[i].custName + '</option>';
-
-						}
-						html += '</option>';
-
-						$('#cust_name').html(html);
-						$("#cust_name").trigger("chosen:updated");
-						/* getCustInfo();
-
-						$('#po_id').html("-1");
-						$("#po_id").trigger("chosen:updated");
-						 */
-						var dataTable = $('#bootstrap-data-table').DataTable();
-						dataTable.clear().draw();
-
-					});
-				}//end of if
-
-			}
-		</script>
-
-
-
-
-		<script type="text/javascript">
-			// onclick of submit to search order 
-			function showQuot() {
-
-				//alert("Hi View Orders  ");
-
-				var fromDate = document.getElementById("from_date").value;
-				var toDate = document.getElementById("to_date").value;
-				var plantId = document.getElementById("plant_id").value;
-				var custId = document.getElementById("cust_name").value;
-
-				var valid = true;
-
-				if (fromDate == null || fromDate == "") {
-					valid = false;
-					alert("Please select from date");
-				}
-
-				else if (toDate == null || toDate == "") {
-					valid = false;
-					alert("Please select to date");
-				}
-
-				if (fromDate > toDate) {
-					valid = false;
-					alert("from date greater than todate ");
-				}
-				if (valid == true) {
-
-					$
-							.getJSON(
-									'${getPayRecoveryDoneBetDateCustWise}',
-									{
-										fromDate : fromDate,
-										toDate : toDate,
-										plantId : plantId,
-										custId : custId,
-										ajax : 'true',
-									},
-
-									function(data) {
-
-										document.getElementById("expExcel").disabled = false;
-										document.getElementById("PDFButton").disabled = false;
-
-										if (data == "") {
-											alert("No records found !!");
-											document.getElementById("expExcel").disabled = true;
-											document
-													.getElementById("PDFButton").disabled = true;
-
-										}
-
-										var dataTable = $(
-												'#bootstrap-data-table')
-												.DataTable();
-										dataTable.clear().draw();
-
-										$
-												.each(
-														data,
-														function(i, v) {
-															var chBox;
-
-															var acButton = '<a href="#" class="action_btn" onclick="callDateDetail('
-																	+ v.custId
-																	+')" style="color:black"><i class="fa fa-list" title="Detail"></i></a>'
-
-															
-															chBox = '<input  type="checkbox" class="chk" name="payHeadIds" id='+v.payHeadId+' class="check"  value='+v.payHeadId+'>'
-
-															dataTable.row
-																	.add(
-																			[
-																					
-																					i + 1,
-																					v.custName,
-																					v.custMobNo,
-																					v.billTotal.toFixed(2),
-																					v.paidAmt.toFixed(2),
-																					v.pendingAmt.toFixed(2),
-																					acButton ])
-																	.draw();
-														});
-
-									});
-
-				}//end of if valid ==true
-
+			if (plantId == null || plantId == "") {
+				valid = false;
+				alert("Please select plant");
 			}
 
-			
-		</script>
+			if (valid == true) {
 
-<script type="text/javascript">
+				$.getJSON('${getCustByPlantId}', {
+					plantId : plantId,
+					ajax : 'true',
+				},
 
-function callDateDetail(custId) {
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option selected value="0"  >All</option>';
 
-	//alert("hello..");
-	var fromDate = document.getElementById("from_date").value;
-	var toDate = document.getElementById("to_date").value;
+					for (var i = 0; i < len; i++) {
 
-	window.open("${pageContext.request.contextPath}/custPayRec/"
-			+ custId + '/' + fromDate + '/'
-			+ toDate+'/');
+						html += '<option value="' + data[i].custId + '">'
+								+ data[i].custName + '</option>';
 
-}
-</script>
+					}
+					html += '</option>';
+
+					$('#cust_name').html(html);
+					$("#cust_name").trigger("chosen:updated");
+					/* getCustInfo();
+
+					$('#po_id').html("-1");
+					$("#po_id").trigger("chosen:updated");
+					 */
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
+
+				});
+			}//end of if
+
+		}
+	</script>
 
 
-		<script type="text/javascript">
-			$(document)
-					.ready(
-							function() {
-								$('#bootstrap-data-table').DataTable();
 
-								$("#selAll")
-										.click(
-												function() {
-													$(
-															'#bootstrap-data-table tbody input[type="checkbox"]')
-															.prop(
-																	'checked',
-																	this.checked);
-												});
-							});
-		</script>
-		<script type="text/javascript">
-			function hideDiv(type) {
 
-				if (type == 0) {
+	<script type="text/javascript">
+		// onclick of submit to search order 
+		function showQuot() {
 
-					document.getElementById("hide_div").style = "display:none"
-				} else {
-					document.getElementById("hide_div").style = "visible"
+			//alert("Hi View Orders  ");
 
-				}
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+			var plantId = document.getElementById("plant_id").value;
+			var custId = document.getElementById("cust_name").value;
+
+			var valid = true;
+
+			if (fromDate == null || fromDate == "") {
+				valid = false;
+				alert("Please select from date");
 			}
-		</script>
 
-		<script type="text/javascript">
-			function exportToExcel() {
-
-				window.open("${pageContext.request.contextPath}/exportToExcel");
-				//document.getElementById("expExcel").disabled = true;
+			else if (toDate == null || toDate == "") {
+				valid = false;
+				alert("Please select to date");
 			}
-		</script>
 
-		<script type="text/javascript">
-			function genPdf() {
-				//alert("hiii");
-				var fromDate = document.getElementById("from_date").value;
-				var toDate = document.getElementById("to_date").value;
+			if (fromDate > toDate) {
+				valid = false;
+				alert("from date greater than todate ");
+			}
+			if (valid == true) {
 
-				window
-						.open('${pageContext.request.contextPath}/showPayRecDoneCustWisePdf/'
-								+ fromDate + '/' + toDate);
-				//document.getElementById("expExcel").disabled = true;
+				$
+						.getJSON(
+								'${getPayRecoveryDoneBetDateCustWise}',
+								{
+									fromDate : fromDate,
+									toDate : toDate,
+									plantId : plantId,
+									custId : custId,
+									ajax : 'true',
+								},
+
+								function(data) {
+
+									document.getElementById("expExcel").disabled = false;
+									document.getElementById("PDFButton").disabled = false;
+
+									if (data == "") {
+										alert("No records found !!");
+										document.getElementById("expExcel").disabled = true;
+										document.getElementById("PDFButton").disabled = true;
+
+									}
+
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
+
+									$
+											.each(
+													data,
+													function(i, v) {
+														var chBox;
+
+														var acButton = '<a href="#" class="action_btn" onclick="callDateDetail('
+																+ v.custId
+																+ ')" style="color:black"><i class="fa fa-list" title="Detail"></i></a>'
+
+														chBox = '<input  type="checkbox" class="chk" name="payHeadIds" id='+v.payHeadId+' class="check"  value='+v.payHeadId+'>'
+
+														dataTable.row
+																.add(
+																		[
+
+																				i + 1,
+																				v.custName,
+																				v.custMobNo,
+																				v.billTotal
+																						.toFixed(2),
+																				v.paidAmt
+																						.toFixed(2),
+																				v.pendingAmt
+																						.toFixed(2),
+																				acButton ])
+																.draw();
+													});
+
+								});
+
+			}//end of if valid ==true
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		function callDateDetail(custId) {
+
+			//alert("hello..");
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
+			window.open("${pageContext.request.contextPath}/custPayRec/"
+					+ custId + '/' + fromDate + '/' + toDate + '/');
+
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table').DataTable();
+
+							$("#selAll")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
+	</script>
+	<script type="text/javascript">
+		function hideDiv(type) {
+
+			if (type == 0) {
+
+				document.getElementById("hide_div").style = "display:none"
+			} else {
+				document.getElementById("hide_div").style = "visible"
 
 			}
-		</script>
+		}
+	</script>
+
+	<script type="text/javascript">
+		function exportToExcel() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			//document.getElementById("expExcel").disabled = true;
+		}
+	</script>
+
+	<script type="text/javascript">
+		function genPdf() {
+			//alert("hiii");
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
+			window
+					.open('${pageContext.request.contextPath}/showPayRecDoneCustWisePdf/'
+							+ fromDate + '/' + toDate);
+			//document.getElementById("expExcel").disabled = true;
+
+		}
+	</script>
 </body>
 </html>
