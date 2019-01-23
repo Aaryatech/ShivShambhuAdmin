@@ -52,8 +52,10 @@ public class PdfController {
 			QuotPrintData[] qPrintArray = rest.postForObject(Constants.url + "/getQuotPrintData", map,
 					QuotPrintData[].class);
 			quotPrintData = new ArrayList<QuotPrintData>(Arrays.asList(qPrintArray));
+			model.addObject("plantName",quotPrintData.get(0).getQuotDetPrint().get(0).getPlantName());
 
 			System.err.println("pdf data " + quotPrintData.get(0).getQuotDetPrint().toString());
+			
 			// quotIdList
 			// model.addObject("quotIdList", quotIdList);
 
@@ -72,6 +74,8 @@ public class PdfController {
 		return model;
 	}
 
+	
+	
 	@RequestMapping(value = "pdf/showChalanPdf/{chalanId}", method = RequestMethod.GET)
 	public ModelAndView showChalanPdf(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("chalanId") int chalanId) {

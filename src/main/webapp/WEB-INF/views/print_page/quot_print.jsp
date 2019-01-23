@@ -47,7 +47,10 @@
 					<c:out value="${printData.proj.projName}"></c:out> &nbsp;&nbsp; Site
 			</b></u>
 		</p>
-
+		
+	  <p>	
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dear Sir,<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This has a reference to your site telephonic discussion with you regarding the supply of  ${plantName} to your site In this connection we are submitting herewith our competitive offer for the supply of ${plantName} on the following&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;terms and conditions.
+		</p>
 
 		<table width="80%" border="0" cellpadding="0" cellspacing="0"
 			style="border-right: 1px solid #313131; margin-left: 100px;">
@@ -113,15 +116,10 @@
 			<p style="margin-left: 100px;">${count1.index+1})
 				${docTerm.termDesc}</p>
 		</c:forEach>
-		<br></br>
-		<%-- <p style="margin-left: 100px;">We also supply material to
-			following parties.</p>
-		<c:forEach items="${supplyList}" var="supply" varStatus="count4">
-
-			<p style="margin-left: 100px;">${count4.index+1})
-				${supply.termDesc}</p>
-		</c:forEach>
-		<br></br> --%>
+		<br/>
+		<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;We thank you for considering us for the supply of ${plantName} and we assure you of our Best Quality and services at all times. </p>
+	<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Note:</b> I under sign read the above terms and conditions carefully and agree for the same.</p>
+		
 		<p style="margin-left: 100px;">
 			<u><b>Our Bank Details:</b></u>
 		</p>
@@ -137,3 +135,13 @@
 	</c:forEach>
 </body>
 </html>
+
+
+<%-- <p style="margin-left: 100px;">We also supply material tos
+			following parties.</p>
+		<c:forEach items="${supplyList}" var="supply" varStatus="count4">
+
+			<p style="margin-left: 100px;">${count4.index+1})
+				${supply.termDesc}</p>
+		</c:forEach>
+		<br></br> --%>

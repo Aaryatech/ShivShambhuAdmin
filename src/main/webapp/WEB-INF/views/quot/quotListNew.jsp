@@ -418,7 +418,7 @@
 			} else {
 				window
 						.open('${pageContext.request.contextPath}/pdfQuot?url=pdf/showQuotPdf/'
-								+ quotIdList);
+								+ quotIdList 	+ '/'+ plantId);
 			}
 		}
 	</script>
@@ -667,6 +667,10 @@
 	<script type="text/javascript">
 		$(document)
 				.ready(
+						
+						
+						
+						
 						function() {
 							$('#bootstrap-data-table-export').DataTable();
 
