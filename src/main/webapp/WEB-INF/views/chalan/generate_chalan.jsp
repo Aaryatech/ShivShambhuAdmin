@@ -1167,8 +1167,10 @@ function allowOnlyNumber1(evt)
 		var width = '<input  type="text" value="0"  class="form-control"  id="width'+v.itemId+'" name="width'+v.itemId+'"   oninput="calcChalanTotal('+v.itemId+')"  onkeypress="return allowOnlyNumber(event);"/>'
 		var height = '<input  type="text" value="0"  class="form-control"  id="height'+v.itemId+'" name="height'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
 		var length = '<input  type="text" value="0"  class="form-control"  id="length'+v.itemId+'" name="length'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
-		   var itemChalanTotal = '<input  type="text"  class="form-control"  id="itemChalanTotal'+v.itemId+'" name="itemChalanTotal'+v.itemId+'"/>'
-			var chalanQty = '<input  type="text" value="'+v.chalanQty+'"    class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
+	 var itemChalanTotal = '<input  type="text" value="'+v.chalanQty+'" class="form-control"  id="itemChalanTotal'+v.itemId+'" name="itemChalanTotal'+v.itemId+'"/>'
+	var chalanQty = '<input  type="text" value="'+v.chalanQty+'" class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
+	
+	//alert(itemChalanTotal);
 		  
 														var index=i+1;
 														dataTable.row

@@ -184,7 +184,7 @@
 														<option value="${plant.plantId}" selected>${plant.plantName}</option>
 													</c:when>
 													<c:otherwise>
-													<option value="${plant.plantId}">${plant.plantName}</option>
+														<option value="${plant.plantId}">${plant.plantName}</option>
 													</c:otherwise>
 												</c:choose>
 											</c:forEach>
@@ -237,7 +237,8 @@
 												<th style="text-align: center">Delivery Date</th>
 												<th style="text-align: center">Dispatch Time</th>
 												<th style="text-align: center">Item Name</th>
-												<th style="text-align: center">Quantity</th>
+												<th style="text-align: center">Order Quantity</th>
+												<th style="text-align: center">Remaining Order Quantity</th>
 												<th style="text-align: center">Action</th>
 											</tr>
 										</thead>
@@ -260,6 +261,9 @@
 															value="${orderDet.dispatchTime}" /></td>
 													<td style="text-align: left"><c:out
 															value="${orderDet.itemName}" /></td>
+
+													<td style="text-align: center"><c:out
+															value="${orderDet.orderQty}" /></td>
 													<td style="text-align: center"><c:out
 															value="${orderDet.remOrdQty}" /></td>
 

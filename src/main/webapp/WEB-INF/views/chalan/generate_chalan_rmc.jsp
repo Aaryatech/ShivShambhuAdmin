@@ -380,16 +380,16 @@ body {
 
 									<div class="col-md-4">
 										<input type="text" id="batchNo" name="batchNo"
-											 autocomplete="off" required value="-"
-											style="width: 100%;" class="form-control"> <span
-											class="error" aria-live="polite"></span>
+											autocomplete="off" required value="-" style="width: 100%;"
+											class="form-control"> <span class="error"
+											aria-live="polite"></span>
 									</div>
 
 									<div class="col-md-2">RST No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="rstNo" name="rstNo" required
-											 autocomplete="off" style="width: 100%;" value="-"
+											autocomplete="off" style="width: 100%;" value="-"
 											class="form-control"> <span class="error"
 											aria-live="polite"></span>
 									</div>
@@ -1190,9 +1190,11 @@ var no=1;
 		var width = '<input  type="text" value="0"  class="form-control"  id="width'+v.itemId+'" name="width'+v.itemId+'"   oninput="calcChalanTotal('+v.itemId+')"  onkeypress="return allowOnlyNumber(event);"/>'
 		var height = '<input  type="text" value="0"  class="form-control"  id="height'+v.itemId+'" name="height'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
 		var length = '<input  type="text" value="0"  class="form-control"  id="length'+v.itemId+'" name="length'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
-	    var itemChalanTotal = '<input  type="text"  class="form-control"  id="itemChalanTotal'+v.itemId+'" name="itemChalanTotal'+v.itemId+'"/>'
-		var chalanQty = '<input  type="text" value="'+v.chalanQty+'"    class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
+	    var itemChalanTotal = '<input  type="text"  value="'+v.chalanQty+'"  class="form-control"  id="itemChalanTotal'+v.itemId+'" name="itemChalanTotal'+v.itemId+'"/>'
+	    var chalanQty = '<input  type="text" value="'+v.chalanQty+'" class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 	  
+		
+		alert(chalanQty);
 													var index=i+1;
 													dataTable.row
 															.add(

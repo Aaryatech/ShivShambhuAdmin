@@ -97,7 +97,11 @@ public class ChalanController {
 
 			model.addObject("plantList", plantList);
 
-			Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+			map1.add("vehicleType", 2);
+
+			Vehicle[] vehArray = rest.postForObject(Constants.url + "getVehListByVehicleType", map1, Vehicle[].class);
 			vehicleList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
 
 			model.addObject("vehicleList", vehicleList);
@@ -364,7 +368,7 @@ public class ChalanController {
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
 			int custId = Integer.parseInt(request.getParameter("cust_name"));
 			int orderId = Integer.parseInt(request.getParameter("order_id"));
-		
+
 			String chalanDate = request.getParameter("chalan_date");
 			String batchNo = request.getParameter("batchNo");
 			String chalanRemark = request.getParameter("chalan_remark");
@@ -385,12 +389,13 @@ public class ChalanController {
 				float width = Float.parseFloat(request.getParameter("width" + tempChItemList.get(i).getItemId()));
 				float height = Float.parseFloat(request.getParameter("height" + tempChItemList.get(i).getItemId()));
 				float length = Float.parseFloat(request.getParameter("length" + tempChItemList.get(i).getItemId()));
-				
-				int chalanQty=Integer.parseInt(request.getParameter("chalanQty" + tempChItemList.get(i).getItemId()));
-				
-				System.out.println("Qty is::"+chalanQty);
-				float total= Float.parseFloat(request.getParameter("itemChalanTotal" + tempChItemList.get(i).getItemId()));
-				System.out.println("total is::"+total);
+
+				int chalanQty = Integer.parseInt(request.getParameter("chalanQty" + tempChItemList.get(i).getItemId()));
+
+				System.out.println("Qty is::" + chalanQty);
+				float total = Float
+						.parseFloat(request.getParameter("itemChalanTotal" + tempChItemList.get(i).getItemId()));
+				System.out.println("total is::" + total);
 				ChalanDetail chDetail = new ChalanDetail();
 
 				chDetail.setDelStatus(1);
@@ -526,7 +531,7 @@ public class ChalanController {
 			model.addObject("plantList", plantList);
 
 			model.addObject("title", "Chalan List");
-			
+
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -537,10 +542,9 @@ public class ChalanController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
-
 
 		} catch (Exception e) {
 			System.err.println("Exce in /showChalanList   " + e.getMessage());
