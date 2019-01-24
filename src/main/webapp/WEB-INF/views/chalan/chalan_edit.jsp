@@ -999,8 +999,8 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 			var out_km= document.getElementById("out_km").value;
 			var in_km= document.getElementById("in_km").value;
 			
-			alert("out"+out_km);
-			alert("in_km"+in_km);
+			//alert("out"+out_km);
+			//alert("in_km"+in_km);
 			
 			
 			var valid = true;

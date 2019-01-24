@@ -406,6 +406,13 @@ public class QuotController {
 		GetQuotHeader[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustIdAndStatus", map,
 				GetQuotHeader[].class);
 		getQuotList = new ArrayList<GetQuotHeader>(Arrays.asList(ordHeadArray));
+		
+		for (int i = 0; i < getQuotList.size(); i++) {
+		
+			
+			getQuotList.get(i).setQuotDate(DateConvertor.convertToDMY(getQuotList.get(i).getQuotDate()));
+			
+		}
 
 		System.out.println("quot list data " + getQuotList.toString());
 
@@ -432,19 +439,13 @@ public class QuotController {
 			rowData.add("" + getQuotList.get(i).getCompName());
 
 			rowData.add("" + getQuotList.get(i).getQuotNo());
-			rowData.add("" + getQuotList.get(i).getQuotDate());
+			String date1=DateConvertor.convertToDMY( getQuotList.get(i).getQuotDate());
+			System.out.println("date1"+date1);
+			
+			rowData.add("" + date1);
 			rowData.add("" + getQuotList.get(i).getUsrName());
 
-			/*
-			 * String status1=null; int stat=getEnqList.get(i).getEnqStatus(); if (stat== 0)
-			 * { status1 = "Enquiry Generated"; } else if (stat == 1) { status1 =
-			 * "Quotation Generated"; } else {
-			 * 
-			 * status1 = "PO Generated"; }
-			 * 
-			 * rowData.add("" + status1 );
-			 */
-
+			
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
