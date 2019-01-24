@@ -419,8 +419,7 @@ body {
 														<tr>
 															<th style="width: 5%;" align="center">Sr</th>
 															<th style="width: 20%;" align="center">Item Name</th>
-															<th style="width: 20%;" align="center">Unit of
-																Measure</th>
+															<th style="width: 20%;" align="center">UOM</th>
 															<th style="width: 20%;" align="center">Order
 																Quantity</th>
 															<th style="width: 20%;" align="center">Remaining

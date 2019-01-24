@@ -81,118 +81,129 @@
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
 						<div class="card-header">
-							<strong>${title}</strong> Quotation No : <strong>${quotHeader.quotNo}</strong> &nbsp;
-							Date : <strong>${quotHeader.quotDate}</strong>
+							<strong>${title}</strong> Quotation No : <strong>${quotHeader.quotNo}</strong>
+							&nbsp; Date : <strong>${quotHeader.quotDate}</strong>
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/submitPurchaseOrder"
-								onsubmit="return confirm('Do you really want to submit the Purchase Order ?');" method="post">
-								
+							<form
+								action="${pageContext.request.contextPath}/submitPurchaseOrder"
+								onsubmit="return confirm('Do you really want to submit the Purchase Order ?');"
+								method="post">
+
 								<div class="row">
 
-									<div class="col-md-2"> Purchase Order No.</div>
+									<div class="col-md-2">Purchase Order No.</div>
 
 									<div class="col-md-4">
-										<input type="text" id="poNo" name="poNo"
-											class="form-control" value="${shortName}-${fyf}-${fyt}-${var}" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
+										<input type="text" id="poNo" name="poNo" class="form-control"
+											value="${shortName}-${fyf}-${fyt}-${var}"
+											style="height: 32px; padding-bottom: 12px; font-size: 15px;">
 									</div>
-									 
+
 
 								</div>
-							 
+
 								<div class="form-group"></div>
 
 								<div class="row">
 
-									<div class="col-md-2"> Plant</div>
+									<div class="col-md-2">Plant</div>
 
 									<div class="col-md-4">
 										<input type="text" id="plantName" name="plantName"
-											class="form-control" value="${quotHeader.plantName}" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
+											class="form-control" value="${quotHeader.plantName}"
+											style="height: 32px; padding-bottom: 12px; font-size: 15px;"
+											readonly>
 									</div>
 									<div class="col-md-2">Customer</div>
 									<div class="col-md-4">
 										<input type="text" id="custName" name="custName"
-											class="form-control" value="${quotHeader.custName}" style="height: 32px;padding-bottom: 12px;font-size: 15px;" readonly>
+											class="form-control" value="${quotHeader.custName}"
+											style="height: 32px; padding-bottom: 12px; font-size: 15px;"
+											readonly>
 									</div>
 
 								</div>
-							 
+
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Purchase Order Date</div>
 									<div class="col-md-4">
 										<input type="text" id="poDate" name="poDate"
-											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
+											class="form-control"
+											style="height: 32px; padding-bottom: 12px; font-size: 15px;"
 											value="${todayDate}">
 									</div>
 									<div class="col-md-2">Payment Term</div>
 
 									<div class="col-md-4">
 										<input type="text" id="payTerm" name="payTerm"
-											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
-											value="${quotHeader.payTerm}" readonly>
-										<input type="hidden" id="taxIncl" name="taxIncl" 
+											class="form-control"
+											style="height: 32px; padding-bottom: 12px; font-size: 15px;"
+											value="${quotHeader.payTerm}" readonly> <input
+											type="hidden" id="taxIncl" name="taxIncl"
 											value="${quotHeader.taxValue}" readonly>
 									</div>
 
 
 								</div>
-								 
+
 								<div class="form-group"></div>
 
 								<div class="row">
-								<div class="col-md-2">Purchase Order Validity Date </div>
+									<div class="col-md-2">Purchase Order Validity Date</div>
 									<div class="col-md-4">
 										<input type="text" id="poValidityDate" name="poValidityDate"
-											class="form-control" style="height: 32px;padding-bottom: 12px;font-size: 15px;"
+											class="form-control"
+											style="height: 32px; padding-bottom: 12px; font-size: 15px;"
 											value="${todayDate}">
 									</div>
-									
+
 									<div class="col-md-2">Delivery Location</div>
 									<div class="col-md-4">
 										<input type="text" id="delivery" name="delivery"
-											  class="form-control"
-											style="height: 32px;padding-bottom: 12px;font-size: 15px;" required>
+											autocomplete="off" class="form-control"
+											style="height: 32px; padding-bottom: 12px; font-size: 15px;"
+											required>
 									</div>
-									 
+
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Tax Include</div>
 									<div class="col-md-4">
-									<c:choose>
-										<c:when test="${quotHeader.taxValue==1}">
+										<c:choose>
+											<c:when test="${quotHeader.taxValue==1}">
 										 No
 										</c:when>
-										<c:otherwise>
+											<c:otherwise>
 										YES
 										</c:otherwise>
-									</c:choose>
-										 
+										</c:choose>
+
 									</div>
-									 
+
 								</div>
-  
-								 
-								 
-							<div class="card-body card-block">
+
+
+
+								<div class="card-body card-block">
 
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
-										
+
 										<thead>
-										
+
 											<tr>
 
-												<th style="text-align: center" width="2%">Sr </th>
+												<th style="text-align: center" width="2%">Sr</th>
 
 												<th style="text-align: center" class="col-md-1">Item</th>
 												<th style="text-align: center" class="col-md-1">Qty</th>
-												 
+
 												<th style="text-align: center" class="col-md-1">Item
-													Rate</th> 
-												<th style="text-align: center" class="col-md-1">GST</th> 
+													Rate</th>
+												<th style="text-align: center" class="col-md-1">GST</th>
 												<th style="text-align: center" class="col-md-1">Tax</th>
 												<th style="text-align: center" class="col-md-1">Other
 													Cost After Tax</th>
@@ -203,42 +214,59 @@
 										</thead>
 										<tbody>
 
-											<c:forEach items="${quotHeader.getQuotDetailList}" var="getQuotDetailList" varStatus="count">
+											<c:forEach items="${quotHeader.getQuotDetailList}"
+												var="getQuotDetailList" varStatus="count">
 												<tr>
 
-													<td style="text-align: center">${count.index+1} </td>
+													<td style="text-align: center">${count.index+1}</td>
 
 
 													<td style="text-align: left"><c:out
 															value="${getQuotDetailList.itemName}" /></td>
 
 													<td style="width: 100px"><input type="text"
-														id="pOqty${getQuotDetailList.itemId}" name="pOqty${getQuotDetailList.itemId}"
-														value="${getQuotDetailList.quotQty}" class="form-control"  pattern="[+-]?([0-9]*[.])?[0-9]+" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;" required></td>
-														
-														<td style="width: 100px"><input type="text"
-														 id="taxableAmt${getQuotDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
-														name="taxableAmt${getQuotDetailList.itemId}" pattern="[+-]?([0-9]*[.])?[0-9]+" onchange="calFinalValue(${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer},${getQuotDetailList.itemId});" value="${getQuotDetailList.taxableValue}" class="form-control" required></td>
-														
-														<td style="text-align: right;"><c:out
-															value="${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer}%" /></td>
-    		 
-
-													<td id="taxValuetd${getQuotDetailList.itemId}" style="text-align: right"><c:out
-															value="${getQuotDetailList.taxValue}" /></td>
-  
-													<td style="width: 100px"><input type="text" 
-														id="othCostAftTax${getQuotDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
-														name="othCostAftTax${getQuotDetailList.itemId}" pattern="[+-]?([0-9]*[.])?[0-9]+" onchange="calFinalValue(${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer},${getQuotDetailList.itemId});" value="${getQuotDetailList.otherCostAfterTax}" class="form-control" required>
-													
-													<input type="hidden" id="taxAmt${getQuotDetailList.itemId}" 
-														name="taxAmt${getQuotDetailList.itemId}" value="${getQuotDetailList.taxValue}" required>
-													
-													</td>
+														id="pOqty${getQuotDetailList.itemId}"
+														name="pOqty${getQuotDetailList.itemId}"
+														value="${getQuotDetailList.quotQty}" class="form-control"
+														pattern="[+-]?([0-9]*[.])?[0-9]+"
+														style="height: 32px; padding-bottom: 12px; text-align: right; font-size: 15px;"
+														required></td>
 
 													<td style="width: 100px"><input type="text"
-														readonly id="finalAmt${getQuotDetailList.itemId}" style="height: 32px;padding-bottom: 12px; text-align: right;font-size: 15px;"
-														name="finalAmt${getQuotDetailList.itemId}" value="${getQuotDetailList.total}" class="form-control" readonly></td>
+														id="taxableAmt${getQuotDetailList.itemId}"
+														style="height: 32px; padding-bottom: 12px; text-align: right; font-size: 15px;"
+														name="taxableAmt${getQuotDetailList.itemId}"
+														pattern="[+-]?([0-9]*[.])?[0-9]+"
+														onchange="calFinalValue(${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer},${getQuotDetailList.itemId});"
+														value="${getQuotDetailList.taxableValue}"
+														class="form-control" required></td>
+
+													<td style="text-align: right;"><c:out
+															value="${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer}%" /></td>
+
+
+													<td id="taxValuetd${getQuotDetailList.itemId}"
+														style="text-align: right"><c:out
+															value="${getQuotDetailList.taxValue}" /></td>
+
+													<td style="width: 100px"><input type="text"
+														id="othCostAftTax${getQuotDetailList.itemId}"
+														style="height: 32px; padding-bottom: 12px; text-align: right; font-size: 15px;"
+														name="othCostAftTax${getQuotDetailList.itemId}"
+														pattern="[+-]?([0-9]*[.])?[0-9]+"
+														onchange="calFinalValue(${getQuotDetailList.igstPer+getQuotDetailList.cgstPer+getQuotDetailList.sgstPer},${getQuotDetailList.itemId});"
+														value="${getQuotDetailList.otherCostAfterTax}"
+														class="form-control" required> <input
+														type="hidden" id="taxAmt${getQuotDetailList.itemId}"
+														name="taxAmt${getQuotDetailList.itemId}"
+														value="${getQuotDetailList.taxValue}" required></td>
+
+													<td style="width: 100px"><input type="text" readonly
+														id="finalAmt${getQuotDetailList.itemId}"
+														style="height: 32px; padding-bottom: 12px; text-align: right; font-size: 15px;"
+														name="finalAmt${getQuotDetailList.itemId}"
+														value="${getQuotDetailList.total}" class="form-control"
+														readonly></td>
 
 
 												</tr>
@@ -249,7 +277,7 @@
 
 
 								</div>
-								 
+
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -258,19 +286,21 @@
 
 									<div class="col-md-9">
 										<input type="text" id="poRemark" name="poRemark"
-											class="form-control"  value="-" style="height: 32px;padding-bottom: 12px; text-align: left;font-size: 15px;" required>
-									</div> 
- 
+											class="form-control" value="-"
+											style="height: 32px; padding-bottom: 12px; text-align: left; font-size: 15px;"
+											required>
+									</div>
+
 
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-						<div class="col-md-12" style="text-align: center">
-						 
-						<button type="submit" style="height:35px;width:80px">Submit</button>
-						</div>
-						</div>
-						
+									<div class="col-md-12" style="text-align: center">
+
+										<button type="submit" style="height: 35px; width: 80px">Submit</button>
+									</div>
+								</div>
+
 
 							</form>
 						</div>
@@ -493,7 +523,7 @@
 			 }
 		}
 </script>
-	 
+
 
 </body>
 </html>

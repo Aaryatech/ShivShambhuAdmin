@@ -273,6 +273,10 @@
 														<a href="#" class="action_btn"
 														onclick="callChalanPage(${orderDet.orderDetId},${orderDet.orderId},${count.index})"><i
 															class="fa fa-list" style="color: black" title="Chalan"></i></a>
+														<a
+														href="${pageContext.request.contextPath}/editOrder/${orderDet.orderId}"><i
+															class="fa fa-edit" style="color: black" title="Edit"></i>
+															<span class="text-muted"></span></a>
 													</td>
 
 
