@@ -55,19 +55,19 @@ public class PdfController {
 			model.addObject("plantName",quotPrintData.get(0).getQuotDetPrint().get(0).getPlantName());
 
 			System.err.println("pdf data " + quotPrintData.get(0).getQuotDetPrint().toString());
-			
+			model.addObject("quotPrintData", quotPrintData);
 			// quotIdList
 			// model.addObject("quotIdList", quotIdList);
-
+/*
 			map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("termId", 4);
+			map.add("termId",4]);
 			DocTermHeader editDoc = rest.postForObject(Constants.url + "getDocHeaderByTermId", map,
 					DocTermHeader.class);
 
-			model.addObject("supplyList", editDoc.getDetailList());
+			model.addObject("supplyList", editDoc.getDetailList());*/
 
-			model.addObject("quotPrintData", quotPrintData);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
