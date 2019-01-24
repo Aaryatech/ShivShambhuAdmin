@@ -102,7 +102,7 @@ public class BillController {
 	List<RmcQuotTemp> rmcQuotTempList;
 	List<Setting> settingList;
 
-//hii
+	// hii
 
 	@RequestMapping(value = "/showBillByMultiChalanId", method = RequestMethod.POST)
 	public ModelAndView showBillByMultiChalanId(HttpServletRequest request, HttpServletResponse response) {
@@ -569,6 +569,30 @@ public class BillController {
 			billHeader.setBillNo(doc.getDocPrefix() + "" + doc.getSrNo());
 
 			billHeader.setBillDetailList(billDetailList);
+
+			MultiValueMap<String, Object> mapObj = new LinkedMultiValueMap<String, Object>();
+			System.err.println("custId for getPoByCust  " + custId);
+
+			mapObj.add("custId", custId);
+			mapObj.add("statusList", 1);
+
+			PoHeader[] chArray = rest.postForObject(Constants.url + "getPoHeaderByCustIdAndStatus", mapObj,
+					PoHeader[].class);
+
+			List<PoHeader> poHeaderList = new ArrayList<>();
+			poHeaderList = new ArrayList<PoHeader>(Arrays.asList(chArray));
+
+			ArrayList<String> poNOList = new ArrayList<>();
+
+			if (poHeaderList.size() > 0) {
+				for (int i = 0; i < poHeaderList.size(); i++) {
+					poNOList.add(poHeaderList.get(i).getPoNo());
+				}
+			}
+
+			System.out.println("poNOLIST : --------------------------------------"+poNOList.toString());
+			
+			billHeader.setExVar1("" + poNOList.toString());
 
 			if (grandTotalAmt > 0) {
 
