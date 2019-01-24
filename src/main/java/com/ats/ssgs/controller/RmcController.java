@@ -122,6 +122,11 @@ public class RmcController {
 
 			model.addObject("plantList", plantList);
 			model.addObject("rmcOrdList", rmcOrdList);
+
+			for (int k = 0; k < rmcOrdList.size(); k++) {
+				rmcOrdList.get(k).setDeliveryDate(DateConvertor.convertToDMY(rmcOrdList.get(k).getDeliveryDate()));
+			}
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 			model.addObject("plantId", plantId);
@@ -422,7 +427,11 @@ public class RmcController {
 			 * model.addObject("plantList", plantList);
 			 */
 
-			Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+			map1.add("vehicleType", 2);
+
+			Vehicle[] vehArray = rest.postForObject(Constants.url + "getVehListByVehicleType", map1, Vehicle[].class);
 			vehicleList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
 
 			model.addObject("vehicleList", vehicleList);

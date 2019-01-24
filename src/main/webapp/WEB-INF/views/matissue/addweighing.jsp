@@ -282,13 +282,12 @@
 									<div class="col-md-2">
 										<input type="file" id="imgInp" name="imgInp" accept="image/*"
 											style="width: 100%;" class="form-control" autocomplete="off"
-											value="${editWeigh.photo1}" required  accept="image/*" 
+											value="${editWeigh.photo1}" required accept="image/*"
 											onchange="validateFileType()" /> <span class="error"
 											aria-live="polite"></span>
 									</div>
 									<div class="col-md-2">
 										<img id="image1" name="image1"
-											src="https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/media/assets/submodel/8230.jpg"
 											alt="l" height="50px;" width="50px;">
 									</div>
 
@@ -297,16 +296,16 @@
 
 									<div class="col-md-2">Add Photo2</div>
 									<div class="col-md-2">
-										<input type="file" id="imgInp1" name="imgInp1"  accept="image/*" 
-											style="width: 100%;" class="form-control" autocomplete="off"
+										<input type="file" id="imgInp1" name="imgInp1"
+											accept="image/*" style="width: 100%;" class="form-control"
+											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter photo')"
-											value="${editWeigh.photo2}"  
+											value="${editWeigh.photo2}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-2">
 										<img id="image2" name="image2"
-											src="https://hips.hearstapps.com/amv-prod-cad-assets.s3.amazonaws.com/media/assets/submodel/8230.jpg"
 											alt="l" height="50px;" width="50px;">
 									</div>
 
@@ -320,7 +319,7 @@
 
 
 
-									<div class="col-md-2">RTS No*</div>
+									<div class="col-md-2">RST No*</div>
 									<div class="col-md-4">
 										<input type="text" id="rtsNo" name="rtsNo" required
 											class="form-control" autocomplete="off" style="width: 100%;"
