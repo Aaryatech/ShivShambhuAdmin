@@ -1194,7 +1194,7 @@ var no=1;
 	    var chalanQty = '<input  type="text" value="'+v.chalanQty+'" class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 	  
 		
-		alert(chalanQty);
+		//alert(chalanQty);
 													var index=i+1;
 													dataTable.row
 															.add(
