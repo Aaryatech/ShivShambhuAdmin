@@ -19,8 +19,8 @@ contentType="text/html; charset=ISO8859_1"%>
 <table width="100%" border="0"  cellpadding="0" cellspacing="0" style="border-left:1px solid #313131;border-right:1px solid #313131;border-top:1px solid #313131;">
   <tr>
     <td colspan="6" rowspan="3" width="50%" style="border-bottom:1px solid #313131; padding:10px;color:#FFF; font-size:15px;">
-     <p style="color:black; font-size:20px; text-align:left; margin:0px;font-weight: bold;">M/S Shree Gajanan Stone Crusher</p>
- <p style="color:#000; font-size:11px; text-align:left;margin:0px;">Gat No-124,At Sarul,Post- Villholi, <br></br> Tal.Dist-Nashik 422010   <br></br> Mobile No. 9822602249 <br></br>GSTIN/UIN:  27ABUFS9787K1ZR  <br></br>State : Maharashtra ,Code: 27  <br></br> Contact:2378054,9011097294 <br></br>Email: gajananstone95_nsk@rediffmail.com</p>
+     <p style="color:black; font-size:20px; text-align:left; margin:0px;font-weight: bold;">M/S <b>${billHeaderRes.compName}</b></p>
+ <p style="color:#000; font-size:11px; text-align:left;margin:0px;"><b>${billHeaderRes.compOfficeAdd}</b> <br></br><b>GSTIN/UIN:${billHeaderRes.compGstNo}</b> <br></br><b>State : Maharashtra ,Code: 27 </b> <br></br> <b>Contact:${billHeaderRes.contactNo1}</b> <br></br><b>Email:${billHeaderRes.email1}</b></p> 
 
 </td>
 
@@ -49,7 +49,7 @@ contentType="text/html; charset=ISO8859_1"%>
   <tr>
      <td width="25%" colspan="3" style="border-left:1px solid #313131; border-bottom:1px solid #313131; padding:10px;color:#000; font-size:15px; text-align:center">
     	<p style="color:#000; font-size:11px; text-align:left;margin:0px;">Supplier's Ref.<!-- </p> 
-   	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> --><b> ${billHeaderRes.custVendor}</b></p> 
+   	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> --><b>${ref}</b></p> 
  </td>
     <td colspan="3" width="25%" style="border-left:1px solid #313131;border-bottom:1px solid #313131;  padding:10px;color:#FFF; font-size:15px;">
    <p style="color:#000; font-size:11px; text-align:left;margin:0px;">Other Reference(s)</p> 
@@ -68,7 +68,7 @@ contentType="text/html; charset=ISO8859_1"%>
     
     <td width="25%" colspan="3" style="border-left:1px solid #313131;border-bottom:1px solid #313131; padding:10px;color:#000; font-size:15px; text-align:center">
     	<p style="color:#000; font-size:11px; text-align:left;margin:0px;">Buyer's Order No.<!-- </p> 
-      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> --><b>1663</b></p> 
+      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> --><b>${billHeaderRes.orderNo}</b></p> 
   
  </td>
     <td colspan="3" width="25%" style="border-left:1px solid #313131; border-bottom:1px solid #313131; padding:10px;color:#FFF; font-size:15px;">
@@ -91,7 +91,7 @@ contentType="text/html; charset=ISO8859_1"%>
   <tr>
      <td width="25%" colspan="3" style="border-left:1px solid #313131; border-bottom:1px solid #313131; padding:10px;color:#000; font-size:15px; text-align:center">
     	<p style="color:#000; font-size:11px; text-align:left;margin:0px;">Supplier's Ref.<!-- </p> 
-   	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> --><b> ${billHeaderRes.custVendor}</b></p> 
+   	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> --><b> ${ref}</b></p> 
  </td>
     <td colspan="3" width="25%" style="border-left:1px solid #313131;border-bottom:1px solid #313131;  padding:10px;color:#FFF; font-size:15px;">
    <p style="color:#000; font-size:11px; text-align:left;margin:0px;">Other Reference(s)</p> 
@@ -315,7 +315,7 @@ Declaration: We declare that this invoice shows actual price of goods described 
      <p style="color:#000; font-size:12px; text-align:center;margin:0px;">Customer's Seal & Signature<br /></p>
 </td>
     <td  align="center" colspan="4" width="40%" style="border-bottom:1px solid #313131;border-top:1px solid #313131;border-left:1px solid #313131; padding:10px;color:#000;font-size:12px;">
-  <b>  for M/S Shree Gajanan Stone Crusher</b><br /><br /><br />
+  <b>  for M/S  ${billHeaderRes.compName}</b><br /><br /><br />
     
     Authorised Signature</td>
   </tr>

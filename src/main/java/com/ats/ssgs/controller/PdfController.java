@@ -1,9 +1,10 @@
 package com.ats.ssgs.controller;
 
 import java.util.ArrayList;
+
 import java.util.Arrays;
 import java.util.List;
-
+import com.ats.ssgs.model.GetTotalChalanQuantity; 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,8 @@ import com.ats.ssgs.common.Currency;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.GetBillHeaderPdf;
 import com.ats.ssgs.model.chalan.ChalanPrintData;
+import com.ats.ssgs.model.chalan.GetChalanHeader;
+import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.DocTermHeader;
 import com.ats.ssgs.model.quot.GetQuotHeads;
 import com.ats.ssgs.model.quot.QuotPrintData;
@@ -76,36 +79,69 @@ public class PdfController {
 
 	
 	
-	@RequestMapping(value = "pdf/showChalanPdf/{chalanId}", method = RequestMethod.GET)
+	@RequestMapping(value = "pdf/showChalanPdf/{chalanId}/{plantId}", method = RequestMethod.GET)
 	public ModelAndView showChalanPdf(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable("chalanId") int chalanId) {
+			@PathVariable("chalanId") int chalanId,@PathVariable("plantId") int plantId) {
 		// List<ChalanPrintData> chPrintData=new ArrayList<>();
 
 		ModelAndView model = null;
 		System.err.println("in pdf/showQuotPdf/\", ");
 		try {
-			model = new ModelAndView("print_page/chalan_print");
+			if(plantId==70) {
+				model = new ModelAndView("print_page/chalan_print_rmc");
+			}
+			else if(plantId==68) {
+				model = new ModelAndView("print_page/chalan_print");
+				
+			}
+			else {
+				model = new ModelAndView("print_page/chalan_print");
+			}
+			
+			
 			RestTemplate rest = new RestTemplate();
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("chalanId", chalanId);
+			GetChalanHeader chPrint = rest.postForObject(Constants.url + "/getChalanHeadersByChalanId", map,
+					GetChalanHeader.class);
+			
+			int orderId=chPrint.getOrderId();
+			System.err.println("Order id:::::" + orderId);
+			
+			
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			
+			map.add("orderId", chalanId);
+			GetTotalChalanQuantity[] chArry = rest.postForObject(Constants.url + "/getChalanQuanPrintData", map,
+					GetTotalChalanQuantity[].class);
+			List<GetTotalChalanQuantity> compList = new ArrayList<GetTotalChalanQuantity>(Arrays.asList(chArry));
+			model.addObject("compList",compList);
+			
+			System.err.println("pdf data /getChalanQuanPrintData " + compList.toString());
+			map = new LinkedMultiValueMap<String, Object>();
+			
+			map.add("chalanId", chalanId);
 			ChalanPrintData chPrintData = rest.postForObject(Constants.url + "/getChalanPrintData", map,
 					ChalanPrintData.class);
+			
+			String a=chPrintData.getChalanItemList().get(0).getVehTimeIn();
+		
+			
+			if(a.equals("00:00:00")) {
+				
+				System.err.println("hiiiiii" + a);
+				model.addObject("temp","--:--:--");
+				
+			}
+			else {
+				System.err.println("pdf time:::::" + a);
+				model.addObject("temp",a);
+			}
 
 			System.err.println("pdf data /showChalanPdf " + chPrintData.toString());
-			// quotIdList
-			// model.addObject("quotIdList", quotIdList);
-
-			/*
-			 * map = new LinkedMultiValueMap<String, Object>();
-			 * 
-			 * map.add("termId", 4); DocTermHeader editDoc =
-			 * rest.postForObject(Constants.url + "getDocHeaderByTermId", map,
-			 * DocTermHeader.class);
-			 * 
-			 * model.addObject("supplyList", editDoc.getDetailList());
-			 * 
-			 */
+			
 			model.addObject("printData", chPrintData);
 
 		} catch (Exception e) {

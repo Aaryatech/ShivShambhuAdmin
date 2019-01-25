@@ -28,6 +28,26 @@ public class ChalanPrintItem {
 	private String vehicleName;
 	
 	
+	private String batchNo;
+	
+	private float totalQuan;
+
+
+	public String getBatchNo() {
+		return batchNo;
+	}
+
+	public void setBatchNo(String batchNo) {
+		this.batchNo = batchNo;
+	}
+
+	public float getTotalQuan() {
+		return totalQuan;
+	}
+
+	public void setTotalQuan(float totalQuan) {
+		this.totalQuan = totalQuan;
+	}
 
 	public String getUsrName() {
 		return usrName;
@@ -111,23 +131,24 @@ public class ChalanPrintItem {
 		this.uom = uom;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "ChalanPrintItem [chalanDetailId=" + chalanDetailId + ", chalanId=" + chalanId + ", chalanNo=" + chalanNo
 				+ ", chalanDate=" + chalanDate + ", custName=" + custName + ", custMobNo=" + custMobNo + ", projName="
 				+ projName + ", address=" + address + ", itemName=" + itemName + ", itemCode=" + itemCode + ", uom="
-				+ uom + ", usrName=" + usrName + ", vehNo=" + vehNo + ", vehicleName=" + vehicleName + ", vehicleId="
-				+ vehicleId + ", plantId=" + plantId + ", custId=" + custId + ", projId=" + projId + ", driverId="
-				+ driverId + ", vehTimeOut=" + vehTimeOut + ", vehTimeIn=" + vehTimeIn + ", vehInDate=" + vehInDate
-				+ ", outKm=" + outKm + ", inKm=" + inKm + ", sitePersonName=" + sitePersonName + ", sitePersonMob="
-				+ sitePersonMob + ", orderId=" + orderId + ", orderNo=" + orderNo + ", chalanRemark=" + chalanRemark
-				+ ", itemId=" + itemId + ", itemUom=" + itemUom + ", itemQty=" + itemQty + ", itemLengthPlant="
-				+ itemLengthPlant + ", itemWidthPlant=" + itemWidthPlant + ", itemHeightPlant=" + itemHeightPlant
-				+ ", itemTotalPlant=" + itemTotalPlant + ", itemLengthSite=" + itemLengthSite + ", itemWidthSite="
-				+ itemWidthSite + ", itemHeightSite=" + itemHeightSite + ", itemTotalSite=" + itemTotalSite
-				+ ", status=" + status + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1
-				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", orderDetailId="
-				+ orderDetailId + "]";
+				+ uom + ", usrName=" + usrName + ", vehNo=" + vehNo + ", vehicleName=" + vehicleName + ", batchNo="
+				+ batchNo + ", totalQuan=" + totalQuan + ", vehicleId=" + vehicleId + ", plantId=" + plantId
+				+ ", custId=" + custId + ", projId=" + projId + ", driverId=" + driverId + ", vehTimeOut=" + vehTimeOut
+				+ ", vehTimeIn=" + vehTimeIn + ", vehInDate=" + vehInDate + ", outKm=" + outKm + ", inKm=" + inKm
+				+ ", sitePersonName=" + sitePersonName + ", sitePersonMob=" + sitePersonMob + ", orderId=" + orderId
+				+ ", orderNo=" + orderNo + ", chalanRemark=" + chalanRemark + ", itemId=" + itemId + ", itemUom="
+				+ itemUom + ", itemQty=" + itemQty + ", itemLengthPlant=" + itemLengthPlant + ", itemWidthPlant="
+				+ itemWidthPlant + ", itemHeightPlant=" + itemHeightPlant + ", itemTotalPlant=" + itemTotalPlant
+				+ ", itemLengthSite=" + itemLengthSite + ", itemWidthSite=" + itemWidthSite + ", itemHeightSite="
+				+ itemHeightSite + ", itemTotalSite=" + itemTotalSite + ", status=" + status + ", delStatus="
+				+ delStatus + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1 + ", exVar1=" + exVar1 + ", exVar2="
+				+ exVar2 + ", exDate1=" + exDate1 + ", orderDetailId=" + orderDetailId + "]";
 	}
 
 	public String getChalanDate() {

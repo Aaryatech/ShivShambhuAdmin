@@ -1161,8 +1161,15 @@ public class BillController {
 			GetBillHeaderPdf[] billHeaderRes = rest.postForObject(Constants.url + "/findBillsByHeaderId", map,
 					GetBillHeaderPdf[].class);
 			ArrayList<GetBillHeaderPdf> billHeaders = new ArrayList<GetBillHeaderPdf>(Arrays.asList(billHeaderRes));
+			System.out.println("9999999999999999999"+billHeaderRes.toString());
+			
+			System.err.println("Bill detail*******************************" + 	billHeaders.get(0).getGetBillDetails().get(0).getRefNo());
+			
+			String a=billHeaders.get(0).getGetBillDetails().get(0).getRefNo();
+			model.addObject("ref",a);
+			System.out.println("999"+a);
 
-			System.err.println("*******************************" + billHeaders.toString());
+			
 
 			HttpSession httpSession = request.getSession();
 			httpSession.setAttribute("Currency", new Currency());

@@ -15,7 +15,7 @@
 <body>
 	<c:forEach items="${quotPrintData}" var="printData" varStatus="count">
 
-		<table style="margin-left: 100px;" width="100%">
+		<table style="margin-left: 2px;" width="100%">
 			<tr>
 				<td align="left"><img
 					src="/ssgs/resources/images/shambhu_logo.PNG"
@@ -49,7 +49,7 @@
 		</p>
 		
 	  <p>	
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dear Sir,</p><p style="margin-left: 110px;">This has a reference to your site telephonic discussion with you regarding the supply of  ${plantName} to your site In this connection we are submitting herewith our competitive offer for the supply </p> <br/> <p style="margin-left: 90px;"> of ${plantName} on the following terms and conditions.</p>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dear Sir,</p><p style="margin-left: 110px;">This has a reference to your site telephonic discussion with you regarding the supply of  ${plantName} to your site In this connection we are submitting herewith our competitive offer for the supply of ${plantName} on the following terms and conditions.</p>
 		
 
 		<table width="80%" border="0" cellpadding="0" cellspacing="0"

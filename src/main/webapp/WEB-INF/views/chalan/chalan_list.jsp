@@ -669,7 +669,9 @@ function callClose(chalanId){
 	
 	function callPdf(chalanId,key){
 		//alert("call Pdf " +chalanId);
-		   window.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'+chalanId);
+		var plantId= document.getElementById("plant_id").value;
+		alert("call Pdf " +chalanId);
+		   window.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'+ chalanId + '/' + plantId);
 
 	}
 	

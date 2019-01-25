@@ -57,6 +57,23 @@ public class GetBillDetail implements Serializable{
 	
 	private int delStatus;
 
+private int company_id;
+	
+	private String comp_name;
+	
+	private String comp_office_add;
+	
+	private String contact_no1;
+	
+	private String email1;
+	
+/*	private int plantId;*/
+	
+	private String plantName;
+	
+	private String orderNo;
+	
+	private String refNo;
 	
 	public String getUomName() {
 		return uomName;
@@ -266,17 +283,94 @@ public class GetBillDetail implements Serializable{
 		this.delStatus = delStatus;
 	}
 
+	
+	public int getCompany_id() {
+		return company_id;
+	}
+
+	public void setCompany_id(int company_id) {
+		this.company_id = company_id;
+	}
+
+	public String getComp_name() {
+		return comp_name;
+	}
+
+	public void setComp_name(String comp_name) {
+		this.comp_name = comp_name;
+	}
+
+	public String getComp_office_add() {
+		return comp_office_add;
+	}
+
+	public void setComp_office_add(String comp_office_add) {
+		this.comp_office_add = comp_office_add;
+	}
+
+	public String getContact_no1() {
+		return contact_no1;
+	}
+
+	public void setContact_no1(String contact_no1) {
+		this.contact_no1 = contact_no1;
+	}
+
+	public String getEmail1() {
+		return email1;
+	}
+
+	public void setEmail1(String email1) {
+		this.email1 = email1;
+	}
+
+	/*public int getPlantId() {
+		return plantId;
+	}
+
+	public void setPlantId(int plantId) {
+		this.plantId = plantId;
+	}
+*/
+	public String getPlantName() {
+		return plantName;
+	}
+
+	public void setPlantName(String plantName) {
+		this.plantName = plantName;
+	}
+
+	
+	
+	public String getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
+	}
+
+	public String getRefNo() {
+		return refNo;
+	}
+
+	public void setRefNo(String refNo) {
+		this.refNo = refNo;
+	}
+
 	@Override
 	public String toString() {
 		return "GetBillDetail [billDetailId=" + billDetailId + ", billHeadId=" + billHeadId + ", itemId=" + itemId
-				+ ", itemName=" + itemName + ", qty=" + qty + ", hsnCode=" + hsnCode + ", rate=" + rate + ", cgstPer="
-				+ cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt + ", sgstAmt="
-				+ sgstAmt + ", igstAmt=" + igstAmt + ", taxAmt=" + taxAmt + ", discPer=" + discPer + ", discAmt="
-				+ discAmt + ", taxableAmt=" + taxableAmt + ", totalAmt=" + totalAmt + ", exInt1=" + exInt1 + ", exInt2="
-				+ exInt2 + ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", exVar1=" + exVar1 + ", exVar2="
-				+ exVar2 + ", delStatus=" + delStatus + "]";
+				+ ", itemName=" + itemName + ", uomName=" + uomName + ", qty=" + qty + ", hsnCode=" + hsnCode
+				+ ", rate=" + rate + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer
+				+ ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt + ", taxAmt=" + taxAmt
+				+ ", discPer=" + discPer + ", discAmt=" + discAmt + ", taxableAmt=" + taxableAmt + ", totalAmt="
+				+ totalAmt + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exFloat1=" + exFloat1 + ", exFloat2="
+				+ exFloat2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", delStatus=" + delStatus + ", company_id="
+				+ company_id + ", comp_name=" + comp_name + ", comp_office_add=" + comp_office_add + ", contact_no1="
+				+ contact_no1 + ", email1=" + email1 +  ", plantName=" + plantName
+				+ ", orderNo=" + orderNo + ", refNo=" + refNo + "]";
 	}
-	
-	
+
 	
 }

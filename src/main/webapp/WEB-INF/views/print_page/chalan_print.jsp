@@ -34,58 +34,11 @@ contentType="text/html; charset=utf-8"%>
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Vehicle No:</b> ${printData.chalanItemList[0].vehNo}</p>
 <p style="margin-left: 100px;"><b>Customer Name:</b>
-<c:out value="${printData.chalanItemList[0].custName}"></c:out>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Project:</b> ${printData.chalanItemList[0].projName}<br></br></p>
+<c:out value="${printData.chalanItemList[0].custName}"></c:out>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Project:</b> ${printData.chalanItemList[0].projName}
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>RST No:</b> ${printData.chalanItemList[0].exVar1}<br></br></p>
 
 
-<%-- <table  width="80%" border="0"  cellpadding="0" cellspacing="0" style="border-right:1px solid #313131; margin-left:100px; ">
-<tr>
-<td  style="border-left:1px solid #000;border-top:1px solid #000;
-  padding: 2px ; border-bottom:1px solid #000;;
-  text-align: center;">Sr No</td>
-<td style="border-left:1px solid #000;border-top:1px solid #000;
-  padding: 2px ;border-bottom:1px solid #000;
-  text-align: center;">Material</td>
-  </tr>
-  <tr>
-  <td rowspan="2" style="border-left:1px solid #000;border-top:1px solid #000;
-  padding: 2px ;border-bottom:1px solid #000;
-  text-align: center;">Plant Measure</td>
-  <td colspan="4" style="border-left:1px solid #000;border-top:1px solid #000;
-  padding: 2px ;border-bottom:1px solid #000;
-  text-align: center;">Site Measure</td>
-<td   rowspan="2" style="border-left:1px solid #000;border-top:1px solid #000;
-  padding: 2px ;border-bottom:1px solid #000;
-  text-align: center;">L</td>
-  <td  style="border-left:1px solid #000;border-top:1px solid #000;
-  padding: 2px ;border-bottom:1px solid #000;
-  text-align: center;">W</td>
-  <td  style="border-left:1px solid #000;border-top:1px solid #000;
-  padding: 2px ;border-bottom:1px solid #000;
-  text-align: center;">H</td>
-  
-  <td   style="border-left:1px solid #000;border-top:1px solid #000;
-  padding: 2px ;border-bottom:1px solid #000;
-  text-align: center;">T</td>
-  </tr>
-  
 
-
-<c:forEach items="${printData.chalanItemList}" var="quot" varStatus="count3">
-
-<tr>
-<td  style="border-bottom:1px solid #313131; border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemId}</td>
-<td style="border-bottom:1px solid #313131; border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemName}</td>
-</tr>
-<tr>
-<td colspan="2"  style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemName}</td>
-<td colspan="2"  align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000;  font-size:10px;">${quot.itemName}</td>
-<td colspan="2"  style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemName}</td>
-<td colspan="2"  align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000;  font-size:10px;">${quot.itemName}</td>
-</tr>
-
-</c:forEach>
-
-</table> --%>
 
 <table  width="100%" border="0" cellpadding="0" cellspacing="0"
 			style="border-top: 1px solid #313131; border-right: 1px solid #313131; margin-left: 100px;" >
@@ -95,12 +48,20 @@ contentType="text/html; charset=utf-8"%>
 				<td align="left" width="35%" rowspan="2"
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Item
 					Name</td>
+					<td align="left" width="5%" rowspan="2"
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Order Quantity</td>
+					
+					<td align="left" width="5%" rowspan="2"
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Total Chalan Quantity</td>
+					<td align="left" width="5%" rowspan="2"
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Current Chalan Quantity</td>
 				<td align="center" width="10%" colspan="4"
 					style="border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: center;">
 					Plant</td>
 				<td align="center" width="10%" colspan="4"
 					style="border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: center;">Site</td>
 			</tr>
+			
 			<tr>
 				<td align="center" width="2%"
 					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">L
@@ -128,6 +89,9 @@ contentType="text/html; charset=utf-8"%>
 
 <tr>
 <td  style="border-bottom:1px solid #313131; border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${count3.index+1}</td>
+<td style="border-bottom:1px solid #313131; border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemName}</td>
+<td style="border-bottom:1px solid #313131; border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${printData.chalanItemList[0].totalQuan}</td>
+<td style="border-bottom:1px solid #313131; border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemName}</td>
 <td style="border-bottom:1px solid #313131; border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemName}</td>
 
 <td  align="right" style="border-bottom:1px solid #313131;border-left:1px solid #313131; padding:5px;color:#000; font-size:10px;">${quot.itemLengthPlant}</td>
@@ -172,7 +136,7 @@ contentType="text/html; charset=utf-8"%>
 
 </c:forEach> --%>
 <p style="margin-left: 100px;" align="left" ><b>Out Time:</b>${printData.chalanItemList[0].vehTimeOut}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Out Km:</b>${printData.chalanItemList[0].outKm}</p>
-<p style="margin-left: 100px;" align="left"><b>In Time:</b>${printData.chalanItemList[0].vehTimeIn}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>In Km:</b>${printData.chalanItemList[0].inKm}</p>
+<p style="margin-left: 100px;" align="left"><b>In Time:</b>${temp}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>In Km:</b>${printData.chalanItemList[0].inKm}</p>
 <p style="margin-left: 100px;"><b>Driver Sign</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Site Incharge</b></p>
 <p style="margin-left: 100px;"><b></b>${printData.chalanItemList[0].usrName}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b></b>${printData.chalanItemList[0].sitePersonName}</p>
 
