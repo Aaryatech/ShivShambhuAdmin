@@ -1088,8 +1088,6 @@ public class MasterController {
 			custTypeList = new ArrayList<CustType>(Arrays.asList(custTypeArray));
 			System.err.println("custList In showAddPlant at Master Contr" + custTypeList);
 			model.addObject("custTypeList", custTypeList);
-			
-			
 
 		} catch (Exception e) {
 
@@ -1102,22 +1100,19 @@ public class MasterController {
 		return model;
 
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/getCustCode", method = RequestMethod.GET)
 	public @ResponseBody Code getCustCode(HttpServletRequest request, HttpServletResponse response) {
 
-		Code code1=new Code();
+		Code code1 = new Code();
 		ModelAndView model = null;
 		try {
 
-			int plantId=Integer.parseInt(request.getParameter("plantId"));
+			int plantId = Integer.parseInt(request.getParameter("plantId"));
 			System.out.println("plant data is" + plantId);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			String var=null;
-			
+			String var = null;
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("plantId", plantId);
@@ -1127,32 +1122,24 @@ public class MasterController {
 			System.out.println("pl is " + pl.toString());
 			System.out.println("short name  " + shortName);
 
-			
-			
-			
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("docCode", 9);
 			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
-			
-			
-			System.out.println("doc data is" + doc);
-			int a=doc.getSrNo();
-			if(String.valueOf(a).length()==1) {
-				var="0000".concat(String.valueOf(a));
-				
-			}else if(String.valueOf(a).length()==2) {
-				var="000".concat(String.valueOf(a));
-				
-			}else if(String.valueOf(a).length()==3){
-				var="00".concat(String.valueOf(a));
-				
-			}
-			
-		
-			
-			code1.setCustCode(shortName.concat(var));
-		
 
+			System.out.println("doc data is" + doc);
+			int a = doc.getSrNo();
+			if (String.valueOf(a).length() == 1) {
+				var = "0000".concat(String.valueOf(a));
+
+			} else if (String.valueOf(a).length() == 2) {
+				var = "000".concat(String.valueOf(a));
+
+			} else if (String.valueOf(a).length() == 3) {
+				var = "00".concat(String.valueOf(a));
+
+			}
+
+			code1.setCustCode(shortName.concat(var));
 
 		} catch (Exception e) {
 
@@ -1252,19 +1239,17 @@ public class MasterController {
 			cust.setRespPerson(refName);
 			cust.setPlantId(plantId);
 			cust.setIsSameState(sameState);
-			
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("docCode", 9);
 			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
-			
+
 			try {
-				String dob=request.getParameter("dob");
-				if(!dob.isEmpty())
-				{
-				cust.setCustDob(DateConvertor.convertToYMD(dob));
-				}else
-				{
-					
+				String dob = request.getParameter("dob");
+				if (!dob.isEmpty()) {
+					cust.setCustDob(DateConvertor.convertToYMD(dob));
+				} else {
+
 				}
 			} catch (Exception e) {
 				cust.setCustDob(curDate);
@@ -1326,13 +1311,13 @@ public class MasterController {
 			// proj.setKm(Float.parseFloat(km));
 
 			Project projInsertRes = rest.postForObject(Constants.url + "saveProject", proj, Project.class);
-			
-			if(projInsertRes!=null) {
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("srNo", doc.getSrNo() + 1);
-			map.add("docCode", 9);
-			Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
-			System.out.println("info is   updateDocSr " + updateDocSr);
+
+			if (projInsertRes != null) {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("srNo", doc.getSrNo() + 1);
+				map.add("docCode", 9);
+				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+				System.out.println("info is   updateDocSr " + updateDocSr);
 			}
 
 		} catch (Exception e) {
@@ -1412,11 +1397,11 @@ public class MasterController {
 
 			model.addObject("title", "Edit Customer");
 			model.addObject("editCust", editCust);
-			System.out.println("prev date: "+editCust.getCustDob());
+			System.out.println("prev date: " + editCust.getCustDob());
 
-			model.addObject("DOB",DateConvertor.convertToDMY(editCust.getCustDob()));
-			
-			System.out.println("next date: "+DateConvertor.convertToDMY(editCust.getCustDob()));
+			model.addObject("DOB", DateConvertor.convertToDMY(editCust.getCustDob()));
+
+			System.out.println("next date: " + DateConvertor.convertToDMY(editCust.getCustDob()));
 
 		} catch (Exception e) {
 
@@ -2072,7 +2057,7 @@ public class MasterController {
 			}
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			int deptId = Integer.parseInt(request.getParameter("dept_id"));
-			// int plantId = Integer.parseInt(request.getParameter("plant_id"));
+			int plantId = Integer.parseInt(request.getParameter("plant_id"));
 
 			int companyId = Integer.parseInt(request.getParameter("company_id"));
 			String curDate = dateFormat.format(new Date());
@@ -2109,16 +2094,14 @@ public class MasterController {
 			user.setExVar1("NA");
 			user.setExVar2("NA");
 			user.setUserId(userId);
+			user.setPlantId(plantId);
 
 			try {
-
-				user.setPlantId(Integer.parseInt(request.getParameter("plant_id")));
 
 				user.setSortNo(Integer.parseInt(request.getParameter("sortNo")));
 
 			} catch (Exception e) {
 				user.setSortNo(0);
-				user.setPlantId(0);
 
 			}
 

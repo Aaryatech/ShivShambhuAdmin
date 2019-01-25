@@ -356,7 +356,7 @@ body {
 
 									<div class="col-md-2">Select Order*</div>
 
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<select id="order_id" name="order_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select order')"
@@ -367,6 +367,12 @@ body {
 												<option value="${plant.plantId}">${plant.plantName}</option>
 											</c:forEach> --%>
 										</select>
+									</div>
+
+									<div class="col-md-2">
+										<input type="button" onclick="showPopupForGetData()"
+											class="btn btn-primary" value="View Item">
+
 									</div>
 
 
@@ -382,7 +388,6 @@ body {
 										<input type="text" id="batchNo" name="batchNo" value="-"
 											autocomplete="off" style="width: 100%;" required
 											oninvalid="setCustomValidity('Please enter Batch No')"
-											onchange="showOrderItemPopup(this.value)"
 											class="form-control"> <span class="error"
 											aria-live="polite"></span>
 									</div>
@@ -392,9 +397,8 @@ body {
 									<div class="col-md-4">
 										<input type="text" id="rstNo" name="rstNo" required value="-"
 											oninvalid="setCustomValidity('Please enter RST No')"
-											onchange="showOrderItemPopup(this.value)" autocomplete="off"
-											style="width: 100%;" class="form-control"> <span
-											class="error" aria-live="polite"></span>
+											autocomplete="off" style="width: 100%;" class="form-control">
+										<span class="error" aria-live="polite"></span>
 									</div>
 
 								</div>
@@ -419,12 +423,15 @@ body {
 														<tr>
 															<th style="width: 5%;" align="center">Sr</th>
 															<th style="width: 20%;" align="center">Item Name</th>
-															<th style="width: 20%;" align="center">UOM</th>
-															<th style="width: 20%;" align="center">Order
+															<th style="width: 8%;" align="center">UOM</th>
+															<th style="width: 10%;" align="center">Order
 																Quantity</th>
-															<th style="width: 20%;" align="center">Remaining
+															<th style="width: 10%;" align="center">Order
+																Remaining Quantity</th>
+															<th style="width: 10%;" align="center">PO Quantity</th>
+															<th style="width: 10%;" align="center">PO Remaining
 																Quantity</th>
-															<th style="width: 10%;" align="center">Chalan
+															<th style="width: 20%;" align="center">Chalan
 																Quantity</th>
 														</tr>
 													</thead>
@@ -526,6 +533,7 @@ body {
 
 									<div class="col-md-4">
 										<input type="text" id="out_km" name="out_km" required
+											autocomplete="off"
 											onkeypress="return allowOnlyNumber(event);"
 											style="width: 100%;" class="form-control" maxlength="10">
 										<span class="error" aria-live="polite"></span>
@@ -1063,7 +1071,79 @@ function allowOnlyNumber1(evt)
 													dataTable.row
 															.add(
 																	[
-																		index,v.itemName,v.uomName,v.orderQty,v.remOrdQty,chalanQty])
+																		index,v.itemName,v.uomName,v.orderQty,v.remOrdQty,v.poQty,v.poRemainingQty,chalanQty])
+															.draw();
+												});
+				
+		} );
+		
+		}
+	}
+	</script>
+
+
+
+	<script type="text/javascript">
+	function showPopupForGetData(){
+		
+		var orderId=document.getElementById("order_id").value;
+		var isValid=true;
+		
+		if(orderId==-1){
+			alert("Please select order");
+			isValid=false;
+		}
+		if(isValid==true){
+		 var span = document.getElementById("close");
+			var modal = document.getElementById('myModal');
+
+			modal.style.display = "block";
+			span.onclick = function() {
+			    modal.style.display = "none"; 
+			}
+
+			// When the user clicks anywhere outside of the modal, close it
+			window.onclick = function(event) {
+			    if (event.target == modal) {
+			        modal.style.display = "none";
+			        
+			    }
+			}
+
+		  $.getJSON('${getOrderDetailForChalan}', {
+			  orderId : orderId,
+					ajax : 'true',
+
+				},
+
+				function(data) {
+					
+					//alert("detail  " +JSON.stringify(data));
+					if(data==null){
+						document.getElementById('poupSubButton').disabled=true;
+						
+					}else{
+						document.getElementById('poupSubButton').disabled=false;
+					}
+					
+					
+					var len = data.length;
+					//alert("Len " +len);
+								var dataTable = $('#table_grid1')
+										.DataTable();
+								dataTable.clear().draw();
+								$
+										.each(
+												data,
+												function(i, v) {
+													//var checkB = '<input  type="checkbox" name="selChalanItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
+		var chalanQty = '<input  type="text" value="0"  class="form-control"  id="chalanQty'+v.itemId+'" name="chalanQty'+v.itemId+'" oninput="setChalanItem(this.value,'+v.itemId+','+v.poId+','+v.poDetailId+','+v.remOrdQty+','+v.orderDetId+','+v.orderId+','+i+','+v.uomId+',/'+v.itemName+'/,/'+v.uomName+'/)" onkeypress="return allowOnlyNumber(event);"/>'
+													//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
+													var index=i+1;
+													dataTable.row
+															.add(
+																	[
+																		index,v.itemName,v.uomName,v.orderQty,v.remOrdQty,v.poQty,v.poRemainingQty,chalanQty])
 															.draw();
 												});
 				
@@ -1166,8 +1246,8 @@ function allowOnlyNumber1(evt)
 		var width = '<input  type="text" value="0"  class="form-control"  id="width'+v.itemId+'" name="width'+v.itemId+'"   oninput="calcChalanTotal('+v.itemId+')"  onkeypress="return allowOnlyNumber(event);"/>'
 		var height = '<input  type="text" value="0"  class="form-control"  id="height'+v.itemId+'" name="height'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
 		var length = '<input  type="text" value="0"  class="form-control"  id="length'+v.itemId+'" name="length'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
-	 var itemChalanTotal = '<input  type="text" value="'+v.chalanQty+'" class="form-control"  id="itemChalanTotal'+v.itemId+'" name="itemChalanTotal'+v.itemId+'"/>'
-	var chalanQty = '<input  type="text" value="'+v.chalanQty+'" class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
+		 var itemChalanTotal = '<input  type="text" value="'+v.chalanQty+'" readonly class="form-control"  id="itemChalanTotal'+v.itemId+'" name="itemChalanTotal'+v.itemId+'"/>'
+		var chalanQty = '<input  type="text" value="'+v.chalanQty+'" readonly class="form-control"  id="chalanQty'+v.itemId+'" name="chalanQty'+v.itemId+'"  onkeypress="return allowOnlyNumber(event);" onchange="placeTempTotal(this.value)"/>'
 	
 	//alert(itemChalanTotal);
 		  
@@ -1397,6 +1477,19 @@ function allowOnlyNumber1(evt)
 			
 		});
 	</script> -->
+
+
+
+	<script type="text/javascript">
+	function placeTempTotal(chalanQty){
+		
+		//alert("hiii");
+		//alert(chalanQty);
+		
+		//document.getElementById("itemChalanTotal").value = chalanQty;
+		//document.getElementById("itemChalanTotal"+itemId).value="0";
+	}
+	</script>
 	<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(

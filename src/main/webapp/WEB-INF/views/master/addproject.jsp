@@ -135,14 +135,19 @@
 											<option value="-1">Select</option>
 											<c:forEach items="${plantList}" var="plant">
 												<c:choose>
-													<c:when test="${plant.plantId==editItem.plantId}">
+
+													<c:when test="${sessionScope.plantId==plant.plantId}">
 														<option value="${plant.plantId}" selected>${plant.plantName}</option>
 													</c:when>
+
+													<c:when test="${plant.plantId==editPro.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+
 													<c:otherwise>
 														<option value="${plant.plantId}">${plant.plantName}
 													</c:otherwise>
 												</c:choose>
-
 											</c:forEach>
 										</select>
 									</div>
@@ -428,15 +433,14 @@
 		$(function() {
 			$('input[id$=start_date]').datepicker({
 				dateFormat : 'dd-mm-yy',
-				changeMonth:true,
-				changeYear:true
-				
-				
+				changeMonth : true,
+				changeYear : true
+
 			});
 			$('input[id$=end_date]').datepicker({
 				dateFormat : 'dd-mm-yy',
-				changeMonth:true,
-				changeYear:true
+				changeMonth : true,
+				changeYear : true
 
 			});
 		});

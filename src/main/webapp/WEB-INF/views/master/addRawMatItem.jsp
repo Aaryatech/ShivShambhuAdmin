@@ -118,73 +118,59 @@
 							</div>
 						</div>
 						<div class="card-body card-block">
-							<form action="${pageContext.request.contextPath}/insertItem"
+							<form
+								action="${pageContext.request.contextPath}/insertRawMatItem"
 								method="post" id="submitForm">
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant*</div>
+									<div class="col-md-2">Select Category*</div>
 
 									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
+										<select id="catId" name="catId" class="standardSelect"
 											tabindex="1" required
-											oninvalid="setCustomValidity('Please enter customer name')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 											<option value="">Select</option>
-											<c:forEach items="${plantList}" var="plant">
-
+											<c:forEach items="${catList}" var="cat">
 												<c:choose>
-													<c:when test="${sessionScope.plantId==plant.plantId}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													<c:when test="${cat.catId==editItem.catId}">
+														<option value="${cat.catId}" selected>${cat.catDesc}</option>
 													</c:when>
-
 													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
+														<option value="${cat.catId}">${cat.catDesc}</option>
 													</c:otherwise>
 												</c:choose>
 
-
-
 											</c:forEach>
-										</select>
-									</div>
-									<div class="col-md-2">Item Type*</div>
-									<div class="col-md-4">
-										<select id="item_type" name="item_type" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select item type')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-											<option value="">Select</option>
-											<c:forEach items="${itemTypeList}" var="item">
-												<option value="${item.itemTypeId}">${item.itemTypeName}</option>
-											</c:forEach>
-
 										</select>
 									</div>
 
 								</div>
-								<input type="hidden" name="item_id" id="item_id" value="0">
+								<input type="hidden" name="itemId" id="itemId" value="0">
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Item Name*</div>
-									<div class="col-md-4">
-										<input type="text" id="item_name" name="item_name"
-											class="form-control" required style="width: 100%;"
-											autocomplete="off"
-											oninvalid="setCustomValidity('Please enter item name')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-									</div>
 
 									<div class="col-md-2">Item Code*</div>
 
 									<div class="col-md-4">
-										<input type="text" id="item_code" name="item_code" required
+										<input type="text" id="itemCode" name="itemCode" required
 											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter item code')"
 											value="${editComp.contactNo1}"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
+
+									<div class="col-md-2">Item Description*</div>
+									<div class="col-md-4">
+										<textarea id="itemDesc" name="itemDesc" class="form-control"
+											style="width: 100%;" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter Item Description')"
+											maxlength="200"
+											onchange="try{setCustomValidity('')}catch(e){}" required>${editBankDetail.bankAddress}</textarea>
+									</div>
+
+
 
 								</div>
 
@@ -206,65 +192,36 @@
 										</select>
 									</div>
 
-									<div class="col-md-2">Select Tax*</div>
-
+									<div class="col-md-2">Date*</div>
 									<div class="col-md-4">
-										<select id="taxId" name="taxId" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select tax')"
-											onchange="try{setCustomValidity('')}catch(e){}">
-											<option value="">Select</option>
-											<c:forEach items="${taxList}" var="tax">
-												<option value="${tax.taxId}">${tax.taxName}</option>
-											</c:forEach>
-										</select>
+										<input type="text" id="itemDate" name="itemDate"
+											autocomplete="off" value="${editPro.startDate}" readonly
+											class="form-control" required style="width: 100%;">
 									</div>
+
+
 								</div>
 
 
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Short Name*</div>
-									<div class="col-md-4">
-										<input type="text" id="short_name" name="short_name"
-											pattern="^[A-Za-z\s]+$" autocomplete="off" required
-											oninvalid="setCustomValidity('Please enter short name')"
-											onchange="try{setCustomValidity('')}catch(e){}"
-											class="form-control" style="width: 100%;">
-									</div>
 
-									<div class="col-md-2">Item Rate*</div>
-
-									<div class="col-md-4">
-										<input type="text" id="rate" name="rate"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
-											class="form-control" autocomplete="off" required
-											oninvalid="setCustomValidity('Please enter rate')"
-											onchange="try{setCustomValidity('')}catch(e){}" /> <span
-											class="error" aria-live="polite"></span>
-
-									</div>
-
-								</div>
 
 
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Plant Min Stock*</div>
+									<div class="col-md-2">Item OP Qty*</div>
 
 									<div class="col-md-2">
-										<input type="text" id="pmin_stock" name="pmin_stock"
-											autocomplete="off" pattern="[0-9]+(\.[0-9]{0,2})?%?"
-											onchange="checkstock() "
+										<input type="text" id="opQty" name="opQty" autocomplete="off"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" onchange="checkstock() "
 											onkeypress="return allowOnlyNumber(event);"
 											oninvalid="setCustomValidity('Please enter plan min stock')"
 											class="form-control" style="width: 100%;">
 									</div>
-									<div class="col-md-2">Plant Max Stock*</div>
+									<div class="col-md-2">OP Rate*</div>
 
 									<div class="col-md-2">
-										<input type="text" id="pmax_stock" name="pmax_stock"
+										<input type="text" id="opQty" name="opRate"
 											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter plan max stock')"
 											onchange="checkstock() "
@@ -272,59 +229,176 @@
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;" required>
 									</div>
-									<div class="col-md-2">Plant ROL Stock*</div>
+
+
+									<div class="col-md-2">CL Qty*</div>
 
 									<div class="col-md-2">
-										<input type="text" id="prol_stock" name="prol_stock"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter prol stock')"
+										<input type="text" id="clQty" name="clQty" autocomplete="off"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" onchange="checkstock() "
 											onkeypress="return allowOnlyNumber(event);"
-											onchange="checkstockvalue()"
+											oninvalid="setCustomValidity('Please enter plan min stock')"
+											class="form-control" style="width: 100%;">
+									</div>
+								</div>
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">CL Rate*</div>
+
+									<div class="col-md-2">
+										<input type="text" id="clRate" name="clRate"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter plan max stock')"
+											onchange="checkstock() "
+											onkeypress="return allowOnlyNumber(event);"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											class="form-control" style="width: 100%;" required>
 									</div>
 
-								</div>
+									<div class="col-md-2">Item Life*</div>
 
-
-								<div class="form-group"></div>
-								<div class="row">
-
-
-									<div class="col-md-2">Freight Rate*</div>
-
-									<div class="col-md-4">
-										<input type="text" id="freight_rate" name="freight_rate"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
-											class="form-control" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter freight rate')"
+									<div class="col-md-2">
+										<input type="text" id="itemLife" name="itemLife"
+											style="width: 100%;" class="form-control" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter item life')"
 											onchange="try{setCustomValidity('')}catch(e){}" required />
 									</div>
 
-									<div class="col-md-2">Royalty Rate*</div>
+									<div class="col-md-2">Item Schd*</div>
 
-									<div class="col-md-4">
-										<input type="text" id="royalty_rate" name="royalty_rate"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?" style="width: 100%;"
-											class="form-control" autocomplete="off"
+									<div class="col-md-2">
+										<input type="text" id="itemSchd" name="itemSchd"
+											style="width: 100%;" class="form-control" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter  Royalty rate')"
 											onchange="try{setCustomValidity('')}catch(e){}" required />
 									</div>
 
 								</div>
+
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Sort No(Optional)</div>
 
-									<div class="col-md-4">
-										<input type="text" id="sort_no" name="sort_no" maxlength="3"
+
+									<div class="col-md-2">Item Min Level*</div>
+
+									<div class="col-md-2">
+										<input type="text" id="minLevel" name="minLevel"
+											style="width: 100%;" class="form-control" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter Minimum Level')"
+											onchange="try{setCustomValidity('')}catch(e){}" required />
+									</div>
+
+									<div class="col-md-2">Item Max Level**</div>
+
+									<div class="col-md-2">
+										<input type="text" id="maxLevel" name="maxLevel"
+											style="width: 100%;" class="form-control" autocomplete="off"
+											oninvalid="setCustomValidity('Please enter  Maximum level')"
+											onchange="try{setCustomValidity('')}catch(e){}" required />
+									</div>
+
+									<div class="col-md-2">Item Rod Level*</div>
+
+									<div class="col-md-2">
+										<input type="text" id="rodLevel" name="rodLevel"
 											autocomplete="off"
-											oninvalid="setCustomValidity('Please enter Sort No')"
+											oninvalid="setCustomValidity('Please enter Rod level')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="[0-9]+" class="form-control" style="width: 100%;">
+											class="form-control" style="width: 100%;">
 									</div>
 
 								</div>
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Item Location*</div>
+
+									<div class="col-md-2">
+										<input type="text" id="itemLocation" name="itemLocation"
+											autocomplete="off"
+											oninvalid="setCustomValidity('Please enter Location')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											class="form-control" style="width: 100%;">
+									</div>
+									<div class="col-md-2">Item Weight*</div>
+
+									<div class="col-md-2">
+										<input type="text" id="itemWeight" name="itemWeight"
+											autocomplete="off"
+											oninvalid="setCustomValidity('Please enter Weight')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											class="form-control" style="width: 100%;">
+									</div>
+
+									<div class="col-md-2">Item Abc*</div>
+
+									<div class="col-md-2">
+										<input type="text" id="itemAbc" name="itemAbc"
+											autocomplete="off"
+											oninvalid="setCustomValidity('Please enter ')"
+											onchange="try{setCustomValidity('')}catch(e){}"
+											class="form-control" style="width: 100%;">
+									</div>
+
+								</div>
+								<div class="form-group"></div>
+								<div class="row">
+
+
+
+									<div class="col-md-2">Item Is Critical*</div>
+									<div class="col-md-4">
+										<select class="standardSelect" title="Please Select"
+											name="isCritical" id="isCritical" required>
+											<option value="">Select</option>
+											<c:choose>
+												<c:when test="${editItem.itemIsCritical==0}">
+													<option value="0" selected>NO</option>
+													<option value="1">YES</option>
+												</c:when>
+												<c:when test="${editItem.itemIsCritical==1}">
+													<option value="0">NO</option>
+													<option value="1" selected>YES</option>
+												</c:when>
+												<c:otherwise>
+													<option value="0">NO</option>
+													<option value="1">YES</option>
+												</c:otherwise>
+
+											</c:choose>
+
+										</select>
+									</div>
+
+
+									<div class="col-md-2">Item Is Capital*</div>
+									<div class="col-md-4">
+										<select class="standardSelect" title="Please Select"
+											name="isCapital" id="isCapital" required>
+											<option value="">Select</option>
+											<c:choose>
+												<c:when test="${editItem.itemIsCapital==0}">
+													<option value="0" selected>NO</option>
+													<option value="1">YES</option>
+												</c:when>
+												<c:when test="${editItem.itemIsCapital==1}">
+													<option value="0">NO</option>
+													<option value="1" selected>YES</option>
+												</c:when>
+												<c:otherwise>
+													<option value="0">NO</option>
+													<option value="1">YES</option>
+												</c:otherwise>
+
+											</c:choose>
+
+										</select>
+
+									</div>
+
+
+								</div>
+
 
 								<div class="form-group"></div>
 								<div class="col-lg-4"></div>
@@ -487,5 +561,20 @@
 					});
 		});
 	</script>
+
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$('input[id$=itemDate]').datepicker({
+				dateFormat : 'dd-mm-yy',
+				changeMonth:true,
+				changeYear:true
+				
+				
+			});
+			
+		});
+	</script>
+
 </body>
 </html>

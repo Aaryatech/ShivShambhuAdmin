@@ -510,7 +510,7 @@ public class ChalanController {
 
 		} catch (Exception e) {
 			System.err.println("I catch Is Rmc page ");
-			return "redirect:/showAddChalan";
+			return "redirect:/showPendingOrderList";
 		}
 
 		return "redirect:/showBillRmc";

@@ -249,7 +249,7 @@ public class BillController {
 
 		map.add("projId", projId);
 		map.add("custId", custId);
-		map.add("chalanStatus", "1");
+		map.add("chalanStatus", "0,1");
 
 		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByCustAndStatusAndProj", map,
 				GetChalanHeader[].class);
@@ -590,9 +590,10 @@ public class BillController {
 				}
 			}
 
-			System.out.println("poNOLIST : --------------------------------------"+poNOList.toString());
-			
-			billHeader.setExVar1("" + poNOList.toString());
+			System.out.println("poNOLIST : --------------------------------------"
+					+ poNOList.toString().substring(1, poNOList.toString().length() - 1));
+
+			billHeader.setExVar1(poNOList.toString().substring(1, poNOList.toString().length() - 1));
 
 			if (grandTotalAmt > 0) {
 

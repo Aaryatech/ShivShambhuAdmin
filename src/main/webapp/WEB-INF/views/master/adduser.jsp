@@ -122,8 +122,8 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showUserList" style="color:black"><strong>User
-										List</strong></a>
+								<a href="${pageContext.request.contextPath}/showUserList"
+									style="color: black"><strong>User List</strong></a>
 							</div>
 
 						</div>
@@ -154,7 +154,7 @@
 										</select>
 									</div>
 
-										<div class="col-md-2">Select Department*</div>
+									<div class="col-md-2">Select Department*</div>
 
 									<div class="col-md-4">
 										<select id="dept_id" name="dept_id" class="standardSelect"
@@ -174,14 +174,16 @@
 											</c:forEach>
 										</select>
 									</div>
+								</div>
 
-									<%-- 
+								<div class="form-group"></div>
+								<div class="row">
 									<div class="col-md-2">Select Plant*</div>
 
 									<div class="col-md-4">
 										<select id="plant_name" name="plant_id" class="standardSelect"
 											tabindex="1" required>
-											<option value="">Select</option>
+											<option value="0">All</option>
 											<c:forEach items="${plantList}" var="plant">
 
 												<c:choose>
@@ -197,15 +199,8 @@
 										</select>
 									</div>
 
- --%>
+
 								</div>
-
-
-
-
-
-
-
 
 								<input type="hidden" name="userId" id="userId"
 									value="${editUser.userId}">
@@ -414,7 +409,7 @@
 				function(data) {
 					var html;
 					var len = data.length;
-					var html = '<option value="-1"  >Select</option>';
+					var html = '<option value="0"  >All</option>';
 					for (var i = 0; i < len; i++) {
 
 						html += '<option value="' + data[i].plantId + '">'

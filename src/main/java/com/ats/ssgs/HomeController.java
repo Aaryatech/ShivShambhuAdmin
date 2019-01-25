@@ -48,6 +48,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	RestTemplate rest = new RestTemplate();
 	List<Plant> plantList;
+
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -99,6 +100,8 @@ public class HomeController {
 				if (userObj.isError() == false) {
 
 					session.setAttribute("UserDetail", userObj);
+
+					session.setAttribute("plantId", userObj.getUser().getPlantId());
 					LoginResUser userResponse = (LoginResUser) session.getAttribute("UserDetail");
 					session.setAttribute("userInfo", userResponse.getUser());
 
@@ -125,43 +128,42 @@ public class HomeController {
 						session.setAttribute("newModuleList", newModuleList);
 						session.setAttribute("sessionModuleId", 0);
 						session.setAttribute("sessionSubModuleId", 0);
-                        try {
-						Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
-						plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+						try {
+							Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+							plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
-						mav.addObject("plantList", plantList);
+							mav.addObject("plantList", plantList);
 
-						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-						SimpleDateFormat dd = new SimpleDateFormat("dd-MM-yyyy");
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+							SimpleDateFormat dd = new SimpleDateFormat("dd-MM-yyyy");
 
-						Calendar cal = Calendar.getInstance();
+							Calendar cal = Calendar.getInstance();
 
-						Calendar cal1 = Calendar.getInstance();
-						cal.set(cal1.get(Calendar.YEAR), cal1.get(Calendar.MONTH), 1);
+							Calendar cal1 = Calendar.getInstance();
+							cal.set(cal1.get(Calendar.YEAR), cal1.get(Calendar.MONTH), 1);
 
-						String firstDate = sdf.format(cal.getTimeInMillis());
-						String firstDate1 = dd.format(cal.getTimeInMillis());
-						cal.set(cal.DAY_OF_MONTH, cal.getActualMaximum(cal.DAY_OF_MONTH));
-						String endDate = sdf.format(cal.getTimeInMillis());
-						String endDate1 = dd.format(cal.getTimeInMillis());
-						System.out.println("sd " + firstDate);
-						System.out.println("ed " + endDate);
-						map = new LinkedMultiValueMap<String, Object>();
+							String firstDate = sdf.format(cal.getTimeInMillis());
+							String firstDate1 = dd.format(cal.getTimeInMillis());
+							cal.set(cal.DAY_OF_MONTH, cal.getActualMaximum(cal.DAY_OF_MONTH));
+							String endDate = sdf.format(cal.getTimeInMillis());
+							String endDate1 = dd.format(cal.getTimeInMillis());
+							System.out.println("sd " + firstDate);
+							System.out.println("ed " + endDate);
+							map = new LinkedMultiValueMap<String, Object>();
 
-						map.add("fromDate", firstDate);
+							map.add("fromDate", firstDate);
 
-						map.add("toDate", endDate);
-						map.add("plantId", 0);
+							map.add("toDate", endDate);
+							map.add("plantId", 0);
 
-						DashSaleCount dashBoard = rest.postForObject(Constants.url + "/getDashboardCountBetDate", map,
-								DashSaleCount.class);
+							DashSaleCount dashBoard = rest.postForObject(Constants.url + "/getDashboardCountBetDate",
+									map, DashSaleCount.class);
 
-						mav.addObject("dashBoard", dashBoard);
+							mav.addObject("dashBoard", dashBoard);
 
-						mav.addObject("fromDate", firstDate1);
-						mav.addObject("toDate", endDate1);
-                        }
-                        catch (Exception e) {
+							mav.addObject("fromDate", firstDate1);
+							mav.addObject("toDate", endDate1);
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					} catch (Exception e) {
@@ -209,19 +211,18 @@ public class HomeController {
 		session.invalidate();
 		return "redirect:/";
 	}
-	@RequestMapping(value = "/setSubModId", method = RequestMethod.GET)
-	public @ResponseBody void setSubModId(HttpServletRequest request,
-		HttpServletResponse response) {
-		try {
-		int subModId=Integer.parseInt(request.getParameter("subModId"));
-		int modId=Integer.parseInt(request.getParameter("modId"));
-		HttpSession session = request.getSession();
 
-		session.setAttribute("sessionModuleId", modId);
-		session.setAttribute("sessionSubModuleId",subModId);
-		 session.removeAttribute( "exportExcelList" );
-		}
-		catch (Exception e) {
+	@RequestMapping(value = "/setSubModId", method = RequestMethod.GET)
+	public @ResponseBody void setSubModId(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			int subModId = Integer.parseInt(request.getParameter("subModId"));
+			int modId = Integer.parseInt(request.getParameter("modId"));
+			HttpSession session = request.getSession();
+
+			session.setAttribute("sessionModuleId", modId);
+			session.setAttribute("sessionSubModuleId", subModId);
+			session.removeAttribute("exportExcelList");
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

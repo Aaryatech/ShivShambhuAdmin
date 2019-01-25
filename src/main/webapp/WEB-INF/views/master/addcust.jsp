@@ -137,7 +137,21 @@
 											}catch(e){}">
 											<option value="">Select</option>
 											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+
+												<c:forEach items="${plantList}" var="plant">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}">${plant.plantName}
+														</c:otherwise>
+													</c:choose>
+
+												</c:forEach>
+
+
+
 											</c:forEach>
 										</select>
 									</div>

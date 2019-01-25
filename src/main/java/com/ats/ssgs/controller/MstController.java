@@ -342,7 +342,7 @@ public class MstController {
 					String extension = FilenameUtils.getExtension(file3.get(0).getOriginalFilename());
 
 					prevImage3 = tStamp + "_3." + extension;
-					imgUpload.saveUploadedFiles(file3.get(0), Constants. VEH_IMG_TYPE, prevImage3);
+					imgUpload.saveUploadedFiles(file3.get(0), Constants.VEH_IMG_TYPE, prevImage3);
 					System.out.println("prevImage3" + prevImage3);
 
 				}
@@ -362,7 +362,7 @@ public class MstController {
 					String extension = FilenameUtils.getExtension(file4.get(0).getOriginalFilename());
 
 					prevImage4 = tStamp + "_4." + extension;
-					imgUpload.saveUploadedFiles(file4.get(0), Constants. VEH_IMG_TYPE, prevImage4);
+					imgUpload.saveUploadedFiles(file4.get(0), Constants.VEH_IMG_TYPE, prevImage4);
 					System.out.println("prevImage4" + prevImage4);
 
 				}
@@ -393,15 +393,32 @@ public class MstController {
 
 			try {
 				veh.setVehDoc1(prevImage1);
-				veh.setVehDoc2(prevImage2);
-				veh.setVehDoc3(prevImage3);
-				veh.setVehDoc4(prevImage4);
 
 			} catch (Exception e) {
 				veh.setVehDoc1("NA");
-				veh.setVehDoc2("NA");
-				veh.setVehDoc3("NA");
-				veh.setVehDoc4("NA");
+			}
+
+			try {
+				veh.setVehDoc1(prevImage1);
+
+			} catch (Exception e) {
+				veh.setVehDoc1("NA");
+
+			}
+
+			try {
+				veh.setVehDoc1(prevImage1);
+
+			} catch (Exception e) {
+				veh.setVehDoc1("NA");
+
+			}
+
+			try {
+				veh.setVehDoc1(prevImage1);
+
+			} catch (Exception e) {
+				veh.setVehDoc1("NA");
 
 			}
 
@@ -431,10 +448,8 @@ public class MstController {
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("mst/vehicle");
-			
-			
-			
-			//model.addObject("ImageUrl", Constants.VEH_IMG_URL);
+
+			// model.addObject("ImageUrl", Constants.VEH_IMG_URL);
 
 			Vehicle[] vehArray = rest.getForObject(Constants.url + "getAllVehicleList", Vehicle[].class);
 			vehList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
@@ -460,7 +475,6 @@ public class MstController {
 			model.addObject("editVeh", editVeh);
 
 			model.addObject("vehImgPath", Constants.VEH_IMG_URL);
-			
 
 		} catch (Exception e) {
 
@@ -532,9 +546,14 @@ public class MstController {
 		ModelAndView model = null;
 		try {
 
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
+
 			model = new ModelAndView("mst/subplant");
 			model.addObject("isError", isError);
 			isError = 0;
+
+			model.addObject("plant_id", login.getUser().getPlantId());
 
 			model.addObject("title", "Add Subplant");
 			Subplant[] sbArray = rest.getForObject(Constants.url + "getAllSubPlantList", Subplant[].class);

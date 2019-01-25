@@ -125,14 +125,18 @@
 										<option value="">Select</option>
 
 										<option value="0">All</option>
-										<c:forEach items="${plantList}" var="plant">
+										<c:choose>
+											<c:when test="${sessionScope.plantId==plant.plantId}">
+												<option value="${plant.plantId}" selected>${plant.plantName}</option>
+											</c:when>
 
-											<option value="${plant.plantId}">${plant.plantName}</option>
-
-										</c:forEach>
+											<c:otherwise>
+												<option value="${plant.plantId}">${plant.plantName}
+											</c:otherwise>
+										</c:choose>
 									</select>
 								</div>
-								
+
 								<div class="col-md-2"></div>
 								<div class="col-md-2">
 									<input type="button" class="btn btn-primary"

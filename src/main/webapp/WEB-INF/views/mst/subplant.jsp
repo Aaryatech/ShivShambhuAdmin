@@ -135,6 +135,9 @@
 											<option value="-1">Select</option>
 											<c:forEach items="${plantList}" var="plant">
 												<c:choose>
+													<c:when test="${sessionScope.plantId==plant.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
 													<c:when test="${plant.plantId==editSP.plantId}">
 														<option value="${plant.plantId}" selected>${plant.plantName}</option>
 													</c:when>
@@ -250,11 +253,11 @@
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editSP/${sp.subplantId}"><i
-														class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
-													&nbsp; <a
+														class="fa fa-edit" style="color: black"></i> <span
+														class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deleteSP/${sp.subplantId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o" style="color:black"></i></a></td>
+														class="fa fa-trash-o" style="color: black"></i></a></td>
 
 											</tr>
 										</c:forEach>

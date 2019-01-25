@@ -1,16 +1,11 @@
 package com.ats.ssgs.controller;
 
-import java.text.DateFormat;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -28,17 +23,9 @@ import com.ats.ssgs.model.AddItemDetail;
 import com.ats.ssgs.model.GetAddItemDetail;
 import com.ats.ssgs.model.GetExistingItemDetail;
 import com.ats.ssgs.model.master.Info;
-import com.ats.ssgs.model.master.LoginResUser;
-import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Uom;
-import com.ats.ssgs.model.mat.GetMatIssueDetail;
 import com.ats.ssgs.model.mat.ItemCategory;
-import com.ats.ssgs.model.mat.MatIssueDetail;
-import com.ats.ssgs.model.mat.MatIssueHeader;
-import com.ats.ssgs.model.mat.MatIssueVehDetail;
 import com.ats.ssgs.model.mat.RawMatItem;
-import com.ats.ssgs.model.mat.TempMatIssueDetail;
-import com.ats.ssgs.model.rec.PayRecoveryDetail;
 
 @Controller
 public class RMMaterialController {
@@ -341,6 +328,121 @@ public class RMMaterialController {
 
 		return "redirect:/showItemList";
 
+	}
+
+	// *************************************Raw MAterial**************//
+	@RequestMapping(value = "/showRawMatItem", method = RequestMethod.GET)
+	public ModelAndView showRawMatItem(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("master/addRawMatItem");
+			model.addObject("isError", isError);
+			isError = 0;
+
+			model.addObject("title", "Add Raw Material");
+			ItemCategory[] catArray = rest.getForObject(Constants.url + "getAllItemCategoryList", ItemCategory[].class);
+			catList = new ArrayList<ItemCategory>(Arrays.asList(catArray));
+
+			model.addObject("catList", catList);
+
+			Uom[] uomArray = rest.getForObject(Constants.url + "getAllUomList", Uom[].class);
+			uomList = new ArrayList<Uom>(Arrays.asList(uomArray));
+			model.addObject("uomList", uomList);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showRawMatItem at RMMAterial Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/insertRawMatItem", method = RequestMethod.POST)
+	public String insertRawMatItem(HttpServletRequest request, HttpServletResponse response) {
+
+		// ModelAndView model = new ModelAndView("masters/addEmployee");
+		try {
+			String itemId = request.getParameter("itemId");
+			String itemCode = request.getParameter("itemCode");
+			String itemDesc = request.getParameter("itemDesc");
+			String uom = request.getParameter("uomId");
+			String itemDate = request.getParameter("itemDate");
+			int opQty = Integer.parseInt(request.getParameter("opQty"));
+			float opRate = Float.parseFloat(request.getParameter("opRate"));
+			int clQty = Integer.parseInt(request.getParameter("clQty"));
+			float clRate = Float.parseFloat(request.getParameter("clRate"));
+			int minLevel = Integer.parseInt(request.getParameter("minLevel"));
+			int maxLevel = Integer.parseInt(request.getParameter("maxLevel"));
+			int rodLevel = Integer.parseInt(request.getParameter("rodLevel"));
+			float itemWeight = Float.parseFloat(request.getParameter("itemWeight"));
+			String itemLocation = request.getParameter("itemLocation");
+			String itemAbc = request.getParameter("itemAbc");
+			String itemLife = request.getParameter("itemLife");
+			String itemSchd = request.getParameter("itemSchd");
+			int isCritical = Integer.parseInt(request.getParameter("isCritical"));
+			int isCapital = Integer.parseInt(request.getParameter("isCapital"));
+
+			int catId = Integer.parseInt(request.getParameter("catId"));
+			int grpId = Integer.parseInt(request.getParameter("catId"));
+			int subGrpId = Integer.parseInt(request.getParameter("catId"));
+
+			RawMatItem insert = new RawMatItem();
+
+			if (itemId.equalsIgnoreCase("") || itemId.equalsIgnoreCase(null) || itemId.equalsIgnoreCase("0"))
+				insert.setItemId(0);
+			else
+				insert.setItemId(Integer.parseInt(itemId));
+			insert.setItemCode(itemCode);
+			insert.setItemDesc(itemDesc);
+			insert.setItemDate(DateConvertor.convertToYMD(itemDate));
+
+			for (int i = 0; i < uomList.size(); i++) {
+				if (Integer.parseInt(uom) == uomList.get(i).getUomId()) {
+					insert.setItemUom(uomList.get(i).getUomName());
+					break;
+				}
+			}
+
+			insert.setItemUom2(uom);
+			insert.setItemOpQty(opQty);
+			insert.setItemOpRate(opRate);
+			insert.setItemClQty(clQty);
+			insert.setItemClRate(clRate);
+			insert.setItemMinLevel(minLevel);
+			insert.setItemMaxLevel(maxLevel);
+			insert.setItemRodLevel(rodLevel);
+			insert.setItemWt(itemWeight);
+			insert.setItemLocation(itemLocation);
+			insert.setItemAbc(itemAbc);
+			insert.setItemLife(itemLife);
+			insert.setItemSchd(itemSchd);
+			insert.setItemIsCritical(isCritical);
+			insert.setItemIsCapital(isCapital);
+			insert.setIsUsed(1);
+			insert.setCreatedIn(1);
+			insert.setItemIsCons(1);
+			insert.setCatId(catId);
+			insert.setGrpId(grpId);
+			insert.setSubGrpId(subGrpId);
+			insert.setItemDesc3("NA");
+
+			System.out.println("insert" + insert);
+
+			RawMatItem res = rest.postForObject(Constants.url + "/saveRawItem", insert, RawMatItem.class);
+
+			System.out.println("res " + res);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "redirect:/showRawMatItem";
 	}
 
 }

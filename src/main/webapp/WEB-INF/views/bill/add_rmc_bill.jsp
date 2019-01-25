@@ -18,6 +18,9 @@
 <c:url var="getOrderDetailForChalan" value="/getOrderDetailForChalan" />
 <c:url var="getChalanItems" value="/getChalanItems" />
 <c:url var="getChalanSelectedItems" value="/getChalanSelectedItems" />
+
+
+<c:url var="getChalanByCustAndProj" value="/getChalanByCustAndProj" />
 <c:url var="getItemsForBill" value="/getItemsForRmcBill" />
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -82,7 +85,7 @@
 }
 </style>
 </head>
-<body onload="getChalanItems()">
+<body onload="getChalanByCustAndProj()">
 
 
 	<!-- Left Panel -->
@@ -239,6 +242,9 @@
 										</select>
 									</div>
 								</div> --%>
+
+								<input type="hidden" value="${chalan.chalanId}" id="chalanId"
+									name="chalanId">
 								<div class="form-group"></div>
 
 								<div class="row">
@@ -249,7 +255,11 @@
 										<select id="chalan_id" name="chalan_id" class="standardSelect"
 											tabindex="1" required multiple="multiple"
 											oninvalid="setCustomValidity('Please select Challan')">
-											<option selected value="${chalan.chalanId}">${chalan.chalanNo}</option>
+
+											<c:forEach items="${chalanHeadList}" var="chalan">
+												<option value="${chalan.chalanId}">${chalan.chalanNo}
+											</c:forEach>
+											<%-- 	<option value="${chalan.chalanId}" selected>${chalan.chalanNo}</option>	<option selected value="${chalan.chalanId}">${chalan.chalanNo}</option> --%>
 
 
 											<%-- <c:forEach items="${plantList}" var="plant">
@@ -1065,6 +1075,9 @@ function toggle() {
 		function getChalanByCustAndProj() {
 			var projId=document.getElementById("proj_id").value;
 			var custId = document.getElementById("cust_name").value;
+			var chalanId = document.getElementById("chalanId").value;
+			
+			//alert(chalanId);
 		
 			
 				$
@@ -1082,10 +1095,20 @@ function toggle() {
 									var html='<option value="-1">Select</option>';
 
 									for (var i = 0; i < len; i++) {
+										
+										if(data[i].chalanId==chalanId)
+											{
 										var challanData=data[i].chalanNo+"--"+data[i].chalanDate
 
-										html += '<option value="' + data[i].chalanId + '">'
+										html += '<option value="' + data[i].chalanId + '" Selected>'
 												+challanData+ '</option>';
+											}else
+												{
+												var challanData=data[i].chalanNo+"--"+data[i].chalanDate
+
+												html += '<option value="' + data[i].chalanId + '" >'
+														+challanData+ '</option>';
+												}
 
 									}
 									html += '</option>';

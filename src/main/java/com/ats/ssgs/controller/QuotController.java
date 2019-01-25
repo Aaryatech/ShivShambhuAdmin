@@ -406,12 +406,11 @@ public class QuotController {
 		GetQuotHeader[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustIdAndStatus", map,
 				GetQuotHeader[].class);
 		getQuotList = new ArrayList<GetQuotHeader>(Arrays.asList(ordHeadArray));
-		
+
 		for (int i = 0; i < getQuotList.size(); i++) {
-		
-			
+
 			getQuotList.get(i).setQuotDate(DateConvertor.convertToDMY(getQuotList.get(i).getQuotDate()));
-			
+
 		}
 
 		System.out.println("quot list data " + getQuotList.toString());
@@ -439,13 +438,12 @@ public class QuotController {
 			rowData.add("" + getQuotList.get(i).getCompName());
 
 			rowData.add("" + getQuotList.get(i).getQuotNo());
-			String date1=DateConvertor.convertToDMY( getQuotList.get(i).getQuotDate());
-			System.out.println("date1"+date1);
-			
+			String date1 = DateConvertor.convertToDMY(getQuotList.get(i).getQuotDate());
+			System.out.println("date1" + date1);
+
 			rowData.add("" + date1);
 			rowData.add("" + getQuotList.get(i).getUsrName());
 
-			
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
@@ -1527,9 +1525,10 @@ public class QuotController {
 		String url = request.getParameter("url");
 		System.out.println("URL " + url);
 
-		 File f = new File("E:\\quot.pdf");
+		File f = new File("/home/lenovo/Desktop/quot.pdf");
 
-		//File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf");
+		// File f = new
+		// File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1548,11 +1547,13 @@ public class QuotController {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 
-		 String filename = "E:\\quot.pdf";
-		//String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
+		String filename = "/home/lenovo/Desktop/quot.pdf";
+		// String filename =
+		// "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
 
-		//String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
-		 String filePath = "E:\\quot.pdf";
+		// String filePath =
+		// "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
+		String filePath = "/home/lenovo/Desktop/quot.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file
