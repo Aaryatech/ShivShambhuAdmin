@@ -95,9 +95,11 @@ public class PdfController {
 				
 			}
 			else {
-				model = new ModelAndView("print_page/chalan_print");
+				model = new ModelAndView("print_page/rm_chalan_print");
 			}
 			
+			//model = new ModelAndView("print_page/chalan_print");
+
 			
 			RestTemplate rest = new RestTemplate();
 
@@ -108,19 +110,17 @@ public class PdfController {
 			
 			int orderId=chPrint.getOrderId();
 			System.err.println("Order id:::::" + orderId);
-			
-			
-			
 			map = new LinkedMultiValueMap<String, Object>();
 			
-			map.add("orderId", chalanId);
+			map.add("orderId", orderId);
 			GetTotalChalanQuantity[] chArry = rest.postForObject(Constants.url + "/getChalanQuanPrintData", map,
 					GetTotalChalanQuantity[].class);
-			List<GetTotalChalanQuantity> compList = new ArrayList<GetTotalChalanQuantity>(Arrays.asList(chArry));
-			model.addObject("compList",compList);
+			List<GetTotalChalanQuantity> rstList = new ArrayList<GetTotalChalanQuantity>(Arrays.asList(chArry));
+			model.addObject("rstList",rstList);
 			
-			System.err.println("pdf data /getChalanQuanPrintData " + compList.toString());
+			System.err.println("1 result " + rstList.toString());
 			map = new LinkedMultiValueMap<String, Object>();
+			
 			
 			map.add("chalanId", chalanId);
 			ChalanPrintData chPrintData = rest.postForObject(Constants.url + "/getChalanPrintData", map,
@@ -140,9 +140,26 @@ public class PdfController {
 				model.addObject("temp",a);
 			}
 
-			System.err.println("pdf data /showChalanPdf " + chPrintData.toString());
+			System.err.println("pdf data 2/showChalanPdf Print" + chPrintData.toString());
 			
 			model.addObject("printData", chPrintData);
+			
+			for(int i=0;i<chPrintData.getChalanItemList().size();i++) {
+				System.out.println("inside for");
+				System.err.println("2 result " + chPrintData.getChalanItemList().get(i).getItemId());
+				System.err.println("3 result " + rstList.get(i).getItemId());
+				for(int i1=0;i1<rstList.size();i1++) {
+				
+				if(chPrintData.getChalanItemList().get(i).getItemId()==rstList.get(i1).getItemId()) {
+					System.out.println("matched");
+					model.addObject("result",rstList);
+					
+					System.out.println("result is rstlist >>>>>"+rstList);
+					System.out.println("result is >>>>>"+rstList.get(i1).getResult());
+				}
+				}
+			}
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
