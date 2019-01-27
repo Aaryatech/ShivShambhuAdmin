@@ -89,7 +89,7 @@
 
 
 </head>
-<body>
+<body onload="showProdReport()">
 
 
 	<!-- Left Panel -->
@@ -150,8 +150,7 @@
 						<div class="card-body card-block">
 							<form id="prodHeadForm" method="post">
 								<div class="row">
-									<input type="hidden" name="itemId" id="itemId"
-										value="0" />
+									<input type="hidden" name="itemId" id="itemId" value="0" />
 
 									<div class="col-md-1">Plant</div>
 
@@ -163,8 +162,21 @@
 											<option value="">Select</option>
 
 											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+												<c:if test="${sessionScope.plantId==0}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 											</c:forEach>
+
 										</select>
 									</div>
 
@@ -297,7 +309,7 @@
 			$('input[id$=from_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-			
+
 			$('input[id$=to_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
@@ -308,38 +320,38 @@
 
 
 	<script type="text/javascript">
-	// onclick of submit to search order 
+		// onclick of submit to search order 
 		function showProdReport() {
-		
-		//alert("Hi View Prod Plans  ");
-	
+
+			//alert("Hi View Prod Plans  ");
+
 			var plantId = document.getElementById("plant_id").value;
-			 var fromDate=document.getElementById("from_date").value;
-			 var toDate=document.getElementById("to_date").value;
-			 
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
 			var valid = true;
 
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
-			}			
-			
+			}
+
 			else if (fromDate == null || fromDate == "") {
-					valid = false;
-					alert("Please select from date");
-				}			
-			 
+				valid = false;
+				alert("Please select from date");
+			}
+
 			else if (toDate == null || toDate == "") {
 				valid = false;
 				alert("Please select to date");
-			}			
-		
-			if(fromDate > toDate){
+			}
+
+			if (fromDate > toDate) {
 				valid = false;
 				alert("from date can not be  greater than to date ");
 			}
-			if(valid==true){
-			
+			if (valid == true) {
+
 				$
 						.getJSON(
 								'${getProdHeadReport}',
@@ -351,70 +363,70 @@
 								},
 
 								function(data) {
-									
+
 									//alert("Order Data " +JSON.stringify(data));
-									
-									 var dataTable = $('#bootstrap-data-table')
-									.DataTable();
-							dataTable.clear().draw();
-							
-							//alert("Data " +JSON.stringify(data));
 
-							$.each(data,function(i, v) {
-												//alert("hdjfh");
-//var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-//var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
-//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
-										 var acButton = '<a href="#" class="action_btn" onclick="viewProdDetail('
-														+ v.itemId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-list"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="viewRMHeaderDetail('
-														+ v.itemId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-times"></i></a>'
-														
- 
-												dataTable.row
-														.add(
-																[
-																		i + 1,
-																		v.itemName,
-																		v.planQty,
-																		v.productionQty,
-																		acButton
-																		 ])
-														.draw();
-											}); 
-						
-								});	
-				
-}//end of if valid ==true
-						
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
+
+									//alert("Data " +JSON.stringify(data));
+
+									$
+											.each(
+													data,
+													function(i, v) {
+														//alert("hdjfh");
+														//var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
+														//var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
+														//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
+														var acButton = '<a href="#" class="action_btn" onclick="viewProdDetail('
+																+ v.itemId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-list"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="viewRMHeaderDetail('
+																+ v.itemId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-times"></i></a>'
+
+														dataTable.row
+																.add(
+																		[
+																				i + 1,
+																				v.itemName,
+																				v.planQty,
+																				v.productionQty,
+																				acButton ])
+																.draw();
+													});
+
+								});
+
+			}//end of if valid ==true
+
 		}
-	
-	function viewProdDetail(itemId){
-		document.getElementById("itemId").value=itemId;
-		var form=document.getElementById("prodHeadForm");
-		
-		form.action=("getProdReportDetail");
-		
-		form.submit();
-		
-	}
-		//window.open("${pageContext.request.contextPath}/editOrder/"+orderId);
-		
-		function viewRMHeaderDetail(itemId){
-			document.getElementById("itemId").value=itemId;
 
-			var form=document.getElementById("prodHeadForm");
-			
-			form.action=("getFgItemWiseRMReport");
-			
+		function viewProdDetail(itemId) {
+			document.getElementById("itemId").value = itemId;
+			var form = document.getElementById("prodHeadForm");
+
+			form.action = ("getProdReportDetail");
+
+			form.submit();
+
+		}
+		//window.open("${pageContext.request.contextPath}/editOrder/"+orderId);
+
+		function viewRMHeaderDetail(itemId) {
+			document.getElementById("itemId").value = itemId;
+
+			var form = document.getElementById("prodHeadForm");
+
+			form.action = ("getFgItemWiseRMReport");
+
 			form.submit();
 		}
-		
 	</script>
 
 	<!-- <script type="text/javascript">

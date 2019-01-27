@@ -102,6 +102,7 @@ public class HomeController {
 					session.setAttribute("UserDetail", userObj);
 
 					session.setAttribute("plantId", userObj.getUser().getPlantId());
+					session.setAttribute("companyId", userObj.getUser().getCompanyId());
 					LoginResUser userResponse = (LoginResUser) session.getAttribute("UserDetail");
 					session.setAttribute("userInfo", userResponse.getUser());
 
@@ -154,7 +155,7 @@ public class HomeController {
 							map.add("fromDate", firstDate);
 
 							map.add("toDate", endDate);
-							map.add("plantId", 0);
+							map.add("plantId", userObj.getUser().getPlantId());
 
 							DashSaleCount dashBoard = rest.postForObject(Constants.url + "/getDashboardCountBetDate",
 									map, DashSaleCount.class);

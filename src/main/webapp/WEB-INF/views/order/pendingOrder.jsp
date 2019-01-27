@@ -106,7 +106,7 @@
 
 
 </head>
-<body>
+<body onload="getData()">
 
 
 	<!-- Left Panel -->
@@ -180,7 +180,19 @@
 											<option value="">Select</option>
 
 											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+												<c:if test="${sessionScope.plantId==0}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 											</c:forEach>
 										</select>
 									</div>
@@ -216,31 +228,33 @@
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">From Date</div>
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="text" autocomplete="off" id="from_date"
 											name="from_date" required style="width: 100%;"
 											class="form-control" value="${fromDate}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-2">To Date</div>
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<input type="text" autocomplete="off" id="to_date"
 											name="to_date" style="width: 100%;" class="form-control"
 											value="${toDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
-
-								</div>
-
-
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-6"></div>
+									
+									<div class="col-md-2"></div>
 									<div class="col-md-2">
 										<input type="button" class="btn btn-primary"
 											onclick="showOrder()" value="Submit">
 									</div>
+
 								</div>
+
+
+							<!-- 	<div class="form-group"></div>
+								<div class="row">
+									
+								</div> -->
 
 
 								<div class="form-group"></div>
@@ -535,30 +549,27 @@
 													function(i, v) {
 														var chBox;
 														var status1;
-														if(v.status==0){
-															status1="Pending";
+														if (v.status == 0) {
+															status1 = "Pending";
+														} else {
+															status1 = "Partial Pending";
 														}
-														else{
-															status1="Partial Pending";
-														}
-													
-															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																	+ v.orderId
-																	+ ','
-																	+ i
-																	+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-																	+ v.orderId
-																	+ ','
-																	+ i
-																	+ ')" style="color:black"><i class="fa fa-trash" title="Delete"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDetail('
-																	+ v.orderId
-																	+ ','
-																	+ i
-																	+ ')" style="color:black"><i class="fa fa-list"  title="Generate Chalan"></i></a>'
 
-															chBox = '<input  type="checkbox" class="chk" name="selectOrderToDelete" id='+v.orderId+' class="check"  value='+v.orderId+'>'
+														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																+ v.orderId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+																+ v.orderId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-trash" title="Delete"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDetail('
+																+ v.orderId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-list"  title="Generate Chalan"></i></a>'
 
-														
+														chBox = '<input  type="checkbox" class="chk" name="selectOrderToDelete" id='+v.orderId+' class="check"  value='+v.orderId+'>'
 
 														//var chBox='<input type="checkbox" id="orderId" class="chk" name="quotIds" value='+v.orderId+'/>'
 														dataTable.row

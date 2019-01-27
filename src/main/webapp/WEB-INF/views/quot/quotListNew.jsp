@@ -78,7 +78,7 @@
 
 
 </head>
-<body>
+<body onload="showQuot()">
 
 
 	<!-- Left Panel -->
@@ -150,15 +150,24 @@
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
 											<option value="0">All</option>
+
 											<c:forEach items="${plantList}" var="plant">
-												<c:choose>
-													<c:when test="${plant.plantId==plantId1}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
-													</c:otherwise>
-												</c:choose>
+												<c:if test="${sessionScope.plantId==0}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:when test="${plant.plantId==plantId1}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 											</c:forEach>
 										</select>
 									</div>
@@ -418,7 +427,7 @@
 			} else {
 				window
 						.open('${pageContext.request.contextPath}/pdfQuot?url=pdf/showQuotPdf/'
-								+ quotIdList 	+ '/'+ plantId);
+								+ quotIdList + '/' + plantId);
 			}
 		}
 	</script>
@@ -639,7 +648,7 @@
 
 		}
 
-		function callEdit(quotHeadId, plantId, custId, enqHeadId,stat) {
+		function callEdit(quotHeadId, plantId, custId, enqHeadId, stat) {
 
 			window
 					.open("${pageContext.request.contextPath}/editQuotationDetail/"
@@ -649,9 +658,7 @@
 							+ '/'
 							+ custId
 							+ '/'
-							+ enqHeadId
-							+ '/'
-							+ stat);
+							+ enqHeadId + '/' + stat);
 
 		}
 		function callSinglePdf(quotIdList) {
@@ -667,10 +674,7 @@
 	<script type="text/javascript">
 		$(document)
 				.ready(
-						
-						
-						
-						
+
 						function() {
 							$('#bootstrap-data-table-export').DataTable();
 

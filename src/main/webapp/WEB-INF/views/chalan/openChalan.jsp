@@ -24,7 +24,7 @@
 	
 <c:url var="getTempOrderHeader"
 	value="/getTempOrderHeader" /> --%>
-	
+
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -75,31 +75,30 @@
 
 <style>
 .alert {
-    padding: 20px;
-    background-color: red;
-    color: white;
-    
+	padding: 20px;
+	background-color: red;
+	color: white;
 }
+
 .alert1 {
-    padding: 20px;
-    background-color: green;
-    color: white;
-    
+	padding: 20px;
+	background-color: green;
+	color: white;
 }
 
 .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: black;
+	color: black;
 }
 </style>
 
@@ -123,73 +122,86 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-			
-			<c:choose>
-							<c:when test="${isError==1}">
-							
-							<div class="alert">
-							
+
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Failed !</strong>     Data not submitted  !!
-				</div>
-							
-							</c:when>
-							
-							<c:when test="${isError==2}">
-							
-							<div class="alert1">
-							
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Success</strong>     Data Submitted !!
-				</div>
-							
-							</c:when>
-							
-							</c:choose>
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
-					
+
 						<div class="card-header">
 							<div class="col-md-2">
 								<strong>${title}</strong>
 							</div>
-							
-							
+
+
 
 						</div>
 						<div class="card-body card-block">
-							
+
 							<%-- 
 							<form
 								action="${pageContext.request.contextPath}/deleteRecordofChalan"
 								method="post"> --%>
-								<div class="row">
+							<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+								<div class="col-md-2">Select Plant</div>
 
-									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
-											tabindex="1" required
-											oninvalid="setCustomValidity('Please select plant name')"
-											onchange="getData()">
-											<option value="">Select Plant</option>
+								<div class="col-md-4">
+									<select id="plant_id" name="plant_id" class="standardSelect"
+										tabindex="1" required
+										oninvalid="setCustomValidity('Please select plant name')"
+										onchange="getData()">
+										<option value="">Select Plant</option>
 
-											<c:forEach items="${plantList}" var="plant">
+										<c:forEach items="${plantList}" var="plant">
+											<c:if test="${sessionScope.plantId==0}">
 												<option value="${plant.plantId}">${plant.plantName}</option>
-											</c:forEach>
-										</select>
-									</div>
-									
-									<div class="col-md-2">
-										<input type="button" class="btn btn-primary"  onclick="showChalan()" value="Submit">
-									</div>
+											</c:if>
+											<c:if test="${sessionScope.plantId!=0}">
+												<c:choose>
+													<c:when test="${sessionScope.plantId==plant.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+										</c:forEach>
+									</select>
 								</div>
-								
 
-								<!-- 
+								<div class="col-md-2">
+									<input type="button" class="btn btn-primary"
+										onclick="showChalan()" value="Submit">
+								</div>
+							</div>
+
+
+							<!-- 
 								<div class="row">
 								<div class="col-md-6"></div>
 									<div class="col-md-2">
@@ -198,33 +210,34 @@
 								</div>
 								 -->
 
-								<div class="form-group"></div>
-								
-							
-								
-								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-								
-								<div class="card-body card-block">
-									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
-										<thead>
-											<tr>
-											
-												<th style="text-align: center">Sr.No.</th>
-												<th style="text-align: center">Chalan No</th>
-												<th style="text-align: center">Chalan Date</th>
-												<th style="text-align: center">Customer Name</th>
-												<th style="text-align: center">Project Name</th>
-												<th style="text-align: center">Vehicle No</th>
-												<th style="text-align: center">Driver Name</th>
-												
-<!-- 												<th style="text-align: center">Status</th>
- -->												<th style="text-align: center">Action</th>
-											</tr>
-										</thead>
+							<div class="form-group"></div>
 
-									</table>
-										<div class="col-md-3">
+
+
+							<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
+
+							<div class="card-body card-block">
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
+										<tr>
+
+											<th style="text-align: center">Sr.No.</th>
+											<th style="text-align: center">Chalan No</th>
+											<th style="text-align: center">Chalan Date</th>
+											<th style="text-align: center">Customer Name</th>
+											<th style="text-align: center">Project Name</th>
+											<th style="text-align: center">Vehicle No</th>
+											<th style="text-align: center">Driver Name</th>
+
+											<!-- 												<th style="text-align: center">Status</th>
+ -->
+											<th style="text-align: center">Action</th>
+										</tr>
+									</thead>
+
+								</table>
+								<div class="col-md-3">
 
 									<button type="button" class="btn btn-primary"
 										onclick="exportToExcel();" disabled="disabled" id="expExcel"
@@ -241,22 +254,22 @@
 										PDF</button>
 								</div>
 								&nbsp;
-								</div>
+							</div>
 
 							<!-- <input type="submit" class="btn btn-primary" value="Delete"
 										id="deleteId"
 										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
 										style="align-content: center; width: 113px; margin-left: 40px;"> -->
-						<!-- </form>	 -->
-	</div>
+							<!-- </form>	 -->
 						</div>
 					</div>
 				</div>
 			</div>
-
-
 		</div>
-		<!-- .animated -->
+
+
+	</div>
+	<!-- .animated -->
 	<!-- .content -->
 
 
@@ -327,7 +340,7 @@
 			$('input[id$=from_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-			
+
 			$('input[id$=to_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
@@ -336,9 +349,8 @@
 	</script>
 
 	<script type="text/javascript">
-	
-	// on plant change function 
-		function getData() { 
+		// on plant change function 
+		function getData() {
 			var plantId = document.getElementById("plant_id").value;
 			var valid = true;
 
@@ -374,9 +386,8 @@
 					$('#po_id').html("-1");
 					$("#po_id").trigger("chosen:updated");
 					 */
-					var dataTable = $('#bootstrap-data-table')
-					.DataTable();
-			dataTable.clear().draw();
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
 
 				});
 			}//end of if
@@ -387,22 +398,21 @@
 
 
 	<script type="text/javascript">
-	// onclick of submit to search order 
+		// onclick of submit to search order 
 		function showChalan() {
-		
-		//alert("Hi View showChalan  ");
-	
+
+			//alert("Hi View showChalan  ");
+
 			var plantId = document.getElementById("plant_id").value;
 			var valid = true;
 
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
-			}			
-			
-			
-			if(valid==true){
-			
+			}
+
+			if (valid == true) {
+
 				$
 						.getJSON(
 								'${getOpenChalanListByPlant}',
@@ -412,7 +422,7 @@
 								},
 
 								function(data) {
-									
+
 									document.getElementById("expExcel").disabled = false;
 									document.getElementById("PDFButton").disabled = false;
 
@@ -423,61 +433,60 @@
 
 									}
 
-									
 									//alert("Order Data " +JSON.stringify(data));
 									var chBox;
-									 var dataTable = $('#bootstrap-data-table')
-									.DataTable();
-							dataTable.clear().draw();
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
 
-							$.each(data,function(i, v) {
-								
-								
-												
-										 var acButton ='<a href="#" class="action_btn" onclick="callClose('
-															+ v.chalanId
-															+ ','
-															+ i
-															+ ')" style="color:black"><i class="fa fa-times"></i></a>'
-															
-							
- 
-												dataTable.row
-														.add(
-																[
-																		i + 1,
-																		v.chalanNo,
-																		v.chalanDate,
-																		v.custName,
-																		v.projName,
-																		v.vehNo,
-																		v.driverName,
-																		acButton
-																		 ])
-														.draw();
-											}); 
-						
-								});	
-				
-}//end of if valid ==true
-						
+									$
+											.each(
+													data,
+													function(i, v) {
+
+														var acButton = '<a href="#" class="action_btn" onclick="callClose('
+																+ v.chalanId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-times"></i></a>'
+
+														dataTable.row
+																.add(
+																		[
+																				i + 1,
+																				v.chalanNo,
+																				v.chalanDate,
+																				v.custName,
+																				v.projName,
+																				v.vehNo,
+																				v.driverName,
+																				acButton ])
+																.draw();
+													});
+
+								});
+
+			}//end of if valid ==true
+
 		}
-	
-	function callEdit(chalanId){
-		
-		window.open("${pageContext.request.contextPath}/editChalan/"+chalanId);
-		
-	}
-	
-function callClose(chalanId){
-		
-		window.open("${pageContext.request.contextPath}/closeOpenChalan/"+chalanId);
-		
-	}
-	</script>
-	
 
-		
+		function callEdit(chalanId) {
+
+			window.open("${pageContext.request.contextPath}/editChalan/"
+					+ chalanId);
+
+		}
+
+		function callClose(chalanId) {
+
+			window.open("${pageContext.request.contextPath}/closeOpenChalan/"
+					+ chalanId);
+
+		}
+	</script>
+
+
+
 	<script type="text/javascript">
 		$(document)
 				.ready(
@@ -494,7 +503,7 @@ function callClose(chalanId){
 											});
 						});
 	</script>
-		<script type="text/javascript">
+	<script type="text/javascript">
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");
@@ -504,15 +513,14 @@ function callClose(chalanId){
 
 	<script type="text/javascript">
 		function genPdf() {
-			
-		
-			var plantId= document.getElementById("plant_id").value;
-		
-			//alert("plant_id"+plant_id);
-			
 
-			window.open('${pageContext.request.contextPath}/showOpenChalanListPdf/'
-					+ plantId);
+			var plantId = document.getElementById("plant_id").value;
+
+			//alert("plant_id"+plant_id);
+
+			window
+					.open('${pageContext.request.contextPath}/showOpenChalanListPdf/'
+							+ plantId);
 			document.getElementById("expExcel").disabled = true;
 
 		}

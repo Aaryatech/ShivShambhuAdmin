@@ -127,47 +127,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant*</div>
 
-									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
-											tabindex="1" required onchange="getData()">
-											<option value="-1">Select</option>
-											<c:forEach items="${plantList}" var="plant">
-
-												<c:if test="${isEdit==0}">
-
-													<c:if test="${sessionScope.plantId==0}">
-														<option value="${plant.plantId}">${plant.plantName}</option>
-													</c:if>
-													<c:if test="${sessionScope.plantId!=0}">
-														<c:choose>
-															<c:when test="${sessionScope.plantId==plant.plantId}">
-																<option value="${plant.plantId}" selected>${plant.plantName}</option>
-															</c:when>
-															<c:otherwise>
-																<option value="${plant.plantId}" disabled>${plant.plantName}</option>
-															</c:otherwise>
-														</c:choose>
-													</c:if>
-
-												</c:if>
-
-												<c:if test="${isEdit==1}">
-													<c:choose>
-
-														<c:when test="${plant.plantId==editProj.plantId}">
-															<option value="${plant.plantId}" selected>${plant.plantName}</option>
-														</c:when>
-
-														<c:otherwise>
-															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
-														</c:otherwise>
-													</c:choose>
-												</c:if>
-											</c:forEach>
-										</select>
-									</div>
 
 									<div class="col-md-2">Select Customer*</div>
 

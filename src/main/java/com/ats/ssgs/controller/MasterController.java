@@ -1,3 +1,4 @@
+
 package com.ats.ssgs.controller;
 
 import java.text.DateFormat;
@@ -865,7 +866,7 @@ public class MasterController {
 		try {
 
 			model = new ModelAndView("master/addproject");
-
+			model.addObject("isEdit", 0);// new
 			model.addObject("title", "Add Project");
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
@@ -920,7 +921,7 @@ public class MasterController {
 			String projLoc = request.getParameter("proj_loc");
 
 			int custId = Integer.parseInt(request.getParameter("cust_id"));
-			int plantId = Integer.parseInt(request.getParameter("plant_id"));
+		//	int plantId = Integer.parseInt(request.getParameter("plant_id"));
 
 			String startDate = request.getParameter("start_date");
 			String endDate = request.getParameter("end_date");
@@ -971,8 +972,9 @@ public class MasterController {
 
 		ModelAndView model = null;
 		try {
-			model = new ModelAndView("master/addproject");
+			model = new ModelAndView("master/editProject");
 			// getProjectByProjId
+			model.addObject("isEdit", 1);// new
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));

@@ -134,18 +134,37 @@
 											tabindex="1" required onchange="getData()">
 											<option value="-1">Select</option>
 											<c:forEach items="${plantList}" var="plant">
-												<c:choose>
-													<c:when test="${sessionScope.plantId==plant.plantId}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:when test="${plant.plantId==editSP.plantId}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
-													</c:otherwise>
-												</c:choose>
 
+												<c:if test="${isEdit==0}">
+
+													<c:if test="${sessionScope.plantId==0}">
+														<option value="${plant.plantId}">${plant.plantName}</option>
+													</c:if>
+													<c:if test="${sessionScope.plantId!=0}">
+														<c:choose>
+															<c:when test="${sessionScope.plantId==plant.plantId}">
+																<option value="${plant.plantId}" selected>${plant.plantName}</option>
+															</c:when>
+															<c:otherwise>
+																<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+															</c:otherwise>
+														</c:choose>
+													</c:if>
+
+												</c:if>
+
+												<c:if test="${isEdit==1}">
+													<c:choose>
+
+														<c:when test="${plant.plantId==editSP.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 											</c:forEach>
 										</select>
 									</div>

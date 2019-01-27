@@ -124,16 +124,21 @@
 										tabindex="1" required onchange="getData()">
 										<option value="">Select</option>
 
-										<option value="0">All</option>
-										<c:choose>
-											<c:when test="${sessionScope.plantId==plant.plantId}">
-												<option value="${plant.plantId}" selected>${plant.plantName}</option>
-											</c:when>
-
-											<c:otherwise>
-												<option value="${plant.plantId}">${plant.plantName}
-											</c:otherwise>
-										</c:choose>
+										<c:forEach items="${plantList}" var="plant">
+											<c:if test="${sessionScope.plantId==0}">
+												<option value="${plant.plantId}">${plant.plantName}</option>
+											</c:if>
+											<c:if test="${sessionScope.plantId!=0}">
+												<c:choose>
+													<c:when test="${sessionScope.plantId==plant.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+										</c:forEach>
 									</select>
 								</div>
 

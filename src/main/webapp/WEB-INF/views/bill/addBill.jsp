@@ -13,7 +13,6 @@
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
 <c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
 <c:url var="getProjectByCustId" value="/getProjectByCustId" />
-<c:url var="getOrdHeaderForChalan" value="/getOrdHeaderForChalan" />
 <c:url var="getOrderDetailForChalan" value="/getOrderDetailForChalan" />
 <c:url var="getChalanItems" value="/getChalanItems" />
 <c:url var="getChalanSelectedItems" value="/getChalanSelectedItems" />
@@ -170,6 +169,30 @@
 												</c:choose>
 												<%-- 	<option value="${comp.companyId}">${comp.compName}</option> --%>
 											</c:forEach>
+
+
+											<%-- 
+											<c:forEach items="${compList}" var="comp">
+												<c:if test="${sessionScope.companyId==0}">
+													<option value="${comp.companyId}">${comp.compName}</option>
+												</c:if>
+												<c:if test="${sessionScope.companyId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.companyId==comp.companyId}">
+															<option value="${comp.companyId}" selected>${comp.compName}</option>
+														</c:when>
+
+														<c:when test="${comp.companyId==addBill.companyId}">
+															<option value="${comp.companyId}" selected>${comp.compName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${comp.companyId}" disabled>${comp.compName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
+											</c:forEach>
+
+ --%>
 										</select>
 									</div>
 

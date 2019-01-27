@@ -150,16 +150,27 @@
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
 											<option value="0">All</option>
+
+
 											<c:forEach items="${plantList}" var="plant">
-												<c:choose>
-													<c:when test="${plant.plantId==plantId1}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
-													</c:otherwise>
-												</c:choose>
+												<c:if test="${sessionScope.plantId==0}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:when test="${plant.plantId==plantId1}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 											</c:forEach>
+
 										</select>
 									</div>
 									<div class="col-md-2">Select Customer</div>
@@ -278,21 +289,21 @@
 													<td style="text-align: left"><c:out
 															value="${poList.plantName}" /></td>
 													<td style="text-align: center">${poList.quatationNo}</td>
-														
-	
-												<td style="text-align: left"><c:choose>
-														<c:when test="${status==0}">
+
+
+													<td style="text-align: left"><c:choose>
+															<c:when test="${status==0}">
 														 Pending
 													</c:when>
-														<c:when test="${status==1}">
+															<c:when test="${status==1}">
 														Partial Used
 													</c:when>
-														<c:otherwise>
+															<c:otherwise>
 														Closed
 													</c:otherwise>
 
-													</c:choose></td>
-												
+														</c:choose></td>
+
 
 													<td><a
 														href="${pageContext.request.contextPath}/editPo/${poList.poId}"><i
@@ -493,19 +504,18 @@
 													data,
 													function(i, v) {
 														var chBox;
-							                            var status1;
-							                            if(v.status==0){
-							                            	
-							                            	status1="Pending";
-							                            	
-							                            }else if(v.status==1){
-							                            	status1="Partially Used";
-							                            	
-							                            }
-							                            else if(v.status==2){
-							                            	status1="Closed";
-							                            	
-							                            }
+														var status1;
+														if (v.status == 0) {
+
+															status1 = "Pending";
+
+														} else if (v.status == 1) {
+															status1 = "Partially Used";
+
+														} else if (v.status == 2) {
+															status1 = "Closed";
+
+														}
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.poId
 																+ ','
@@ -658,121 +668,119 @@
 		});
 	</script>
 
-<script>
-function showQuot1() {
+	<script>
+		function showQuot1() {
 
-	//alert("Hi View Orders  ");
+			//alert("Hi View Orders  ");
 
-	var plantId = document.getElementById("plant_id").value;
-	//alert("plantId: "+plantId);
-	var fromDate = document.getElementById("from_date").value;
-	var toDate = document.getElementById("to_date").value;
-	var statusList = document.getElementById("statusList").value;
-	var custId = document.getElementById("cust_name").value;
+			var plantId = document.getElementById("plant_id").value;
+			//alert("plantId: "+plantId);
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+			var statusList = document.getElementById("statusList").value;
+			var custId = document.getElementById("cust_name").value;
+
+			var valid = true;
+			/* /
+			 if (plantId == null || plantId == "") {
+			 valid = false;
+			 alert("Please select plant");
+			 }
 
 
-	var valid = true;
-/* /
-	if (plantId == null || plantId == "") {
-		valid = false;
-		alert("Please select plant");
-	}
+			 if (custId == null || custId == "") {
+			 valid = false;
+			 alert("Please Select Customer");
 
+			 var dataTable = $('#bootstrap-data-table').DataTable();
+			 dataTable.clear().draw();
 
-	if (custId == null || custId == "") {
-		valid = false;
-		alert("Please Select Customer");
+			 } else if (custId < 0) {
+			 valid = false;
 
-		var dataTable = $('#bootstrap-data-table').DataTable();
-		dataTable.clear().draw();
+			 }
 
-	} else if (custId < 0) {
-		valid = false;
+			 else if (fromDate == null || fromDate == "") {
+			 valid = false;
+			 alert("Please select from date");
+			 }
 
-	}
+			 else if (toDate == null || toDate == "") {
+			 valid = false;
+			 alert("Please select to date");
+			 }
 
-	else if (fromDate == null || fromDate == "") {
-		valid = false;
-		alert("Please select from date");
-	}
+			 if (fromDate > toDate) {
+			 valid = false;
+			 alert("from date greater than todate ");
+			 }  */
+			if (valid == true) {
 
-	else if (toDate == null || toDate == "") {
-		valid = false;
-		alert("Please select to date");
-	}
+				$
+						.getJSON(
+								'${getPOListBetDateAndPlantId}',
+								{
+									plantId : plantId,
+									custId : custId,
+									fromDate : fromDate,
+									toDate : toDate,
+									statusList : statusList,
+									ajax : 'true',
+								},
 
-	if (fromDate > toDate) {
-		valid = false;
-		alert("from date greater than todate ");
-	}  */
-	if (valid == true) {
+								function(data) {
 
-		$
-				.getJSON(
-						'${getPOListBetDateAndPlantId}',
-						{
-							plantId : plantId,
-							custId : custId,
-							fromDate : fromDate,
-							toDate : toDate,
-							statusList : statusList,
-							ajax : 'true',
-						},
+									//alert("Order Data " + JSON.stringify(data));
 
-						function(data) {
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
 
-							//alert("Order Data " + JSON.stringify(data));
+									$
+											.each(
+													data,
+													function(i, v) {
+														var chBox;
+														var status1;
+														if (v.status == 0) {
 
-							var dataTable = $('#bootstrap-data-table')
-									.DataTable();
-							dataTable.clear().draw();
+															status1 = "Pending";
 
-							$
-									.each(
-											data,
-											function(i, v) {
-												var chBox;
-					                            var status1;
-					                            if(v.status==0){
-					                            	
-					                            	status1="Pending";
-					                            	
-					                            }else if(v.status==1){
-					                            	status1="Partially Used";
-					                            	
-					                            }
-					                            else if(v.status==2){
-					                            	status1="Closed";
-					                            	
-					                            }
-												var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-														+ v.poId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
+														} else if (v.status == 1) {
+															status1 = "Partially Used";
 
-												chBox = '<input  type="checkbox" class="chk" name="poIds" id='+v.poId+' class="check"  value='+v.poId+'>'
-												dataTable.row
-														.add(
-																[
-																		chBox,
-																		i + 1,
-																		v.poNo,
-																		v.poDate,
-																		v.custName,
-																		v.plantName,
-																		v.quatationNo,
-																		status1,
-																		acButton ])
-														.draw();
-											});
+														} else if (v.status == 2) {
+															status1 = "Closed";
 
-						});
+														}
+														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																+ v.poId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 
-	}//end of if valid ==true
+														chBox = '<input  type="checkbox" class="chk" name="poIds" id='+v.poId+' class="check"  value='+v.poId+'>'
+														dataTable.row
+																.add(
+																		[
+																				chBox,
+																				i + 1,
+																				v.poNo,
+																				v.poDate,
+																				v.custName,
+																				v.plantName,
+																				v.quatationNo,
+																				status1,
+																				acButton ])
+																.draw();
+													});
 
-}
-</script>
+								});
+
+			}//end of if valid ==true
+
+		}
+	</script>
 
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>

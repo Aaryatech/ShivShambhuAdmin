@@ -1161,15 +1161,14 @@ public class BillController {
 			GetBillHeaderPdf[] billHeaderRes = rest.postForObject(Constants.url + "/findBillsByHeaderId", map,
 					GetBillHeaderPdf[].class);
 			ArrayList<GetBillHeaderPdf> billHeaders = new ArrayList<GetBillHeaderPdf>(Arrays.asList(billHeaderRes));
-			System.out.println("9999999999999999999"+billHeaderRes.toString());
-			
-			System.err.println("Bill detail*******************************" + 	billHeaders.get(0).getGetBillDetails().get(0).getRefNo());
-			
-			String a=billHeaders.get(0).getGetBillDetails().get(0).getRefNo();
-			model.addObject("ref",a);
-			System.out.println("999"+a);
+			System.out.println("9999999999999999999" + billHeaderRes.toString());
 
-			
+			System.err.println("Bill detail*******************************"
+					+ billHeaders.get(0).getGetBillDetails().get(0).getRefNo());
+
+			String a = billHeaders.get(0).getGetBillDetails().get(0).getRefNo();
+			model.addObject("ref", a);
+			System.out.println("999" + a);
 
 			HttpSession httpSession = request.getSession();
 			httpSession.setAttribute("Currency", new Currency());
@@ -1200,9 +1199,9 @@ public class BillController {
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		File f = new File("/home/lenovo/Desktop/bill.pdf");
+		// File f = new File("/home/lenovo/Desktop/bill.pdf");
 
-		// File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
+		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1220,11 +1219,11 @@ public class BillController {
 		// get absolute path of the application
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
-		String filename = "/home/lenovo/Desktop/bill.pdf";
-		// String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		// String filename = "/home/lenovo/Desktop/bill.pdf";
+		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 
-		// String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
-		String filePath = "/home/lenovo/Desktop/bill.pdf";
+		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		// String filePath = "/home/lenovo/Desktop/bill.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 
 		// construct the complete absolute path of the file

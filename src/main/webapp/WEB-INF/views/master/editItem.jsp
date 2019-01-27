@@ -131,7 +131,7 @@
 														<option value="${plant.plantId}" selected>${plant.plantName}</option>
 													</c:when>
 													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
+														<option value="${plant.plantId}" disabled>${plant.plantName}
 													</c:otherwise>
 												</c:choose>
 

@@ -90,7 +90,7 @@
 
 
 </head>
-<body>
+<body onload="showProdReport()">
 
 
 	<!-- Left Panel -->
@@ -151,8 +151,7 @@
 						<div class="card-body card-block">
 							<form id="prodHeadForm" method="post">
 								<div class="row">
-									<input type="hidden" name="rmId" id="rmId"
-										value="0" />
+									<input type="hidden" name="rmId" id="rmId" value="0" />
 
 									<div class="col-md-2">Plant</div>
 
@@ -162,10 +161,22 @@
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
 											<option value="">Select</option>
-
 											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+												<c:if test="${sessionScope.plantId==0}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 											</c:forEach>
+
 										</select>
 									</div>
 
@@ -298,7 +309,7 @@
 			$('input[id$=from_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-			
+
 			$('input[id$=to_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
@@ -309,38 +320,38 @@
 
 
 	<script type="text/javascript">
-	// onclick of submit to search order 
+		// onclick of submit to search order 
 		function showProdReport() {
-		
-		//alert("Hi View Prod Plans  ");
-	
+
+			//alert("Hi View Prod Plans  ");
+
 			var plantId = document.getElementById("plant_id").value;
-			 var fromDate=document.getElementById("from_date").value;
-			 var toDate=document.getElementById("to_date").value;
-			 
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
 			var valid = true;
 
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
-			}			
-			
+			}
+
 			else if (fromDate == null || fromDate == "") {
-					valid = false;
-					alert("Please select from date");
-				}			
-			 
+				valid = false;
+				alert("Please select from date");
+			}
+
 			else if (toDate == null || toDate == "") {
 				valid = false;
 				alert("Please select to date");
-			}			
-		
-			if(fromDate > toDate){
+			}
+
+			if (fromDate > toDate) {
 				valid = false;
 				alert("from date can not be  greater than to date ");
 			}
-			if(valid==true){
-			
+			if (valid == true) {
+
 				$
 						.getJSON(
 								'${getRMHeadReport}',
@@ -352,59 +363,59 @@
 								},
 
 								function(data) {
-									
-									if(data==null || data==""){
+
+									if (data == null || data == "") {
 										alert("No records found");
 									}
-									
-									 var dataTable = $('#bootstrap-data-table')
-									.DataTable();
-							dataTable.clear().draw();
-							
-							//alert("Data " +JSON.stringify(data));
 
-							$.each(data,function(i, v) {
-												//alert("hdjfh");
-//var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-//var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
-//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
-										 var acButton = '<a href="#" class="action_btn" onclick="viewRMDetail('
-														+ v.rmId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-list"></i></a>'
-														
- 
-												dataTable.row
-														.add(
-																[
-																		i + 1,
-																		v.itemDesc,
-																		v.rmReqQty,
-																		v.rmIssueQty,
-																		acButton
-																		 ])
-														.draw();
-											}); 
-						
-								});	
-				
-}//end of if valid ==true
-						
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
+
+									//alert("Data " +JSON.stringify(data));
+
+									$
+											.each(
+													data,
+													function(i, v) {
+														//alert("hdjfh");
+														//var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
+														//var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
+														//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
+														var acButton = '<a href="#" class="action_btn" onclick="viewRMDetail('
+																+ v.rmId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-list"></i></a>'
+
+														dataTable.row
+																.add(
+																		[
+																				i + 1,
+																				v.itemDesc,
+																				v.rmReqQty,
+																				v.rmIssueQty,
+																				acButton ])
+																.draw();
+													});
+
+								});
+
+			}//end of if valid ==true
+
 		}
-	
-	function viewRMDetail(rmId){
-		document.getElementById("rmId").value=rmId;
-		var form=document.getElementById("prodHeadForm");
-		
-		form.action=("getRMReportDetail");
-		
-		form.submit();
-		
-		
-		//window.open("${pageContext.request.contextPath}/editOrder/"+orderId);
-		
-	}
+
+		function viewRMDetail(rmId) {
+			document.getElementById("rmId").value = rmId;
+			var form = document.getElementById("prodHeadForm");
+
+			form.action = ("getRMReportDetail");
+
+			form.submit();
+
+			//window.open("${pageContext.request.contextPath}/editOrder/"+orderId);
+
+		}
 	</script>
 
 	<!-- <script type="text/javascript">

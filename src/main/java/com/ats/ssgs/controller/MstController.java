@@ -553,6 +553,8 @@ public class MstController {
 			model.addObject("isError", isError);
 			isError = 0;
 
+			model.addObject("isEdit", 0);// new
+
 			model.addObject("plant_id", login.getUser().getPlantId());
 
 			model.addObject("title", "Add Subplant");
@@ -650,6 +652,7 @@ public class MstController {
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("mst/subplant");
+			model.addObject("isEdit", 1);// new
 
 			Subplant[] conArray = rest.getForObject(Constants.url + "getAllSubPlantList", Subplant[].class);
 			spList = new ArrayList<Subplant>(Arrays.asList(conArray));

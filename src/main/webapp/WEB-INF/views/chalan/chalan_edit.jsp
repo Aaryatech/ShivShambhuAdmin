@@ -337,7 +337,7 @@
 									<div class="col-md-2">In Time</div>
 
 									<div class="col-md-4">
-										<input type="time" id="in_time" name="in_time" readonly
+										<input type="time" id="in_time" name="in_time" 
 											style="width: 100%;" class="form-control" value="${curTime}">
 									</div>
 									<div class="col-md-2">In Kilometer</div>

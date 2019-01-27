@@ -26,31 +26,33 @@
 	
 <c:url var="getTempOrderHeader"
 	value="/getTempOrderHeader" /> --%>
-	
+
 <style>
 .buttonload {
-    background-color: white; /* Green background */
-    border: none; /* Remove borders */
-    color: #ec268f; /* White text */
-    padding: 12px 15px; /* Some padding */
-    font-size: 13px; /* Set a font-size */
-    display:none;
+	background-color: white; /* Green background */
+	border: none; /* Remove borders */
+	color: #ec268f; /* White text */
+	padding: 12px 15px; /* Some padding */
+	font-size: 13px; /* Set a font-size */
+	display: none;
 }
 
 /* Add a right margin to each icon */
 .fa {
-    margin-left: -12px;
-    margin-right: 8px;
+	margin-left: -12px;
+	margin-right: 8px;
 }
- ::-webkit-scrollbar{
-        height: 10px;
-        width: 6px;
-        background:#868e96;
-    }
-    ::-webkit-scrollbar-thumb:horizontal{
-        background: #000;
-        border-radius: 10px;
-    }
+
+::-webkit-scrollbar {
+	height: 10px;
+	width: 6px;
+	background: #868e96;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+	background: #000;
+	border-radius: 10px;
+}
 </style>
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -101,37 +103,36 @@
 
 <style>
 .alert {
-    padding: 20px;
-    background-color: red;
-    color: white;
-    
+	padding: 20px;
+	background-color: red;
+	color: white;
 }
+
 .alert1 {
-    padding: 20px;
-    background-color: green;
-    color: white;
-    
+	padding: 20px;
+	background-color: green;
+	color: white;
 }
 
 .closebtn {
-    margin-left: 15px;
-    color: white;
-    font-weight: bold;
-    float: right;
-    font-size: 22px;
-    line-height: 20px;
-    cursor: pointer;
-    transition: 0.3s;
+	margin-left: 15px;
+	color: white;
+	font-weight: bold;
+	float: right;
+	font-size: 22px;
+	line-height: 20px;
+	cursor: pointer;
+	transition: 0.3s;
 }
 
 .closebtn:hover {
-    color: black;
+	color: black;
 }
 </style>
 
 
 </head>
-<body>
+<body onload="getData()">
 
 
 	<!-- Left Panel -->
@@ -149,41 +150,41 @@
 		<div class="animated fadeIn">
 
 			<div class="row">
-			
-			<c:choose>
-							<c:when test="${isError==1}">
-							
-							<div class="alert">
-							
+
+				<c:choose>
+					<c:when test="${isError==1}">
+
+						<div class="alert">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Failed !</strong>     Data not submitted  !!
-				</div>
-							
-							</c:when>
-							
-							<c:when test="${isError==2}">
-							
-							<div class="alert1">
-							
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Failed !</strong> Data not submitted !!
+						</div>
+
+					</c:when>
+
+					<c:when test="${isError==2}">
+
+						<div class="alert1">
+
 							<span class="closebtn"
-						onclick="this.parentElement.style.display='none';">&times;</span>
-					<strong>Success</strong>     Data Submitted !!
-				</div>
-							
-							</c:when>
-							
-							</c:choose>
+								onclick="this.parentElement.style.display='none';">&times;</span>
+							<strong>Success</strong> Data Submitted !!
+						</div>
+
+					</c:when>
+
+				</c:choose>
 
 				<div class="col-xs-12 col-sm-12">
 					<div class="card">
-					
+
 						<div class="card-header">
 							<div class="col-md-2">
 								<strong>${title}</strong>
 							</div>
-							
-							
+
+
 
 						</div>
 						<div class="card-body card-block">
@@ -212,9 +213,9 @@
 									</div>
 								</div>
 								 --%>
-								 
-								 
-<%-- <div class="row">
+
+
+								<%-- <div class="row">
 
 									<div class="col-md-1">Plant</div>
 
@@ -253,7 +254,7 @@
 
 								<div class="form-group"></div>
 								 --%>
-							
+
 								<div class="row">
 
 									<div class="col-md-2">Select Plant</div>
@@ -265,14 +266,22 @@
 											onchange="getData()">
 											<option value="0">All</option>
 											<c:forEach items="${plantList}" var="plant">
-												<c:choose>
-													<c:when test="${plant.plantId==plantId1}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
-													</c:otherwise>
-												</c:choose>
+												<c:if test="${sessionScope.plantId==0}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:when test="${plant.plantId==plantId1}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 											</c:forEach>
 										</select>
 									</div>
@@ -293,14 +302,14 @@
 								<div class="row">
 									<div class="col-md-2">From Date</div>
 									<div class="col-md-3">
-										<input type="text" autocomplete="off"  id="from_date"
+										<input type="text" autocomplete="off" id="from_date"
 											name="from_date" required style="width: 100%;"
 											class="form-control" value="${fromDate}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 									<div class="col-md-1">To Date</div>
 									<div class="col-md-3">
-										<input type="text" autocomplete="off"  id="to_date"
+										<input type="text" autocomplete="off" id="to_date"
 											name="to_date" style="width: 100%;" class="form-control"
 											value="${toDate}"> <span class="error"
 											aria-live="polite"></span>
@@ -312,21 +321,21 @@
 
 									</div>
 
-</div>
+								</div>
 
 
-									<div class="form-group"></div>
+								<div class="form-group"></div>
 
-								
+
 								<%-- <input type="checkbox" value="${item.itemId}" name="selectItem"> --%>
-								
+
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center"><input
-												type="checkbox" name="selAll" id="selAll" /> </th>
+												<th style="text-align: center"><input type="checkbox"
+													name="selAll" id="selAll" /></th>
 												<th style="text-align: center">Sr.</th>
 												<th style="text-align: center">Chalan No</th>
 												<th style="text-align: center">Chalan Date</th>
@@ -334,49 +343,49 @@
 												<th style="text-align: center">Project Name</th>
 												<th style="text-align: center">Vehicle No</th>
 												<th style="text-align: center">Driver Name</th>
-												
-											<th style="text-align: center">Status</th>
- 											<th style="text-align: center">Action</th>
+
+												<th style="text-align: center">Status</th>
+												<th style="text-align: center">Action</th>
 											</tr>
 										</thead>
 
 									</table>
-									
+
 									<div class="col-md-2"></div>
 
-								<div class="col-md-3">
+									<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();" disabled="disabled" id="expExcel"
-										style="align-content: center; width: 200px; margin-left: 80px;">
-										Export To Excel</button>
+										<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();" disabled="disabled" id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+									</div>
+
+
+									<div class="col-md-3">
+
+										<button type="button" class="btn btn-primary"
+											onclick="genPdf()" disabled="disabled" id="PDFButton"
+											style="align-content: center; width: 100px; margin-left: 80px;">
+											PDF</button>
+									</div>
+									&nbsp;
 								</div>
 
-
-								<div class="col-md-3">
-
-									<button type="button" class="btn btn-primary"
-										onclick="genPdf()" disabled="disabled" id="PDFButton"
-										style="align-content: center; width: 100px; margin-left: 80px;">
-										PDF</button>
-								</div>
-								&nbsp;
-								</div>
-
-							<input type="submit" class="btn btn-primary" value="Delete"
-										id="deleteId"
-										onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
-										style="align-content: center; width: 113px; margin-left: 40px;">
-						</form>	
-	</div>
+								<input type="submit" class="btn btn-primary" value="Delete"
+									id="deleteId"
+									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
+									style="align-content: center; width: 113px; margin-left: 40px;">
+							</form>
 						</div>
 					</div>
 				</div>
 			</div>
-
-
 		</div>
-		<!-- .animated -->
+
+
+	</div>
+	<!-- .animated -->
 	<!-- .content -->
 
 
@@ -447,7 +456,7 @@
 			$('input[id$=from_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
-			
+
 			$('input[id$=to_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
@@ -456,9 +465,8 @@
 	</script>
 
 	<script type="text/javascript">
-	
-	// on plant change function 
-		function getData() { 
+		// on plant change function 
+		function getData() {
 			var plantId = document.getElementById("plant_id").value;
 			var valid = true;
 
@@ -494,9 +502,8 @@
 					$('#po_id').html("-1");
 					$("#po_id").trigger("chosen:updated");
 					 */
-					var dataTable = $('#bootstrap-data-table')
-					.DataTable();
-			dataTable.clear().draw();
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
 
 				});
 			}//end of if
@@ -507,11 +514,11 @@
 
 
 	<script type="text/javascript">
-	// onclick of submit to search order 
+		// onclick of submit to search order 
 		function showQuot() {
-		
-	//alert("Hi View showChalan  ");
-	
+
+			//alert("Hi View showChalan  ");
+
 			var plantId = document.getElementById("plant_id").value;
 			var custId = document.getElementById("cust_name").value;
 			var valid = true;
@@ -524,30 +531,30 @@
 			d2 = d2[2].concat(d2[1], d2[0]);
 			///alert("fromDate " +fromDate);
 			///alert("toDate " +toDate);
-			
+
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
-			}else if(fromDate==null || fromDate==""){
-				valid=false;
+			} else if (fromDate == null || fromDate == "") {
+				valid = false;
 				alert("Please select from date")
-			}else if(toDate==null || toDate==""){
-				valid=false;
+			} else if (toDate == null || toDate == "") {
+				valid = false;
 				alert("Please select to date");
-			}else if (parseInt(d1) > parseInt(d2)) {
+			} else if (parseInt(d1) > parseInt(d2)) {
 				isValid = false;
-			    alert("From Date must be less than To Date!!");
-			} 
-			
-			if(valid==true){
-			//	alert("plant Id " +plantId);
+				alert("From Date must be less than To Date!!");
+			}
+
+			if (valid == true) {
+				//	alert("plant Id " +plantId);
 				$('#loader').show();
 				$
 						.getJSON(
 								'${getChalanListByPlant}',
 								{
 									plantId : plantId,
-									custId  : custId,
+									custId : custId,
 									fromDate : fromDate,
 									toDate : toDate,
 									ajax : 'true',
@@ -565,125 +572,120 @@
 
 									}
 
-									
 									//alert("Order Data " +JSON.stringify(data));
 									var chBox;
-									 var dataTable = $('#bootstrap-data-table')
-									.DataTable();
-							dataTable.clear().draw();
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
 
-							$.each(data,function(i, v) {
-								var status;
-								if(v.exFloat1==0){
-										status="Open";		
-										 var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-												+ v.chalanId
-												+ ','
-												+ i
-												+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-														+ v.chalanId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose('
-															+ v.chalanId
-															+ ','
-															+ i
-															+ ')" style="color:black"><i class="fa fa-times"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
-															+ v.chalanId
-															+ ','
-															+ i
-															+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
-															
-															 chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
-								}else if(v.exFloat1==1){
-									status="Closed";	
-									var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-										+ v.chalanId
-										+ ','
-										+ i
-										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
-														+ v.chalanId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-															+ v.chalanId
-															+ ','
-															+ i
-															+ ')" style="color:black"><i class="fa fa-trash"></i></a>'
-									
-									chBox=""
-									
-									
-								}
-								else if(v.exFloat1==2){
-									status="Bill Generated";	
-									var acButton = '<a href="#" class="action_btn" onclick="callEdit1('
-										+ v.chalanId
-										+ ','
-										+ i
-										+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
-														+ v.chalanId
-														+ ','
-														+ i
-														+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
-									
-														 chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
-									
-									
-								}
+									$
+											.each(
+													data,
+													function(i, v) {
+														var status;
+														if (v.exFloat1 == 0) {
+															status = "Open";
+															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																	+ v.chalanId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+																	+ v.chalanId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose('
+																	+ v.chalanId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-times"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
+																	+ v.chalanId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
 
- 
-												dataTable.row
-														.add(
-																[chBox,
-																		i + 1,
-																		v.chalanNo,
-																		v.chalanDate,
-																		v.custName,
-																		v.projName,
-																		v.vehNo,
-																		v.driverName,
-																		status,
-																		acButton
-																		 ])
-														.draw();
-											}); 
-						
-								});	
-				
-}//end of if valid ==true
-						
+															chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
+														} else if (v.exFloat1 == 1) {
+															status = "Closed";
+															var acButton = '<a href="#" class="action_btn" onclick="callPdf('
+																	+ v.chalanId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
+
+															chBox = ""
+
+														} else if (v.exFloat1 == 2) {
+															status = "Bill Generated";
+															var acButton = '<a href="#" class="action_btn" onclick="callEdit1('
+																	+ v.chalanId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
+																	+ v.chalanId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
+
+															chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
+
+														}
+
+														dataTable.row
+																.add(
+																		[
+																				chBox,
+																				i + 1,
+																				v.chalanNo,
+																				v.chalanDate,
+																				v.custName,
+																				v.projName,
+																				v.vehNo,
+																				v.driverName,
+																				status,
+																				acButton ])
+																.draw();
+													});
+
+								});
+
+			}//end of if valid ==true
+
 		}
-	
-	function callEdit(chalanId){
-		
-		window.open("${pageContext.request.contextPath}/editChalan/"+chalanId);
-		
-	}
-	
-function callClose(chalanId){
-		
-		window.open("${pageContext.request.contextPath}/closeChalan/"+chalanId);
-		
-	}
-	
-	function callPdf(chalanId,key){
-		//alert("call Pdf " +chalanId);
-		var plantId= document.getElementById("plant_id").value;
-		alert("call Pdf " +chalanId);
-		   window.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'+ chalanId + '/' + plantId);
 
-	}
-	
-	function callDelete(chalanId,key){
-		//alert("call Pdf " +chalanId);
-		   window.open('${pageContext.request.contextPath}/deleteChalan/'+chalanId,"_self");
+		function callEdit(chalanId) {
 
-	}
+			window.open("${pageContext.request.contextPath}/editChalan/"
+					+ chalanId);
+
+		}
+
+		function callClose(chalanId) {
+
+			window.open("${pageContext.request.contextPath}/closeChalan/"
+					+ chalanId);
+
+		}
+
+		function callPdf(chalanId, key) {
+			//alert("call Pdf " +chalanId);
+			var plantId = document.getElementById("plant_id").value;
+			//alert("call Pdf " +chalanId);
+			window
+					.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'
+							+ chalanId + '/' + plantId);
+
+		}
+
+		function callDelete(chalanId, key) {
+			//alert("call Pdf " +chalanId);
+			window.open('${pageContext.request.contextPath}/deleteChalan/'
+					+ chalanId, "_self");
+
+		}
 	</script>
-	
-	
-		
+
+
+
 	<script type="text/javascript">
 		$(document)
 				.ready(
@@ -700,7 +702,7 @@ function callClose(chalanId){
 											});
 						});
 	</script>
-		<script type="text/javascript">
+	<script type="text/javascript">
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");
@@ -710,21 +712,20 @@ function callClose(chalanId){
 
 	<script type="text/javascript">
 		function genPdf() {
-			
-		
-			var plantId= document.getElementById("plant_id").value;
-		
-			//alert("plant_id"+plant_id);
-			
 
-			window.open('${pageContext.request.contextPath}/showOpenChalanListPdf/'
-					+ plantId);
+			var plantId = document.getElementById("plant_id").value;
+
+			//alert("plant_id"+plant_id);
+
+			window
+					.open('${pageContext.request.contextPath}/showOpenChalanListPdf/'
+							+ plantId);
 			document.getElementById("expExcel").disabled = true;
 
 		}
 	</script>
 
-		
+
 
 
 

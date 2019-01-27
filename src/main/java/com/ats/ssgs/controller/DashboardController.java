@@ -39,6 +39,7 @@ import com.ats.ssgs.model.OtherExpenses;
 import com.ats.ssgs.model.enq.GetEnqHeader;
 import com.ats.ssgs.model.master.GetVendor;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Vendor;
 import com.ats.ssgs.model.order.GetOrder;
@@ -54,6 +55,9 @@ public class DashboardController {
 
 		ModelAndView model = new ModelAndView("home");
 		try {
+
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
 
 			// System.out.println("hiiiiiiii");
 
@@ -82,7 +86,7 @@ public class DashboardController {
 
 			map.add("fromDate", firstDate);
 			map.add("toDate", endDate);
-			map.add("plantId", 0);
+			map.add("plantId", login.getUser().getPlantId());
 
 			DashSaleCount dashBoard = rest.postForObject(Constants.url + "/getDashboardCountBetDate", map,
 					DashSaleCount.class);
@@ -202,6 +206,11 @@ public class DashboardController {
 			GetQuotHeader[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustIdAndStatus",
 					map, GetQuotHeader[].class);
 			getQuotList = new ArrayList<GetQuotHeader>(Arrays.asList(ordHeadArray));
+			for (int i = 0; i < getQuotList.size(); i++) {
+
+				getQuotList.get(i).setQuotDate(DateConvertor.convertToDMY(getQuotList.get(i).getQuotDate()));
+
+			}
 
 			System.out.println("quot list data " + getQuotList.toString());
 
@@ -247,6 +256,12 @@ public class DashboardController {
 			GetQuotHeader[] ordHeadArray = rest.postForObject(Constants.url + "getQuotListByPlantIdAndCustIdAndStatus",
 					map, GetQuotHeader[].class);
 			getQuotList = new ArrayList<GetQuotHeader>(Arrays.asList(ordHeadArray));
+
+			for (int i = 0; i < getQuotList.size(); i++) {
+
+				getQuotList.get(i).setQuotDate(DateConvertor.convertToDMY(getQuotList.get(i).getQuotDate()));
+
+			}
 
 			System.out.println("quot list data " + getQuotList.toString());
 
@@ -448,7 +463,8 @@ public class DashboardController {
 		ModelAndView model = new ModelAndView("dash/salesDash");
 		try {
 
-			// System.out.println("hiiiiiiii");
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -475,7 +491,7 @@ public class DashboardController {
 
 			map.add("fromDate", firstDate);
 			map.add("toDate", endDate);
-			map.add("plantId", 0);
+			map.add("plantId", login.getUser().getPlantId());
 
 			DashSaleCount dashBoard = rest.postForObject(Constants.url + "/getDashboardCountBetDate", map,
 					DashSaleCount.class);

@@ -67,7 +67,7 @@
 
 
 </head>
-<body>
+<body onload="getData()">
 
 
 	<!-- Left Panel -->
@@ -136,14 +136,26 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Plant</div>
+									<div class="col-md-2">Select Plant*</div>
 
 									<div class="col-md-3">
 										<select id="plantId" name="plantId" class="standardSelect"
-											tabindex="1" required onchange="getData()">
+											tabindex="1"  onchange="getData()">
 											<option value="">Select</option>
 											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+												<c:if test="${sessionScope.plantId==0}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 											</c:forEach>
 										</select>
 									</div>
@@ -151,9 +163,9 @@
 
 									<div class="col-md-1">Date</div>
 									<div class="col-md-2">
-										<input type="text" id="date" name="date" required
-											style="width: 100%;" class="form-control" autocomplete="off"
-											readonly /> <span class="error" aria-live="polite"></span>
+										<input type="text" id="date" name="date" style="width: 100%;"
+											class="form-control" autocomplete="off" readonly /> <span
+											class="error" aria-live="polite"></span>
 
 									</div>
 
@@ -331,7 +343,7 @@
 		</script>
 	<script type="text/javascript">
 		function getData() {
-		//	alert("hii");
+			//alert("hii");
 			var plantId = document.getElementById("plantId").value;
 			$
 			.getJSON(
