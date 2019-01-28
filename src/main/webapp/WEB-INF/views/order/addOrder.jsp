@@ -701,7 +701,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 	</script>
 
 	<script type="text/javascript">
-	function placeTempOrder(itemId,total,poDetailId,poRemainingQty){
+	function placeTempOrder(itemId,poRate,poDetailId,poRemainingQty){
 		//alert("Hi");
 		
 		var valid=true;
@@ -730,7 +730,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 		}
 		if(valid==true){
 			
-			var itemTotal=parseFloat(qty)*parseFloat(total);
+			var itemTotal=parseFloat(qty)*parseFloat(poRate);
 			document.getElementById("itemTotal"+itemId).value=itemTotal;
 		$.getJSON('${getTempOrderHeader}', {
 			

@@ -227,7 +227,6 @@
 													<td style="width: 100px"><input type="text"
 														id="pOqty${getQuotDetailList.itemId}"
 														name="pOqty${getQuotDetailList.itemId}"
-															
 														value="${getQuotDetailList.quotQty}" class="form-control"
 														pattern="[+-]?([0-9]*[.])?[0-9]+"
 														style="height: 32px; padding-bottom: 12px; text-align: right; font-size: 15px;"
@@ -250,7 +249,7 @@
 														style="text-align: right"><c:out
 															value="${getQuotDetailList.taxValue}" /></td>
 
-													<td style="width: 100px"><input type="text"
+													<td style="width: 100px"><input type="text" readonly
 														id="othCostAftTax${getQuotDetailList.itemId}"
 														style="height: 32px; padding-bottom: 12px; text-align: right; font-size: 15px;"
 														name="othCostAftTax${getQuotDetailList.itemId}"

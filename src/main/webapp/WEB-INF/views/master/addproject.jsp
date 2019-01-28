@@ -200,8 +200,8 @@
 											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter contact person Name')"
 											onchange="try{setCustomValidity('')}catch(e){}"
-											pattern="^[A-Za-z\s]+$" value="${editPro.contactPerName}"
-											class="form-control" required style="width: 100%;">
+											value="${editPro.contactPerName}" class="form-control"
+											required style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">Mobile No*</div>
@@ -278,10 +278,9 @@
 									<div class="col-md-4">
 										<input type="text" id="pincode" name="pincode" maxlength="6"
 											autocomplete="off" class="form-control" style="width: 100%;"
-											value="${editPro.pincode}" pattern="[0-9]+"
-											onchange="checkPincodeLength()"
+											value="-" pattern="[0-9]+" 
 											oninvalid="setCustomValidity('Please enter correct Pincode')"
-											onchange="try{setCustomValidity('')}catch(e){}" required>
+											onchange="try{setCustomValidity('')}catch(e){}" >
 									</div>
 
 								</div>

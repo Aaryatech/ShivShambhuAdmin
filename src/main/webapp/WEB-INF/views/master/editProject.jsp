@@ -239,9 +239,8 @@
 										<input type="text" id="pincode" name="pincode" maxlength="6"
 											autocomplete="off" class="form-control" style="width: 100%;"
 											value="${editPro.pincode}" pattern="[0-9]+"
-											onchange="checkPincodeLength()"
 											oninvalid="setCustomValidity('Please enter correct Pincode')"
-											onchange="try{setCustomValidity('')}catch(e){}" required>
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
 								</div>
