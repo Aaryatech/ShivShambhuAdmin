@@ -33,7 +33,7 @@
 		</tr>
 	</table>
 	<hr style="margin-left: 100px;"></hr>
-	<br></br>
+	
 	<!-- <p style="text-align: center; font-size: 14px;font-weight: bold;"><u>Chalan</u></p>
  -->
 	<p style="margin-left: 100px; text-align: left">
@@ -48,15 +48,16 @@
 		<b>Customer Name:</b>
 		<c:out value="${printData.chalanItemList[0].custName}"></c:out>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>RST
-			No:</b> ${printData.chalanItemList[0].exVar1}<br></br>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br></br>
 	</p>
 	<p style="margin-left: 100px; text-align: left">
 	<b>Project:</b>
 		${printData.chalanItemList[0].projName}
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Batch No:</b> ${printData.chalanItemList[0].batchNo}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	
 	
 	</p>
+	<p style="margin-left: 100px; text-align: left"><b>Batch No:</b> ${printData.chalanItemList[0].batchNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>RST
+			No:</b> ${printData.chalanItemList[0].exVar1}</p>
 	<p style="margin-left: 100px; text-align: left">
 		<b>Delivery Address:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		
@@ -120,14 +121,14 @@
 
 
 
-	<p style="margin-left: 100px;" align="left">
+	<p style="margin-left: 100px;padding:0px" align="left">
 		<b>Out Time:</b>${printData.chalanItemList[0].vehTimeOut}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Out
 			Km:</b>${printData.chalanItemList[0].outKm}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Batching
 			Time:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Pumping/Dumping</b>
 	</p>
 	<p style="margin-left: 100px;" align="left">
 		<b>In Time:</b>${temp}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>In
-			Km:</b>{${temp1}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Site
+			Km:</b>${temp1}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Site
 			In Time:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Site
 			Out Time:</b>
 	</p>
@@ -147,35 +148,35 @@
 		<tr>
 			<td align="left" width="35%" rowspan="2"
 				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 15px; text-align: left">
-				<p style="font-size: 12px;">
+				<span style="font-size: 12px;">
 					<b>CAUTION:</b>Wet Cement and Concrete Are Caustic Material Which
 					Can Cause Serious Skin Injuiry.To Avoid Risk Of Such Injuiry
 					Protective Clothing (Gloves,Booted) Should Be Worn During All
 					Handling Operations Where Direct Skin Contact Occurs,Area Should Be
-					Washed Throughly With Clean Water.We Are Not Responsible Fotr Slump
+					Washed Throughly With Clean Water.We Are Not Responsible For Slump
 					Strength OrQuality Of Concrete When Water Has Been Added On Site At
 					The Request Of Customer<br />
 					<hr></hr>
 					<b>WARRANTY DISCLAIMER</b>:SSB Ready mix concrete warrants that
-					theproduct identified are in accordance with the appropraite BIS
+					the product identified are in accordance with the appropriate BIS
 					specification.No one is authorized to make any modification or
 					ddditions to warranty SSB Ready mix concrete makes no warranty
 					either expressed or implied with respect to products and disclaims
-					any implied of mechantable or fitness for particular purpose.SSB
+					any implied of merchantable or fitness for particular purpose.SSB
 					Ready mix concrete has no control over other ingridient mixed with
 					this product or in final application.SSB Ready mix concrete
-					warrantsSSB Ready mix concrete does not andcan not warrant the
+					warrantsSSB Ready mix concrete does not and can not warrant the
 					finished work.In all event SSB Ready mix concrete shall not be
 					liable to direct,indirect,special,incidental of consequential
 					damages arising out of the use of this product.Even if advised of
 					possibilities of such damages in no case shall SSB Ready mix
-					concrete liability exceed the purchase price of thi product <b>Contact
-						No:</b>9922419336/9823354777.<br />
-					<hr></hr>
+					concrete liability exceed the purchase price of the product <b>Contact
+						No:</b>9922419336/9823354777.
+					<hr/>
 					<b>Note:</b>1)If necessary,additional does of admixture may be
-					added at project site to regain the workability of concrete <br />
+					added at project site to regain the workability of concrete .
 					2)Concrete should be consumed within 3 hours of batching time.
-				</p>
+				</span>
 			</td>
 
 		</tr>
@@ -191,9 +192,9 @@
 				<b>${printData.comp.compName}</b> <br />
 			<br />
 			<br />
-			<br />
 			
-			<br /> <b>Authorized Signature</b>
+			
+			 <b>Authorized Signature</b>
 			</td>
 			<td align="left" width="35%" rowspan="2"
 				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">
@@ -201,8 +202,8 @@
 					I/we Clerify that to the best of myfour knowledge the<br />
 					particulars are true and correct and complete
 				</p> <br />
-			<br />
-			<br />
+			
+			
 			
 				<p style="font-size: 12px; text-align: left">
 					Authorize Signature & Name with Seal of Receiver <br />

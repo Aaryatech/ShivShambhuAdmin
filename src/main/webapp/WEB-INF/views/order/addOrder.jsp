@@ -665,7 +665,7 @@
 											function(i, v) {
 												//alert("hdjfh");
 var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-var ordQty = '<input  type="text"  value="0" class="form-control" onkeypress="return allowOnlyNumber(event);" id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" oninput="placeTempOrder('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
+var ordQty = '<input  type="text"  value="0" class="form-control" onkeypress="return allowOnlyNumber(event);" id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" oninput="placeTempOrder('+v.itemId+','+v.total+','+v.poDetailId+','+v.poRemainingQty+')"/>'
 
 var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
 										/* var str = '<a href="#" class="action_btn" onclick="callDelete('
@@ -686,7 +686,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 																		v.itemCode,
 																		v.poQty,
 																		v.poRemainingQty,
-																		v.poRate,
+																		v.total,
 																		ordQty,
 																		itemTotal
 																		 ])
@@ -701,7 +701,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 	</script>
 
 	<script type="text/javascript">
-	function placeTempOrder(itemId,poRate,poDetailId,poRemainingQty){
+	function placeTempOrder(itemId,total,poDetailId,poRemainingQty){
 		//alert("Hi");
 		
 		var valid=true;
@@ -729,7 +729,8 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 			valid=false;
 		}
 		if(valid==true){
-			var itemTotal=parseFloat(qty)*parseFloat(poRate);
+			
+			var itemTotal=parseFloat(qty)*parseFloat(total);
 			document.getElementById("itemTotal"+itemId).value=itemTotal;
 		$.getJSON('${getTempOrderHeader}', {
 			
