@@ -799,7 +799,7 @@ $
 							//var html;
 							var len = data.length;
 							//alert("data " +JSON.stringify(data));
-							var html='<option value="-1">Select All</option>';
+							var html='<option value="-1">Select</option>';
 
 							for (var i = 0; i < len; i++) {
 								var projData=data[i].projName+"-"+data[i].address

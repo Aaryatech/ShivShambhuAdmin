@@ -153,9 +153,6 @@ public class BillController {
 			model.addObject("title", "Add Bill");
 			model.addObject("billHeadId", billHeadId);
 			model.addObject("custId", pdfCustId);
-			model.addObject("fromChalan", 1);
-
-			model.addObject("compList", compList);
 
 		} catch (Exception e) {
 
@@ -256,10 +253,12 @@ public class BillController {
 
 		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
 
-		for (int i = 0; i < chalanHeadList.size(); i++) {
-
-			chalanHeadList.get(i).setChalanDate(DateConvertor.convertToDMY(chalanHeadList.get(i).getChalanDate()));
-		}
+		/*
+		 * for (int i = 0; i < chalanHeadList.size(); i++) {
+		 * 
+		 * chalanHeadList.get(i).setChalanDate(DateConvertor.convertToDMY(chalanHeadList
+		 * .get(i).getChalanDate())); }
+		 */
 
 		System.err.println("Ajax chalanHeadList " + chalanHeadList.toString());
 
@@ -904,16 +903,23 @@ public class BillController {
 
 			System.out.println("Generte Bill" + addBill.toString());
 
-			int chalanIdList = addBill.getChalanId();
+			/*
+			 * int chalanIdList = addBill.getChalanId();
+			 * 
+			 * System.out.println("chalanIdList" + chalanIdList);
+			 */
 
-			System.out.println("chalanIdList" + chalanIdList);
+			map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("chalanIdList", chalanIdList);
+			map.add("projId", addBill.getProjId());
+			map.add("custId", addBill.getCustId());
+			map.add("chalanStatus", "0,1");
 
-			GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByChalanIdList", map,
-					GetChalanHeader[].class);
+			GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByCustAndStatusAndProj",
+					map, GetChalanHeader[].class);
 
 			List<GetChalanHeader> chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
+
 			model.addObject("chalanHeadList", chalanHeadList);
 
 		} catch (Exception e) {

@@ -405,7 +405,7 @@ public class PurchaseOrderController {
 			e.printStackTrace();
 
 		}
-		return "redirect:/getPoList";
+		return "redirect:/showPoListByStatus";
 	}
 
 	@RequestMapping(value = "/showPoListByStatus", method = RequestMethod.GET)

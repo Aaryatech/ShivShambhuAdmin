@@ -155,8 +155,9 @@
 									<div class="col-md-2">Select Company*</div>
 
 									<div class="col-md-4">
-										<select id="companyId" name="companyId" class="standardSelect"
-											tabindex="1" onchange="onCompanyChange(this.value)">
+										<select id="companyName" name="companyName"
+											class="standardSelect" tabindex="1"
+											onchange="onCompanyChange(this.value)">
 
 											<option>${addBill.compName}</option>
 
@@ -167,7 +168,7 @@
 									<div class="col-md-2">Select Plant</div>
 
 									<div class="col-md-4">
-										<select id="plant_id" name="plant_id" class="standardSelect"
+										<select id="plantName" name="plantName" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant')"
 											onchange="getData()">
@@ -204,7 +205,7 @@
 									<div class="col-md-4">
 
 
-										<input type="text" id="cust_name" name="cust_name" readonly
+										<input type="text" id="cust_id" name="cust_id" readonly
 											value="${addBill.custName}" style="width: 100%;"
 											class="form-control"> <span class="error"
 											aria-live="polite"></span>
@@ -214,7 +215,7 @@
 									<div class="col-md-2">Select Project</div>
 
 									<div class="col-md-4">
-										<select id="proj_id" name="proj_id" class="standardSelect"
+										<select id="projName" name="projName" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select project')"
 											onchange="getChalanByCustAndProj()">
@@ -246,8 +247,13 @@
 												style="width: 100%;" class="form-control"> <span
 												class="error" aria-live="polite"></span>
 										</div>
+										<input type="hidden" id="cust_name" name="cust_name"
+											value="${addBill.custId}"> <input type="hidden"
+											id="proj_id" name="proj_id" value="${addBill.projId}">
+
 										<input type="hidden" id="companyId" name="companyId"
-											value="${addBill.companyId}">
+											value="${addBill.companyId}"> <input type="hidden"
+											id="plant_id" name="plant_id" value="${addBill.plantId}">
 
 									</div>
 								</div>
@@ -283,7 +289,16 @@
 										<select id="chalan_id" name="chalan_id" class="standardSelect"
 											tabindex="1" required multiple="multiple"
 											oninvalid="setCustomValidity('Please select Challan')">
-											<option value="${addBill.chalanId}" Selected>${addBill.chalanNo}</option>
+											<c:forEach items="${chalanHeadList}" var="chalan">
+												<c:choose>
+													<c:when test="${chalan.chalanId==addBill.chalanId}">
+														<option value="${chalan.chalanId}" selected>${chalan.chalanNo}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${chalan.chalanId}">${chalan.chalanNo}</option>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
 										</select>
 									</div>
 								</div>
