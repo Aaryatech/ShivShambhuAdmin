@@ -1310,7 +1310,9 @@ var no=1;
 	function showPopupForGetData(){
 		
 		var orderId=document.getElementById("order_id").value;
+		var itemId=${rmcOrd.itemId};
 		var isValid=true;
+		
 		
 		if(orderId==-1){
 			alert("Please select order");
@@ -1359,6 +1361,9 @@ var no=1;
 										.each(
 												data,
 												function(i, v) {
+													
+													if(itemId==v.itemId)
+													{
 													//var checkB = '<input  type="checkbox" name="selChalanItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
 		var chalanQty = '<input  type="text" value="0"  class="form-control"  id="chalanQty'+v.itemId+'" name="chalanQty'+v.itemId+'" oninput="setChalanItem(this.value,'+v.itemId+','+v.poId+','+v.poDetailId+','+v.remOrdQty+','+v.orderDetId+','+v.orderId+','+i+','+v.uomId+',/'+v.itemName+'/,/'+v.uomName+'/)" onkeypress="return allowOnlyNumber(event);"/>'
 													//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
@@ -1368,6 +1373,8 @@ var no=1;
 																	[
 																		index,v.itemName,v.uomName,v.orderQty,v.remOrdQty,v.poQty,v.poRemainingQty,chalanQty])
 															.draw();
+													
+													}
 												});
 				
 		} );
