@@ -443,25 +443,24 @@ body {
 									<c:choose>
 										<c:when test="${quotHeader.noOfKm==0}">
 											<div class="col-md-2">
-												On Spot <input type="radio" name="del_place" checked
+												On Spot <input type="radio" name="del_place" 
 													onchange="setKM(1)" id="del_place" value="1">
 											</div>
 
 											<div class="col-md-2">
-												Specific Place <input type="radio" name="del_place"
-													id="del_place" onchange="setKM(0)" value="0">
+												Specific Place<input type="radio" name="del_place" 
+													id="del_place" checked onchange="setKM(0)" value="0">
 											</div>
 										</c:when>
 										<c:otherwise>
 											<div class="col-md-2">
-												On Spot <input type="radio" name="del_place" id="del_place"
-													onchange="setKM(1)" value="1">
+												On Spot<input type="radio" name="del_place" id="del_place"
+													onchange="setKM(1)"  value="1">
 											</div>
 
 											<div class="col-md-2">
 												Specific Place <input type="radio" name="del_place"
-													id="del_place" checked onchange="setKM(0)" value="0"
-													checked>
+													id="del_place" checked  onchange="setKM(0)" value="0">
 											</div>
 
 										</c:otherwise>
@@ -498,7 +497,7 @@ body {
 									<div class="col-md-2">
 										Automatic<input type="radio" checked name="calc_by"
 											id="calc_by" value="1">
-									</div>
+						 			</div>
 
 									<div class="col-md-2">
 										Manual<input type="radio" name="calc_by" id="calc_by"
@@ -685,7 +684,7 @@ body {
 														name="other_cost${item.itemId}" class="form-control"></td>
 
 													<td class="col-md-1" id="rate" style="text-align: left"><input
-														type="text" id="itemRate${item.itemId}"
+														type="text" id="itemRate${item.itemId}" readonly
 														value="${item.itemRate1}" name="itemRate${item.itemId}"
 														class="form-control"></td>
 
@@ -935,7 +934,7 @@ body {
 															+ ')" style="color:black"><i class="fa fa-list"></i></a>' 
 															
 															//var itemRateDiv = '<div id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'">+'v.itemRate1+'</div>'
-															var itemRateDiv = '<input  type="text"   class="form-control" value='+v.itemRate1+'  id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'"/>'
+															var itemRateDiv = '<input  type="text" readonly   class="form-control" value='+v.itemRate1+'  id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'"/>'
 
 													dataTable.row
 															.add(
@@ -1008,7 +1007,7 @@ body {
 											+ ')" style="color:black"><i class="fa fa-list"></i></a>' 
 											
 											//var itemRateDiv = '<div id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'">+'v.itemRate1+'</div>'
-											var itemRateDiv = '<input  type="text"   class="form-control" value='+v.itemRate1+'  id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'"/>'
+											var itemRateDiv = '<input  type="text" readonly  class="form-control" value='+v.itemRate1+'  id="itemRate'+v.itemId+'" name="itemRate'+v.itemId+'"/>'
 
 									dataTable.row
 											.add(
@@ -1058,11 +1057,34 @@ body {
 		function callsetKM(){
 			var x=${quotHeader.noOfKm};
 			//alert("No of km " +x);
-			if(x==0){
+			
+			 var x = $("input[name=del_place]:checked").val();
+			// alert(x);
+			if(x==1){
 				
-				setKM(1);
+				document.getElementById("no_of_km").value="0";
+				document.getElementById("toll_amt").value="0";
+				document.getElementById("no_of_tolls").value="0";
+
+				
+				document.getElementById("no_of_km").readOnly = true; 
+				document.getElementById("toll_amt").readOnly = true; 
+				document.getElementById("no_of_tolls").readOnly = true; 
+				//setKM(0);
 			}else{
-				setKM(0);
+				//setKM(1);
+				
+				document.getElementById("no_of_km").readOnly = false; 
+				document.getElementById("toll_amt").readOnly = false; 
+				document.getElementById("no_of_tolls").readOnly = false; 
+				
+				var noofkm=${quotHeader.noOfKm};
+				var tollAmt=${quotHeader.tollCost};
+				var noOfTolls=${quotHeader.noOfTolls};
+				
+				document.getElementById("no_of_km").value=noofkm;
+				document.getElementById("toll_amt").value=tollAmt;
+				document.getElementById("no_of_tolls").value=noOfTolls;
 			}
 			
 		}
@@ -1167,6 +1189,7 @@ body {
 					document.getElementById("other_cost"+data[i].itemId).value=otherCostHeader;
 					
 					 var otherCost= document.getElementById("other_cost"+data[i].itemId).value;
+					// alert()
 					 
 					 if(otherCost==null || otherCost==""){
 						 otherCost=0;
