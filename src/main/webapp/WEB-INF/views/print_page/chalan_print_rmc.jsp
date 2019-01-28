@@ -47,14 +47,19 @@
 	<p style="margin-left: 100px;">
 		<b>Customer Name:</b>
 		<c:out value="${printData.chalanItemList[0].custName}"></c:out>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Project:</b>
-		${printData.chalanItemList[0].projName}
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>RST
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>RST
 			No:</b> ${printData.chalanItemList[0].exVar1}<br></br>
 	</p>
 	<p style="margin-left: 100px; text-align: left">
+	<b>Project:</b>
+		${printData.chalanItemList[0].projName}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Batch No:</b> ${printData.chalanItemList[0].batchNo}
+	
+	</p>
+	<p style="margin-left: 100px; text-align: left">
 		<b>Delivery Address:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<b>Batch No:</b> ${printData.chalanItemList[0].batchNo}
+		
 	</p>
 
 
@@ -62,20 +67,20 @@
 	<table width="100%" border="0" cellpadding="0" cellspacing="0"
 		style="border-top: 1px solid #313131; border-right: 1px solid #313131; margin-left: 100px;">
 		<tr>
-			<td rowspan="2" width="5%"
+			<td  width="5%"
 				style="border-bottom: 1px solid #313131; border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 12px;">Sr.
 				No.</td>
-			<td align="left" width="35%" rowspan="2"
+			<td align="left" width="35%"
 				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Item
 				Name</td>
-			<td align="left" width="20%" rowspan="2"
+			<td align="left" width="20%"
 				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Order
 				Quantity</td>
 
-			<td align="left" width="20%" rowspan="2"
+			<td align="left" width="20%" 
 				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Current
 				Chalan Quantity</td>
-			<td align="left" width="20%" rowspan="2"
+			<td align="left" width="20%" 
 				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Total
 				Chalan Quantity</td>
 
@@ -91,10 +96,12 @@
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${count3.index+1}</td>
 				<td
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemName}</td>
-				<td
-					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemQty}</td>
+					
 				<td
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.totalQuan}</td>
+				<td
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemQty}</td>
+				
 
 
 				<c:forEach items="${rstList}" var="temp" varStatus="count3">
@@ -120,7 +127,7 @@
 	</p>
 	<p style="margin-left: 100px;" align="left">
 		<b>In Time:</b>${temp}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>In
-			Km:</b>${printData.chalanItemList[0].inKm}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Site
+			Km:</b>{${temp1}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Site
 			In Time:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Site
 			Out Time:</b>
 	</p>
@@ -176,7 +183,7 @@
 	</table>
 
 
-	<table width="100%" border="0" cellpadding="0" cellspacing="0"
+	<table width="100%"  border="0" cellpadding="0" cellspacing="0"
 		style="border-top: 1px solid #313131; border-right: 1px solid #313131; margin-left: 100px;">
 		<tr>
 			<td align="left" width="35%" rowspan="2"
@@ -185,7 +192,7 @@
 			<br />
 			<br />
 			<br />
-			<br />
+			
 			<br /> <b>Authorized Signature</b>
 			</td>
 			<td align="left" width="35%" rowspan="2"
@@ -196,7 +203,7 @@
 				</p> <br />
 			<br />
 			<br />
-			<br />
+			
 				<p style="font-size: 12px; text-align: left">
 					Authorize Signature & Name with Seal of Receiver <br />
 					<center>(of/on behalf of Customer)</center>

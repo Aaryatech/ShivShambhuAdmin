@@ -127,7 +127,7 @@ public class PdfController {
 					ChalanPrintData.class);
 			
 			String a=chPrintData.getChalanItemList().get(0).getVehTimeIn();
-		
+			float b=chPrintData.getChalanItemList().get(0).getInKm();
 			
 			if(a.equals("00:00:00")) {
 				
@@ -140,6 +140,20 @@ public class PdfController {
 				model.addObject("temp",a);
 			}
 
+         if(b==0.0) {
+				
+				System.err.println("hiiiiii" + a);
+				model.addObject("temp1","--");
+				
+			}
+			else {
+				System.err.println("pdf time:::::" + a);
+				model.addObject("temp1",b);
+			}
+
+			
+			
+			
 			System.err.println("pdf data 2/showChalanPdf Print" + chPrintData.toString());
 			
 			model.addObject("printData", chPrintData);

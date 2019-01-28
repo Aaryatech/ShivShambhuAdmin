@@ -264,7 +264,7 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="0">All</option>
+											<option value="">Select</option>
 											<c:forEach items="${plantList}" var="plant">
 												<c:if test="${sessionScope.plantId==0}">
 													<option value="${plant.plantId}">${plant.plantName}</option>
