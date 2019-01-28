@@ -707,7 +707,7 @@ body {
 
 
 													<td class="col-md-1" style="text-align: center"><input
-														type="text" min="0"
+														type="text" min="0" readonly
 														onkeypress="return allowOnlyNumber(event);"
 														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
 														id="oth_cost_aft_tax${item.itemId}"
@@ -920,7 +920,7 @@ body {
 								var taxable='<input  type="text" value='+v.taxableValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="taxable_amt'+v.itemId+'" name="taxable_amt'+v.itemId+'"/>'
 								var tax='<input  type="text" value='+v.taxValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="tax_amt'+v.itemId+'" name="tax_amt'+v.itemId+'"/>'
 								
-								var costAfTax='<input  type="text" value='+v.otherCostAfterTax+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+								var costAfTax='<input  type="text" readonly value='+v.otherCostAfterTax+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
 								
 								var finalAmt='<input  type="text" value='+v.finalTotal+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
 								var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
@@ -994,7 +994,7 @@ body {
 				var otherCost='<input  type="text" value='+v.otherCost+' class="form-control"  onkeypress="return allowOnlyNumber(event);" id="other_cost'+v.itemId+'" name="other_cost'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
 				var taxable='<input  type="text" value='+v.taxableValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="taxable_amt'+v.itemId+'" name="taxable_amt'+v.itemId+'"/>'
 				var tax='<input  type="text" value='+v.taxValue+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="tax_amt'+v.itemId+'" name="tax_amt'+v.itemId+'"/>'
-				var costAfTax='<input  type="text" value='+v.otherCostAfterTax+'   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
+				var costAfTax='<input  type="text" value='+v.otherCostAfterTax+' readonly   class="form-control"  onkeypress="return allowOnlyNumber(event);" id="oth_cost_aft_tax'+v.itemId+'" name="oth_cost_aft_tax'+v.itemId+'" oninput="itemCalc('+v.itemId+','+v.freightRate+','+v.itemRate1+','+v.royaltyRate+','+v.totalTaxPer+')"/>'
 				var finalAmt='<input  type="text" value='+v.finalTotal+' readonly class="form-control"  onkeypress="return allowOnlyNumber(event);" id="final_amt'+v.itemId+'" name="final_amt'+v.itemId+'"/>'
 				var acButton = '<a href="#"  class="action_btn" onclick="callDelete('
 											+ v.itemId

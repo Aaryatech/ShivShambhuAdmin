@@ -73,7 +73,7 @@
 </style>
 
 </head>
-<body onload="getData()">
+<body onload="getData1()">
 
 
 	<!-- Left Panel -->
@@ -489,6 +489,73 @@
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please Select plant");
+			}
+
+			if (valid == true) {
+
+				$.getJSON('${getItemsByPlantId}', {
+
+					plantId : plantId,
+					ajax : 'true',
+
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option value="-1"  >Select</option>';
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].itemId + '">'
+								+ data[i].itemName + '</option>';
+					}
+					html += '</option>';
+
+					$('#item_name').html(html);
+					$("#item_name").trigger("chosen:updated");
+
+				});
+
+				$.getJSON('${getCustByPlantId}', {
+					plantId : plantId,
+					ajax : 'true',
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option selected value="-1"  >Select</option>';
+					
+					for (var i = 0; i < len; i++) {
+						html += '<option value="' + data[i].custId + '">'
+								+ data[i].custName + '</option>';
+
+					}
+					html += '</option>';
+
+					$('#cust_name').html(html);
+					$("#cust_name").trigger("chosen:updated");
+					getCustInfo();
+
+				});
+			}//end of if
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		function getData1() {
+			document.getElementById("submitButton").disabled=true;
+			
+			//alert("Item Id ")
+			var plantId = document.getElementById("plant_id").value;
+			//alert("Plant Id " +plantId);
+			document.getElementById("isEdit").value = 0;
+			var valid = true;
+
+			if (plantId == null || plantId == "") {
+				valid = false;
+				
 			}
 
 			if (valid == true) {

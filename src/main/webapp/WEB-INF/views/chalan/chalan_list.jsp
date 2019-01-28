@@ -132,7 +132,7 @@
 
 
 </head>
-<body onload="getData()">
+<body onload="getData1()">
 
 
 	<!-- Left Panel -->
@@ -473,6 +473,53 @@
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
+			}
+
+			if (valid == true) {
+
+				$.getJSON('${getCustByPlantId}', {
+					plantId : plantId,
+					ajax : 'true',
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option selected value="0"  >All</option>';
+
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].custId + '">'
+								+ data[i].custName + '</option>';
+
+					}
+					html += '</option>';
+
+					$('#cust_name').html(html);
+					$("#cust_name").trigger("chosen:updated");
+					/* getCustInfo();
+
+					$('#po_id').html("-1");
+					$("#po_id").trigger("chosen:updated");
+					 */
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
+
+				});
+			}//end of if
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		// on plant change function 
+		function getData1() {
+			var plantId = document.getElementById("plant_id").value;
+			var valid = true;
+
+			if (plantId == null || plantId == "") {
+				valid = false;
+
 			}
 
 			if (valid == true) {

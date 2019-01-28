@@ -112,7 +112,7 @@
 </style>
 
 </head>
-<body onload="getData()">
+<body onload="getData1()">
 
 
 	<!-- Left Panel -->
@@ -529,6 +529,58 @@
 	</script>
 
 	<script type="text/javascript">
+
+		function getData1() { 
+			var plantId = document.getElementById("plant_id").value;
+			document.getElementById("isEdit").value = 0;
+			var valid = true;
+
+			if (plantId == null || plantId == "") {
+				valid = false;
+				
+			}
+
+			if (valid == true) {
+
+				$.getJSON('${getCustByPlantId}', {
+					plantId : plantId,
+					ajax : 'true',
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option selected value="-1"  >Select</option>';
+
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].custId + '">'
+								+ data[i].custName + '</option>';
+
+					}
+					html += '</option>';
+
+					$('#cust_name').html(html);
+					$("#cust_name").trigger("chosen:updated");
+					getCustInfo();
+
+					//$('#po_id').html("-1");
+					//$("#po_id").trigger("chosen:updated");
+				
+					
+					var dataTable = $('#bootstrap-data-table1')
+					.DataTable();
+			dataTable.clear().draw();
+			
+			//getPoDetailItem();
+
+				});
+			}//end of if
+
+		}
+	</script>
+
+	<script type="text/javascript">
 	// on cust change function 
 		function getCustInfo() {
 			$('#divCheckbox').show();
@@ -607,7 +659,7 @@
 							var html;
 							var len = data.length;
 							//alert("data " +JSON.stringify(data));
-												var html = '<option selected value="-1"  >Select All</option>';
+												var html = '<option selected value="-1"  >Select</option>';
 
 							for (var i = 0; i < len; i++) {
 								var projData=data[i].projName+"-"+data[i].address

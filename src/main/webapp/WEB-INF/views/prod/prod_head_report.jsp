@@ -89,7 +89,7 @@
 
 
 </head>
-<body onload="showProdReport()">
+<body onload="showProdReport1()">
 
 
 	<!-- Left Panel -->
@@ -334,6 +334,92 @@
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
+			}
+
+			else if (fromDate == null || fromDate == "") {
+				valid = false;
+				alert("Please select from date");
+			}
+
+			else if (toDate == null || toDate == "") {
+				valid = false;
+				alert("Please select to date");
+			}
+
+			if (fromDate > toDate) {
+				valid = false;
+				alert("from date can not be  greater than to date ");
+			}
+			if (valid == true) {
+
+				$
+						.getJSON(
+								'${getProdHeadReport}',
+								{
+									plantId : plantId,
+									fromDate : fromDate,
+									toDate : toDate,
+									ajax : 'true',
+								},
+
+								function(data) {
+
+									//alert("Order Data " +JSON.stringify(data));
+
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
+
+									//alert("Data " +JSON.stringify(data));
+
+									$
+											.each(
+													data,
+													function(i, v) {
+														//alert("hdjfh");
+														//var checkB = '<input  type="checkbox" name="selOrdItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
+														//var ordQty = '<input  type="text"  class="form-control"  id="ordQty'+v.itemId+'" name="ordQty'+v.itemId+'" onchange="calTotal('+v.itemId+','+v.poRate+','+v.poDetailId+','+v.poRemainingQty+')"/>'
+														//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
+														var acButton = '<a href="#" class="action_btn" onclick="viewProdDetail('
+																+ v.itemId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-list"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="viewRMHeaderDetail('
+																+ v.itemId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-times"></i></a>'
+
+														dataTable.row
+																.add(
+																		[
+																				i + 1,
+																				v.itemName,
+																				v.planQty,
+																				v.productionQty,
+																				acButton ])
+																.draw();
+													});
+
+								});
+
+			}//end of if valid ==true
+
+		}
+
+		function showProdReport1() {
+
+			//alert("Hi View Prod Plans  ");
+
+			var plantId = document.getElementById("plant_id").value;
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
+			var valid = true;
+
+			if (plantId == null || plantId == "") {
+				valid = false;
+
 			}
 
 			else if (fromDate == null || fromDate == "") {
