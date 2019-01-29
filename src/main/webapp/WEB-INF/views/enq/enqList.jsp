@@ -78,7 +78,7 @@
 
 
 </head>
-<body>
+<body onload="showQuot()">
 
 
 	<!-- Left Panel -->
@@ -151,14 +151,22 @@
 											onchange="getData()">
 											<option value="0">All</option>
 											<c:forEach items="${plantList}" var="plant">
-												<c:choose>
-													<c:when test="${plant.plantId==plantId1}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
-													</c:otherwise>
-												</c:choose>
+												<c:if test="${sessionScope.plantId==0}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:when test="${plant.plantId==plantId1}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 											</c:forEach>
 										</select>
 									</div>
@@ -265,27 +273,27 @@
 											</c:forEach>
 
 										</table>
-										
+
 										<div class="col-md-2"></div>
 
-								<div class="col-md-3">
+										<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();" disabled="disabled" id="expExcel"
-										style="align-content: center; width: 200px; margin-left: 80px;">
-										Export To Excel</button>
-								</div>
+											<button type="button" class="btn btn-primary"
+												onclick="exportToExcel();" disabled="disabled" id="expExcel"
+												style="align-content: center; width: 200px; margin-left: 80px;">
+												Export To Excel</button>
+										</div>
 
 
-								<div class="col-md-3">
+										<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
-										onclick="genPdf()" disabled="disabled" id="PDFButton"
-										style="align-content: center; width: 100px; margin-left: 80px;">
-										PDF</button>
-								</div>
-								&nbsp;
-										
+											<button type="button" class="btn btn-primary"
+												onclick="genPdf()" disabled="disabled" id="PDFButton"
+												style="align-content: center; width: 100px; margin-left: 80px;">
+												PDF</button>
+										</div>
+										&nbsp;
+
 									</div>
 
 
@@ -438,6 +446,52 @@
 
 		}
 	</script>
+	<script type="text/javascript">
+		// on plant change function 
+		function getData1() {
+			var plantId = document.getElementById("plant_id").value;
+			var valid = true;
+
+			if (plantId == null || plantId == "") {
+				valid = false;
+
+			}
+
+			if (valid == true) {
+
+				$.getJSON('${getCustByPlantId}', {
+					plantId : plantId,
+					ajax : 'true',
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option selected value="0"  >All</option>';
+
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].custId + '">'
+								+ data[i].custName + '</option>';
+
+					}
+					html += '</option>';
+
+					$('#cust_name').html(html);
+					$("#cust_name").trigger("chosen:updated");
+					/* getCustInfo();
+
+					$('#po_id').html("-1");
+					$("#po_id").trigger("chosen:updated");
+					 */
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
+
+				});
+			}//end of if
+
+		}
+	</script>
 
 
 
@@ -501,7 +555,6 @@
 
 								function(data) {
 
-									
 									document.getElementById("expExcel").disabled = false;
 									document.getElementById("PDFButton").disabled = false;
 
@@ -511,8 +564,6 @@
 										document.getElementById("PDFButton").disabled = true;
 
 									}
-
-									
 
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();
@@ -582,19 +633,14 @@
 																this.checked);
 											});
 						});
-		
-		
 	</script>
 
-<script type="text/javascript">
-
-
-function disableSubmitButton(){
-	  document.getElementById('submitButton').innerHTML='Please Wait';
-	  document.getElementById("submitButton").disabled=true;
-}
-
-</script>
+	<script type="text/javascript">
+		function disableSubmitButton() {
+			document.getElementById('submitButton').innerHTML = 'Please Wait';
+			document.getElementById("submitButton").disabled = true;
+		}
+	</script>
 
 
 	<script type="text/javascript">
@@ -610,13 +656,11 @@ function disableSubmitButton(){
 			//alert("hiii");
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-			var plantId= document.getElementById("plant_id").value;
-			var custId= document.getElementById("cust_name").value;
-			
-			
+			var plantId = document.getElementById("plant_id").value;
+			var custId = document.getElementById("cust_name").value;
 
 			window.open('${pageContext.request.contextPath}/showEnqListPdf/'
-					+ fromDate + '/' + toDate +'/' + custId + '/' + plantId);
+					+ fromDate + '/' + toDate + '/' + custId + '/' + plantId);
 			document.getElementById("expExcel").disabled = true;
 
 		}

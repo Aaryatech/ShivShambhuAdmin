@@ -157,7 +157,7 @@
 										<select id="companyId" name="companyId" class="standardSelect"
 											tabindex="1" onchange="onCompanyChange(this.value)">
 											<option value="">Select</option>
-											<c:forEach items="${compList}" var="comp">
+											<%-- <c:forEach items="${compList}" var="comp">
 
 												<c:choose>
 													<c:when test="${comp.companyId==addBill.companyId}">
@@ -167,14 +167,22 @@
 														<option value="${comp.companyId}">${comp.compName}
 													</c:otherwise>
 												</c:choose>
-												<%-- 	<option value="${comp.companyId}">${comp.compName}</option> --%>
-											</c:forEach>
+													<option value="${comp.companyId}">${comp.compName}</option>
+											</c:forEach> --%>
 
 
-											<%-- 
+
 											<c:forEach items="${compList}" var="comp">
 												<c:if test="${sessionScope.companyId==0}">
-													<option value="${comp.companyId}">${comp.compName}</option>
+													<c:choose>
+														<c:when test="${comp.companyId==addBill.companyId}">
+															<option value="${comp.companyId}" selected>${comp.compName}</option>
+														</c:when>
+
+														<c:otherwise>
+															<option value="${comp.companyId}">${comp.compName}</option>
+														</c:otherwise>
+													</c:choose>
 												</c:if>
 												<c:if test="${sessionScope.companyId!=0}">
 													<c:choose>
@@ -192,7 +200,7 @@
 												</c:if>
 											</c:forEach>
 
- --%>
+
 										</select>
 									</div>
 
@@ -209,7 +217,40 @@
 											<option value="-1">Select</option>
 
 
-											<option value="${addBill.plantId}" Selected>${addBill.plantName}</option>
+
+											<c:forEach items="${plantList}" var="plant">
+												<c:if test="${sessionScope.plantId==0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:when test="${plant.plantId==addBill.plantId}">
+															<option value="${addBill.plantId}" Selected>${addBill.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}">${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+
+
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:when test="${plant.plantId==addBill.plantId}">
+															<option value="${addBill.plantId}" Selected>${addBill.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
+											</c:forEach>
+
+
+
 
 										</select>
 									</div>
@@ -1112,6 +1153,8 @@ $
 
 	<script type="text/javascript">
 	function sendEmailByBillHeadId(billHeadId,custId){
+		getData();
+		
 		var isValid=true;
 		if(billHeadId==0){
 			
