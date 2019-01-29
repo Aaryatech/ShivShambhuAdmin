@@ -177,16 +177,32 @@
 											onchange="getData()">
 											<option value="">Select</option>
 
-
 											<c:forEach items="${plantList}" var="plant">
-												<c:choose>
-													<c:when test="${plant.plantId==plantId}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}</option>
-													</c:otherwise>
-												</c:choose>
+
+
+												<c:if test="${sessionScope.plantId==0}">
+													<c:choose>
+
+														<c:when test="${plant.plantId==plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}">${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 											</c:forEach>
 											<%-- 	</c:forEach>
 											<c:forEach items="${plantList}" var="plant">

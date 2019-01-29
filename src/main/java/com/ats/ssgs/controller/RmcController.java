@@ -76,11 +76,18 @@ public class RmcController {
 
 		ModelAndView model = null;
 		try {
-
+			int plantId = 0;
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			// String fromDate,toDate;
-			int plantId = 70;
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
+			if (login.getUser().getPlantId() == 0) {
+
+				plantId = 70;
+			} else {
+				plantId = login.getUser().getPlantId();
+			}
 			if (request.getParameter("from_date") == null || request.getParameter("to_date") == null) {
 				Date date = new Date();
 				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -170,7 +177,7 @@ public class RmcController {
 
 			}
 
-			HttpSession session = request.getSession();
+			 session = request.getSession();
 			session.setAttribute("exportExcelList", exportToExcelList);
 			session.setAttribute("excelName", "Order List");
 
@@ -527,14 +534,13 @@ public class RmcController {
 			 * model.addObject("compList", compList);
 			 */
 
+			getChalanPDFData gc = new getChalanPDFData();
 
-			getChalanPDFData gc=new getChalanPDFData();
-			
-			int mchalanId=gc.getcId();
-			int mPlantId= gc.getpId();
+			int mchalanId = gc.getcId();
+			int mPlantId = gc.getpId();
 			System.err.println("chalan id in rmc " + mchalanId + "plantId   " + mPlantId);
 			model.addObject("mPlantId", mPlantId);
-			model.addObject("mchalanId",mchalanId);
+			model.addObject("mchalanId", mchalanId);
 			HttpSession session = request.getSession();
 			ChalanHeader chalan = (ChalanHeader) session.getAttribute("chalanRes");
 

@@ -70,7 +70,7 @@
 
 
 </head>
-<body onload="showQuot()">
+<body onload="showQuot1()">
 
 
 	<!-- Left Panel -->
@@ -320,6 +320,79 @@
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please Select Plant");
+
+				 var dataTable = $('#bootstrap-data-table').DataTable();
+				dataTable.clear().draw();
+
+			} else if (plantId < 0) {
+				valid = false;
+
+			}
+
+			if (valid == true) {
+
+				$
+						.getJSON(
+								'${getStockItemByPlantIdAndCurDate}',
+								{
+									plantId : plantId,
+									ajax : 'true',
+
+								},
+								function(data) {
+
+								 	var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw(); 
+									
+
+									if (data == "") {
+										alert("No records found !!");						
+								}
+									
+
+									$
+											.each(
+													data,
+													function(i, v) {
+													
+														
+														var opQty1 = '<input  type="text" value="'+v.opQty+'"  class="form-control"  id="opQty'+v.itemId+'" name="opQty'+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
+
+														dataTable.row
+																.add(
+																		[
+																				i + 1,
+																				v.itemName,
+																				v.uomName,
+																				v.opQty,
+																				v.prodQty,
+																				v.chalanQty,v.closingQty
+																				 ])
+																.draw();
+													});
+
+								});
+				
+			
+				
+
+			}//end of if valid ==true
+
+		}
+		</script>
+
+	<script type="text/javascript">
+		// onclick of submit to search order 
+		function showQuot1() {
+			//alert("hii");
+
+			var plantId = document.getElementById("plantId").value;
+			var valid = true;
+			//alert("plantId"+plantId);
+			if (plantId == null || plantId == "") {
+				valid = false;
+				
 
 				 var dataTable = $('#bootstrap-data-table').DataTable();
 				dataTable.clear().draw();
