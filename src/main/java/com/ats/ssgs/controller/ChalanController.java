@@ -46,6 +46,7 @@ import com.ats.ssgs.model.chalan.ChalanHeader;
 import com.ats.ssgs.model.chalan.GetChalanDetail;
 import com.ats.ssgs.model.chalan.GetChalanHeader;
 import com.ats.ssgs.model.chalan.TempChalanItem;
+import com.ats.ssgs.model.chalan.getChalanPDFData;
 import com.ats.ssgs.model.enq.EnqHeader;
 import com.ats.ssgs.model.master.Cust;
 //import com.ats.ssgs.model.master.Document;
@@ -83,6 +84,8 @@ public class ChalanController {
 	List<Vehicle> vehicleList;
 	List<User> usrList;
 	List<RmcQuotTemp> rmcQuotTempList;
+	int mPlantId=0;
+	int mchalanId=0;
 
 	@RequestMapping(value = "/showAddChalan", method = RequestMethod.GET)
 	public ModelAndView showAddChalan(HttpServletRequest request, HttpServletResponse response) {
@@ -368,7 +371,7 @@ public class ChalanController {
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
 			int custId = Integer.parseInt(request.getParameter("cust_name"));
 			int orderId = Integer.parseInt(request.getParameter("order_id"));
-
+			
 			String chalanDate = request.getParameter("chalan_date");
 			String batchNo = request.getParameter("batchNo");
 			String chalanRemark = request.getParameter("chalan_remark");
@@ -465,13 +468,24 @@ public class ChalanController {
 			chHeader.setExFloat1(0);// isClosed
 			chHeader.setInKm(0.0f);
 
+			
 			ChalanHeader chHeadInserRes = rest.postForObject(Constants.url + "saveChalanHeaderDetail", chHeader,
 					ChalanHeader.class);
 
 			session.setAttribute("chalanRes", chHeadInserRes);
 
 			System.err.println("chHeadInserRes " + chHeadInserRes.toString());
-
+			mchalanId=chHeadInserRes.getChalanId();
+			mPlantId=chHeadInserRes.getPlantId();
+			System.out.println("ids are in chalan:"+mchalanId+mPlantId);
+			
+			getChalanPDFData gc=new getChalanPDFData();
+			
+			
+			////////////////////////////////////////
+			gc.setcId(mchalanId);
+			gc.setpId(mPlantId);
+			////////////////////////////
 			if (chHeadInserRes != null) {
 
 				map = new LinkedMultiValueMap<String, Object>();

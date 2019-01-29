@@ -41,7 +41,7 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.PoHeader;
-
+import com.ats.ssgs.model.chalan.getChalanPDFData;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.GetCust;
 //import com.ats.ssgs.model.master.Document;
@@ -1056,7 +1056,18 @@ public class OrderController {
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+			
+			
 
+			getChalanPDFData gc=new getChalanPDFData();
+			
+			int mchalanId=gc.getcId();
+			int mPlantId= gc.getpId();
+			model.addObject("mPlantId", mPlantId);
+			model.addObject("mchalanId",mchalanId);
+		
+
+			System.err.println("chalan id in order  " + mchalanId + "plantId   " + mPlantId);
 			model.addObject("plantList", plantList);
 
 			String fromDate = null, toDate = null;
@@ -1089,6 +1100,7 @@ public class OrderController {
 
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
+			
 
 		} catch (Exception e) {
 

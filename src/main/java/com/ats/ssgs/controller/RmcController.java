@@ -38,6 +38,7 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.chalan.ChalanHeader;
+import com.ats.ssgs.model.chalan.getChalanPDFData;
 import com.ats.ssgs.model.master.Company;
 //import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.GetCust;
@@ -526,6 +527,14 @@ public class RmcController {
 			 * model.addObject("compList", compList);
 			 */
 
+
+			getChalanPDFData gc=new getChalanPDFData();
+			
+			int mchalanId=gc.getcId();
+			int mPlantId= gc.getpId();
+			System.err.println("chalan id in rmc " + mchalanId + "plantId   " + mPlantId);
+			model.addObject("mPlantId", mPlantId);
+			model.addObject("mchalanId",mchalanId);
 			HttpSession session = request.getSession();
 			ChalanHeader chalan = (ChalanHeader) session.getAttribute("chalanRes");
 

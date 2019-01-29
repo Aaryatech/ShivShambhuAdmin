@@ -85,7 +85,8 @@ public class PdfController {
 		// List<ChalanPrintData> chPrintData=new ArrayList<>();
 
 		ModelAndView model = null;
-		System.err.println("in pdf/showQuotPdf/\", ");
+		
+		System.err.println("in pdf/showChalanPdf/\", "+plantId+chalanId);
 		try {
 			if(plantId==70) {
 				model = new ModelAndView("print_page/chalan_print_rmc");

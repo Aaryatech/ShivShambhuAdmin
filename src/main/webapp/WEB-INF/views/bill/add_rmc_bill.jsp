@@ -85,7 +85,7 @@
 }
 </style>
 </head>
-<body onload="getChalanByCustAndProj()">
+<body onload="getChalanByCustAndProj(${mPlantId},${mchalanId})">
 
 
 	<!-- Left Panel -->
@@ -1072,7 +1072,7 @@ function toggle() {
 
 	<script type="text/javascript">
 	// on proj_id  change function show Order Header Select Option List 
-		function getChalanByCustAndProj() {
+		function getChalanByCustAndProj(mPlantId,mchalanId) {
 			var projId=document.getElementById("proj_id").value;
 			var custId = document.getElementById("cust_name").value;
 			var chalanId = document.getElementById("chalanId").value;
@@ -1115,6 +1115,13 @@ function toggle() {
 									$('#chalan_id').html(html);
 									$("#chalan_id").trigger("chosen:updated");
 								});
+				
+				
+				//alert("call Pdf in rmc " +mchalanId+mPlantId);
+				window
+						.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'
+								+ mchalanId + '/' + mPlantId);
+				
 		}
 	
 	</script>

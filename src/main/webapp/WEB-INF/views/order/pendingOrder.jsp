@@ -106,7 +106,7 @@
 
 
 </head>
-<body onload="getData1()">
+<body onload="getData1(${mPlantId},${mchalanId})">
 
 
 	<!-- Left Panel -->
@@ -467,7 +467,7 @@
 
 	<script type="text/javascript">
 		// on plant change function 
-		function getData1() {
+		function getData1(mPlantId,mchalanId) {
 			var plantId = document.getElementById("plant_id").value;
 			var valid = true;
 
@@ -509,7 +509,20 @@
 				});
 			}//end of if
 
+			
+			
+			//var plantId = document.getElementById("plant_id").value;
+			//alert("call Pdf " +mchalanId+mPlantId);
+			window
+					.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'
+							+ mchalanId + '/' + mPlantId);
 		}
+		
+		
+		
+		
+		
+		
 	</script>
 
 
@@ -716,6 +729,7 @@
 
 		}
 	</script>
+
 
 
 </body>
