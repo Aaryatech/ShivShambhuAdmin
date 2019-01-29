@@ -599,15 +599,22 @@
 														var status1;
 														if (v.status == 0) {
 															status1 = "Pending";
+															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																+ v.quotHeadId
+																+ ','
+																+ v.plantIds
+																+ ','
+																+ v.custId
+																+ ','
+																+ v.enqHeadId
+																+ ','
+																+ v.status
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 														} else if (v.status == 1) {
 															status1 = "Quotation Generated";
-														} else {
-
-															status1 = "PO Generated";
-														}
-														var chBox;
-
-														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.quotHeadId
 																+ ','
 																+ v.plantIds
@@ -624,6 +631,18 @@
 																+ ','
 																+ i
 																+ ')" style="color:black"><i class="fa fa-file"  title="PDF"></i></a>'
+														} else {
+
+															status1 = "PO Generated";
+															var acButton = '<a href="#" class="action_btn" onclick="callSinglePdf('
+																+ v.quotHeadId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-file"  title="PDF"></i></a>'
+														}
+														var chBox;
+
+														
 
 														chBox = '<input  type="checkbox" class="chk" name="selectQuatationToDelete" id='+v.quotHeadId+' class="check"  value='+v.quotHeadId+'>'
 

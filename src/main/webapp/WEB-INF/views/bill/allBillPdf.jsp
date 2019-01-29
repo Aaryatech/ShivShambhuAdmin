@@ -50,7 +50,7 @@ contentType="text/html; charset=ISO8859_1"%>
      <td width="25%" colspan="3" style="border-left:1px solid #313131; border-bottom:1px solid #313131; padding:10px;color:#000; font-size:15px; text-align:center">
     	<p style="color:#000; font-size:11px; text-align:left;margin:0px;">Supplier's Ref.<!-- </p> 
    	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> --><b>${ref}</b></p> 
- </td>
+ </td><%-- ${billHeaderRes.getBillDetails[0].refNo} --%>
     <td colspan="3" width="25%" style="border-left:1px solid #313131;border-bottom:1px solid #313131;  padding:10px;color:#FFF; font-size:15px;">
    <p style="color:#000; font-size:11px; text-align:left;margin:0px;">Other Reference(s)</p> 
     </td>
@@ -67,8 +67,8 @@ contentType="text/html; charset=ISO8859_1"%>
 
     
     <td width="25%" colspan="3" style="border-left:1px solid #313131;border-bottom:1px solid #313131; padding:10px;color:#000; font-size:15px; text-align:center">
-    	<p style="color:#000; font-size:11px; text-align:left;margin:0px;">Buyer's Order No.<!-- </p> 
-      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> --><b>${billHeaderRes.orderNo}</b></p> 
+    	<p style="color:#000; font-size:11px; text-align:left;margin:0px;">Buyer's Order No.:<!-- </p> 
+      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> --><b>${b}</b></p> 
   
  </td>
     <td colspan="3" width="25%" style="border-left:1px solid #313131; border-bottom:1px solid #313131; padding:10px;color:#FFF; font-size:15px;">
@@ -91,7 +91,7 @@ contentType="text/html; charset=ISO8859_1"%>
   <tr>
      <td width="25%" colspan="3" style="border-left:1px solid #313131; border-bottom:1px solid #313131; padding:10px;color:#000; font-size:15px; text-align:center">
     	<p style="color:#000; font-size:11px; text-align:left;margin:0px;">Supplier's Ref.<!-- </p> 
-   	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> --><b> ${ref}</b></p> 
+   	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> --><b>${ref}</b></p> 
  </td>
     <td colspan="3" width="25%" style="border-left:1px solid #313131;border-bottom:1px solid #313131;  padding:10px;color:#FFF; font-size:15px;">
    <p style="color:#000; font-size:11px; text-align:left;margin:0px;">Other Reference(s)</p> 
