@@ -595,6 +595,7 @@ public class ChalanController {
 		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByPlantAndStatus", map,
 				GetChalanHeader[].class);
 
+		
 		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
 
 		System.out.println("2.....");
