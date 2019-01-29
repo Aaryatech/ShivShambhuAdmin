@@ -508,17 +508,17 @@
 
 				});
 			}//end of if
-
-			
-	 	var valid==true;
-			if(mchalanId=" "){
-				valid1=false;
+			var valid1=true;
+			//alert("hii...");
+	 	
+			if(mchalanId <= 0){
+				valid1 = false;
 			} 
-			//var plantId = document.getElementById("plant_id").value;
+			 
 			
 			
 		//alert("call Pdf " +mchalanId+mPlantId);
-		if(valid==true){
+		if(valid1==true){
 			window
 					.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'
 							+ mchalanId + '/' + mPlantId);

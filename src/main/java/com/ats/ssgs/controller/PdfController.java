@@ -174,7 +174,8 @@ public class PdfController {
 				}
 				}
 			}
-			
+			chalanId=0;
+			plantId=0;
 
 		} catch (Exception e) {
 			e.printStackTrace();
