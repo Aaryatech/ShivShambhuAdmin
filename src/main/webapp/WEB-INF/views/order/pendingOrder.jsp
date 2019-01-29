@@ -510,12 +510,19 @@
 			}//end of if
 
 			
-			
+	 	var valid==true;
+			if(mchalanId=" "){
+				valid1=false;
+			} 
 			//var plantId = document.getElementById("plant_id").value;
-			//alert("call Pdf " +mchalanId+mPlantId);
+			
+			
+		//alert("call Pdf " +mchalanId+mPlantId);
+		if(valid==true){
 			window
 					.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'
 							+ mchalanId + '/' + mPlantId);
+		}
 		}
 		
 		
