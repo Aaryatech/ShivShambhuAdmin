@@ -101,6 +101,7 @@ public class BillController {
 	int pdfCustId = 0;
 	List<RmcQuotTemp> rmcQuotTempList;
 	List<Setting> settingList;
+	List<Plant> plantList;
 
 	// hii
 
@@ -154,6 +155,11 @@ public class BillController {
 			model.addObject("billHeadId", billHeadId);
 			model.addObject("custId", pdfCustId);
 
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
 		} catch (Exception e) {
 
 			System.err.println("Exception in /showBillByMultiChalanId @MastContr  " + e.getMessage());
@@ -191,6 +197,11 @@ public class BillController {
 			model.addObject("billHeadId", billHeadId);
 			model.addObject("custId", pdfCustId);
 			model.addObject("fromChalan", 0);
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
 		} catch (Exception e) {
 
 			System.err.println("" + e.getMessage());
@@ -1171,7 +1182,8 @@ public class BillController {
 
 			System.err.println("Bill detail*******************************"
 					+ billHeaders.get(0).getGetBillDetails().get(0).getRefNo());
-			//System.err.println("pdf data " + quotPrintData.get(0).getQuotDetPrint().toString());
+			// System.err.println("pdf data " +
+			// quotPrintData.get(0).getQuotDetPrint().toString());
 			String a = billHeaders.get(0).getGetBillDetails().get(0).getRefNo();
 			model.addObject("ref", a);
 			System.out.println("999" + a);
@@ -1209,8 +1221,8 @@ public class BillController {
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
 		// File f = new File("/home/lenovo/Desktop/bill.pdf");
-		File f= new File("E:\\bill.pdf");
-		//File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
+		// File f = new File("E:\\bill.pdf");
+		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1228,13 +1240,13 @@ public class BillController {
 		// get absolute path of the application
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
-	String filename = "E:\\bill.pdf";
-		//String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		// String filename = "E:\\bill.pdf";
+		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 
-		//String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 		// String filePath = "/home/lenovo/Desktop/bill.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
-String filePath="E:\\bill.pdf";
+		// String filePath = "E:\\bill.pdf";
 		// construct the complete absolute path of the file
 		String fullPath = appPath + filePath;
 		File downloadFile = new File(filePath);
