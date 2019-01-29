@@ -978,7 +978,7 @@ $
 	
 	</script>
 	<script type="text/javascript">
-	
+	//sss
 	function calculation(key,itemId){
 		var orderRate=parseFloat(document.getElementById("orderRate"+key+''+itemId).value); //alert(orderRate+"orderRate");
 		var chalanQty=parseFloat(document.getElementById("chalanQty"+key+''+itemId).value); //alert(chalanQty+"chalanQty");
@@ -1016,6 +1016,7 @@ $
          		 document.getElementById("taxableAmt"+key+''+itemId).innerHTML=taxableAmt.toFixed(2);
          		 }
          	  
+         	 
          	 
          	 
 
