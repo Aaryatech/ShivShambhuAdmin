@@ -79,7 +79,7 @@
 
 
 </head>
-<body onload="showQuot1()">
+<body onload="showQuot()">
 
 
 	<!-- Left Panel -->
@@ -149,7 +149,9 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="0">All</option>
+											<c:if test="${sessionScope.plantId==0}">
+												<option value="0">All</option>
+											</c:if>
 
 
 											<c:forEach items="${plantList}" var="plant">
@@ -778,6 +780,7 @@
 								});
 
 			}//end of if valid ==true
+			getData();
 
 		}
 	</script>

@@ -149,8 +149,10 @@
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
-											<option value="0">All</option>
 
+											<c:if test="${sessionScope.plantId==0}">
+												<option value="0">All</option>
+											</c:if>
 											<c:forEach items="${plantList}" var="plant">
 												<c:if test="${sessionScope.plantId==0}">
 													<option value="${plant.plantId}">${plant.plantName}</option>
@@ -600,49 +602,47 @@
 														if (v.status == 0) {
 															status1 = "Pending";
 															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.quotHeadId
-																+ ','
-																+ v.plantIds
-																+ ','
-																+ v.custId
-																+ ','
-																+ v.enqHeadId
-																+ ','
-																+ v.status
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
+																	+ v.quotHeadId
+																	+ ','
+																	+ v.plantIds
+																	+ ','
+																	+ v.custId
+																	+ ','
+																	+ v.enqHeadId
+																	+ ','
+																	+ v.status
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 														} else if (v.status == 1) {
 															status1 = "Quotation Generated";
 															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.quotHeadId
-																+ ','
-																+ v.plantIds
-																+ ','
-																+ v.custId
-																+ ','
-																+ v.enqHeadId
-																+ ','
-																+ v.status
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callSinglePdf('
-																+ v.quotHeadId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-file"  title="PDF"></i></a>'
+																	+ v.quotHeadId
+																	+ ','
+																	+ v.plantIds
+																	+ ','
+																	+ v.custId
+																	+ ','
+																	+ v.enqHeadId
+																	+ ','
+																	+ v.status
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callSinglePdf('
+																	+ v.quotHeadId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-file"  title="PDF"></i></a>'
 														} else {
 
 															status1 = "PO Generated";
 															var acButton = '<a href="#" class="action_btn" onclick="callSinglePdf('
-																+ v.quotHeadId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-file"  title="PDF"></i></a>'
+																	+ v.quotHeadId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-file"  title="PDF"></i></a>'
 														}
 														var chBox;
-
-														
 
 														chBox = '<input  type="checkbox" class="chk" name="selectQuatationToDelete" id='+v.quotHeadId+' class="check"  value='+v.quotHeadId+'>'
 
@@ -664,6 +664,7 @@
 								});
 
 			}//end of if valid ==true
+			getData();
 
 		}
 

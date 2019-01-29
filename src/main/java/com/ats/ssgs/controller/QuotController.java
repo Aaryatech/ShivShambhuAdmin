@@ -65,6 +65,7 @@ import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.DocTermHeader;
 import com.ats.ssgs.model.master.GetCust;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.PaymentTerm;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
@@ -279,9 +280,13 @@ public class QuotController {
 
 			model.addObject("title", "Generate Quotation");
 
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("statusList", "0");
+			map.add("plantId", login.getUser().getPlantId());
 
 			GetQuotHeads[] quotArray = rest.postForObject(Constants.url + "getQuotHeaders", map, GetQuotHeads[].class);
 			quotList = new ArrayList<GetQuotHeads>(Arrays.asList(quotArray));
@@ -309,10 +314,13 @@ public class QuotController {
 			model = new ModelAndView("quot/quotList");
 
 			model.addObject("title", "Add Customer P.O.");
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("statusList", "1");
+			map.add("plantId", login.getUser().getPlantId());
 
 			GetQuotHeads[] quotArray = rest.postForObject(Constants.url + "getQuotHeaders", map, GetQuotHeads[].class);
 			quotList = new ArrayList<GetQuotHeads>(Arrays.asList(quotArray));

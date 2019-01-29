@@ -138,7 +138,8 @@
 									<div class="col-md-4">
 										<select id="company_id" name="company_id"
 											class="standardSelect" tabindex="1" onchange="getData()">
-											<option value="">Select</option>
+										
+											<option value="0">All</option>
 											<c:forEach items="${compList}" var="comp">
 
 												<c:choose>

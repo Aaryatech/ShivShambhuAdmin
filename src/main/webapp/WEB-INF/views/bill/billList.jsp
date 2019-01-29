@@ -123,7 +123,7 @@
 }
 </style>
 </head>
-<body>
+<body onload="showBill()">
 
 
 	<!-- Left Panel -->
@@ -192,10 +192,28 @@
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select plant name')"
 										onchange="getData()">
-										<option value="0">All</option>
+										<c:if test="${sessionScope.plantId==0}">
+											<option value="0">All</option>
+										</c:if>
+
 
 										<c:forEach items="${plantList}" var="plant">
-											<option value="${plant.plantId}">${plant.plantName}</option>
+											<c:if test="${sessionScope.plantId==0}">
+												<option value="${plant.plantId}">${plant.plantName}</option>
+											</c:if>
+											<c:if test="${sessionScope.plantId!=0}">
+												<c:choose>
+													<c:when test="${sessionScope.plantId==plant.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:when test="${plant.plantId==plantId1}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
 										</c:forEach>
 									</select>
 								</div>
@@ -215,37 +233,33 @@
 
 							<div class="row">
 								<div class="col-md-2">From Date</div>
-								<div class="col-md-4">
+								<div class="col-md-2">
 									<input type="text" autocomplete="off" id="from_date"
 										name="from_date" required style="width: 100%;"
 										class="form-control" value="${fromDate}"> <span
 										class="error" aria-live="polite"></span>
 								</div>
 								<div class="col-md-2">To Date</div>
-								<div class="col-md-4">
+								<div class="col-md-2">
 									<input type="text" autocomplete="off" id="to_date"
 										name="to_date" style="width: 100%;" class="form-control"
 										value="${toDate}"> <span class="error"
 										aria-live="polite"></span>
 								</div>
 
-							</div>
-
-
-							<div class="form-group"></div>
-							<div class="row">
-								<div class="col-md-6"></div>
-								<div class="col-md-3">
+								<div class="col-md-1"></div>
+								<div class="col-md-1">
 									<input type="button" class="btn btn-primary"
 										onclick="showBill()" value="Submit">
 									<button class="buttonload" id="loader">
 										<i class="fa fa-spinner fa-spin"></i>Loading
 									</button>
 								</div>
+
 							</div>
 
 
-							<div class="form-group"></div>
+
 
 						</div>
 
@@ -259,15 +273,15 @@
 
 										<th style="text-align: center"><input type="checkbox"
 											id="selectAll" /></th>
-												<th style="text-align: center">Sr.</th>
+										<th style="text-align: center">Sr.</th>
 										<th style="text-align: center">Bill No</th>
 										<th style="text-align: center">Bill Date</th>
 										<th style="text-align: center">Customer Name</th>
 
-											<th style="text-align: center">Taxable Amount</th>
+										<th style="text-align: center">Taxable Amount</th>
 										<th style="text-align: center">Tax Amount</th>
 										<th style="text-align: center">Total Amount</th>
-										
+
 										<th style="text-align: center">Action</th>
 									</tr>
 								</thead>
@@ -278,7 +292,7 @@
 											<td><input type="checkbox" class="chk" name="quotIds"
 												id="quotIds${count.index+1}" value="${bill.billHeadId}" /></td>
 
-													<td style="text-align: center">${count.index+1}</td> 
+											<td style="text-align: center">${count.index+1}</td>
 
 
 											<td style="text-align: left"><c:out
@@ -302,9 +316,10 @@
 
 											<td><a
 												href="${pageContext.request.contextPath}/editBill/${bill.billHeadId}"><i
-													class="fa fa-edit" style="color:black" title="Generate Quotation"></i> <span
-													class="text-muted"></span></a> &nbsp;<input type="button"
-												id="btn_submit" class="btn btn-primary"
+													class="fa fa-edit" style="color: black"
+													title="Generate Quotation"></i> <span class="text-muted"></span></a>
+												&nbsp;<input type="button" id="btn_submit"
+												class="btn btn-primary"
 												onclick="singleBillPdf(${bill.billHeadId})" value="Pdf" /></td>
 										</tr>
 									</c:forEach>
