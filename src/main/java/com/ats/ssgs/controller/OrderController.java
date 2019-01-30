@@ -287,6 +287,7 @@ public class OrderController {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String curDate = dateFormat.format(new Date());
 
+			
 			model = new ModelAndView("order/addOrder");
 
 			model.addObject("title", "Add Order");

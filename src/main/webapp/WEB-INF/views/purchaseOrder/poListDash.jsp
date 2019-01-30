@@ -270,6 +270,7 @@
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Plant Name</th>
 												<th style="text-align: center">Quotation No</th>
+												<th style="text-align: center">Delivery Location</th>
 												<th style="text-align: center">Status</th>
 												<th style="text-align: center">Action</th>
 											</tr>
@@ -291,7 +292,7 @@
 													<td style="text-align: left"><c:out
 															value="${poList.plantName}" /></td>
 													<td style="text-align: center">${poList.quatationNo}</td>
-
+													<td style="text-align: center">${poList.varchar1}</td>
 
 													<td style="text-align: left"><c:choose>
 															<c:when test="${status==0}">
@@ -535,6 +536,7 @@
 																				v.custName,
 																				v.plantName,
 																				v.quatationNo,
+																				v.varchar1,
 																				status1,
 																				acButton ])
 																.draw();

@@ -734,7 +734,8 @@ body {
 										</tbody>
 
 									</table>
-
+									
+                                  
 									<input type="hidden" id="rmc_mix_total" name="rmc_mix_total"
 										value="0" class="form-control" style="width: 100%;" required>
 
@@ -752,18 +753,20 @@ body {
 												value="${quotHeader.otherRemark1}" required>
 										</div>
 
+ 	                                 <input type="hidden" id="stat" name="stat"
+										value="${stat}" class="form-control" style="width: 100%;" required>
+
 
 										<div class="col-md-1">
 											<input type="button" class="btn btn-primary"
-												value="Generate" onclick="valthisform()"  
-									<c:if test="${stat==1}"><c:out value="disabled='disabled'"/></c:if>>
-
-
+												value="Generate" onclick="valthisform()" id="generate">
+									
 										</div>
 										<div class="col-md-2"></div>
 
+
 										<div class="col-md-1">
-											<input type="button" class="btn btn-primary"
+											<input type="button" class="btn btn-primary" id="update"
 												onclick="valthisformUpdateQuot()" value="Update Quotation">
 
 										</div>
@@ -1087,6 +1090,18 @@ body {
 				document.getElementById("no_of_tolls").value=noOfTolls;
 			}
 			
+			
+			 var stat=document.getElementById('stat').value;
+			// alert("stat:"+stat);
+			 if (stat == 1) {
+
+					document.getElementById("generate").style = "display:none"
+				}
+			 else if(stat == 0) {
+					document.getElementById("update").style = "display:none"
+
+				}
+			
 		}
 		function setKM(delPlace) {
 		//alert("hiii");
@@ -1116,6 +1131,10 @@ body {
 					calcAll();
 					
 				}
+				 
+				 
+				 
+				
 			}
 		
 		</script>

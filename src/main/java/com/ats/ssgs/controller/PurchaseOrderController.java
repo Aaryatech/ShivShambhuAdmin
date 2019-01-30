@@ -502,6 +502,7 @@ public class PurchaseOrderController {
 	public @ResponseBody List<GetPoHeader> getPOListBetDateAndPlantId(HttpServletRequest request,
 			HttpServletResponse response) {
 
+	    System.out.println("Address is :"+getPoList.toString());
 		System.err.println(" in getPOListBetDateAndPlantId");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 

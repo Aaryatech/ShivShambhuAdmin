@@ -1221,8 +1221,8 @@ public class BillController {
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
 		// File f = new File("/home/lenovo/Desktop/bill.pdf");
-		// File f = new File("E:\\bill.pdf");
-		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
+		File f = new File("E:\\bill.pdf");
+		//File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1240,13 +1240,13 @@ public class BillController {
 		// get absolute path of the application
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
-		// String filename = "E:\\bill.pdf";
-		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		String filename = "E:\\bill.pdf";
+		//String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 
-		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		//String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 		// String filePath = "/home/lenovo/Desktop/bill.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
-		// String filePath = "E:\\bill.pdf";
+		 String filePath = "E:\\bill.pdf";
 		// construct the complete absolute path of the file
 		String fullPath = appPath + filePath;
 		File downloadFile = new File(filePath);
