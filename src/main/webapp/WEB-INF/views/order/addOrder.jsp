@@ -16,7 +16,7 @@
 <c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
 
 <c:url var="getProjectByCustId" value="/getProjectByCustId" />
-
+<c:url var="getEnqNumber" value="/getEnqNumber" />
 
 <c:url var="getPoDetailForOrderByPoId"
 	value="/getPoDetailForOrderByPoId" />
@@ -309,7 +309,7 @@
 									<div class="col-md-4">
 										<input type="text" readonly id="ord_no" name="ord_no"
 											style="width: 100%;" class="form-control"
-											value="${doc.docPrefix}${doc.srNo}"> <span
+											> <span
 											class="error" aria-live="polite"></span>
 									</div>
 
@@ -524,9 +524,71 @@
 
 				});
 			}//end of if
-
+			getOrdNum(); 
 		}
 	</script>
+
+
+
+
+
+
+<script>
+		function getOrdNum() {
+			
+			var plantId = document.getElementById("plant_id").value;
+			//alert("Plant Id " +plantId);
+		
+			var valid = true;
+			if (valid == true) {
+
+				$.getJSON('${getEnqNumber}', {
+
+					plantId : plantId,
+					ajax : 'true',
+
+				},
+
+				function(data) {
+				
+					var sn=data.plantFax1;
+					var count=data.exInt3;
+					
+					//alert("sn"+sn);
+					//alert("count"+count);
+					var c;
+					var len1=count.toString().length;
+					//alert("len"+len1);
+					
+					
+					
+					if (len1 == 1) {
+						var c= "000"+count;
+
+					} else if (len1 == 2) {
+						var c= "00"+count;
+					} else if (len1 == 3) {
+						var c= "0"+count;
+
+					}
+					//alert("var c:"+c);
+					var enqNum="ORD"+ "-" +sn+"-"+c;
+					//alert("enqNum"+enqNum);
+					
+					document.getElementById("ord_no").value=enqNum;
+				});
+
+				
+			}//end of if
+
+		}
+	
+	
+	
+		</script>
+	
+	
+	
 
 	<script type="text/javascript">
 
@@ -576,7 +638,7 @@
 
 				});
 			}//end of if
-
+			getOrdNum(); 
 		}
 	</script>
 

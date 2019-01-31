@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
-
+<c:url var="getEnqNumber" value="/getEnqNumber" />
 <c:url var="getItemsByPlantId" value="/getItemsByPlantId" />
 
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
@@ -230,7 +230,7 @@
 									<div class="col-md-4">
 										<input type="text" readonly id="enq_no" name="enq_no"
 											style="width: 100%;" class="form-control"
-											value="${doc.docPrefix}${doc.srNo}"> <span
+											> <span
 											class="error" aria-live="polite"></span>
 									</div>
 
@@ -539,9 +539,68 @@
 
 				});
 			}//end of if
+			
+			 getEnqNum();
 
 		}
 	</script>
+	
+	<script>
+		function getEnqNum() {
+			
+			var plantId = document.getElementById("plant_id").value;
+			//alert("Plant Id " +plantId);
+		
+			var valid = true;
+			if (valid == true) {
+
+				$.getJSON('${getEnqNumber}', {
+
+					plantId : plantId,
+					ajax : 'true',
+
+				},
+
+				function(data) {
+				
+					var sn=data.plantFax1;
+					var count=data.exInt1;
+					
+					//alert("sn"+sn);
+					//alert("count"+count);
+					var c;
+					var len1=count.toString().length;
+					//alert("len"+len1);
+					
+					
+					
+					if (len1 == 1) {
+						var c= "000"+count;
+
+					} else if (len1 == 2) {
+						var c= "00"+count;
+					} else if (len1 == 3) {
+						var c= "0"+count;
+
+					}
+					//alert("var c:"+c);
+					var enqNum="ENQ"+ "-" +sn+"-"+c;
+					//alert("enqNum"+enqNum);
+					
+					document.getElementById("enq_no").value=enqNum;
+				});
+
+				
+			}//end of if
+
+		}
+	
+	
+	
+		</script>
+	
+	
+	
 
 	<script type="text/javascript">
 		function getData1() {
@@ -606,7 +665,7 @@
 
 				});
 			}//end of if
-
+			 getEnqNum();
 		}
 	</script>
 

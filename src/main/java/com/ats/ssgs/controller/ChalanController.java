@@ -481,20 +481,31 @@ public class ChalanController {
 			
 			getChalanPDFData gc=new getChalanPDFData();
 			
-			
-			////////////////////////////////////////
 			gc.setcId(mchalanId);
 			gc.setpId(mPlantId);
-			////////////////////////////
+		
+			
+			
+			
 			if (chHeadInserRes != null) {
 
+			
+				
+				System.out.println("ch inserted......");
 				map = new LinkedMultiValueMap<String, Object>();
+				map.add("plantId", plantId);
 
-				map.add("srNo", doc.getSrNo() + 1);
-				map.add("docCode", doc.getDocCode());
-
-				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
-
+				Plant pData= rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+				int a=Integer.parseInt(pData.getExVar1())+1;
+				String c=String.valueOf(a);
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("plantId", plantId);
+				map.add("chCount", c);
+				System.out.println("new count....."+a);
+				
+		        Info  pData1= rest.postForObject(Constants.url + "updateChalanCounter", map, Info.class);
+				
 				map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("orderId", chHeadInserRes.getOrderId());

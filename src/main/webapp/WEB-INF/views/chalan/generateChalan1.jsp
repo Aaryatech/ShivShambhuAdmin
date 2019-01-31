@@ -122,7 +122,7 @@ body {
 <c:url var="getOrderDetailForChalan" value="/getOrderDetailForChalan" />
 <c:url var="setChalanItem" value="/setChalanItem" />
 <c:url var="getChalanSelectedItems" value="/getChalanSelectedItems" />
-
+<c:url var="getEnqNumber" value="/getEnqNumber" />
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -354,9 +354,7 @@ body {
 											onchange="showOrderItemPopup1(this.value)">
 											<option selected value="${orderId}">${orderNo}</option>
 
-											<%-- <c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
-											</c:forEach> --%>
+										
 										</select>
 									</div>
 
@@ -459,7 +457,7 @@ body {
 									<div class="col-md-4">
 										<input type="text" readonly id="chalan_no" name="chalan_no"
 											style="width: 100%;" class="form-control"
-											value="${doc.docPrefix}${doc.srNo}"> <span
+											 ><span
 											class="error" aria-live="polite"></span>
 									</div>
 
@@ -958,6 +956,7 @@ function allowOnlyNumber1(evt)
 
 				});
 			}//end of if
+		
 
 		}
 	</script>
@@ -1131,6 +1130,9 @@ function allowOnlyNumber1(evt)
 		} );
 		
 		}
+		
+		getEnqNum();
+		
 	}
 	</script>
 
@@ -1549,5 +1551,61 @@ function toggle() {
 				  
 			
 			</script>
+			
+			
+			<script>
+		function getEnqNum() {
+			
+			var plantId = document.getElementById("plant_id").value;
+			//alert("Plant Id " +plantId);
+		
+			var valid = true;
+			if (valid == true) {
+
+				$.getJSON('${getEnqNumber}', {
+
+					plantId : plantId,
+					ajax : 'true',
+
+				},
+
+				function(data) {
+				
+					var sn=data.plantFax1;
+					var count=data.exVar1;
+					
+					//alert("sn"+sn);
+					//lert("count"+count);
+					var c;
+					var len1=count.length;
+			//alert("len"+len1);
+					
+					
+					
+					if (len1 == 1) {
+						var c= "000"+count;
+
+					} else if (len1 == 2) {
+						var c= "00"+count;
+					} else if (len1 == 3) {
+						var c= "0"+count;
+
+					}
+				//alert("var c:"+c);
+					var enqNum="CH"+ "-" +sn+"-"+c;
+				//alert("enqNum"+enqNum);
+					
+					document.getElementById("chalan_no").value=enqNum;
+				});
+
+				
+			}//end of if
+
+		}
+	
+	
+	
+		</script>
+	
 </body>
 </html>

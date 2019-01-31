@@ -108,10 +108,10 @@ public class EnqController {
 			model.addObject("enqGenFactList", enqGenFactList);
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("docCode", 1);
+			/*map.add("docCode", 1);
 			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,
 					com.ats.ssgs.model.master.Document.class);
-			model.addObject("doc", doc);
+			model.addObject("doc", doc);*/
 
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			String curDate = dateFormat.format(new Date());
@@ -530,7 +530,7 @@ public class EnqController {
 
 		GetCust cust = rest.postForObject(Constants.url + "getCustomerByCustId", map, GetCust.class);
 
-		System.err.println("Ajax Customer  " + cust.toString());
+		//System.err.println("Ajax Customer  " + cust.toString());
 
 		return cust;
 
@@ -554,6 +554,27 @@ public class EnqController {
 		return custList;
 
 	}
+	
+	
+	
+	// Ajax call
+		@RequestMapping(value = "/getEnqNumber", method = RequestMethod.GET)
+		public @ResponseBody Plant getEnqNumber(HttpServletRequest request, HttpServletResponse response) {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			int plantId = Integer.parseInt(request.getParameter("plantId"));
+
+			map.add("plantId", plantId);
+
+		Plant pData= rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+			
+
+			//System.err.println("Ajax enq no data " + pData.toString());
+
+			return pData;
+
+		}
 	// addEnqItem Ajax
 
 	List<TempEnqItem> enqItemList = new ArrayList<TempEnqItem>();
@@ -744,6 +765,8 @@ public class EnqController {
 
 			String enqDate = request.getParameter("enq_date");
 			String enqNo = request.getParameter("enq_no");
+			
+			System.out.println("enq no is"+enqNo);
 			String enqRemark = request.getParameter("enq_remark");
 
 			int enqGenId = Integer.parseInt(request.getParameter("enq_gen_fact"));
@@ -805,11 +828,11 @@ public class EnqController {
 			}
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("docCode", 1);
+			/*map.add("docCode", 1);
 			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,
-					com.ats.ssgs.model.master.Document.class);
+					com.ats.ssgs.model.master.Document.class);*/
 
-			enqHead.setEnqNo(doc.getDocPrefix() + "" + doc.getSrNo());
+			//enqHead.setEnqNo(doc.getDocPrefix() + "" + doc.getSrNo());
 			enqHead.setEnqDetailList(enqDetList);
 
 			EnqHeader enqInsertRes = rest.postForObject(Constants.url + "saveEnqHeaderAndDetail", enqHead,
@@ -817,7 +840,7 @@ public class EnqController {
 
 			if (enqInsertRes != null) {
 
-				map = new LinkedMultiValueMap<String, Object>();
+				/*map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("srNo", doc.getSrNo() + 1);
 				map.add("docCode", doc.getDocCode());
@@ -825,6 +848,22 @@ public class EnqController {
 				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
 
 				isError = 2;
+				
+				*/
+				
+				System.out.println("enq inserted......");
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("plantId", plantId);
+
+				Plant pData= rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+				int a=pData.getExInt1()+1;
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("plantId", plantId);
+				map.add("enqCount", a);
+				System.out.println("new count....."+a);
+		        Info  pData1= rest.postForObject(Constants.url + "updateEnqCounter", map, Info.class);
+			
 
 			}
 
@@ -872,11 +911,38 @@ public class EnqController {
 
 			map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("docCode", 2);
+			/*map.add("docCode", 2);
 			com.ats.ssgs.model.master.Document docs = rest.postForObject(Constants.url + "getDocument", map,
-					com.ats.ssgs.model.master.Document.class);
+					com.ats.ssgs.model.master.Document.class);*/
 
-			quotHeader.setQuotNo(docs.getDocPrefix() + "" + docs.getSrNo());
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("plantId", plantId);
+			Plant pData= rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+			String shortName=pData.getPlantFax1();
+			int a=pData.getExInt2();
+			String var=null;
+		
+			if (String.valueOf(a).length() == 1) {
+				var = "000".concat(String.valueOf(a));
+
+			} else if (String.valueOf(a).length() == 2) {
+				var = "00".concat(String.valueOf(a));
+
+			} else if (String.valueOf(a).length() == 3) {
+				var = "0".concat(String.valueOf(a));
+
+			}
+			
+			String b="QUOT";
+			
+			String quotNo_1=  b + "-" + shortName + "-" + var;
+			System.err.println("Quot no is .........." +quotNo_1 );
+
+			
+		
+			quotHeader.setQuotNo(quotNo_1);
 
 			quotHeader.setQuotTaxableAmt(0.0f);
 			quotHeader.setQuotTaxAmt(0.0f);
@@ -938,13 +1004,20 @@ public class EnqController {
 			System.err.println("quotHeadInsertRes  " + quotHeadInsertRes.toString());
 
 			if (quotHeadInsertRes != null) {
-
+				System.out.println("quot inserted......");
 				map = new LinkedMultiValueMap<String, Object>();
+				map.add("plantId", plantId);
 
-				map.add("srNo", docs.getSrNo() + 1);
-				map.add("docCode", docs.getDocCode());
-
-				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+				Plant pData12= rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+				int a1=pData12.getExInt2()+1;
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("plantId", plantId);
+				map.add("quotCount", a1);
+				System.out.println("new count....."+a1);
+		        Info  pData11= rest.postForObject(Constants.url + "updateQuotCounter", map, Info.class);
+				
+				
 
 			}
 

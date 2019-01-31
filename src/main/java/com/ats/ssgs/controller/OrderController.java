@@ -159,6 +159,8 @@ public class OrderController {
 
 	}
 
+	
+	
 	@RequestMapping(value = "/getPoDetailForOrderByPoId", method = RequestMethod.GET)
 	public @ResponseBody List<GetPoForOrder> getPoDetailForOrderByPoId(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -299,6 +301,7 @@ public class OrderController {
 			String dispTime = request.getParameter("disp_time");
 			String ordDate = request.getParameter("ord_date");
 			String delDate = request.getParameter("del_date");
+			String ord_no = request.getParameter("ord_no");
 
 			// float itemTotal = Float.parseFloat(request.getParameter("itemTotal"));
 
@@ -358,11 +361,14 @@ public class OrderController {
 			ordHeader.setExInt1(login.getUser().getUserId());
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("docCode", 3);
+			/*map.add("docCode", 3);
 
 			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,
-					com.ats.ssgs.model.master.Document.class);
-			ordHeader.setOrderNo(doc.getDocPrefix() + "" + doc.getSrNo());
+					com.ats.ssgs.model.master.Document.class);*/
+			
+			System.out.println("order num is"+ord_no);
+			
+			ordHeader.setOrderNo(ord_no);
 
 			if (poDetailForOrdList.get(0).getTaxAmt() == 0) {
 
@@ -383,14 +389,29 @@ public class OrderController {
 
 				isError = 2;
 
-				map = new LinkedMultiValueMap<String, Object>();
+				/*map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("srNo", doc.getSrNo() + 1);
-				map.add("docCode", doc.getDocCode());
+				map.add("docCode", doc.getDocCode());*/
 
-				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+				/*Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
 
+				map = new LinkedMultiValueMap<String, Object>();*/
+				
+				
+				System.out.println("order inserted......");
 				map = new LinkedMultiValueMap<String, Object>();
+				map.add("plantId", plantId);
+
+				Plant pData= rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+				int a=pData.getExInt3()+1;
+				
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("plantId", plantId);
+				map.add("ordCount", a);
+				System.out.println("new count....."+a);
+		        Info  pData1= rest.postForObject(Constants.url + "updateOrderCounter", map, Info.class);
+			
 
 				map.add("poId", insertOrdHeadRes.getPoId());
 
