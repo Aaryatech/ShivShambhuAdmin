@@ -84,8 +84,8 @@ public class ChalanController {
 	List<Vehicle> vehicleList;
 	List<User> usrList;
 	List<RmcQuotTemp> rmcQuotTempList;
-	int mPlantId=0;
-	int mchalanId=0;
+	int mPlantId = 0;
+	int mchalanId = 0;
 
 	@RequestMapping(value = "/showAddChalan", method = RequestMethod.GET)
 	public ModelAndView showAddChalan(HttpServletRequest request, HttpServletResponse response) {
@@ -371,7 +371,7 @@ public class ChalanController {
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
 			int custId = Integer.parseInt(request.getParameter("cust_name"));
 			int orderId = Integer.parseInt(request.getParameter("order_id"));
-			
+
 			String chalanDate = request.getParameter("chalan_date");
 			String batchNo = request.getParameter("batchNo");
 			String chalanRemark = request.getParameter("chalan_remark");
@@ -393,7 +393,8 @@ public class ChalanController {
 				float height = Float.parseFloat(request.getParameter("height" + tempChItemList.get(i).getItemId()));
 				float length = Float.parseFloat(request.getParameter("length" + tempChItemList.get(i).getItemId()));
 
-				int chalanQty = Integer.parseInt(request.getParameter("chalanQty" + tempChItemList.get(i).getItemId()));
+				float chalanQty = Float
+						.parseFloat(request.getParameter("chalanQty" + tempChItemList.get(i).getItemId()));
 
 				System.out.println("Qty is::" + chalanQty);
 				float total = Float
@@ -468,44 +469,38 @@ public class ChalanController {
 			chHeader.setExFloat1(0);// isClosed
 			chHeader.setInKm(0.0f);
 
-			
 			ChalanHeader chHeadInserRes = rest.postForObject(Constants.url + "saveChalanHeaderDetail", chHeader,
 					ChalanHeader.class);
 
 			session.setAttribute("chalanRes", chHeadInserRes);
 
 			System.err.println("chHeadInserRes " + chHeadInserRes.toString());
-			mchalanId=chHeadInserRes.getChalanId();
-			mPlantId=chHeadInserRes.getPlantId();
-			System.out.println("ids are in chalan:"+mchalanId+mPlantId);
-			
-			getChalanPDFData gc=new getChalanPDFData();
-			
+			mchalanId = chHeadInserRes.getChalanId();
+			mPlantId = chHeadInserRes.getPlantId();
+			System.out.println("ids are in chalan:" + mchalanId + mPlantId);
+
+			getChalanPDFData gc = new getChalanPDFData();
+
 			gc.setcId(mchalanId);
 			gc.setpId(mPlantId);
-		
-			
-			
-			
+
 			if (chHeadInserRes != null) {
 
-			
-				
 				System.out.println("ch inserted......");
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("plantId", plantId);
 
-				Plant pData= rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
-				int a=Integer.parseInt(pData.getExVar1())+1;
-				String c=String.valueOf(a);
-				
+				Plant pData = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+				int a = Integer.parseInt(pData.getExVar1()) + 1;
+				String c = String.valueOf(a);
+
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("plantId", plantId);
 				map.add("chCount", c);
-				System.out.println("new count....."+a);
-				
-		        Info  pData1= rest.postForObject(Constants.url + "updateChalanCounter", map, Info.class);
-				
+				System.out.println("new count....." + a);
+
+				Info pData1 = rest.postForObject(Constants.url + "updateChalanCounter", map, Info.class);
+
 				map = new LinkedMultiValueMap<String, Object>();
 
 				map.add("orderId", chHeadInserRes.getOrderId());
@@ -606,7 +601,6 @@ public class ChalanController {
 		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByPlantAndStatus", map,
 				GetChalanHeader[].class);
 
-		
 		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
 
 		System.out.println("2.....");

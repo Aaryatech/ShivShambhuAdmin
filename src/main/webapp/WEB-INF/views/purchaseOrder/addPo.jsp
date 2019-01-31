@@ -249,7 +249,7 @@
 														style="text-align: right"><c:out
 															value="${getQuotDetailList.taxValue}" /></td>
 
-													<td style="width: 100px"><input type="text" readonly
+													<td style="width: 100px"><input type="text"
 														id="othCostAftTax${getQuotDetailList.itemId}"
 														style="height: 32px; padding-bottom: 12px; text-align: right; font-size: 15px;"
 														name="othCostAftTax${getQuotDetailList.itemId}"

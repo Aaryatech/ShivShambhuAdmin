@@ -636,19 +636,19 @@
 																	+ v.chalanId
 																	+ ','
 																	+ i
-																	+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+																	+ ')" style="color:black"><i class="fa fa-edit" title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
 																	+ v.chalanId
 																	+ ','
 																	+ i
-																	+ ')" style="color:black"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose('
+																	+ ')" style="color:black"><i class="fa fa-trash" title="Delete"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose('
 																	+ v.chalanId
 																	+ ','
 																	+ i
-																	+ ')" style="color:black"><i class="fa fa-times"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
+																	+ ')" style="color:black"><i class="fa fa-times" title="Close Chalan"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
 																	+ v.chalanId
 																	+ ','
 																	+ i
-																	+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
+																	+ ')" style="color:black"><i class="fa fa-file-pdf-o" title="Generate Pdf"></i></a>'
 
 															chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
 														} else if (v.exFloat1 == 1) {

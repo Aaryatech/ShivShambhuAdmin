@@ -275,7 +275,8 @@
 												<th style="text-align: center">Order Date</th>
 												<th style="text-align: center">Delivery Date</th>
 												<th style="text-align: center">Customer Name</th>
-												<th style="text-align: center">Customer Mobile No</th>
+												<th style="text-align: center">Mobile No</th>
+												<th style="text-align: center">Project Name</th>
 												<th style="text-align: center">Status</th>
 
 												<!-- 												<th style="text-align: center">Status</th>
@@ -509,9 +510,9 @@
 				});
 			}//end of if
 			var valid1=true;
-		alert("hii..."+mchalanId );
+			//alert("hii...");
 	 	
-			if(mchalanId == 0){
+			if(mchalanId = 0){
 				valid1 = false;
 			} 
 			 
@@ -626,11 +627,7 @@
 																+ v.orderId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-																+ v.orderId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-trash" title="Delete"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDetail('
+																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDetail('
 																+ v.orderId
 																+ ','
 																+ i
@@ -649,6 +646,7 @@
 																				v.deliveryDate,
 																				v.custName,
 																				v.custMobNo,
+																				v.projName,
 																				status1,
 
 																				acButton ])

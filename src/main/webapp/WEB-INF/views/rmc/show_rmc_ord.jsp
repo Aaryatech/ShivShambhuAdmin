@@ -250,6 +250,7 @@
 												<th style="text-align: center">Order No</th>
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Mobile No</th>
+												<th style="text-align: center">Project Name</th>
 												<th style="text-align: center">Delivery Date</th>
 												<th style="text-align: center">Dispatch Time</th>
 												<th style="text-align: center">Item Name</th>
@@ -270,6 +271,8 @@
 															value="${orderDet.custName}" /></td>
 													<td style="text-align: left"><c:out
 															value="${orderDet.custMobNo}" /></td>
+													<td style="text-align: center"><c:out
+															value="${orderDet.projName}" /></td>
 													<td style="text-align: center"><c:out
 															value="${orderDet.deliveryDate}" /></td>
 

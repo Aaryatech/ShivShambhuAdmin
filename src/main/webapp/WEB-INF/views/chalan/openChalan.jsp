@@ -495,7 +495,7 @@
 																+ v.chalanId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-times"></i></a>'
+																+ ')" style="color:black"><i class="fa fa-times" title="Close Chalan"></i></a>'
 
 														dataTable.row
 																.add(

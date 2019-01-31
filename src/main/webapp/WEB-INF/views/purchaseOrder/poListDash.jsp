@@ -268,6 +268,7 @@
 												<th style="text-align: center">Po No</th>
 												<th style="text-align: center">Purchase Order Date</th>
 												<th style="text-align: center">Customer Name</th>
+												<th style="text-align: center">Project Name</th>
 												<th style="text-align: center">Plant Name</th>
 												<th style="text-align: center">Quotation No</th>
 												<th style="text-align: center">Delivery Location</th>
@@ -534,6 +535,7 @@
 																				v.poNo,
 																				v.poDate,
 																				v.custName,
+																				v.projName,
 																				v.plantName,
 																				v.quatationNo,
 																				v.varchar1,

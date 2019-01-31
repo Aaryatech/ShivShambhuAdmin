@@ -287,6 +287,7 @@
 												<th style="text-align: center">Delivery Date</th>
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Mobile No</th>
+												<th style="text-align: center">Project Name</th>
 												<th style="text-align: center">Total</th>
 												<th style="text-align: center">Status</th>
 												<th style="text-align: center">Action</th>
@@ -319,6 +320,10 @@
 
 													<td style="text-align: left"><c:out
 															value="${enq.custMobNo}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${enq.projName}" /></td>
+
 
 													<td style="text-align: left"><c:out
 															value="${enq.total}" /></td>
@@ -652,6 +657,7 @@
 																				deliveryDate,
 																				v.custName,
 																				v.custMobNo,
+																				v.projName,
 																				v.total,
 																				status1,
 																				acButton ])
