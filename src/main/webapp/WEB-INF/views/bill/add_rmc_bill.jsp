@@ -9,6 +9,9 @@
 
 <title>Shiv Admin</title>
 <c:url var="getPlantByCompanyId" value="/getPlantByCompanyId" />
+<c:url var="getCompanyByCompanyId" value="/getCompanyByCompanyId" />
+
+
 <c:url var="getChalansByPO" value="/getChalanByPO" />
 <c:url var="getPoByCust" value="/getPoByCust" />
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
@@ -245,6 +248,44 @@
 
 								<input type="hidden" value="${chalan.chalanId}" id="chalanId"
 									name="chalanId">
+
+								<div class="form-group"></div>
+
+								<div class="row">
+
+
+									<div class="col-md-2">Is GST No*</div>
+
+
+									<div class="col-md-1">
+										No <input type="radio" name="gstNo" id="gstNo"
+											onchange="GSTBillNo(this.value)" checked value="0">
+									</div>
+
+									<div class="col-md-1">
+										Yes<input type="radio" name="gstNo" id="gstNo"
+											onchange="GSTBillNo(this.value)" value="1">
+									</div>
+
+
+									<div class="col-md-1">Bill No*</div>
+									<div class="col-md-3">
+										<input type="text" readonly id="bill_no" name="bill_no"
+											style="width: 100%;" class="form-control"
+											value="${editComp.exVar1}-${var}"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+
+									<div class="col-md-2">Bill Date*</div>
+									<div class="col-md-2">
+										<input type="text" autocomplete="off" id="bill_date"
+											name="bill_date" required style="width: 100%;"
+											class="form-control" value="${curDate}" readonly> <span
+											class="error" aria-live="polite"></span>
+									</div>
+
+								</div>
+
 								<div class="form-group"></div>
 
 								<div class="row">
@@ -268,27 +309,7 @@
 										</select>
 									</div>
 								</div>
-								<div class="form-group"></div>
 
-								<div class="row"></div>
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Bill Date</div>
-									<div class="col-md-4">
-										<input type="text" autocomplete="off" id="bill_date"
-											name="bill_date" required style="width: 100%;"
-											class="form-control" value="${curDate}"> <span
-											class="error" aria-live="polite"></span>
-									</div>
-									<div class="col-md-2">Bill No</div>
-									<div class="col-md-4">
-										<input type="text" readonly id="bill_no" name="bill_no"
-											style="width: 100%;" class="form-control"
-											value="${doc.docPrefix}-${doc.srNo}"> <span
-											class="error" aria-live="polite"></span>
-									</div>
-
-								</div>
 
 								<div class="form-group"></div>
 								<div class="row">
@@ -1081,7 +1102,7 @@ function toggle() {
 			var chalanId = document.getElementById("chalanId").value;
 			
 			//alert(chalanId);
-		
+		getBillNoByCompanyId();
 			
 				$
 						.getJSON(
@@ -1128,5 +1149,68 @@ function toggle() {
 		}
 	
 	</script>
+
+	<script type="text/javascript">
+		function getBillNoByCompanyId(){
+			
+			var companyId=document.getElementById("companyId").value;
+			var a="-";
+			
+			
+				$
+				.getJSON(
+						'${getCompanyByCompanyId}',
+						{
+							companyId : companyId,
+							
+							ajax : 'true',
+
+						},
+						function(data) {
+				
+							document.getElementById("bill_no").value=(data.exVar1)+"-"+(data.exInt1);
+							
+						});
+				
+			
+			
+			
+		}
+		</script>
+
+	<script type="text/javascript">
+		function GSTBillNo(type){
+			
+			var companyId=document.getElementById("companyId").value;
+			var a="-";
+			
+			
+				$
+				.getJSON(
+						'${getCompanyByCompanyId}',
+						{
+							companyId : companyId,
+							
+							ajax : 'true',
+
+						},
+						function(data) {
+							
+							
+							if(type==1){
+							
+							document.getElementById("bill_no").value=(data.exVar2)+"-"+(data.exInt2);
+							}
+							else
+								{
+								document.getElementById("bill_no").value=(data.exVar1)+"-"+(data.exInt1);
+								}	
+						});
+				
+			
+			
+			
+		}
+		</script>
 </body>
 </html>

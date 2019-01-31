@@ -177,17 +177,15 @@ public class BillController {
 
 			model = new ModelAndView("bill/addBill");
 
+			HttpSession httpSession = request.getSession();
+			LoginResUser login = (LoginResUser) httpSession.getAttribute("UserDetail");
+
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Calendar cal = Calendar.getInstance();
 
 			String curDate = dateFormat.format(new Date());
 
 			model.addObject("curDate", curDate);
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-			map.add("docCode", 6);
-			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
-			model.addObject("doc", doc);
 
 			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
 			List<Company> compList = new ArrayList<Company>(Arrays.asList(compArray));
@@ -196,12 +194,33 @@ public class BillController {
 			model.addObject("title", "Add Bill");
 			model.addObject("billHeadId", billHeadId);
 			model.addObject("custId", pdfCustId);
-			model.addObject("fromChalan", 0);
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("companyId", login.getUser().getCompanyId());
+
+			Company editComp = rest.postForObject(Constants.url + "getCompByCompanyId", map, Company.class);
+			model.addObject("editComp", editComp);
+			String var = null;
+			int a = editComp.getExInt1();
+			if (String.valueOf(a).length() == 1) {
+				var = "000".concat(String.valueOf(a));
+
+			} else if (String.valueOf(a).length() == 2) {
+				var = "00".concat(String.valueOf(a));
+
+			}
+
+			model.addObject("var", var);
+			System.out.println("Var" + var);
+
 		} catch (Exception e) {
 
 			System.err.println("" + e.getMessage());
@@ -365,6 +384,7 @@ public class BillController {
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
 			int custId = Integer.parseInt(request.getParameter("cust_name"));
 			int projId = Integer.parseInt(request.getParameter("proj_id"));
+			int gstNo = Integer.parseInt(request.getParameter("gstNo"));
 			// int poId = Integer.parseInt(request.getParameter("po_id"));
 
 			String billDate = request.getParameter("bill_date");
@@ -391,7 +411,7 @@ public class BillController {
 			billHeader.setExFloat1(0);
 			billHeader.setExFloat2(0);
 			billHeader.setExInt1(plantId);
-			billHeader.setExInt2(0);
+			billHeader.setExInt2(gstNo);
 			billHeader.setExInt3(0);
 			billHeader.setExVar1("");
 			billHeader.setExVar2("");
@@ -571,13 +591,15 @@ public class BillController {
 			billHeader.setTotalAmt(grandTotalAmt);
 
 			System.err.println("billHeader" + billHeader.toString());
-
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("docCode", 6);
-
-			Document doc = rest.postForObject(Constants.url + "getDocument", map, Document.class);
-			billHeader.setBillNo(doc.getDocPrefix() + "" + doc.getSrNo());
-
+			/*
+			 * map.add("docCode", 6);
+			 * 
+			 * Document doc = rest.postForObject(Constants.url + "getDocument", map,
+			 * Document.class); billHeader.setBillNo(doc.getDocPrefix() + "" +
+			 * doc.getSrNo());
+			 */
+			billHeader.setBillNo(billNo);
 			billHeader.setBillDetailList(billDetailList);
 
 			MultiValueMap<String, Object> mapObj = new LinkedMultiValueMap<String, Object>();
@@ -676,10 +698,28 @@ public class BillController {
 
 					map = new LinkedMultiValueMap<String, Object>();
 
-					map.add("srNo", doc.getSrNo() + 1);
-					map.add("docCode", doc.getDocCode());
+					map.add("companyId", companyId);
 
-					Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+					Company updateComp = rest.postForObject(Constants.url + "getCompByCompanyId", map, Company.class);
+
+					if (gstNo == 0) {
+						map = new LinkedMultiValueMap<String, Object>();
+
+						map.add("exInt1", updateComp.getExInt1() + 1);
+						map.add("companyId", companyId);
+
+						Info updateCompany = rest.postForObject(Constants.url + "updateCompany", map, Info.class);
+						System.out.println(updateCompany.toString());
+					} else {
+
+						map = new LinkedMultiValueMap<String, Object>();
+
+						map.add("exInt2", updateComp.getExInt2() + 1);
+						map.add("companyId", companyId);
+
+						Info updateCompany1 = rest.postForObject(Constants.url + "updateCompanyGST", map, Info.class);
+						System.out.println("2222222" + updateCompany1.toString());
+					}
 					System.out.println(chalanDetailList.toString());
 					map = new LinkedMultiValueMap<String, Object>();
 					String idList = chalanDetailList.toString();
@@ -886,6 +926,9 @@ public class BillController {
 		ModelAndView model = null;
 		try {
 
+			HttpSession httpSession = request.getSession();
+			LoginResUser login = (LoginResUser) httpSession.getAttribute("UserDetail");
+
 			model = new ModelAndView("bill/addBill1");
 			GetChalanHeader addBill = null;
 
@@ -932,6 +975,24 @@ public class BillController {
 			List<GetChalanHeader> chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
 
 			model.addObject("chalanHeadList", chalanHeadList);
+
+			map.add("companyId", addBill.getCompanyId());
+
+			Company editComp = rest.postForObject(Constants.url + "getCompByCompanyId", map, Company.class);
+			model.addObject("editComp", editComp);
+			
+			String var = null;
+			int a = editComp.getExInt1();
+			if (String.valueOf(a).length() == 1) {
+				var = "000".concat(String.valueOf(a));
+
+			} else if (String.valueOf(a).length() == 2) {
+				var = "00".concat(String.valueOf(a));
+
+			}
+
+			model.addObject("var", var);
+			System.out.println("Var" + var);
 
 		} catch (Exception e) {
 			System.err.println("Exce in Add Bill By Chalan " + e.getMessage());
@@ -1221,8 +1282,8 @@ public class BillController {
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
 		// File f = new File("/home/lenovo/Desktop/bill.pdf");
-		File f = new File("E:\\bill.pdf");
-		//File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
+		// File f = new File("E:\\bill.pdf");
+		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1240,13 +1301,13 @@ public class BillController {
 		// get absolute path of the application
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
-		String filename = "E:\\bill.pdf";
-		//String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		// String filename = "E:\\bill.pdf";
+		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 
-		//String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 		// String filePath = "/home/lenovo/Desktop/bill.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
-		 String filePath = "E:\\bill.pdf";
+		// String filePath = "E:\\bill.pdf";
 		// construct the complete absolute path of the file
 		String fullPath = appPath + filePath;
 		File downloadFile = new File(filePath);
@@ -1489,6 +1550,24 @@ public class BillController {
 		System.out.println("chalanHeadList" + chalanHeadList.toString());
 
 		return chalanHeadList;
+	}
+
+	// Ajax call
+	@RequestMapping(value = "/getCompanyByCompanyId", method = RequestMethod.GET)
+	public @ResponseBody Company getCompanyByCompanyId(HttpServletRequest request, HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int companyId = Integer.parseInt(request.getParameter("companyId"));
+
+		map.add("companyId", companyId);
+
+		Company editComp = rest.postForObject(Constants.url + "getCompByCompanyId", map, Company.class);
+
+		System.err.println("Ajax editComp List " + editComp.toString());
+
+		return editComp;
+
 	}
 
 }

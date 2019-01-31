@@ -8,6 +8,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 <c:url var="getPlantByCompanyId" value="/getPlantByCompanyId" />
+<c:url var="getCompanyByCompanyId" value="/getCompanyByCompanyId" />
+
 <c:url var="getChalansByPO" value="/getChalanByPO" />
 <c:url var="getPoByCust" value="/getPoByCust" />
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
@@ -204,8 +206,8 @@
 										</select>
 									</div>
 
-									<input type="hidden" id="companyId" name="companyId"
-										value="${addBill.companyId}">
+									<%-- <input type="hidden" id="companyId" name="companyId"
+										value="${addBill.companyId}"> --%>
 
 									<div class="col-md-2">Select Plant</div>
 
@@ -215,8 +217,6 @@
 											oninvalid="setCustomValidity('Please select plant')"
 											onchange="getData()">
 											<option value="-1">Select</option>
-
-
 
 											<c:forEach items="${plantList}" var="plant">
 												<c:if test="${sessionScope.plantId==0}">
@@ -259,18 +259,35 @@
 
 
 								<div class="row">
-									<div class="col-md-2">Bill Date</div>
-									<div class="col-md-4">
-										<input type="text" autocomplete="off" id="bill_date"
-											name="bill_date" required style="width: 100%;"
-											class="form-control" value="${curDate}"> <span
-											class="error" aria-live="polite"></span>
+
+
+									<div class="col-md-2">Is GST No*</div>
+
+
+									<div class="col-md-1">
+										No <input type="radio" name="gstNo" id="gstNo"
+											onchange="GSTBillNo(this.value)" checked value="0">
 									</div>
-									<div class="col-md-2">Bill No</div>
-									<div class="col-md-4">
+
+									<div class="col-md-1">
+										Yes<input type="radio" name="gstNo" id="gstNo"
+											onchange="GSTBillNo(this.value)" value="1">
+									</div>
+
+
+									<div class="col-md-1">Bill No*</div>
+									<div class="col-md-3">
 										<input type="text" readonly id="bill_no" name="bill_no"
 											style="width: 100%;" class="form-control"
-											value="${doc.docPrefix}-${doc.srNo}"> <span
+											value="${editComp.exVar1}-${var}"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+
+									<div class="col-md-2">Bill Date*</div>
+									<div class="col-md-2">
+										<input type="text" autocomplete="off" id="bill_date"
+											name="bill_date" required style="width: 100%;"
+											class="form-control" value="${curDate}" readonly> <span
 											class="error" aria-live="polite"></span>
 									</div>
 
@@ -279,7 +296,7 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Customer</div>
+									<div class="col-md-2">Customer*</div>
 									<div class="col-md-4">
 										<select id="cust_name" name="cust_name" class="standardSelect"
 											tabindex="1" required
@@ -289,7 +306,7 @@
 
 										</select>
 									</div>
-									<div class="col-md-2">Select Project</div>
+									<div class="col-md-2">Select Project*</div>
 
 									<div class="col-md-4">
 										<select id="proj_id" name="proj_id" class="standardSelect"
@@ -323,7 +340,7 @@
 									<div class="form-group"></div>
 									<div class="row">
 
-										<div class="col-md-2">Cust Type Name</div>
+										<div class="col-md-2">Cust Type Name*</div>
 
 										<div class="col-md-4">
 											<input type="text" id="custTypeName" name="custTypeName"
@@ -331,7 +348,7 @@
 											<span class="error" aria-live="polite"></span>
 										</div>
 
-										<div class="col-md-2">Cust Mobile No</div>
+										<div class="col-md-2">Cust Mobile No*</div>
 
 										<div class="col-md-4">
 											<input type="text" readonly id="custMobNo" name="custMobNo"
@@ -367,7 +384,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Chalan</div>
+									<div class="col-md-2">Select Chalan*</div>
 
 									<div class="col-md-10">
 										<select id="chalan_id" name="chalan_id" class="standardSelect"
@@ -608,7 +625,7 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$('input[id$=chalan_date]').datepicker({
+			$('input[id$=bill_date]').datepicker({
 				dateFormat : 'dd-mm-yy'
 			});
 			
@@ -734,6 +751,8 @@ function onCompanyChange(companyId) {
 			dataTable.clear().draw();
 
 		});
+		
+		getBillNoByCompanyId();
 	}//end of if
 
 }
@@ -1250,6 +1269,186 @@ function toggle() {
 		}
 	
 	</script>
+
+	<script type="text/javascript">
+		function GSTBillNo(type){
+			
+			var companyId=document.getElementById("companyId").value;
+			var a="-";
+			
+			
+				$
+				.getJSON(
+						'${getCompanyByCompanyId}',
+						{
+							companyId : companyId,
+							
+							ajax : 'true',
+
+						},
+						function(data) {
+							
+							
+							if(type==1){
+								
+								
+								var sn=data.exVar2;
+								var count=data.exInt2;
+								
+								
+								var c;
+								var len1=count.toString().length;
+								
+								if (len1 == 1) {
+									var c= "000"+count;
+
+								} else if (len1 == 2) {
+									var c= "00"+count;
+								} else if (len1 == 3) {
+									var c= "0"+count;
+
+								}
+								var billNumber=sn+"-"+c;
+					
+								document.getElementById("bill_no").value=billNumber;
+								
+								
+							
+						/* 	document.getElementById("bill_no").value=(data.exVar2)+"-"+(data.exInt2); */
+							}
+							else
+								{
+								var sn=data.exVar1;
+								var count=data.exInt1;
+								
+								
+								var c;
+								var len1=count.toString().length;
+								
+								if (len1 == 1) {
+									var c= "000"+count;
+
+								} else if (len1 == 2) {
+									var c= "00"+count;
+								} else if (len1 == 3) {
+									var c= "0"+count;
+
+								}
+								var billNumber=sn+"-"+c;
+					
+								document.getElementById("bill_no").value=billNumber;
+								
+							//	document.getElementById("bill_no").value=(data.exVar1)+"-"+(data.exInt1);
+								}	
+						});
+				
+			
+			
+			
+		}
+		</script>
+
+	<script type="text/javascript">
+		function getBillNoByCompanyId(){
+			
+			var companyId=document.getElementById("companyId").value;
+			
+			
+			
+				$
+				.getJSON(
+						'${getCompanyByCompanyId}',
+						{
+							companyId : companyId,
+							
+							ajax : 'true',
+
+						},
+						function(data) {
+							
+							var sn=data.exVar1;
+							var count=data.exInt1;
+							
+							
+							var c;
+							var len1=count.toString().length;
+							
+							if (len1 == 1) {
+								var c= "000"+count;
+
+							} else if (len1 == 2) {
+								var c= "00"+count;
+							} else if (len1 == 3) {
+								var c= "0"+count;
+
+							}
+							var billNumber=sn+"-"+c;
+				
+							document.getElementById("bill_no").value=billNumber;
+							
+						});
+				
+			
+			
+			
+		}
+		
+		
+/* function getEnqNum() {
+			
+			var plantId = document.getElementById("plant_id").value;
+			alert("Plant Id " +plantId);
+		
+			var valid = true;
+			if (valid == true) {
+
+				$.getJSON('${getEnqNumber}', {
+
+					plantId : plantId,
+					ajax : 'true',
+
+				},
+
+				function(data) {
+				
+					var sn=data.plantFax1;
+					var count=data.exInt1;
+					
+					//alert("sn"+sn);
+					//alert("count"+count);
+					var c;
+					var len1=count.toString().length;
+					//alert("len"+len1);
+					
+					
+					
+					if (len1 == 1) {
+						var c= "000"+count;
+
+					} else if (len1 == 2) {
+						var c= "00"+count;
+					} else if (len1 == 3) {
+						var c= "0"+count;
+
+					}
+					//alert("var c:"+c);
+					var enqNum="ENQ"+ "-" +sn+"-"+c;
+					//alert("enqNum"+enqNum);
+					
+					document.getElementById("enq_no").value=enqNum;
+				});
+
+				
+			}//end of if
+
+		}
+	 */
+		
+		</script>
+
+
+
+
 
 </body>
 </html>

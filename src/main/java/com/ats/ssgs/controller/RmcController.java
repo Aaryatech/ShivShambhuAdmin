@@ -88,6 +88,7 @@ public class RmcController {
 			} else {
 				plantId = login.getUser().getPlantId();
 			}
+
 			if (request.getParameter("from_date") == null || request.getParameter("to_date") == null) {
 				Date date = new Date();
 				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
@@ -138,6 +139,7 @@ public class RmcController {
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 			model.addObject("plantId", plantId);
+
 			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 			ExportToExcel expoExcel = new ExportToExcel();
@@ -177,7 +179,7 @@ public class RmcController {
 
 			}
 
-			 session = request.getSession();
+			session = request.getSession();
 			session.setAttribute("exportExcelList", exportToExcelList);
 			session.setAttribute("excelName", "Order List");
 
@@ -504,6 +506,8 @@ public class RmcController {
 
 		ModelAndView model = null;
 		try {
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
 
 			model = new ModelAndView("bill/add_rmc_bill");
 
@@ -541,7 +545,7 @@ public class RmcController {
 			System.err.println("chalan id in rmc " + mchalanId + "plantId   " + mPlantId);
 			model.addObject("mPlantId", mPlantId);
 			model.addObject("mchalanId", mchalanId);
-			HttpSession session = request.getSession();
+			session = request.getSession();
 			ChalanHeader chalan = (ChalanHeader) session.getAttribute("chalanRes");
 
 			model.addObject("chalan", chalan);
@@ -550,6 +554,29 @@ public class RmcController {
 			session.removeAttribute("chalanRes");
 
 			model.addObject("title", "Add Bill");
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("companyId", login.getUser().getCompanyId());
+
+			Company editComp = rest.postForObject(Constants.url + "getCompByCompanyId", map, Company.class);
+			System.out.println(editComp.toString());
+
+			model.addObject("editComp", editComp);
+
+			String var = null;
+			int a = editComp.getExInt1();
+			if (String.valueOf(a).length() == 1) {
+				var = "000".concat(String.valueOf(a));
+
+			} else if (String.valueOf(a).length() == 2) {
+				var = "00".concat(String.valueOf(a));
+
+			}
+
+			model.addObject("var", var);
+			System.out.println("Var" + var);
+
 		} catch (Exception e) {
 
 			System.err.println("" + e.getMessage());

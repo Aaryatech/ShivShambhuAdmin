@@ -480,6 +480,7 @@
 			var toDate = document.getElementById("to_date").value;
 
 			var valid = true;
+			getData();
 
 			if (plantId == null || plantId == "") {
 				valid = false;
