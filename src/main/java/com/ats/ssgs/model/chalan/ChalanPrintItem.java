@@ -27,11 +27,34 @@ public class ChalanPrintItem {
 	private String vehNo;
 	private String vehicleName;
 	
+	private String  devAddress;
 	
+	private String plantAddress1;
+
 	private String batchNo;
 	
 	private float totalQuan;
+	
+	private String plantContactNo1;
+	private String plantContactNo2;
 
+
+
+	public String getDevAddress() {
+		return devAddress;
+	}
+
+	public void setDevAddress(String devAddress) {
+		this.devAddress = devAddress;
+	}
+
+	public String getPlantAddress1() {
+		return plantAddress1;
+	}
+
+	public void setPlantAddress1(String plantAddress1) {
+		this.plantAddress1 = plantAddress1;
+	}
 
 	public String getBatchNo() {
 		return batchNo;
@@ -132,24 +155,26 @@ public class ChalanPrintItem {
 	}
 
 	
-	@Override
-	public String toString() {
-		return "ChalanPrintItem [chalanDetailId=" + chalanDetailId + ", chalanId=" + chalanId + ", chalanNo=" + chalanNo
-				+ ", chalanDate=" + chalanDate + ", custName=" + custName + ", custMobNo=" + custMobNo + ", projName="
-				+ projName + ", address=" + address + ", itemName=" + itemName + ", itemCode=" + itemCode + ", uom="
-				+ uom + ", usrName=" + usrName + ", vehNo=" + vehNo + ", vehicleName=" + vehicleName + ", batchNo="
-				+ batchNo + ", totalQuan=" + totalQuan + ", vehicleId=" + vehicleId + ", plantId=" + plantId
-				+ ", custId=" + custId + ", projId=" + projId + ", driverId=" + driverId + ", vehTimeOut=" + vehTimeOut
-				+ ", vehTimeIn=" + vehTimeIn + ", vehInDate=" + vehInDate + ", outKm=" + outKm + ", inKm=" + inKm
-				+ ", sitePersonName=" + sitePersonName + ", sitePersonMob=" + sitePersonMob + ", orderId=" + orderId
-				+ ", orderNo=" + orderNo + ", chalanRemark=" + chalanRemark + ", itemId=" + itemId + ", itemUom="
-				+ itemUom + ", itemQty=" + itemQty + ", itemLengthPlant=" + itemLengthPlant + ", itemWidthPlant="
-				+ itemWidthPlant + ", itemHeightPlant=" + itemHeightPlant + ", itemTotalPlant=" + itemTotalPlant
-				+ ", itemLengthSite=" + itemLengthSite + ", itemWidthSite=" + itemWidthSite + ", itemHeightSite="
-				+ itemHeightSite + ", itemTotalSite=" + itemTotalSite + ", status=" + status + ", delStatus="
-				+ delStatus + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1 + ", exVar1=" + exVar1 + ", exVar2="
-				+ exVar2 + ", exDate1=" + exDate1 + ", orderDetailId=" + orderDetailId + "]";
+	
+	
+	
+	
+	public String getPlantContactNo1() {
+		return plantContactNo1;
 	}
+
+	public void setPlantContactNo1(String plantContactNo1) {
+		this.plantContactNo1 = plantContactNo1;
+	}
+
+	public String getPlantContactNo2() {
+		return plantContactNo2;
+	}
+
+	public void setPlantContactNo2(String plantContactNo2) {
+		this.plantContactNo2 = plantContactNo2;
+	}
+
 
 	public String getChalanDate() {
 		return chalanDate;
@@ -514,6 +539,27 @@ public class ChalanPrintItem {
 
 	public void setOrderDetailId(int orderDetailId) {
 		this.orderDetailId = orderDetailId;
+	}
+
+	@Override
+	public String toString() {
+		return "ChalanPrintItem [chalanDetailId=" + chalanDetailId + ", chalanId=" + chalanId + ", chalanNo=" + chalanNo
+				+ ", chalanDate=" + chalanDate + ", custName=" + custName + ", custMobNo=" + custMobNo + ", projName="
+				+ projName + ", address=" + address + ", itemName=" + itemName + ", itemCode=" + itemCode + ", uom="
+				+ uom + ", usrName=" + usrName + ", vehNo=" + vehNo + ", vehicleName=" + vehicleName + ", devAddress="
+				+ devAddress + ", plantAddress1=" + plantAddress1 + ", batchNo=" + batchNo + ", totalQuan=" + totalQuan
+				+ ", plantContactNo1=" + plantContactNo1 + ", plantContactNo2=" + plantContactNo2 + ", vehicleId="
+				+ vehicleId + ", plantId=" + plantId + ", custId=" + custId + ", projId=" + projId + ", driverId="
+				+ driverId + ", vehTimeOut=" + vehTimeOut + ", vehTimeIn=" + vehTimeIn + ", vehInDate=" + vehInDate
+				+ ", outKm=" + outKm + ", inKm=" + inKm + ", sitePersonName=" + sitePersonName + ", sitePersonMob="
+				+ sitePersonMob + ", orderId=" + orderId + ", orderNo=" + orderNo + ", chalanRemark=" + chalanRemark
+				+ ", itemId=" + itemId + ", itemUom=" + itemUom + ", itemQty=" + itemQty + ", itemLengthPlant="
+				+ itemLengthPlant + ", itemWidthPlant=" + itemWidthPlant + ", itemHeightPlant=" + itemHeightPlant
+				+ ", itemTotalPlant=" + itemTotalPlant + ", itemLengthSite=" + itemLengthSite + ", itemWidthSite="
+				+ itemWidthSite + ", itemHeightSite=" + itemHeightSite + ", itemTotalSite=" + itemTotalSite
+				+ ", status=" + status + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1
+				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", orderDetailId="
+				+ orderDetailId + "]";
 	}
 	
 	

@@ -527,7 +527,10 @@ public class MasterController {
 			plant.setDelStatus(1);
 			plant.setExDate1(curDate);
 			plant.setExDate2(curDate);
-			plant.setExVar1(na);
+			plant.setExInt1(1);
+			plant.setExInt2(1);
+			plant.setExInt3(1);
+			plant.setExVar1("1");
 			plant.setExVar2(na);
 			plant.setExVar3(na);
 			plant.setIsUsed(1);

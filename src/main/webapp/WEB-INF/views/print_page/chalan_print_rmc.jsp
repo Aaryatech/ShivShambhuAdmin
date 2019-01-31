@@ -22,7 +22,7 @@
 			<td colspan="6" rowspan="3" width="50%"
 				style="border-bottom: 1px solid #313131; border-top: 1px solid #313131 padding:10px; color: #FFF; font-size: 15px;">
 				<p
-					style="color: black; font-size: 20px; text-align: center; margin: 0px; font-weight: bold;">${printData.comp.compName}</p>
+					style="color: black; font-size: 20px; text-align: center; margin: 0px; font-weight: bold;">M/S.${printData.comp.compName}</p>
 				<p
 					style="color: #000; font-size: 11px; text-align: right; margin: 0px;">${printData.comp.compOfficeAdd}<br></br>
 					Mobile No. ${printData.comp.contactNo1} <br></br>Email:
@@ -36,6 +36,7 @@
 	
 	<!-- <p style="text-align: center; font-size: 14px;font-weight: bold;"><u>Chalan</u></p>
  -->
+ <center><b>Delivery Chalan(for sale) </b></center>
 	<p style="margin-left: 100px; text-align: left">
 		<b>Chalan No:</b>${printData.chalanItemList[0].chalanNo}
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Date:</b>
@@ -74,15 +75,18 @@
 			<td align="left" width="35%"
 				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Item
 				Name</td>
+				<td align="left" width="35%"
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">UOM
+				</td>
 			<td align="left" width="20%"
 				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Order
 				Quantity</td>
 
 			<td align="left" width="20%" 
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Current
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">
 				Chalan Quantity</td>
 			<td align="left" width="20%" 
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Total
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Cumulative
 				Chalan Quantity</td>
 
 		</tr>
@@ -96,6 +100,8 @@
 				<td
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${count3.index+1}</td>
 				<td
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemName}</td>
+					<td
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemName}</td>
 					
 				<td
@@ -157,25 +163,25 @@
 					Strength OrQuality Of Concrete When Water Has Been Added On Site At
 					The Request Of Customer<br />
 					<hr></hr>
-					<b>WARRANTY DISCLAIMER</b>:SSB Ready mix concrete warrants that
+					<b>WARRANTY DISCLAIMER</b>:<b>SSB Ready mix concrete </b>warrants that
 					the product identified are in accordance with the appropriate BIS
 					specification.No one is authorized to make any modification or
-					ddditions to warranty SSB Ready mix concrete makes no warranty
-					either expressed or implied with respect to products and disclaims
-					any implied of merchantable or fitness for particular purpose.SSB
-					Ready mix concrete has no control over other ingridient mixed with
-					this product or in final application.SSB Ready mix concrete
-					warrantsSSB Ready mix concrete does not and can not warrant the
-					finished work.In all event SSB Ready mix concrete shall not be
+					additions to this warranty <b>SSB Ready mix concrete </b> makes no warranty
+					either expressed or implied with respect to this products and disclaims
+					any implied of merchantable or fitness for particular purpose.<b>SSB Ready mix concrete </b> 
+					has no control over other ingridient mixed with
+					this product or in final application.<b>SSB Ready mix concrete </b> 
+					warrants <b>SSB Ready mix concrete </b>  does not and can not warrant the
+					finished work.In all event <b>SSB Ready mix concrete </b>  shall not be
 					liable to direct,indirect,special,incidental of consequential
 					damages arising out of the use of this product.Even if advised of
-					possibilities of such damages in no case shall SSB Ready mix
-					concrete liability exceed the purchase price of the product <b>Contact
+					possibilities of such damages in no case shall<b>SSB Ready mix concrete </b> 
+					liability exceed the purchase price of the product <b>Contact
 						No:</b>9922419336/9823354777.
 					<hr/>
-					<b>Note:</b>1)If necessary,additional does of admixture may be
+					<b>Note:1)If necessary,additional does of admixture may be
 					added at project site to regain the workability of concrete .
-					2)Concrete should be consumed within 3 hours of batching time.
+					2)Concrete should be consumed within 3 hours of batching time.</b>
 				</span>
 			</td>
 
@@ -189,7 +195,7 @@
 		<tr>
 			<td align="left" width="35%" rowspan="2"
 				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 15px; text-align: left">
-				<b>${printData.comp.compName}</b> <br />
+				<b>M/S.${printData.comp.compName}</b> <br />
 			<br />
 			<br />
 			
@@ -199,7 +205,7 @@
 			<td align="left" width="35%" rowspan="2"
 				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">
 				<p style="font-size: 12px; text-align: left">
-					I/we Clerify that to the best of myfour knowledge the<br />
+					I/we Certify that to the best of my/our knowledge the<br />
 					particulars are true and correct and complete
 				</p> <br />
 			
