@@ -288,6 +288,7 @@
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Mobile No</th>
 												<th style="text-align: center">Project Name</th>
+												<th style="text-align: center">Delivery</th>
 												<th style="text-align: center">Total</th>
 												<th style="text-align: center">Status</th>
 												<th style="text-align: center">Action</th>
@@ -658,6 +659,7 @@
 																				v.custName,
 																				v.custMobNo,
 																				v.projName,
+																				v.delivery,
 																				v.total,
 																				status1,
 																				acButton ])

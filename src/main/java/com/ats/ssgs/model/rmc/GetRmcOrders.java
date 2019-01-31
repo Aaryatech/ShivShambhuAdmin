@@ -1,9 +1,7 @@
 package com.ats.ssgs.model.rmc;
 
-
 public class GetRmcOrders {
 
-	
 	private int orderDetId;
 
 	private int orderId;
@@ -58,7 +56,6 @@ public class GetRmcOrders {
 
 	private int custId;
 
-	
 	private int projId;
 
 	private String deliveryDate;
@@ -84,55 +81,52 @@ public class GetRmcOrders {
 	private String poNo;
 
 	private String projName;
-	
-	 private String projPerMob;
-	 private String projPerName;
-	 
-	 private String usrName;
-	 
-	 private int uomId;
 
-		private String uomName;
-		
-		private int companyId;
+	private String projPerMob;
+	private String projPerName;
 
-		private String compName;
-		
+	private String usrName;
 
-		
-		
-		public int getCompanyId() {
-			return companyId;
-		}
+	private int uomId;
 
-		public void setCompanyId(int companyId) {
-			this.companyId = companyId;
-		}
+	private String uomName;
 
-		public String getCompName() {
-			return compName;
-		}
+	private int companyId;
 
-		public void setCompName(String compName) {
-			this.compName = compName;
-		}
+	private String compName;
+	private String varchar1;
 
-		
-		public int getUomId() {
-			return uomId;
-		}
+	public int getCompanyId() {
+		return companyId;
+	}
 
-		public void setUomId(int uomId) {
-			this.uomId = uomId;
-		}
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
+	}
 
-		public String getUomName() {
-			return uomName;
-		}
+	public String getCompName() {
+		return compName;
+	}
 
-		public void setUomName(String uomName) {
-			this.uomName = uomName;
-		}
+	public void setCompName(String compName) {
+		this.compName = compName;
+	}
+
+	public int getUomId() {
+		return uomId;
+	}
+
+	public void setUomId(int uomId) {
+		this.uomId = uomId;
+	}
+
+	public String getUomName() {
+		return uomName;
+	}
+
+	public void setUomName(String uomName) {
+		this.uomName = uomName;
+	}
 
 	public int getOrderDetId() {
 		return orderDetId;
@@ -150,7 +144,6 @@ public class GetRmcOrders {
 		this.orderId = orderId;
 	}
 
-	
 	public int getItemId() {
 		return itemId;
 	}
@@ -463,7 +456,14 @@ public class GetRmcOrders {
 		this.usrName = usrName;
 	}
 
-	
+	public String getVarchar1() {
+		return varchar1;
+	}
+
+	public void setVarchar1(String varchar1) {
+		this.varchar1 = varchar1;
+	}
+
 	@Override
 	public String toString() {
 		return "GetRmcOrders [orderDetId=" + orderDetId + ", orderId=" + orderId + ", poId=" + poId + ", itemId="
@@ -478,7 +478,8 @@ public class GetRmcOrders {
 				+ ", contactPerMob=" + contactPerMob + ", itemName=" + itemName + ", itemCode=" + itemCode
 				+ ", plantName=" + plantName + ", poNo=" + poNo + ", projName=" + projName + ", projPerMob="
 				+ projPerMob + ", projPerName=" + projPerName + ", usrName=" + usrName + ", uomId=" + uomId
-				+ ", uomName=" + uomName + ", companyId=" + companyId + ", compName=" + compName + "]";
+				+ ", uomName=" + uomName + ", companyId=" + companyId + ", compName=" + compName + ", varchar1="
+				+ varchar1 + "]";
 	}
 
 }

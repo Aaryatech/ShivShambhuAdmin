@@ -724,9 +724,12 @@
 		}
 
 		function callDelete(chalanId, key) {
-			//alert("call Pdf " +chalanId);
-			window.open('${pageContext.request.contextPath}/deleteChalan/'
-					+ chalanId, "_self");
+			var isDel = confirm('Are you sure want to delete this record');
+			if (isDel == true) {
+				window.open('${pageContext.request.contextPath}/deleteChalan/'
+						+ chalanId, "_self");
+
+			}
 
 		}
 	</script>

@@ -57,6 +57,7 @@ public class GetOrder {
 	private String custName;
 	private String projName;
 	private String address;
+	private String delivery;
 	public int getOrderId() {
 		return orderId;
 	}
@@ -238,6 +239,15 @@ public class GetOrder {
 	public void setCustMobNo(String custMobNo) {
 		this.custMobNo = custMobNo;
 	}
+	
+	
+	public String getDelivery() {
+		return delivery;
+	}
+	public void setDelivery(String delivery) {
+		this.delivery = delivery;
+	}
+
 	@Override
 	public String toString() {
 		return "GetOrder [orderId=" + orderId + ", plantId=" + plantId + ", custId=" + custId + ", poId=" + poId
@@ -248,19 +258,7 @@ public class GetOrder {
 				+ ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", exBool1=" + exBool1 + ", exBool2=" + exBool2
 				+ ", status=" + status + ", custMobNo=" + custMobNo + ", plantName=" + plantName + ", compName="
 				+ compName + ", custName=" + custName + ", projName=" + projName + ", address=" + address
-				+ ", getOrderId()=" + getOrderId() + ", getPlantId()=" + getPlantId() + ", getCustId()=" + getCustId()
-				+ ", getPoId()=" + getPoId() + ", getProjId()=" + getProjId() + ", getDeliveryDate()="
-				+ getDeliveryDate() + ", getOrderDate()=" + getOrderDate() + ", getProdDate()=" + getProdDate()
-				+ ", getOrderValue()=" + getOrderValue() + ", getOrderNo()=" + getOrderNo() + ", getTotal()="
-				+ getTotal() + ", getIsTaxIncluding()=" + getIsTaxIncluding() + ", getDelStatus()=" + getDelStatus()
-				+ ", getExInt1()=" + getExInt1() + ", getExInt2()=" + getExInt2() + ", getExInt3()=" + getExInt3()
-				+ ", getExVar1()=" + getExVar1() + ", getExVar2()=" + getExVar2() + ", getExVar3()=" + getExVar3()
-				+ ", getExDate1()=" + getExDate1() + ", getExDate2()=" + getExDate2() + ", getExBool1()=" + getExBool1()
-				+ ", getExBool2()=" + getExBool2() + ", getStatus()=" + getStatus() + ", getPlantName()="
-				+ getPlantName() + ", getCompName()=" + getCompName() + ", getCustName()=" + getCustName()
-				+ ", getProjName()=" + getProjName() + ", getAddress()=" + getAddress() + ", getCustMobNo()="
-				+ getCustMobNo() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
-				+ super.toString() + "]";
+				+ ", delivery=" + delivery + "]";
 	}
 	
 	

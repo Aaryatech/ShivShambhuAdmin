@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -40,6 +41,7 @@ import com.ats.ssgs.model.master.GetVendor;
 import com.ats.ssgs.model.master.Info;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.ItemType;
+import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.master.Setting;
@@ -924,7 +926,7 @@ public class MasterController {
 			String projLoc = request.getParameter("proj_loc");
 
 			int custId = Integer.parseInt(request.getParameter("cust_id"));
-		//	int plantId = Integer.parseInt(request.getParameter("plant_id"));
+			// int plantId = Integer.parseInt(request.getParameter("plant_id"));
 
 			String startDate = request.getParameter("start_date");
 			String endDate = request.getParameter("end_date");
@@ -1017,7 +1019,14 @@ public class MasterController {
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("master/projectlist");
-			GetProject[] proArray = rest.getForObject(Constants.url + "getAllProList", GetProject[].class);
+
+			HttpSession httpSession = request.getSession();
+			LoginResUser login = (LoginResUser) httpSession.getAttribute("UserDetail");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("plantId", login.getUser().getPlantId());
+
+			GetProject[] proArray = rest.postForObject(Constants.url + "getAllProList", map, GetProject[].class);
 			proList = new ArrayList<GetProject>(Arrays.asList(proArray));
 
 			model.addObject("title", "Project List");
@@ -1343,7 +1352,13 @@ public class MasterController {
 		try {
 			model = new ModelAndView("master/custList");
 
-			GetCust[] custArray = rest.getForObject(Constants.url + "getAllCustomerList", GetCust[].class);
+			HttpSession httpSession = request.getSession();
+			LoginResUser login = (LoginResUser) httpSession.getAttribute("UserDetail");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("plantId", login.getUser().getPlantId());
+
+			GetCust[] custArray = rest.postForObject(Constants.url + "getAllCustomerList", map, GetCust[].class);
 			getCustList = new ArrayList<GetCust>(Arrays.asList(custArray));
 
 			model.addObject("title", "Customer List");

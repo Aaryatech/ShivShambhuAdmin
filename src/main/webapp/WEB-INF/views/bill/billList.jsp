@@ -548,7 +548,7 @@
 																+ v.billHeadId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Bill Pdf" onclick="singleBillPdf('
+																+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file-pdf-o" title="Bill Pdf" onclick="singleBillPdf('
 																+ v.billHeadId
 																+ ','
 																+ i

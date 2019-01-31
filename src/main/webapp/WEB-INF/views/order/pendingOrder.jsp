@@ -512,7 +512,7 @@
 			var valid1=true;
 			//alert("hii...");
 	 	
-			if(mchalanId = 0){
+			if(mchalanId ==0){
 				valid1 = false;
 			} 
 			 

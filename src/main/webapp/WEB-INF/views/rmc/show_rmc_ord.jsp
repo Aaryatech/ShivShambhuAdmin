@@ -252,6 +252,7 @@
 												<th style="text-align: center">Mobile No</th>
 												<th style="text-align: center">Project Name</th>
 												<th style="text-align: center">Delivery Date</th>
+												<th style="text-align: center">Delivery</th>
 												<th style="text-align: center">Dispatch Time</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">Order Quantity</th>
@@ -275,6 +276,9 @@
 															value="${orderDet.projName}" /></td>
 													<td style="text-align: center"><c:out
 															value="${orderDet.deliveryDate}" /></td>
+
+													<td style="text-align: center"><c:out
+															value="${orderDet.varchar1}" /></td>
 
 													<td style="text-align: center"><c:out
 															value="${orderDet.dispatchTime}" /></td>

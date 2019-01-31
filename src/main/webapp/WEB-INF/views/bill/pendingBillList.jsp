@@ -290,8 +290,6 @@
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	<!-- Footer -->
 
-
-
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/vendor/jquery-2.1.4.min.js"></script>
 	<script
@@ -300,6 +298,7 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/plugins.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables.min.js"></script>
@@ -323,6 +322,10 @@
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/buttons.colVis.min.js"></script>
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/data-table/datatables-init.js"></script>
+
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
+
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
@@ -524,11 +527,11 @@
 																+ v.chalanId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;<a href="#" class="fa fa-file" title="Chalan Pdf" onclick="callPdf('
+																+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;<a href="#" class="fa fa-file-pdf-o" title="Chalan Pdf" onclick="callPdf('
 																+ v.chalanId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;<a href="#" class="fa fa-file" title="Generate Bill" onclick="generateBill('
+																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;<a href="#" class="fa fa-list" title="Generate Bill" onclick="generateBill('
 																+ v.chalanId
 																+ ','
 																+ i
