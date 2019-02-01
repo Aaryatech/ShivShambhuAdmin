@@ -563,12 +563,6 @@ public class EnqController {
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-		/*HttpSession httpSession = request.getSession();
-		LoginResUser login = (LoginResUser) httpSession.getAttribute("UserDetail");
-
-		if (login.getUser().getPlantId() == 0) {
-
-		}*/
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
 
 		map.add("plantId", plantId);
