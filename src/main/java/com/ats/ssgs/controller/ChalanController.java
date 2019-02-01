@@ -374,6 +374,7 @@ public class ChalanController {
 
 			String chalanDate = request.getParameter("chalan_date");
 			String batchNo = request.getParameter("batchNo");
+			String chalanNo = request.getParameter("chalan_no");
 			String chalanRemark = request.getParameter("chalan_remark");
 			String rstNo = request.getParameter("rstNo");
 			String costSegment = request.getParameter("cost_segment");
@@ -439,7 +440,7 @@ public class ChalanController {
 			HttpSession session = request.getSession();
 			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
 
-			chHeader.setChalanNo(doc.getDocPrefix() + "" + doc.getSrNo());
+			chHeader.setChalanNo(chalanNo);
 
 			chHeader.setChalanDate(DateConvertor.convertToYMD(chalanDate));
 			chHeader.setChalanDetailList(chDetailList);

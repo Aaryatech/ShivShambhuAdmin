@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import java.util.Arrays;
 import java.util.List;
-import com.ats.ssgs.model.GetTotalChalanQuantity; 
+import com.ats.ssgs.model.GetTotalChalanQuantity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -55,127 +55,117 @@ public class PdfController {
 			QuotPrintData[] qPrintArray = rest.postForObject(Constants.url + "/getQuotPrintData", map,
 					QuotPrintData[].class);
 			quotPrintData = new ArrayList<QuotPrintData>(Arrays.asList(qPrintArray));
-			model.addObject("plantName",quotPrintData.get(0).getQuotDetPrint().get(0).getPlantName());
+			model.addObject("plantName", quotPrintData.get(0).getQuotDetPrint().get(0).getPlantName());
 
 			System.err.println("pdf data " + quotPrintData.get(0).getQuotDetPrint().toString());
 			model.addObject("quotPrintData", quotPrintData);
 			// quotIdList
 			// model.addObject("quotIdList", quotIdList);
-/*
-			map = new LinkedMultiValueMap<String, Object>();
+			/*
+			 * map = new LinkedMultiValueMap<String, Object>();
+			 * 
+			 * map.add("termId",4]); DocTermHeader editDoc =
+			 * rest.postForObject(Constants.url + "getDocHeaderByTermId", map,
+			 * DocTermHeader.class);
+			 * 
+			 * model.addObject("supplyList", editDoc.getDetailList());
+			 */
 
-			map.add("termId",4]);
-			DocTermHeader editDoc = rest.postForObject(Constants.url + "getDocHeaderByTermId", map,
-					DocTermHeader.class);
-
-			model.addObject("supplyList", editDoc.getDetailList());*/
-
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return model;
 	}
 
-	
-	
 	@RequestMapping(value = "pdf/showChalanPdf/{chalanId}/{plantId}", method = RequestMethod.GET)
 	public ModelAndView showChalanPdf(HttpServletRequest request, HttpServletResponse response,
-			@PathVariable("chalanId") int chalanId,@PathVariable("plantId") int plantId) {
+			@PathVariable("chalanId") int chalanId, @PathVariable("plantId") int plantId) {
 		// List<ChalanPrintData> chPrintData=new ArrayList<>();
 
 		ModelAndView model = null;
-		
-		System.err.println("in pdf/showChalanPdf/\", "+plantId+chalanId);
+
+		System.err.println("in pdf/showChalanPdf/\", " + plantId + chalanId);
 		try {
-			if(plantId==70) {
+			if (plantId == 70) {
 				model = new ModelAndView("print_page/chalan_print_rmc");
-			}
-			else if(plantId==68) {
+			} else if (plantId == 68) {
 				model = new ModelAndView("print_page/chalan_print");
-				
-			}
-			else {
+
+			} else {
 				model = new ModelAndView("print_page/rm_chalan_print");
 			}
-			
-			//model = new ModelAndView("print_page/chalan_print");
 
-			
+			// model = new ModelAndView("print_page/chalan_print");
+
 			RestTemplate rest = new RestTemplate();
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("chalanId", chalanId);
 			GetChalanHeader chPrint = rest.postForObject(Constants.url + "/getChalanHeadersByChalanId", map,
 					GetChalanHeader.class);
-			
-			int orderId=chPrint.getOrderId();
+
+			int orderId = chPrint.getOrderId();
 			System.err.println("Order id:::::" + orderId);
 			map = new LinkedMultiValueMap<String, Object>();
-			
+
 			map.add("orderId", orderId);
+			map.add("chalanId", chPrint.getChalanId());
 			GetTotalChalanQuantity[] chArry = rest.postForObject(Constants.url + "/getChalanQuanPrintData", map,
 					GetTotalChalanQuantity[].class);
 			List<GetTotalChalanQuantity> rstList = new ArrayList<GetTotalChalanQuantity>(Arrays.asList(chArry));
-			model.addObject("rstList",rstList);
-			
+			model.addObject("rstList", rstList);
+
 			System.err.println("1 result " + rstList.toString());
 			map = new LinkedMultiValueMap<String, Object>();
-			
-			
+
 			map.add("chalanId", chalanId);
 			ChalanPrintData chPrintData = rest.postForObject(Constants.url + "/getChalanPrintData", map,
 					ChalanPrintData.class);
-			
-			String a=chPrintData.getChalanItemList().get(0).getVehTimeIn();
-			float b=chPrintData.getChalanItemList().get(0).getInKm();
-			
-			if(a.equals("00:00:00")) {
-				
+
+			String a = chPrintData.getChalanItemList().get(0).getVehTimeIn();
+			float b = chPrintData.getChalanItemList().get(0).getInKm();
+
+			if (a.equals("00:00:00")) {
+
 				System.err.println("hiiiiii" + a);
-				model.addObject("temp","--:--:--");
-				
-			}
-			else {
+				model.addObject("temp", "--:--:--");
+
+			} else {
 				System.err.println("pdf time:::::" + a);
-				model.addObject("temp",a);
+				model.addObject("temp", a);
 			}
 
-         if(b==0.0) {
-				
+			if (b == 0.0) {
+
 				System.err.println("hiiiiii" + a);
-				model.addObject("temp1","--");
-				
-			}
-			else {
+				model.addObject("temp1", "--");
+
+			} else {
 				System.err.println("pdf time:::::" + a);
-				model.addObject("temp1",b);
+				model.addObject("temp1", b);
 			}
 
-			
-			
-			
 			System.err.println("pdf data 2/showChalanPdf Print" + chPrintData.toString());
-			
+
 			model.addObject("printData", chPrintData);
-			
-			for(int i=0;i<chPrintData.getChalanItemList().size();i++) {
+
+			for (int i = 0; i < chPrintData.getChalanItemList().size(); i++) {
 				System.out.println("inside for");
 				System.err.println("2 result " + chPrintData.getChalanItemList().get(i).getItemId());
 				System.err.println("3 result " + rstList.get(i).getItemId());
-				for(int i1=0;i1<rstList.size();i1++) {
-				
-				if(chPrintData.getChalanItemList().get(i).getItemId()==rstList.get(i1).getItemId()) {
-					System.out.println("matched");
-					model.addObject("result",rstList);
-					
-					System.out.println("result is rstlist >>>>>"+rstList);
-					System.out.println("result is >>>>>"+rstList.get(i1).getResult());
-				}
+				for (int i1 = 0; i1 < rstList.size(); i1++) {
+
+					if (chPrintData.getChalanItemList().get(i).getItemId() == rstList.get(i1).getItemId()) {
+						System.out.println("matched");
+						model.addObject("result", rstList);
+
+						System.out.println("result is rstlist >>>>>" + rstList);
+						System.out.println("result is >>>>>" + rstList.get(i1).getResult());
+					}
 				}
 			}
-			chalanId=0;
-			plantId=0;
+			chalanId = 0;
+			plantId = 0;
 
 		} catch (Exception e) {
 			e.printStackTrace();
