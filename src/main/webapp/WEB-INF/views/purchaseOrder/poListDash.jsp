@@ -289,6 +289,8 @@
 													<td style="text-align: left">${poList.poDate}</td>
 													<td style="text-align: left"><c:out
 															value="${poList.custName}" /></td>
+													<td style="text-align: left"><c:out
+															value="${poList.projName}" /></td>
 
 													<td style="text-align: left"><c:out
 															value="${poList.plantName}" /></td>
@@ -312,10 +314,7 @@
 													<td><a
 														href="${pageContext.request.contextPath}/editPo/${poList.poId}"><i
 															class="fa fa-edit" style="color: black" title="Edit"></i>
-															<span class="text-muted"></span></a> <a
-														href="${pageContext.request.contextPath}/deletePurchaseOrder/${poList.poId}"
-														onClick="return confirm('Are you sure want to delete this record');"><i
-															class="fa fa-trash-o" style="color: black" title="Delete"></i></a></td>
+															<span class="text-muted"></span></a></td>
 												</tr>
 											</c:forEach>
 										</tbody>
