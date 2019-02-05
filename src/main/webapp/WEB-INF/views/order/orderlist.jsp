@@ -325,6 +325,10 @@
 													<td style="text-align: left"><c:out
 															value="${enq.projName}" /></td>
 
+													<td style="text-align: left"><c:out
+															value="${enq.delivery}" /></td>
+
+
 
 													<td style="text-align: left"><c:out
 															value="${enq.total}" /></td>
@@ -527,8 +531,8 @@
 					$('#po_id').html("-1");
 					$("#po_id").trigger("chosen:updated");
 					 */
-					var dataTable = $('#bootstrap-data-table').DataTable();
-					dataTable.clear().draw();
+				/* 	var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw(); */
 
 				});
 			}//end of if

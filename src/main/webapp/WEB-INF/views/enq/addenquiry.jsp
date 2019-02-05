@@ -229,8 +229,7 @@
 
 									<div class="col-md-4">
 										<input type="text" readonly id="enq_no" name="enq_no"
-											style="width: 100%;" class="form-control"
-											> <span
+											style="width: 100%;" class="form-control"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 
@@ -544,7 +543,7 @@
 
 		}
 	</script>
-	
+
 	<script>
 		function getEnqNum() {
 			
@@ -552,6 +551,11 @@
 			//alert("Plant Id " +plantId);
 		
 			var valid = true;
+			if (plantId == null || plantId == "") {
+				valid = false;
+				
+			}
+
 			if (valid == true) {
 
 				$.getJSON('${getEnqNumber}', {
@@ -598,9 +602,9 @@
 	
 	
 		</script>
-	
-	
-	
+
+
+
 
 	<script type="text/javascript">
 		function getData1() {

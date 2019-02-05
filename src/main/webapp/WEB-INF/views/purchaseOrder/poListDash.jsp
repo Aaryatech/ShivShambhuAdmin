@@ -424,8 +424,8 @@
 					$('#po_id').html("-1");
 					$("#po_id").trigger("chosen:updated");
 					 */
-					var dataTable = $('#bootstrap-data-table').DataTable();
-					dataTable.clear().draw();
+					/* 	var dataTable = $('#bootstrap-data-table').DataTable();
+						dataTable.clear().draw(); */
 
 				});
 			}//end of if
@@ -546,6 +546,8 @@
 								});
 
 			}//end of if valid ==true
+
+			getData();
 
 		}
 		function callEdit(poId) {
