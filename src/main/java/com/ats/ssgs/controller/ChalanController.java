@@ -478,10 +478,13 @@ public class ChalanController {
 			System.err.println("chHeadInserRes " + chHeadInserRes.toString());
 			mchalanId = chHeadInserRes.getChalanId();
 			mPlantId = chHeadInserRes.getPlantId();
+			
+			
+			
 			System.out.println("ids are in chalan:" + mchalanId + mPlantId);
 
 			getChalanPDFData gc = new getChalanPDFData();
-
+			int flag=1;
 			gc.setcId(mchalanId);
 			gc.setpId(mPlantId);
 

@@ -810,8 +810,11 @@ public class QuotController {
 
 			newItemList = new ArrayList<GetItemWithEnq>();
 			enqItemList = new ArrayList<GetItemWithEnq>();
+			
+			
 
-			System.err.println(" Original Item List " + itemList.toString());
+			System.err.println(" Original Item List is:::: " + itemList.toString());
+			System.err.println(" Enq Item List is:::: " + enqItemList.toString());
 
 			List<Integer> indexList = new ArrayList<>();
 			for (int i = 0; i < itemList.size(); i++) {
@@ -1536,7 +1539,7 @@ public class QuotController {
 		// File f = new File("/home/lenovo/Desktop/quot.pdf");
 
 		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf");
-
+		//File f = new File("E:\\bill.pdf");
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
 
@@ -1556,11 +1559,11 @@ public class QuotController {
 
 		// String filename = "/home/lenovo/Desktop/quot.pdf";
 		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
-
-		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
+		//String filename ="E:\\bill.pdf";
+	String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
 		// String filePath = "/home/lenovo/Desktop/quot.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
-
+		//String filePath = "E:\\bill.pdf";
 		// construct the complete absolute path of the file
 		String fullPath = appPath + filePath;
 		File downloadFile = new File(filePath);

@@ -56,7 +56,14 @@ public class PdfController {
 					QuotPrintData[].class);
 			quotPrintData = new ArrayList<QuotPrintData>(Arrays.asList(qPrintArray));
 			model.addObject("plantName", quotPrintData.get(0).getQuotDetPrint().get(0).getPlantName());
-
+			model.addObject("plantId",quotPrintData.get(0).getQuotDetPrint().get(0).getPlantId());
+			String quotNo= quotPrintData.get(0).getQuotDetPrint().get(0).getQuotNo();
+			
+			String[] parts = quotNo.split("-");
+			String quotNo1=parts[1].concat("-").concat(parts[2]);
+			System.out.println("quot nois "+quotNo1);
+			model.addObject("quotNo1",quotNo1);
+			
 			System.err.println("pdf data " + quotPrintData.get(0).getQuotDetPrint().toString());
 			model.addObject("quotPrintData", quotPrintData);
 			// quotIdList
@@ -122,6 +129,12 @@ public class PdfController {
 			ChalanPrintData chPrintData = rest.postForObject(Constants.url + "/getChalanPrintData", map,
 					ChalanPrintData.class);
 
+			
+			String ch_no = chPrintData.getChalanItemList().get(0).getChalanNo();
+			
+			String[] parts =  ch_no.split("-");
+			String ch_no1=parts[1].concat("-").concat(parts[2]);
+			model.addObject("ch_no1", ch_no1);
 			String a = chPrintData.getChalanItemList().get(0).getVehTimeIn();
 			float b = chPrintData.getChalanItemList().get(0).getInKm();
 

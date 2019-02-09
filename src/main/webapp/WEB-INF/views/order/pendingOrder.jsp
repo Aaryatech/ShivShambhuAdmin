@@ -469,6 +469,8 @@
 	<script type="text/javascript">
 		// on plant change function 
 		function getData1(mPlantId,mchalanId) {
+			
+			//alert("call Pdf  in" +mchalanId);
 			var plantId = document.getElementById("plant_id").value;
 			var valid = true;
 
@@ -510,16 +512,16 @@
 				});
 			}//end of if
 			var valid1=true;
-			//alert("hii...");
-	 	
+			
+			//alert("call Pdf " +mchalanId);
 			if(mchalanId ==0){
 				valid1 = false;
 			} 
 			 
 			
 			
-		//alert("call Pdf " +mchalanId+mPlantId);
-		if(valid1==true){
+		//alert("call Pdf " +mchalanId);
+		if(valid1 == true){
 			window
 					.open('${pageContext.request.contextPath}/pdf?url=pdf/showChalanPdf/'
 							+ mchalanId + '/' + mPlantId);

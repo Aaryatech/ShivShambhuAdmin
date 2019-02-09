@@ -1058,6 +1058,8 @@ body {
 
 	<script type="text/javascript">
 		function callsetKM(){
+			
+			calcAll();
 			var x=${quotHeader.noOfKm};
 			//alert("No of km " +x);
 			
@@ -1101,6 +1103,8 @@ body {
 					document.getElementById("update").style = "display:none"
 
 				}
+			 
+			
 			
 		}
 		function setKM(delPlace) {

@@ -1081,17 +1081,22 @@ public class OrderController {
 			
 			
 
-			getChalanPDFData gc=new getChalanPDFData();
+		getChalanPDFData gc=new getChalanPDFData();
 			
 			int mchalanId=gc.getcId();
 			int mPlantId= gc.getpId();
+		
 			model.addObject("mPlantId", mPlantId);
 			model.addObject("mchalanId",mchalanId);
 		
 
-			System.err.println("chalan id in order  " + mchalanId + "plantId   " + mPlantId);
+		//System.err.println("chalan id in order  " + mchalanId + "plantId   " + mPlantId);*/
 			model.addObject("plantList", plantList);
-
+			
+			
+			    gc.setcId(0);
+			   gc.setpId(0);
+			
 			String fromDate = null, toDate = null;
 
 			if (request.getParameter("fromDate") == null || request.getParameter("fromDate") == "") {
@@ -1134,6 +1139,11 @@ public class OrderController {
 
 		return model;
 	}
+	
+	
+	
+
+	
 
 	@RequestMapping(value = "/getOrderPendingListBetDate", method = RequestMethod.GET)
 	public @ResponseBody List<GetOrder> getOrderPendingListBetDate(HttpServletRequest request,
