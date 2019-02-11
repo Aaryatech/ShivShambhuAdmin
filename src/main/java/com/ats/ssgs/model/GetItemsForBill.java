@@ -42,6 +42,8 @@ public class GetItemsForBill {
 	private int isTaxIncluding;
 	
 	
+	private float poRate;
+	
 
 	public int getOrderId() {
 		return orderId;
@@ -195,6 +197,15 @@ public class GetItemsForBill {
 		this.deliveryTerm = deliveryTerm;
 	}
 
+	
+	public float getPoRate() {
+		return poRate;
+	}
+
+	public void setPoRate(float poRate) {
+		this.poRate = poRate;
+	}
+
 	@Override
 	public String toString() {
 		return "GetItemsForBill [chalanDetailId=" + chalanDetailId + ", chalanId=" + chalanId + ", chalanNo=" + chalanNo
@@ -202,8 +213,18 @@ public class GetItemsForBill {
 				+ itemName + ", itemUom=" + itemUom + ", uomId=" + uomId + ", hsnCode=" + hsnCode + ", itemQty="
 				+ itemQty + ", orderRate=" + orderRate + ", orderId=" + orderId + ", cgstPer=" + cgstPer + ", sgstPer="
 				+ sgstPer + ", igstPer=" + igstPer + ", poTermId=" + poTermId + ", deliveryTerm=" + deliveryTerm
-				+ ", isTaxIncluding=" + isTaxIncluding + "]";
+				+ ", isTaxIncluding=" + isTaxIncluding + ", poRate=" + poRate + ", getOrderId()=" + getOrderId()
+				+ ", getIsTaxIncluding()=" + getIsTaxIncluding() + ", getChalanDetailId()=" + getChalanDetailId()
+				+ ", getChalanId()=" + getChalanId() + ", getChalanNo()=" + getChalanNo() + ", getChalanDate()="
+				+ getChalanDate() + ", getItemId()=" + getItemId() + ", getItemCode()=" + getItemCode()
+				+ ", getItemName()=" + getItemName() + ", getItemUom()=" + getItemUom() + ", getUomId()=" + getUomId()
+				+ ", getHsnCode()=" + getHsnCode() + ", getItemQty()=" + getItemQty() + ", getOrderRate()="
+				+ getOrderRate() + ", getCgstPer()=" + getCgstPer() + ", getSgstPer()=" + getSgstPer()
+				+ ", getIgstPer()=" + getIgstPer() + ", getPoTermId()=" + getPoTermId() + ", getDeliveryTerm()="
+				+ getDeliveryTerm() + ", getPoRate()=" + getPoRate() + ", getClass()=" + getClass() + ", hashCode()="
+				+ hashCode() + ", toString()=" + super.toString() + "]";
 	}
-      
+
+	
 
 }
