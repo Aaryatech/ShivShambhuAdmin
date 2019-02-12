@@ -56,6 +56,7 @@ body {
 	border: 1px solid #888;
 	width: 80%;
 	height: 80%;
+	overflow: scroll;
 }
 
 /* The Close Button */
@@ -480,9 +481,8 @@ body {
 									<div class="col-md-2">Chalan No*</div>
 									<div class="col-md-4">
 										<input type="text" readonly id="chalan_no" name="chalan_no"
-											style="width: 100%;" class="form-control"
-											> <span
-											class="error" aria-live="polite"></span>
+											style="width: 100%;" class="form-control">
+										<span class="error" aria-live="polite"></span>
 									</div>
 
 								</div>
@@ -1528,9 +1528,9 @@ function toggle() {
 				  
 			
 			</script>
-			
-			
-				<script>
+
+
+	<script>
 		function getEnqNum() {
 			
 			var plantId = document.getElementById("plant_id").value;
@@ -1583,6 +1583,6 @@ function toggle() {
 	
 	
 		</script>
-	
+
 </body>
 </html>

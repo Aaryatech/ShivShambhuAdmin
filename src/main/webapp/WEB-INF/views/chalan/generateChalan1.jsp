@@ -46,6 +46,7 @@ body {
 	overflow: auto; /* Enable scroll if needed */
 	background-color: rgb(0, 0, 0); /* Fallback color */
 	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+	overflow: scroll;
 }
 
 /* Modal Content */
@@ -56,6 +57,7 @@ body {
 	border: 1px solid #888;
 	width: 80%;
 	height: 80%;
+	overflow: scroll;
 }
 
 /* The Close Button */
@@ -354,7 +356,7 @@ body {
 											onchange="showOrderItemPopup1(this.value)">
 											<option selected value="${orderId}">${orderNo}</option>
 
-										
+
 										</select>
 									</div>
 
@@ -456,8 +458,7 @@ body {
 									<div class="col-md-2">Chalan No</div>
 									<div class="col-md-4">
 										<input type="text" readonly id="chalan_no" name="chalan_no"
-											style="width: 100%;" class="form-control"
-											 ><span
+											style="width: 100%;" class="form-control"><span
 											class="error" aria-live="polite"></span>
 									</div>
 
@@ -1551,9 +1552,9 @@ function toggle() {
 				  
 			
 			</script>
-			
-			
-			<script>
+
+
+	<script>
 		function getEnqNum() {
 			
 			var plantId = document.getElementById("plant_id").value;
@@ -1606,6 +1607,6 @@ function toggle() {
 	
 	
 		</script>
-	
+
 </body>
 </html>

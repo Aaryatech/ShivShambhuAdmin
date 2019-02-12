@@ -845,7 +845,7 @@ var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTot
 		if(valid==true){
 			
 			var itemTotal=parseFloat(qty)*parseFloat(poRate);
-			document.getElementById("itemTotal"+itemId).value=itemTotal;
+			document.getElementById("itemTotal"+itemId).value=itemTotal.toFixed(2);
 		$.getJSON('${getTempOrderHeader}', {
 			
 			
