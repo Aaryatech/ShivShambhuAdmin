@@ -55,8 +55,36 @@ public class GetBillReport {
 	private String projName;
 	private String custName;
 	private String custMobNo;
-
 	private String plantName;
+	
+	private float sgstAmt;
+	private float cgstAmt;
+	private float igstAmt;
+
+	
+	public float getSgstAmt() {
+		return sgstAmt;
+	}
+
+	public void setSgstAmt(float sgstAmt) {
+		this.sgstAmt = sgstAmt;
+	}
+
+	public float getCgstAmt() {
+		return cgstAmt;
+	}
+
+	public void setCgstAmt(float cgstAmt) {
+		this.cgstAmt = cgstAmt;
+	}
+
+	public float getIgstAmt() {
+		return igstAmt;
+	}
+
+	public void setIgstAmt(float igstAmt) {
+		this.igstAmt = igstAmt;
+	}
 
 	public int getBillHeadId() {
 		return billHeadId;
@@ -299,6 +327,7 @@ public class GetBillReport {
 				+ accId + ", orderId=" + orderId + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2="
 				+ exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
 				+ ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", projName=" + projName + ", custName="
-				+ custName + ", custMobNo=" + custMobNo + ", plantName=" + plantName + "]";
+				+ custName + ", custMobNo=" + custMobNo + ", plantName=" + plantName + ", sgstAmt=" + sgstAmt
+				+ ", cgstAmt=" + cgstAmt + ", igstAmt=" + igstAmt + "]";
 	}
 }

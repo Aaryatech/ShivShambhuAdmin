@@ -174,8 +174,11 @@
 											<th style="text-align: center">Bill No</th>
 											<th style="text-align: center">Customer Name</th>
 											<th style="text-align: center">Project Name</th>
-											<th style="text-align: center">Tax Amount</th>
 											<th style="text-align: center">Taxable Amount</th>
+											<th style="text-align: center">Sgst Amount</th>
+											<th style="text-align: center">Cgst Amount</th>
+											<th style="text-align: center">Igst Amount</th>
+											<th style="text-align: center">Tax Amount</th>
 											<th style="text-align: center">Total Amount</th>
 
 										</tr>
@@ -372,8 +375,12 @@
 
 						dataTable.row.add(
 								[ i + 1, v.billDate, v.billNo, v.custName,
-										v.projName, v.taxAmt.toFixed(2),
+										v.projName,
 										v.taxableAmt.toFixed(2),
+										v.sgstAmt.toFixed(2),
+										v.cgstAmt.toFixed(2),
+										v.igstAmt.toFixed(2),
+										v.taxAmt.toFixed(2),
 										v.totalAmt.toFixed(2)
 
 								]).draw();

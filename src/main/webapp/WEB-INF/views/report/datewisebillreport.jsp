@@ -137,14 +137,14 @@
 								<div class="col-md-2">
 									<input type="text" autocomplete="off" id="from_date"
 										name="from_date" required style="width: 100%;"
-										class="form-control" value="${firstDate}"> <span
+										class="form-control" value="${fromDate}"> <span
 										class="error" aria-live="polite"></span>
 								</div>
 								<div class="col-md-1">To Date</div>
 								<div class="col-md-2">
 									<input type="text" autocomplete="off" id="to_date"
 										name="to_date" style="width: 100%;" class="form-control"
-										value="${endDate}"> <span class="error"
+										value="${toDate}"> <span class="error"
 										aria-live="polite"></span>
 								</div>
 
@@ -172,12 +172,11 @@
 										<tr>
 											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Bill Date</th>
-
+											<th style="text-align: center">Taxable Amount</th>
 											<th style="text-align: center">CGST</th>
 											<th style="text-align: center">SGST</th>
 											<th style="text-align: center">IGST</th>
 											<th style="text-align: center">Tax Amount</th>
-											<th style="text-align: center">Taxable Amount</th>
 											<th style="text-align: center">Total Amount</th>
 											<th style="text-align: center">Action</th>
 
@@ -393,6 +392,8 @@
 																		[
 																				i + 1,
 																				v.billDate,
+																				v.taxableAmt
+																						.toFixed(2),
 																				v.cgstAmt
 																						.toFixed(2),
 																				v.sgstAmt
@@ -400,8 +401,6 @@
 																				v.igstAmt
 																						.toFixed(2),
 																				v.taxAmt
-																						.toFixed(2),
-																				v.taxableAmt
 																						.toFixed(2),
 																				v.totalAmt
 																						.toFixed(2),

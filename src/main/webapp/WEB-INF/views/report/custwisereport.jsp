@@ -317,8 +317,6 @@
 
 			var values = $('#custId').val();
 
-			alert("custId:" + custId);
-			alert("list is:" + values);
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
@@ -332,7 +330,7 @@
 			}
 
 			var plantId = document.getElementById("plantId").value;
-			alert("plant id are" + plantId);
+			//alert("plant id are" + plantId);
 
 			//alert("plantId" + plantId);
 			var valid = true;

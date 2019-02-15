@@ -427,7 +427,9 @@ public class BillReportController {
 
 		ModelAndView model = null;
 		try {
-
+			
+			System.out.println("DATA:"+monthNo+" "+year+" "+plantId+" "+custId);
+			
 			Calendar cal = Calendar.getInstance();
 			cal.set(year, monthNo - 1, 1);
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -435,8 +437,8 @@ public class BillReportController {
 			cal.set(cal.DAY_OF_MONTH, cal.getActualMaximum(cal.DAY_OF_MONTH));
 			String endDate = sdf.format(cal.getTimeInMillis());
 
-			System.out.println("sd " + firstDate);
-			System.out.println("ed " + endDate);
+			System.out.println("sd1 " + firstDate);
+			System.out.println("ed2 " + endDate);
 
 			model.addObject("firstDate", firstDate);
 			model.addObject("endDate", endDate);
@@ -543,11 +545,11 @@ public class BillReportController {
 
 		rowData.add("Sr. No");
 		rowData.add("Bill Date");
+		rowData.add("Taxable Amt");
 		rowData.add("CGST");
 		rowData.add("IGST");
 		rowData.add("SGST");
 		rowData.add("Tax Amount");
-		rowData.add("Taxable Amount");
 		rowData.add("Total Amount");
 
 		expoExcel.setRowData(rowData);
@@ -560,12 +562,11 @@ public class BillReportController {
 			rowData.add("" + (i + 1));
 
 			rowData.add("" + dateBillList.get(i).getBillDate());
-
+			rowData.add("" + dateBillList.get(i).getTaxableAmt());
 			rowData.add("" + dateBillList.get(i).getCgstAmt());
 			rowData.add("" + dateBillList.get(i).getIgstAmt());
 			rowData.add("" + dateBillList.get(i).getSgstAmt());
 			rowData.add("" + dateBillList.get(i).getTaxAmt());
-			rowData.add("" + dateBillList.get(i).getTaxableAmt());
 			rowData.add("" + dateBillList.get(i).getTotalAmt());
 
 			expoExcel.setRowData(rowData);
@@ -630,6 +631,12 @@ public class BillReportController {
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
+			
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("CGST ", headFont1));
@@ -654,10 +661,7 @@ public class BillReportController {
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
-			table.addCell(hcell);
-			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
-			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell.setBackgroundColor(BaseColor.PINK);
+		
 
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Total Amount", headFont1));
@@ -680,6 +684,13 @@ public class BillReportController {
 				cell = new PdfPCell(new Phrase("" + work.getBillDate(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
@@ -712,13 +723,7 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table.addCell(cell);
-
+				
 				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -1215,8 +1220,11 @@ public class BillReportController {
 		rowData.add("Bill No");
 		rowData.add("Customer Name");
 		rowData.add("Project Name");
-		rowData.add("Tax Amount");
 		rowData.add("Taxable Amount");
+		rowData.add("Sgst Amount");
+		rowData.add("Cgst Amount");
+		rowData.add("Igst Amount");
+		rowData.add("Tax Amount");
 		rowData.add("Total Amount");
 
 		expoExcel.setRowData(rowData);
@@ -1232,8 +1240,11 @@ public class BillReportController {
 			rowData.add("" + billList.get(i).getBillNo());
 			rowData.add("" + billList.get(i).getCustName());
 			rowData.add("" + billList.get(i).getProjName());
-			rowData.add("" + billList.get(i).getTaxAmt());
 			rowData.add("" + billList.get(i).getTaxableAmt());
+			rowData.add("" + billList.get(i).getSgstAmt());
+			rowData.add("" + billList.get(i).getCgstAmt());
+			rowData.add("" + billList.get(i).getIgstAmt());
+			rowData.add("" + billList.get(i).getTaxAmt());
 			rowData.add("" + billList.get(i).getTotalAmt());
 
 			expoExcel.setRowData(rowData);
@@ -1272,11 +1283,11 @@ public class BillReportController {
 			e.printStackTrace();
 		}
 
-		PdfPTable table = new PdfPTable(8);
+		PdfPTable table = new PdfPTable(11);
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
+			table.setWidths(new float[] { 2.4f, 4.2f, 4.2f, 4.2f, 4.2f, 4.2f, 4.2f, 4.2f, 4.2f, 4.2f, 4.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -1313,15 +1324,31 @@ public class BillReportController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("Sgst Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("Cgst Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("Igst Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			
+			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Tax Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
-			table.addCell(hcell);
-			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
-			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell.setBackgroundColor(BaseColor.PINK);
-
+			
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Total Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1367,7 +1394,35 @@ public class BillReportController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("" + work.getSgstAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("" + work.getCgstAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
 
+				cell = new PdfPCell(new Phrase("" + work.getIgstAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+				
 				cell = new PdfPCell(new Phrase("" + work.getTaxAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -1375,12 +1430,6 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1957,8 +2006,11 @@ public class BillReportController {
 		rowData.add("Sr. No");
 		rowData.add("Item Code");
 		rowData.add("Item Name");
-		rowData.add("Total Tax Amount");
+		rowData.add("Qty");
+		rowData.add("Uom");
+		rowData.add("Hsn Code");
 		rowData.add("Total Taxable Amount");
+		rowData.add("Total Tax Amount");
 		rowData.add("Total Amount");
 		rowData.add("CGST");
 		rowData.add("SGST");
@@ -1975,8 +2027,11 @@ public class BillReportController {
 
 			rowData.add("" + itemList1.get(i).getItemCode());
 			rowData.add("" + itemList1.get(i).getItemName());
-			rowData.add("" + itemList1.get(i).getTaxAmt());
+			rowData.add("" + itemList1.get(i).getQty());
+			rowData.add("" + itemList1.get(i).getUomName());
+			rowData.add("" + itemList1.get(i).getHsnCode());
 			rowData.add("" + itemList1.get(i).getTaxableAmt());
+			rowData.add("" + itemList1.get(i).getTaxAmt());
 			rowData.add("" + itemList1.get(i).getTotalAmt());
 			rowData.add("" + itemList1.get(i).getCgstAmt());
 			rowData.add("" + itemList1.get(i).getSgstAmt());
@@ -2023,11 +2078,11 @@ public class BillReportController {
 			e.printStackTrace();
 		}
 
-		PdfPTable table = new PdfPTable(9);
+		PdfPTable table = new PdfPTable(12);
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 2.4f });
+			table.setWidths(new float[] { 2.4f, 3.2f,3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 2.4f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -2054,13 +2109,29 @@ public class BillReportController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("Tax Amount", headFont1));
+			hcell = new PdfPCell(new Phrase("Qty", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
+			
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("Uom", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("Hsn Code", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Total Taxable Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			
+			
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Tax Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
@@ -2111,6 +2182,35 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
+				cell = new PdfPCell(new Phrase("" + work.getQty(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("" + work.getUomName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("" + work.getHsnCode(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+				
+				
 				cell = new PdfPCell(new Phrase("" + work.getTaxAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -2118,13 +2218,7 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table.addCell(cell);
-
+			
 				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
