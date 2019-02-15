@@ -243,7 +243,7 @@ public class ReportController {
 				exportToExcelList.add(expoExcel);
 
 			}
-
+//this
 			HttpSession session = request.getSession();
 			session.setAttribute("exportExcelList", exportToExcelList);
 			session.setAttribute("excelName", "GetMatIssueHeader");

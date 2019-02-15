@@ -440,6 +440,7 @@ public class BillReportController {
 			System.out.println("sd1 " + firstDate);
 			System.out.println("ed2 " + endDate);
 
+			
 			model.addObject("firstDate", firstDate);
 			model.addObject("endDate", endDate);
 
@@ -495,7 +496,7 @@ public class BillReportController {
 
 	}
 
-	// Ajax call
+	// Ajax call//
 	@RequestMapping(value = "/getCustomerByPlantId", method = RequestMethod.GET)
 	public @ResponseBody List<Cust> getCustomerByPlantId(HttpServletRequest request, HttpServletResponse response) {
 
