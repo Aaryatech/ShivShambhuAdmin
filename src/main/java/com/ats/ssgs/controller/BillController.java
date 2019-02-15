@@ -464,6 +464,11 @@ public class BillController {
 						System.err.println("chalanIdList" + chalanIdList);
 
 					}
+					MultiValueMap<String, Object> ma = new LinkedMultiValueMap<String, Object>();
+					ma = new LinkedMultiValueMap<String, Object>();
+					ma.add("custId", custId);
+					Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", ma, Cust.class);
+
 					if (isTaxIncluding == 0) {
 						System.out.println("Mrp: " + rate);
 						System.out.println("Tax1 : " + tax1);
@@ -495,15 +500,22 @@ public class BillController {
 						billDetail.setRate(rate);
 
 						billDetail.setCgstPer(tax2);
-						billDetail.setCgstAmt(cgstRs);
+						billDetail.setSgstPer(tax1);
 
 						billDetail.setDiscAmt(discAmt);
 						billDetail.setDiscPer(discountPer);
 
-						billDetail.setSgstAmt(sgstRs);
-						billDetail.setSgstPer(tax1);
+						if (editCust.getIsSameState() == 1) {
+							billDetail.setCgstAmt(cgstRs);
+							billDetail.setSgstAmt(sgstRs);
+							billDetail.setIgstAmt(0);
+						} else {
 
-						billDetail.setIgstAmt(igstRs);
+							billDetail.setCgstAmt(0);
+							billDetail.setSgstAmt(0);
+							billDetail.setIgstAmt(igstRs);
+						}
+
 						billDetail.setIgstPer(tax3);
 
 						billDetail.setTaxableAmt(taxableAmt);
@@ -547,16 +559,24 @@ public class BillController {
 						billDetail.setQty(qty);
 						billDetail.setRate(rate);
 
+						if (editCust.getIsSameState() == 1) {
+							billDetail.setCgstAmt(cgstRs);
+							billDetail.setSgstAmt(sgstRs);
+							billDetail.setIgstAmt(0);
+						} else {
+
+							billDetail.setCgstAmt(0);
+							billDetail.setSgstAmt(0);
+							billDetail.setIgstAmt(igstRs);
+						}
+
 						billDetail.setCgstPer(tax2);
-						billDetail.setCgstAmt(cgstRs);
 
 						billDetail.setDiscAmt(discAmt);
 						billDetail.setDiscPer(discountPer);
 
-						billDetail.setSgstAmt(sgstRs);
 						billDetail.setSgstPer(tax1);
 
-						billDetail.setIgstAmt(igstRs);
 						billDetail.setIgstPer(tax3);
 
 						billDetail.setTaxableAmt(taxableAmt);

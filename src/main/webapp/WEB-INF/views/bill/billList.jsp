@@ -778,7 +778,7 @@
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");
-		/* 	document.getElementById("expExcel").disabled = true; */
+	 	document.getElementById("expExcel").disabled = true; 
 		}
 	</script>
 
@@ -786,14 +786,14 @@
 		function exportToExcel1() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel1");
-			/* document.getElementById("expExcel1").disabled = true; */
+			 document.getElementById("expExcel1").disabled = true; 
 		}
 	</script>
 	<script type="text/javascript">
 		function exportToExcel2() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel2");
-			/* document.getElementById("expExcel2").disabled = true; */
+			 document.getElementById("expExcel2").disabled = true; 
 		}
 	</script>
 </body>
