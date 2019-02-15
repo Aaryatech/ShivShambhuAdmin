@@ -239,12 +239,47 @@
 										class="form-control" value="${fromDate}"> <span
 										class="error" aria-live="polite"></span>
 								</div>
-								<div class="col-md-2">To Date</div>
+								<div class="col-md-1">To Date</div>
 								<div class="col-md-2">
 									<input type="text" autocomplete="off" id="to_date"
 										name="to_date" style="width: 100%;" class="form-control"
 										value="${toDate}"> <span class="error"
 										aria-live="polite"></span>
+								</div>
+
+
+								<div class="col-md-1">Status</div>
+								<div class="col-md-2">
+									<select id="statusList" name="statusList"
+										class="standardSelect" tabindex="1" required
+										oninvalid="setCustomValidity('Please select customer')">
+
+
+										<c:choose>
+											<c:when test="${status==-1}">
+												<option value="-1" Selected>All</option>
+												<option value="0">Without GST</option>
+												<option value="1">With GST</option>
+
+											</c:when>
+
+											<c:when test="${status==0}">
+
+												<option value="-1">All</option>
+												<option value="0" Selected>Without GST</option>
+												<option value="1">With GST</option>
+											</c:when>
+											<c:otherwise>
+												<option value="-1">All</option>
+												<option value="0">Without GST</option>
+												<option value="1" Selected>With GST</option>
+											</c:otherwise>
+										</c:choose>
+
+
+
+
+									</select>
 								</div>
 
 								<div class="col-md-1"></div>
@@ -326,36 +361,36 @@
 								</tbody>
 
 							</table>
-							
-							
-								<center>
-							<input type="button" margin-right: 5px;" id="btn_submit"
-								class="btn btn-primary" onclick="billPdf()" value="Bill Pdf" />
-						
-						
-						<button type="button" class="btn btn-primary"
-											onclick="exportToExcel();"  id="expExcel"
-											style="align-content: center; width: 200px; margin-left: 80px;">
-											Export To Excel</button>
-											
-											
-												
-						<button type="button" class="btn btn-primary"
-											onclick="exportToExcel1();"  id="expExcel1"
-											style="align-content: center; width: 200px; margin-left: 80px;">
-											Export To Excel</button>
-											
-											
-												
-						<button type="button" class="btn btn-primary"
-											onclick="exportToExcel2();"  id="expExcel2"
-											style="align-content: center; width: 200px; margin-left: 80px;">
-											Export To Excel</button>
+
+
+							<center>
+								<input type="button" margin-right: 5px;" id="btn_submit"
+									class="btn btn-primary" onclick="billPdf()" value="Bill Pdf" />
+
+
+								<button type="button" class="btn btn-primary"
+									onclick="exportToExcel();" id="expExcel"
+									style="align-content: center; width: 200px; margin-left: 80px;">
+									Export To Excel</button>
+
+
+
+								<button type="button" class="btn btn-primary"
+									onclick="exportToExcel1();" id="expExcel1"
+									style="align-content: center; width: 200px; margin-left: 80px;">
+									Export To Excel Item</button>
+
+
+
+								<button type="button" class="btn btn-primary"
+									onclick="exportToExcel2();" id="expExcel2"
+									style="align-content: center; width: 200px; margin-left: 80px;">
+									Export To Excel Customer</button>
 							</center>
-						
+
 						</div>
 
-					
+
 
 					</div>
 				</div>
@@ -501,6 +536,7 @@
 			var plantId = document.getElementById("plant_id").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
+			var statusList = document.getElementById("statusList").value;
 
 			var valid = true;
 			getData();
@@ -548,6 +584,7 @@
 									custId : custId,
 									fromDate : fromDate,
 									toDate : toDate,
+									statusList : statusList,
 									ajax : 'true',
 								},
 
@@ -737,26 +774,26 @@
 				});
 	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");
-			document.getElementById("expExcel").disabled = true;
+		/* 	document.getElementById("expExcel").disabled = true; */
 		}
 	</script>
-	
+
 	<script type="text/javascript">
 		function exportToExcel1() {
 
-			window.open("${pageContext.request.contextPath}/exportToExcelItem");
-			document.getElementById("expExcel1").disabled = true;
+			window.open("${pageContext.request.contextPath}/exportToExcel1");
+			/* document.getElementById("expExcel1").disabled = true; */
 		}
 	</script>
 	<script type="text/javascript">
 		function exportToExcel2() {
 
-			window.open("${pageContext.request.contextPath}/exportToExcelCus");
-			document.getElementById("expExcel2").disabled = true;
+			window.open("${pageContext.request.contextPath}/exportToExcel2");
+			/* document.getElementById("expExcel2").disabled = true; */
 		}
 	</script>
 </body>
