@@ -302,10 +302,8 @@
 
 
 	<script type="text/javascript">
-		// onclick of submit to search order 
+		 
 		function showQuot() {
-
-			//alert("Hi View Orders  ");
 
 			var custId = document.getElementById("custId").value;
 			var fromDate = document.getElementById("from_date").value;
