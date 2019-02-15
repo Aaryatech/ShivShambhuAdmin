@@ -306,8 +306,7 @@
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			//alert(compId);
-
+			
 			var valid = true;
 
 			if (compId == null || compId == "") {
@@ -317,7 +316,7 @@
 
 			var plantId = document.getElementById("plantId").value;
 
-			//alert("plantId" + plantId);
+			
 			var valid = true;
 			if (plantId == null || plantId == "") {
 				valid = false;
