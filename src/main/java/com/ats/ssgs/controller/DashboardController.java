@@ -433,7 +433,7 @@ public class DashboardController {
 			model.addObject("plantList", plantList);
 
 			model.addObject("plantId1", plantId);
-			model.addObject("status", 0);
+			model.addObject("status", -1);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 

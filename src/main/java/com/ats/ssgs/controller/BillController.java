@@ -93,10 +93,7 @@ public class BillController {
 	 * <artifactId>spring-context-support</artifactId>
 	 * <version>${org.springframework-version}</version> </dependency>
 	 */
-	List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
-	List<ExportToExcel> exportToExcelList1 = new ArrayList<ExportToExcel>();
-	List<ExportToExcel> exportToExcelList2 = new ArrayList<ExportToExcel>();
 	RestTemplate rest = new RestTemplate();
 	List<GetItemsForBill> billItems;
 	int billHeadId = 0;
@@ -886,7 +883,10 @@ public class BillController {
 		getBillList = new ArrayList<GetBillHeader>(Arrays.asList(ordHeadArray));
 
 		System.out.println("getBillList" + getBillList.toString());
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
+		List<ExportToExcel> exportToExcelList1 = new ArrayList<ExportToExcel>();
+		List<ExportToExcel> exportToExcelList2 = new ArrayList<ExportToExcel>();
 		ExportToExcel expoExcel = new ExportToExcel();
 		List<String> rowData = new ArrayList<String>();
 
