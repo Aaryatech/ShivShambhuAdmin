@@ -326,13 +326,36 @@
 								</tbody>
 
 							</table>
-						</div>
-
-						<center>
+							
+							
+								<center>
 							<input type="button" margin-right: 5px;" id="btn_submit"
 								class="btn btn-primary" onclick="billPdf()" value="Bill Pdf" />
-						</center>
+						
+						
+						<button type="button" class="btn btn-primary"
+											onclick="exportToExcel();"  id="expExcel"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+											
+											
+												
+						<button type="button" class="btn btn-primary"
+											onclick="exportToExcel1();"  id="expExcel1"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+											
+											
+												
+						<button type="button" class="btn btn-primary"
+											onclick="exportToExcel2();"  id="expExcel2"
+											style="align-content: center; width: 200px; margin-left: 80px;">
+											Export To Excel</button>
+							</center>
+						
+						</div>
 
+					
 
 					</div>
 				</div>
@@ -714,6 +737,27 @@
 				});
 	</script>
 
+<script type="text/javascript">
+		function exportToExcel() {
 
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
+		}
+	</script>
+	
+	<script type="text/javascript">
+		function exportToExcel1() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcelItem");
+			document.getElementById("expExcel1").disabled = true;
+		}
+	</script>
+	<script type="text/javascript">
+		function exportToExcel2() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcelCus");
+			document.getElementById("expExcel2").disabled = true;
+		}
+	</script>
 </body>
 </html>

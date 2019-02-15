@@ -663,6 +663,7 @@ public class ChalanController {
 			}
 
 			rowData.add("" + status1);
+			
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 

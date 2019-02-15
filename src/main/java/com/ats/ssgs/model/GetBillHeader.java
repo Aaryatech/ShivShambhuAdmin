@@ -64,6 +64,8 @@ public class GetBillHeader implements Serializable{
 
 	List<GetBillDetail> getBillDetails;
 	
+	
+	
 	public List<GetBillDetail> getGetBillDetails() {
 		return getBillDetails;
 	}

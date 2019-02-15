@@ -56,6 +56,7 @@ import org.zefer.pd4ml.PD4PageMark;
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.Currency;
 import com.ats.ssgs.common.DateConvertor;
+import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.BillDetail;
 import com.ats.ssgs.model.BillHeader;
 import com.ats.ssgs.model.GetBillDetail;
@@ -68,7 +69,10 @@ import com.ats.ssgs.model.master.BankDetail;
 import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.Document;
+import com.ats.ssgs.model.master.GetCust;
+import com.ats.ssgs.model.master.GetItem;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.ItemType;
 import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
@@ -94,7 +98,10 @@ public class BillController {
 	 * <artifactId>spring-context-support</artifactId>
 	 * <version>${org.springframework-version}</version> </dependency>
 	 */
-
+	List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+	
+	List<ExportToExcel> exportToExcelList1 = new ArrayList<ExportToExcel>();
+	List<ExportToExcel> exportToExcelList2 = new ArrayList<ExportToExcel>();
 	RestTemplate rest = new RestTemplate();
 	List<GetItemsForBill> billItems;
 	int billHeadId = 0;
@@ -833,8 +840,14 @@ public class BillController {
 		}
 
 		return model;
+		
+		
 	}
 
+	
+	
+	
+	
 	List<GetBillHeader> getBillList = new ArrayList<>();
 
 	@RequestMapping(value = "/getBillListBetDate", method = RequestMethod.GET)
@@ -857,11 +870,231 @@ public class BillController {
 		GetBillHeader[] ordHeadArray = rest.postForObject(Constants.url + "getBillHeadersByDateAndCustAndPlant", map,
 				GetBillHeader[].class);
 		getBillList = new ArrayList<GetBillHeader>(Arrays.asList(ordHeadArray));
+		
 		System.out.println("getBillList" + getBillList.toString());
+		
+	
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
 
+		rowData.add("Sr. No");
+		rowData.add("Voucher Type");
+		rowData.add("Voucher No.");
+		rowData.add("Date");
+		rowData.add("Reference No");
+		rowData.add("Party Name");
+		rowData.add("Dispatch Doc No.");
+		rowData.add("Dispatch Through");
+		rowData.add("Destination");
+		rowData.add("Item Name");
+		rowData.add("Qty");
+		rowData.add("Rate");
+		rowData.add("Taxable Amount");
+		rowData.add("Sales Ledger");
+		rowData.add("CGST Ledger");
+		rowData.add("CGST Amt");
+		rowData.add("SGST Ledger");
+		rowData.add("SGST Amt");
+		rowData.add("IGST Ledger");
+		rowData.add("IGST Amt");
+		rowData.add("Roundoff");
+		rowData.add("Invoice Amt");
+		rowData.add("Narration");
+		
+		
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		System.out.println("hello...................");
+		int cnt = 1;
+		for (int i = 0; i < getBillList.size(); i++) {
+			//6
+			System.out.println("item len is "+getBillList.get(i).getGetBillDetails().size());
+			
+			
+			
+			
+			cnt = cnt + i;
+			
+			for (int j = 0; j < getBillList.get(i).getGetBillDetails().size();j++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+
+				rowData.add("" + (i + 1));
+				
+
+				rowData.add("" + "Sales Voucher");
+				rowData.add("" + getBillList.get(i).getBillNo());
+				rowData.add("" + getBillList.get(i).getBillDate());
+				rowData.add("" + getBillList.get(i).getBillNo());
+				rowData.add("" + getBillList.get(i).getCustName());
+				rowData.add("" + "-");
+				rowData.add("" + "-");
+				rowData.add("" + "-");
+				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getItemName());
+				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getQty());
+				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getRate());
+				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getTaxableAmt());
+				rowData.add("" + "-");
+				rowData.add("" +"CGST".concat(" ").concat(String.valueOf(getBillList.get(i).getGetBillDetails().get(j).getCgstPer())).concat("%") );
+				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getCgstAmt());
+				rowData.add("" +"SGST".concat(" ").concat(String.valueOf(getBillList.get(i).getGetBillDetails().get(j).getSgstPer())).concat("%") );
+				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getSgstAmt());
+				rowData.add("" +"IGST".concat(" ").concat(String.valueOf(getBillList.get(i).getGetBillDetails().get(j).getSgstPer())).concat("%") );
+				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getIgstAmt());
+				rowData.add("" + "0");
+				rowData.add("" + getBillList.get(i).getTotalAmt());
+				
+				rowData.add("" + "-");
+				
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+			
+
+			}
+
+			
+			
+
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "Bill List");
+		
+		
+		
+		
+		List<GetItem> getItemList;
+		GetItem[] itemArray = rest.getForObject(Constants.url + "getAllItemList", GetItem[].class);
+		getItemList = new ArrayList<GetItem>(Arrays.asList(itemArray));
+		System.out.println("hello...................1111"+getItemList.toString());
+		
+		ExportToExcel expoExcel1 = new ExportToExcel();
+		List<String> rowData1 = new ArrayList<String>();
+		
+		rowData1.add("Sr. No");
+		rowData1.add("Name");
+		rowData1.add("Group");
+		rowData1.add("HSN");
+		rowData1.add("GST%");
+		rowData1.add("Op. Qty");
+		rowData1.add("Rate");
+		rowData1.add("Amount");
+		 
+		
+		expoExcel1.setRowData(rowData1);
+		exportToExcelList1.add(expoExcel1);
+	
+		int cnt1 = 1;
+		
+		for (int i = 0; i < getItemList.size(); i++) {
+			expoExcel1 = new ExportToExcel();
+			rowData1 = new ArrayList<String>();
+			
+			cnt1= cnt1 + i;
+			rowData1.add("" + (i + 1));
+			
+			rowData1.add("" + getItemList.get(i).getItemName());
+			rowData1.add("" + getItemList.get(i).getItemType());
+			rowData1.add("" + getItemList.get(i).getHsnCode());
+			rowData1.add("" + getItemList.get(i).getExVar1());
+			rowData1.add("" + getItemList.get(i).getMaxStock());
+			rowData1.add("" + getItemList.get(i).getItemRate1());
+			rowData1.add("" + getItemList.get(i).getItemRate2());
+			
+			expoExcel1.setRowData(rowData1);
+			exportToExcelList1.add(expoExcel1);
+			
+			
+		}
+		
+		HttpSession session1 = request.getSession();
+		session1.setAttribute("exportExcelListItem", exportToExcelList1);
+		session1.setAttribute("excelNameItem", "Item List");
+		
+
+		
+		List<GetCust> getCustList;
+
+		GetCust[] custArray = rest.postForObject(Constants.url + "getAllCustomerList", map, GetCust[].class);
+		getCustList = new ArrayList<GetCust>(Arrays.asList(custArray));
+		System.out.println("hello...................1111"+getCustList.toString());
+		
+		ExportToExcel expoExcel2 = new ExportToExcel();
+		List<String> rowData2 = new ArrayList<String>();
+		
+		rowData2.add("Sr. No");
+		rowData2.add("Name");
+		rowData2.add("Group");
+		rowData2.add("GSTIN");
+		rowData2.add("Default Credit Period");
+		rowData2.add("Address1");
+		rowData2.add("Address2");
+		rowData2.add("Address3");
+		rowData2.add("Address4");
+		rowData2.add("Country");
+		rowData2.add("State");
+		rowData2.add("Contact Person");
+		rowData2.add("Phone No.");
+		rowData2.add("Mobile No.");
+		rowData2.add("Fax No.");
+		rowData2.add("Email ID");
+		rowData2.add("CC");
+		rowData2.add("Website");
+		rowData2.add("Registration");
+		 
+		
+		expoExcel2.setRowData(rowData2);
+		exportToExcelList2.add(expoExcel2);
+	
+		int cnt2 = 1;
+		
+		for (int i = 0; i < getCustList.size(); i++) {
+			expoExcel2 = new ExportToExcel();
+			rowData2 = new ArrayList<String>();
+			
+			cnt2= cnt2 + i;
+			rowData1.add("" + (i + 1));
+			
+			rowData2.add("" + getCustList.get(i).getCustName());
+		
+			rowData2.add("" + getCustList.get(i).getPlantName());
+			rowData2.add("" + getCustList.get(i).getCustGstNo());
+			rowData2.add("" + "-");
+			rowData2.add("" + getCustList.get(i).getCustAddress());
+			rowData2.add("" + "-");
+			rowData2.add("" + "-");
+			rowData2.add("" + "-");
+			rowData2.add("" + "India");
+			rowData2.add("" + "Maharashtra");
+			rowData2.add("" + getCustList.get(i).getContactPerMob());
+			rowData2.add("" + getCustList.get(i).getContactPerMob());
+		
+			rowData2.add("" + getCustList.get(i).getCustMobNo());
+			rowData2.add("" + "-");
+			rowData2.add("" + "-");
+			rowData2.add("" + "-");
+			rowData2.add("" + "-");
+			expoExcel2.setRowData(rowData2);
+			exportToExcelList2.add(expoExcel2);
+			
+			
+		}
+		
+		HttpSession session3 = request.getSession();
+		session1.setAttribute("exportExcelListCus", exportToExcelList2);
+		session1.setAttribute("excelNameCus", "Customer List");
+		
+		
+		
 		return getBillList;
 	}
 
+	
+	
+	
+	
 	List<GetBillDetail> billDetailList;
 
 	@RequestMapping(value = "/editBill/{billHeadId}", method = RequestMethod.GET)

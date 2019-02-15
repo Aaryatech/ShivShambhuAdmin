@@ -1656,6 +1656,22 @@ public class MasterController {
 			itemTypeList = new ArrayList<ItemType>(Arrays.asList(itemTypeArray));
 
 			model.addObject("itemTypeList", itemTypeList);
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
 		} catch (Exception e) {
 

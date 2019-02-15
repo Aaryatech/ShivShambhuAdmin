@@ -36,6 +36,8 @@ public class ExportExcelController {
 	List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 	List<ExportToExcel> exportToExcelList1 = new ArrayList<ExportToExcel>();
 	List<ExportToExcel> exportToExcelList2 = new ArrayList<ExportToExcel>();
+	List<ExportToExcel> exportToExcelList3 = new ArrayList<ExportToExcel>();
+	List<ExportToExcel> exportToExcelList4 = new ArrayList<ExportToExcel>();
 
 	@RequestMapping(value = "/exportToExcel", method = RequestMethod.GET)
 
@@ -231,4 +233,113 @@ public class ExportExcelController {
 		return style;
 	}
 
+	
+	//////////////////////////////////////
+	
+
+	@RequestMapping(value = "/exportToExcelItem", method = RequestMethod.GET)
+
+	public void exportToExcelItem(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		XSSFWorkbook wb = null;
+		HttpSession session = request.getSession();
+		try {
+
+			exportToExcelList3 = (List) session.getAttribute("exportExcelListItem");
+			System.out.println("Excel List :" + exportToExcelList3.toString());
+
+			String excelName = (String) session.getAttribute("excelNameItem");
+			wb = createWorkbookItem();
+
+			response.setContentType("application/vnd.ms-excel");
+			String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+			response.setHeader("Content-disposition", "attachment; filename=" + excelName + "-" + date + ".xlsx");
+			wb.write(response.getOutputStream());
+
+		} catch (IOException ioe) {
+			throw new RuntimeException("Error writing spreadsheet to output stream");
+		} finally {
+			if (wb != null) {
+				wb.close();
+			}
+		}
+		session.removeAttribute("exportExcelListItem");
+		System.out.println("Session List" + session.getAttribute("exportExcelListItem"));
+	}
+
+	private XSSFWorkbook createWorkbookItem() throws IOException {
+		XSSFWorkbook wb = new XSSFWorkbook();
+		XSSFSheet sheet = wb.createSheet("Sheet1");
+
+		/*
+		 * writeHeaders(wb, sheet); writeHeaders(wb, sheet); writeHeaders(wb, sheet);
+		 */
+
+		for (int rowIndex = 0; rowIndex < exportToExcelList3.size(); rowIndex++) {
+			XSSFRow row = sheet.createRow(rowIndex);
+			for (int j = 0; j < exportToExcelList3.get(rowIndex).getRowData().size(); j++) {
+
+				XSSFCell cell = row.createCell(j);
+
+				cell.setCellValue(exportToExcelList3.get(rowIndex).getRowData().get(j));
+
+			}
+			if (rowIndex == 0)
+				row.setRowStyle(createHeaderStyle(wb));
+		}
+		return wb;
+	}
+	
+	
+	
+	@RequestMapping(value = "/exportToExcelCus", method = RequestMethod.GET)
+
+	public void exportToExcelCus(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		XSSFWorkbook wb = null;
+		HttpSession session = request.getSession();
+		try {
+
+			exportToExcelList4 = (List) session.getAttribute("exportExcelListCus");
+			System.out.println("Excel List :" + exportToExcelList4.toString());
+
+			String excelName = (String) session.getAttribute("excelNameCus");
+			wb = createWorkbookcus();
+
+			response.setContentType("application/vnd.ms-excel");
+			String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+			response.setHeader("Content-disposition", "attachment; filename=" + excelName + "-" + date + ".xlsx");
+			wb.write(response.getOutputStream());
+
+		} catch (IOException ioe) {
+			throw new RuntimeException("Error writing spreadsheet to output stream");
+		} finally {
+			if (wb != null) {
+				wb.close();
+			}
+		}
+		session.removeAttribute("exportExcelListCus");
+		System.out.println("Session List" + session.getAttribute("exportExcelListCus"));
+	}
+
+	private XSSFWorkbook createWorkbookcus() throws IOException {
+		XSSFWorkbook wb = new XSSFWorkbook();
+		XSSFSheet sheet = wb.createSheet("Sheet1");
+
+		/*
+		 * writeHeaders(wb, sheet); writeHeaders(wb, sheet); writeHeaders(wb, sheet);
+		 */
+
+		for (int rowIndex = 0; rowIndex < exportToExcelList4.size(); rowIndex++) {
+			XSSFRow row = sheet.createRow(rowIndex);
+			for (int j = 0; j < exportToExcelList4.get(rowIndex).getRowData().size(); j++) {
+
+				XSSFCell cell = row.createCell(j);
+
+				cell.setCellValue(exportToExcelList4.get(rowIndex).getRowData().get(j));
+
+			}
+			if (rowIndex == 0)
+				row.setRowStyle(createHeaderStyle(wb));
+		}
+		return wb;
+	}
 }
