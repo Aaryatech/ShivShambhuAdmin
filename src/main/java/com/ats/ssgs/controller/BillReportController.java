@@ -493,7 +493,6 @@ public class BillReportController {
 		}
 
 		return model;
-
 	}
 
 	// Ajax call//
@@ -829,11 +828,11 @@ public class BillReportController {
 			rowData.add("Bill Date");
 			rowData.add("Bill No");
 			rowData.add("Customer Name");
+			rowData.add("Taxable Amount");
 			rowData.add("CGST");
 			rowData.add("IGST");
 			rowData.add("SGST");
 			rowData.add("Tax Amount");
-			rowData.add("Taxable Amount");
 			rowData.add("Total Amount");
 
 			expoExcel.setRowData(rowData);
@@ -848,11 +847,11 @@ public class BillReportController {
 				rowData.add("" + dateBillDetailList.get(i).getBillDate());
 				rowData.add("" + dateBillDetailList.get(i).getBillNo());
 				rowData.add("" + dateBillDetailList.get(i).getCustName());
+				rowData.add("" + dateBillDetailList.get(i).getTaxableAmt());
 				rowData.add("" + dateBillDetailList.get(i).getCgstAmt());
 				rowData.add("" + dateBillDetailList.get(i).getIgstAmt());
 				rowData.add("" + dateBillDetailList.get(i).getSgstAmt());
 				rowData.add("" + dateBillDetailList.get(i).getTaxAmt());
-				rowData.add("" + dateBillDetailList.get(i).getTaxableAmt());
 				rowData.add("" + dateBillDetailList.get(i).getTotalAmt());
 
 				expoExcel.setRowData(rowData);
@@ -932,6 +931,11 @@ public class BillReportController {
 			hcell = new PdfPCell(new Phrase("Customer Name", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
+			
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
 
@@ -957,11 +961,7 @@ public class BillReportController {
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
-			table.addCell(hcell);
-			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
-			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell.setBackgroundColor(BaseColor.PINK);
-
+			
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Total Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1000,6 +1000,13 @@ public class BillReportController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getCgstAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1029,13 +1036,7 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table.addCell(cell);
-
+				
 				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -2404,11 +2405,11 @@ public class BillReportController {
 		rowData.add("Bill No");
 		rowData.add("Customer GST No.");
 		rowData.add("Customer Name");
+		rowData.add("Total Taxable Amount");
 		rowData.add("CGST");
 		rowData.add("SGST");
 		rowData.add("IGST");
 		rowData.add("Tax Amount");
-		rowData.add("Total Taxable Amount");
 		rowData.add("Total Amount");
 
 		expoExcel.setRowData(rowData);
@@ -2424,11 +2425,11 @@ public class BillReportController {
 			rowData.add("" + taxList.get(i).getBillNo());
 			rowData.add("" + taxList.get(i).getCustGstNo());
 			rowData.add("" + taxList.get(i).getCustName());
+			rowData.add("" + taxList.get(i).getTaxableAmt());
 			rowData.add("" + taxList.get(i).getCgstAmt());
 			rowData.add("" + taxList.get(i).getSgstAmt());
 			rowData.add("" + taxList.get(i).getIgstAmt());
 			rowData.add("" + taxList.get(i).getTaxAmt());
-			rowData.add("" + taxList.get(i).getTaxableAmt());
 			rowData.add("" + taxList.get(i).getTotalAmt());
 
 			expoExcel.setRowData(rowData);
@@ -2502,6 +2503,12 @@ public class BillReportController {
 
 			table.addCell(hcell);
 
+			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+			
+			table.addCell(hcell);
+
 			hcell = new PdfPCell(new Phrase("GST No.", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
@@ -2524,11 +2531,7 @@ public class BillReportController {
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
-			table.addCell(hcell);
-
-			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
-			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell.setBackgroundColor(BaseColor.PINK);
+			
 
 			table.addCell(hcell);
 
@@ -2569,6 +2572,13 @@ public class BillReportController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getCustGstNo(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -2605,13 +2615,7 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table.addCell(cell);
-
+				
 				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
