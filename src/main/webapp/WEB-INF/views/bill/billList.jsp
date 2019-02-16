@@ -602,7 +602,7 @@
 													function(i, v) {
 														//alert("hdjfh");
 
-														var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v.billHeadId+' class="chk"  value='+v.billHeadId+'/>'
+														var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v.billHeadId+' class="chk"  value='+v.billHeadId+'>'
 													
 														var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"  onclick="callEdit('
 																+ v.billHeadId
@@ -755,16 +755,21 @@
 			}).get();
 			//checkedVals=checkedVals.slice(0,- 1);alert(checkedVals);
 			checkedVals = checkedVals.join(",");
-			var str2 = checkedVals.replace('/', "");
+			
+			
+			var str2 = checkedVals.replace('/', ',');
+			var str3=str2.replace('on,', "");
+			
+			alert("Ids : ------------ "+str3);
 
 			if (checkedVals == "") {
 				alert("Please Select Bill")
 			} else {
 				window
 						.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-								+ str2);
+								+ str3);
 			}
-		}
+		} 
 	</script>
 	<script type="text/javascript">
 		$('#selectAll').click(
