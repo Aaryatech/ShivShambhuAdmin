@@ -158,12 +158,13 @@
 											<th style="text-align: center">Qty</th>
 											<th style="text-align: center">Uom</th>
 											<th style="text-align: center">Hsn Code</th>
-											<th style="text-align: center">Total Taxable Amount</th>
-											<th style="text-align: center">Total Tax Amount</th>
-											<th style="text-align: center">Total Amount</th>
+											<th style="text-align: center">Taxable Amount</th>
 											<th style="text-align: center">CGST</th>
 											<th style="text-align: center">SGST</th>
 											<th style="text-align: center">IGST</th>
+											<th style="text-align: center">Tax Amount</th>
+											<th style="text-align: center">Total Amount</th>
+
 
 
 										</tr>
@@ -285,7 +286,6 @@
 		// onclick of submit to search order 
 		function showQuot() {
 
-		
 			var plantId = document.getElementById("plantId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
@@ -351,13 +351,15 @@
 					$.each(data, function(i, v) {
 
 						dataTable.row.add(
-								[ i + 1, v.itemCode, v.itemName,v.qty,v.uomName,v.hsnCode,
-										v.taxableAmt.toFixed(2),	
-										v.taxAmt.toFixed(2),
-										v.totalAmt.toFixed(2),
+								[ i + 1, v.itemCode, v.itemName, v.qty,
+										v.uomName, v.hsnCode,
+										v.taxableAmt.toFixed(2),
 										v.cgstAmt.toFixed(2),
 										v.sgstAmt.toFixed(2),
-										v.sgstAmt.toFixed(2)
+										v.igstAmt.toFixed(2)
+										v.taxAmt.toFixed(2),
+										v.totalAmt.toFixed(2),
+										
 
 								]).draw();
 					});
