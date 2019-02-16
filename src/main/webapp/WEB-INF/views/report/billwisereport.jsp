@@ -175,9 +175,9 @@
 											<th style="text-align: center">Customer Name</th>
 											<th style="text-align: center">Project Name</th>
 											<th style="text-align: center">Taxable Amount</th>
-											<th style="text-align: center">Sgst Amount</th>
-											<th style="text-align: center">Cgst Amount</th>
-											<th style="text-align: center">Igst Amount</th>
+											<th style="text-align: center">CGST Amount</th>
+											<th style="text-align: center">SGST Amount</th>
+											<th style="text-align: center">IGST Amount</th>
 											<th style="text-align: center">Tax Amount</th>
 											<th style="text-align: center">Total Amount</th>
 
@@ -306,7 +306,6 @@
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			
 			var valid = true;
 
 			if (compId == null || compId == "") {
@@ -316,7 +315,6 @@
 
 			var plantId = document.getElementById("plantId").value;
 
-			
 			var valid = true;
 			if (plantId == null || plantId == "") {
 				valid = false;
@@ -374,10 +372,9 @@
 
 						dataTable.row.add(
 								[ i + 1, v.billDate, v.billNo, v.custName,
-										v.projName,
-										v.taxableAmt.toFixed(2),
-										v.sgstAmt.toFixed(2),
+										v.projName, v.taxableAmt.toFixed(2),
 										v.cgstAmt.toFixed(2),
+										v.sgstAmt.toFixed(2),
 										v.igstAmt.toFixed(2),
 										v.taxAmt.toFixed(2),
 										v.totalAmt.toFixed(2)

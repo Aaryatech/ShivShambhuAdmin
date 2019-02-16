@@ -105,17 +105,17 @@
 								<div class="col-md-4">
 									<select id="plantId" name="plantId" class="standardSelect"
 										tabindex="1" required onchange="getData()">
-
+										<option value="0">All</option>
 										<%-- <option value="${plantId}">${pname}</option> --%>
-
 										<c:forEach items="${plantList}" var="plant">
 											<c:choose>
-												<c:when test="${plant.plantId==plantId}">
-													<option value="${plant.plantId}">${plant.plantName}</option>
-												</c:when>
 												<c:when test="${plant.plantId==0}">
-													<option value="${plant.plantId}">All</option>
+													<option value="0">All</option>
 												</c:when>
+												<c:when test="${plant.plantId==plantId}">
+													<option value="${plant.plantId}" selected>${plant.plantName}</option>
+												</c:when>
+
 												<c:otherwise>
 													<option value="${plant.plantId}">${plant.plantName}</option>
 												</c:otherwise>

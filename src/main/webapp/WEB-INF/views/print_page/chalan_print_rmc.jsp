@@ -18,7 +18,7 @@
 	<table style="margin-left: 10px;" width="100%">
 		<tr>
 			<td align="left"><img
-				src="/ssgs/resources/images/shambhu_logo.PNG"
+				src="/shivAdmin/resources/images/shambhu_logo.PNG"
 				style="height: 80px; width: 80px;" alt="User Avatar" /></td>
 			<td colspan="1" rowspan="1" width="90%"
 				style="border-bottom: 1px solid #313131; border-top: 1px solid #313131 padding:10px; color: #FFF; font-size: 15px;">

@@ -760,7 +760,7 @@
 			var str2 = checkedVals.replace('/', ',');
 			var str3=str2.replace('on,', "");
 			
-			alert("Ids : ------------ "+str3);
+			//alert("Ids : ------------ "+str3);
 
 			if (checkedVals == "") {
 				alert("Please Select Bill")

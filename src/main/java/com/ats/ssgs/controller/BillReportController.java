@@ -451,29 +451,8 @@ public class BillReportController {
 			custList = new ArrayList<Cust>(Arrays.asList(custArray));
 			model.addObject("custList", custList);
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-
-			map = new LinkedMultiValueMap<String, Object>();
-
-			map.add("plantId", plantId);
-
-			Plant pl = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
-			String pname = pl.getPlantName();
-			System.out.println(pname);
-			model.addObject("pname", pname);
 			model.addObject("plantId", plantId);
-			if (custId != 0) {
-				map = new LinkedMultiValueMap<String, Object>();
-				map.add("custId", custId);
-
-				Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
-				String cname = editCust.getCustName();
-				model.addObject("cname", cname);
-				model.addObject("custId", custId);
-			} else {
-				model.addObject("cname", "All");
-				model.addObject("custId", "0");
-			}
+			model.addObject("custId", custId);
 
 		} catch (Exception e) {
 

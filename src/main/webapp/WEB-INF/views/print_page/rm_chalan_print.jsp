@@ -13,11 +13,12 @@
 <title>Chalan Print</title>
 </head>
 <body>
-<div  style="color: black; font-size: 20px; text-align: center; margin: 0px; font-weight: bold;">M/S.${printData.comp.compName}</div>
+	<div
+		style="color: black; font-size: 20px; text-align: center; margin: 0px; font-weight: bold;">M/S.${printData.comp.compName}</div>
 	<table style="margin-left: 10px;" width="100%">
 		<tr>
 			<td align="left"><img
-				src="/ssgs/resources/images/shambhu_logo.PNG"
+				src="/shivAdmin/resources/images/shambhu_logo.PNG"
 				style="height: 80px; width: 80px;" alt="User Avatar" /></td>
 			<td colspan="1" rowspan="1" width="90%"
 				style="border-bottom: 1px solid #313131; border-top: 1px solid #313131 padding:10px; color: #FFF; font-size: 15px;">
@@ -47,7 +48,8 @@
 		<b>Delivery Chalan(for sale) </b>
 	</center>
 
-	<div style="margin-left: 10px; padding: 4px; font-size: 15px; text-align: left">
+	<div
+		style="margin-left: 10px; padding: 4px; font-size: 15px; text-align: left">
 		<b>Chalan No : </b>${ch_no1}
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -65,7 +67,8 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 	</div>
-	<div style="margin-left: 10px; padding: 4px; font-size: 15px; text-align: left">
+	<div
+		style="margin-left: 10px; padding: 4px; font-size: 15px; text-align: left">
 		<b>Project :</b> ${printData.chalanItemList[0].projName}
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -80,7 +83,8 @@
 
 	</div>
 
-	<div style="margin-left: 10px; text-align: left; padding: 4px; font-size: 15px;">
+	<div
+		style="margin-left: 10px; text-align: left; padding: 4px; font-size: 15px;">
 		<b>Delivery Address:</b>${printData.chalanItemList[0].devAddress}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 	</div>
@@ -143,7 +147,7 @@
 
 
 
-	<div style="margin-left: 10px; padding: 4px;  font-size: 15px;">
+	<div style="margin-left: 10px; padding: 4px; font-size: 15px;">
 		<b>Out Time : </b>${printData.chalanItemList[0].vehTimeOut}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Out
 			Km:</b>${printData.chalanItemList[0].outKm}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>

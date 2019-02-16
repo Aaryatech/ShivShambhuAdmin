@@ -169,11 +169,11 @@
 										<tr>
 											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Bill Month</th>
+											<th style="text-align: center">Taxable Amount</th>
 											<th style="text-align: center">CGST</th>
 											<th style="text-align: center">SGST</th>
 											<th style="text-align: center">IGST</th>
 											<th style="text-align: center">Tax Amount</th>
-											<th style="text-align: center">Taxable Amount</th>
 											<th style="text-align: center">Total Amount</th>
 											<th style="text-align: center">Action</th>
 
@@ -389,6 +389,8 @@
 																		[
 																				i + 1,
 																				v.month,
+																				v.taxableAmt
+																						.toFixed(2),
 																				v.cgstAmt
 																						.toFixed(2),
 																				v.sgstAmt
@@ -397,8 +399,7 @@
 																						.toFixed(2),
 																				v.taxAmt
 																						.toFixed(2),
-																				v.taxableAmt
-																						.toFixed(2),
+
 																				v.totalAmt
 																						.toFixed(2),
 																				acButton

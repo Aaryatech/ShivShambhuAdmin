@@ -300,7 +300,7 @@
 		// onclick of submit to search order 
 		function showReport() {
 
-			alert("Hi View Report  ");
+			//alert("Hi View Report  ");
 
 			var plantId = document.getElementById("plantId").value;
 			var fromDate = document.getElementById("from_date").value;
@@ -344,7 +344,7 @@
 
 					}
 
-					alert("Tax Data " + JSON.stringify(data));
+					//alert("Tax Data " + JSON.stringify(data));
 
 					var dataTable = $('#bootstrap-data-table').DataTable();
 					dataTable.clear().draw();

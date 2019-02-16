@@ -13,12 +13,13 @@
 <title>Chalan Print</title>
 </head>
 <body>
-<div  style="color: black; font-size: 20px; text-align: center; margin: 0px; font-weight: bold;">M/S.${printData.comp.compName}</div>
+	<div
+		style="color: black; font-size: 20px; text-align: center; margin: 0px; font-weight: bold;">M/S.${printData.comp.compName}</div>
 
 	<table style="margin-left: 10px;" width="100%">
 		<tr>
 			<td align="left"><img
-				src="/ssgs/resources/images/shambhu_logo.PNG"
+				src="/shivAdmin/resources/images/shambhu_logo.PNG"
 				style="height: 80px; width: 80px;" alt="User Avatar" /></td>
 			<td colspan="1" rowspan="1" width="90%"
 				style="border-bottom: 1px solid #313131; border-top: 1px solid #313131 padding:10px; color: #FFF; font-size: 15px;">
@@ -48,7 +49,8 @@
 		<b>Delivery Chalan(for sale) </b>
 	</center>
 
-	<div style="margin-left: 10px; text-align: left;  padding: 3px; font-size: 15px;">
+	<div
+		style="margin-left: 10px; text-align: left; padding: 3px; font-size: 15px;">
 		<b>Chalan No : </b>${ch_no1}
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -59,14 +61,15 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Date
 			: </b> ${printData.chalanItemList[0].chalanDate}
 	</div>
-	<div style="margin-left: 10px;  padding: 3px; font-size: 15px;">
+	<div style="margin-left: 10px; padding: 3px; font-size: 15px;">
 		<b>Customer Name : </b>
 		<c:out value="${printData.chalanItemList[0].custName}"></c:out>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 	</div>
-	<div style="margin-left: 10px; text-align: left; padding: 3px; font-size: 15px;"  >
+	<div
+		style="margin-left: 10px; text-align: left; padding: 3px; font-size: 15px;">
 		<b>Project :</b> ${printData.chalanItemList[0].projName}
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -81,7 +84,8 @@
 
 	</div>
 
-	<div style="margin-left: 10px; text-align: left; padding: 3px; font-size: 15px;">
+	<div
+		style="margin-left: 10px; text-align: left; padding: 3px; font-size: 15px;">
 		<b>Delivery Address:</b>${printData.chalanItemList[0].devAddress}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 	</div>
@@ -208,16 +212,18 @@
 
 
 
-	<div style="margin-left: 10px; padding: 3px; font-size: 15px;" align="left">
+	<div style="margin-left: 10px; padding: 3px; font-size: 15px;"
+		align="left">
 		<b>Out Time :</b>${printData.chalanItemList[0].vehTimeOut}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Out
 			Km:</b>${printData.chalanItemList[0].outKm}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
-	<div style="margin-left: 10px; padding: 3px; font-size: 15px;" align="left">
+	<div style="margin-left: 10px; padding: 3px; font-size: 15px;"
+		align="left">
 		<b>In Time :</b>
 		${temp}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>In
 			Km : </b>${temp1}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
-<div style="margin-left: 10px;padding: 4px; font-size: 15px;">
+	<div style="margin-left: 10px; padding: 4px; font-size: 15px;">
 		<b>Vehicle No:</b> ${printData.chalanItemList[0].vehNo}
 	</div>
 	<div style="margin-left: 10px; padding: 3px; font-size: 15px;">
@@ -247,8 +253,8 @@
 		<tr>
 			<td align="left" width="35%" rowspan="1"
 				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 15px; text-align: left">
-				<b>M/S.${printData.comp.compName}</b> <br /> <br /> <br /> 
-				<br /> <b>Authorized Signature</b>
+				<b>M/S.${printData.comp.compName}</b> <br /> <br /> <br /> <br />
+				<b>Authorized Signature</b>
 			</td>
 			<td align="left" width="35%" rowspan="2"
 				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 12px; text-align: left">
