@@ -356,10 +356,9 @@
 										v.taxableAmt.toFixed(2),
 										v.cgstAmt.toFixed(2),
 										v.sgstAmt.toFixed(2),
-										v.igstAmt.toFixed(2)
+										v.igstAmt.toFixed(2),
 										v.taxAmt.toFixed(2),
-										v.totalAmt.toFixed(2),
-										
+										v.totalAmt.toFixed(2)
 
 								]).draw();
 					});
