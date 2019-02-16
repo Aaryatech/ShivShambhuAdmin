@@ -106,11 +106,20 @@
 									<select id="plantId" name="plantId" class="standardSelect"
 										tabindex="1" required onchange="getData()">
 
-										<option value="${plantId}">${pname}</option>
-										<option value="0">All</option>
-										<c:forEach items="${plantList}" var="plant">
+										<%-- <option value="${plantId}">${pname}</option> --%>
 
-											<option value="${plant.plantId}">${plant.plantName}</option>
+										<c:forEach items="${plantList}" var="plant">
+											<c:choose>
+												<c:when test="${plant.plantId==plantId}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:when>
+												<c:when test="${plant.plantId==0}">
+													<option value="${plant.plantId}">All</option>
+												</c:when>
+												<c:otherwise>
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:otherwise>
+											</c:choose>
 
 										</c:forEach>
 									</select>
@@ -121,10 +130,19 @@
 								<div class="col-md-4">
 									<select id="custId" name="custId" class="standardSelect"
 										tabindex="1" required
-										oninvalid="setCustomValidity('Please select company')">
-										<option value="${custId}">${cname}</option>
+										oninvalid="setCustomValidity('Please select Plant')">
+										<%-- <option value="${custId}">${cname}</option> --%>
 
 										<option value="0">All</option>
+
+										<c:forEach items="${custList}" var="cust">
+											<c:choose>
+												<c:when test="${cust.custId==custId}">
+													<option value="${cust.custId}" selected>${cust.custName}</option>
+												</c:when>
+											</c:choose>
+
+										</c:forEach>
 									</select>
 								</div>
 
@@ -304,8 +322,6 @@
 			var custId = document.getElementById("custId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-
-			
 
 			var valid = true;
 

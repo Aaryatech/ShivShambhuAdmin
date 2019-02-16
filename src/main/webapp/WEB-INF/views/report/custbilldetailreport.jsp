@@ -181,8 +181,9 @@
 												<th style="text-align: center">Bill No</th>
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Project Name</th>
-												<th style="text-align: center">Tax Amount</th>
 												<th style="text-align: center">Taxable Amount</th>
+												<th style="text-align: center">Tax Amount</th>
+
 												<th style="text-align: center">Total Amount</th>
 
 											</tr>
@@ -206,13 +207,15 @@
 													<td style="text-align: left"><c:out
 															value="${bill.projName}" /></td>
 
+													<td style="text-align: left"><c:out
+															value="${bill.taxableAmt}" /></td>
+
+
 
 													<td style="text-align: left"><c:out
 															value="${bill.taxAmt}" /></td>
 
 
-													<td style="text-align: left"><c:out
-															value="${bill.taxableAmt}" /></td>
 
 													<td style="text-align: left"><c:out
 															value="${bill.totalAmt}" /></td>

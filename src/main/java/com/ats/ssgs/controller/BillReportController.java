@@ -43,6 +43,7 @@ import com.ats.ssgs.model.GetItemsForBill;
 import com.ats.ssgs.model.GetItenwiseBillReport;
 import com.ats.ssgs.model.GetPoReport;
 import com.ats.ssgs.model.MonthWiseBill;
+import com.ats.ssgs.model.TaxSummery;
 import com.ats.ssgs.model.TaxWiseBill;
 import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Cust;
@@ -394,7 +395,7 @@ public class BillReportController {
 			model.addObject("plantList", plantList);
 
 			model.addObject("title", "Datewise Bill Report");
-			
+
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -405,7 +406,7 @@ public class BillReportController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
@@ -422,14 +423,15 @@ public class BillReportController {
 	}
 
 	@RequestMapping(value = "/showDatewiseBillReport1/{monthNo}/{year}/{plantId}/{custId}", method = RequestMethod.GET)
-	public ModelAndView showDatewiseBillReport1(@PathVariable("monthNo") int monthNo, @PathVariable("year") int year,@PathVariable("plantId") int plantId,@PathVariable("custId") int custId
-			,HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView showDatewiseBillReport1(@PathVariable("monthNo") int monthNo, @PathVariable("year") int year,
+			@PathVariable("plantId") int plantId, @PathVariable("custId") int custId, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView model = null;
 		try {
-			
-			System.out.println("DATA:"+monthNo+" "+year+" "+plantId+" "+custId);
-			
+			model = new ModelAndView("report/datewisebillreport");
+			model.addObject("title", "Datewise Bill Report");
+
 			Calendar cal = Calendar.getInstance();
 			cal.set(year, monthNo - 1, 1);
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -437,31 +439,22 @@ public class BillReportController {
 			cal.set(cal.DAY_OF_MONTH, cal.getActualMaximum(cal.DAY_OF_MONTH));
 			String endDate = sdf.format(cal.getTimeInMillis());
 
-			System.out.println("sd1 " + firstDate);
-			System.out.println("ed2 " + endDate);
-
-			
-			model.addObject("firstDate", firstDate);
-			model.addObject("endDate", endDate);
-
-		
-			
-			   System.out.println("mon is" + monthNo);
-			   System.out.println("year" + year);
-			   model = new ModelAndView("report/datewisebillreport");
-			
-			   model.addObject("title", "Datewise Bill Report");
+			model.addObject("fromDate", firstDate);
+			model.addObject("toDate", endDate);
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
-			
-			
+
+			Cust[] custArray = rest.getForObject(Constants.url + "getAllCustList", Cust[].class);
+			custList = new ArrayList<Cust>(Arrays.asList(custArray));
+			model.addObject("custList", custList);
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map = new LinkedMultiValueMap<String, Object>();
-			
+
 			map.add("plantId", plantId);
 
 			Plant pl = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
@@ -469,20 +462,18 @@ public class BillReportController {
 			System.out.println(pname);
 			model.addObject("pname", pname);
 			model.addObject("plantId", plantId);
-			if(custId!=0) {
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("custId", custId);
+			if (custId != 0) {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("custId", custId);
 
-			Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
-			String cname=editCust.getCustName(); 
-			model.addObject("cname", cname);
-			model.addObject("custId", custId);
-			}else {
+				Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
+				String cname = editCust.getCustName();
+				model.addObject("cname", cname);
+				model.addObject("custId", custId);
+			} else {
 				model.addObject("cname", "All");
 				model.addObject("custId", "0");
 			}
-			
-			
 
 		} catch (Exception e) {
 
@@ -631,12 +622,11 @@ public class BillReportController {
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
-			
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
+
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("CGST ", headFont1));
@@ -660,8 +650,6 @@ public class BillReportController {
 			hcell = new PdfPCell(new Phrase("Tax Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
-		
 
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Total Amount", headFont1));
@@ -687,7 +675,7 @@ public class BillReportController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -723,7 +711,6 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				
 				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -931,7 +918,7 @@ public class BillReportController {
 			hcell = new PdfPCell(new Phrase("Customer Name", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
+
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -961,7 +948,6 @@ public class BillReportController {
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
-			
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Total Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1000,7 +986,7 @@ public class BillReportController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -1036,7 +1022,6 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				
 				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -1119,7 +1104,7 @@ public class BillReportController {
 			model.addObject("compList", compList);
 
 			model.addObject("title", "Billwise Report");
-			
+
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -1130,10 +1115,9 @@ public class BillReportController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
-
 
 		} catch (Exception e) {
 
@@ -1329,28 +1313,27 @@ public class BillReportController {
 			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
+
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Sgst Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
+
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Cgst Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
+
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Igst Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
+
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Tax Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
-			
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Total Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -1396,21 +1379,21 @@ public class BillReportController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getSgstAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getCgstAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -1424,14 +1407,13 @@ public class BillReportController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getTaxAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-
 
 				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1520,7 +1502,6 @@ public class BillReportController {
 			model.addObject("custList", custList);
 
 			model.addObject("title", "Customerwise Report");
-			
 
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
@@ -1532,10 +1513,9 @@ public class BillReportController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
-
 
 		} catch (Exception e) {
 
@@ -1554,57 +1534,51 @@ public class BillReportController {
 			HttpServletResponse response) {
 
 		String selectedFr = request.getParameter("values");
-	
-		
 
 		selectedFr = selectedFr.substring(1, selectedFr.length() - 1);
 		selectedFr = selectedFr.replaceAll("\"", "");
 
-		
-		System.out.println("cust:::::"+selectedFr);
-		
-		
-		
-		
-		
-		  //String[] custIdList = request.getParameterValues("values");
-		 // System.out.println("cust:::::"+arr1);
-		    
-		   //String[] custIdList1 = arr1.split(",");
-		  // System.out.println("custId is:::::"+arr1[0]+""+arr1[1]);
-		    
-		  /*  for(int i=0;i<arr1.length;i++) {
-		    	System.err.println("arr [] " +arr1[i]);
-		    }*/
-		    
+		System.out.println("cust:::::" + selectedFr);
+
+		// String[] custIdList = request.getParameterValues("values");
+		// System.out.println("cust:::::"+arr1);
+
+		// String[] custIdList1 = arr1.split(",");
+		// System.out.println("custId is:::::"+arr1[0]+""+arr1[1]);
+
+		/*
+		 * for(int i=0;i<arr1.length;i++) { System.err.println("arr [] " +arr1[i]); }
+		 */
+
 		System.err.println(" in getCustListBetweenDate");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		//	String rs=request.getParameter("values");
-		//String[] custIdList = request.getParameterValues("values");
-		
-		int plantId =Integer.parseInt(request.getParameter("plantId")) ;
+		// String rs=request.getParameter("values");
+		// String[] custIdList = request.getParameterValues("values");
+
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
 
 		System.out.println("plantIdList lengtr" + plantId);
 
-		/*StringBuilder sb = new StringBuilder();
+		/*
+		 * StringBuilder sb = new StringBuilder();
+		 * 
+		 * for (int i = 0; i < selectedFr.length; i++) { sb = sb.append(selectedFr[i] +
+		 * ",");
+		 * 
+		 * } String items = sb.toString(); items = items.substring(0, items.length() -
+		 * 1);
+		 */
+		// StringBuilder sb1 = new StringBuilder();
 
-		for (int i = 0; i < selectedFr.length; i++) {
-			sb = sb.append(selectedFr[i] + ",");
-
-		}
-		String items = sb.toString();
-		items = items.substring(0, items.length() - 1);
-*/
-		//StringBuilder sb1 = new StringBuilder();
-
-		/*for (int i = 0; i < plantIdList.length; i++) {
-			sb1 = sb1.append(plantIdList[i] + ",");
-
-		}
-		String items1 = sb1.toString();
-		items1 = items1.substring(0, items1.length() - 1);
-
-		System.out.println("plantIdList" + items1);*/
+		/*
+		 * for (int i = 0; i < plantIdList.length; i++) { sb1 =
+		 * sb1.append(plantIdList[i] + ",");
+		 * 
+		 * } String items1 = sb1.toString(); items1 = items1.substring(0,
+		 * items1.length() - 1);
+		 * 
+		 * System.out.println("plantIdList" + items1);
+		 */
 
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
@@ -1938,7 +1912,7 @@ public class BillReportController {
 			model.addObject("plantList", plantList);
 
 			model.addObject("title", "Itemwise Bill Report");
-			
+
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -1949,7 +1923,7 @@ public class BillReportController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
@@ -2084,7 +2058,7 @@ public class BillReportController {
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f,3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 2.4f });
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 2.4f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -2114,23 +2088,22 @@ public class BillReportController {
 			hcell = new PdfPCell(new Phrase("Qty", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
+
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Uom", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
+
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Hsn Code", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
+
 			table.addCell(hcell);
 			hcell = new PdfPCell(new Phrase("Total Taxable Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
-			
+
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("Tax Amount", headFont1));
@@ -2190,29 +2163,28 @@ public class BillReportController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getUomName(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getHsnCode(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getTaxAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
@@ -2220,7 +2192,6 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-			
 				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -2318,8 +2289,6 @@ public class BillReportController {
 		ModelAndView model = null;
 		try {
 
-			
-			
 			model = new ModelAndView("report/taxwisebillreport");
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
@@ -2333,8 +2302,7 @@ public class BillReportController {
 			model.addObject("custList", custList);
 
 			model.addObject("title", "Taxwise Bill Report");
-			
-			
+
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -2345,7 +2313,7 @@ public class BillReportController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
@@ -2366,29 +2334,23 @@ public class BillReportController {
 	@RequestMapping(value = "/getTaxListBetweenDate", method = RequestMethod.GET)
 	public @ResponseBody List<TaxWiseBill> getTaxListBetweenDate(HttpServletRequest request,
 			HttpServletResponse response) {
-		
-		
 
 		String selectedFr = request.getParameter("values");
-	
-		
 
 		selectedFr = selectedFr.substring(1, selectedFr.length() - 1);
 		selectedFr = selectedFr.replaceAll("\"", "");
 
-		
-		System.out.println("cust:::::"+selectedFr);
-		
+		System.out.println("cust:::::" + selectedFr);
 
 		System.err.println(" in getTaxListBetweenDate");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
-		
+
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
 		System.out.println("data is: " + fromDate + toDate);
-		map.add("custIdList",selectedFr );
+		map.add("custIdList", selectedFr);
 		map.add("plantId", plantId);
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
@@ -2506,7 +2468,7 @@ public class BillReportController {
 			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
+
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("GST No.", headFont1));
@@ -2530,8 +2492,6 @@ public class BillReportController {
 			hcell = new PdfPCell(new Phrase("IGST ", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
-			
 
 			table.addCell(hcell);
 
@@ -2572,7 +2532,7 @@ public class BillReportController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -2615,7 +2575,6 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				
 				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -2710,7 +2669,7 @@ public class BillReportController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
@@ -3233,6 +3192,301 @@ public class BillReportController {
 			document.add(name);
 			document.add(new Paragraph(" "));
 			Paragraph company = new Paragraph("Customerwise Detail Report\n", f);
+			company.setAlignment(Element.ALIGN_CENTER);
+			document.add(company);
+			document.add(new Paragraph(" "));
+
+			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new Date());
+			Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			p1.setAlignment(Element.ALIGN_CENTER);
+			document.add(p1);
+			document.add(new Paragraph("\n"));
+			document.add(table);
+
+			int totalPages = writer.getPageNumber();
+
+			System.out.println("Page no " + totalPages);
+
+			document.close();
+
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+				try {
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
+					e.printStackTrace();
+				}
+			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error: " + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+
+	}
+
+	@RequestMapping(value = "/showTaxSummeryReport", method = RequestMethod.GET)
+	public ModelAndView showTaxSummeryReport(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("report/taxSumReport");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat dd = new SimpleDateFormat("dd-MM-yyyy");
+
+			Calendar cal = Calendar.getInstance();
+
+			Calendar cal1 = Calendar.getInstance();
+			cal.set(cal1.get(Calendar.YEAR), cal1.get(Calendar.MONTH), 1);
+
+			String firstDate = sdf.format(cal.getTimeInMillis());
+			String firstDate1 = dd.format(cal.getTimeInMillis());
+			cal.set(cal.DAY_OF_MONTH, cal.getActualMaximum(cal.DAY_OF_MONTH));
+			String endDate = sdf.format(cal.getTimeInMillis());
+			String endDate1 = dd.format(cal.getTimeInMillis());
+			System.out.println("sd " + firstDate);
+			System.out.println("ed " + endDate);
+			model.addObject("fromDate", DateConvertor.convertToDMY(firstDate));
+			model.addObject("toDate", DateConvertor.convertToDMY(endDate));
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			model.addObject("title", "Tax Summery Report");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showPOReport at billreport Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	List<TaxSummery> taxSumList;
+
+	@RequestMapping(value = "/getTaxSummeryBetDate", method = RequestMethod.GET)
+	public @ResponseBody List<TaxSummery> getTaxSummeryBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		map.add("plantId", plantId);
+
+		TaxSummery[] taxReportArray = rest.postForObject(Constants.url + "getTaxSummeryBetweenDate", map,
+				TaxSummery[].class);
+		taxSumList = new ArrayList<TaxSummery>(Arrays.asList(taxReportArray));
+
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+
+		rowData.add("Sr. No");
+		rowData.add("GST");
+		rowData.add("Taxable Amount");
+		rowData.add("CGST");
+		rowData.add("SGST");
+		rowData.add("IGST");
+		rowData.add("Total");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		int cnt = 1;
+		for (int i = 0; i < taxSumList.size(); i++) {
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			cnt = cnt + i;
+			rowData.add("" + (i + 1));
+			rowData.add("" + taxSumList.get(i).getGstPer());
+			rowData.add("" + taxSumList.get(i).getTaxableAmt());
+			rowData.add("" + taxSumList.get(i).getCgstAmt());
+			rowData.add("" + taxSumList.get(i).getSgstAmt());
+			rowData.add("" + taxSumList.get(i).getIgstAmt());
+			rowData.add("" + taxSumList.get(i).getTotalAmt());
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "TaxSummery");
+
+		return taxSumList;
+	}
+
+	@RequestMapping(value = "/showTaxSummeryPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
+	public void showTaxSummeryPdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+		BufferedOutputStream outStream = null;
+		System.out.println("Inside Pdf showBillwisePdf");
+		Document document = new Document(PageSize.A4);
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+
+		System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		String FILE_PATH = Constants.REPORT_SAVE;
+		File file = new File(FILE_PATH);
+
+		PdfWriter writer = null;
+
+		FileOutputStream out = new FileOutputStream(FILE_PATH);
+		try {
+			writer = PdfWriter.getInstance(document, out);
+		} catch (DocumentException e) {
+
+			e.printStackTrace();
+		}
+
+		PdfPTable table = new PdfPTable(7);
+		try {
+			System.out.println("Inside PDF Table try");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			headFont1.setColor(BaseColor.WHITE);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+
+			PdfPCell hcell = new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			hcell.setPadding(3);
+			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("GST", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Taxable Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("CGST", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("SGST", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("IGST", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Total", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+			int index = 0;
+			for (TaxSummery work : taxSumList) {
+				index++;
+				PdfPCell cell;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPadding(3);
+				cell.setPaddingRight(2);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getGstPer(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getCgstAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getSgstAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getIgstAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+			}
+			document.open();
+			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
+			name.setAlignment(Element.ALIGN_CENTER);
+			document.add(name);
+			document.add(new Paragraph(" "));
+			Paragraph company = new Paragraph("Tax Summery Report\n", f);
 			company.setAlignment(Element.ALIGN_CENTER);
 			document.add(company);
 			document.add(new Paragraph(" "));
