@@ -352,9 +352,12 @@
 					$.each(data, function(i, v) {
 
 						dataTable.row.add(
-								[ i + 1, v.gstPer, v.taxableAmt, v.cgstAmt,
-										v.sgstAmt, v.igstAmt, v.totalAmt ])
-								.draw();
+								[ i + 1, v.gstPer.toFixed(2),
+										v.taxableAmt.toFixed(2),
+										v.cgstAmt.toFixed(2),
+										v.sgstAmt.toFixed(2),
+										v.igstAmt.toFixed(2),
+										v.totalAmt.toFixed(2), ]).draw();
 					});
 
 				});
