@@ -323,8 +323,7 @@ body {
 
 									<div class="col-md-4">
 										<select id="quot_doc_term_id" name="quot_doc_term_id"
-											class="standardSelect" tabindex="1"
-											onchange="showDocDetailPopup()">
+											class="standardSelect" tabindex="1">
 											<option value="-1">Select</option>
 
 											<c:forEach items="${docTermList}" var="qTerm">
@@ -443,24 +442,24 @@ body {
 									<c:choose>
 										<c:when test="${quotHeader.noOfKm==0}">
 											<div class="col-md-2">
-												On Spot <input type="radio" name="del_place" 
+												On Spot <input type="radio" name="del_place"
 													onchange="setKM(1)" id="del_place" value="1">
 											</div>
 
 											<div class="col-md-2">
-												Specific Place<input type="radio" name="del_place" 
+												Specific Place<input type="radio" name="del_place"
 													id="del_place" checked onchange="setKM(0)" value="0">
 											</div>
 										</c:when>
 										<c:otherwise>
 											<div class="col-md-2">
 												On Spot<input type="radio" name="del_place" id="del_place"
-													onchange="setKM(1)"  value="1">
+													onchange="setKM(1)" value="1">
 											</div>
 
 											<div class="col-md-2">
 												Specific Place <input type="radio" name="del_place"
-													id="del_place" checked  onchange="setKM(0)" value="0">
+													id="del_place" checked onchange="setKM(0)" value="0">
 											</div>
 
 										</c:otherwise>
@@ -558,6 +557,14 @@ body {
 											value="Add Items" onclick="getNewItems(0)">
 									</div>
 
+									<div class="col-md-2"></div>
+
+									<div class="col-md-2">
+										<input type="button" id="newItemAdd" name="newItemAdd"
+											class="btn btn-primary" style="width: 100%;"
+											value="See Quotation" onclick="showDocDetailPopup()">
+									</div>
+
 								</div>
 								<div class="form-group"></div>
 								<div class="row" id="newItemAddDiv" style="display: none;">
@@ -613,7 +620,8 @@ body {
 
 												<th style="text-align: center" width="10%">Other Cost</th>
 
-												<th style="text-align: center" width="10%">Item Rate/Unit</th>
+												<th style="text-align: center" width="10%">Item
+													Rate/Unit</th>
 												<th style="text-align: center" width="5%">Roy Rate</th>
 												<th style="text-align: center" width="8%">GST</th>
 
@@ -621,7 +629,8 @@ body {
 												<th style="text-align: center" width="10%">Tax value</th>
 												<th style="text-align: center" width="10%">Cost After
 													Tax</th>
-												<th style="text-align: center" width="5%">Final Rate/Unit</th>
+												<th style="text-align: center" width="5%">Final
+													Rate/Unit</th>
 												<th style="text-align: center" width="5%">Action</th>
 
 
@@ -661,12 +670,12 @@ body {
 													<c:if test="${item.enqQty > 0}">
 														<c:set var="uomName" value="${item.enqUomName}"></c:set>
 													</c:if>
-													
+
 													<td class="col-md-1" style="text-align: left"><input
-														type="text" 
-														id="uom_name${item.itemId}" name="uom_name${item.itemId}"
-														value="${uomName}" class="form-control"></td>
-													
+														type="text" id="uom_name${item.itemId}"
+														name="uom_name${item.itemId}" value="${uomName}"
+														class="form-control"></td>
+
 
 													<td class="col-md-1" style="text-align: center"><input
 														type="text" id="trans_cost${item.itemId}"
@@ -734,8 +743,8 @@ body {
 										</tbody>
 
 									</table>
-									
-                                  
+
+
 									<input type="hidden" id="rmc_mix_total" name="rmc_mix_total"
 										value="0" class="form-control" style="width: 100%;" required>
 
@@ -753,14 +762,14 @@ body {
 												value="${quotHeader.otherRemark1}" required>
 										</div>
 
- 	                                 <input type="hidden" id="stat" name="stat"
-										value="${stat}" class="form-control" style="width: 100%;" required>
+										<input type="hidden" id="stat" name="stat" value="${stat}"
+											class="form-control" style="width: 100%;" required>
 
 
 										<div class="col-md-1">
-											<input type="button" class="btn btn-primary"
-												value="Generate" onclick="valthisform()" id="generate">
-									
+											<input type="button" class="btn btn-primary" value="Generate"
+												onclick="valthisform()" id="generate">
+
 										</div>
 										<div class="col-md-2"></div>
 

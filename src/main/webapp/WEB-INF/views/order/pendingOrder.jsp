@@ -629,7 +629,11 @@
 																+ v.orderId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDetail('
+																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose('
+																+ v.orderId
+																+ ','
+																+ i
+																+ ')" style="color:black"><i class="fa fa-times" title="Close Order"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDetail('
 																+ v.orderId
 																+ ','
 																+ i
@@ -665,6 +669,17 @@
 
 			window.open("${pageContext.request.contextPath}/editOrder/"
 					+ orderId);
+
+		}
+		
+		function callClose(orderId) {
+			
+			var isDel = confirm('Are you sure want to close this record');
+			if (isDel == true) {
+
+			window.open("${pageContext.request.contextPath}/closeOpenOrder/"
+					+ orderId ,"_self");
+			}
 
 		}
 

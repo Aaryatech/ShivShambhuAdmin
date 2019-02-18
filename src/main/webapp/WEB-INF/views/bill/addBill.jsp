@@ -951,7 +951,7 @@ $
 		var chalanQty = '<input  type="text" value="'+v.itemQty+'" readonly  oninput="calculation('+i+','+v.itemId+')"   class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var discPer = '<input  type="text" value="0.0" oninput="calculation('+i+','+v.itemId+')" class="form-control"  id="discPer'+i+''+v.itemId+'" name="discPer'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var taxPer = '<input  type="text" readonly value="'+(v.cgstPer+v.sgstPer)+'" oninput="calculation('+i+','+v.itemId+')" class="form-control"  id="taxPer'+i+''+v.itemId+'" name="taxPer'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
-		var rate = '<input  type="hidden" value="'+v.poRate+'" class="form-control"  id="orderRate'+i+''+v.itemId+'" name="orderRate'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
+		var rate = '<input  type="hidden" value="'+v.orderRate+'" class="form-control"  id="orderRate'+i+''+v.itemId+'" name="orderRate'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var isTaxIncluding = '<input  type="hidden" value="'+v.poRate+'" class="form-control"  id="isTaxIncluding'+i+''+v.itemId+'" name="isTaxIncluding'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 
 		var taxPerc=parseFloat(v.cgstPer)+parseFloat(v.sgstPer);
@@ -979,7 +979,7 @@ $
 		
 
 		var index=i+1;
-		dataTable.row.add([ index,v.itemName,v.itemUom,v.poRate+""+rate+""+isTaxIncluding,v.itemQty,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
+		dataTable.row.add([ index,v.itemName,v.itemUom,v.orderRate+""+rate+""+isTaxIncluding,v.itemQty,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
 		$('#loader').hide();
 			
 			});

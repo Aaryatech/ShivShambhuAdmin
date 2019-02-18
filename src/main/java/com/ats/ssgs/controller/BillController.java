@@ -940,9 +940,13 @@ public class BillController {
 				rowData.add("" + "-");
 				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getItemName());
 				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getQty());
-				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getRate());
+				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getTaxableAmt()
+						/ getBillList.get(i).getGetBillDetails().get(j).getQty());
 				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getTaxableAmt());
-				rowData.add("" + "-");
+				rowData.add("" + "GST Sales".concat(" ")
+						.concat(String.valueOf(getBillList.get(i).getGetBillDetails().get(j).getCgstPer()
+								+ getBillList.get(i).getGetBillDetails().get(j).getSgstPer()))
+						.concat("%"));
 				rowData.add("" + "CGST".concat(" ")
 						.concat(String.valueOf(getBillList.get(i).getGetBillDetails().get(j).getCgstPer()))
 						.concat("%"));

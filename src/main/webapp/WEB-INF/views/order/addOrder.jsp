@@ -72,44 +72,9 @@
 }
 </style>
 
-<style>
-.alert {
-	padding: 20px;
-	background-color: red;
-	color: white;
-}
 
-.alert1 {
-	padding: 20px;
-	background-color: green;
-	color: white;
-}
 
-.closebtn {
-	margin-left: 15px;
-	color: white;
-	font-weight: bold;
-	float: right;
-	font-size: 22px;
-	line-height: 20px;
-	cursor: pointer;
-	transition: 0.3s;
-}
 
-.closebtn:hover {
-	color: black;
-}
-</style>
-
-<style type="text/css">
-.right {
-	text-align: right;
-}
-
-.left {
-	text-align: left;
-}
-</style>
 
 </head>
 <body onload="getData1()">
@@ -308,8 +273,7 @@
 									<div class="col-md-2">Order No*</div>
 									<div class="col-md-4">
 										<input type="text" readonly id="ord_no" name="ord_no"
-											style="width: 100%;" class="form-control"
-											> <span
+											style="width: 100%;" class="form-control"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 
@@ -533,7 +497,7 @@
 
 
 
-<script>
+	<script>
 		function getOrdNum() {
 			
 			var plantId = document.getElementById("plant_id").value;
@@ -586,9 +550,9 @@
 	
 	
 		</script>
-	
-	
-	
+
+
+
 
 	<script type="text/javascript">
 

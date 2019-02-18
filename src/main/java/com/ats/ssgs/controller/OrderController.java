@@ -41,6 +41,10 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.PoHeader;
+import com.ats.ssgs.model.chalan.ChalanDetail;
+import com.ats.ssgs.model.chalan.ChalanHeader;
+import com.ats.ssgs.model.chalan.GetChalanDetail;
+import com.ats.ssgs.model.chalan.GetChalanHeader;
 import com.ats.ssgs.model.chalan.getChalanPDFData;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.GetCust;
@@ -159,8 +163,6 @@ public class OrderController {
 
 	}
 
-	
-	
 	@RequestMapping(value = "/getPoDetailForOrderByPoId", method = RequestMethod.GET)
 	public @ResponseBody List<GetPoForOrder> getPoDetailForOrderByPoId(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -289,7 +291,6 @@ public class OrderController {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String curDate = dateFormat.format(new Date());
 
-			
 			model = new ModelAndView("order/addOrder");
 
 			model.addObject("title", "Add Order");
@@ -361,13 +362,15 @@ public class OrderController {
 			ordHeader.setExInt1(login.getUser().getUserId());
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			/*map.add("docCode", 3);
+			/*
+			 * map.add("docCode", 3);
+			 * 
+			 * com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url +
+			 * "getDocument", map, com.ats.ssgs.model.master.Document.class);
+			 */
 
-			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,
-					com.ats.ssgs.model.master.Document.class);*/
-			
-			System.out.println("order num is"+ord_no);
-			
+			System.out.println("order num is" + ord_no);
+
 			ordHeader.setOrderNo(ord_no);
 
 			if (poDetailForOrdList.get(0).getTaxAmt() == 0) {
@@ -389,29 +392,31 @@ public class OrderController {
 
 				isError = 2;
 
-				/*map = new LinkedMultiValueMap<String, Object>();
+				/*
+				 * map = new LinkedMultiValueMap<String, Object>();
+				 * 
+				 * map.add("srNo", doc.getSrNo() + 1); map.add("docCode", doc.getDocCode());
+				 */
 
-				map.add("srNo", doc.getSrNo() + 1);
-				map.add("docCode", doc.getDocCode());*/
+				/*
+				 * Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map,
+				 * Info.class);
+				 * 
+				 * map = new LinkedMultiValueMap<String, Object>();
+				 */
 
-				/*Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
-
-				map = new LinkedMultiValueMap<String, Object>();*/
-				
-				
 				System.out.println("order inserted......");
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("plantId", plantId);
 
-				Plant pData= rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
-				int a=pData.getExInt3()+1;
-				
+				Plant pData = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+				int a = pData.getExInt3() + 1;
+
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("plantId", plantId);
 				map.add("ordCount", a);
-				System.out.println("new count....."+a);
-		        Info  pData1= rest.postForObject(Constants.url + "updateOrderCounter", map, Info.class);
-			
+				System.out.println("new count....." + a);
+				Info pData1 = rest.postForObject(Constants.url + "updateOrderCounter", map, Info.class);
 
 				map.add("poId", insertOrdHeadRes.getPoId());
 
@@ -1078,25 +1083,22 @@ public class OrderController {
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
-			
-			
 
-		getChalanPDFData gc=new getChalanPDFData();
-			
-			int mchalanId=gc.getcId();
-			int mPlantId= gc.getpId();
-		
+			getChalanPDFData gc = new getChalanPDFData();
+
+			int mchalanId = gc.getcId();
+			int mPlantId = gc.getpId();
+
 			model.addObject("mPlantId", mPlantId);
-			model.addObject("mchalanId",mchalanId);
-		
+			model.addObject("mchalanId", mchalanId);
 
-		//System.err.println("chalan id in order  " + mchalanId + "plantId   " + mPlantId);*/
+			// System.err.println("chalan id in order " + mchalanId + "plantId " +
+			// mPlantId);*/
 			model.addObject("plantList", plantList);
-			
-			
-			    gc.setcId(0);
-			   gc.setpId(0);
-			
+
+			gc.setcId(0);
+			gc.setpId(0);
+
 			String fromDate = null, toDate = null;
 
 			if (request.getParameter("fromDate") == null || request.getParameter("fromDate") == "") {
@@ -1127,7 +1129,6 @@ public class OrderController {
 
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
-			
 
 		} catch (Exception e) {
 
@@ -1139,11 +1140,48 @@ public class OrderController {
 
 		return model;
 	}
-	
-	
-	
 
-	
+	@RequestMapping(value = "/closeOpenOrder/{orderId}", method = RequestMethod.GET)
+	public String closeOpenOrder(HttpServletRequest request, HttpServletResponse response, @PathVariable int orderId) {
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("orderId", orderId);
+
+			Info orderHeader = rest.postForObject(Constants.url + "UpdateOrderHeader", map, Info.class);
+			if (orderHeader != null) {
+				Info orderDetail = rest.postForObject(Constants.url + "UpdateOrderDetail", map, Info.class);
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exception in /closeOpenOrder @OrderController  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showPendingOrderList";
+	}
+
+	@RequestMapping(value = "/closeOpenOrder1/{orderId}", method = RequestMethod.GET)
+	public String closeOpenOrder1(HttpServletRequest request, HttpServletResponse response, @PathVariable int orderId) {
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("orderId", orderId);
+
+			Info orderHeader = rest.postForObject(Constants.url + "UpdateOrderHeader", map, Info.class);
+			if (orderHeader != null) {
+				Info orderDetail = rest.postForObject(Constants.url + "UpdateOrderDetail", map, Info.class);
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exception in /closeOpenOrder @OrderController  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showOrderList";
+	}
 
 	@RequestMapping(value = "/getOrderPendingListBetDate", method = RequestMethod.GET)
 	public @ResponseBody List<GetOrder> getOrderPendingListBetDate(HttpServletRequest request,
