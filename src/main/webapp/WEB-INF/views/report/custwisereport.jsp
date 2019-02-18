@@ -107,7 +107,7 @@
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select plant name')"
 										onchange="getData()">
-
+										<option value="0">All</option>
 										<c:forEach items="${plantList}" var="plant">
 											<c:choose>
 												<c:when test="${plant.plantId==plantId1}">

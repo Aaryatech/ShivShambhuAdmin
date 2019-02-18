@@ -11,6 +11,7 @@
 
 
 <c:url var="getTaxListBetweenDate" value="/getTaxListBetweenDate" />
+<c:url var="getCustByPlantId" value="/getCustByPlantId" />
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -106,7 +107,7 @@
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select plant name')"
 										onchange="getData()">
-
+										<option value="0">All</option>
 										<c:forEach items="${plantList}" var="plant">
 											<c:choose>
 												<c:when test="${plant.plantId==plantId1}">
@@ -302,7 +303,6 @@
 
 
 	<script type="text/javascript">
-		 
 		function showQuot() {
 
 			var custId = document.getElementById("custId").value;
@@ -456,6 +456,52 @@
 		}
 	</script>
 
+	<script type="text/javascript">
+		// on plant change function 
+		function getData() {
+			var plantId = document.getElementById("plantId").value;
+			var valid = true;
+
+			if (plantId == null || plantId == "") {
+				valid = false;
+				alert("Please select plant");
+			}
+
+			if (valid == true) {
+
+				$.getJSON('${getCustByPlantId}', {
+					plantId : plantId,
+					ajax : 'true',
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option selected value="-1"  >Select</option>';
+
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].custId + '">'
+								+ data[i].custName + '</option>';
+
+					}
+					html += '</option>';
+
+					$('#custId').html(html);
+					$("#custId").trigger("chosen:updated");
+					/* getCustInfo();
+
+					$('#po_id').html("-1");
+					$("#po_id").trigger("chosen:updated");
+					 */
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
+
+				});
+			}//end of if
+
+		}
+	</script>
 
 </body>
 </html>

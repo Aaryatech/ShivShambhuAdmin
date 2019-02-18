@@ -3255,7 +3255,7 @@ public class BillReportController {
 
 			model.addObject("plantList", plantList);
 
-			model.addObject("title", "Tax Summery Report");
+			model.addObject("title", "Tax Summary Report");
 
 		} catch (Exception e) {
 
