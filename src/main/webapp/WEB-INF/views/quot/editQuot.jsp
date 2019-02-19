@@ -321,7 +321,7 @@ body {
 								<div class="row">
 									<div class="col-md-2">Select Term & Condition</div>
 
-									<div class="col-md-4">
+									<div class="col-md-2">
 										<select id="quot_doc_term_id" name="quot_doc_term_id"
 											class="standardSelect" tabindex="1">
 											<option value="-1">Select</option>
@@ -337,6 +337,11 @@ body {
 												</c:choose>
 											</c:forEach>
 										</select>
+									</div>
+									<div class="col-md-2">
+										<input type="button" id="newItemAdd" name="newItemAdd"
+											class="btn btn-primary" style="width: 50%;" value="Quotation"
+											onclick="showDocDetailPopup()">
 									</div>
 
 
@@ -559,11 +564,11 @@ body {
 
 									<div class="col-md-2"></div>
 
-									<div class="col-md-2">
+									<!-- <div class="col-md-2">
 										<input type="button" id="newItemAdd" name="newItemAdd"
 											class="btn btn-primary" style="width: 100%;"
 											value="See Quotation" onclick="showDocDetailPopup()">
-									</div>
+									</div> -->
 
 								</div>
 								<div class="form-group"></div>

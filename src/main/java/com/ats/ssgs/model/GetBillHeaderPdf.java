@@ -87,6 +87,9 @@ public class GetBillHeaderPdf{
 	private float exFloat2;
 
 	List<GetBillDetail> getBillDetails;
+	List<GetBillDetByHsn> getBillDetByHsn;
+	
+	private String printWord;
 	
 	BankDetail bankDetail;
 
@@ -427,6 +430,25 @@ public class GetBillHeaderPdf{
 	public void setCompFactAdd(String compFactAdd) {
 		this.compFactAdd = compFactAdd;
 	}
+	
+	
+
+	public List<GetBillDetByHsn> getGetBillDetByHsn() {
+		return getBillDetByHsn;
+	}
+
+	public void setGetBillDetByHsn(List<GetBillDetByHsn> getBillDetByHsn) {
+		this.getBillDetByHsn = getBillDetByHsn;
+	}
+	
+
+	public String getPrintWord() {
+		return printWord;
+	}
+
+	public void setPrintWord(String printWord) {
+		this.printWord = printWord;
+	}
 
 	@Override
 	public String toString() {
@@ -441,7 +463,8 @@ public class GetBillHeaderPdf{
 				+ taxAmt + ", totalAmt=" + totalAmt + ", accId=" + accId + ", orderId=" + orderId + ", orderNo="
 				+ orderNo + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3="
 				+ exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exFloat1=" + exFloat1
-				+ ", exFloat2=" + exFloat2 + ", getBillDetails=" + getBillDetails + ", bankDetail=" + bankDetail + "]";
+				+ ", exFloat2=" + exFloat2 + ", getBillDetails=" + getBillDetails + ", getBillDetByHsn="
+				+ getBillDetByHsn + ", printWord=" + printWord + ", bankDetail=" + bankDetail + "]";
 	}
 
     	

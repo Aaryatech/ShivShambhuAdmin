@@ -3535,11 +3535,12 @@ public class BillReportController {
 			Calendar cal1 = Calendar.getInstance();
 			cal.set(cal1.get(Calendar.YEAR), cal1.get(Calendar.MONTH), 1);
 
-			String firstDate = sdf.format(cal.getTimeInMillis());
+			String firstDate = dd.format(cal.getTimeInMillis());
 
-			String endDate = sdf.format(cal.getTimeInMillis());
-			model.addObject("fromDate", DateConvertor.convertToDMY(firstDate));
-			model.addObject("toDate", DateConvertor.convertToDMY(endDate));
+			// String endDate = dd.format(cal.getTimeInMillis());
+			String toDate = dd.format(new Date());
+			model.addObject("fromDate", firstDate);
+			model.addObject("toDate", toDate);
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));

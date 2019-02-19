@@ -59,6 +59,7 @@ import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.BillDetail;
 import com.ats.ssgs.model.BillHeader;
+import com.ats.ssgs.model.GetBillDetByHsn;
 import com.ats.ssgs.model.GetBillDetail;
 import com.ats.ssgs.model.GetBillHeader;
 import com.ats.ssgs.model.GetBillHeaderPdf;
@@ -1476,16 +1477,21 @@ public class BillController {
 					GetBillHeaderPdf[].class);
 			ArrayList<GetBillHeaderPdf> billHeaders = new ArrayList<GetBillHeaderPdf>(Arrays.asList(billHeaderRes));
 			System.out.println("Complete order data is::::" + billHeaders.get(0).getGetBillDetails().get(0).toString());
+			for (int i = 0; i < billHeaders.size(); i++) {
+				map = new LinkedMultiValueMap<String, Object>();
+				map.add("billHeadIds", billHeaders.get(i).getBillHeadId());
 
-			/*
-			 * int q=billHeaderRes.length; System.out.println("len of res is"+q);
-			 * model.addObject("q", q);
-			 */
+				GetBillDetByHsn[] getBillDetByHsnRes = rest
+						.postForObject(Constants.url + "/getBillDetailsByIdAndHsnReport", map, GetBillDetByHsn[].class);
+				ArrayList<GetBillDetByHsn> hsnpdf = new ArrayList<GetBillDetByHsn>(Arrays.asList(getBillDetByHsnRes));
+				billHeaders.get(i).setGetBillDetByHsn(hsnpdf);
+				System.err.println("hsnpdf*******************************" + hsnpdf.toString());
+				String printWord = Currency.convertToIndianCurrency(String.valueOf(billHeaders.get(i).getTotalAmt()));
+				billHeaders.get(i).setPrintWord(printWord);
+			}
 
-			System.err.println("Bill detail*******************************"
-					+ billHeaders.get(0).getGetBillDetails().get(0).getRefNo());
-			// System.err.println("pdf data " +
-			// quotPrintData.get(0).getQuotDetPrint().toString());
+			// model.addObject("hsnpdf", hsnpdf);
+
 			String a = billHeaders.get(0).getGetBillDetails().get(0).getRefNo();
 			model.addObject("ref", a);
 			System.out.println("999" + a);
@@ -1496,6 +1502,17 @@ public class BillController {
 			HttpSession httpSession = request.getSession();
 			httpSession.setAttribute("Currency", new Currency());
 			model.addObject("billHeaderList", billHeaders);
+			/*
+			 * String val = null; for (int i = 0; i < hsnpdf.size(); i++)
+			 * 
+			 * {
+			 * 
+			 * val =
+			 * Currency.convertToIndianCurrency(String.valueOf(hsnpdf.get(i).getTotalAmt()))
+			 * ; }
+			 */
+
+			model.addObject("val", "");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -1546,9 +1563,9 @@ public class BillController {
 		// String filename = "/home/lenovo/Desktop/bill.pdf";
 		// String filename = "E:\\bill.pdf";
 		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
-
-		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 		// String filePath = "/home/lenovo/Desktop/bill.pdf";
+		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 		// String filePath = "E:\\bill.pdf";
 		// construct the complete absolute path of the file
