@@ -39,17 +39,29 @@
 		</p>
 		<hr></hr>
 		<p style="margin-left: 100px;">
-			Quotation No:<b>${quotNo1}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			Date:<b>${printData.quotDetPrint[0].quotDate}</b>
+			Quotation No : <b>${quotNo1}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			Date : <b>${printData.quotDetPrint[0].quotDate}</b>
 		</p>
 
 		<p style="margin-left: 100px;">
 			<b>To</b><br></br>
 			<c:out value="${printData.cust.custName}"></c:out>
-			<br></br> <u><br></br>Material Rate List With Carting Only For<b>
-					<c:out value="${printData.proj.projName}"></c:out> &nbsp;&nbsp;
-					Site
-			</b></u>
+			<br></br>
+
+
+
+			<c:out value="${printData.cust.custAddress}"></c:out>
+			<br></br>
+			<c:if test="${plantId!=70}">
+				<u><br></br>Material Rate List With Carting Only For<b> <c:out
+							value="${printData.proj.projName}"></c:out> &nbsp;&nbsp; Site
+				</b></u>
+			</c:if>
+			<c:if test="${plantId==70}">
+				<u><br></br>Quotation for Supply of RMC at your <b> <c:out
+							value="${printData.proj.projName}"></c:out> &nbsp;&nbsp; Site
+				</b></u>
+			</c:if>
 		</p>
 
 		<div>
@@ -123,11 +135,12 @@
 
 			<div style="margin-left: 100px; font-size: 13px; padding: 0px">
 				<b>Note – 1)Above rates are valid till One month.<br /> 2)
-					Cement grade:Ultratech OPC 53Grade.<br /> 3)Our Bank Details – SHIV
-					SHAMBHU BUILDCON IDBI BANK, AMBAD BRANCH, NASHIK A/c No -<br />
-					&nbsp;&nbsp;&nbsp;1991102000005203.IFSC CODE – IBKL0001991<br />
-					4)Toll charges will be paid by you at an actual. 5) Pumping charges
-					will be extra Rs.175/-<br /> 6) OUR GST NO.27ADHFS8127N1ZE
+					Cement grade:Ultratech OPC 53Grade.<br /> 3)Toll charges will be
+					paid by you at an actual. 4) OUR GST NO.27ADHFS8127N1ZE<br />
+					5)Our Bank Details – ${printData.comp.compName}
+					,${printData.bank.bankName}<br /> A/c No -
+					&nbsp;&nbsp;&nbsp;${printData.bank.accNo}.&nbsp;IFSC CODE –
+					${printData.bank.bankIfsc}<br />
 				</b>
 
 

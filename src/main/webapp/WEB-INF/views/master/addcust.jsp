@@ -191,7 +191,7 @@
 											class="form-control"
 											oninvalid="setCustomValidity('Please enter correct mob no')"
 											maxlength="10" value="${editComp.contactNo1}"
-											pattern="^[1-9]{1}[0-9]{9}$" autocomplete="off"
+											autocomplete="off"
 											onchange="try{setCustomValidity('')}catch(e){}" /> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -251,14 +251,14 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<div class="col-md-2">Category</div>
+									<div class="col-md-2">Select Category</div>
 
 									<div class="col-md-4">
 										<select id="cust_cate" name="cust_cate" class="standardSelect"
 											tabindex="1"
 											oninvalid="setCustomValidity('Please enter customer category')"
 											onchange="try{setCustomValidity('')}catch(e){}">
-											<option value="">Select</option>
+
 											<c:forEach items="${settingList}" var="custCate">
 												<option value="${custCate.settingId}">${custCate.settingValue}</option>
 											</c:forEach>

@@ -874,19 +874,26 @@ public class MasterController {
 			model.addObject("isEdit", 0);// new
 			model.addObject("title", "Add Project");
 
+			SimpleDateFormat dd = new SimpleDateFormat("dd-MM-yyyy");
+
+			Calendar cal = Calendar.getInstance();
+
+			Calendar cal1 = Calendar.getInstance();
+			cal.set(cal1.get(Calendar.YEAR), cal1.get(Calendar.MONTH), 1);
+
+			String firstDate = dd.format(cal.getTimeInMillis());
+			String endDate = dd.format(cal.getTimeInMillis());
+			System.out.println("sd " + firstDate);
+			System.out.println("ed " + endDate);
+			model.addObject("fromDate", firstDate);
+			model.addObject("toDate", endDate);
+
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
 			model.addObject("isError", isError);
 			isError = 0;
-
-			/*
-			 * Cust[] custArray = rest.getForObject(Constants.url + "getAllCustList",
-			 * Cust[].class); custList = new ArrayList<Cust>(Arrays.asList(custArray));
-			 * System.err.println("custList In showAddProject at Master Contr" + custList);
-			 * model.addObject("custList", custList);
-			 */
 
 			Company[] compArray = rest.getForObject(Constants.url + "getAllCompList", Company[].class);
 			compList = new ArrayList<Company>(Arrays.asList(compArray));
@@ -1656,22 +1663,6 @@ public class MasterController {
 			itemTypeList = new ArrayList<ItemType>(Arrays.asList(itemTypeArray));
 
 			model.addObject("itemTypeList", itemTypeList);
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
 
 		} catch (Exception e) {
 

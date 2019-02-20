@@ -247,17 +247,18 @@
 									<div class="col-md-2">Start Date*</div>
 									<div class="col-md-4">
 										<input type="text" id="start_date" name="start_date"
-											autocomplete="off" value="${editPro.startDate}" readonly
-											class="form-control" required style="width: 100%;">
+											value="${fromDate}" autocomplete="off"
+											value="${editPro.startDate}" readonly class="form-control"
+											required style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">End Date*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="end_date" name="end_date"
-											autocomplete="off" value="${editPro.endDate}"
-											onchange="checkDate()" class="form-control" required readonly
-											style="width: 100%;">
+											value="${toDate}" autocomplete="off"
+											value="${editPro.endDate}" onchange="checkDate()"
+											class="form-control" required readonly style="width: 100%;">
 									</div>
 
 								</div>
@@ -274,13 +275,13 @@
 											style="width: 100%;">${editPro.address}</textarea>
 									</div>
 
-									<div class="col-md-2">PIN Code No*</div>
+									<div class="col-md-2">PIN Code No</div>
 									<div class="col-md-4">
 										<input type="text" id="pincode" name="pincode" maxlength="6"
 											autocomplete="off" class="form-control" style="width: 100%;"
-											value="-" pattern="[0-9]+" 
+											value="-"
 											oninvalid="setCustomValidity('Please enter correct Pincode')"
-											onchange="try{setCustomValidity('')}catch(e){}" >
+											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
 								</div>

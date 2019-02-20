@@ -160,7 +160,7 @@
 									<div class="col-md-4">
 										<input type="text" id="uomShortName" name="uomShortName"
 											autocomplete="off" value="${editUom.uomShortName}"
-											class="form-control" pattern="[a-zA-Z][a-zA-Z]*"
+											class="form-control"
 											oninvalid="setCustomValidity('Please enter Uom Short Name')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
 											style="width: 100%;">
@@ -236,11 +236,11 @@
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editUom/${uom.uomId}"><i
-														class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
-													&nbsp; <a
+														class="fa fa-edit" style="color: black"></i> <span
+														class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deleteUom/${uom.uomId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o" style="color:black"></i></a></td>
+														class="fa fa-trash-o" style="color: black"></i></a></td>
 
 											</tr>
 										</c:forEach>

@@ -76,43 +76,12 @@
 
 			</tr>
 			<tr>
-				<td width="25%" colspan="3"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Delivery
-						Note</p>
 
-				</td>
-				<td colspan="3" width="25%"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Mode/Terms Of Payment
-						<!-- </p> 
-      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-						<b> ${billHeaderRes.payTerm}</b>
-					</p>
 
-				</td>
 			</tr>
 			<tr>
-				<td width="25%" colspan="3"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Supplier's Ref.
-						<!-- </p> 
-   	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-						<b>${ref}</b>
-					</p>
-				</td>
-				<%-- ${billHeaderRes.getBillDetails[0].refNo} --%>
-				<td colspan="3" width="25%"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Other
-						Reference(s)</p>
-				</td>
+
+
 			</tr>
 			<tr>
 				<td width="50%" rowspan="4" colspan="6"
@@ -145,7 +114,7 @@
 						Buyer's Order No.:
 						<!-- </p> 
       	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-						<b>${b}</b>
+						<b>${ref}</b>
 					</p>
 
 				</td>
@@ -162,56 +131,27 @@
 
 			</tr>
 			<tr>
-				<td width="25%" colspan="3"
+				<td width="25%" colspan="6"
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
 					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Delivery
-						Note</p>
-
-				</td>
-				<td colspan="3" width="25%"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Mode/Terms Of Payment
-						<!-- </p> 
-      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-						<b>${billHeaderRes.payTerm}</b>
-					</p>
-
-				</td>
-			</tr>
-			<tr>
-				<td width="25%" colspan="3"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Supplier's Ref.
-						<!-- </p> 
-   	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-						<b>${ref}</b>
-					</p>
-				</td>
-				<td colspan="3" width="25%"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Other
-						Reference(s)</p>
+						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Despatch
+						Doc. No.</p>
 
 				</td>
 
 			</tr>
 			<tr>
-				<td width="25%" colspan="3"
-					style="border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
+
+				<td colspan="6" width="25%"
+					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Terms Of Delivery
-						<!-- </p> 
-   	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-					</p>
+						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Project
+						Name</p>
+
 				</td>
 
+			</tr>
+			<tr>
 
 			</tr>
 
@@ -236,14 +176,17 @@
 				<td align="center" width="8%" rowspan="2"
 					style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 0.2px; color: #000; font-size: 10px;">HSN/SAC</td>
 
-				<td align="center" width="6%" rowspan="2"
-					style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">UOM
-				</td>
 
 				<td align="center" width="6%" rowspan="2"
 					style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">Qty</td>
 				<td align="center" width="6%" rowspan="2"
 					style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">Rate</td>
+
+
+				<td align="center" width="6%" rowspan="2"
+					style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">UOM
+				</td>
+
 				<td align="center" width="8%" rowspan="2"
 					style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">Taxable
 					Amt</td>
@@ -294,7 +237,6 @@
 		<h6 align="center">TAX INVOICE</h6>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0"
 			style="border-left: 1px solid #313131; border-right: 1px solid #313131; border-top: 1px solid #313131;">
-
 			<tr>
 				<td colspan="6" rowspan="3" width="50%"
 					style="border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
@@ -335,42 +277,12 @@
 
 			</tr>
 			<tr>
-				<td width="25%" colspan="3"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Delivery
-						Note</p>
 
-				</td>
-				<td colspan="3" width="25%"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Mode/Terms Of Payment
-						<!-- </p> 
-      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-						<b> ${billHeaderRes.payTerm}</b>
-					</p>
 
-				</td>
 			</tr>
 			<tr>
-				<td width="25%" colspan="3"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Supplier's Ref.
-						<!-- </p> 
-   	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-						<b>${ref}</b>
-					</p>
-				</td> ${billHeaderRes.getBillDetails[0].refNo}
-				<td colspan="3" width="25%"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Other
-						Reference(s)</p>
-				</td>
+
+
 			</tr>
 			<tr>
 				<td width="50%" rowspan="4" colspan="6"
@@ -403,7 +315,7 @@
 						Buyer's Order No.:
 						<!-- </p> 
       	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-						<b>${b}</b>
+						<b>${ref}</b>
 					</p>
 
 				</td>
@@ -420,58 +332,32 @@
 
 			</tr>
 			<tr>
-				<td width="25%" colspan="3"
+				<td width="25%" colspan="6"
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
 					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Delivery
-						Note</p>
-
-				</td>
-				<td colspan="3" width="25%"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Mode/Terms Of Payment
-						<!-- </p> 
-      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-						<b>${billHeaderRes.payTerm}</b>
-					</p>
-
-				</td>
-			</tr>
-			<tr>
-				<td width="25%" colspan="3"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Supplier's Ref.
-						<!-- </p> 
-   	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-						<b>${ref}</b>
-					</p>
-				</td>
-				<td colspan="3" width="25%"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Other
-						Reference(s)</p>
+						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Despatch
+						Doc. No.</p>
 
 				</td>
 
 			</tr>
 			<tr>
-				<td width="25%" colspan="3"
-					style="border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
+
+				<td colspan="6" width="25%"
+					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Terms Of Delivery
-						<!-- </p> 
-   	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-					</p>
+						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Project
+						Name</p>
+
 				</td>
+
+			</tr>
+			<tr>
+
 
 
 			</tr>
+
 		</table>
 
 		<table width="100%" border="0" cellpadding="0" cellspacing="0"
@@ -544,8 +430,7 @@
 					style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${billDetails.itemName}</td>
 				<td align="left"
 					style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${billDetails.hsnCode}</td>
-				<td align="left"
-					style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${billDetails.uomName}</td>
+
 
 
 				<td align="right"
@@ -555,7 +440,8 @@
 				<c:set var="totalQty" value="${totalQty+billDetails.qty}" />
 				<td align="center"
 					style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${billDetails.rate}</td>
-
+				<td align="left"
+					style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${billDetails.uomName}</td>
 
 				<td align="right"
 					style="border-left: 1px solid #313131; padding: 3px 4px; color: #000; font-size: 10px;"><fmt:formatNumber
@@ -693,11 +579,11 @@
 			<tr>
 				<td rowspan="2" width="2%"
 					style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">No.</td>
-				<td align="left" width="20%" rowspan="2"
+				<td align="left" width="10%" rowspan="2"
 					style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 10px; text-align: left">
 					HSN/SAC</td>
 
-				<td align="left" width="20%" rowspan="2"
+				<td align="left" width="13%" rowspan="2"
 					style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 10px; text-align: left">
 					Taxable Amt</td>
 
@@ -709,14 +595,23 @@
 				<td align="center" width="20%" colspan="2"
 					style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">State
 					Tax</td>
+				<td align="center" width="20%" colspan="2"
+					style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">IGST
+				</td>
 
-				<td align="center" width="18%" rowspan="2"
+
+				<td align="center" width="15%" rowspan="2"
 					style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">Amount</td>
 
 
 
 			</tr>
 			<tr>
+				<td align="center"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Rate
+					%</td>
+				<td align="center"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
 				<td align="center"
 					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Rate
 					%</td>
@@ -735,6 +630,7 @@
 			<c:set var="totalHsnCgst" value="0" />
 
 			<c:set var="totalHsnSgst" value="0" />
+			<c:set var="totalHsnIgst" value="0" />
 
 
 
@@ -779,6 +675,16 @@
 							type="number" maxFractionDigits="2" minFractionDigits="2"
 							value="${hsnpdf.sgstAmt}" /></td>
 
+					<td align="right"
+						style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+							type="number" maxFractionDigits="2" minFractionDigits="2"
+							value="${hsnpdf.igstPer}" /></td>
+
+					<td align="right"
+						style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+							type="number" maxFractionDigits="2" minFractionDigits="2"
+							value="${hsnpdf.igstAmt}" /></td>
+
 
 
 
@@ -796,6 +702,8 @@
 					<c:set var="totalHsnCgst" value="${totalHsnCgst+hsnpdf.cgstAmt}" />
 
 					<c:set var="totalHsnSgst" value="${totalHsnSgst+hsnpdf.sgstAmt}" />
+
+					<c:set var="totalHsnIgst" value="${totalHsnIgst+hsnpdf.igstAmt}" />
 
 
 
@@ -827,6 +735,17 @@
 					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
 							type="number" maxFractionDigits="2" minFractionDigits="2"
 							value="${totalHsnSgst}" /></b></td>
+
+				<td align="center"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+
+				<td align="right"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+							type="number" maxFractionDigits="2" minFractionDigits="2"
+							value="${totalHsnIgst}" /></b></td>
+
+
+
 				<td align="right"
 					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
 							type="number" maxFractionDigits="2" minFractionDigits="2"
@@ -880,9 +799,7 @@
 			<tr>
 				<td colspan="8" width="60%"
 					style="padding: 8px; color: #000; font-size: 13px;">Company's
-					VAT TIN: <br /> Company's CST No:<br /> Company's PAN:
-					${billHeaderRes.compPanNo}
-				</td>
+					PAN: ${billHeaderRes.compPanNo}</td>
 				<td colspan="4" width="60%"
 					style="border-left: 1px solid #313131; padding: 8px; color: #000; font-size: 15px;">
 					<p

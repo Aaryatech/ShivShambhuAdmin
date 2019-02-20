@@ -114,7 +114,7 @@ public class ChalanController {
 
 			model.addObject("usrList", usrList);
 
-			model.addObject("title", "Add Chalan");
+			model.addObject("title", "Add Challan");
 
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Calendar cal = Calendar.getInstance();
@@ -478,13 +478,11 @@ public class ChalanController {
 			System.err.println("chHeadInserRes " + chHeadInserRes.toString());
 			mchalanId = chHeadInserRes.getChalanId();
 			mPlantId = chHeadInserRes.getPlantId();
-			
-			
-			
+
 			System.out.println("ids are in chalan:" + mchalanId + mPlantId);
 
 			getChalanPDFData gc = new getChalanPDFData();
-			int flag=1;
+			int flag = 1;
 			gc.setcId(mchalanId);
 			gc.setpId(mPlantId);
 
@@ -554,7 +552,7 @@ public class ChalanController {
 
 			model.addObject("plantList", plantList);
 
-			model.addObject("title", "Chalan List");
+			model.addObject("title", "Challan List");
 
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
@@ -663,7 +661,7 @@ public class ChalanController {
 			}
 
 			rowData.add("" + status1);
-			
+
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
@@ -973,7 +971,7 @@ public class ChalanController {
 			model.addObject("editChalan", editChalan);
 			model.addObject("rstNo", chDetailList.get(0).getExVar1());
 
-			model.addObject("title", "Close Chalan");
+			model.addObject("title", "Close Challan");
 			Calendar cal = Calendar.getInstance();
 
 			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -1210,7 +1208,7 @@ public class ChalanController {
 
 			model.addObject("editChalan", editChalan);
 
-			model.addObject("title", "Edit Chalan");
+			model.addObject("title", "Edit Challan");
 
 			map = new LinkedMultiValueMap<String, Object>();
 
@@ -1419,7 +1417,7 @@ public class ChalanController {
 
 			model.addObject("plantList", plantList);
 
-			model.addObject("title", "Open Chalan List");
+			model.addObject("title", "Open Challan List");
 
 		} catch (Exception e) {
 			System.err.println("Exce in /showChalanList   " + e.getMessage());
@@ -1799,7 +1797,7 @@ public class ChalanController {
 
 			model.addObject("editChalan", editChalan);
 
-			model.addObject("title", "Close Chalan");
+			model.addObject("title", "Close Challan");
 
 			String inTime = request.getParameter("in_time");
 			float inKm = Float.parseFloat(request.getParameter("in_km"));

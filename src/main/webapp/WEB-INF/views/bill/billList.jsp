@@ -371,21 +371,21 @@
 								<button type="button" class="btn btn-primary"
 									onclick="exportToExcel();" id="expExcel"
 									style="align-content: center; width: 200px; margin-left: 80px;">
-									Export To Excel</button>
+									Export Bills(Talley)</button>
 
 
 
 								<button type="button" class="btn btn-primary"
 									onclick="exportToExcel1();" id="expExcel1"
 									style="align-content: center; width: 200px; margin-left: 80px;">
-									Export To Excel Item</button>
+									Export Item(Talley)</button>
 
 
 
 								<button type="button" class="btn btn-primary"
 									onclick="exportToExcel2();" id="expExcel2"
 									style="align-content: center; width: 200px; margin-left: 80px;">
-									Export To Excel Customer</button>
+									Export Customer(Talley)</button>
 							</center>
 
 						</div>
