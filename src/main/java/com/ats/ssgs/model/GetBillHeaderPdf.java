@@ -4,96 +4,99 @@ import java.util.List;
 
 import com.ats.ssgs.model.master.BankDetail;
 
-public class GetBillHeaderPdf{
+public class GetBillHeaderPdf {
 
 	private int billHeadId;
-	
+
 	private String billNo;
-	
+
 	private String billDate;
 
 	private int custId;
-	
+
 	private String custName;
-	
+
 	private String custMobNo;
-	
+
 	private String custGstNo;
-	
+
 	private String custVendor;
-	
+
 	private String plantName;
-	
+
 	private int projId;
-	
+
 	private String costSegment;
-	
+
 	private int paymentTermId;
-	
+
 	private String payTerm;
-	
+
 	private int companyId;
-	
+
 	private String compName;
-	
-    private String compPanNo;
-	
+
+	private String compPanNo;
+
 	private String compGstNo;
-	
+
 	private String contactNo1;
-	
+
 	private String contactNo2;
-	
+
 	private String email1;
-	
+
 	private String compOfficeAdd;
-	
+
 	private String compFactAdd;
-	
+
 	private String challanId;
-	
+
 	private String deliveryTerm;
-	
+
 	private int poId;
-	
+
 	private float taxableAmt;
-	
+
 	private float taxAmt;
-	
+
 	private float totalAmt;
-	
+
 	private int accId;
-	
+
 	private String orderId;
-	
+
 	private String orderNo;
-		
+
 	private int delStatus;
-	
+
 	private int exInt1;
-	
+
 	private int exInt2;
-	
+
 	private int exInt3;
-	
+
 	private String exVar1;
-	
+
 	private String exVar2;
-	
+
 	private String exVar3;
-	
+
 	private float exFloat1;
-	
+
 	private float exFloat2;
 
 	List<GetBillDetail> getBillDetails;
 	List<GetBillDetByHsn> getBillDetByHsn;
-	
+
 	private String printWord;
-	
+
 	BankDetail bankDetail;
 
-	
+	private String projName;
+	private String location;
+	private String chalanNo;
+
 	public String getCustVendor() {
 		return custVendor;
 	}
@@ -133,7 +136,7 @@ public class GetBillHeaderPdf{
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
-    
+
 	public BankDetail getBankDetail() {
 		return bankDetail;
 	}
@@ -157,7 +160,6 @@ public class GetBillHeaderPdf{
 	public void setBillNo(String billNo) {
 		this.billNo = billNo;
 	}
-
 
 	public String getBillDate() {
 		return billDate;
@@ -430,8 +432,6 @@ public class GetBillHeaderPdf{
 	public void setCompFactAdd(String compFactAdd) {
 		this.compFactAdd = compFactAdd;
 	}
-	
-	
 
 	public List<GetBillDetByHsn> getGetBillDetByHsn() {
 		return getBillDetByHsn;
@@ -440,7 +440,6 @@ public class GetBillHeaderPdf{
 	public void setGetBillDetByHsn(List<GetBillDetByHsn> getBillDetByHsn) {
 		this.getBillDetByHsn = getBillDetByHsn;
 	}
-	
 
 	public String getPrintWord() {
 		return printWord;
@@ -448,6 +447,30 @@ public class GetBillHeaderPdf{
 
 	public void setPrintWord(String printWord) {
 		this.printWord = printWord;
+	}
+
+	public String getProjName() {
+		return projName;
+	}
+
+	public void setProjName(String projName) {
+		this.projName = projName;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getChalanNo() {
+		return chalanNo;
+	}
+
+	public void setChalanNo(String chalanNo) {
+		this.chalanNo = chalanNo;
 	}
 
 	@Override
@@ -464,8 +487,8 @@ public class GetBillHeaderPdf{
 				+ orderNo + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3="
 				+ exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exFloat1=" + exFloat1
 				+ ", exFloat2=" + exFloat2 + ", getBillDetails=" + getBillDetails + ", getBillDetByHsn="
-				+ getBillDetByHsn + ", printWord=" + printWord + ", bankDetail=" + bankDetail + "]";
+				+ getBillDetByHsn + ", printWord=" + printWord + ", bankDetail=" + bankDetail + ", projName=" + projName
+				+ ", location=" + location + ", chalanNo=" + chalanNo + "]";
 	}
 
-    	
 }

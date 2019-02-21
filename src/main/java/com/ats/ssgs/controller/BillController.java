@@ -389,7 +389,7 @@ public class BillController {
 			// int poId = Integer.parseInt(request.getParameter("po_id"));
 
 			String billDate = request.getParameter("bill_date");
-			String remark = request.getParameter("remark");
+			String remark = request.getParameter("bill_remark");
 			String billNo = request.getParameter("bill_no");
 
 			BillHeader billHeader = new BillHeader();
@@ -415,7 +415,7 @@ public class BillController {
 			billHeader.setExInt2(gstNo);
 			billHeader.setExInt3(0);
 			billHeader.setExVar1("");
-			billHeader.setExVar2("");
+			billHeader.setExVar2(remark);
 			billHeader.setExVar3("");
 
 			billHeader.setPaymentTermId(billItems.get(0).getPoTermId());
@@ -1518,9 +1518,9 @@ public class BillController {
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		File f = new File("/home/lenovo/Desktop/bill.pdf");
+		// File f = new File("/home/lenovo/Desktop/bill.pdf");
 		// File f = new File("E:\\bill.pdf");
-		// File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
+		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1539,11 +1539,11 @@ public class BillController {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 
-		String filename = "/home/lenovo/Desktop/bill.pdf";
+		// String filename = "/home/lenovo/Desktop/bill.pdf";
 		// String filename = "E:\\bill.pdf";
-		// String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
-		String filePath = "/home/lenovo/Desktop/bill.pdf";
-		// String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		// String filePath = "/home/lenovo/Desktop/bill.pdf";
+		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 		// String filePath = "E:\\bill.pdf";

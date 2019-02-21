@@ -319,7 +319,7 @@ public class QuotController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("statusList", "1");
+			map.add("statusList", "1,2");
 			map.add("plantId", login.getUser().getPlantId());
 
 			GetQuotHeads[] quotArray = rest.postForObject(Constants.url + "getQuotHeaders", map, GetQuotHeads[].class);
@@ -1542,10 +1542,9 @@ public class QuotController {
 		String url = request.getParameter("url");
 		System.out.println("URL " + url);
 
-		File f = new File("/home/lenovo/Desktop/quot.pdf");
+		// File f = new File("/home/lenovo/Desktop/quot.pdf");
 
-		// File f = new
-		// File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf");
+		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf");
 		// File f = new File("E:\\bill.pdf");
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1564,14 +1563,12 @@ public class QuotController {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 
-		String filename = "/home/lenovo/Desktop/quot.pdf";
-		// String filename =
-		// "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
+		// String filename = "/home/lenovo/Desktop/quot.pdf";
+		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
 		// String filename ="E:\\bill.pdf";
-		// String filePath =
-		// "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
+		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
 
-		String filePath = "/home/lenovo/Desktop/quot.pdf";
+		// String filePath = "/home/lenovo/Desktop/quot.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 		// String filePath = "E:\\bill.pdf";
 		// construct the complete absolute path of the file

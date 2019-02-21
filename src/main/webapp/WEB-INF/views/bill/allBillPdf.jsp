@@ -135,7 +135,7 @@
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
 					<p
 						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Despatch
-						Doc. No.</p>
+						Doc. No. ${billHeaderRes.chalanNo}</p>
 
 				</td>
 
@@ -146,7 +146,7 @@
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 					<p
 						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Project
-						Name</p>
+						Name - ${billHeaderRes.projName} ${billHeaderRes.location}</p>
 
 				</td>
 
@@ -799,7 +799,9 @@
 			<tr>
 				<td colspan="8" width="60%"
 					style="padding: 8px; color: #000; font-size: 13px;">Company's
-					PAN: ${billHeaderRes.compPanNo}</td>
+					PAN: ${billHeaderRes.compPanNo}<br />Remark :
+					${billHeaderRes.exVar2}
+				</td>
 				<td colspan="4" width="60%"
 					style="border-left: 1px solid #313131; padding: 8px; color: #000; font-size: 15px;">
 					<p
@@ -815,8 +817,8 @@
 			<tr>
 				<td colspan="12" width="100%"
 					style="border-top: 1px solid #313131; padding: 8px; color: #000; font-size: 13px;">&nbsp;
-					Declaration: We declare that this invoice shows actual price of
-					goods described .</td>
+					Declaration: We declare that this invoice shows actual price of the
+					goods described and that all particulars are true and correct .</td>
 			</tr>
 			<tr>
 				<td colspan="8" width="60%"
@@ -825,6 +827,7 @@
 						style="color: #000; font-size: 12px; text-align: center; margin: 0px;">
 						Customer's Seal & Signature<br />
 					</p>
+
 				</td>
 				<td align="center" colspan="4" width="40%"
 					style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px;">
