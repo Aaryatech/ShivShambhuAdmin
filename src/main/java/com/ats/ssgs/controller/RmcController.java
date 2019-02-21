@@ -565,7 +565,7 @@ public class RmcController {
 			model.addObject("editComp", editComp);
 
 			String var = null;
-			int a = editComp.getExInt1();
+			int a = editComp.getExInt2();
 			if (String.valueOf(a).length() == 1) {
 				var = "000".concat(String.valueOf(a));
 

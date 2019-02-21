@@ -259,11 +259,11 @@
 
 									<div class="col-md-1">
 										No <input type="radio" name="gstNo" id="gstNo"
-											onchange="GSTBillNo(this.value)" checked value="0">
+											onchange="GSTBillNo(this.value)" value="0">
 									</div>
 
 									<div class="col-md-1">
-										Yes<input type="radio" name="gstNo" id="gstNo"
+										Yes<input type="radio" name="gstNo" id="gstNo" checked
 											onchange="GSTBillNo(this.value)" value="1">
 									</div>
 
@@ -272,7 +272,7 @@
 									<div class="col-md-3">
 										<input type="text" readonly id="bill_no" name="bill_no"
 											style="width: 100%;" class="form-control"
-											value="${editComp.exVar1}-${var}"> <span
+											value="${editComp.exVar2}-${var}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 
@@ -1150,33 +1150,7 @@ function toggle() {
 	
 	</script>
 
-	<script type="text/javascript">
-		function getBillNoByCompanyId(){
-			
-			var companyId=document.getElementById("companyId").value;
-			var a="-";
-			
-			
-				$
-				.getJSON(
-						'${getCompanyByCompanyId}',
-						{
-							companyId : companyId,
-							
-							ajax : 'true',
 
-						},
-						function(data) {
-				
-							document.getElementById("bill_no").value=(data.exVar1)+"-"+(data.exInt1);
-							
-						});
-				
-			
-			
-			
-		}
-		</script>
 
 	<script type="text/javascript">
 		function GSTBillNo(type){
@@ -1198,13 +1172,102 @@ function toggle() {
 							
 							
 							if(type==1){
+								
+								
+								var sn=data.exVar2;
+								var count=data.exInt2;
+								
+								
+								var c;
+								var len1=count.toString().length;
+								
+								if (len1 == 1) {
+									var c= "000"+count;
+
+								} else if (len1 == 2) {
+									var c= "00"+count;
+								} else if (len1 == 3) {
+									var c= "0"+count;
+
+								}
+								var billNumber=sn+"-"+c;
+					
+								document.getElementById("bill_no").value=billNumber;
+								
+								
 							
-							document.getElementById("bill_no").value=(data.exVar2)+"-"+(data.exInt2);
+						/* 	document.getElementById("bill_no").value=(data.exVar2)+"-"+(data.exInt2); */
 							}
 							else
 								{
-								document.getElementById("bill_no").value=(data.exVar1)+"-"+(data.exInt1);
+								var sn=data.exVar1;
+								var count=data.exInt1;
+								
+								
+								var c;
+								var len1=count.toString().length;
+								
+								if (len1 == 1) {
+									var c= "000"+count;
+
+								} else if (len1 == 2) {
+									var c= "00"+count;
+								} else if (len1 == 3) {
+									var c= "0"+count;
+
+								}
+								var billNumber=sn+"-"+c;
+					
+								document.getElementById("bill_no").value=billNumber;
+								
+							//	document.getElementById("bill_no").value=(data.exVar1)+"-"+(data.exInt1);
 								}	
+						});
+				
+			
+			
+			
+		}
+		</script>
+
+	<script type="text/javascript">
+		function getBillNoByCompanyId(){
+			
+			var companyId=document.getElementById("companyId").value;
+			
+			
+			
+				$
+				.getJSON(
+						'${getCompanyByCompanyId}',
+						{
+							companyId : companyId,
+							
+							ajax : 'true',
+
+						},
+						function(data) {
+							
+							var sn=data.exVar2;
+							var count=data.exInt2;
+							
+							
+							var c;
+							var len1=count.toString().length;
+							
+							if (len1 == 1) {
+								var c= "000"+count;
+
+							} else if (len1 == 2) {
+								var c= "00"+count;
+							} else if (len1 == 3) {
+								var c= "0"+count;
+
+							}
+							var billNumber=sn+"-"+c;
+				
+							document.getElementById("bill_no").value=billNumber;
+							
 						});
 				
 			

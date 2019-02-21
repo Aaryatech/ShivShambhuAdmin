@@ -94,6 +94,36 @@ public class GetItem {
 	private String uomName;
 	private String plantName;
 
+	private float cgst;
+
+	private float igst;
+
+	private float sgst;
+
+	public float getCgst() {
+		return cgst;
+	}
+
+	public void setCgst(float cgst) {
+		this.cgst = cgst;
+	}
+
+	public float getIgst() {
+		return igst;
+	}
+
+	public void setIgst(float igst) {
+		this.igst = igst;
+	}
+
+	public float getSgst() {
+		return sgst;
+	}
+
+	public void setSgst(float sgst) {
+		this.sgst = sgst;
+	}
+
 	public int getItemId() {
 		return itemId;
 	}
@@ -493,7 +523,8 @@ public class GetItem {
 				+ ", exBool1=" + exBool1 + ", exBool2=" + exBool2 + ", exBool3=" + exBool3 + ", sortNo=" + sortNo
 				+ ", length=" + length + ", height=" + height + ", width=" + width + ", itemLocation=" + itemLocation
 				+ ", royaltyRate=" + royaltyRate + ", freightRate=" + freightRate + ", taxName=" + taxName
-				+ ", hsnCode=" + hsnCode + ", uomName=" + uomName + ", plantName=" + plantName + "]";
+				+ ", hsnCode=" + hsnCode + ", uomName=" + uomName + ", plantName=" + plantName + ", cgst=" + cgst
+				+ ", igst=" + igst + ", sgst=" + sgst + "]";
 	}
 
 }

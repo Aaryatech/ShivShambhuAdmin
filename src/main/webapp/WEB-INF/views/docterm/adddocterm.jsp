@@ -124,8 +124,9 @@
 							</div>
 							<div class="col-md-4"></div>
 							<div class="col-md-4" align="left">
-								<a href="${pageContext.request.contextPath}/showDocTermList" style="color:black"><strong>Terms
-										And Conditions List</strong></a>
+								<a href="${pageContext.request.contextPath}/showDocTermList"
+									style="color: black"><strong>Terms And Conditions
+										List</strong></a>
 							</div>
 
 						</div>
@@ -134,6 +135,34 @@
 								id="submitForm" method="post">
 
 								<div class="row">
+
+
+									<div class="col-md-2">Select Plant</div>
+
+									<div class="col-md-4">
+										<select id="plantId" name="plantId" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select plant name')"
+											onchange="getData()">
+											<option value="">Select</option>
+
+											<c:forEach items="${plantList}" var="plant">
+												<c:if test="${sessionScope.plantId==0}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
+											</c:forEach>
+										</select>
+									</div>
 
 									<div class="col-md-2">Select Document*</div>
 
@@ -284,7 +313,7 @@
 
 	<script
 		src="${pageContext.request.contextPath}/resources/assets/js/lib/chosen/chosen.jquery.min.js"></script>
-		
+
 	<script>
 		jQuery(document).ready(function() {
 			jQuery(".standardSelect").chosen({

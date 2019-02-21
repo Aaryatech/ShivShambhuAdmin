@@ -209,7 +209,7 @@ public class BillController {
 			Company editComp = rest.postForObject(Constants.url + "getCompByCompanyId", map, Company.class);
 			model.addObject("editComp", editComp);
 			String var = null;
-			int a = editComp.getExInt1();
+			int a = editComp.getExInt2();
 			if (String.valueOf(a).length() == 1) {
 				var = "000".concat(String.valueOf(a));
 
@@ -616,13 +616,7 @@ public class BillController {
 
 			System.err.println("billHeader" + billHeader.toString());
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			/*
-			 * map.add("docCode", 6);
-			 * 
-			 * Document doc = rest.postForObject(Constants.url + "getDocument", map,
-			 * Document.class); billHeader.setBillNo(doc.getDocPrefix() + "" +
-			 * doc.getSrNo());
-			 */
+
 			billHeader.setBillNo(billNo);
 			billHeader.setBillDetailList(billDetailList);
 
@@ -891,7 +885,6 @@ public class BillController {
 		ExportToExcel expoExcel = new ExportToExcel();
 		List<String> rowData = new ArrayList<String>();
 
-		rowData.add("Sr. No");
 		rowData.add("Voucher Type");
 		rowData.add("Voucher No.");
 		rowData.add("Date");
@@ -928,8 +921,6 @@ public class BillController {
 			for (int j = 0; j < getBillList.get(i).getGetBillDetails().size(); j++) {
 				expoExcel = new ExportToExcel();
 				rowData = new ArrayList<String>();
-
-				rowData.add("" + (i + 1));
 
 				rowData.add("" + "Sales Voucher");
 				rowData.add("" + getBillList.get(i).getBillNo());
@@ -985,12 +976,11 @@ public class BillController {
 		ExportToExcel expoExcel1 = new ExportToExcel();
 		List<String> rowData1 = new ArrayList<String>();
 
-		rowData1.add("Sr. No");
 		rowData1.add("Name");
 		rowData1.add("Group");
 		rowData1.add("HSN");
 		rowData1.add("GST%");
-		rowData1.add("Op. Qty");
+		rowData1.add("Op.Qty");
 		rowData1.add("Rate");
 		rowData1.add("Amount");
 
@@ -1004,15 +994,15 @@ public class BillController {
 			rowData1 = new ArrayList<String>();
 
 			cnt1 = cnt1 + i;
-			rowData1.add("" + (i + 1));
 
 			rowData1.add("" + getItemList.get(i).getItemName());
-			rowData1.add("" + getItemList.get(i).getItemType());
+
+			rowData1.add("" + "Ready Mix Concrete");
 			rowData1.add("" + getItemList.get(i).getHsnCode());
-			rowData1.add("" + getItemList.get(i).getExVar1());
+			rowData1.add("" + (getItemList.get(i).getCgst() + getItemList.get(i).getSgst()));
 			rowData1.add("" + getItemList.get(i).getMaxStock());
 			rowData1.add("" + getItemList.get(i).getItemRate1());
-			rowData1.add("" + getItemList.get(i).getItemRate2());
+			rowData1.add("" + (getItemList.get(i).getMaxStock() * getItemList.get(i).getItemRate1()));
 
 			expoExcel1.setRowData(rowData1);
 			exportToExcelList1.add(expoExcel1);
@@ -1033,7 +1023,6 @@ public class BillController {
 		ExportToExcel expoExcel2 = new ExportToExcel();
 		List<String> rowData2 = new ArrayList<String>();
 
-		rowData2.add("Sr. No");
 		rowData2.add("Name");
 		rowData2.add("Group");
 		rowData2.add("GSTIN");
@@ -1063,11 +1052,10 @@ public class BillController {
 			rowData2 = new ArrayList<String>();
 
 			cnt2 = cnt2 + i;
-			rowData1.add("" + (i + 1));
 
 			rowData2.add("" + getCustList.get(i).getCustName());
 
-			rowData2.add("" + getCustList.get(i).getPlantName());
+			rowData2.add("" + "Sundry Debtor");
 			rowData2.add("" + getCustList.get(i).getCustGstNo());
 			rowData2.add("" + "-");
 			rowData2.add("" + getCustList.get(i).getCustAddress());
@@ -1076,8 +1064,8 @@ public class BillController {
 			rowData2.add("" + "-");
 			rowData2.add("" + "India");
 			rowData2.add("" + "Maharashtra");
-			rowData2.add("" + getCustList.get(i).getContactPerMob());
-			rowData2.add("" + getCustList.get(i).getContactPerMob());
+			rowData2.add("" + "-");
+			rowData2.add("" + "-");
 
 			rowData2.add("" + getCustList.get(i).getCustMobNo());
 			rowData2.add("" + "-");
@@ -1219,7 +1207,7 @@ public class BillController {
 			model.addObject("editComp", editComp);
 
 			String var = null;
-			int a = editComp.getExInt1();
+			int a = editComp.getExInt2();
 			if (String.valueOf(a).length() == 1) {
 				var = "000".concat(String.valueOf(a));
 
@@ -1502,15 +1490,6 @@ public class BillController {
 			HttpSession httpSession = request.getSession();
 			httpSession.setAttribute("Currency", new Currency());
 			model.addObject("billHeaderList", billHeaders);
-			/*
-			 * String val = null; for (int i = 0; i < hsnpdf.size(); i++)
-			 * 
-			 * {
-			 * 
-			 * val =
-			 * Currency.convertToIndianCurrency(String.valueOf(hsnpdf.get(i).getTotalAmt()))
-			 * ; }
-			 */
 
 			model.addObject("val", "");
 		} catch (Exception e) {
@@ -1539,9 +1518,9 @@ public class BillController {
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		// File f = new File("/home/lenovo/Desktop/bill.pdf");
+		File f = new File("/home/lenovo/Desktop/bill.pdf");
 		// File f = new File("E:\\bill.pdf");
-		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
+		// File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1560,11 +1539,11 @@ public class BillController {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 
-		// String filename = "/home/lenovo/Desktop/bill.pdf";
+		String filename = "/home/lenovo/Desktop/bill.pdf";
 		// String filename = "E:\\bill.pdf";
-		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
-		// String filePath = "/home/lenovo/Desktop/bill.pdf";
-		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		// String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		String filePath = "/home/lenovo/Desktop/bill.pdf";
+		// String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 		// String filePath = "E:\\bill.pdf";

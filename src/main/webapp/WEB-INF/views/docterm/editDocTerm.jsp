@@ -128,6 +128,31 @@
 
 								<div class="row">
 
+									<div class="col-md-2">Select Plant</div>
+
+									<div class="col-md-4">
+										<select id="plantId" name="plantId" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select plant name')"
+											onchange="getData()">
+											<option value="">Select</option>
+
+											<c:forEach items="${plantList}" var="plant">
+
+												<c:choose>
+													<c:when test="${plant.plantId==editDoc.exInt1}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}" disabled>${plant.plantName}
+													</c:otherwise>
+												</c:choose>
+
+												<%-- <option value="${plant.plantId}">${plant.plantName}</option> --%>
+											</c:forEach>
+										</select>
+									</div>
+
 									<div class="col-md-2">Select Document*</div>
 
 									<div class="col-md-4">

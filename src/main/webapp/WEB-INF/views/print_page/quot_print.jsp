@@ -96,7 +96,7 @@
 
 				<td
 					style="border-left: 1px solid #000; border-top: 1px solid #000; padding: 2px 2px; text-align: center; border-bottom: 1px solid #000;">Rate
-					/ Brass</td>
+				</td>
 			</tr>
 
 			<c:forEach items="${printData.quotDetPrint}" var="quot"

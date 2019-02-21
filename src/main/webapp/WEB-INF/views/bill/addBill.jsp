@@ -266,11 +266,11 @@
 
 									<div class="col-md-1">
 										No <input type="radio" name="gstNo" id="gstNo"
-											onchange="GSTBillNo(this.value)" checked value="0">
+											onchange="GSTBillNo(this.value)" value="0">
 									</div>
 
 									<div class="col-md-1">
-										Yes<input type="radio" name="gstNo" id="gstNo"
+										Yes<input type="radio" name="gstNo" id="gstNo" checked
 											onchange="GSTBillNo(this.value)" value="1">
 									</div>
 
@@ -279,7 +279,7 @@
 									<div class="col-md-3">
 										<input type="text" readonly id="bill_no" name="bill_no"
 											style="width: 100%;" class="form-control"
-											value="${editComp.exVar1}-${var}"> <span
+											value="${editComp.exVar2}-${var}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
 
@@ -1368,8 +1368,8 @@ function toggle() {
 						},
 						function(data) {
 							
-							var sn=data.exVar1;
-							var count=data.exInt1;
+							var sn=data.exVar2;
+							var count=data.exInt2;
 							
 							
 							var c;

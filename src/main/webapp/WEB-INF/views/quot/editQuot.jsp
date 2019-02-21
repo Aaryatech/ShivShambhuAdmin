@@ -329,7 +329,7 @@ body {
 											<c:forEach items="${docTermList}" var="qTerm">
 												<c:choose>
 													<c:when test="${quotHeader.quotTermId==qTerm.termId}">
-														<option selected value="${qTerm.termId}">${qTerm.termTitle}</option>
+														<option value="${qTerm.termId}" selected>${qTerm.termTitle}</option>
 													</c:when>
 													<c:otherwise>
 														<option value="${qTerm.termId}">${qTerm.termTitle}</option>

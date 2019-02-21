@@ -12,6 +12,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -29,11 +30,9 @@ import com.ats.ssgs.model.master.DocTermHeader;
 import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.GetDocTermHeader;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.LoginResUser;
+import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.TempDocDetail;
-
-
- 
-
 
 @Controller
 public class DocTermController {
@@ -41,6 +40,7 @@ public class DocTermController {
 
 	List<Document> docList;
 	int isError = 0;
+	List<Plant> plantList;
 
 	@RequestMapping(value = "/showAddDocTerm", method = RequestMethod.GET)
 	public ModelAndView showAddDocTerm(HttpServletRequest request, HttpServletResponse response) {
@@ -57,6 +57,10 @@ public class DocTermController {
 			docList = new ArrayList<Document>(Arrays.asList(docArray));
 
 			model.addObject("docList", docList);
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
 
 			model.addObject("title", "Add Terms & Conditions");
 
@@ -126,7 +130,6 @@ public class DocTermController {
 	@RequestMapping(value = "/getDocTermForEdit", method = RequestMethod.GET)
 	public @ResponseBody TempDocDetail getDocTermForEdit(HttpServletRequest request, HttpServletResponse response) {
 
-
 		int index = Integer.parseInt(request.getParameter("index"));
 
 		return tempDocList.get(index);
@@ -142,6 +145,7 @@ public class DocTermController {
 			System.err.println("Inside insert insertDocTerm method");
 
 			int docId = Integer.parseInt(request.getParameter("doc_id"));
+			int plantId = Integer.parseInt(request.getParameter("plantId"));
 
 			System.err.println("docId Id " + docId);
 
@@ -158,7 +162,7 @@ public class DocTermController {
 
 			docHead.setDelStatus(1);
 			docHead.setDocId(docId);
-			docHead.setExInt1(0);
+			docHead.setExInt1(plantId);
 			docHead.setExInt2(0);
 			docHead.setExVar1("NA");
 			docHead.setExVar2("NA");
@@ -223,9 +227,11 @@ public class DocTermController {
 			String termTitle = request.getParameter("termTitle");
 
 			int sortNo = Integer.parseInt(request.getParameter("sortNo"));
+			int plantId = Integer.parseInt(request.getParameter("plantId"));
 
 			editDoc.setTermTitle(termTitle);
 			editDoc.setSortNo(sortNo);
+			editDoc.setExInt1(plantId);
 
 			for (int i = 0; i < editDoc.getDetailList().size(); i++) {
 				int sortNoDetail = Integer.parseInt(
@@ -260,7 +266,13 @@ public class DocTermController {
 		ModelAndView model = null;
 		try {
 			model = new ModelAndView("docterm/doctermlist");
-			GetDocTermHeader[] docArray = rest.getForObject(Constants.url + "getAllDocHeaderList",
+
+			HttpSession httpSession = request.getSession();
+			LoginResUser login = (LoginResUser) httpSession.getAttribute("UserDetail");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("plantId", login.getUser().getPlantId());
+			GetDocTermHeader[] docArray = rest.postForObject(Constants.url + "getAllDocHeaderList", map,
 					GetDocTermHeader[].class);
 			docTermHeaderList = new ArrayList<GetDocTermHeader>(Arrays.asList(docArray));
 
@@ -292,6 +304,10 @@ public class DocTermController {
 			docList = new ArrayList<Document>(Arrays.asList(docArray));
 
 			model.addObject("docList", docList);
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
