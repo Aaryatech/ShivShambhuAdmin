@@ -347,7 +347,8 @@
 												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
-												<th style="text-align: center">Rate</th>
+												<th style="text-align: center">Basic Rate</th>
+												<th style="text-align: center">Taxable Rate</th>
 												<th style="text-align: center">Chalan Qty</th>
 												<th style="text-align: center">Qty</th>
 												<th style="text-align: center">Disc %</th>
@@ -886,7 +887,7 @@ $
 		
 
 		var index=i+1;
-		dataTable.row.add([ index,v.itemName,v.itemUom,v.orderRate+""+rate+""+isTaxIncluding,v.itemQty,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
+		dataTable.row.add([ index,v.itemName,v.itemUom,v.poRate,v.orderRate+""+rate+""+isTaxIncluding,v.itemQty,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
 		//$('#loader').hide();
 			
 			} );

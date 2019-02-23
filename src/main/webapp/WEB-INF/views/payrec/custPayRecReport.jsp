@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!doctype html>
 <html class="no-js" lang="">
@@ -12,8 +12,10 @@
 <title>Shiv Admin</title>
 
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
-<c:url var="getPayRecoveryDoneBetDate" value="/getPayRecoveryDoneBetDate" />
-<c:url var="getPayRecoveryBetDateVyPlantId" value="/getPayRecoveryBetDateVyPlantId" />
+<c:url var="getPayRecoveryDoneBetDate"
+	value="/getPayRecoveryDoneBetDate" />
+<c:url var="getPayRecoveryBetDateVyPlantId"
+	value="/getPayRecoveryBetDateVyPlantId" />
 
 
 <meta name="description" content="Sufee Admin - HTML5 Admin Template">
@@ -97,60 +99,49 @@
 							<div class="col-md-5"></div>
 
 						</div>
-					
-							<div class="card-body card-block">
 
-								<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-2">Customer Name*</div>
-									<div class="col-md-4">
-										<input type="text" id="custName" name="custName" maxlength="60"
-											value="${editCust.custName}" class="form-control"
-											onblur="getUomNameCheck()" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter correct Contractor Name')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
-									</div>
-									
-									<%-- 
-									<div class="col-md-2">Plant Name*</div>
-									<div class="col-md-4">
-										<input type="text" id="custName" name="custName" maxlength="60"
-											value="${plantId}" class="form-control"
-											onblur="getUomNameCheck()" autocomplete="off"
-											oninvalid="setCustomValidity('Please enter correct Contractor Name')"
-											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">
-									</div>
- --%>
-								
+						<div class="card-body card-block">
 
-								</div>
-								<div class="form-group"></div>
-
-								<div class="row">
-									<div class="col-md-2">From Date</div>
-									<div class="col-md-4">
-										<input type="text" autocomplete="off" id="from_date"
-											name="from_date" required style="width: 100%;"
-											class="form-control" value="${fromDate}"> <span
-											class="error" aria-live="polite"></span>
-									</div>
-									<div class="col-md-2">To Date</div>
-									<div class="col-md-4">
-										<input type="text" autocomplete="off" id="to_date"
-											name="to_date" style="width: 100%;" class="form-control"
-											value="${toDate}"> <span class="error"
-											aria-live="polite"></span>
-									</div>
-
+							<div class="form-group"></div>
+							<div class="row">
+								<div class="col-md-2">Customer Name*</div>
+								<div class="col-md-2">
+									<input type="text" id="custName" name="custName" maxlength="60"
+										value="${editCust.custName}" class="form-control" readonly
+										onblur="getUomNameCheck()" autocomplete="off"
+										oninvalid="setCustomValidity('Please enter correct Contractor Name')"
+										onchange="try{setCustomValidity('')}catch(e){}" required
+										style="width: 100%;">
 								</div>
 
 
-								<div class="form-group"></div>
-								
-								
-								<!-- <div class="row">
+								<div class="col-md-2">From Date</div>
+								<div class="col-md-2">
+									<input type="text" autocomplete="off" id="from_date" readonly
+										name="from_date" required style="width: 100%;"
+										class="form-control" value="${fromDate}"> <span
+										class="error" aria-live="polite"></span>
+								</div>
+								<div class="col-md-2">To Date</div>
+								<div class="col-md-2">
+									<input type="text" autocomplete="off" id="to_date" readonly
+										name="to_date" style="width: 100%;" class="form-control"
+										value="${toDate}"> <span class="error"
+										aria-live="polite"></span>
+								</div>
+
+							</div>
+
+
+							<div class="form-group"></div>
+
+
+
+
+							<div class="form-group"></div>
+
+
+							<!-- <div class="row">
 								<div class="col-md-6"></div>
 								<div class="col-md-2">
 									<input type="button" class="btn btn-primary"
@@ -161,73 +152,71 @@
  -->
 
 
-								<div class="card-body card-block">
-									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
-										<thead>
+							<div class="card-body card-block">
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
+										<tr>
+											<!-- <th class="check" style="text-align: center; width: 5%;"> -->
+											<th style="text-align: center; width: 5%;">Sr.</th>
+											<th style="text-align: center">Customer Name</th>
+											<th style="text-align: center">Bill No</th>
+											<th style="text-align: center">Bill Date</th>
+											<th style="text-align: center">Billing Amount</th>
+											<th style="text-align: center">Received Amount</th>
+											<th style="text-align: center">Pending Amount</th>
+
+										</tr>
+									</thead>
+
+
+									<tbody>
+										<c:forEach items="${recList}" var="rec" varStatus="count">
 											<tr>
-												<!-- <th class="check" style="text-align: center; width: 5%;"> -->
-												<th style="text-align: center; width: 5%;">Sr.</th>
-												<th style="text-align: center">Customer Name</th>
-												<th style="text-align: center">Bill No</th>
-												<th style="text-align: center">Bill Date</th>
-												<th style="text-align: center">Billing Amount</th>
-												<th style="text-align: center">Paid Amount</th>
-												<th style="text-align: center">Pending Amount</th>
-											
+
+												<td style="text-align: center">${count.index+1}</td>
+
+												<td style="text-align: left"><c:out
+														value="${rec.custName}" /></td>
+
+
+												<td style="text-align: left"><c:out
+														value="${rec.billNo}" /></td>
+
+
+												<td style="text-align: left"><c:out
+														value="${rec.billDate}" /></td>
+
+
+
+												<td style="text-align: left"><fmt:formatNumber
+														type="number" maxFractionDigits="2"
+														value="${rec.billTotal}" /></td>
+
+
+												<td style="text-align: left"><fmt:formatNumber
+														type="number" maxFractionDigits="2" value="${rec.paidAmt}" /></td>
+
+												<td style="text-align: left"><fmt:formatNumber
+														type="number" maxFractionDigits="2"
+														value="${rec.pendingAmt}" /></td>
+
+
+
+
+
 											</tr>
-										</thead>
+										</c:forEach>
+									</tbody>
 
+								</table>
 
-										<tbody>
-											<c:forEach items="${recList}" var="rec" varStatus="count">
-												<tr>
-													
-													<td style="text-align: center">${count.index+1}</td>
-
-													<td style="text-align: left"><c:out
-															value="${rec.custName}" /></td>
-													
-															
-													<td style="text-align: left"><c:out
-															value="${rec.billNo}" /></td>
-
-
-													<td style="text-align: left"><c:out
-															value="${rec.billDate}" /></td>
-
-													
-													
-													<td style="text-align: left">
-													
-													<fmt:formatNumber type = "number" 
-         maxFractionDigits = "2" value="${rec.billTotal}" /></td>
-
-
-													<td style="text-align: left">
-													<fmt:formatNumber type = "number" 
-         maxFractionDigits = "2" value="${rec.paidAmt}" /></td>
-
-													<td style="text-align: left">
-												<fmt:formatNumber type = "number" 
-         maxFractionDigits = "2" value="${rec.pendingAmt}" /></td>	
-													
-
-
-
-
-												</tr>
-											</c:forEach>
-										</tbody>
-
-									</table>
-									
-									<div class="col-md-2"></div>
+								<div class="col-md-2"></div>
 
 								<div class="col-md-3">
 
 									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();"   id="expExcel"
+										onclick="exportToExcel();" id="expExcel"
 										style="align-content: center; width: 200px; margin-left: 80px;">
 										Export To Excel</button>
 								</div>
@@ -236,28 +225,28 @@
 								<div class="col-md-3">
 
 									<button type="button" class="btn btn-primary"
-										onclick="genPdf()"  id="PDFButton"
+										onclick="genPdf()" id="PDFButton"
 										style="align-content: center; width: 100px; margin-left: 80px;">
 										PDF</button>
 								</div>
 								&nbsp;
-									
-								</div>
 
-								
 							</div>
 
-						
+
+						</div>
+
+
 					</div>
 				</div>
 
 			</div>
 		</div>
-<!-- disabled="disabled" -->
+		<!-- disabled="disabled" -->
 	</div>
-	
 
-	
+
+
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	<!-- Footer -->
 
@@ -324,7 +313,7 @@
 
 
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		// on plant change function 
 		function getData() {
 			var plantId = document.getElementById("plant_id").value;
@@ -511,7 +500,7 @@
 		}
 	</script>
 
-<script type="text/javascript">
+	<script type="text/javascript">
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");
@@ -526,16 +515,12 @@
 			var toDate = document.getElementById("to_date").value;
 			var custName = document.getElementById("custName").value;
 
-			window.open('${pageContext.request.contextPath}/showPayRecDoneCustSpecPdf/'
-					+ fromDate + '/' + toDate + '/' + custName);
-		//document.getElementById("expExcel").disabled = true;
+			window
+					.open('${pageContext.request.contextPath}/showPayRecDoneCustSpecPdf/'
+							+ fromDate + '/' + toDate + '/' + custName);
+			//document.getElementById("expExcel").disabled = true;
 
 		}
-		
-		
-		
-		
-		
 	</script>
 
 </body>

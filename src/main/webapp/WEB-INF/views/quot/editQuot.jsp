@@ -630,7 +630,7 @@ body {
 												<th style="text-align: center" width="5%">Roy Rate</th>
 												<th style="text-align: center" width="8%">GST</th>
 
-												<th style="text-align: center" width="10%">Taxable</th>
+												<th style="text-align: center" width="10%">Taxable Rate</th>
 												<th style="text-align: center" width="10%">Tax value</th>
 												<th style="text-align: center" width="10%">Cost After
 													Tax</th>

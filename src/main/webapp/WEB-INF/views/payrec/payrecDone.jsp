@@ -67,7 +67,7 @@
 
 
 </head>
-<body>
+<body onload="getData1()">
 
 
 	<!-- Left Panel -->
@@ -114,9 +114,20 @@
 											oninvalid="setCustomValidity('Please select plant name')"
 											onchange="getData()">
 											<option value="">Select</option>
-
 											<c:forEach items="${plantList}" var="plant">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+												<c:if test="${sessionScope.plantId==0}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 											</c:forEach>
 										</select>
 									</div>
@@ -190,7 +201,7 @@
 												<th style="text-align: center">Bill No</th>
 												<th style="text-align: center">Bill Date</th>
 												<th style="text-align: center">Billing Amount</th>
-												<th style="text-align: center">Paid Amount</th>
+												<th style="text-align: center">Received Amount</th>
 												<th style="text-align: center">Pending Amount</th>
 
 											</tr>
@@ -564,6 +575,53 @@
 		
 		
 		
+	</script>
+
+	<script type="text/javascript">
+		// on plant change function 
+		function getData1() {
+			var plantId = document.getElementById("plant_id").value;
+			var valid = true;
+
+			if (plantId == null || plantId == "") {
+				valid = false;
+				
+			}
+
+			if (valid == true) {
+
+				$.getJSON('${getCustByPlantId}', {
+					plantId : plantId,
+					ajax : 'true',
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option selected value="0"  >All</option>';
+
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].custId + '">'
+								+ data[i].custName + '</option>';
+
+					}
+					html += '</option>';
+
+					$('#cust_name').html(html);
+					$("#cust_name").trigger("chosen:updated");
+					/* getCustInfo();
+
+					$('#po_id').html("-1");
+					$("#po_id").trigger("chosen:updated");
+					 */
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
+
+				});
+			}//end of if
+
+		}
 	</script>
 
 </body>

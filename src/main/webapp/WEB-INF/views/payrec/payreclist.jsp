@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!doctype html>
 <html class="no-js" lang="">
@@ -98,71 +98,85 @@
 							<div class="col-md-5"></div>
 
 						</div>
-						
-							<div class="card-body card-block">
-							
-							
 
-								<div class="form-group"></div>
-								<div class="row">
+						<div class="card-body card-block">
 
-									<div class="col-md-2">Select Type*</div>
 
-									<div class="col-md-4">
-										<select id="txType" name="txType" class="standardSelect"
-											onchange="hideDiv(this.value)" tabindex="1">
 
+							<div class="form-group"></div>
+							<div class="row">
+
+								<div class="col-md-2">Select Type*</div>
+
+								<div class="col-md-4">
+									<select id="txType" name="txType" class="standardSelect"
+										onchange="hideDiv(this.value)" tabindex="1">
+
+										<option value="0">All</option>
+										<option value="1">Follow up Date</option>
+
+									</select>
+								</div>
+								<div class="col-md-2">Select Plant*</div>
+								<div class="col-md-4">
+									<select id="plantId" name="plantId" class="standardSelect"
+										tabindex="1" required onchange="showDetail()">
+										<option value="">Select</option>
+
+										<c:if test="${sessionScope.plantId==0}">
 											<option value="0">All</option>
-											<option value="1">Follow up Date</option>
-
-										</select>
-									</div>
-									<div class="col-md-2">Select Plant*</div>
-									<div class="col-md-4">
-										<select id="plantId" name="plantId" class="standardSelect"
-											tabindex="1" required onchange="showDetail()">
-											<option value="">Select</option>
-
-											<option selected value="0">All</option>
-											<c:forEach items="${plantList}" var="plant">
-
+										</c:if>
+										<c:forEach items="${plantList}" var="plant">
+											<c:if test="${sessionScope.plantId==0}">
 												<option value="${plant.plantId}">${plant.plantName}</option>
+											</c:if>
+											<c:if test="${sessionScope.plantId!=0}">
+												<c:choose>
+													<c:when test="${sessionScope.plantId==plant.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
 
-											</c:forEach>
-										</select>
-									</div>
 
-
+										</c:forEach>
+									</select>
 								</div>
 
 
+							</div>
 
-								<div class="form-group"></div>
 
-								<div class="row" id="hide_div" style="visibility: hidden">
-									<div class="col-md-2">From Date</div>
-									<div class="col-md-3">
-										<input type="text" autocomplete="off" id="from_date"
-											name="from_date" required style="width: 100%;"
-											class="form-control" value="${fromDate}"> <span
-											class="error" aria-live="polite"></span>
-									</div>
-									<div class="col-md-2">To Date</div>
-									<div class="col-md-3">
-										<input type="text" autocomplete="off" id="to_date"
-											name="to_date" style="width: 100%;" class="form-control"
-											value="${toDate}"> <span class="error"
-											aria-live="polite"></span>
-									</div>
-									<div class="col-md-2">
-										<input type="button" class="btn btn-primary"
-											onclick="showQuot()" value="Submit">
-									</div>
 
+							<div class="form-group"></div>
+
+							<div class="row" id="hide_div" style="visibility: hidden">
+								<div class="col-md-2">From Date</div>
+								<div class="col-md-3">
+									<input type="text" autocomplete="off" id="from_date"
+										name="from_date" required style="width: 100%;"
+										class="form-control" value="${fromDate}"> <span
+										class="error" aria-live="polite"></span>
+								</div>
+								<div class="col-md-2">To Date</div>
+								<div class="col-md-3">
+									<input type="text" autocomplete="off" id="to_date"
+										name="to_date" style="width: 100%;" class="form-control"
+										value="${toDate}"> <span class="error"
+										aria-live="polite"></span>
+								</div>
+								<div class="col-md-2">
+									<input type="button" class="btn btn-primary"
+										onclick="showQuot()" value="Submit">
 								</div>
 
-								<div class="form-group"></div>
-								<!-- 	<div class="form-group"></div>
+							</div>
+
+							<div class="form-group"></div>
+							<!-- 	<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-6"></div>
 									
@@ -170,122 +184,120 @@
  -->
 
 
-								<div class="card-body card-block">
-									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
-										<thead>
+							<div class="card-body card-block">
+								<table id="bootstrap-data-table"
+									class="table table-striped table-bordered">
+									<thead>
+										<tr>
+
+											<th style="text-align: center; width: 5%;">Sr.</th>
+											<th style="text-align: center">Customer Name</th>
+											<th style="text-align: center">Bill No</th>
+											<th style="text-align: center">Bill Date</th>
+											<th style="text-align: center">Credit Start Date</th>
+											<th style="text-align: center">Follow up Date</th>
+											<th style="text-align: center">Billing Amount</th>
+											<th style="text-align: center">Paid Amount</th>
+											<th style="text-align: center">Pending Amount</th>
+											<th style="text-align: center">Status</th>
+											<th style="text-align: center">Action</th>
+										</tr>
+									</thead>
+
+
+									<tbody>
+										<c:forEach items="${recList}" var="rec" varStatus="count">
 											<tr>
-												
-												<th style="text-align: center; width: 5%;">Sr.</th>
-												<th style="text-align: center">Customer Name</th>
-												<th style="text-align: center">Bill No</th>
-												<th style="text-align: center">Bill Date</th>
-												<th style="text-align: center">Credit Start Date</th>
-												<th style="text-align: center">Follow up Date</th>
-												<th style="text-align: center">Billing Amount</th>
-												<th style="text-align: center">Paid Amount</th>
-												<th style="text-align: center">Pending Amount</th>
-												<th style="text-align: center">Status</th>
-												<th style="text-align: center">Action</th>
-											</tr>
-										</thead>
-
-
-										<tbody>
-											<c:forEach items="${recList}" var="rec" varStatus="count">
-												<tr>
-													<%-- <td><input type="checkbox" class="chk"
+												<%-- <td><input type="checkbox" class="chk"
 														name="payHeadIds" id="payHeadIds${count.index+1}"
 														value="${rec.payHeadId}" /></td>
  --%>
-													<td style="text-align: center">${count.index+1}</td>
+												<td style="text-align: center">${count.index+1}</td>
 
-													<td style="text-align: left"><c:out
-															value="${rec.custName}" /></td>
+												<td style="text-align: left"><c:out
+														value="${rec.custName}" /></td>
 
-													<td style="text-align: left"><c:out
-															value="${rec.billNo}" /></td>
-
-
-													<td style="text-align: left"><c:out
-															value="${rec.billDate}" /></td>
+												<td style="text-align: left"><c:out
+														value="${rec.billNo}" /></td>
 
 
-
-													<td style="text-align: left"><c:out
-															value="${rec.creditDate1}" /></td>
-
-
-													<td style="text-align: left"><c:out
-															value="${rec.creditDate2}" /></td>
+												<td style="text-align: left"><c:out
+														value="${rec.billDate}" /></td>
 
 
-													<td style="text-align: left">
-													
-													<fmt:formatNumber type = "number" 
-         maxFractionDigits = "2" value="${rec.billTotal}" /></td>
+
+												<td style="text-align: left"><c:out
+														value="${rec.creditDate1}" /></td>
 
 
-													<td style="text-align: left">
-													<fmt:formatNumber type = "number" 
-         maxFractionDigits = "2" value="${rec.paidAmt}" /></td>
-
-													<td style="text-align: left">
-												<fmt:formatNumber type = "number" 
-         maxFractionDigits = "2" value="${rec.pendingAmt}" /></td>	
-													
+												<td style="text-align: left"><c:out
+														value="${rec.creditDate2}" /></td>
 
 
-													<td style="text-align: left"><c:choose>
-															<c:when test="${rec.status==0}">
+												<td style="text-align: left"><fmt:formatNumber
+														type="number" maxFractionDigits="2"
+														value="${rec.billTotal}" /></td>
+
+
+												<td style="text-align: left"><fmt:formatNumber
+														type="number" maxFractionDigits="2" value="${rec.paidAmt}" /></td>
+
+												<td style="text-align: left"><fmt:formatNumber
+														type="number" maxFractionDigits="2"
+														value="${rec.pendingAmt}" /></td>
+
+
+
+												<td style="text-align: left"><c:choose>
+														<c:when test="${rec.status==0}">
 													Pending
 													</c:when>
-															<c:when test="${rec.status==1}">
+														<c:when test="${rec.status==1}">
 													Done
 													</c:when>
-														</c:choose></td>
+													</c:choose></td>
 
 
-													<td style="text-align: center"><a href="#"
-														onclick="callEdit(${rec.payHeadId},${count.index})"><i
-															class="fa fa-edit" style="color: black"></i> <span
-															class="text-muted"></span></a></td>
+												<td style="text-align: center"><a href="#"
+													onclick="callEdit(${rec.payHeadId},${count.index})"><i
+														class="fa fa-edit" style="color: black"></i> <span
+														class="text-muted"></span></a></td>
 
 
 
 
-												</tr>
-											</c:forEach>
-										</tbody>
+											</tr>
+										</c:forEach>
+									</tbody>
 
-									</table>
+								</table>
 
-									<div class="col-md-2"></div>
+								<div class="col-md-2"></div>
 
-									<div class="col-md-3">
+								<div class="col-md-3">
 
-										<button type="button" class="btn btn-primary"
-											onclick="exportToExcel();" id="expExcel"
-											style="align-content: center; width: 200px; margin-left: 80px;">
-											Export To Excel</button>
-									</div>
-
-
-									<div class="col-md-3">
-
-										<button type="button" class="btn btn-primary"
-											onclick="genPdf()" id="PDFButton"
-											style="align-content: center; width: 100px; margin-left: 80px;">
-											PDF</button>
-									</div>
-									&nbsp;
-
+									<button type="button" class="btn btn-primary"
+										onclick="exportToExcel();" id="expExcel"
+										style="align-content: center; width: 200px; margin-left: 80px;">
+										Export To Excel</button>
 								</div>
 
-								
+
+								<div class="col-md-3">
+
+									<button type="button" class="btn btn-primary"
+										onclick="genPdf()" id="PDFButton"
+										style="align-content: center; width: 100px; margin-left: 80px;">
+										PDF</button>
+								</div>
+								&nbsp;
+
 							</div>
 
-						
+
+						</div>
+
+
 					</div>
 				</div>
 

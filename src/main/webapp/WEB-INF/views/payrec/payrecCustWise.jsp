@@ -67,7 +67,7 @@
 
 
 </head>
-<body>
+<body onload="getData1()">
 
 
 	<!-- Left Panel -->
@@ -104,51 +104,39 @@
 
 							<div class="form-group"></div>
 
-
-							<div class="row">
-								<div class="col-md-2">From Date</div>
-								<div class="col-md-4">
-									<input type="text" autocomplete="off" id="from_date"
-										name="from_date" required style="width: 100%;"
-										class="form-control" value="${fromDate}"> <span
-										class="error" aria-live="polite"></span>
-								</div>
-								<div class="col-md-2">To Date</div>
-								<div class="col-md-4">
-									<input type="text" autocomplete="off" id="to_date"
-										name="to_date" style="width: 100%;" class="form-control"
-										value="${toDate}"> <span class="error"
-										aria-live="polite"></span>
-								</div>
-
-							</div>
-
-
-							<div class="form-group"></div>
 							<div class="row">
 
 								<div class="col-md-2">Select Plant</div>
 
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<select id="plant_id" name="plant_id" class="standardSelect"
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select plant name')"
 										onchange="getData()">
-										<option value="0">All</option>
+										<c:if test="${sessionScope.plantId==0}">
+											<option value="0">All</option>
+										</c:if>
 										<c:forEach items="${plantList}" var="plant">
-											<c:choose>
-												<c:when test="${plant.plantId==plantId1}">
-													<option value="${plant.plantId}" selected>${plant.plantName}</option>
-												</c:when>
-												<c:otherwise>
-													<option value="${plant.plantId}">${plant.plantName}
-												</c:otherwise>
-											</c:choose>
+											<c:if test="${sessionScope.plantId==0}">
+												<option value="${plant.plantId}">${plant.plantName}</option>
+											</c:if>
+											<c:if test="${sessionScope.plantId!=0}">
+												<c:choose>
+													<c:when test="${sessionScope.plantId==plant.plantId}">
+														<option value="${plant.plantId}" selected>${plant.plantName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+
+
 										</c:forEach>
 									</select>
 								</div>
 								<div class="col-md-2">Select Customer</div>
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<select id="cust_name" name="cust_name" class="standardSelect"
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select customer')"
@@ -156,6 +144,29 @@
 										<option value="0">All</option>
 									</select>
 								</div>
+							</div>
+
+
+							<div class="form-group"></div>
+							<div class="row">
+								<div class="col-md-2">From Date</div>
+								<div class="col-md-2">
+									<input type="text" autocomplete="off" id="from_date"
+										name="from_date" required style="width: 100%;"
+										class="form-control" value="${fromDate}"> <span
+										class="error" aria-live="polite"></span>
+								</div>
+								<div class="col-md-2">To Date</div>
+								<div class="col-md-2">
+									<input type="text" autocomplete="off" id="to_date"
+										name="to_date" style="width: 100%;" class="form-control"
+										value="${toDate}"> <span class="error"
+										aria-live="polite"></span>
+								</div>
+
+
+								<div class="col-md-1"></div>
+
 								<div class="col-md-2">
 									<input type="button" class="btn btn-primary"
 										onclick="showQuot()" value="Submit">
@@ -183,7 +194,7 @@
 											<th style="text-align: center">Customer Name</th>
 											<th style="text-align: center">Mobile No.</th>
 											<th style="text-align: center">Billing Amount</th>
-											<th style="text-align: center">Paid Amount</th>
+											<th style="text-align: center">Received Amount</th>
 											<th style="text-align: center">Pending Amount</th>
 											<th style="text-align: center">Action</th>
 
@@ -348,6 +359,53 @@
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
+			}
+
+			if (valid == true) {
+
+				$.getJSON('${getCustByPlantId}', {
+					plantId : plantId,
+					ajax : 'true',
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option selected value="0"  >All</option>';
+
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].custId + '">'
+								+ data[i].custName + '</option>';
+
+					}
+					html += '</option>';
+
+					$('#cust_name').html(html);
+					$("#cust_name").trigger("chosen:updated");
+					/* getCustInfo();
+
+					$('#po_id').html("-1");
+					$("#po_id").trigger("chosen:updated");
+					 */
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
+
+				});
+			}//end of if
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		// on plant change function 
+		function getData1() {
+			var plantId = document.getElementById("plant_id").value;
+			var valid = true;
+
+			if (plantId == null || plantId == "") {
+				valid = false;
+
 			}
 
 			if (valid == true) {

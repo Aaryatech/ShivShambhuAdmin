@@ -37,9 +37,13 @@ import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.GetDatewiseReport;
+import com.ats.ssgs.model.master.BankDetail;
 import com.ats.ssgs.model.master.Cust;
+import com.ats.ssgs.model.master.GetBankDetail;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
+import com.ats.ssgs.model.quot.GetQuotHeads;
 import com.ats.ssgs.model.rec.GetPayRecoveryHead;
 import com.ats.ssgs.model.rec.GetPayRecoveryHeadCustWise;
 import com.ats.ssgs.model.rec.PayRecoveryDetail;
@@ -67,8 +71,7 @@ public class PayRecController {
 	int isError = 0;
 	List<GetPayRecoveryHead> recList;
 
-	
-	//1
+	// 1
 	@RequestMapping(value = "/showPaymentRecoveryList", method = RequestMethod.GET)
 	public ModelAndView showPaymentRecoveryList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -76,8 +79,8 @@ public class PayRecController {
 		try {
 			model = new ModelAndView("payrec/payreclist");
 
-			model.addObject("title", "Outstanding Followup List");
-			
+			model.addObject("title", "Recovery List");
+
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -88,7 +91,7 @@ public class PayRecController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
@@ -96,14 +99,12 @@ public class PayRecController {
 					GetPayRecoveryHead[].class);
 			recList = new ArrayList<GetPayRecoveryHead>(Arrays.asList(recHeadArray));
 			model.addObject("recList", recList);
-			
+
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
 
-			
-			
 			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 			ExportToExcel expoExcel = new ExportToExcel();
@@ -116,7 +117,7 @@ public class PayRecController {
 			rowData.add("Creadit Start Date");
 			rowData.add("Followup Date");
 			rowData.add("Billing Amount");
-			
+
 			rowData.add("Paid Amount");
 			rowData.add("Pending Amount");
 			rowData.add(" Status");
@@ -129,8 +130,6 @@ public class PayRecController {
 				rowData = new ArrayList<String>();
 				cnt = cnt + i;
 				rowData.add("" + (i + 1));
-
-				
 
 				rowData.add("" + recList.get(i).getCustName());
 				rowData.add("" + recList.get(i).getBillNo());
@@ -153,8 +152,7 @@ public class PayRecController {
 			session.setAttribute("exportExcelList", exportToExcelList);
 			session.setAttribute("excelName", "GetPaymwntRecoveryReport");
 
-			//return recList;
-			
+			// return recList;
 
 		} catch (Exception e) {
 
@@ -169,28 +167,27 @@ public class PayRecController {
 	}
 
 	@RequestMapping(value = "/getPayRecoveryBetDate", method = RequestMethod.GET)
-	public @ResponseBody List<GetPayRecoveryHead> getPayRecoveryBetDate(HttpServletRequest request,HttpServletResponse response) {
+	public @ResponseBody List<GetPayRecoveryHead> getPayRecoveryBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
 
 		System.err.println(" in getWeighListBetDate");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
-		String plantId=request.getParameter("plantId");
-		System.out.println("plant id "+plantId);
+		String plantId = request.getParameter("plantId");
+		System.out.println("plant id " + plantId);
 
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
-		map.add("plantId",plantId);
+		map.add("plantId", plantId);
 		// map.add("status", 0);
 
 		GetPayRecoveryHead[] recHeadArray = rest.postForObject(Constants.url + "getPayRecoveryBetDate", map,
 				GetPayRecoveryHead[].class);
 		recList = new ArrayList<GetPayRecoveryHead>(Arrays.asList(recHeadArray));
-		System.out.println("payrec data:"+recList.toString());
-		
-		
-		
+		System.out.println("payrec data:" + recList.toString());
+
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		ExportToExcel expoExcel = new ExportToExcel();
@@ -216,8 +213,6 @@ public class PayRecController {
 			cnt = cnt + i;
 			rowData.add("" + (i + 1));
 
-			
-
 			rowData.add("" + recList.get(i).getCustName());
 			rowData.add("" + recList.get(i).getBillNo());
 			rowData.add("" + recList.get(i).getBillDate());
@@ -238,11 +233,9 @@ public class PayRecController {
 		session.setAttribute("excelName", "GetPaymwntRecoveryReport");
 
 		return recList;
-		
+
 	}
 
-	
-	
 	@RequestMapping(value = "/getPayRecoveryBetDateVyPlantId", method = RequestMethod.GET)
 	public @ResponseBody List<GetPayRecoveryHead> getPayRecoveryBetDateVyPlantId(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -250,19 +243,17 @@ public class PayRecController {
 		System.err.println(" in getWeighListBetDate1");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-		String plantId=request.getParameter("plantId");
-		System.out.println("plant id "+plantId);
+		String plantId = request.getParameter("plantId");
+		System.out.println("plant id " + plantId);
 
-		
-		map.add("plantId",plantId);
+		map.add("plantId", plantId);
 		// map.add("status", 0);
 
 		GetPayRecoveryHead[] recHeadArray = rest.postForObject(Constants.url + "getPayRecoveryByStatus1", map,
 				GetPayRecoveryHead[].class);
 		recList = new ArrayList<GetPayRecoveryHead>(Arrays.asList(recHeadArray));
-		System.out.println("payrec data:"+recList.toString());
-		
-		
+		System.out.println("payrec data:" + recList.toString());
+
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		ExportToExcel expoExcel = new ExportToExcel();
@@ -288,8 +279,6 @@ public class PayRecController {
 			cnt = cnt + i;
 			rowData.add("" + (i + 1));
 
-			
-
 			rowData.add("" + recList.get(i).getCustName());
 			rowData.add("" + recList.get(i).getBillNo());
 			rowData.add("" + recList.get(i).getBillDate());
@@ -309,14 +298,8 @@ public class PayRecController {
 		session.setAttribute("exportExcelList", exportToExcelList);
 		session.setAttribute("excelName", "GetPaymwntRecoveryReport");
 
-		
-
 		return recList;
 	}
-
-	
-	
-	
 
 	// showPayRecPdf
 
@@ -348,7 +331,7 @@ public class PayRecController {
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f,3.2f, 3.2f});
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -381,23 +364,18 @@ public class PayRecController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
 
 			hcell = new PdfPCell(new Phrase("Credit Date ", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
 
 			hcell = new PdfPCell(new Phrase("Follow up  Date ", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
-			
-			
 
 			hcell = new PdfPCell(new Phrase("Bill Total", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -405,7 +383,6 @@ public class PayRecController {
 
 			table.addCell(hcell);
 
-			
 			hcell = new PdfPCell(new Phrase("Paid Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
@@ -414,14 +391,11 @@ public class PayRecController {
 			hcell = new PdfPCell(new Phrase("Pending Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
-			
-			
 
 			table.addCell(hcell);
-			
+
 			int index = 0;
-			for (		GetPayRecoveryHead work : recList) {
+			for (GetPayRecoveryHead work : recList) {
 				index++;
 				PdfPCell cell;
 
@@ -466,15 +440,13 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getBillTotal(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-
 
 				cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -489,13 +461,13 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				/*cell = new PdfPCell(new Phrase("" + work.getStatus(), headFont));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table.addCell(cell);*/
+
+				/*
+				 * cell = new PdfPCell(new Phrase("" + work.getStatus(), headFont));
+				 * cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				 * cell.setHorizontalAlignment(Element.ALIGN_RIGHT); cell.setPaddingRight(2);
+				 * cell.setPadding(3); table.addCell(cell);
+				 */
 
 			}
 			document.open();
@@ -557,12 +529,9 @@ public class PayRecController {
 		}
 
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/showPayRecPdf1", method = RequestMethod.GET)
-	public void showPayRecPdf1(
-			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+	public void showPayRecPdf1(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showPayRecPdf");
 		Document document = new Document(PageSize.A4);
@@ -588,7 +557,7 @@ public class PayRecController {
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f,3.2f, 3.2f});
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -621,23 +590,18 @@ public class PayRecController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
 
 			hcell = new PdfPCell(new Phrase("Credit Date ", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
 
 			hcell = new PdfPCell(new Phrase("Follow up  Date ", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
-			
-			
 
 			hcell = new PdfPCell(new Phrase("Bill Total", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -645,7 +609,6 @@ public class PayRecController {
 
 			table.addCell(hcell);
 
-			
 			hcell = new PdfPCell(new Phrase("Paid Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
@@ -654,14 +617,11 @@ public class PayRecController {
 			hcell = new PdfPCell(new Phrase("Pending Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-			
-			
-			
 
 			table.addCell(hcell);
-			
+
 			int index = 0;
-			for (		GetPayRecoveryHead work : recList) {
+			for (GetPayRecoveryHead work : recList) {
 				index++;
 				PdfPCell cell;
 
@@ -706,15 +666,13 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getBillTotal(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-
 
 				cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -729,13 +687,13 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				/*cell = new PdfPCell(new Phrase("" + work.getStatus(), headFont));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table.addCell(cell);*/
+
+				/*
+				 * cell = new PdfPCell(new Phrase("" + work.getStatus(), headFont));
+				 * cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				 * cell.setHorizontalAlignment(Element.ALIGN_RIGHT); cell.setPaddingRight(2);
+				 * cell.setPadding(3); table.addCell(cell);
+				 */
 
 			}
 			document.open();
@@ -748,11 +706,12 @@ public class PayRecController {
 			document.add(company);
 			document.add(new Paragraph(" "));
 
-			/*DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
-			String reportDate = DF.format(new Date());
-			//Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
-			p1.setAlignment(Element.ALIGN_CENTER);
-			document.add(p1);*/
+			/*
+			 * DateFormat DF = new SimpleDateFormat("dd-MM-yyyy"); String reportDate =
+			 * DF.format(new Date()); //Paragraph p1 = new Paragraph("From Date:" + fromDate
+			 * + "  To Date:" + toDate, headFont); p1.setAlignment(Element.ALIGN_CENTER);
+			 * document.add(p1);
+			 */
 			document.add(new Paragraph("\n"));
 			document.add(table);
 
@@ -797,11 +756,11 @@ public class PayRecController {
 		}
 
 	}
+
 	@RequestMapping(value = "/deleteRecordofPayRec", method = RequestMethod.POST)
 	public String deleteRecordofPayRec(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			System.out.println("Delete multi........................ " );
-
+			System.out.println("Delete multi........................ ");
 
 			String[] payHeadIds = request.getParameterValues("payHeadIds");
 
@@ -817,8 +776,6 @@ public class PayRecController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("payHeadIds", items);
-			
-
 
 			Info errMsg = rest.postForObject(Constants.url + "deleteMultiPayRec", map, Info.class);
 
@@ -839,21 +796,35 @@ public class PayRecController {
 
 		ModelAndView model = null;
 		try {
+
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
 			model = new ModelAndView("payrec/editpayrec");
+			model.addObject("title", "Edit Payment Recovery");
+
+			// getBankDetailByBankId
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("payHeadId", payHeadId);
 			editRec = rest.postForObject(Constants.url + "getPayRecoveryByPayHeadId", map, GetPayRecoveryHead.class);
 
-			model.addObject("title", "Edit Payment Recovery");
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("companyId", login.getUser().getCompanyId());
+			GetBankDetail[] quotArray = rest.postForObject(Constants.url + "getBankDetailByCompanyId", map,
+					GetBankDetail[].class);
+			List<GetBankDetail> bankDetailList = new ArrayList<GetBankDetail>(Arrays.asList(quotArray));
+
 			model.addObject("editRec", editRec);
 			model.addObject("editRecDetail", editRec.getPayRecoveryDetailList());
-			
+
+			model.addObject("bankDetailList", bankDetailList);
+
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		   String curDate = (dateFormat.format(new Date()));
-			String date=DateConvertor.convertToDMY(curDate);
-			System.out.println("dateeee"+date);
+			String curDate = (dateFormat.format(new Date()));
+			String date = DateConvertor.convertToDMY(curDate);
+			System.out.println("dateeee" + date);
 			model.addObject("curDate", date);
 
 		} catch (Exception e) {
@@ -906,6 +877,7 @@ public class PayRecController {
 				int typeTx = Integer.parseInt(request.getParameter("txType"));
 				String txNo = request.getParameter("txNo");
 				String paymentDate = request.getParameter("paymentDate");
+				String remark = request.getParameter("remark");
 
 				int index = Integer.parseInt(request.getParameter("index"));
 				float paidAmt = Float.parseFloat(request.getParameter("paidAmt"));
@@ -915,6 +887,7 @@ public class PayRecController {
 				System.out.println("IsDelete dateeee" + paymentDate);
 				editRec.getPayRecoveryDetailList().get(index).setPaymentDate((paymentDate));
 				editRec.getPayRecoveryDetailList().get(index).setPaidAmt(paidAmt);
+				editRec.getPayRecoveryDetailList().get(index).setRemark(remark);
 
 			}
 
@@ -924,6 +897,7 @@ public class PayRecController {
 				String paymentDate = request.getParameter("paymentDate");
 
 				int typeTx = Integer.parseInt(request.getParameter("txType"));
+				String remark = request.getParameter("remark");
 
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 				float paidAmt = Float.parseFloat(request.getParameter("paidAmt"));
@@ -942,6 +916,7 @@ public class PayRecController {
 				detail.setPayHeadId(payHeadId);
 				detail.setPaymentDate(paymentDate);
 				detail.setTypeTx(typeTx);
+				detail.setRemark(remark);
 
 				try {
 					detail.setTxNo(request.getParameter("txNo"));
@@ -985,12 +960,14 @@ public class PayRecController {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			String curDate = dateFormat.format(new Date());
+			String remark = request.getParameter("remark");
 
 			editRec.setCreditDate2(DateConvertor.convertToYMD(creditDate2));
 			editRec.setBillDate(DateConvertor.convertToYMD(editRec.getBillDate()));
 			editRec.setCreditDate1(DateConvertor.convertToYMD(editRec.getCreditDate1()));
 
 			editRec.setCreditDate3(DateConvertor.convertToYMD(editRec.getCreditDate3()));
+			editRec.setRemark(remark);
 
 			float paidAmt1 = 0;
 
@@ -1042,9 +1019,9 @@ public class PayRecController {
 
 	}
 
-	//2
-	//********************Recovery Done************************//
-	
+	// 2
+	// ********************Recovery Done************************//
+
 	@RequestMapping(value = "/showPaymentRecoveryDoneList", method = RequestMethod.GET)
 	public ModelAndView showPaymentRecoveryDoneList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -1052,16 +1029,13 @@ public class PayRecController {
 		try {
 			model = new ModelAndView("payrec/payrecDone");
 
-			model.addObject("title", "Payment Recovery Done List");
+			model.addObject("title", "Payment Receipt List");
 
-			
-			
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
 
-			
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -1072,11 +1046,9 @@ public class PayRecController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
-
-			
 
 		} catch (Exception e) {
 
@@ -1089,32 +1061,30 @@ public class PayRecController {
 		return model;
 
 	}
-	
-	
+
 	@RequestMapping(value = "/getPayRecoveryDoneBetDate", method = RequestMethod.GET)
-	public @ResponseBody List<GetPayRecoveryHead> getPayRecoveryDoneBetDate(HttpServletRequest request,HttpServletResponse response) {
+	public @ResponseBody List<GetPayRecoveryHead> getPayRecoveryDoneBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
 
 		System.err.println(" in getPayRecoveryDoneBetDate");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
-		String plantId=request.getParameter("plantId");
-		String custId=request.getParameter("custId");
-		System.out.println("plant id "+plantId);
+		String plantId = request.getParameter("plantId");
+		String custId = request.getParameter("custId");
+		System.out.println("plant id " + plantId);
 
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
-		map.add("plantId",plantId);
-		 map.add("custId",custId);
+		map.add("plantId", plantId);
+		map.add("custId", custId);
 
 		GetPayRecoveryHead[] recHeadArray = rest.postForObject(Constants.url + "getPayRecoveryDoneBetDate", map,
 				GetPayRecoveryHead[].class);
 		recList = new ArrayList<GetPayRecoveryHead>(Arrays.asList(recHeadArray));
-		System.out.println("payrec data:"+recList.toString());
-		
-		
-	
+		System.out.println("payrec data:" + recList.toString());
+
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		ExportToExcel expoExcel = new ExportToExcel();
@@ -1127,7 +1097,6 @@ public class PayRecController {
 		rowData.add("Billing Amount");
 		rowData.add("Paid Amount");
 		rowData.add("Pending Amount");
-		
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -1138,15 +1107,12 @@ public class PayRecController {
 			cnt = cnt + i;
 			rowData.add("" + (i + 1));
 
-			
-
 			rowData.add("" + recList.get(i).getCustName());
 			rowData.add("" + recList.get(i).getBillNo());
 			rowData.add("" + recList.get(i).getBillDate());
 			rowData.add("" + recList.get(i).getBillTotal());
 			rowData.add("" + recList.get(i).getPaidAmt());
 			rowData.add("" + recList.get(i).getPendingAmt());
-		
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -1158,10 +1124,9 @@ public class PayRecController {
 		session.setAttribute("excelName", "GetPaymwntRecoveryReport");
 
 		return recList;
-		
+
 	}
 
-	
 	@RequestMapping(value = "/showPayRecDonePdf/{fromDate}/{toDate}", method = RequestMethod.GET)
 	public void showPayRecDonePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
 			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
@@ -1190,7 +1155,7 @@ public class PayRecController {
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f});
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -1230,7 +1195,6 @@ public class PayRecController {
 
 			table.addCell(hcell);
 
-			
 			hcell = new PdfPCell(new Phrase("Paid Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
@@ -1241,9 +1205,9 @@ public class PayRecController {
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
-			
+
 			int index = 0;
-			for (		GetPayRecoveryHead work : recList) {
+			for (GetPayRecoveryHead work : recList) {
 				index++;
 				PdfPCell cell;
 
@@ -1274,8 +1238,7 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				
+
 				cell = new PdfPCell(new Phrase("" + work.getBillTotal(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -1283,7 +1246,6 @@ public class PayRecController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-			
 				cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -1297,8 +1259,6 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				
 
 			}
 			document.open();
@@ -1359,84 +1319,347 @@ public class PayRecController {
 
 		}
 	}
-	
-	
-	
-	
-	
-	//3
-	
-	
-	
-	//********************Recovery Done Customerwise************************//
-	
-		@RequestMapping(value = "/showPaymentRecoveryDoneCustWiseList", method = RequestMethod.GET)
-		public ModelAndView showPaymentRecoveryDoneCustWiseList(HttpServletRequest request, HttpServletResponse response) {
 
-			ModelAndView model = null;
-			try {
-				model = new ModelAndView("payrec/payrecDoneCustWise");
+	// 3
 
-				model.addObject("title", "Payment Recovery Done Customerwise List");
+	// ********************Recovery Customerwise************************//
 
-				
-				
-				Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
-				plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+	@RequestMapping(value = "/showPaymentRecoveryDoneCustWiseList", method = RequestMethod.GET)
+	public ModelAndView showPaymentRecoveryDoneCustWiseList(HttpServletRequest request, HttpServletResponse response) {
 
-				model.addObject("plantList", plantList);
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("payrec/payrecCustWise");
 
-				Calendar date = Calendar.getInstance();
-				date.set(Calendar.DAY_OF_MONTH, 1);
+			model.addObject("title", "Outstanding Summery");
 
-				Date firstDate = date.getTime();
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
-				DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+			model.addObject("plantList", plantList);
 
-				String fromDate = dateFormat.format(firstDate);
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
 
-				String toDate = dateFormat.format(new Date());
-				
-				model.addObject("fromDate", fromDate);
-				model.addObject("toDate", toDate);
+			Date firstDate = date.getTime();
 
-			} catch (Exception e) {
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 
-				System.err.println("exception In showPaymentRecoveryList at Txn Contr" + e.getMessage());
+			String fromDate = dateFormat.format(firstDate);
 
-				e.printStackTrace();
+			String toDate = dateFormat.format(new Date());
 
-			}
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
 
-			return model;
+		} catch (Exception e) {
+
+			System.err.println("exception In showPaymentRecoveryList at Txn Contr" + e.getMessage());
+
+			e.printStackTrace();
 
 		}
-		
-		
-		@RequestMapping(value = "/getPayRecoveryDoneBetDateCustWise", method = RequestMethod.GET)
-		public @ResponseBody List<GetPayRecoveryHeadCustWise> getPayRecoveryDoneBetDateCustWise(HttpServletRequest request,HttpServletResponse response) {
 
-			System.err.println(" in getPayRecoveryDoneBetDate");
+		return model;
+
+	}
+
+	@RequestMapping(value = "/getPayRecoveryDoneBetDateCustWise", method = RequestMethod.GET)
+	public @ResponseBody List<GetPayRecoveryHeadCustWise> getPayRecoveryDoneBetDateCustWise(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		System.err.println(" in getPayRecoveryDoneBetDate");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+		String plantId = request.getParameter("plantId");
+		String custId = request.getParameter("custId");
+		System.out.println("plant id " + plantId);
+
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		map.add("plantId", plantId);
+		map.add("custId", custId);
+
+		GetPayRecoveryHeadCustWise[] recHeadArray1 = rest.postForObject(
+				Constants.url + "getPayRecoveryDoneBetDateCustWise", map, GetPayRecoveryHeadCustWise[].class);
+		reccustwiseList = new ArrayList<GetPayRecoveryHeadCustWise>(Arrays.asList(recHeadArray1));
+		System.out.println("payrec data:" + reccustwiseList.toString());
+
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+
+		rowData.add("Sr. No");
+		rowData.add("Customer name");
+		rowData.add("Mobile No.");
+		rowData.add("Billing Amount");
+		rowData.add("Paid Amount");
+		rowData.add("Pending Amount");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		int cnt = 1;
+		for (int i = 0; i < reccustwiseList.size(); i++) {
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			cnt = cnt + i;
+			rowData.add("" + (i + 1));
+
+			rowData.add("" + reccustwiseList.get(i).getCustName());
+			rowData.add("" + reccustwiseList.get(i).getCustMobNo());
+			rowData.add("" + reccustwiseList.get(i).getBillTotal());
+			rowData.add("" + reccustwiseList.get(i).getPaidAmt());
+			rowData.add("" + reccustwiseList.get(i).getPendingAmt());
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "GetPaymentRecoveryReportCustomerWise");
+
+		return reccustwiseList;
+
+	}
+
+	@RequestMapping(value = "/showPayRecDoneCustWisePdf/{fromDate}/{toDate}", method = RequestMethod.GET)
+	public void showPayRecDoneCustWisePdf(@PathVariable("fromDate") String fromDate,
+			@PathVariable("toDate") String toDate, HttpServletRequest request, HttpServletResponse response)
+			throws FileNotFoundException {
+		BufferedOutputStream outStream = null;
+		System.out.println("Inside Pdf showPayRecPdf");
+		Document document = new Document(PageSize.A4);
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+
+		System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		String FILE_PATH = Constants.REPORT_SAVE;
+		File file = new File(FILE_PATH);
+
+		PdfWriter writer = null;
+
+		FileOutputStream out = new FileOutputStream(FILE_PATH);
+		try {
+			writer = PdfWriter.getInstance(document, out);
+		} catch (DocumentException e) {
+
+			e.printStackTrace();
+		}
+
+		PdfPTable table = new PdfPTable(6);
+		try {
+			System.out.println("Inside PDF Table try");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			headFont1.setColor(BaseColor.WHITE);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+
+			PdfPCell hcell = new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			hcell.setPadding(3);
+			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Customer Name", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Mobile No. ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Bill Total", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Paid Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("Pending Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			int index = 0;
+			for (GetPayRecoveryHeadCustWise work : reccustwiseList) {
+				index++;
+				PdfPCell cell;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPadding(3);
+				cell.setPaddingRight(2);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getCustName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getCustMobNo(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getBillTotal(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getPendingAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+			}
+			document.open();
+			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
+			name.setAlignment(Element.ALIGN_CENTER);
+			document.add(name);
+			document.add(new Paragraph(" "));
+			Paragraph company = new Paragraph("Payment Recovery Done Customerwise Report\n", f);
+			company.setAlignment(Element.ALIGN_CENTER);
+			document.add(company);
+			document.add(new Paragraph(" "));
+
+			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new Date());
+			Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			p1.setAlignment(Element.ALIGN_CENTER);
+			document.add(p1);
+			document.add(new Paragraph("\n"));
+			document.add(table);
+
+			int totalPages = writer.getPageNumber();
+
+			System.out.println("Page no " + totalPages);
+
+			document.close();
+
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+				try {
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
+					e.printStackTrace();
+				}
+			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error: " + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+	}
+	// 4
+
+	// ********************Recovery Done Specific Customer
+	// r************************//
+
+	@RequestMapping(value = "/custPayRec/{custId}/{fromDate}/{toDate}/", method = RequestMethod.GET)
+	public ModelAndView custPayRec(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("custId") int custId, @PathVariable("fromDate") String fromDate,
+			@PathVariable("toDate") String toDate) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("payrec/custPayRecReport");
+
+			model.addObject("title", "Customer Payment Recovery List");
+			String frDate = fromDate;
+			String tDate = toDate;
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			String fromDate = request.getParameter("fromDate");
-			String toDate = request.getParameter("toDate");
-			String plantId=request.getParameter("plantId");
-			String custId=request.getParameter("custId");
-			System.out.println("plant id "+plantId);
+			map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
-			map.add("toDate", DateConvertor.convertToYMD(toDate));
-			map.add("plantId",plantId);
-			 map.add("custId",custId);
+			map.add("custId", custId);
 
-			 GetPayRecoveryHeadCustWise[] recHeadArray1 = rest.postForObject(Constants.url + "getPayRecoveryDoneBetDateCustWise", map,
-					 GetPayRecoveryHeadCustWise[].class);
-			 reccustwiseList = new ArrayList<GetPayRecoveryHeadCustWise>(Arrays.asList(recHeadArray1));
-			System.out.println("payrec data:"+ reccustwiseList.toString());
-			
-			
-		
+			Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
+
+			model.addObject("editCust", editCust);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+			// System.out.println("from date is"+fromDate);
+			// System.out.println("to date is"+toDate);
+
+			////////////////
+			map.add("fromDate", DateConvertor.convertToYMD(frDate));
+			map.add("toDate", DateConvertor.convertToYMD(tDate));
+
+			/*
+			 * map.add("fromDate", fromDate); map.add("toDate", toDate);
+			 */
+
+			map.add("custId", custId);
+
+			GetPayRecoveryHead[] recHeadArray = rest.postForObject(Constants.url + "getPayRecoveryBetDateSpecCust", map,
+					GetPayRecoveryHead[].class);
+			recList = new ArrayList<GetPayRecoveryHead>(Arrays.asList(recHeadArray));
+			System.out.println("payrec data new:" + recList.toString());
+
+			model.addObject("recList", recList);
+
 			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 			ExportToExcel expoExcel = new ExportToExcel();
@@ -1444,29 +1667,27 @@ public class PayRecController {
 
 			rowData.add("Sr. No");
 			rowData.add("Customer name");
-			rowData.add("Mobile No.");
+			rowData.add("Bill No.");
+			rowData.add("Bill Date");
 			rowData.add("Billing Amount");
 			rowData.add("Paid Amount");
 			rowData.add("Pending Amount");
-			
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 			int cnt = 1;
-			for (int i = 0; i < reccustwiseList.size(); i++) {
+			for (int i = 0; i < recList.size(); i++) {
 				expoExcel = new ExportToExcel();
 				rowData = new ArrayList<String>();
 				cnt = cnt + i;
 				rowData.add("" + (i + 1));
 
-				
-
-				rowData.add("" + reccustwiseList.get(i).getCustName());
-				rowData.add("" + reccustwiseList.get(i).getCustMobNo());
-				rowData.add("" + reccustwiseList.get(i).getBillTotal());
-				rowData.add("" + reccustwiseList.get(i).getPaidAmt());
-				rowData.add("" + reccustwiseList.get(i).getPendingAmt());
-			
+				rowData.add("" + recList.get(i).getCustName());
+				rowData.add("" + recList.get(i).getBillNo());
+				rowData.add("" + recList.get(i).getBillDate());
+				rowData.add("" + recList.get(i).getBillTotal());
+				rowData.add("" + recList.get(i).getPaidAmt());
+				rowData.add("" + recList.get(i).getPendingAmt());
 
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
@@ -1475,517 +1696,212 @@ public class PayRecController {
 
 			HttpSession session = request.getSession();
 			session.setAttribute("exportExcelList", exportToExcelList);
-			session.setAttribute("excelName", "GetPaymentRecoveryReportCustomerWise");
+			session.setAttribute("excelName", "GetPaymwntRecoveryReport");
 
-			return reccustwiseList;
-			
+		} catch (Exception e) {
+
+			System.err.println("exception In showPaymentRecoveryList at Txn Contr" + e.getMessage());
+
+			e.printStackTrace();
+
 		}
 
-		
-		
-		@RequestMapping(value = "/showPayRecDoneCustWisePdf/{fromDate}/{toDate}", method = RequestMethod.GET)
-		public void showPayRecDoneCustWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
-				HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
-			BufferedOutputStream outStream = null;
-			System.out.println("Inside Pdf showPayRecPdf");
-			Document document = new Document(PageSize.A4);
+		return model;
 
-			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-			Calendar cal = Calendar.getInstance();
+	}
 
-			System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
-			String FILE_PATH = Constants.REPORT_SAVE;
-			File file = new File(FILE_PATH);
+	@RequestMapping(value = "/showPayRecDoneCustSpecPdf/{fromDate}/{toDate}/{custName}", method = RequestMethod.GET)
+	public void showPayRecDoneCustSpecPdf(@PathVariable("fromDate") String fromDate,
+			@PathVariable("toDate") String toDate, HttpServletRequest request, HttpServletResponse response)
+			throws FileNotFoundException {
+		BufferedOutputStream outStream = null;
+		System.out.println("Inside Pdf showPayRecPdf");
+		Document document = new Document(PageSize.A4);
 
-			PdfWriter writer = null;
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
 
-			FileOutputStream out = new FileOutputStream(FILE_PATH);
-			try {
-				writer = PdfWriter.getInstance(document, out);
-			} catch (DocumentException e) {
+		System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		String FILE_PATH = Constants.REPORT_SAVE;
+		File file = new File(FILE_PATH);
 
-				e.printStackTrace();
-			}
+		PdfWriter writer = null;
 
-			PdfPTable table = new PdfPTable(6);
-			try {
-				System.out.println("Inside PDF Table try");
-				table.setWidthPercentage(100);
-				table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f});
-				Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
-				Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
-				headFont1.setColor(BaseColor.WHITE);
-				Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+		FileOutputStream out = new FileOutputStream(FILE_PATH);
+		try {
+			writer = PdfWriter.getInstance(document, out);
+		} catch (DocumentException e) {
 
-				PdfPCell hcell = new PdfPCell();
-				hcell.setBackgroundColor(BaseColor.PINK);
-
-				hcell.setPadding(3);
-				hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
-				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				hcell.setBackgroundColor(BaseColor.PINK);
-
-				table.addCell(hcell);
-
-				hcell = new PdfPCell(new Phrase("Customer Name", headFont1));
-				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				hcell.setBackgroundColor(BaseColor.PINK);
-
-				table.addCell(hcell);
-
-				hcell = new PdfPCell(new Phrase("Mobile No. ", headFont1));
-				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				hcell.setBackgroundColor(BaseColor.PINK);
-
-				table.addCell(hcell);
-
-				
-
-				hcell = new PdfPCell(new Phrase("Bill Total", headFont1));
-				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				hcell.setBackgroundColor(BaseColor.PINK);
-
-				table.addCell(hcell);
-
-				
-				hcell = new PdfPCell(new Phrase("Paid Amount", headFont1));
-				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				hcell.setBackgroundColor(BaseColor.PINK);
-
-				table.addCell(hcell);
-				hcell = new PdfPCell(new Phrase("Pending Amount", headFont1));
-				hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				hcell.setBackgroundColor(BaseColor.PINK);
-
-				table.addCell(hcell);
-				
-				int index = 0;
-				for (GetPayRecoveryHeadCustWise work : reccustwiseList) {
-					index++;
-					PdfPCell cell;
-
-					cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					cell.setPadding(3);
-					cell.setPaddingRight(2);
-					table.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("" + work.getCustName(), headFont));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					cell.setPaddingRight(2);
-					cell.setPadding(3);
-					table.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("" + work.getCustMobNo(), headFont));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-					cell.setPaddingRight(2);
-					cell.setPadding(3);
-					table.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("" + work.getBillTotal(), headFont));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-					cell.setPaddingRight(2);
-					cell.setPadding(3);
-					table.addCell(cell);
-
-				
-					cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-					cell.setPaddingRight(2);
-					cell.setPadding(3);
-					table.addCell(cell);
-
-					cell = new PdfPCell(new Phrase("" + work.getPendingAmt(), headFont));
-					cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-					cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-					cell.setPaddingRight(2);
-					cell.setPadding(3);
-					table.addCell(cell);
-					
-					
-
-				}
-				document.open();
-				Paragraph name = new Paragraph("Shiv Shambhu\n", f);
-				name.setAlignment(Element.ALIGN_CENTER);
-				document.add(name);
-				document.add(new Paragraph(" "));
-				Paragraph company = new Paragraph("Payment Recovery Done Customerwise Report\n", f);
-				company.setAlignment(Element.ALIGN_CENTER);
-				document.add(company);
-				document.add(new Paragraph(" "));
-
-				DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
-				String reportDate = DF.format(new Date());
-				Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
-				p1.setAlignment(Element.ALIGN_CENTER);
-				document.add(p1);
-				document.add(new Paragraph("\n"));
-				document.add(table);
-
-				int totalPages = writer.getPageNumber();
-
-				System.out.println("Page no " + totalPages);
-
-				document.close();
-
-				if (file != null) {
-
-					String mimeType = URLConnection.guessContentTypeFromName(file.getName());
-
-					if (mimeType == null) {
-
-						mimeType = "application/pdf";
-
-					}
-
-					response.setContentType(mimeType);
-
-					response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
-
-					response.setContentLength((int) file.length());
-
-					InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
-
-					try {
-						FileCopyUtils.copy(inputStream, response.getOutputStream());
-					} catch (IOException e) {
-						System.out.println("Excep in Opening a Pdf File");
-						e.printStackTrace();
-					}
-				}
-
-			} catch (DocumentException ex) {
-
-				System.out.println("Pdf Generation Error: " + ex.getMessage());
-
-				ex.printStackTrace();
-
-			}
+			e.printStackTrace();
 		}
-	//4	
-		
 
-		//********************Recovery Done Specific Customer r************************//
-		
-			@RequestMapping(value = "/custPayRec/{custId}/{fromDate}/{toDate}/", method = RequestMethod.GET)
-			public ModelAndView custPayRec(HttpServletRequest request, HttpServletResponse response,@PathVariable("custId") int custId,@PathVariable("fromDate") String fromDate,@PathVariable("toDate") String toDate) {
+		PdfPTable table = new PdfPTable(7);
+		try {
+			System.out.println("Inside PDF Table try");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			headFont1.setColor(BaseColor.WHITE);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
 
-				ModelAndView model = null;
-				try {
-					model = new ModelAndView("payrec/custPayRecReport");
+			PdfPCell hcell = new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.PINK);
 
-					model.addObject("title", "Customer Payment Recovery Done Datewise List");
-					String frDate=fromDate;
-					String tDate=toDate;
+			hcell.setPadding(3);
+			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
 
-					MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			table.addCell(hcell);
 
-					
-					
-					
-					
-					map = new LinkedMultiValueMap<String, Object>();
-					
-					map.add("custId", custId);
-					
+			hcell = new PdfPCell(new Phrase("Customer Name", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
 
-					Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
+			table.addCell(hcell);
 
-					model.addObject("title", "Edit Customer");
-					model.addObject("editCust", editCust);
-					
-					map = new LinkedMultiValueMap<String, Object>();
+			hcell = new PdfPCell(new Phrase("Bill No. ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
 
-					
+			table.addCell(hcell);
 
-					model.addObject("fromDate", fromDate);
-					model.addObject("toDate", toDate);
-				
-				
-					
-					//System.out.println("from date is"+fromDate);
-					//System.out.println("to date is"+toDate);
+			hcell = new PdfPCell(new Phrase("Bill Date ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
 
-					
-					////////////////
-					map.add("fromDate", DateConvertor.convertToYMD(frDate));
-					map.add("toDate", DateConvertor.convertToYMD(tDate));
-					
-					
-					/*map.add("fromDate", fromDate);
-					map.add("toDate", toDate);*/
-				
-					 map.add("custId",custId);
+			table.addCell(hcell);
 
-					GetPayRecoveryHead[] recHeadArray = rest.postForObject(Constants.url + "getPayRecoveryBetDateSpecCust", map,
-							GetPayRecoveryHead[].class);
-					recList = new ArrayList<GetPayRecoveryHead>(Arrays.asList(recHeadArray));
-					System.out.println("payrec data new:"+recList.toString());
-					
-					model.addObject("recList", recList);
-				
-					List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+			hcell = new PdfPCell(new Phrase("Bill Total", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
 
-					ExportToExcel expoExcel = new ExportToExcel();
-					List<String> rowData = new ArrayList<String>();
+			table.addCell(hcell);
 
-					rowData.add("Sr. No");
-					rowData.add("Customer name");
-					rowData.add("Bill No.");
-					rowData.add("Bill Date");
-					rowData.add("Billing Amount");
-					rowData.add("Paid Amount");
-					rowData.add("Pending Amount");
-					
+			hcell = new PdfPCell(new Phrase("Paid Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
 
-					expoExcel.setRowData(rowData);
-					exportToExcelList.add(expoExcel);
-					int cnt = 1;
-					for (int i = 0; i < recList.size(); i++) {
-						expoExcel = new ExportToExcel();
-						rowData = new ArrayList<String>();
-						cnt = cnt + i;
-						rowData.add("" + (i + 1));
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("Pending Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
 
-						
+			table.addCell(hcell);
 
-						rowData.add("" + recList.get(i).getCustName());
-						rowData.add("" + recList.get(i).getBillNo());
-						rowData.add("" + recList.get(i).getBillDate());
-						rowData.add("" + recList.get(i).getBillTotal());
-						rowData.add("" + recList.get(i).getPaidAmt());
-						rowData.add("" + recList.get(i).getPendingAmt());
-					
+			int index = 0;
+			for (GetPayRecoveryHead work : recList) {
+				index++;
+				PdfPCell cell;
 
-						expoExcel.setRowData(rowData);
-						exportToExcelList.add(expoExcel);
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPadding(3);
+				cell.setPaddingRight(2);
+				table.addCell(cell);
 
-					}
+				cell = new PdfPCell(new Phrase("" + work.getCustName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
 
-					HttpSession session = request.getSession();
-					session.setAttribute("exportExcelList", exportToExcelList);
-					session.setAttribute("excelName", "GetPaymwntRecoveryReport");
+				cell = new PdfPCell(new Phrase("" + work.getBillNo(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
 
-					
-					
+				cell = new PdfPCell(new Phrase("" + work.getBillDate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
 
-				} catch (Exception e) {
+				cell = new PdfPCell(new Phrase("" + work.getBillTotal(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
 
-					System.err.println("exception In showPaymentRecoveryList at Txn Contr" + e.getMessage());
+				cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
 
-					e.printStackTrace();
-
-				}
-
-				return model;
+				cell = new PdfPCell(new Phrase("" + work.getPendingAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
 
 			}
-			
-			
-			
-			@RequestMapping(value = "/showPayRecDoneCustSpecPdf/{fromDate}/{toDate}/{custName}", method = RequestMethod.GET)
-			public void showPayRecDoneCustSpecPdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
-					HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
-				BufferedOutputStream outStream = null;
-				System.out.println("Inside Pdf showPayRecPdf");
-				Document document = new Document(PageSize.A4);
+			document.open();
+			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
+			name.setAlignment(Element.ALIGN_CENTER);
+			document.add(name);
+			document.add(new Paragraph(" "));
+			Paragraph company = new Paragraph("Payment Recovery Done  Report\n", f);
+			company.setAlignment(Element.ALIGN_CENTER);
+			document.add(company);
+			document.add(new Paragraph(" "));
 
-				DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-				Calendar cal = Calendar.getInstance();
+			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new Date());
+			Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			p1.setAlignment(Element.ALIGN_CENTER);
+			document.add(p1);
+			document.add(new Paragraph("\n"));
+			document.add(table);
 
-				System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
-				String FILE_PATH = Constants.REPORT_SAVE;
-				File file = new File(FILE_PATH);
+			int totalPages = writer.getPageNumber();
 
-				PdfWriter writer = null;
+			System.out.println("Page no " + totalPages);
 
-				FileOutputStream out = new FileOutputStream(FILE_PATH);
+			document.close();
+
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
 				try {
-					writer = PdfWriter.getInstance(document, out);
-				} catch (DocumentException e) {
-
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
 					e.printStackTrace();
 				}
-
-				PdfPTable table = new PdfPTable(7);
-				try {
-					System.out.println("Inside PDF Table try");
-					table.setWidthPercentage(100);
-					table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f});
-					Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
-					Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
-					headFont1.setColor(BaseColor.WHITE);
-					Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
-
-					PdfPCell hcell = new PdfPCell();
-					hcell.setBackgroundColor(BaseColor.PINK);
-
-					hcell.setPadding(3);
-					hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
-					hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					hcell.setBackgroundColor(BaseColor.PINK);
-
-					table.addCell(hcell);
-
-					hcell = new PdfPCell(new Phrase("Customer Name", headFont1));
-					hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					hcell.setBackgroundColor(BaseColor.PINK);
-
-					table.addCell(hcell);
-
-					hcell = new PdfPCell(new Phrase("Bill No. ", headFont1));
-					hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					hcell.setBackgroundColor(BaseColor.PINK);
-
-					table.addCell(hcell);
-
-					hcell = new PdfPCell(new Phrase("Bill Date ", headFont1));
-					hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					hcell.setBackgroundColor(BaseColor.PINK);
-
-					table.addCell(hcell);
-
-					hcell = new PdfPCell(new Phrase("Bill Total", headFont1));
-					hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					hcell.setBackgroundColor(BaseColor.PINK);
-
-					table.addCell(hcell);
-
-					
-					hcell = new PdfPCell(new Phrase("Paid Amount", headFont1));
-					hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					hcell.setBackgroundColor(BaseColor.PINK);
-
-					table.addCell(hcell);
-					hcell = new PdfPCell(new Phrase("Pending Amount", headFont1));
-					hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-					hcell.setBackgroundColor(BaseColor.PINK);
-
-					table.addCell(hcell);
-					
-					int index = 0;
-					for (GetPayRecoveryHead work : recList) {
-						index++;
-						PdfPCell cell;
-
-						cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
-						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						cell.setPadding(3);
-						cell.setPaddingRight(2);
-						table.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("" + work.getCustName(), headFont));
-						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-						cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-						cell.setPaddingRight(2);
-						cell.setPadding(3);
-						table.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("" + work.getBillNo(), headFont));
-						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-						cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-						cell.setPaddingRight(2);
-						cell.setPadding(3);
-						table.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("" + work.getBillDate(), headFont));
-						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-						cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-						cell.setPaddingRight(2);
-						cell.setPadding(3);
-						table.addCell(cell);
-
-
-						cell = new PdfPCell(new Phrase("" + work.getBillTotal(), headFont));
-						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-						cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-						cell.setPaddingRight(2);
-						cell.setPadding(3);
-						table.addCell(cell);
-
-						
-						
-						
-						cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
-						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-						cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-						cell.setPaddingRight(2);
-						cell.setPadding(3);
-						table.addCell(cell);
-
-						cell = new PdfPCell(new Phrase("" + work.getPendingAmt(), headFont));
-						cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-						cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-						cell.setPaddingRight(2);
-						cell.setPadding(3);
-						table.addCell(cell);
-						
-
-					}
-					document.open();
-					Paragraph name = new Paragraph("Shiv Shambhu\n", f);
-					name.setAlignment(Element.ALIGN_CENTER);
-					document.add(name);
-					document.add(new Paragraph(" "));
-					Paragraph company = new Paragraph("Payment Recovery Done  Report\n", f);
-					company.setAlignment(Element.ALIGN_CENTER);
-					document.add(company);
-					document.add(new Paragraph(" "));
-
-					DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
-					String reportDate = DF.format(new Date());
-					Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
-					p1.setAlignment(Element.ALIGN_CENTER);
-					document.add(p1);
-					document.add(new Paragraph("\n"));
-					document.add(table);
-
-					int totalPages = writer.getPageNumber();
-
-					System.out.println("Page no " + totalPages);
-
-					document.close();
-
-					if (file != null) {
-
-						String mimeType = URLConnection.guessContentTypeFromName(file.getName());
-
-						if (mimeType == null) {
-
-							mimeType = "application/pdf";
-
-						}
-
-						response.setContentType(mimeType);
-
-						response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
-
-						response.setContentLength((int) file.length());
-
-						InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
-
-						try {
-							FileCopyUtils.copy(inputStream, response.getOutputStream());
-						} catch (IOException e) {
-							System.out.println("Excep in Opening a Pdf File");
-							e.printStackTrace();
-						}
-					}
-
-				} catch (DocumentException ex) {
-
-					System.out.println("Pdf Generation Error: " + ex.getMessage());
-
-					ex.printStackTrace();
-
-				}
-
 			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error: " + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+
+	}
 }

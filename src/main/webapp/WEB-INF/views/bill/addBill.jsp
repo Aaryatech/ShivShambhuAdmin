@@ -437,7 +437,8 @@
 												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
-												<th style="text-align: center">Rate</th>
+												<th style="text-align: center">Basic Rate</th>
+												<th style="text-align: center">Taxable Rate</th>
 												<th style="text-align: center" width="8%">Chalan Qty</th>
 												<th style="text-align: center" width="15%">Qty</th>
 												<th style="text-align: center">Disc %</th>
@@ -456,7 +457,28 @@
 
 									</table>
 								</div>
+
+
 								<div class="form-group"></div>
+
+
+								<div class="form-group"></div>
+								<div class="row">
+
+									<!-- 	<div class="col-md-2">Other Cost After Tax</div>
+
+									<div class="col-md-3">845</div> -->
+									<div class="col-md-2">Total</div>
+
+									<div class="col-md-3" id="ordTotal">0</div>
+
+									<div class="col-md-2">
+										<!-- onclick="validateForm()" -->
+										<input type="Submit" class="btn btn-primary" value="Submit">
+
+									</div>
+
+								</div>
 
 								<!-- <div class="row">
 
@@ -477,11 +499,11 @@
 
 									<div class="col-md-3" id="ordTotal">0</div>
  -->
-									<div class="col-md-2">
-										<!-- onclick="validateForm()" -->
+									<!-- <div class="col-md-2">
+										onclick="validateForm()"
 										<input type="Submit" class="btn btn-primary" value="Submit">
 
-									</div>
+									</div> -->
 
 								</div>
 
@@ -975,15 +997,46 @@ $
     		var total = '<p id="total'+i+''+v.itemId+'">'+total.toFixed(2)+'</p>'
     		var taxableAmt = '<p id="taxableAmt'+i+''+v.itemId+'">'+taxableAmt.toFixed(2)+'</p>'
     		} 
+		 
+		 /* var len = data.length;
+		 alert(total);
+			//alert("orderTotal " +data.orderTotal);
+			var tot=0;
+			for (var i = 0; i < len; i++) {
+				alert("data[]" +total)
+			tot=total+tot;
+				//alert("Json " +JSON.stringify(data.ordDetailList[i]));
+
+			}
+			//alert("total " +tot);
+			tot=tot.toFixed(2);
+			document.getElementById("ordTotal").innerHTML=tot; */
 		
 		
 
 		var index=i+1;
-		dataTable.row.add([ index,v.itemName,v.itemUom,v.orderRate+""+rate+""+isTaxIncluding,v.itemQty,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
+		dataTable.row.add([ index,v.itemName,v.itemUom,v.poRate,v.orderRate+""+rate+""+isTaxIncluding,v.itemQty,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
 		$('#loader').hide();
 			
 			});
 		});
+		
+		/* function(data) {
+			
+
+			var len = data.length;
+			//alert("orderTotal " +data.orderTotal);
+			var tot=0;
+			for (var i = 0; i < len; i++) {
+				//alert("data[]" +data[i].total)
+			tot=data[i].total+tot;
+				//alert("Json " +JSON.stringify(data.ordDetailList[i]));
+
+			}
+			//alert("total " +tot);
+			tot=tot.toFixed(2);
+			document.getElementById("ordTotal").innerHTML=tot;
+		}); */
 		}
 		}
 	</script>

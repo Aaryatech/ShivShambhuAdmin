@@ -127,7 +127,7 @@
 
 						</div>
 						<div class="card-body card-block">
-							<form name="submitForm" 
+							<form name="submitForm"
 								action="${pageContext.request.contextPath}/editSubmitDetailPayRec"
 								id="submitForm" method="post">
 
@@ -197,18 +197,18 @@
 											class="form-control" required style="width: 100%;">
 									</div>
 
-									<div class="col-md-2">Paid Amount*</div>
+									<div class="col-md-2">Received Amount*</div>
 									<div class="col-md-2">
 										<input type="text" id="paidAmt1" name="paidAmt1"
-											autocomplete="off" value="${editRec.paidAmt}" 
-											onkeypress="return allowOnlyNumber(event);"readonly
+											autocomplete="off" value="${editRec.paidAmt}"
+											onkeypress="return allowOnlyNumber(event);" readonly
 											class="form-control" required style="width: 100%;">
 									</div>
 
 									<div class="col-md-2">Pending Amount*</div>
 									<div class="col-md-2">
 										<input type="text" id="pendingAmt" name="pendingAmt"
-										onkeypress="return allowOnlyNumber(event);"
+											onkeypress="return allowOnlyNumber(event);"
 											autocomplete="off" value="${editRec.pendingAmt}" readonly
 											class="form-control" required style="width: 100%;">
 									</div>
@@ -220,11 +220,12 @@
 								<hr>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Paid Amount</div>
+									<div class="col-md-2">Received Amount*</div>
 									<div class="col-md-4">
 										<input type="text" id="paidAmt" name="paidAmt"
-										onkeypress="return allowOnlyNumber(event);" onchange="checkstock() "
-											class="form-control" autocomplete="off" style="width: 100%;">
+											onkeypress="return allowOnlyNumber(event);"
+											onchange="checkstock() " class="form-control"
+											autocomplete="off" style="width: 100%;">
 									</div>
 
 
@@ -247,26 +248,67 @@
 								<div class="form-group"></div>
 								<div class="row">
 
+									<div class="col-md-2">Select Bank</div>
+
+									<div class="col-md-2">
+										<select id="bankDetail" name="bankDetail"
+											class="standardSelect" tabindex="1" required
+											oninvalid="setCustomValidity('Please select plant name')"
+											onchange="getData()">
+
+
+
+											<c:forEach items="${bankDetailList}" var="bankDetail">
+
+												<c:if test="${sessionScope.companyId==0}">
+													<option value="${bankDetail.bankDetId}">${bankDetail.bankName}</option>
+												</c:if>
+												<c:if test="${sessionScope.companyId!=0}">
+													<option value="${bankDetail.bankDetId}" Selected>${bankDetail.bankName}</option>
+												</c:if>
+
+											</c:forEach>
+										</select>
+									</div>
+
 									<div class="col-md-2">Transaction No*</div>
-									<div class="col-md-3">
+									<div class="col-md-2">
 										<input type="text" id="txNo" name="txNo" class="form-control"
 											autocomplete="off" style="width: 100%;"
-											
 											onkeypress="return allowOnlyNumber(event);">
 									</div>
 
-									<div class="col-md-1">Payment Date*</div>
-									<div class="col-md-3">
+									<div class="col-md-2">Payment Date*</div>
+									<div class="col-md-2">
 										<input type="text" id="paymentDate" name="paymentDate"
-											required class="form-control" autocomplete="off" value="${curDate}"
-											style="width: 100%;">
+											required class="form-control" autocomplete="off"
+											value="${curDate}" style="width: 100%;">
+									</div>
+
+								</div>
+
+
+								<div class="form-group"></div>
+								<div class="row">
+
+									<div class="col-md-2">Remark</div>
+									<div class="col-md-7">
+										<input type="text" id="remark" name="remark"
+											class="form-control" autocomplete="off" style="width: 100%;"
+											value="-">
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">
 										<input type="button" value="Add" class="btn btn-primary"
 											style="align-content: center; width: 113px;" onclick="add()" />
 									</div>
+
+
+
 								</div>
+
+								<div class="form-group"></div>
+
 
 								<input type="hidden" id="isDelete" name="isDelete" value="0">
 								<input type="hidden" name="isEdit" id="isEdit" value="0">
@@ -284,9 +326,12 @@
 											<tr>
 
 												<th style="text-align: center; width: 5%;">Sr No</th>
-												<th style="text-align: center">Payment Date</th>
-												<th style="text-align: center">Paid Amount</th>
-												<th style="text-align: center; width: 5%;">Action</th>
+
+												<th style="text-align: center; width: 40%;">Payment
+													Date</th>
+												<th style="text-align: center; width: 45%;">Received
+													Amount</th>
+												<th style="text-align: center; width: 10%;">Action</th>
 											</tr>
 										</thead>
 
@@ -305,12 +350,13 @@
 															value="${recDetail.paidAmt}" /></td>
 
 
-													<td style="text-align:center"><a href="#"
+													<td style="text-align: center"><a href="#"
 														onclick="callEdit(${recDetail.payHeadId},${count.index})"><i
-															class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
-														<a href="#"
+															class="fa fa-edit" style="color: black"></i> <span
+															class="text-muted"></span></a> <a href="#"
 														onclick="callDelete(${recDetail.payHeadId},${count.index})"><i
-															class="fa fa fa-trash-o" style="color:black"></i> <span class="text-muted"></span></a></td>
+															class="fa fa fa-trash-o" style="color: black"></i> <span
+															class="text-muted"></span></a></td>
 
 
 
@@ -325,7 +371,7 @@
 								<div class="col-lg-4"></div>
 								<div class="col-lg-2">
 
-									<input type="submit" class="btn btn-primary" value="Submit" 
+									<input type="submit" class="btn btn-primary" value="Submit"
 										style="align-content: center; width: 113px; margin-left: 20px;">
 
 								</div>
@@ -403,6 +449,7 @@
 			var paidAmt = document.getElementById("paidAmt").value;
 			var payHeadId = document.getElementById("payHeadId").value;
 			var paymentDate = document.getElementById("paymentDate").value;
+			var remark = document.getElementById("remark").value;
 			
 		
 
@@ -420,6 +467,7 @@
 								paidAmt : paidAmt,
 								payHeadId : payHeadId,
 								paymentDate :paymentDate,
+								remark : remark,
 								ajax : 'true',
 
 							},
@@ -458,6 +506,7 @@
 			document.getElementById("txType").value = " ";
 			document.getElementById("paymentDate").value = " ";
 			document.getElementById("paidAmt").value = " ";
+			document.getElementById("remark").value = "-";
 			document.getElementById("txNo").value = " ";
 			document.getElementById("isDelete").value = 0;
 			document.getElementById("isEdit").value = 0;
@@ -478,6 +527,7 @@
 				document.getElementById("txType").value = data.typeTx;
 				document.getElementById("txNo").value = data.txNo;
 				document.getElementById("paymentDate").value = data.paymentDate;
+				document.getElementById("remark").value = data.remark;
 				document.getElementById("paidAmt").value = data.paidAmt;
 				document.getElementById("index").value = index;
 				
@@ -592,8 +642,8 @@
 
 		});
 	</script>
-	
-<script>
+
+	<script>
 		
 		function allowOnlyNumber(evt){
 		    var charCode = (evt.which) ? evt.which : event.keyCode
@@ -687,30 +737,19 @@
 		  }
 	</script>
 
-<script>
+	<script>
 		function checkstock() {
 
 			var pendingAmt= document.getElementById("pendingAmt").value;
 			var paidAmt= document.getElementById("paidAmt").value;
-			/* alert( "min stk is"+min_stock);
-			alert( "max stk is"+max_stock); */
-			//var len= max_stock.length;
-			  
-			
-			var valid = true;
-			
-			
+		
 			if (  paidAmt > pendingAmt  ) {
 
-				valid = false;
+				alert("Enter Received Amount less than Pending Amount ");
+				document.getElementById("paidAmt").value="";
 			} 
 
-			if (valid == false) {
-				
-				alert("Enter Paid Amount less than Pending Amount ");
-				document.getElementById("paidAmt").value="";
-				//document.getElementById("pmax_stock").value="";
-			}
+			
 		}
 
 		

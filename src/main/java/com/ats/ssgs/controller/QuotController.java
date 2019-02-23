@@ -311,7 +311,7 @@ public class QuotController {
 		ModelAndView model = null;
 		try {
 
-			model = new ModelAndView("quot/quotList");
+			model = new ModelAndView("quot/quotListPo");
 
 			model.addObject("title", "Add Customer P.O.");
 			HttpSession session = request.getSession();

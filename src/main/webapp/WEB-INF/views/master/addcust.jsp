@@ -319,7 +319,7 @@
 									<div class="col-md-4">
 										<input type="text" id="creaditDays" name="creaditDays"
 											autocomplete="off" class="form-control" style="width: 100%;"
-											pattern="[0-9]+(\.[0-9]{0,2})?%?"
+											pattern="[0-9]+(\.[0-9]{0,2})?%?" value="20"
 											oninvalid="setCustomValidity('Please enter creadit days')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
