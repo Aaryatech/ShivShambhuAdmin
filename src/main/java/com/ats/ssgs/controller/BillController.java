@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -951,7 +952,13 @@ public class BillController {
 						.concat(String.valueOf(getBillList.get(i).getGetBillDetails().get(j).getSgstPer()))
 						.concat("%"));
 				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getIgstAmt());
-				rowData.add("" + "0");
+				
+				float roundOff=(Math.round(getBillList.get(i).getTotalAmt())-getBillList.get(i).getTotalAmt());
+				
+				DecimalFormat df = new DecimalFormat("#.##");
+				String decimalRndOff= df.format(roundOff);
+				
+				rowData.add("" + decimalRndOff);
 				rowData.add("" + getBillList.get(i).getTotalAmt());
 
 				rowData.add("" + "-");
