@@ -384,7 +384,7 @@
 
 								<div class="row">
 
-									<div class="col-md-2">Select Chalan*</div>
+									<div class="col-md-2">Select Challan*</div>
 
 									<div class="col-md-10">
 										<select id="chalan_id" name="chalan_id" class="standardSelect"
@@ -439,7 +439,7 @@
 												<th style="text-align: center">UOM</th>
 												<th style="text-align: center">Basic Rate</th>
 												<th style="text-align: center">Taxable Rate</th>
-												<th style="text-align: center" width="8%">Chalan Qty</th>
+												<th style="text-align: center" width="8%">Challan Qty</th>
 												<th style="text-align: center" width="15%">Qty</th>
 												<th style="text-align: center">Disc %</th>
 												<th style="text-align: center">Taxable Amt</th>
@@ -457,23 +457,16 @@
 
 									</table>
 								</div>
-
-
-								<div class="form-group"></div>
-
-
 								<div class="form-group"></div>
 								<div class="row">
 
-									<!-- 	<div class="col-md-2">Other Cost After Tax</div>
 
-									<div class="col-md-3">845</div> -->
 									<div class="col-md-2">Total</div>
 
-									<div class="col-md-3" id="ordTotal">0</div>
+									<div class="col-md-3" id="billTotal">0</div>
 
 									<div class="col-md-2">
-										<!-- onclick="validateForm()" -->
+
 										<input type="Submit" class="btn btn-primary" value="Submit">
 
 									</div>
@@ -489,23 +482,20 @@
 									<div class="col-md-4">88.36</div>
 
 								</div> -->
-								<div class="form-group"></div>
-								<div class="row">
 
-									<!-- 	<div class="col-md-2">Other Cost After Tax</div>
+								<!-- 	<div class="col-md-2">Other Cost After Tax</div>
 
 									<div class="col-md-3">845</div> -->
-									<!-- <div class="col-md-2">Total</div>
+								<!-- <div class="col-md-2">Total</div>
 
 									<div class="col-md-3" id="ordTotal">0</div>
  -->
-									<!-- <div class="col-md-2">
+								<!-- <div class="col-md-2">
 										onclick="validateForm()"
 										<input type="Submit" class="btn btn-primary" value="Submit">
 
 									</div> -->
 
-								</div>
 
 							</form>
 						</div>
@@ -967,8 +957,9 @@ $
 								
 								
 			dataTable.clear().draw();
+					
+					var tot=0;
 			$.each(data,function(i, v) {
-
 				
 		var chalanQty = '<input  type="text" value="'+v.itemQty+'" readonly  oninput="calculation('+i+','+v.itemId+')"   class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var discPer = '<input  type="text" value="0.0" oninput="calculation('+i+','+v.itemId+')" class="form-control"  id="discPer'+i+''+v.itemId+'" name="discPer'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
@@ -982,61 +973,39 @@ $
     	  var taxableAmt=(parseFloat(v.poRate)*parseFloat(v.itemQty));
      	 var taxAmt=((taxableAmt*taxPerc)/100);
      	 var total=(taxableAmt+taxAmt);
+     	 var total1=(taxableAmt+taxAmt);
+     	 
      	var discAmt = '<p id="discAmt'+i+''+v.itemId+'">0.0</p>'
 		var taxAmt = '<p id="taxAmt'+i+''+v.itemId+'">'+taxAmt.toFixed(2)+'</p>'
 		var total = '<p id="total'+i+''+v.itemId+'">'+total.toFixed(2)+'</p>'
+		tot=parseFloat(tot)+total1;
 		var taxableAmt = '<p id="taxableAmt'+i+''+v.itemId+'">'+taxableAmt.toFixed(2)+'</p>'
+		
     	}else
     		{
     		var baseRate = ((v.poRate * 100) / (100 + taxPerc));
     		var taxableAmt=(baseRate*v.itemQty);
          	var taxAmt=((taxableAmt*taxPerc)/100);
          	var total=(taxableAmt+taxAmt);
+         	var total1=(taxableAmt+taxAmt);
          	var discAmt = '<p id="discAmt'+i+''+v.itemId+'">0.0</p>'
     		var taxAmt = '<p id="taxAmt'+i+''+v.itemId+'">'+taxAmt.toFixed(2)+'</p>'
     		var total = '<p id="total'+i+''+v.itemId+'">'+total.toFixed(2)+'</p>'
+    		tot=parseFloat(tot)+total1;
     		var taxableAmt = '<p id="taxableAmt'+i+''+v.itemId+'">'+taxableAmt.toFixed(2)+'</p>'
+    		
     		} 
-		 
-		 /* var len = data.length;
-		 alert(total);
-			//alert("orderTotal " +data.orderTotal);
-			var tot=0;
-			for (var i = 0; i < len; i++) {
-				alert("data[]" +total)
-			tot=total+tot;
-				//alert("Json " +JSON.stringify(data.ordDetailList[i]));
-
-			}
-			//alert("total " +tot);
-			tot=tot.toFixed(2);
-			document.getElementById("ordTotal").innerHTML=tot; */
-		
-		
-
 		var index=i+1;
 		dataTable.row.add([ index,v.itemName,v.itemUom,v.poRate,v.orderRate+""+rate+""+isTaxIncluding,v.itemQty,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
 		$('#loader').hide();
 			
 			});
+			 document.getElementById("billTotal").innerHTML=tot; 
+			
 		});
 		
-		/* function(data) {
-			
-
-			var len = data.length;
-			//alert("orderTotal " +data.orderTotal);
-			var tot=0;
-			for (var i = 0; i < len; i++) {
-				//alert("data[]" +data[i].total)
-			tot=data[i].total+tot;
-				//alert("Json " +JSON.stringify(data.ordDetailList[i]));
-
-			}
-			//alert("total " +tot);
-			tot=tot.toFixed(2);
-			document.getElementById("ordTotal").innerHTML=tot;
-		}); */
+		
+	
 		}
 		}
 	</script>

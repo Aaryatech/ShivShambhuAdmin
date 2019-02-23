@@ -135,14 +135,20 @@
 											tabindex="1" required onchange="getData()">
 											<option value="-1">Select</option>
 											<c:forEach items="${plantList}" var="plant">
-												<c:choose>
-													<c:when test="${plant.plantId==editOt.plantId}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}">${plant.plantName}
-													</c:otherwise>
-												</c:choose>
+												<c:if test="${sessionScope.plantId==0}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
+
 
 											</c:forEach>
 										</select>
@@ -253,11 +259,11 @@
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editOtherExpenses/${sp.otherExpId}"><i
-														class="fa fa-edit" style="color:black"></i> <span class="text-muted"></span></a>
-													&nbsp; <a
+														class="fa fa-edit" style="color: black"></i> <span
+														class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deleteOtherExp/${sp.otherExpId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o" style="color:black"></i></a></td>
+														class="fa fa-trash-o" style="color: black"></i></a></td>
 
 											</tr>
 										</c:forEach>

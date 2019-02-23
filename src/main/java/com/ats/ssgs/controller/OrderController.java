@@ -1079,7 +1079,7 @@ public class OrderController {
 
 			model = new ModelAndView("order/pendingOrder");
 
-			model.addObject("title", "Pending Chalan List");
+			model.addObject("title", "Pending Challan List");
 
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
@@ -1487,7 +1487,6 @@ public class OrderController {
 			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 			Calendar cal = Calendar.getInstance();
 
-			System.out.println("inside aaa");
 			model = new ModelAndView("chalan/generateChalan1");
 
 			model.addObject("title", "Add Chalan");
@@ -1532,7 +1531,7 @@ public class OrderController {
 
 			model.addObject("usrList", usrList);
 
-			model.addObject("title", "Add Chalan");
+			model.addObject("title", "Add Challan");
 
 			map.add("docCode", 3);
 			System.out.println("before");

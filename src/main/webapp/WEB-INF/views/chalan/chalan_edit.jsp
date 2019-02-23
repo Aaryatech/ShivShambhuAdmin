@@ -273,7 +273,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Chalan Date</div>
+									<div class="col-md-2">Challan Date</div>
 									<div class="col-md-4">
 										<input type="text" readonly id="chalan_date"
 											name="chalan_date" required style="width: 100%;"
@@ -281,7 +281,7 @@
 										<span class="error" aria-live="polite"></span>
 									</div>
 
-									<div class="col-md-2">Chalan No</div>
+									<div class="col-md-2">Challan No</div>
 									<div class="col-md-4">
 										<input type="text" readonly id="chalan_no" name="chalan_no"
 											required style="width: 100%;" class="form-control"
@@ -337,7 +337,7 @@
 									<div class="col-md-2">In Time</div>
 
 									<div class="col-md-4">
-										<input type="time" id="in_time" name="in_time" 
+										<input type="time" id="in_time" name="in_time"
 											style="width: 100%;" class="form-control" value="${curTime}">
 									</div>
 									<div class="col-md-2">In Kilometer</div>
@@ -345,7 +345,7 @@
 									<div class="col-md-4">
 										<input type="text" id="in_km" name="in_km" required
 											onkeypress="return allowOnlyNumber(event);"
-										style="width: 100%;"  onchange="checkKm()"
+											style="width: 100%;" onchange="checkKm()"
 											class="form-control" maxlength="10"> <span
 											class="error" aria-live="polite"></span>
 									</div>
@@ -354,7 +354,7 @@
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Chalan Remark</div>
+									<div class="col-md-2">Challan Remark</div>
 
 									<div class="col-md-4">
 										<input type="text" id="chalan_remark" name="chalan_remark"
@@ -405,11 +405,11 @@
 												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
-												<th style="text-align: center">Chalan Qty</th>
+												<th style="text-align: center">Challan Qty</th>
 												<th style="text-align: center">Width</th>
 												<th style="text-align: center">Height</th>
 												<th style="text-align: center">Length</th>
-												<th style="text-align: center">Chalan Total</th>
+												<th style="text-align: center">Challan Total</th>
 											</tr>
 
 										</thead>
@@ -499,8 +499,7 @@
 
 
 									<div class="col-md-2">
-										<input type="submit" class="btn btn-primary" value="Submit"
-										>
+										<input type="submit" class="btn btn-primary" value="Submit">
 
 									</div>
 

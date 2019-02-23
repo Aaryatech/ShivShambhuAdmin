@@ -164,7 +164,7 @@
 
 									<div class="col-md-2">
 										<input type="text" id="creditDate1" name="creditDate1"
-											autocomplete="off" value="${editRec.creditDate1}" required
+											autocomplete="off" value="${editRec.billDate}" required
 											class="form-control" readonly required style="width: 100%;">
 									</div>
 
@@ -172,7 +172,7 @@
 
 									<div class="col-md-2">
 										<input type="text" id="creditDate3" name="creditDate3"
-											autocomplete="off" value="${editRec.creditDate3}" required
+											autocomplete="off" value="${editRec.creditDate2}" required
 											class="form-control" readonly required style="width: 100%;">
 									</div>
 
@@ -180,7 +180,7 @@
 									<div class="col-md-2">Follow Up Date*</div>
 									<div class="col-md-2">
 										<input type="text" id="creditDate2" name="creditDate2"
-											autocomplete="off" value="${editRec.creditDate2}"
+											autocomplete="off" value="${editRec.creditDate3}"
 											class="form-control" required style="width: 100%;">
 									</div>
 								</div>

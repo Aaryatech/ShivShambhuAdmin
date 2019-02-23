@@ -274,7 +274,7 @@
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Chalans</div>
+									<div class="col-md-2">Challans</div>
 									<div class="col-md-4">
 										<select id="chalan_id" name="chalan_id" class="standardSelect"
 											tabindex="1" multiple="multiple"

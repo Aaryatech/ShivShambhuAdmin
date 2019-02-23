@@ -202,8 +202,8 @@
 								<div class="row">
 									<div class="col-md-2">Terms And Conditions*</div>
 									<div class="col-md-10">
-										<input type="text" id="termDesc" name="termDesc"
-											class="form-control" style="width: 100%;">
+										<input type="text" id="termDesc" name="termDesc" required
+											autocomplete="off" class="form-control" style="width: 100%;">
 									</div>
 								</div>
 								<div class="form-group"></div>
@@ -212,8 +212,8 @@
 
 									<div class="col-md-3">
 										<input type="text" id="sortNoDetail" name="sortNoDetail"
-											maxlength="3" pattern="[0-9]+" class="form-control"
-											style="width: 100%;">
+											autocomplete="off" maxlength="3" pattern="[0-9]+"
+											class="form-control" value="0" style="width: 100%;">
 									</div>
 									<div class="col-md-1"></div>
 									<div class="col-md-2">
@@ -397,7 +397,7 @@
 
 							});
 			document.getElementById("termDesc").value = "";
-			document.getElementById("sortNoDetail").value = "";
+			document.getElementById("sortNoDetail").value = 0;
 			document.getElementById("isDelete").value = 0;
 			document.getElementById("isEdit").value = 0;
 			document.getElementById("index").value = 0;

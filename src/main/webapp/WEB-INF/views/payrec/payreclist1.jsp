@@ -12,7 +12,7 @@
 <title>Shiv Admin</title>
 
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
-<c:url var="getPayRecoveryBetDate" value="/getPayRecoveryBetDate" />
+<c:url var="getPayRecBetDateAndCat" value="/getPayRecBetDateAndCat" />
 <c:url var="getPayRecoveryBetDateVyPlantId"
 	value="/getPayRecoveryBetDateVyPlantId" />
 
@@ -68,7 +68,7 @@
 
 
 </head>
-<body>
+<body onload="getData1()">
 
 
 	<!-- Left Panel -->
@@ -104,25 +104,16 @@
 
 
 							<div class="form-group"></div>
+
 							<div class="row">
 
-								<div class="col-md-2">Select Type*</div>
+								<div class="col-md-2">Select Plant</div>
 
-								<div class="col-md-4">
-									<select id="txType" name="txType" class="standardSelect"
-										onchange="hideDiv(this.value)" tabindex="1">
-
-										<option value="0">All</option>
-										<option value="1">Follow up Date</option>
-
-									</select>
-								</div>
-								<div class="col-md-2">Select Plant*</div>
-								<div class="col-md-4">
-									<select id="plantId" name="plantId" class="standardSelect"
-										tabindex="1" required onchange="showDetail()">
-										<option value="">Select</option>
-
+								<div class="col-md-2">
+									<select id="plant_id" name="plant_id" class="standardSelect"
+										tabindex="1" required
+										oninvalid="setCustomValidity('Please select plant name')"
+										onchange="getData()">
 										<c:if test="${sessionScope.plantId==0}">
 											<option value="0">All</option>
 										</c:if>
@@ -145,45 +136,60 @@
 										</c:forEach>
 									</select>
 								</div>
+								<div class="col-md-2">Select Customer</div>
+								<div class="col-md-2">
+									<select id="cust_name" name="cust_name" class="standardSelect"
+										tabindex="1" required
+										oninvalid="setCustomValidity('Please select customer')"
+										onchange="getCustInfo()">
+										<option value="0">All</option>
+									</select>
+								</div>
 
+								<div class="col-md-2">Select Category</div>
+
+								<div class="col-md-2">
+									<select id="cust_cate" name="cust_cate" class="standardSelect"
+										tabindex="1"
+										oninvalid="setCustomValidity('Please enter customer category')"
+										onchange="try{setCustomValidity('')}catch(e){}">
+										<option value="0">All</option>
+										<c:forEach items="${settingList}" var="custCate">
+											<option value="${custCate.settingId}">${custCate.settingValue}</option>
+										</c:forEach>
+									</select>
+								</div>
 
 							</div>
 
 
-
 							<div class="form-group"></div>
-
-							<div class="row" id="hide_div" style="visibility: hidden">
+							<div class="row">
 								<div class="col-md-2">From Date</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<input type="text" autocomplete="off" id="from_date"
 										name="from_date" required style="width: 100%;"
 										class="form-control" value="${fromDate}"> <span
 										class="error" aria-live="polite"></span>
 								</div>
 								<div class="col-md-2">To Date</div>
-								<div class="col-md-3">
+								<div class="col-md-2">
 									<input type="text" autocomplete="off" id="to_date"
 										name="to_date" style="width: 100%;" class="form-control"
 										value="${toDate}"> <span class="error"
 										aria-live="polite"></span>
 								</div>
+
+
+								<div class="col-md-1"></div>
+
 								<div class="col-md-2">
 									<input type="button" class="btn btn-primary"
 										onclick="showQuot()" value="Submit">
 								</div>
-
 							</div>
 
 							<div class="form-group"></div>
-							<!-- 	<div class="form-group"></div>
-								<div class="row">
-									<div class="col-md-6"></div>
-									
-								</div>
- -->
-
-
 							<div class="card-body card-block">
 								<table id="bootstrap-data-table"
 									class="table table-striped table-bordered">
@@ -192,83 +198,18 @@
 
 											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Customer Name</th>
+											<th style="text-align: center">Class</th>
 											<th style="text-align: center">Bill No</th>
 											<th style="text-align: center">Bill Date</th>
-											<th style="text-align: center">Credit Start Date</th>
-											<th style="text-align: center">Follow up Date</th>
 											<th style="text-align: center">Billing Amount</th>
-											<th style="text-align: center">Paid Amount</th>
-											<th style="text-align: center">Pending Amount</th>
+											<th style="text-align: center">Due Date</th>
+											<th style="text-align: center">Days</th>
+											<th style="text-align: center">Received Amt</th>
+											<th style="text-align: center">Pending Amt</th>
 											<th style="text-align: center">Status</th>
 											<th style="text-align: center">Action</th>
 										</tr>
 									</thead>
-
-
-									<tbody>
-										<c:forEach items="${recList}" var="rec" varStatus="count">
-											<tr>
-												<%-- <td><input type="checkbox" class="chk"
-														name="payHeadIds" id="payHeadIds${count.index+1}"
-														value="${rec.payHeadId}" /></td>
- --%>
-												<td style="text-align: center">${count.index+1}</td>
-
-												<td style="text-align: left"><c:out
-														value="${rec.custName}" /></td>
-
-												<td style="text-align: left"><c:out
-														value="${rec.billNo}" /></td>
-
-
-												<td style="text-align: left"><c:out
-														value="${rec.billDate}" /></td>
-
-
-
-												<td style="text-align: left"><c:out
-														value="${rec.creditDate1}" /></td>
-
-
-												<td style="text-align: left"><c:out
-														value="${rec.creditDate2}" /></td>
-
-
-												<td style="text-align: left"><fmt:formatNumber
-														type="number" maxFractionDigits="2"
-														value="${rec.billTotal}" /></td>
-
-
-												<td style="text-align: left"><fmt:formatNumber
-														type="number" maxFractionDigits="2" value="${rec.paidAmt}" /></td>
-
-												<td style="text-align: left"><fmt:formatNumber
-														type="number" maxFractionDigits="2"
-														value="${rec.pendingAmt}" /></td>
-
-
-
-												<td style="text-align: left"><c:choose>
-														<c:when test="${rec.status==0}">
-													Pending
-													</c:when>
-														<c:when test="${rec.status==1}">
-													Done
-													</c:when>
-													</c:choose></td>
-
-
-												<td style="text-align: center"><a href="#"
-													onclick="callEdit(${rec.payHeadId},${count.index})"><i
-														class="fa fa-edit" style="color: black"></i> <span
-														class="text-muted"></span></a></td>
-
-
-
-
-											</tr>
-										</c:forEach>
-									</tbody>
 
 								</table>
 
@@ -277,7 +218,7 @@
 								<div class="col-md-3">
 
 									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();" id="expExcel"
+										onclick="exportToExcel();" id="expExcel" disabled
 										style="align-content: center; width: 200px; margin-left: 80px;">
 										Export To Excel</button>
 								</div>
@@ -285,7 +226,7 @@
 
 								<div class="col-md-3">
 
-									<button type="button" class="btn btn-primary"
+									<button type="button" class="btn btn-primary" disabled
 										onclick="genPdf()" id="PDFButton"
 										style="align-content: center; width: 100px; margin-left: 80px;">
 										PDF</button>
@@ -381,11 +322,18 @@
 		// onclick of submit to search order 
 		function showQuot() {
 
-			//alert("Hi View Orders  ");
+			//alert("Hi View reports  ");
 
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-			var plantId = document.getElementById("plantId").value;
+			var plantId = document.getElementById("plant_id").value;
+			var custId = document.getElementById("cust_name").value;
+			var category = document.getElementById("cust_cate").value;
+			/* 	alert(fromDate);
+				alert(toDate);
+				alert(plantId);
+				alert(custId);
+				alert(category); */
 
 			var valid = true;
 
@@ -407,11 +355,13 @@
 
 				$
 						.getJSON(
-								'${getPayRecoveryBetDate}',
+								'${getPayRecBetDateAndCat}',
 								{
 									fromDate : fromDate,
 									toDate : toDate,
-									plantId:plantId,
+									plantId : plantId,
+									custId : custId,
+									category : category,
 									ajax : 'true',
 								},
 
@@ -429,6 +379,20 @@
 													function(i, v) {
 														var chBox;
 
+														document
+																.getElementById("expExcel").disabled = false;
+														document
+																.getElementById("PDFButton").disabled = false;
+
+														if (data == "") {
+															alert("No records found !!");
+															document
+																	.getElementById("expExcel").disabled = true;
+															document
+																	.getElementById("PDFButton").disabled = true;
+
+														}
+
 														var status1;
 														if (v.status == 0) {
 															status1 = "Pending";
@@ -442,20 +406,22 @@
 																+ i
 																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 
-
 														dataTable.row
 																.add(
 																		[
-																				
 																				i + 1,
 																				v.custName,
+																				v.custClass,
 																				v.billNo,
 																				v.billDate,
-																				v.creditDate1,
+																				v.billTotal
+																						.toFixed(2),
 																				v.creditDate2,
-																				v.billTotal.toFixed(2),
-																				v.paidAmt.toFixed(2),
-																				v.pendingAmt.toFixed(2),
+																				v.days,
+																				v.paidAmt
+																						.toFixed(2),
+																				v.pendingAmt
+																						.toFixed(2),
 																				status1,
 																				acButton ])
 																.draw();
@@ -478,86 +444,7 @@
 
 
 
-	<script type="text/javascript">
-		// onclick of submit to search order 
-		function showDetail() {
 
-			//alert("Hi View Orders  ");
-
-			
-			var plantId = document.getElementById("plantId").value;
-
-			var valid = true;
-			if (valid == true) {
-
-				$
-						.getJSON(
-								'${getPayRecoveryBetDateVyPlantId}',
-								{
-									
-									plantId:plantId,
-									ajax : 'true',
-								},
-
-								function(data) {
-
-									//alert("Order Data " + JSON.stringify(data));
-
-									var dataTable = $('#bootstrap-data-table')
-											.DataTable();
-									dataTable.clear().draw();
-
-									$
-											.each(
-													data,
-													function(i, v) {
-														var chBox;
-
-														var status1;
-														if (v.status == 0) {
-															status1 = "Pending";
-														} else if (v.status == 1) {
-															status1 = "Payment Done";
-														}
-
-														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.payHeadId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
-
-
-														dataTable.row
-																.add(
-																		[
-																				
-																				i + 1,
-																				v.custName,
-																				v.billNo,
-																				v.billDate,
-																				v.creditDate1,
-																				v.creditDate2,
-																				v.billTotal.toFixed(2),
-																				v.paidAmt.toFixed(2),
-																				v.pendingAmt.toFixed(2),
-																				status1,
-																				acButton ])
-																.draw();
-													});
-
-								});
-
-			}//end of if valid ==true
-
-		}
-
-		function callEdit(payHeadId) {
-
-			window.open("${pageContext.request.contextPath}/editPayRec/"
-					+ payHeadId);
-
-		}
-	</script>
 
 
 	<script type="text/javascript">
@@ -576,7 +463,18 @@
 											});
 						});
 	</script>
+	<script type="text/javascript">
+		function hideDiv(type) {
 
+			if (type == 0) {
+
+				document.getElementById("hide_div").style = "display:none"
+			} else {
+				document.getElementById("hide_div").style = "visible"
+
+			}
+		}
+	</script>
 
 	<script type="text/javascript">
 		function exportToExcel() {
@@ -589,24 +487,110 @@
 	<script type="text/javascript">
 		function genPdf() {
 			//alert("hiii");
-			
-			
-			var temp= document.getElementById("txType").value;
+
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-			alert("from date"+fromDate);
-			alert("to date"+toDate);
-			
-			
-			if(temp==1){
-			window.open('${pageContext.request.contextPath}/showPayRecPdf/'
+			//alert("from date" + fromDate);
+			//alert("to date" + toDate);
+
+			window.open('${pageContext.request.contextPath}/showPayRecPdfCat/'
 					+ fromDate + '/' + toDate);
+
+			document.getElementById("expExcel").disabled = true;
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		// on plant change function 
+		function getData() {
+			var plantId = document.getElementById("plant_id").value;
+			var valid = true;
+
+			if (plantId == null || plantId == "") {
+				valid = false;
+				alert("Please select plant");
 			}
-			else{
-				window.open('${pageContext.request.contextPath}/showPayRecPdf1/');
+
+			if (valid == true) {
+
+				$.getJSON('${getCustByPlantId}', {
+					plantId : plantId,
+					ajax : 'true',
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option selected value="0"  >All</option>';
+
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].custId + '">'
+								+ data[i].custName + '</option>';
+
+					}
+					html += '</option>';
+
+					$('#cust_name').html(html);
+					$("#cust_name").trigger("chosen:updated");
+					/* getCustInfo();
+
+					$('#po_id').html("-1");
+					$("#po_id").trigger("chosen:updated");
+					 */
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
+
+				});
+			}//end of if
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		// on plant change function 
+		function getData1() {
+			var plantId = document.getElementById("plant_id").value;
+			var valid = true;
+
+			if (plantId == null || plantId == "") {
+				valid = false;
+				alert("Please select plant");
 			}
-		document.getElementById("expExcel").disabled = true;
-			
+
+			if (valid == true) {
+
+				$.getJSON('${getCustByPlantId}', {
+					plantId : plantId,
+					ajax : 'true',
+				},
+
+				function(data) {
+					var html;
+					var len = data.length;
+					var html = '<option selected value="0"  >All</option>';
+
+					for (var i = 0; i < len; i++) {
+
+						html += '<option value="' + data[i].custId + '">'
+								+ data[i].custName + '</option>';
+
+					}
+					html += '</option>';
+
+					$('#cust_name').html(html);
+					$("#cust_name").trigger("chosen:updated");
+					/* getCustInfo();
+
+					$('#po_id').html("-1");
+					$("#po_id").trigger("chosen:updated");
+					 */
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
+
+				});
+			}//end of if
 
 		}
 	</script>

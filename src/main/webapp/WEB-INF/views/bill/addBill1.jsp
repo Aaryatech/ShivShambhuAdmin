@@ -361,7 +361,7 @@
 												<th style="text-align: center">UOM</th>
 												<th style="text-align: center">Basic Rate</th>
 												<th style="text-align: center">Taxable Rate</th>
-												<th style="text-align: center" width="8%">Chalan Qty</th>
+												<th style="text-align: center" width="8%">Challan Qty</th>
 												<th style="text-align: center" width="15%">Qty</th>
 												<th style="text-align: center">Disc %</th>
 												<th style="text-align: center">Taxable Amt</th>
@@ -393,15 +393,13 @@
 								<div class="form-group"></div>
 								<div class="row">
 
-									<!-- 	<div class="col-md-2">Other Cost After Tax</div>
 
-									<div class="col-md-3">845</div> -->
-									<!-- <div class="col-md-2">Total</div>
+									<div class="col-md-2">Total</div>
 
-									<div class="col-md-3" id="ordTotal">0</div>
- -->
+									<div class="col-md-3" id="billTotal">0</div>
+
 									<div class="col-md-2">
-										<!-- onclick="validateForm()" -->
+
 										<input type="Submit" class="btn btn-primary" value="Submit">
 
 									</div>
@@ -864,48 +862,61 @@ $
 					var len = data.length;
 								var dataTable = $('#bootstrap-data-table').DataTable();
 								
+								
 			dataTable.clear().draw();
+					
+					var tot=0;
 			$.each(data,function(i, v) {
-
-		var chalanQty = '<input  type="text" value="'+v.itemQty+'"  readonly  oninput="calculation('+i+','+v.itemId+')"   class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
+				
+		var chalanQty = '<input  type="text" value="'+v.itemQty+'" readonly  oninput="calculation('+i+','+v.itemId+')"   class="form-control"  id="chalanQty'+i+''+v.itemId+'" name="chalanQty'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var discPer = '<input  type="text" value="0.0" oninput="calculation('+i+','+v.itemId+')" class="form-control"  id="discPer'+i+''+v.itemId+'" name="discPer'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var taxPer = '<input  type="text" readonly value="'+(v.cgstPer+v.sgstPer)+'" oninput="calculation('+i+','+v.itemId+')" class="form-control"  id="taxPer'+i+''+v.itemId+'" name="taxPer'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 		var rate = '<input  type="hidden" value="'+v.orderRate+'" class="form-control"  id="orderRate'+i+''+v.itemId+'" name="orderRate'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
-		var isTaxIncluding = '<input  type="hidden" value="'+v.orderRate+'" class="form-control"  id="isTaxIncluding'+i+''+v.itemId+'" name="isTaxIncluding'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
+		var isTaxIncluding = '<input  type="hidden" value="'+v.poRate+'" class="form-control"  id="isTaxIncluding'+i+''+v.itemId+'" name="isTaxIncluding'+i+''+v.itemId+'"  onkeypress="return allowOnlyNumber(event);"/>'
 
 		var taxPerc=parseFloat(v.cgstPer)+parseFloat(v.sgstPer);
 		 if(v.isTaxIncluding==0)
     	{
-    	  var taxableAmt=(parseFloat(v.orderRate)*parseFloat(v.itemQty));
+    	  var taxableAmt=(parseFloat(v.poRate)*parseFloat(v.itemQty));
      	 var taxAmt=((taxableAmt*taxPerc)/100);
      	 var total=(taxableAmt+taxAmt);
+     	 var total1=(taxableAmt+taxAmt);
+     	 
      	var discAmt = '<p id="discAmt'+i+''+v.itemId+'">0.0</p>'
 		var taxAmt = '<p id="taxAmt'+i+''+v.itemId+'">'+taxAmt.toFixed(2)+'</p>'
 		var total = '<p id="total'+i+''+v.itemId+'">'+total.toFixed(2)+'</p>'
+		tot=parseFloat(tot)+total1;
 		var taxableAmt = '<p id="taxableAmt'+i+''+v.itemId+'">'+taxableAmt.toFixed(2)+'</p>'
+		
     	}else
     		{
-    		var baseRate = ((v.orderRate * 100) / (100 + taxPerc));
+    		var baseRate = ((v.poRate * 100) / (100 + taxPerc));
     		var taxableAmt=(baseRate*v.itemQty);
          	var taxAmt=((taxableAmt*taxPerc)/100);
          	var total=(taxableAmt+taxAmt);
+         	var total1=(taxableAmt+taxAmt);
          	var discAmt = '<p id="discAmt'+i+''+v.itemId+'">0.0</p>'
     		var taxAmt = '<p id="taxAmt'+i+''+v.itemId+'">'+taxAmt.toFixed(2)+'</p>'
     		var total = '<p id="total'+i+''+v.itemId+'">'+total.toFixed(2)+'</p>'
+    		tot=parseFloat(tot)+total1;
     		var taxableAmt = '<p id="taxableAmt'+i+''+v.itemId+'">'+taxableAmt.toFixed(2)+'</p>'
+    		
     		} 
-		
-		
-
 		var index=i+1;
 		dataTable.row.add([ index,v.itemName,v.itemUom,v.poRate,v.orderRate+""+rate+""+isTaxIncluding,v.itemQty,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
 		$('#loader').hide();
 			
 			});
+			 document.getElementById("billTotal").innerHTML=tot; 
+			
 		});
+		
+		
+	
 		}
 		}
 	</script>
+
 
 	<script type="text/javascript">
 	function allowOnlyNumber(evt){

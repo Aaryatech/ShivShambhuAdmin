@@ -412,7 +412,7 @@ body {
 
 									<div class="modal-content" style="color: black;">
 										<span class="close" id="close">&times;</span>
-										<h5 style="text-align: left;">Add Chalan Quantity</h5>
+										<h5 style="text-align: left;">Add Challan Quantity</h5>
 										<div class=" box-content">
 
 											<div
@@ -431,7 +431,7 @@ body {
 															<th style="width: 10%;" align="center">PO Quantity</th>
 															<th style="width: 10%;" align="center">PO Remaining
 																Quantity</th>
-															<th style="width: 20%;" align="center">Chalan
+															<th style="width: 20%;" align="center">Challan
 																Quantity</th>
 														</tr>
 													</thead>
@@ -456,14 +456,14 @@ body {
 								<input type="hidden" name="item_id" id="item_id" value="0">
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Chalan Date*</div>
+									<div class="col-md-2">Challan Date*</div>
 									<div class="col-md-4">
 										<input type="text" autocomplete="off" id="chalan_date"
 											name="chalan_date" required style="width: 100%;"
 											class="form-control" value="${curDate}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
-									<div class="col-md-2">Chalan No*</div>
+									<div class="col-md-2">Challan No*</div>
 									<div class="col-md-4">
 										<input type="text" readonly id="chalan_no" name="chalan_no"
 											style="width: 100%;" class="form-control"> <span
@@ -553,7 +553,7 @@ body {
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Chalan Remark</div>
+									<div class="col-md-2">Challan Remark</div>
 
 									<div class="col-md-4">
 										<input type="text" id="chalan_remark" name="chalan_remark"
@@ -580,11 +580,11 @@ body {
 												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
-												<th style="text-align: center">Chalan Qty</th>
+												<th style="text-align: center">Challan Qty</th>
 												<th style="text-align: center">Width</th>
 												<th style="text-align: center">Height</th>
 												<th style="text-align: center">Length</th>
-												<th style="text-align: center">Chalan Total</th>
+												<th style="text-align: center">Challan Total</th>
 											</tr>
 										</thead>
 

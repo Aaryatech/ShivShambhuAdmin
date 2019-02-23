@@ -223,8 +223,8 @@
 										<tr>
 
 											<th style="text-align: center">Sr.No.</th>
-											<th style="text-align: center">Chalan No</th>
-											<th style="text-align: center">Chalan Date</th>
+											<th style="text-align: center">Challan No</th>
+											<th style="text-align: center">Challan Date</th>
 											<th style="text-align: center">Customer Name</th>
 											<th style="text-align: center">Project Name</th>
 											<th style="text-align: center">Vehicle No</th>
