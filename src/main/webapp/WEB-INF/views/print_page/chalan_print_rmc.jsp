@@ -50,52 +50,42 @@
 	</center>
 
 	<div
-		style="margin-left: 10px; padding: 3px; font-size: 15px; text-align: left">
-		<b>Challan No : </b>${ch_no1}
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Date
-			: </b> ${printData.chalanItemList[0].chalanDate}
+		style="margin-left: 10px;  font-size: 15px; text-align: left">
+		
+		<table style="width: 100%">
+		<tr>
+		<td width="50%"><b>Challan No  </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  : ${ch_no1}</td>
+		<td width="50%"><b>Date	: </b>${printData.chalanItemList[0].chalanDate}</td>
+		</tr>
+		</table>
+		
 	</div>
-	<div style="margin-left: 10px; padding: 3px; font-size: 15px;">
-		<b>Customer Name : </b>
-		<c:out value="${printData.chalanItemList[0].custName}"></c:out>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-
-
+	
+	<div style="margin-left: 10px; padding: 3px; font-size: 15px; text-align: left">
+		
+		<b>Customer Name </b>&nbsp;&nbsp; : ${printData.chalanItemList[0].custName}
 	</div>
 	<div
-		style="margin-left: 10px; padding: 3px; font-size: 15px; text-align: left">
-		<b>Project :</b> ${printData.chalanItemList[0].projName}
-
-
+		style="margin-left: 10px; padding: 3px;font-size: 15px; text-align: left">
+		<b>Project Name </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :  ${printData.chalanItemList[0].projName}
 
 	</div>
 
 	<div
 		style="margin-left: 10px; padding: 3px; font-size: 15px; text-align: left">
-		<b>Delivery Address : </b>${printData.chalanItemList[0].devAddress}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<b>Delivery Address </b> : ${printData.chalanItemList[0].devAddress}
 
 	</div>
 
 	<div
-		style="margin-left: 10px; padding: 3px; font-size: 15px; text-align: left">
-		<b>Batch No : </b>${printData.chalanItemList[0].batchNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		style="margin-left: 10px;  font-size: 15px; text-align: left">
+		
+		<table style="width: 100%">
+		<td width="50%"><b>Batch No </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${printData.chalanItemList[0].batchNo}</td>
+		<td width="50%"><b>RST No : </b>${printData.chalanItemList[0].exVar1}</td></table>
 
 	</div>
-	<div
-		style="margin-left: 10px; padding: 3px; font-size: 15px; text-align: left">
-		<b>RST No : </b>${printData.chalanItemList[0].exVar1}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-	</div>
+	
 
 	<br />
 

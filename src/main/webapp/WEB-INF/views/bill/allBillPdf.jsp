@@ -16,7 +16,7 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	width: 150px;
-	height: 1.0em;
+	height: 1.7em;
 }
 </style>
 
@@ -36,7 +36,7 @@
 		<h6 align="center">TAX INVOICE</h6>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0"
 			style="border-left: 1px solid #313131; border-right: 1px solid #313131; border-top: 1px solid #313131;">
-			<tr>
+			<tr> <!--  row str -->
 				<td colspan="6" rowspan="3" width="50%"
 					style="border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 					<p
@@ -75,17 +75,42 @@
 				</td>
 
 			</tr>
+			
 			<tr>
-
-
+			<td width="25%" colspan="3"
+					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
+					
+					<p
+						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
+						Buyer's Order No.:
+						
+						<b>${ref}</b>
+					</p></td>
+						<td width="25%" colspan="3"
+					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
+					
+					
+				<p
+						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
+						Dated.
+						<!-- </p> 
+      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
+						<b>${billHeaderRes.billDate}</b>
+					</p></td>
+			
+			
 			</tr>
 			<tr>
 
 
 			</tr>
 			<tr>
+
+
+			</tr>
+			<tr>    <!--  row strats -->
 				<td width="50%" rowspan="4" colspan="6"
-					style="padding: 8px; color: #FFF; font-size: 14px;">
+					style="padding: 8px; color: #FFF; font-size: 14px;">  <!--  1st td -->
 					<p
 						style="color: #000; font-size: 15px; text-align:; left; margin: 0px;">
 						<b>Buyer: </b>
@@ -104,16 +129,15 @@
 						style="color: #000; font-size: 12px; text-align: left; margin: 0px;">Contact:
 						${billHeaderRes.custMobNo}</p>
 
-				</td>
+				</td> <!--  1st td ends -->
 
 
-				<td width="25%" colspan="3"
+				<%-- <td width="25%" colspan="3"
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
 					<p
 						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
 						Buyer's Order No.:
-						<!-- </p> 
-      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
+						
 						<b>${ref}</b>
 					</p>
 
@@ -128,8 +152,8 @@
 						<b>${billHeaderRes.billDate}</b>
 					</p>
 				</td>
-
-			</tr>
+ --%>
+			</tr>                              <!-- row ends -->
 			<tr>
 				<td width="25%" colspan="6"
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
@@ -143,7 +167,7 @@
 			<tr>
 
 				<td colspan="6" width="25%"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
+					style="border-left: 1px solid #313131; border-bottom: 0px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 					<p
 						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Project
 						Name - ${billHeaderRes.projName} ${billHeaderRes.location}</p>
@@ -151,9 +175,9 @@
 				</td>
 
 			</tr>
-			<tr>
+			<!-- <tr>
 
-			</tr>
+			</tr> -->
 
 		</table>
 		<c:set var="tAmt" value="0" />
@@ -533,25 +557,45 @@
 							value="${tAmt}" /></b></td>
 
 			</tr>
+			
+			
+			<!-- Round_Off -->
+		
+		<c:set var="roundVal"
+						value="${Math.round(tAmt)}" />
+						
+						<c:set var="roundOffVal"
+						value="${roundVal-tAmt}" />
+		
+		<tr>
+				<td align="left"
+					style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+				<td colspan="12" align="right"
+					style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b>Round off</b></td>
+
+				<td align="right"
+					style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+							type="number" maxFractionDigits="2" minFractionDigits="2"
+							value="${roundOffVal}" /></b></td>
+
+			</tr>
+			
+			<!-- TOTAL -->
+		<tr>
+				<td align="left"
+					style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+				<td colspan="12" align="right"
+					style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b>Total</b></td>
+
+				<td align="right"
+					style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+							type="number" maxFractionDigits="2" minFractionDigits="2"
+							value="${roundVal}" /></b></td>
+
+			</tr>
+		
+		
 		</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -560,7 +604,7 @@
 			<tr>
 
 				<td colspan="8" width="60%"
-					style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 8px; color: #000; font-size: 10px;">&nbsp;
+					style="border-left: 1px solid #313131; border-top: 0px solid #313131; padding: 8px; color: #000; font-size: 10px;">&nbsp;
 					Amount Chargeable (in words)</td>
 				<!-- <td colspan="4" width="40%"
 					style="border-top: 1px solid #313131; padding: 8px; color: #000; font-size: 10px;">&nbsp;
