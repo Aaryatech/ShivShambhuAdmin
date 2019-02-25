@@ -32,11 +32,13 @@
 		<c:set var="srCnt" value="0" />
 		<c:set var="totalRowCount" value="0" />
 		<c:set var="maxRowCount" value="34" />
-
-		<h6 align="center">TAX INVOICE</h6>
+		<div style="font-size: 10px; text-align: right;">${taxName}</div>
+		<div style="color: black; font-size: 15px; text-align: center;">
+			TAX INVOICE</div>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0"
 			style="border-left: 1px solid #313131; border-right: 1px solid #313131; border-top: 1px solid #313131;">
-			<tr> <!--  row str -->
+			<tr>
+				<!--  row str -->
 				<td colspan="6" rowspan="3" width="50%"
 					style="border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 					<p
@@ -63,7 +65,7 @@
 					</p>
 
 				</td>
-				<td colspan="3" width="25%"
+				<td colspan="3" width="25%" 
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 					<p
 						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
@@ -75,32 +77,28 @@
 				</td>
 
 			</tr>
-			
-			<tr>
-			<td width="25%" colspan="3"
+
+			<tr >
+				<td width="25%" colspan="3"
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-					
+
 					<p
 						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Buyer's Order No.:
-						
-						<b>${ref}</b>
-					</p></td>
-						<td width="25%" colspan="3"
+						Buyer's Order No.: <b>${ref}</b>
+					</p>
+				</td>
+				<td width="25%" colspan="3"
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-					
-					
-				<p
+
+
+					<p
 						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
 						Dated.
 						<!-- </p> 
       	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
 						<b>${billHeaderRes.billDate}</b>
-					</p></td>
-			
-			
-			</tr>
-			<tr>
+					</p>
+				</td>
 
 
 			</tr>
@@ -108,9 +106,15 @@
 
 
 			</tr>
-			<tr>    <!--  row strats -->
+			<tr>
+
+
+			</tr>
+			<tr>
+				<!--  row strats -->
 				<td width="50%" rowspan="4" colspan="6"
-					style="padding: 8px; color: #FFF; font-size: 14px;">  <!--  1st td -->
+					style="padding: 8px; color: #FFF; font-size: 14px;">
+					<!--  1st td -->
 					<p
 						style="color: #000; font-size: 15px; text-align:; left; margin: 0px;">
 						<b>Buyer: </b>
@@ -129,7 +133,8 @@
 						style="color: #000; font-size: 12px; text-align: left; margin: 0px;">Contact:
 						${billHeaderRes.custMobNo}</p>
 
-				</td> <!--  1st td ends -->
+				</td>
+				<!--  1st td ends -->
 
 
 				<%-- <td width="25%" colspan="3"
@@ -153,7 +158,8 @@
 					</p>
 				</td>
  --%>
-			</tr>                              <!-- row ends -->
+			</tr>
+			<!-- row ends -->
 			<tr>
 				<td width="25%" colspan="6"
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
@@ -463,7 +469,9 @@
 						value="${billDetails.qty}" /></td>
 				<c:set var="totalQty" value="${totalQty+billDetails.qty}" />
 				<td align="center"
-					style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${billDetails.rate}</td>
+					style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+						type="number" maxFractionDigits="2" minFractionDigits="2"
+						value="${(billDetails.rate*100)/(100+billDetails.cgstPer+billDetails.sgstPer)}" /></td>
 				<td align="left"
 					style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${billDetails.uomName}</td>
 
@@ -557,21 +565,20 @@
 							value="${tAmt}" /></b></td>
 
 			</tr>
-			
-			
+
+
 			<!-- Round_Off -->
-		
-		<c:set var="roundVal"
-						value="${Math.round(tAmt)}" />
-						
-						<c:set var="roundOffVal"
-						value="${roundVal-tAmt}" />
-		
-		<tr>
+
+			<c:set var="roundVal" value="${Math.round(tAmt)}" />
+
+			<c:set var="roundOffVal" value="${roundVal-tAmt}" />
+
+			<tr>
 				<td align="left"
 					style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
 				<td colspan="12" align="right"
-					style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b>Round off</b></td>
+					style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b>Round
+						off</b></td>
 
 				<td align="right"
 					style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
@@ -579,9 +586,9 @@
 							value="${roundOffVal}" /></b></td>
 
 			</tr>
-			
+
 			<!-- TOTAL -->
-		<tr>
+			<tr>
 				<td align="left"
 					style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
 				<td colspan="12" align="right"
@@ -593,8 +600,8 @@
 							value="${roundVal}" /></b></td>
 
 			</tr>
-		
-		
+
+
 		</table>
 
 

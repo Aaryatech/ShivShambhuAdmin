@@ -123,27 +123,27 @@ public class PurchaseOrderController {
 	@RequestMapping(value = "/submitPurchaseOrder", method = RequestMethod.POST)
 	public ModelAndView submitPurchaseOrder(HttpServletRequest request, HttpServletResponse response) {
 
-		ModelAndView model =null;
-		int plantId =0;
+		ModelAndView model = null;
+		int plantId = 0;
 		try {
-			 model = new ModelAndView("purchaseOrder/poListDash");
+			model = new ModelAndView("purchaseOrder/poListDash");
 
-			 model.addObject("title", "PO List");
-			 
-				Calendar date = Calendar.getInstance();
-				date.set(Calendar.DAY_OF_MONTH, 1);
+			model.addObject("title", "PO List");
 
-				Date firstDate = date.getTime();
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
 
-				DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+			Date firstDate = date.getTime();
 
-				String fromDate = dateFormat.format(firstDate);
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
 
-				String toDate = dateFormat.format(new Date());
-				
-				model.addObject("fromDate", fromDate);
-				model.addObject("toDate", toDate);
-			
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
 			String poRemark = request.getParameter("poRemark");
 			String poDate = request.getParameter("poDate");
 			String poValidityDate = request.getParameter("poValidityDate");
@@ -182,6 +182,10 @@ public class PurchaseOrderController {
 				poDetail.setQuDetailId(quotHeader.getGetQuotDetailList().get(i).getQuotDetailId());
 				poDetail.setPoQty(Float.parseFloat(
 						request.getParameter("pOqty" + quotHeader.getGetQuotDetailList().get(i).getItemId())));
+
+				poDetail.setExtra1(Integer.parseInt(
+						request.getParameter("pOAlertqty" + quotHeader.getGetQuotDetailList().get(i).getItemId())));
+
 				poDetail.setPoRate(Float.parseFloat(
 						request.getParameter("taxableAmt" + quotHeader.getGetQuotDetailList().get(i).getItemId())));
 				poDetail.setTaxableAmt(poDetail.getPoRate());
@@ -206,7 +210,7 @@ public class PurchaseOrderController {
 			System.err.println("res  PoHeader insert " + res.toString());
 
 			if (res != null) {
-                
+
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("quotHeadId", quotHeader.getQuotHeadId());
 				Info info = rest.postForObject(Constants.url + "/updateQuatationStatus", map, Info.class);
@@ -215,26 +219,22 @@ public class PurchaseOrderController {
 				map.add("docCode", 7);
 				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
 				System.out.println("info is   updateDocSr " + updateDocSr);
-				
-				
-				plantId=res.getPlantId();
-				System.out.println("plantId in loop ::::"+plantId);
-				
+
+				plantId = res.getPlantId();
+				System.out.println("plantId in loop ::::" + plantId);
+
 				MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 				map1.add("plantId", plantId);
-	            Plant pl = rest.postForObject(Constants.url + "getPlantByPlantId", map1, Plant.class);
-				
-				
+				Plant pl = rest.postForObject(Constants.url + "getPlantByPlantId", map1, Plant.class);
+
 				model.addObject("plantId1", plantId);
-				//model.addObject("pname", pl);
+				// model.addObject("pname", pl);
 				Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 				List<Plant> plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 				System.out.println("plant is" + plantList);
 
 				model.addObject("plantList", plantList);
-	     
-			
 
 				for (int i = 0; i < quotHeader.getGetQuotDetailList().size(); i++) {
 					map = new LinkedMultiValueMap<String, Object>();
@@ -244,7 +244,7 @@ public class PurchaseOrderController {
 
 					Info updateQuotNo = rest.postForObject(Constants.url + "/updateQuotNoAndPoNo", map, Info.class);
 
-					 plantId = Integer.parseInt(quotHeader.getPlantIds());
+					plantId = Integer.parseInt(quotHeader.getPlantIds());
 				}
 
 			}
@@ -255,8 +255,8 @@ public class PurchaseOrderController {
 
 		}
 		return model;
-		//return new ModelAndView("redirect:" + "showPoListByStatus", "/",plantId);
-		//return "redirect:/showPoListByStatus/plantId";
+		// return new ModelAndView("redirect:" + "showPoListByStatus", "/",plantId);
+		// return "redirect:/showPoListByStatus/plantId";
 	}
 
 	@RequestMapping(value = "/getPoList", method = RequestMethod.GET)
@@ -423,7 +423,7 @@ public class PurchaseOrderController {
 			System.out.println("plant is" + plantList);
 
 			model.addObject("plantList", plantList);
-			
+
 			Calendar date = Calendar.getInstance();
 			date.set(Calendar.DAY_OF_MONTH, 1);
 
@@ -434,7 +434,7 @@ public class PurchaseOrderController {
 			String fromDate = dateFormat.format(firstDate);
 
 			String toDate = dateFormat.format(new Date());
-			
+
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
@@ -445,54 +445,50 @@ public class PurchaseOrderController {
 		return model;
 
 	}
-	
-/*	
-	@RequestMapping(value = "/showPoListByStatus/plantId", method = RequestMethod.GET)
-	public ModelAndView showPoListByStatus1(HttpServletRequest request, HttpServletResponse response, @PathVariable int plantId) {
 
-		ModelAndView model = null;
-		try {
-
-			System.out.println("plant is new   ::"+plantId);
-			model = new ModelAndView("purchaseOrder/poListDash");
-
-			model.addObject("title", "PO List");
-			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
-			List<Plant> plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
-
-			System.out.println("plant is" + plantList);
-
-			model.addObject("plantList", plantList);
-			
-			Calendar date = Calendar.getInstance();
-			date.set(Calendar.DAY_OF_MONTH, 1);
-
-			Date firstDate = date.getTime();
-
-			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
-
-			String fromDate = dateFormat.format(firstDate);
-
-			String toDate = dateFormat.format(new Date());
-			
-			
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map.add("plantId", plantId);
-
-			Plant pl = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
-			
-			model.addObject("fromDate", fromDate);
-			model.addObject("toDate", toDate);
-			model.addObject("plantId1", plantId);
-			model.addObject("pname", pl);
-
-		} catch (Exception e) {
-			System.err.println("Exce in /Po" + e.getMessage());
-			e.printStackTrace();
-		}
-		return model;
-
-	}*/
+	/*
+	 * @RequestMapping(value = "/showPoListByStatus/plantId", method =
+	 * RequestMethod.GET) public ModelAndView showPoListByStatus1(HttpServletRequest
+	 * request, HttpServletResponse response, @PathVariable int plantId) {
+	 * 
+	 * ModelAndView model = null; try {
+	 * 
+	 * System.out.println("plant is new   ::"+plantId); model = new
+	 * ModelAndView("purchaseOrder/poListDash");
+	 * 
+	 * model.addObject("title", "PO List"); Plant[] plantArray =
+	 * rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+	 * List<Plant> plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+	 * 
+	 * System.out.println("plant is" + plantList);
+	 * 
+	 * model.addObject("plantList", plantList);
+	 * 
+	 * Calendar date = Calendar.getInstance(); date.set(Calendar.DAY_OF_MONTH, 1);
+	 * 
+	 * Date firstDate = date.getTime();
+	 * 
+	 * DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+	 * 
+	 * String fromDate = dateFormat.format(firstDate);
+	 * 
+	 * String toDate = dateFormat.format(new Date());
+	 * 
+	 * 
+	 * MultiValueMap<String, Object> map = new LinkedMultiValueMap<String,
+	 * Object>(); map.add("plantId", plantId);
+	 * 
+	 * Plant pl = rest.postForObject(Constants.url + "getPlantByPlantId", map,
+	 * Plant.class);
+	 * 
+	 * model.addObject("fromDate", fromDate); model.addObject("toDate", toDate);
+	 * model.addObject("plantId1", plantId); model.addObject("pname", pl);
+	 * 
+	 * } catch (Exception e) { System.err.println("Exce in /Po" + e.getMessage());
+	 * e.printStackTrace(); } return model;
+	 * 
+	 * }
+	 */
 
 	// getPoListByDateAndStatus
 
@@ -502,7 +498,7 @@ public class PurchaseOrderController {
 	public @ResponseBody List<GetPoHeader> getPOListBetDateAndPlantId(HttpServletRequest request,
 			HttpServletResponse response) {
 
-	    System.out.println("Address is :"+getPoList.toString());
+		System.out.println("Address is :" + getPoList.toString());
 		System.err.println(" in getPOListBetDateAndPlantId");
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 

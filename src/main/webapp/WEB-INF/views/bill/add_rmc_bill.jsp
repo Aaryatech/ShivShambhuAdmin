@@ -348,7 +348,7 @@
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
 												<th style="text-align: center">Basic Rate</th>
-												<th style="text-align: center">Taxable Rate</th>
+												<th style="text-align: center">Final Rate</th>
 												<th style="text-align: center">Challan Qty</th>
 												<th style="text-align: center">Qty</th>
 												<th style="text-align: center">Disc %</th>

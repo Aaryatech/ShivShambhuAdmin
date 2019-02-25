@@ -327,15 +327,15 @@
 
 	<script type="text/javascript">
 		function genPdf() {
-			alert("hiii");
+			//alert("hiii");
 
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 			var custName = document.getElementById("custName").value;
 
-			alert(fromDate);
+			/* alert(fromDate);
 			alert(toDate);
-			alert(custName);
+			alert(custName); */
 
 			window
 					.open('${pageContext.request.contextPath}/showPayRecDoneCustPdf/'

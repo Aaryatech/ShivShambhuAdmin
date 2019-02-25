@@ -201,6 +201,10 @@
 												<th style="text-align: center" class="col-md-1">Item</th>
 												<th style="text-align: center" class="col-md-1">Qty</th>
 
+												<th style="text-align: center" class="col-md-1">PO
+													Alert Qty</th>
+
+
 												<th style="text-align: center" class="col-md-1">Item
 													Rate</th>
 												<th style="text-align: center" class="col-md-1">GST</th>
@@ -228,6 +232,14 @@
 														id="pOqty${getQuotDetailList.itemId}"
 														name="pOqty${getQuotDetailList.itemId}"
 														value="${getQuotDetailList.quotQty}" class="form-control"
+														pattern="[+-]?([0-9]*[.])?[0-9]+"
+														style="height: 32px; padding-bottom: 12px; text-align: right; font-size: 15px;"
+														required></td>
+
+													<td style="width: 100px"><input type="text"
+														id="pOAlertqty${getQuotDetailList.itemId}"
+														name="pOAlertqty${getQuotDetailList.itemId}"
+														value="${getQuotDetailList.exInt1}" class="form-control"
 														pattern="[+-]?([0-9]*[.])?[0-9]+"
 														style="height: 32px; padding-bottom: 12px; text-align: right; font-size: 15px;"
 														required></td>

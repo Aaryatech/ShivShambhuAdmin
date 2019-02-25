@@ -270,14 +270,15 @@
 											</c:forEach>
 										</select>
 									</div>
-									<div class="row" id="hide_div" style="visibility: hidden">
-										<div class="col-md-2">Transaction No*</div>
-										<div class="col-md-2">
-											<input type="text" id="txNo" name="txNo" class="form-control"
-												autocomplete="off" style="width: 100%;"
-												onkeypress="return allowOnlyNumber(event);">
-										</div>
+
+									<div class="col-md-2" id="hide_div" style="visibility: hidden">Transaction
+										No*</div>
+									<div class="col-md-2" id="hide_div1" style="visibility: hidden">
+										<input type="text" id="txNo" name="txNo" class="form-control"
+											autocomplete="off" style="width: 100%;"
+											onkeypress="return allowOnlyNumber(event);">
 									</div>
+
 
 									<div class="col-md-2">Payment Date*</div>
 									<div class="col-md-2">
@@ -791,8 +792,10 @@
 			if (type == 0) {
 
 				document.getElementById("hide_div").style = "display:none"
+					document.getElementById("hide_div1").style = "display:none"
 			} else {
 				document.getElementById("hide_div").style = "visible"
+					document.getElementById("hide_div1").style = "visible"
 
 			}
 		}

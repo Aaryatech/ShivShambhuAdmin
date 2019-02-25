@@ -745,7 +745,13 @@
 		function singleBillPdf(id) {
 			window
 			.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-					+ id);
+					+ id+ '/' + "1");
+			window
+			.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
+					+ id+ '/' + "2");
+			window
+			.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
+					+ id+ '/' + "3");
 		}
 		</script>
 	<script type="text/javascript">

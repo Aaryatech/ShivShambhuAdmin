@@ -438,7 +438,7 @@
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
 												<th style="text-align: center">Basic Rate</th>
-												<th style="text-align: center">Taxable Rate</th>
+												<th style="text-align: center">Final Rate</th>
 												<th style="text-align: center" width="8%">Challan Qty</th>
 												<th style="text-align: center" width="15%">Qty</th>
 												<th style="text-align: center">Disc %</th>
@@ -970,7 +970,7 @@ $
 		var taxPerc=parseFloat(v.cgstPer)+parseFloat(v.sgstPer);
 		 if(v.isTaxIncluding==0)
     	{
-    	  var taxableAmt=(parseFloat(v.poRate)*parseFloat(v.itemQty));
+    	  var taxableAmt=(parseFloat(v.orderRate)*parseFloat(v.itemQty)*100/(100+taxPerc));
      	 var taxAmt=((taxableAmt*taxPerc)/100);
      	 var total=(taxableAmt+taxAmt);
      	 var total1=(taxableAmt+taxAmt);
@@ -983,7 +983,7 @@ $
 		
     	}else
     		{
-    		var baseRate = ((v.poRate * 100) / (100 + taxPerc));
+    		var baseRate = ((v.orderRate * 100) / (100 + taxPerc));
     		var taxableAmt=(baseRate*v.itemQty);
          	var taxAmt=((taxableAmt*taxPerc)/100);
          	var total=(taxableAmt+taxAmt);
