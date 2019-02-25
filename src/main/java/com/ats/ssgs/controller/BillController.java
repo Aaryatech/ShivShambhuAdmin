@@ -843,7 +843,7 @@ public class BillController {
 
 		} catch (Exception e) {
 
-			System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
+			System.err.println("exception In showBillList at OrderController " + e.getMessage());
 
 			e.printStackTrace();
 
@@ -1452,9 +1452,9 @@ public class BillController {
 	 * 
 	 * } catch (Exception e) { e.printStackTrace(); } return model; }
 	 */
-	@RequestMapping(value = "pdf/showBillsPdf/{billHeadId}", method = RequestMethod.GET)
-	public ModelAndView showBillsPdf(@PathVariable("billHeadId") String[] billTempIds, HttpServletRequest request,
-			HttpServletResponse response) {
+	@RequestMapping(value = "pdf/showBillsPdf/{billHeadId}/{taxName}", method = RequestMethod.GET)
+	public ModelAndView showBillsPdf(@PathVariable("billHeadId") String[] billTempIds,
+			@PathVariable("taxName") int taxName, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("bill/allBillPdf");
 
@@ -1486,7 +1486,12 @@ public class BillController {
 				billHeaders.get(i).setPrintWord(printWord);
 			}
 
-			// model.addObject("hsnpdf", hsnpdf);
+			if (taxName == 1)
+				model.addObject("taxName", "(ORIGIANL FOR RECIPIENT)");
+			if (taxName == 2)
+				model.addObject("taxName", "DUPLICATE");
+			if (taxName == 3)
+				model.addObject("taxName", "TRIPLICATE");
 
 			String a = billHeaders.get(0).getGetBillDetails().get(0).getRefNo();
 			model.addObject("ref", a);
@@ -1526,9 +1531,9 @@ public class BillController {
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		// File f = new File("/home/lenovo/Desktop/bill.pdf");
+		File f = new File("/home/lenovo/Desktop/bill.pdf");
 		// File f = new File("E:\\bill.pdf");
-		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
+		// File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1547,11 +1552,11 @@ public class BillController {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 
-		// String filename = "/home/lenovo/Desktop/bill.pdf";
+		String filename = "/home/lenovo/Desktop/bill.pdf";
 		// String filename = "E:\\bill.pdf";
-		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
-		// String filePath = "/home/lenovo/Desktop/bill.pdf";
-		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		// String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		String filePath = "/home/lenovo/Desktop/bill.pdf";
+		// String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 		// String filePath = "E:\\bill.pdf";

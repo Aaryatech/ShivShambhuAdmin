@@ -1069,7 +1069,7 @@ function allowOnlyNumber1(evt)
 					
 					
 					
-					
+					alert(data[0].alertMsg);
 					var len = data.length;
 					//alert("Len " +len);
 								var dataTable = $('#table_grid1')
@@ -1353,7 +1353,7 @@ var no=1;
 						document.getElementById('poupSubButton').disabled=false;
 					}
 					
-					
+					alert(data[0].alertMsg);
 					var len = data.length;
 					//alert("Len " +len);
 								var dataTable = $('#table_grid1')

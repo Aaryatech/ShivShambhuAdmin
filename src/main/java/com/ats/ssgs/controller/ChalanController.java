@@ -196,13 +196,25 @@ public class ChalanController {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		System.err.println("orderHeaderId for getOrderDetailList  " + orderId);
-
+		String alertMsg = null;
 		map.add("orderHeaderId", orderId);
 		GetOrderDetail[] ordDetailArray = rest.postForObject(Constants.url + "getOrderDetailList", map,
 				GetOrderDetail[].class);
 
 		ordDetailList = new ArrayList<GetOrderDetail>(Arrays.asList(ordDetailArray));
+		alertMsg = "Alert for new PO";
+		for (int i = 0; i < ordDetailList.size(); i++) {
+			System.err.println("dcgdhc cdsjcv" + ordDetailList.get(i).getExtra1());
+			if (ordDetailList.get(i).getExtra1() > ordDetailList.get(i).getPoRemainingQty()) {
+				alertMsg = alertMsg + "  " + ordDetailList.get(i).getItemName() + "  quanity" + " "
+						+ ordDetailList.get(i).getExtra1();
 
+			}
+
+		}
+		if (ordDetailList.size() > 0) {
+			ordDetailList.get(0).setAlertMsg(alertMsg);
+		}
 		System.err.println("Ajax ordDetailList " + ordDetailList.toString());
 
 		return ordDetailList;

@@ -1070,7 +1070,7 @@ function allowOnlyNumber1(evt)
 						document.getElementById('poupSubButton').disabled=false;
 					}
 					
-					
+					alert(data[0].alertMsg);
 					var len = data.length;
 					//alert("Len " +len);
 								var dataTable = $('#table_grid1')
@@ -1142,7 +1142,7 @@ function allowOnlyNumber1(evt)
 						document.getElementById('poupSubButton').disabled=false;
 					}
 					
-					
+					alert(data[0].alertMsg);
 					var len = data.length;
 					//alert("Len " +len);
 								var dataTable = $('#table_grid1')
@@ -1240,14 +1240,14 @@ function allowOnlyNumber1(evt)
 		
 		  $.getJSON('${getChalanSelectedItems}', {
 					ajax : 'true',
-
 				},
 
 				function(data) {
 					var modal = document.getElementById('myModal');
 			        modal.style.display = "none";
 
-					//alert("detail  " +JSON.stringify(data));
+					alert("detail  " +JSON.stringify(data));
+				
 					
 					var len = data.length;
 					//alert("Len " +len);
@@ -1258,6 +1258,8 @@ function allowOnlyNumber1(evt)
 										.each(
 												data,
 												function(i, v) {
+													
+													
 													//var checkB = '<input  type="checkbox" name="selChalanItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
 		var width = '<input  type="text" value="0"  class="form-control"  id="width'+v.itemId+'" name="width'+v.itemId+'"   oninput="calcChalanTotal('+v.itemId+')"  onkeypress="return allowOnlyNumber(event);"/>'
 		var height = '<input  type="text" value="0"  class="form-control"  id="height'+v.itemId+'" name="height'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
@@ -1265,7 +1267,7 @@ function allowOnlyNumber1(evt)
 		 var itemChalanTotal = '<input  type="text" value="'+v.chalanQty+'" readonly class="form-control"  id="itemChalanTotal'+v.itemId+'" name="itemChalanTotal'+v.itemId+'"/>'
 		var chalanQty = '<input  type="text" value="'+v.chalanQty+'" readonly class="form-control"  id="chalanQty'+v.itemId+'" name="chalanQty'+v.itemId+'"  onkeypress="return allowOnlyNumber(event);" onchange="placeTempTotal(this.value)"/>'
 	
-	//alert(itemChalanTotal);
+	
 		  
 														var index=i+1;
 														dataTable.row

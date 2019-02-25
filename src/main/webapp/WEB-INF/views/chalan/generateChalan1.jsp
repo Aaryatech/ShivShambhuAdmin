@@ -1289,7 +1289,7 @@ function allowOnlyNumber1(evt)
 						document.getElementById('poupSubButton').disabled=false;
 					}
 					
-					
+					alert(data[0].alertMsg);
 					var len = data.length;
 					//alert("Len " +len);
 								var dataTable = $('#table_grid1')

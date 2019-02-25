@@ -1,9 +1,7 @@
 package com.ats.ssgs.model.order;
 
-
 public class GetOrderDetail {
 
-	
 	private int orderDetId;
 
 	private int orderId;
@@ -59,11 +57,22 @@ public class GetOrderDetail {
 	private String poDate;
 	private String poNo;
 
-	private float remOrdQty;//new field
+	private float remOrdQty;// new field
 	private String uomName;
 	private int uomId;
+	private int extra1;
+
+	private String alertMsg; // for alert qty po
+	
 	
 
+	public String getAlertMsg() {
+		return alertMsg;
+	}
+
+	public void setAlertMsg(String alertMsg) {
+		this.alertMsg = alertMsg;
+	}
 
 	public int getUomId() {
 		return uomId;
@@ -88,7 +97,7 @@ public class GetOrderDetail {
 	public void setRemOrdQty(float remOrdQty) {
 		this.remOrdQty = remOrdQty;
 	}
-	
+
 	public int getOrderDetId() {
 		return orderDetId;
 	}
@@ -329,6 +338,14 @@ public class GetOrderDetail {
 		this.poNo = poNo;
 	}
 
+	public int getExtra1() {
+		return extra1;
+	}
+
+	public void setExtra1(int extra1) {
+		this.extra1 = extra1;
+	}
+
 	@Override
 	public String toString() {
 		return "GetOrderDetail [orderDetId=" + orderDetId + ", orderId=" + orderId + ", poId=" + poId + ", itemId="
@@ -339,7 +356,8 @@ public class GetOrderDetail {
 				+ ", exBool3=" + exBool3 + ", status=" + status + ", poRate=" + poRate + ", poQty=" + poQty
 				+ ", poConsumeQty=" + poConsumeQty + ", poTotal=" + poTotal + ", poRemainingQty=" + poRemainingQty
 				+ ", itemName=" + itemName + ", itemCode=" + itemCode + ", poDate=" + poDate + ", poNo=" + poNo
-				+ ", remOrdQty=" + remOrdQty + ", uomName=" + uomName + ", uomId=" + uomId + "]";
+				+ ", remOrdQty=" + remOrdQty + ", uomName=" + uomName + ", uomId=" + uomId + ", extra1=" + extra1
+				+ ", alertMsg=" + alertMsg + "]";
 	}
 
 }
