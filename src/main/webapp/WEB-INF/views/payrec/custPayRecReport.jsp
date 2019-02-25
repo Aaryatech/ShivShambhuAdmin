@@ -313,192 +313,9 @@
 
 
 
-	<script type="text/javascript">
-		// on plant change function 
-		function getData() {
-			var plantId = document.getElementById("plant_id").value;
-			var valid = true;
-
-			if (plantId == null || plantId == "") {
-				valid = false;
-				alert("Please select plant");
-			}
-
-			if (valid == true) {
-
-				$.getJSON('${getCustByPlantId}', {
-					plantId : plantId,
-					ajax : 'true',
-				},
-
-				function(data) {
-					var html;
-					var len = data.length;
-					var html = '<option selected value="0"  >All</option>';
-
-					for (var i = 0; i < len; i++) {
-
-						html += '<option value="' + data[i].custId + '">'
-								+ data[i].custName + '</option>';
-
-					}
-					html += '</option>';
-
-					$('#cust_name').html(html);
-					$("#cust_name").trigger("chosen:updated");
-					/* getCustInfo();
-
-					$('#po_id').html("-1");
-					$("#po_id").trigger("chosen:updated");
-					 */
-					var dataTable = $('#bootstrap-data-table').DataTable();
-					dataTable.clear().draw();
-
-				});
-			}//end of if
-
-		}
-	</script>
 
 
 
-
-	<!-- <script type="text/javascript">
-		// onclick of submit to search order 
-		function showQuot() {
-
-			alert("Hi View Orders  ");
-
-			var fromDate = document.getElementById("from_date").value;
-			var toDate = document.getElementById("to_date").value;
-			var plantId = document.getElementById("plant_id").value;
-			var custId = document.getElementById("cust_name").value;
-
-			var valid = true;
-
-			if (fromDate == null || fromDate == "") {
-				valid = false;
-				alert("Please select from date");
-			}
-
-			else if (toDate == null || toDate == "") {
-				valid = false;
-				alert("Please select to date");
-			}
-
-			if (fromDate > toDate) {
-				valid = false;
-				alert("from date greater than todate ");
-			}
-			if (valid == true) {
-
-				$
-						.getJSON(
-								'${getPayRecoveryDoneBetDate}',
-								{
-									fromDate : fromDate,
-									toDate : toDate,
-									plantId:plantId,
-									custId:custId,
-									ajax : 'true',
-								},
-
-								function(data) {
-									
-									
-									document.getElementById("expExcel").disabled = false;
-									document.getElementById("PDFButton").disabled = false;
-
-									if (data == "") {
-										alert("No records found !!");
-										document.getElementById("expExcel").disabled = true;
-										document.getElementById("PDFButton").disabled = true;
-
-									}
-
-									
-									
-									
-
-									var dataTable = $('#bootstrap-data-table')
-											.DataTable();
-									dataTable.clear().draw();
-
-									$
-											.each(
-													data,
-													function(i, v) {
-														var chBox;
-
-														
-														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.payHeadId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-edit"  title="Edit"></i></a>'
-
-														chBox = '<input  type="checkbox" class="chk" name="payHeadIds" id='+v.payHeadId+' class="check"  value='+v.payHeadId+'>'
-
-														dataTable.row
-																.add(
-																		[
-																			chBox,
-																				i + 1,
-																				v.custName,
-																				v.billNo,
-																				v.billDate,
-																				v.billTotal,
-																				v.paidAmt,
-																				v.pendingAmt,
-																				acButton ])
-																.draw();
-													});
-
-								});
-
-			}//end of if valid ==true
-
-		}
-
-		function callEdit(payHeadId) {
-
-			window.open("${pageContext.request.contextPath}/editPayRec/"
-					+ payHeadId);
-
-		}
-	</script>
-
- -->
-
-
-	<script type="text/javascript">
-		$(document)
-				.ready(
-						function() {
-							$('#bootstrap-data-table').DataTable();
-
-							$("#selAll")
-									.click(
-											function() {
-												$(
-														'#bootstrap-data-table tbody input[type="checkbox"]')
-														.prop('checked',
-																this.checked);
-											});
-						});
-	</script>
-	<script type="text/javascript">
-		function hideDiv(type) {
-
-			if (type == 0) {
-
-				document.getElementById("hide_div").style = "display:none"
-			} else {
-				document.getElementById("hide_div").style = "visible"
-
-			}
-		}
-	</script>
 
 	<script type="text/javascript">
 		function exportToExcel() {
@@ -510,13 +327,18 @@
 
 	<script type="text/javascript">
 		function genPdf() {
-			//alert("hiii");
+			alert("hiii");
+
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 			var custName = document.getElementById("custName").value;
 
+			alert(fromDate);
+			alert(toDate);
+			alert(custName);
+
 			window
-					.open('${pageContext.request.contextPath}/showPayRecDoneCustSpecPdf/'
+					.open('${pageContext.request.contextPath}/showPayRecDoneCustPdf/'
 							+ fromDate + '/' + toDate + '/' + custName);
 			//document.getElementById("expExcel").disabled = true;
 

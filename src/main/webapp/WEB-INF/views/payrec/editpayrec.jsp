@@ -270,12 +270,13 @@
 											</c:forEach>
 										</select>
 									</div>
-
-									<div class="col-md-2">Transaction No*</div>
-									<div class="col-md-2">
-										<input type="text" id="txNo" name="txNo" class="form-control"
-											autocomplete="off" style="width: 100%;"
-											onkeypress="return allowOnlyNumber(event);">
+									<div class="row" id="hide_div" style="visibility: hidden">
+										<div class="col-md-2">Transaction No*</div>
+										<div class="col-md-2">
+											<input type="text" id="txNo" name="txNo" class="form-control"
+												autocomplete="off" style="width: 100%;"
+												onkeypress="return allowOnlyNumber(event);">
+										</div>
 									</div>
 
 									<div class="col-md-2">Payment Date*</div>
@@ -327,10 +328,13 @@
 
 												<th style="text-align: center; width: 5%;">Sr No</th>
 
-												<th style="text-align: center; width: 40%;">Payment
+												<th style="text-align: center; width: 20%;">Payment
 													Date</th>
-												<th style="text-align: center; width: 45%;">Received
+												<th style="text-align: center; width: 20%;">Received
 													Amount</th>
+												<th style="text-align: center; width: 25%;">Remark</th>
+												<th style="text-align: center; width: 20%;">Transaction
+													Type</th>
 												<th style="text-align: center; width: 10%;">Action</th>
 											</tr>
 										</thead>
@@ -348,6 +352,17 @@
 
 													<td style="text-align: left"><c:out
 															value="${recDetail.paidAmt}" /></td>
+													<td style="text-align: left"><c:out
+															value="${recDetail.remark}" /></td>
+													<td><c:choose>
+															<c:when test="${recDetail.typeTx==0}">
+														 Cash
+													</c:when>
+															<c:when test="${recDetail.typeTx==1}">
+														 Online
+													</c:when>
+															<c:otherwise>Cheque</c:otherwise>
+														</c:choose></td>
 
 
 													<td style="text-align: center"><a href="#"
@@ -482,6 +497,18 @@
 										.each(
 												data,
 												function(i, v) {
+													
+													var typeTx;
+													if (v.typeTx== 0) {
+														typeTx = "Cash";
+														}
+													else if(v.typeTx== 1){
+														typeTx = "Online";
+														
+													}else{
+														typeTx = "Cheque";
+														
+													}
 
 													var str = '<a href="#" class="action_btn" onclick="callEdit('
 														+ v.payDetailId
@@ -497,6 +524,9 @@
 															[ i + 1,
 																	v.paymentDate,
 																	v.paidAmt,
+																	v.remark,
+																	
+																	typeTx,
 													
 																	str ])
 															.draw();
@@ -504,7 +534,7 @@
 
 							});
 			document.getElementById("txType").value = " ";
-			document.getElementById("paymentDate").value = " ";
+			
 			document.getElementById("paidAmt").value = " ";
 			document.getElementById("remark").value = "-";
 			document.getElementById("txNo").value = " ";
@@ -753,6 +783,19 @@
 		}
 
 		
+	</script>
+
+	<script type="text/javascript">
+		function hideDiv(type) {
+
+			if (type == 0) {
+
+				document.getElementById("hide_div").style = "display:none"
+			} else {
+				document.getElementById("hide_div").style = "visible"
+
+			}
+		}
 	</script>
 
 

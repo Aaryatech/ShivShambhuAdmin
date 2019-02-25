@@ -530,28 +530,28 @@ body {
 
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Is Tax Included</div>
+									<div class="col-md-2">Is Tax Extra</div>
 
 									<c:choose>
-										<c:when test="${quotHeader.taxValue>0}">
-											<div class="col-md-1">
-												No<input type="radio" checked name="is_tax_inc"
-													id="is_tax_inc" value="1" onchange="calcAll()">
-											</div>
-
+										<c:when test="${quotHeader.taxValue==0}">
 											<div class="col-md-1">
 												Yes<input type="radio" name="is_tax_inc" id="is_tax_inc"
-													value="0" onchange="calcAll()">
-											</div>
-										</c:when>
-										<c:otherwise>
-											<div class="col-md-1">
-												No<input type="radio" name="is_tax_inc" id="is_tax_inc"
 													value="1" onchange="calcAll()">
 											</div>
 
 											<div class="col-md-1">
+												No<input type="radio" checked name="is_tax_inc"
+													id="is_tax_inc" value="0" onchange="calcAll()">
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="col-md-1">
 												Yes<input type="radio" name="is_tax_inc" id="is_tax_inc"
+													value="1" onchange="calcAll()">
+											</div>
+
+											<div class="col-md-1">
+												No<input type="radio" name="is_tax_inc" id="is_tax_inc"
 													value="0" checked onchange="calcAll()">
 											</div>
 										</c:otherwise>
@@ -894,6 +894,13 @@ body {
 			var quotQty=document.getElementById('new_item_qty').value;
 			var tollCost=${quotHeader.tollCost};
 			var quotHeaderId=${quotHeader.quotHeadId};
+			
+			/* alert(quotHeaderId);
+			alert(tollCost);
+			alert(quotQty);
+			alert(itemId); */
+			
+			
 			 var valid=true;
 			if(quotQty<0 || quotQty==0){
 				valid=false;
@@ -918,8 +925,10 @@ body {
 
 								function(data) {
 									//alert("Success");
-									alert(data[0].tempMsg);
+									//alert(data[0].tempMsg);
 									//appendTableData(data);
+									
+									//alert("Quot Data " +JSON.stringify(data));
 									
 									 var dataTable = $('#bootstrap-data-table')
 										.DataTable();

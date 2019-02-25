@@ -459,8 +459,21 @@
 			var custId = document.getElementById("cust_name").value;
 
 			var valid = true;
+			
+			if (plantId == null || plantId == "") {
+				valid = false;
+				alert("Please Select Plant");
 
-			if (fromDate == null || fromDate == "") {
+				var dataTable = $('#bootstrap-data-table').DataTable();
+				dataTable.clear().draw();
+
+			} else if (plantId < 0) {
+				valid = false;
+
+			}
+
+
+			else if (fromDate == null || fromDate == "") {
 				valid = false;
 				alert("Please select from date");
 			}

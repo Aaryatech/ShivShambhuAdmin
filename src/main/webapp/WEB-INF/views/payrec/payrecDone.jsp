@@ -203,6 +203,7 @@
 												<th style="text-align: center">Billing Amount</th>
 												<th style="text-align: center">Received Amount</th>
 												<th style="text-align: center">Pending Amount</th>
+												<th style="text-align: center">Action</th>
 
 											</tr>
 										</thead>
@@ -426,8 +427,21 @@
 			var custId = document.getElementById("cust_name").value;
 
 			var valid = true;
+			
+			if (plantId == null || plantId == "") {
+				valid = false;
+				alert("Please Select Plant");
 
-			if (fromDate == null || fromDate == "") {
+				var dataTable = $('#bootstrap-data-table').DataTable();
+				dataTable.clear().draw();
+
+			} else if (plantId < 0) {
+				valid = false;
+
+			}
+
+
+			else if (fromDate == null || fromDate == "") {
 				valid = false;
 				alert("Please select from date");
 			}
@@ -482,11 +496,9 @@
 														var chBox;
 
 														
-														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.payHeadId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
+														var acButton = '<a href="#" class="action_btn" onclick="callDateDetail('
+															+ v.custId
+															+ ')" style="color:black"><i class="fa fa-list" title="Detail"></i></a>'
 
 														chBox = '<input  type="checkbox" class="chk" name="payHeadIds" id='+v.payHeadId+' class="check"  value='+v.payHeadId+'>'
 
@@ -511,10 +523,17 @@
 
 		}
 
-		function callEdit(payHeadId) {
+		
+	</script>
+	<script type="text/javascript">
+		function callDateDetail(custId) {
 
-			window.open("${pageContext.request.contextPath}/editPayRec/"
-					+ payHeadId);
+			//alert("hello..");
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+
+			window.open("${pageContext.request.contextPath}/custPayRecDoneList/"
+					+ custId + '/' + fromDate + '/' + toDate + '/');
 
 		}
 	</script>

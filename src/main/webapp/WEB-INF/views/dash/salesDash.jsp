@@ -126,7 +126,9 @@ background-color: transparent;
 							<select id="plantId" name="plantId" class="standardSelect"
 								tabindex="1" required style="color: black;"
 								oninvalid="setCustomValidity('Please select plant')">
-								<option value="0">All</option>
+								<c:if test="${sessionScope.plantId==0}">
+									<option value="0">All</option>
+								</c:if>
 								<c:forEach items="${plantList}" var="plant">
 									<c:if test="${sessionScope.plantId==0}">
 										<option value="${plant.plantId}">${plant.plantName}</option>
