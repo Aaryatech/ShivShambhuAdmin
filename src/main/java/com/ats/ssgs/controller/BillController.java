@@ -952,14 +952,14 @@ public class BillController {
 						.concat(String.valueOf(getBillList.get(i).getGetBillDetails().get(j).getSgstPer()))
 						.concat("%"));
 				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getIgstAmt());
-				
-				float roundOff=(Math.round(getBillList.get(i).getTotalAmt())-getBillList.get(i).getTotalAmt());
-				
+
+				float roundOff = (Math.round(getBillList.get(i).getTotalAmt()) - getBillList.get(i).getTotalAmt());
+
 				DecimalFormat df = new DecimalFormat("#.##");
-				String decimalRndOff= df.format(roundOff);
-				
+				String decimalRndOff = df.format(roundOff);
+
 				rowData.add("" + decimalRndOff);
-				rowData.add("" + getBillList.get(i).getTotalAmt());
+				rowData.add("" + Math.round(getBillList.get(i).getTotalAmt()));
 
 				rowData.add("" + "-");
 
@@ -1481,7 +1481,8 @@ public class BillController {
 				ArrayList<GetBillDetByHsn> hsnpdf = new ArrayList<GetBillDetByHsn>(Arrays.asList(getBillDetByHsnRes));
 				billHeaders.get(i).setGetBillDetByHsn(hsnpdf);
 				System.err.println("hsnpdf*******************************" + hsnpdf.toString());
-				String printWord = Currency.convertToIndianCurrency(String.valueOf(billHeaders.get(i).getTotalAmt()));
+				String printWord = Currency
+						.convertToIndianCurrency(String.valueOf(Math.round(billHeaders.get(i).getTotalAmt())));
 				billHeaders.get(i).setPrintWord(printWord);
 			}
 
@@ -1525,9 +1526,9 @@ public class BillController {
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		File f = new File("/home/lenovo/Desktop/bill.pdf");
+		// File f = new File("/home/lenovo/Desktop/bill.pdf");
 		// File f = new File("E:\\bill.pdf");
-		// File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
+		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1546,11 +1547,11 @@ public class BillController {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 
-		String filename = "/home/lenovo/Desktop/bill.pdf";
+		// String filename = "/home/lenovo/Desktop/bill.pdf";
 		// String filename = "E:\\bill.pdf";
-		// String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
-		String filePath = "/home/lenovo/Desktop/bill.pdf";
-		// String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		// String filePath = "/home/lenovo/Desktop/bill.pdf";
+		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
 
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 		// String filePath = "E:\\bill.pdf";

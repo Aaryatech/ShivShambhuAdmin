@@ -1330,6 +1330,7 @@ public class PayRecController {
 			/*
 			 * map.add("fromDate", fromDate); map.add("toDate", toDate);
 			 */
+			//
 
 			map.add("custId", custId);
 
@@ -1390,9 +1391,100 @@ public class PayRecController {
 
 	}
 
-	@RequestMapping(value = "/showPayRecDoneCustSpecPdf/{fromDate}/{toDate}/{custName}", method = RequestMethod.GET)
-	public void showPayRecDoneCustSpecPdf(@PathVariable("fromDate") String fromDate,
-			@PathVariable("toDate") String toDate, HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping(value = "/custPayRecDoneList/{custId}/{fromDate}/{toDate}/", method = RequestMethod.GET)
+	public ModelAndView custPayRecDoneList(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("custId") int custId, @PathVariable("fromDate") String fromDate,
+			@PathVariable("toDate") String toDate) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("payrec/custPayRecReport");
+
+			model.addObject("title", "Customer Payment Recovery List");
+			String frDate = fromDate;
+			String tDate = toDate;
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("custId", custId);
+
+			Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
+
+			model.addObject("editCust", editCust);
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+			map.add("fromDate", DateConvertor.convertToYMD(frDate));
+			map.add("toDate", DateConvertor.convertToYMD(tDate));
+
+			map.add("custId", custId);
+			map.add("status", 1);
+
+			GetPayRecoveryHead[] recHeadArray = rest.postForObject(
+					Constants.url + "getPayRecoveryBetDateSpecCustAndStatus", map, GetPayRecoveryHead[].class);
+			recList = new ArrayList<GetPayRecoveryHead>(Arrays.asList(recHeadArray));
+			System.out.println("payrec data new:" + recList.toString());
+
+			model.addObject("recList", recList);
+
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No");
+			rowData.add("Customer name");
+			rowData.add("Bill No.");
+			rowData.add("Bill Date");
+			rowData.add("Billing Amount");
+			rowData.add("Received Amount");
+			rowData.add("Pending Amount");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+			int cnt = 1;
+			for (int i = 0; i < recList.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				cnt = cnt + i;
+				rowData.add("" + (i + 1));
+
+				rowData.add("" + recList.get(i).getCustName());
+				rowData.add("" + recList.get(i).getBillNo());
+				rowData.add("" + recList.get(i).getBillDate());
+				rowData.add("" + recList.get(i).getBillTotal());
+				rowData.add("" + recList.get(i).getPaidAmt());
+				rowData.add("" + recList.get(i).getPendingAmt());
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "GetPaymwntRecoveryReport");
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showPaymentRecoveryList at Txn Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/showPayRecDoneCustPdf/{fromDate}/{toDate}/{custName}", method = RequestMethod.GET)
+	public void showPayRecDoneCustPdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			@PathVariable("custName") String custName, HttpServletRequest request, HttpServletResponse response)
 			throws FileNotFoundException {
 		BufferedOutputStream outStream = null;
 		System.out.println("Inside Pdf showPayRecPdf");
