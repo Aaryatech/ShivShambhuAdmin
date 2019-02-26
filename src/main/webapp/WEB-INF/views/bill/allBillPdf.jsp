@@ -27,14 +27,14 @@
 </head>
 <body>
 
-	<c:forEach items="${typeList}" var="type" varStatus="cnt">
+	<c:forEach items="${settingList}" var="setting" varStatus="cnt">
 		<c:forEach items="${billHeaderList}" var="billHeaderRes"
 			varStatus="cnt">
 
 			<c:set var="srCnt" value="0" />
 			<c:set var="totalRowCount" value="0" />
-			<c:set var="maxRowCount" value="32" />
-			<div style="font-size: 10px; text-align: right;">${taxName}</div>
+			<c:set var="maxRowCount" value="34" />
+			<div style="font-size: 10px; text-align: right;">${setting.settingValue}</div>
 			<div style="color: black; font-size: 15px; text-align: center;">
 				TAX INVOICE</div>
 			<table width="100%" border="0" cellpadding="0" cellspacing="0"
@@ -266,7 +266,7 @@
 						<c:when test="${totalRowCount eq maxRowCount}">
 			</table>
 			<div style="page-break-after: always;"></div>
-			<div style="font-size: 10px; text-align: right;">${taxName}</div>
+			<div style="font-size: 10px; text-align: right;">${setting.settingValue}</div>
 			<div style="color: black; font-size: 15px; text-align: center;">
 				TAX INVOICE</div>
 			<table width="100%" border="0" cellpadding="0" cellspacing="0"

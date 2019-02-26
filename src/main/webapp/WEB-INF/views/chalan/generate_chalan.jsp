@@ -1246,7 +1246,7 @@ function allowOnlyNumber1(evt)
 					var modal = document.getElementById('myModal');
 			        modal.style.display = "none";
 
-					alert("detail  " +JSON.stringify(data));
+					//alert("detail  " +JSON.stringify(data));
 				
 					
 					var len = data.length;

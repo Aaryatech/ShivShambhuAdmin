@@ -842,6 +842,15 @@ public class BillController {
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("keyList", "11,12,13");
+
+			Setting[] settArray = rest.postForObject(Constants.url + "getSettingValueByKeyList", map, Setting[].class);
+			settingList = new ArrayList<Setting>(Arrays.asList(settArray));
+
+			model.addObject("settingList", settingList);
+
 		} catch (Exception e) {
 
 			System.err.println("exception In showBillList at OrderController " + e.getMessage());
@@ -1190,11 +1199,6 @@ public class BillController {
 
 			System.out.println("Generte Bill" + addBill.toString());
 
-			/*
-			 * int chalanIdList = addBill.getChalanId();
-			 * 
-			 * System.out.println("chalanIdList" + chalanIdList);
-			 */
 
 			map = new LinkedMultiValueMap<String, Object>();
 
@@ -1443,13 +1447,15 @@ public class BillController {
 		return "redirect:/showBillList";
 	}
 
-	@RequestMapping(value = "pdf/showBillsPdf/{billHeadId}", method = RequestMethod.GET)
-	public ModelAndView showBillsPdf(@PathVariable("billHeadId") String[] billTempIds, HttpServletRequest request,
+	@RequestMapping(value = "pdf/showBillsPdf/{billHeadId}/{settingsVal}", method = RequestMethod.GET)
+	public ModelAndView showBillsPdf(@PathVariable("billHeadId") String[] billTempIds,
+			@PathVariable("settingsVal") String[] settingsVal, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("bill/allBillPdf");
 
 		try {
+
 			RestTemplate rest = new RestTemplate();
 			String strBillTempIds = new String();
 			for (int i = 0; i < billTempIds.length; i++) {
@@ -1471,17 +1477,28 @@ public class BillController {
 						.postForObject(Constants.url + "/getBillDetailsByIdAndHsnReport", map, GetBillDetByHsn[].class);
 				ArrayList<GetBillDetByHsn> hsnpdf = new ArrayList<GetBillDetByHsn>(Arrays.asList(getBillDetByHsnRes));
 				billHeaders.get(i).setGetBillDetByHsn(hsnpdf);
-				System.err.println("hsnpdf*******************************" + hsnpdf.toString());
+
 				String printWord = Currency
 						.convertToIndianCurrency(String.valueOf(Math.round(billHeaders.get(i).getTotalAmt())));
 				billHeaders.get(i).setPrintWord(printWord);
 			}
 
-			/*
-			 * if (taxName == 1) model.addObject("taxName", "(ORIGIANL FOR RECIPIENT)"); if
-			 * (taxName == 2) model.addObject("taxName", "DUPLICATE"); if (taxName == 3)
-			 * model.addObject("taxName", "TRIPLICATE");
-			 */
+			String settingsValues = new String();
+			for (int i = 0; i < settingsVal.length; i++) {
+				settingsValues = settingsValues + "," + settingsVal[i];
+			}
+			settingsValues = settingsValues.substring(1);
+
+			System.out.println("settingsValues============" + settingsValues);
+
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+			map1.add("keyList", settingsValues);
+
+			Setting[] settArray = rest.postForObject(Constants.url + "getSettingValueByKeyList", map1, Setting[].class);
+			settingList = new ArrayList<Setting>(Arrays.asList(settArray));
+
+			model.addObject("settingList", settingList);
 
 			String a = billHeaders.get(0).getGetBillDetails().get(0).getRefNo();
 			model.addObject("ref", a);

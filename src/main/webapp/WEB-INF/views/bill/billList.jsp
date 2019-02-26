@@ -16,15 +16,15 @@ body {
 	padding-top: 20px; /* Location of the box */
 	left: 0;
 	top: 0;
-	width: 30%; /* Full width */
-	height: 30%; /* Full height */
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
 	overflow: auto; /* Enable scroll if needed */
 	background-color: rgb(0, 0, 0); /* Fallback color */
 	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 /* Modal Content */
-.modal-content {
+.modal-content1 {
 	background-color: #fefefe;
 	margin: auto;
 	padding: 20px;
@@ -50,7 +50,7 @@ body {
 #overlay {
 	position: absolute;
 	display: none;
-	width: 50%;
+	width: 100%;
 	height: auto;
 	top: 0;
 	left: 0;
@@ -363,7 +363,8 @@ body {
 										aria-live="polite"></span>
 								</div>
 
-
+								<input type="hidden" name="billHeaderIdTemp"
+									id="billHeaderIdTemp">
 
 
 								<div class="col-md-1"></div>
@@ -736,7 +737,7 @@ body {
 
 	<div id="myModal" class="modal1">
 
-		<div class="modal-content" style="color: black;">
+		<div class="modal-content1" style="color: black;">
 			<span class="close" id="close">&times;</span>
 			<h4 style="text-align: left;">Select PDF Options</h4>
 
@@ -746,8 +747,9 @@ body {
 					class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th class="check" style="text-align: center; width: 5%;"><input
-								type="checkbox" name="selectAll1" id=selectAll1 /></th>
+							<th class="check" style="text-align: left; width: 5%;"
+								align="left"><input type="checkbox" name="selectAll1"
+								id="selectAll1" /></th>
 							<th style="width: 5%;" align="center">Sr</th>
 							<th style="width: 20%;" align="center">Name</th>
 
@@ -755,31 +757,25 @@ body {
 					</thead>
 					<tbody>
 
-						<tr>
-							<td><input type="checkbox" class="chk" name="custIds"
-								id="custIds" value="1" /></td>
-							<td>1</td>
-							<td>ORIGINAL</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" class="chk" name="custIds"
-								id="custIds" value="2" /></td>
-							<td>2</td>
-							<td>DUPLICATE</td>
-						</tr>
+						<c:forEach items="${settingList}" var="custCate">
+							<tr>
+								<td><input type="checkbox" class="chk" name="settingIds"
+									id="settingIds${count.index+1}" value="${custCate.settingId}" /></td>
+								<td style="text-align: center">${count.index+1}</td>
 
-						<tr>
-							<td><input type="checkbox" class="chk" name="custIds"
-								id="custIds" value="3" /></td>
-							<td>3</td>
-							<td>TRIPLICATE</td>
-						</tr>
+
+								<td style="text-align: left"><c:out
+										value="${custCate.settingValue}" /></td>
+							</tr>
+						</c:forEach>
+
+
 
 					</tbody>
 				</table>
 			</div>
 
-			<input type="submit" id="poupSubButton" onclick="showSinglePdf()"
+			<input type="button" id="poupSubButton" onClick="showSinglePdf()"
 				class="btn btn-primary" value="Submit"
 				style="align-content: center; width: 113px; margin-left: 40px;">
 			<br>
@@ -791,9 +787,7 @@ body {
 	<script type="text/javascript">
 		function singleBillPdf(id) {
 			
-			alert("hi");
-			
-		
+			//alert("hi"+id);
 			
 			var isValid=true;
 			if(id==null){
@@ -814,28 +808,57 @@ body {
 				        modal.style.display = "none";
 				        
 				    }
-				}}
+				}
+				
+				document.getElementById("billHeaderIdTemp").value=id;
+			
+			}
 		}
 			
-			
-		/* 	window
-			.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-					+ id); */
+		
 		
 		
 		</script>
 
 
 	<script type="text/javascript">
-		function showSinglePdf(id) {
-			alert("hii");
+		function showSinglePdf() {
 			
-		 	window
+			
+			var modal = document.getElementById('myModal');
+	        modal.style.display = "none";
+	        
+	        
+	        var id =document.getElementById("billHeaderIdTemp").value; 
+	      
+	       
+	        
+	        var checkedVals = $('input:checkbox:checked').map(function() {
+				return this.value;
+			}).get();
+			
+			checkedVals = checkedVals.join(",");
+			
+			
+			var str2 = checkedVals.replace('/', ',');
+			var str3=str2.replace('on,', "");
+			
+			if (checkedVals == "") {
+				alert("Please Select")
+			} else {
+				window
+						.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
+								+ id+ '/' + str3 );
+			}
+	      
+		}
+			
+		 	/* window
 			.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-					+ id);
+					+ id);   */
 		
-		}
-		}
+		
+	
 		</script>
 
 
