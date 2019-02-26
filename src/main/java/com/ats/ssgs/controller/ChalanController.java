@@ -206,7 +206,7 @@ public class ChalanController {
 		for (int i = 0; i < ordDetailList.size(); i++) {
 			System.err.println("dcgdhc cdsjcv" + ordDetailList.get(i).getExtra1());
 			if (ordDetailList.get(i).getExtra1() > ordDetailList.get(i).getPoRemainingQty()) {
-				alertMsg = alertMsg + "  " + ordDetailList.get(i).getItemName() + "  quanity" + " "
+				alertMsg = alertMsg + "  " + ordDetailList.get(i).getItemName() + "  quantity" + " "
 						+ ordDetailList.get(i).getExtra1();
 
 			}

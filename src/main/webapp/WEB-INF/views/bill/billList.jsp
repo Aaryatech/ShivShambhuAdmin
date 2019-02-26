@@ -3,6 +3,87 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!doctype html>
 <html class="no-js" lang="">
+<style>
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* The Modal (background) */
+.modal1 {
+	display: none; /* Hidden by default */
+	position: absolute; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 20px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 30%; /* Full width */
+	height: 30%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 50%;
+	height: auto;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: left;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#overlay {
+	position: absolute;
+	display: none;
+	width: 50%;
+	height: auto;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(101, 113, 119, 0.5);
+	z-index: 2;
+	cursor: pointer;
+}
+
+#text {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 25px;
+	color: white;
+	transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+}
+
+.bg-overlay {
+	background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)),
+		url("${pageContext.request.contextPath}/resources/images/smart.jpeg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center center;
+	color: #fff;
+	height: auto;
+	width: auto;
+	padding-top: 10px;
+	padding-left: 20px;
+}
+</style>
 
 <head>
 <meta charset="utf-8">
@@ -187,7 +268,7 @@
 
 								<div class="col-md-2">Select Plant</div>
 
-								<div class="col-md-4">
+								<div class="col-md-3">
 									<select id="plant_id" name="plant_id" class="standardSelect"
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select plant name')"
@@ -218,7 +299,7 @@
 									</select>
 								</div>
 								<div class="col-md-2">Select Customer</div>
-								<div class="col-md-4">
+								<div class="col-md-2">
 									<select id="cust_name" name="cust_name" class="standardSelect"
 										tabindex="1" required
 										oninvalid="setCustomValidity('Please select customer')"
@@ -226,25 +307,6 @@
 										<option value="0">All</option>
 
 									</select>
-								</div>
-
-							</div>
-							<div class="form-group"></div>
-
-							<div class="row">
-								<div class="col-md-2">From Date</div>
-								<div class="col-md-2">
-									<input type="text" autocomplete="off" id="from_date"
-										name="from_date" required style="width: 100%;"
-										class="form-control" value="${fromDate}"> <span
-										class="error" aria-live="polite"></span>
-								</div>
-								<div class="col-md-1">To Date</div>
-								<div class="col-md-2">
-									<input type="text" autocomplete="off" id="to_date"
-										name="to_date" style="width: 100%;" class="form-control"
-										value="${toDate}"> <span class="error"
-										aria-live="polite"></span>
 								</div>
 
 
@@ -281,6 +343,28 @@
 
 									</select>
 								</div>
+
+							</div>
+							<div class="form-group"></div>
+
+							<div class="row">
+								<div class="col-md-2">From Date</div>
+								<div class="col-md-2">
+									<input type="text" autocomplete="off" id="from_date"
+										name="from_date" required style="width: 100%;"
+										class="form-control" value="${fromDate}"> <span
+										class="error" aria-live="polite"></span>
+								</div>
+								<div class="col-md-1">To Date</div>
+								<div class="col-md-2">
+									<input type="text" autocomplete="off" id="to_date"
+										name="to_date" style="width: 100%;" class="form-control"
+										value="${toDate}"> <span class="error"
+										aria-live="polite"></span>
+								</div>
+
+
+
 
 								<div class="col-md-1"></div>
 								<div class="col-md-1">
@@ -647,113 +731,115 @@
 		}
 	</script>
 
-	<!-- <script type="text/javascript">
-	// on cust change function 
-		function showOrder() {
-			$('#divCheckbox').show();
-			var custId = document.getElementById("cust_name").value;
-			var valid = true;
-			if (custId == null || custId == "") {
-				valid = false;
-				alert("Please Select Customer");
-				
-				$('#po_id').html("-1");
-				$("#po_id").trigger("chosen:updated");
-				
-				var dataTable = $('#bootstrap-data-table')
-				.DataTable();
-		dataTable.clear().draw();
+	<div class="row"></div>
+	<div class="form-group"></div>
 
-			}
-			else if(custId<0){
-				valid = false;
-				
-				$('#po_id').html("-1");
-				$("#po_id").trigger("chosen:updated");
-				
-				var dataTable = $('#bootstrap-data-table')
-				.DataTable();
-		dataTable.clear().draw();
+	<div id="myModal" class="modal1">
 
-			}
-			if (valid == true) {
+		<div class="modal-content" style="color: black;">
+			<span class="close" id="close">&times;</span>
+			<h4 style="text-align: left;">Select PDF Options</h4>
 
-				$
-						.getJSON(
-								'${getCustInfoByCustId}',
-								{
-									custId : custId,
-									ajax : 'true',
 
-								},
-								function(data) {
-									document.getElementById("custTypeName").value = data.custTypeName;
-									document.getElementById("custMobNo").value = data.custMobNo;
-								});
+			<div style="height: 100%; width: 100%; overflow: auto">
+				<table style="width: 100%" id="table_grid1"
+					class="table table-striped table-bordered">
+					<thead>
+						<tr>
+							<th class="check" style="text-align: center; width: 5%;"><input
+								type="checkbox" name="selectAll1" id=selectAll1 /></th>
+							<th style="width: 5%;" align="center">Sr</th>
+							<th style="width: 20%;" align="center">Name</th>
 
-				$	.getJSON(
-						'${getPOHeaderByCustId}',
-						{
-							custId : custId,
-							ajax : 'true',
-						},
-						function(data) {
-							var html;
-							var len = data.length;
-							//alert("data " +JSON.stringify(data));
-							for (var i = 0; i < len; i++) {
-								var PNo=data[i].poNo+"-"+ data[i].poDate 
+						</tr>
+					</thead>
+					<tbody>
 
-								html += '<option value="' + data[i].poId + '">'
-										+PNo+ '</option>';
+						<tr>
+							<td><input type="checkbox" class="chk" name="custIds"
+								id="custIds" value="1" /></td>
+							<td>1</td>
+							<td>ORIGINAL</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" class="chk" name="custIds"
+								id="custIds" value="2" /></td>
+							<td>2</td>
+							<td>DUPLICATE</td>
+						</tr>
 
-							}
-							html += '</option>';
-							$('#po_id').html(html);
-							$("#po_id").trigger("chosen:updated");
-						});
-				
-				
-				$	.getJSON(
-						'${getProjectByCustId}',
-						{
-							custId : custId,
-							ajax : 'true',
-						},
-						function(data) {
-							var html;
-							var len = data.length;
-							//alert("data " +JSON.stringify(data));
-							for (var i = 0; i < len; i++) {
-								var projData=data[i].projName+"-"+data[i].address
+						<tr>
+							<td><input type="checkbox" class="chk" name="custIds"
+								id="custIds" value="3" /></td>
+							<td>3</td>
+							<td>TRIPLICATE</td>
+						</tr>
 
-								html += '<option value="' + data[i].projId + '">'
-										+projData+ '</option>';
+					</tbody>
+				</table>
+			</div>
 
-							}
-							html += '</option>';
-							$('#proj_id').html(html);
-							$("#proj_id").trigger("chosen:updated");
-						});
-				
-				
-			}// end of if valid= true
-			
-		}
-	</script> -->
+			<input type="submit" id="poupSubButton" onclick="showSinglePdf()"
+				class="btn btn-primary" value="Submit"
+				style="align-content: center; width: 113px; margin-left: 40px;">
+			<br>
+		</div>
+
+	</div>
+
+
 	<script type="text/javascript">
 		function singleBillPdf(id) {
-			window
+			
+			alert("hi");
+			
+		
+			
+			var isValid=true;
+			if(id==null){
+				isValid=false;
+			}
+			if(isValid==true){
+			 var span = document.getElementById("close");
+				var modal = document.getElementById('myModal');
+
+				modal.style.display = "block";
+				span.onclick = function() {
+				    modal.style.display = "none"; 
+				}
+
+				// When the user clicks anywhere outside of the modal, close it
+				window.onclick = function(event) {
+				    if (event.target == modal) {
+				        modal.style.display = "none";
+				        
+				    }
+				}}
+		}
+			
+			
+		/* 	window
 			.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-					+ id+ '/' + "1");
-			window
+					+ id); */
+		
+		
+		</script>
+
+
+	<script type="text/javascript">
+		function showSinglePdf(id) {
+			alert("hii");
+			
+		 	window
 			.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-					+ id+ '/' + "2");
-			window
-			.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-					+ id+ '/' + "3");
+					+ id);
+		
+		}
 		}
 		</script>
+
+
+
 	<script type="text/javascript">
 		function billPdf() {
 			var checkedVals = $('input:checkbox:checked').map(function() {
@@ -786,6 +872,14 @@
 	</script>
 
 	<script type="text/javascript">
+		$('#selectAll1').click(
+				function(e) {
+					$(this).closest('table').find('td input:checkbox').prop(
+							'checked', this.checked);
+				});
+	</script>
+
+	<script type="text/javascript">
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");
@@ -806,6 +900,22 @@
 			window.open("${pageContext.request.contextPath}/exportToExcel2");
 			 document.getElementById("expExcel2").disabled = true; 
 		}
+	</script>
+	<script type="text/javascript">
+		$(document)
+				.ready(
+						function() {
+							$('#bootstrap-data-table-export').DataTable();
+
+							$("#selAll1")
+									.click(
+											function() {
+												$(
+														'#bootstrap-data-table tbody input[type="checkbox"]')
+														.prop('checked',
+																this.checked);
+											});
+						});
 	</script>
 </body>
 </html>

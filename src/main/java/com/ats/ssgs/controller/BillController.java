@@ -623,16 +623,17 @@ public class BillController {
 
 			MultiValueMap<String, Object> mapObj = new LinkedMultiValueMap<String, Object>();
 			System.err.println("custId for getPoByCust  " + custId);
+			System.err.println("custId for getPoByCust  " + removeComma(cIdList));
 
 			mapObj.add("custId", custId);
-			mapObj.add("statusList", 1);
+			mapObj.add("chalanIdList", removeComma(cIdList));
 
-			PoHeader[] chArray = rest.postForObject(Constants.url + "getPoHeaderByCustIdAndStatus", mapObj,
+			PoHeader[] poHeaderListArray = rest.postForObject(Constants.url + "getPoNoByBill", mapObj,
 					PoHeader[].class);
 
-			List<PoHeader> poHeaderList = new ArrayList<>();
-			poHeaderList = new ArrayList<PoHeader>(Arrays.asList(chArray));
+			List<PoHeader> poHeaderList = new ArrayList<PoHeader>(Arrays.asList(poHeaderListArray));
 
+			System.out.println("poHeaderList====" + poHeaderList.toString());
 			ArrayList<String> poNOList = new ArrayList<>();
 
 			if (poHeaderList.size() > 0) {
@@ -1442,19 +1443,9 @@ public class BillController {
 		return "redirect:/showBillList";
 	}
 
-	/*
-	 * @RequestMapping(value = "pdf/showBillsPdf/{billHeadId}", method =
-	 * RequestMethod.GET) public ModelAndView
-	 * showBillsPdf(@PathVariable("billHeadId")String[]
-	 * billHeadIds,HttpServletRequest request, HttpServletResponse response) {
-	 * 
-	 * ModelAndView model = new ModelAndView("bill/allBillPdf"); try {
-	 * 
-	 * } catch (Exception e) { e.printStackTrace(); } return model; }
-	 */
-	@RequestMapping(value = "pdf/showBillsPdf/{billHeadId}/{taxName}", method = RequestMethod.GET)
-	public ModelAndView showBillsPdf(@PathVariable("billHeadId") String[] billTempIds,
-			@PathVariable("taxName") int taxName, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "pdf/showBillsPdf/{billHeadId}", method = RequestMethod.GET)
+	public ModelAndView showBillsPdf(@PathVariable("billHeadId") String[] billTempIds, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("bill/allBillPdf");
 
@@ -1486,12 +1477,11 @@ public class BillController {
 				billHeaders.get(i).setPrintWord(printWord);
 			}
 
-			if (taxName == 1)
-				model.addObject("taxName", "(ORIGIANL FOR RECIPIENT)");
-			if (taxName == 2)
-				model.addObject("taxName", "DUPLICATE");
-			if (taxName == 3)
-				model.addObject("taxName", "TRIPLICATE");
+			/*
+			 * if (taxName == 1) model.addObject("taxName", "(ORIGIANL FOR RECIPIENT)"); if
+			 * (taxName == 2) model.addObject("taxName", "DUPLICATE"); if (taxName == 3)
+			 * model.addObject("taxName", "TRIPLICATE");
+			 */
 
 			String a = billHeaders.get(0).getGetBillDetails().get(0).getRefNo();
 			model.addObject("ref", a);
