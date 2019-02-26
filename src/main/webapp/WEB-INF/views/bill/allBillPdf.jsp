@@ -33,7 +33,7 @@
 
 			<c:set var="srCnt" value="0" />
 			<c:set var="totalRowCount" value="0" />
-			<c:set var="maxRowCount" value="34" />
+			<c:set var="maxRowCount" value="32" />
 			<div style="font-size: 10px; text-align: right;">${taxName}</div>
 			<div style="color: black; font-size: 15px; text-align: center;">
 				TAX INVOICE</div>
@@ -266,7 +266,9 @@
 						<c:when test="${totalRowCount eq maxRowCount}">
 			</table>
 			<div style="page-break-after: always;"></div>
-			<h6 align="center">TAX INVOICE</h6>
+			<div style="font-size: 10px; text-align: right;">${taxName}</div>
+			<div style="color: black; font-size: 15px; text-align: center;">
+				TAX INVOICE</div>
 			<table width="100%" border="0" cellpadding="0" cellspacing="0"
 				style="border-left: 1px solid #313131; border-right: 1px solid #313131; border-top: 1px solid #313131;">
 				<tr>
