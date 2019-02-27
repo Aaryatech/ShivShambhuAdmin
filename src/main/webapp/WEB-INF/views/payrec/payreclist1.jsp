@@ -222,16 +222,18 @@
 										<td></td>
 										<td></td>
 										<td><b>Total</b></td>
-										<td><input type="text" id="totalBillAmt" width="10px"
-											name="totalBillAmt" value="0" readonly></td>
+										<td><input type="text" id="totalBillAmt"
+											style="width: 80px;" name="totalBillAmt" value="0" readonly></td>
 										<td></td>
 										<td></td>
 
 
 										<td><input type="text" id="totalReceivedAmt"
-											name="totalReceivedAmt" value="0" readonly></td>
+											style="width: 80px;" name="totalReceivedAmt" value="0"
+											readonly></td>
 										<td><input type="text" id="totalPendingAmt"
-											name="totalPendingAmt" value="0" readonly></td>
+											style="width: 80px;" name="totalPendingAmt" value="0"
+											readonly></td>
 										<td></td>
 										<td></td>
 									</tr>

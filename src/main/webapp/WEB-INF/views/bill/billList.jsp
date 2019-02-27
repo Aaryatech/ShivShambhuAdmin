@@ -29,7 +29,7 @@ body {
 	margin: auto;
 	padding: 20px;
 	border: 1px solid #888;
-	width: 50%;
+	width: 30%;
 	height: auto;
 }
 
@@ -739,7 +739,7 @@ body {
 
 		<div class="modal-content1" style="color: black;">
 			<span class="close" id="close">&times;</span>
-			<h3 style="text-align: left;">Select PDF Options</h3>
+			<h2 style="text-align: left;">Select PDF Options</h2>
 
 
 			<div style="height: 100%; width: 100%; overflow: auto">
@@ -747,11 +747,10 @@ body {
 					class="table table-striped table-bordered">
 					<thead>
 						<tr>
-							<th class="check" style="text-align: left; width: 5%;"
-								align="left"><input type="checkbox" name="selectAll1"
-								id="selectAll1" /></th>
-							<th style="width: 5%;" align="center">Sr</th>
-							<th style="width: 20%;" align="center">Name</th>
+							<th class="check" style="text-align: left;" align="left"><input
+								type="checkbox" name="selectAll1" id="selectAll1" /></th>
+
+							<th align="center">Name</th>
 
 						</tr>
 					</thead>
@@ -761,7 +760,7 @@ body {
 							<tr>
 								<td><input type="checkbox" class="chk" name="settingIds"
 									id="settingIds${count.index+1}" value="${custCate.settingId}" /></td>
-								<td style="text-align: center">${count.index+1}</td>
+
 								<td style="text-align: left"><c:out
 										value="${custCate.settingValue}" /></td>
 							</tr>
@@ -880,7 +879,7 @@ body {
 			} else {
 				window
 						.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-								+ str3);
+								+ str3 +'/' + "11");
 			}
 		} 
 	</script>

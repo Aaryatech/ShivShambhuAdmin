@@ -196,7 +196,7 @@ public class ChalanController {
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		int orderId = Integer.parseInt(request.getParameter("orderId"));
 		System.err.println("orderHeaderId for getOrderDetailList  " + orderId);
-		String alertMsg = null;
+		String alertMsg = " ";
 		map.add("orderHeaderId", orderId);
 		GetOrderDetail[] ordDetailArray = rest.postForObject(Constants.url + "getOrderDetailList", map,
 				GetOrderDetail[].class);
@@ -204,10 +204,10 @@ public class ChalanController {
 		ordDetailList = new ArrayList<GetOrderDetail>(Arrays.asList(ordDetailArray));
 
 		for (int i = 0; i < ordDetailList.size(); i++) {
-			System.err.println("dcgdhc cdsjcv" + ordDetailList.get(i).getExtra1());
+
 			if (ordDetailList.get(i).getExtra1() > ordDetailList.get(i).getPoRemainingQty()) {
-				alertMsg = alertMsg + "Alert for new PO" + "  " + ordDetailList.get(i).getItemName() + "  quantity"
-						+ " " + ordDetailList.get(i).getExtra1();
+				alertMsg = alertMsg + "\n" + "Alert for new PO" + "  " + ordDetailList.get(i).getItemName()
+						+ " Remaining qty" + " " + ordDetailList.get(i).getPoRemainingQty() + "\n";
 
 			}
 

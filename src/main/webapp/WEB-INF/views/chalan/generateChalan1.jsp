@@ -1289,7 +1289,7 @@ function allowOnlyNumber1(evt)
 						document.getElementById('poupSubButton').disabled=false;
 					}
 					
-					if(data[0].alertMsg==null)
+					if(data[0].alertMsg==" ")
 					{
 					}
 				else
