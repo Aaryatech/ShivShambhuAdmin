@@ -739,7 +739,7 @@ body {
 
 		<div class="modal-content1" style="color: black;">
 			<span class="close" id="close">&times;</span>
-			<h4 style="text-align: left;">Select PDF Options</h4>
+			<h3 style="text-align: left;">Select PDF Options</h3>
 
 
 			<div style="height: 100%; width: 100%; overflow: auto">
@@ -757,13 +757,11 @@ body {
 					</thead>
 					<tbody>
 
-						<c:forEach items="${settingList}" var="custCate">
+						<c:forEach items="${settingList}" var="custCate" varStatus="count">
 							<tr>
 								<td><input type="checkbox" class="chk" name="settingIds"
 									id="settingIds${count.index+1}" value="${custCate.settingId}" /></td>
 								<td style="text-align: center">${count.index+1}</td>
-
-
 								<td style="text-align: left"><c:out
 										value="${custCate.settingValue}" /></td>
 							</tr>

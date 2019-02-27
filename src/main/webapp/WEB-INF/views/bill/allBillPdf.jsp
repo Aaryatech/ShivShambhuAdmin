@@ -81,26 +81,15 @@
 				</tr>
 
 				<tr>
-					<td width="25%" colspan="3"
+
+					<td width="25%" colspan="6"
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-
 						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-							Buyer's Order No.: <b>${ref}</b>
-						</p>
-					</td>
-					<td width="25%" colspan="3"
-						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
+							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Despatch
+							Doc. No. ${billHeaderRes.chalanNo}</p>
 
-
-						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-							Dated.
-							<!-- </p> 
-      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-							<b>${billHeaderRes.billDate}</b>
-						</p>
 					</td>
+
 
 
 				</tr>
@@ -165,11 +154,13 @@
 				<tr>
 					<td width="25%" colspan="6"
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Despatch
-							Doc. No. ${billHeaderRes.chalanNo}</p>
 
+						<p
+							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
+							Buyer's Order No.: <b>${ref}</b>
+						</p>
 					</td>
+
 
 				</tr>
 				<tr>
@@ -272,6 +263,7 @@
 			<table width="100%" border="0" cellpadding="0" cellspacing="0"
 				style="border-left: 1px solid #313131; border-right: 1px solid #313131; border-top: 1px solid #313131;">
 				<tr>
+					<!--  row str -->
 					<td colspan="6" rowspan="3" width="50%"
 						style="border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 						<p
@@ -310,7 +302,17 @@
 					</td>
 
 				</tr>
+
 				<tr>
+
+					<td width="25%" colspan="6"
+						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
+						<p
+							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Despatch
+							Doc. No. ${billHeaderRes.chalanNo}</p>
+
+					</td>
+
 
 
 				</tr>
@@ -319,8 +321,14 @@
 
 				</tr>
 				<tr>
+
+
+				</tr>
+				<tr>
+					<!--  row strats -->
 					<td width="50%" rowspan="4" colspan="6"
 						style="padding: 8px; color: #FFF; font-size: 14px;">
+						<!--  1st td -->
 						<p
 							style="color: #000; font-size: 15px; text-align:; left; margin: 0px;">
 							<b>Buyer: </b>
@@ -340,60 +348,60 @@
 							${billHeaderRes.custMobNo}</p>
 
 					</td>
+					<!--  1st td ends -->
 
 
-					<td width="25%" colspan="3"
-						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-							Buyer's Order No.:
-							<!-- </p> 
+					<%-- <td width="25%" colspan="3"
+					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
+					<p
+						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
+						Buyer's Order No.:
+						
+						<b>${ref}</b>
+					</p>
+
+				</td>
+				<td colspan="3" width="25%"
+					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
+					<p
+						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
+						Dated.
+						<!-- </p> 
       	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-							<b>${ref}</b>
-						</p>
-
-					</td>
-					<td colspan="3" width="25%"
-						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
-						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-							Dated.
-							<!-- </p> 
-      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-							<b>${billHeaderRes.billDate}</b>
-						</p>
-					</td>
-
+						<b>${billHeaderRes.billDate}</b>
+					</p>
+				</td>
+ --%>
 				</tr>
+				<!-- row ends -->
 				<tr>
 					<td width="25%" colspan="6"
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Despatch
-							Doc. No.</p>
 
+						<p
+							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
+							Buyer's Order No.: <b>${ref}</b>
+						</p>
 					</td>
+
 
 				</tr>
 				<tr>
 
 					<td colspan="6" width="25%"
-						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
+						style="border-left: 1px solid #313131; border-bottom: 0px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 						<p
 							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Project
-							Name</p>
+							Name - ${billHeaderRes.projName} ${billHeaderRes.location}</p>
 
 					</td>
 
 				</tr>
-				<tr>
+				<!-- <tr>
 
-
-
-				</tr>
+			</tr> -->
 
 			</table>
-
 			<table width="100%" border="0" cellpadding="0" cellspacing="0"
 				style="border-right: 1px solid #313131">
 				<tr>
@@ -404,15 +412,15 @@
 						Of Goods.</td>
 					<td align="center" width="8%" rowspan="2"
 						style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 0.2px; color: #000; font-size: 10px;">HSN/SAC</td>
-
-					<td align="center" width="6%" rowspan="2"
-						style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">UOM
-					</td>
-
 					<td align="center" width="6%" rowspan="2"
 						style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">Qty</td>
 					<td align="center" width="6%" rowspan="2"
 						style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">Rate</td>
+					<td align="center" width="6%" rowspan="2"
+						style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">UOM
+					</td>
+
+
 					<td align="center" width="8%" rowspan="2"
 						style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">Taxable
 						Amt</td>
@@ -530,12 +538,13 @@
 
 					<td align="center"
 						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
-					<td align="center"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+
 					<td align="right"
 						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
 								type="number" maxFractionDigits="2" minFractionDigits="2"
 								value="${totalQty}" /></b></td>
+					<td align="center"
+						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
 					<td align="center"
 						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
 					<td align="center"

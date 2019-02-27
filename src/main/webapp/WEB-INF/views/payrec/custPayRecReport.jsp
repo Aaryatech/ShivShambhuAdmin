@@ -132,12 +132,6 @@
 
 							</div>
 
-
-							<div class="form-group"></div>
-
-
-
-
 							<div class="form-group"></div>
 
 
@@ -167,6 +161,8 @@
 											<th style="text-align: center">Pending Amount</th>
 
 										</tr>
+
+
 									</thead>
 
 
@@ -189,15 +185,15 @@
 
 
 
-												<td style="text-align: left"><fmt:formatNumber
+												<td style="text-align: right"><fmt:formatNumber
 														type="number" maxFractionDigits="2"
 														value="${rec.billTotal}" /></td>
 
 
-												<td style="text-align: left"><fmt:formatNumber
+												<td style="text-align: right"><fmt:formatNumber
 														type="number" maxFractionDigits="2" value="${rec.paidAmt}" /></td>
 
-												<td style="text-align: left"><fmt:formatNumber
+												<td style="text-align: right"><fmt:formatNumber
 														type="number" maxFractionDigits="2"
 														value="${rec.pendingAmt}" /></td>
 
@@ -207,9 +203,30 @@
 
 											</tr>
 										</c:forEach>
+
 									</tbody>
 
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td><b>Total</b></td>
+										<td style="text-align: right"><fmt:formatNumber
+												type="number" maxFractionDigits="2" value="${totalBillAmt}" /></td>
+										<td style="text-align: right"><fmt:formatNumber
+												type="number" maxFractionDigits="2"
+												value="${totalReceivedAmt}" /></td>
+										<td style="text-align: right"><fmt:formatNumber
+												type="number" maxFractionDigits="2"
+												value="${totalPendingAmt}" /></td>
+									</tr>
+
+
+
 								</table>
+
+
+
 
 								<div class="col-md-2"></div>
 

@@ -202,12 +202,12 @@ public class ChalanController {
 				GetOrderDetail[].class);
 
 		ordDetailList = new ArrayList<GetOrderDetail>(Arrays.asList(ordDetailArray));
-		alertMsg = "Alert for new PO";
+
 		for (int i = 0; i < ordDetailList.size(); i++) {
 			System.err.println("dcgdhc cdsjcv" + ordDetailList.get(i).getExtra1());
 			if (ordDetailList.get(i).getExtra1() > ordDetailList.get(i).getPoRemainingQty()) {
-				alertMsg = alertMsg + "  " + ordDetailList.get(i).getItemName() + "  quantity" + " "
-						+ ordDetailList.get(i).getExtra1();
+				alertMsg = alertMsg + "Alert for new PO" + "  " + ordDetailList.get(i).getItemName() + "  quantity"
+						+ " " + ordDetailList.get(i).getExtra1();
 
 			}
 

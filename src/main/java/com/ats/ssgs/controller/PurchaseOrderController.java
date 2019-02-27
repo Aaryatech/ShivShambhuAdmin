@@ -391,7 +391,8 @@ public class PurchaseOrderController {
 						request.getParameter("othCostAftTax" + editPo.getGetPoDetailList().get(i).getItemId())));
 				editPo.getGetPoDetailList().get(i).setTotal(Float
 						.parseFloat(request.getParameter("finalAmt" + editPo.getGetPoDetailList().get(i).getItemId())));
-
+				editPo.getGetPoDetailList().get(i).setExtra1(Integer
+						.parseInt(request.getParameter("pOAlertqty" + editPo.getGetPoDetailList().get(i).getItemId())));
 			}
 
 			editPo.setPoDetailList(editPo.getGetPoDetailList());

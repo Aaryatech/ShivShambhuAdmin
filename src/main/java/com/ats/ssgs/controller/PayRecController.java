@@ -1320,26 +1320,26 @@ public class PayRecController {
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
 
-			// System.out.println("from date is"+fromDate);
-			// System.out.println("to date is"+toDate);
-
-			////////////////
 			map.add("fromDate", DateConvertor.convertToYMD(frDate));
 			map.add("toDate", DateConvertor.convertToYMD(tDate));
-
-			/*
-			 * map.add("fromDate", fromDate); map.add("toDate", toDate);
-			 */
-			//
-
 			map.add("custId", custId);
 
 			GetPayRecoveryHead[] recHeadArray = rest.postForObject(Constants.url + "getPayRecoveryBetDateSpecCust", map,
 					GetPayRecoveryHead[].class);
 			recList = new ArrayList<GetPayRecoveryHead>(Arrays.asList(recHeadArray));
-			System.out.println("payrec data new:" + recList.toString());
 
 			model.addObject("recList", recList);
+			float totalBillAmt = 0;
+			float totalPendingAmt = 0;
+			float totalReceivedAmt = 0;
+			for (int i = 0; i < recList.size(); i++) {
+				totalBillAmt = totalBillAmt + recList.get(i).getBillTotal();
+				totalPendingAmt = totalPendingAmt + recList.get(i).getPendingAmt();
+				totalReceivedAmt = totalReceivedAmt + recList.get(i).getPaidAmt();
+			}
+			model.addObject("totalBillAmt", totalBillAmt);
+			model.addObject("totalPendingAmt", totalPendingAmt);
+			model.addObject("totalReceivedAmt", totalReceivedAmt);
 
 			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
@@ -1431,6 +1431,17 @@ public class PayRecController {
 			System.out.println("payrec data new:" + recList.toString());
 
 			model.addObject("recList", recList);
+			float totalBillAmt = 0;
+			float totalPendingAmt = 0;
+			float totalReceivedAmt = 0;
+			for (int i = 0; i < recList.size(); i++) {
+				totalBillAmt = totalBillAmt + recList.get(i).getBillTotal();
+				totalPendingAmt = totalPendingAmt + recList.get(i).getPendingAmt();
+				totalReceivedAmt = totalReceivedAmt + recList.get(i).getPaidAmt();
+			}
+			model.addObject("totalBillAmt", totalBillAmt);
+			model.addObject("totalPendingAmt", totalPendingAmt);
+			model.addObject("totalReceivedAmt", totalReceivedAmt);
 
 			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
