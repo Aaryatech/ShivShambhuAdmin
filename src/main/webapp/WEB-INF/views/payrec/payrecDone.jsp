@@ -209,52 +209,26 @@
 										</thead>
 
 
-										<tbody>
-											<c:forEach items="${recList}" var="rec" varStatus="count">
-												<tr>
-													<%-- <td><input type="checkbox" class="chk"
-														name="payHeadIds" id="payHeadIds${count.index+1}"
-														value="${rec.payHeadId}" /></td> --%>
 
-													<td style="text-align: center">${count.index+1}</td>
+										<tbody></tbody>
 
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
 
 
-													<td style="text-align: left"><c:out
-															value="${rec.custName}" /></td>
+											<td><b>Total</b></td>
+											<td><input type="text" id="totalBillAmt"
+												name="totalBillAmt" value="0" readonly></td>
 
-													<td style="text-align: left"><c:out
-															value="${rec.billNo}" /></td>
+											<td><input type="text" id="totalReceivedAmt"
+												name="totalReceivedAmt" value="0" readonly></td>
+											<td><input type="text" id="totalPendingAmt"
+												name="totalPendingAmt" value="0" readonly></td>
+											<td></td>
 
-
-													<td style="text-align: left"><c:out
-															value="${rec.billDate}" /></td>
-
-
-													<td style="text-align: left"><c:out
-															value="${rec.billTotal}" /></td>
-
-													<td style="text-align: left"><c:out
-															value="${rec.paidAmt}" /></td>
-
-													<td style="text-align: left"><c:out
-															value="${rec.pendingAmt}" /></td>
-
-
-
-
-
-													<td style="text-align: center"><a href="#"
-														onclick="callEdit(${rec.payHeadId},${count.index})"><i
-															class="fa fa-edit" style="color: black"></i> <span
-															class="text-muted"></span></a></td>
-
-
-
-
-												</tr>
-											</c:forEach>
-										</tbody>
+										</tr>
 
 									</table>
 
@@ -427,7 +401,7 @@
 			var custId = document.getElementById("cust_name").value;
 
 			var valid = true;
-			
+
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please Select Plant");
@@ -439,7 +413,6 @@
 				valid = false;
 
 			}
-
 
 			else if (fromDate == null || fromDate == "") {
 				valid = false;
@@ -463,14 +436,13 @@
 								{
 									fromDate : fromDate,
 									toDate : toDate,
-									plantId:plantId,
-									custId:custId,
+									plantId : plantId,
+									custId : custId,
 									ajax : 'true',
 								},
 
 								function(data) {
-									
-									
+
 									document.getElementById("expExcel").disabled = false;
 									document.getElementById("PDFButton").disabled = false;
 
@@ -481,49 +453,58 @@
 
 									}
 
-									
-									
-									
-
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();
 									dataTable.clear().draw();
+									var totalBillAmt = 0;
+									var totalReceivedAmt = 0;
+									var totalPendingAmt = 0;
 
 									$
 											.each(
 													data,
 													function(i, v) {
 														var chBox;
+														totalBillAmt = totalBillAmt
+																+ v.billTotal;
 
-														
+														totalReceivedAmt = totalReceivedAmt
+																+ v.paidAmt;
+														totalPendingAmt = totalPendingAmt
+																+ v.pendingAmt;
+
 														var acButton = '<a href="#" class="action_btn" onclick="callDateDetail('
-															+ v.custId
-															+ ')" style="color:black"><i class="fa fa-list" title="Detail"></i></a>'
+																+ v.custId
+																+ ')" style="color:black"><i class="fa fa-list" title="Detail"></i></a>'
 
 														chBox = '<input  type="checkbox" class="chk" name="payHeadIds" id='+v.payHeadId+' class="check"  value='+v.payHeadId+'>'
 
 														dataTable.row
 																.add(
 																		[
-																			
+
 																				i + 1,
 																				v.custName,
 																				v.billNo,
 																				v.billDate,
-																				v.billTotal.toFixed(2),
-																				v.paidAmt.toFixed(2),
-																				v.pendingAmt.toFixed(2),
+																				v.billTotal
+																						.toFixed(2),
+																				v.paidAmt
+																						.toFixed(2),
+																				v.pendingAmt
+																						.toFixed(2),
 																				acButton ])
 																.draw();
 													});
+									document.getElementById("totalBillAmt").value = totalBillAmt;
+									document.getElementById("totalReceivedAmt").value = totalReceivedAmt;
+									document.getElementById("totalPendingAmt").value = totalPendingAmt;
 
 								});
 
 			}//end of if valid ==true
 
 		}
-
-		
 	</script>
 	<script type="text/javascript">
 		function callDateDetail(custId) {
@@ -532,8 +513,9 @@
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 
-			window.open("${pageContext.request.contextPath}/custPayRecDoneList/"
-					+ custId + '/' + fromDate + '/' + toDate + '/');
+			window
+					.open("${pageContext.request.contextPath}/custPayRecDoneList/"
+							+ custId + '/' + fromDate + '/' + toDate + '/');
 
 		}
 	</script>
@@ -586,14 +568,9 @@
 
 			window.open('${pageContext.request.contextPath}/showPayRecDonePdf/'
 					+ fromDate + '/' + toDate);
-		//document.getElementById("expExcel").disabled = true;
+			//document.getElementById("expExcel").disabled = true;
 
 		}
-		
-		
-		
-		
-		
 	</script>
 
 	<script type="text/javascript">
@@ -604,7 +581,7 @@
 
 			if (plantId == null || plantId == "") {
 				valid = false;
-				
+
 			}
 
 			if (valid == true) {

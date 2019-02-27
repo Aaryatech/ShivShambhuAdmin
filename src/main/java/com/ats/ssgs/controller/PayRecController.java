@@ -157,6 +157,17 @@ public class PayRecController {
 		getPayRecHeadDataList = new ArrayList<GetPayRecoveryHeadData>(Arrays.asList(recArray));
 		System.out.println("payrec data:" + getPayRecHeadDataList.toString());
 
+		/*float totalBillAmt = 0;
+		float totalPendingAmt = 0;
+		float totalReceivedAmt = 0;
+		for (int i = 0; i < getPayRecHeadDataList.size(); i++) {
+			totalBillAmt = totalBillAmt + getPayRecHeadDataList.get(i).getBillTotal();
+			totalPendingAmt = totalPendingAmt + getPayRecHeadDataList.get(i).getPendingAmt();
+			totalReceivedAmt = totalReceivedAmt + getPayRecHeadDataList.get(i).getPaidAmt();
+			getPayRecHeadDataList.get(i).setTotalBillAmt(totalBillAmt);
+
+		}*/
+
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		ExportToExcel expoExcel = new ExportToExcel();

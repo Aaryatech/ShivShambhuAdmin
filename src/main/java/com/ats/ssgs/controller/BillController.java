@@ -1199,7 +1199,6 @@ public class BillController {
 
 			System.out.println("Generte Bill" + addBill.toString());
 
-
 			map = new LinkedMultiValueMap<String, Object>();
 
 			map.add("projId", addBill.getProjId());

@@ -198,35 +198,42 @@
 										<tr>
 
 											<th style="text-align: center; width: 5%;">Sr.</th>
-											<th style="text-align: center">Customer Name</th>
-											<th style="text-align: center">Class</th>
-											<th style="text-align: center">Bill No</th>
-											<th style="text-align: center">Bill Date</th>
-											<th style="text-align: center">Billing Amount</th>
-											<th style="text-align: center">Due Date</th>
-											<th style="text-align: center">Days</th>
-											<th style="text-align: center">Received Amt</th>
-											<th style="text-align: center">Pending Amt</th>
-											<th style="text-align: center">Status</th>
-											<th style="text-align: center">Action</th>
+											<th style="text-align: center; width: 10%;">Customer
+												Name</th>
+											<th style="text-align: center; width: 5%;">Class</th>
+											<th style="text-align: center; width: 10%;">Bill No</th>
+											<th style="text-align: center; width: 10%;">Bill Date</th>
+											<th style="text-align: center; width: 10%;">Billing
+												Amount</th>
+											<th style="text-align: center; width: 10%;">Due Date</th>
+											<th style="text-align: center; width: 5%;">Days</th>
+											<th style="text-align: center; width: 10%;">Received Amt</th>
+											<th style="text-align: center; width: 10%;">Pending Amt</th>
+											<th style="text-align: center; width: 10%;">Status</th>
+											<th style="text-align: center; width: 5%;">Action</th>
 										</tr>
 									</thead>
-									
+
 									<tbody></tbody>
-									
+
 									<tr>
 										<td></td>
 										<td></td>
 										<td></td>
+										<td></td>
 										<td><b>Total</b></td>
-										<td style="text-align: right"><fmt:formatNumber
-												type="number" maxFractionDigits="2" value="${totalBillAmt}" /></td>
-										<td style="text-align: right"><fmt:formatNumber
-												type="number" maxFractionDigits="2"
-												value="${totalReceivedAmt}" /></td>
-										<td style="text-align: right"><fmt:formatNumber
-												type="number" maxFractionDigits="2"
-												value="${totalPendingAmt}" /></td>
+										<td><input type="text" id="totalBillAmt" width="10px"
+											name="totalBillAmt" value="0" readonly></td>
+										<td></td>
+										<td></td>
+
+
+										<td><input type="text" id="totalReceivedAmt"
+											name="totalReceivedAmt" value="0" readonly></td>
+										<td><input type="text" id="totalPendingAmt"
+											name="totalPendingAmt" value="0" readonly></td>
+										<td></td>
+										<td></td>
 									</tr>
 
 								</table>
@@ -389,7 +396,10 @@
 
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();
-									dataTable.clear().draw();
+
+									var totalBillAmt = 0;
+									var totalReceivedAmt = 0;
+									var totalPendingAmt = 0;
 
 									$
 											.each(
@@ -424,6 +434,14 @@
 																+ i
 																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
 
+														totalBillAmt = totalBillAmt
+																+ v.billTotal;
+
+														totalReceivedAmt = totalReceivedAmt
+																+ v.paidAmt;
+														totalPendingAmt = totalPendingAmt
+																+ v.pendingAmt;
+
 														dataTable.row
 																.add(
 																		[
@@ -446,10 +464,9 @@
 
 													});
 
-									/* dataTable.row.add(
-											[ "", "", "", "", "", "", "", "",
-													"555", "555", "", "" ])
-											.draw(); */
+									document.getElementById("totalBillAmt").value = totalBillAmt;
+									document.getElementById("totalReceivedAmt").value = totalReceivedAmt;
+									document.getElementById("totalPendingAmt").value = totalPendingAmt;
 
 								});
 

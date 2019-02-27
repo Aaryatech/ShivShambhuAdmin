@@ -221,8 +221,6 @@
 												value="${totalPendingAmt}" /></td>
 									</tr>
 
-
-
 								</table>
 
 
