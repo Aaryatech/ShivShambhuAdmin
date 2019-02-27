@@ -211,6 +211,23 @@
 											<th style="text-align: center">Action</th>
 										</tr>
 									</thead>
+									
+									<tbody></tbody>
+									
+									<tr>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td><b>Total</b></td>
+										<td style="text-align: right"><fmt:formatNumber
+												type="number" maxFractionDigits="2" value="${totalBillAmt}" /></td>
+										<td style="text-align: right"><fmt:formatNumber
+												type="number" maxFractionDigits="2"
+												value="${totalReceivedAmt}" /></td>
+										<td style="text-align: right"><fmt:formatNumber
+												type="number" maxFractionDigits="2"
+												value="${totalPendingAmt}" /></td>
+									</tr>
 
 								</table>
 
@@ -429,10 +446,10 @@
 
 													});
 
-									dataTable.row.add(
+									/* dataTable.row.add(
 											[ "", "", "", "", "", "", "", "",
 													"555", "555", "", "" ])
-											.draw();
+											.draw(); */
 
 								});
 
