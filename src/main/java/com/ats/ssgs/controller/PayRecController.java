@@ -249,6 +249,7 @@ public class PayRecController {
 			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			Font boldFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
 			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
 
@@ -316,6 +317,7 @@ public class PayRecController {
 			table.addCell(hcell);
 
 			int index = 0;
+			float billTotal=0,receivedTotal=0,pendingTotal=0;
 			for (GetPayRecoveryHeadData work : getPayRecHeadDataList) {
 				index++;
 				PdfPCell cell;
@@ -361,6 +363,8 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				billTotal=billTotal+work.getBillTotal();
 
 				cell = new PdfPCell(new Phrase("" + work.getCreditDate2(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -382,6 +386,8 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				receivedTotal=receivedTotal+ work.getPaidAmt();
 
 				cell = new PdfPCell(new Phrase("" + work.getPendingAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -389,8 +395,85 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				pendingTotal=pendingTotal+work.getPendingAmt();
 
 			}
+			
+			PdfPCell cell;
+
+			cell = new PdfPCell(new Phrase(" ", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setPadding(3);
+			cell.setPaddingRight(2);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" ", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" Total " , boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(""+billTotal , boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(""+receivedTotal , boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(""+pendingTotal , boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+		
+			
+			
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
@@ -852,6 +935,7 @@ public class PayRecController {
 			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			Font boldFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
 			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
 
@@ -901,6 +985,7 @@ public class PayRecController {
 			table.addCell(hcell);
 
 			int index = 0;
+			float billTotal=0,recTotal=0,pendingTotal=0;
 			for (GetPayRecoveryHead work : recList) {
 				index++;
 				PdfPCell cell;
@@ -939,6 +1024,8 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				billTotal=billTotal+work.getBillTotal();
 
 				cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -946,6 +1033,8 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				recTotal=recTotal+work.getPaidAmt();
 
 				cell = new PdfPCell(new Phrase("" + work.getPendingAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -953,8 +1042,62 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				pendingTotal=pendingTotal+ work.getPendingAmt();
 
 			}
+			
+			PdfPCell cell;
+
+			cell = new PdfPCell(new Phrase(" ", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setPadding(3);
+			cell.setPaddingRight(2);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" ", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" Total " , boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("" +billTotal , boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" " +recTotal, boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("" +  pendingTotal, boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+			
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
@@ -1153,6 +1296,7 @@ public class PayRecController {
 			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			Font boldFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
 			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
 
@@ -1196,6 +1340,7 @@ public class PayRecController {
 			table.addCell(hcell);
 
 			int index = 0;
+			float billTotal=0,recTotal=0,pendingTotal=0;
 			for (GetPayRecoveryHeadCustWise work : reccustwiseList) {
 				index++;
 				PdfPCell cell;
@@ -1227,6 +1372,8 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				billTotal=billTotal+work.getBillTotal();
 
 				cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1234,6 +1381,8 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				recTotal=recTotal+work.getPaidAmt();
 
 				cell = new PdfPCell(new Phrase("" + work.getPendingAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1241,8 +1390,55 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				pendingTotal=pendingTotal+work.getPendingAmt();
 
 			}
+			
+			PdfPCell cell;
+
+			cell = new PdfPCell(new Phrase(" ", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setPadding(3);
+			cell.setPaddingRight(2);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" Total " , boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("" + billTotal, boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("" + recTotal, boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("" + pendingTotal, boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+			
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
@@ -1536,6 +1732,7 @@ public class PayRecController {
 			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			Font boldFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
 			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
 
@@ -1585,6 +1782,7 @@ public class PayRecController {
 			table.addCell(hcell);
 
 			int index = 0;
+			float billTotal=0,recTotal=0,pendingTotal=0;
 			for (GetPayRecoveryHead work : recList) {
 				index++;
 				PdfPCell cell;
@@ -1624,12 +1822,16 @@ public class PayRecController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
+				billTotal=billTotal+work.getBillTotal();
+				
 				cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				recTotal=recTotal+work.getPaidAmt();
 
 				cell = new PdfPCell(new Phrase("" + work.getPendingAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1637,8 +1839,62 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
+				
+				pendingTotal=pendingTotal+work.getPendingAmt();
 
 			}
+			
+			PdfPCell cell;
+
+			cell = new PdfPCell(new Phrase(" ", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setPadding(3);
+			cell.setPaddingRight(2);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" ", headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase(" Total " , boldFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("" + billTotal, headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("" + recTotal, headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+
+			cell = new PdfPCell(new Phrase("" + pendingTotal, headFont));
+			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			cell.setPaddingRight(2);
+			cell.setPadding(3);
+			table.addCell(cell);
+			
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
