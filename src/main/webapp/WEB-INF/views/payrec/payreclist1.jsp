@@ -62,12 +62,16 @@
 .left {
 	text-align: left;
 }
+
+.new {
+	background-color: red;
+}
+
+table-striped tbody tr:nth-of-type(2n+1) {
+	background-color: rgba(255, 255, 255, 0.05);
+}
 </style>
 
-
-<style> 
-  .even { background-color: red; }
-</style>
 
 </head>
 <body onload="getData1()">
@@ -193,8 +197,7 @@
 
 							<div class="form-group"></div>
 							<div class="card-body card-block">
-								<table id="bootstrap-data-table"
-									class="table table-striped table-bordered"
+								<table id="bootstrap-data-table" class="table  table-bordered"
 									data-page-length='-1'>
 									<thead>
 										<tr>
@@ -445,33 +448,54 @@
 																+ v.paidAmt;
 														totalPendingAmt = totalPendingAmt
 																+ v.pendingAmt;
+														if (v.days > 0) {
+															dataTable.row
+																	.add(
+																			[
+																					i + 1,
+																					v.custName,
+																					v.custClass,
+																					v.billNo,
+																					v.billDate,
+																					v.billTotal
+																							.toFixed(2),
+																					v.creditDate2,
+																					v.days,
+																					v.paidAmt
+																							.toFixed(2),
+																					v.pendingAmt
+																							.toFixed(2),
+																					status1,
+																					acButton ])
+																	.draw()
+																	.nodes()
+																	.to$()
+																	.addClass(
+																			'new');
 
-														dataTable.row
-																.add(
-																		[
-																				i + 1,
-																				v.custName,
-																				v.custClass,
-																				v.billNo,
-																				v.billDate,
-																				v.billTotal
-																						.toFixed(2),
-																				v.creditDate2,
-																				v.days,
-																				v.paidAmt
-																						.toFixed(2),
-																				v.pendingAmt
-																						.toFixed(2),
-																				status1,
-																				acButton ])
-																.draw();
-														
-														if(v.days==-17){
-															alert("-17");
-															dataTable.row.className="even";	
+														} else {
+
+															dataTable.row
+																	.add(
+																			[
+																					i + 1,
+																					v.custName,
+																					v.custClass,
+																					v.billNo,
+																					v.billDate,
+																					v.billTotal
+																							.toFixed(2),
+																					v.creditDate2,
+																					v.days,
+																					v.paidAmt
+																							.toFixed(2),
+																					v.pendingAmt
+																							.toFixed(2),
+																					status1,
+																					acButton ])
+																	.draw();
+
 														}
-														
-														 
 
 													});
 
