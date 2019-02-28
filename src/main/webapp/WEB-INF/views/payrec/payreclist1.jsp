@@ -65,7 +65,9 @@
 </style>
 
 
-
+<style> 
+  .even { background-color: red; }
+</style>
 
 </head>
 <body onload="getData1()">
@@ -463,6 +465,13 @@
 																				status1,
 																				acButton ])
 																.draw();
+														
+														if(v.days==-17){
+															alert("-17");
+															dataTable.row.className="even";	
+														}
+														
+														 
 
 													});
 
