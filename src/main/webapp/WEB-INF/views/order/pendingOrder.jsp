@@ -207,24 +207,23 @@
 									</div>
 
 								</div>
-								<div class="form-group"></div>
-								<div class="row">
 
 
-									<div class="col-md-2"></div>
 
-									<div class="col-md-4">
-										<input type="hidden" id="key" name="key" style="width: 100%;"
-											class="form-control">
-									</div>
-									<div class="col-md-2"></div>
+								<div class="col-md-2"></div>
 
-									<div class="col-md-4">
-										<input type="hidden" id="orderId" name="orderId" required
-											style="width: 100%;" class="form-control" maxlength="10">
-										<span class="error" aria-live="polite"></span>
-									</div>
+								<div class="col-md-4">
+									<input type="hidden" id="key" name="key" style="width: 100%;"
+										class="form-control">
 								</div>
+								<div class="col-md-2"></div>
+
+								<div class="col-md-4">
+									<input type="hidden" id="orderId" name="orderId" required
+										style="width: 100%;" class="form-control" maxlength="10">
+									<span class="error" aria-live="polite"></span>
+								</div>
+
 								<div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">From Date</div>

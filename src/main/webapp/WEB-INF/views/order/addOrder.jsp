@@ -312,7 +312,8 @@
 
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table1"
-										class="table table-striped table-bordered">
+										class="table table-striped table-bordered"
+										data-page-length='-1'>
 										<thead>
 											<tr>
 												<th style="text-align: center">Sr &nbsp;</th>

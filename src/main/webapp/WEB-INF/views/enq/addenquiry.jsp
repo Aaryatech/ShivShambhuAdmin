@@ -314,7 +314,8 @@
 								</section>
 								<div class="card-body card-block">
 
-									<table id="t1" class="table table-striped table-bordered">
+									<table id="t1" class="table table-striped table-bordered"
+										data-page-length='-1'>
 										<thead>
 											<tr>
 

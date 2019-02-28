@@ -531,7 +531,7 @@
 																+ v.chalanId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;<a href="#" class="fa fa-list" title="Generate Bill" onclick="generateBill('
+																+ ')" style="color:black"><i class="fa fa-edit"></i></a><a href="#" class="fa fa-list" title="Generate Bill" onclick="generateBill('
 																+ v.chalanId
 																+ ','
 																+ i

@@ -409,7 +409,8 @@ body {
 											<div
 												style="overflow: scroll; height: auto; width: auto; overflow: auto">
 												<table style="width: 100%" id="table_grid1"
-													class="table table-striped table-bordered">
+													class="table table-striped table-bordered"
+													data-page-length='-1'>
 													<thead>
 														<tr>
 															<th style="width: 5%;" align="center">Sr</th>
@@ -543,7 +544,8 @@ body {
 
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
+										class="table table-striped table-bordered"
+										data-page-length='-1'>
 										<thead>
 											<tr>
 												<th style="text-align: center">Sr</th>

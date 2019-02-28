@@ -190,7 +190,8 @@
 								<div class="card-body card-block">
 
 									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
+										class="table table-striped table-bordered"
+										data-page-length='-1'>
 
 										<thead>
 

@@ -341,7 +341,8 @@
 
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
+										class="table table-striped table-bordered"
+										data-page-length='-1'>
 										<thead>
 											<tr>
 												<th style="text-align: center">Sr</th>
@@ -887,7 +888,7 @@ $
 		//$('#loader').hide();
 			
 			} );
-	 	 document.getElementById("billTotal").innerHTML=tot;
+	 	 document.getElementById("billTotal").innerHTML=tot.toFixed(2);
 		});
 		}
 		}
