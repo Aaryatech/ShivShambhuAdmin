@@ -876,11 +876,13 @@ public class QuotController {
 			map.add("docId", 2);
 			map.add("plantId", login.getUser().getPlantId());
 
-			DocTermHeader[] docTermArray = rest.postForObject(Constants.url + "getDocHeaderByDocIdAndPlantId", map,
-					DocTermHeader[].class);
+			DocTermHeader[] docTermArray = rest.postForObject(Constants.url + "getDocHeaderByDocIdAndPlantIdForAll",
+					map, DocTermHeader[].class);
 			docTermList = new ArrayList<DocTermHeader>(Arrays.asList(docTermArray));
 
 			model.addObject("docTermList", docTermList);
+
+			System.out.println(docTermList.toString());
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("quotHeadId", quotHeadId);
@@ -986,8 +988,8 @@ public class QuotController {
 
 			map.add("plantId", login.getUser().getPlantId());
 
-			DocTermHeader[] docTermArray = rest.postForObject(Constants.url + "getDocHeaderByDocIdAndPlantId", map,
-					DocTermHeader[].class);
+			DocTermHeader[] docTermArray = rest.postForObject(Constants.url + "getDocHeaderByDocIdAndPlantIdForAll",
+					map, DocTermHeader[].class);
 			docTermList = new ArrayList<DocTermHeader>(Arrays.asList(docTermArray));
 
 			model.addObject("docTermList", docTermList);
@@ -1544,7 +1546,7 @@ public class QuotController {
 
 		// File f = new File("/home/lenovo/Desktop/quot.pdf");
 
-		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf");
+		File f = new File("apache-tomcat-8.5.40/webapps/uploads/shiv/quotation.pdf");
 		// File f = new File("E:\\bill.pdf");
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1564,9 +1566,9 @@ public class QuotController {
 		String appPath = context.getRealPath("");
 
 		// String filename = "/home/lenovo/Desktop/quot.pdf";
-		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
+		String filename = "apache-tomcat-8.5.40/webapps/uploads/shiv/quotation.pdf";
 		// String filename ="E:\\bill.pdf";
-		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/quotation.pdf";
+		String filePath = "apache-tomcat-8.5.40/webapps/uploads/shiv/quotation.pdf";
 
 		// String filePath = "/home/lenovo/Desktop/quot.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";

@@ -205,12 +205,12 @@ public class BillController {
 
 			map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("companyId", login.getUser().getCompanyId());
+			map.add("plantId", login.getUser().getPlantId());
 
-			Company editComp = rest.postForObject(Constants.url + "getCompByCompanyId", map, Company.class);
-			model.addObject("editComp", editComp);
+			Plant editPlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+			model.addObject("editPlant", editPlant);
 			String var = null;
-			int a = editComp.getExInt2();
+			String a = editPlant.getExVar2();
 			if (String.valueOf(a).length() == 1) {
 				var = "000".concat(String.valueOf(a));
 
@@ -718,26 +718,32 @@ public class BillController {
 
 					map = new LinkedMultiValueMap<String, Object>();
 
-					map.add("companyId", companyId);
+					map.add("plantId", plantId);
 
-					Company updateComp = rest.postForObject(Constants.url + "getCompByCompanyId", map, Company.class);
+					Plant updatePlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+					System.out.println("updatePlant-----------------------" + updatePlant.toString());
 
 					if (gstNo == 0) {
 						map = new LinkedMultiValueMap<String, Object>();
+						int billCount = 1 + Integer.parseInt(updatePlant.getExVar3());
 
-						map.add("exInt1", updateComp.getExInt1() + 1);
-						map.add("companyId", companyId);
+						map.add("billCount", billCount);
+						map.add("plantId", plantId);
 
-						Info updateCompany = rest.postForObject(Constants.url + "updateCompany", map, Info.class);
-						System.out.println(updateCompany.toString());
+						Info updateplant = rest.postForObject(Constants.url + "updateBillNonGSTCounter", map,
+								Info.class);
+						System.out.println(updateplant.toString());
 					} else {
+
+						int billCount = 1 + Integer.parseInt(updatePlant.getExVar2());
 
 						map = new LinkedMultiValueMap<String, Object>();
 
-						map.add("exInt2", updateComp.getExInt2() + 1);
-						map.add("companyId", companyId);
+						map.add("billCount", billCount);
+						map.add("plantId", plantId);
 
-						Info updateCompany1 = rest.postForObject(Constants.url + "updateCompanyGST", map, Info.class);
+						Info updateCompany1 = rest.postForObject(Constants.url + "updateBillGSTCounter", map,
+								Info.class);
 						System.out.println("2222222" + updateCompany1.toString());
 					}
 					System.out.println(chalanDetailList.toString());
@@ -1217,13 +1223,21 @@ public class BillController {
 			Company editComp = rest.postForObject(Constants.url + "getCompByCompanyId", map, Company.class);
 			model.addObject("editComp", editComp);
 
-			String var = null;
-			int a = editComp.getExInt2();
-			if (String.valueOf(a).length() == 1) {
-				var = "000".concat(String.valueOf(a));
+			map = new LinkedMultiValueMap<String, Object>();
 
-			} else if (String.valueOf(a).length() == 2) {
-				var = "00".concat(String.valueOf(a));
+			map.add("plantId", addBill.getPlantId());
+
+			Plant editPlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+			model.addObject("editPlant", editPlant);
+
+			String var = null;
+
+			String b = editPlant.getExVar2();
+			if (String.valueOf(b).length() == 1) {
+				var = "000".concat(String.valueOf(b));
+
+			} else if (String.valueOf(b).length() == 2) {
+				var = "00".concat(String.valueOf(b));
 
 			}
 
@@ -1539,7 +1553,7 @@ public class BillController {
 		// File f = new File("/report.pdf");
 		// File f = new File("/home/lenovo/Desktop/bill.pdf");
 		// File f = new File("E:\\bill.pdf");
-		File f = new File("/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf");
+		File f = new File("apache-tomcat-8.5.40/webapps/uploads/shiv/bill.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1560,9 +1574,9 @@ public class BillController {
 
 		// String filename = "/home/lenovo/Desktop/bill.pdf";
 		// String filename = "E:\\bill.pdf";
-		String filename = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		String filename = "apache-tomcat-8.5.40/webapps/uploads/shiv/bill.pdf";
 		// String filePath = "/home/lenovo/Desktop/bill.pdf";
-		String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/shiv/bill.pdf";
+		String filePath = "apache-tomcat-8.5.40/webapps/uploads/shiv/bill.pdf";
 
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 		// String filePath = "E:\\bill.pdf";

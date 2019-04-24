@@ -7,6 +7,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
+<c:url var="getEnqNumber" value="/getEnqNumber" />
+
 <c:url var="getPlantByCompanyId" value="/getPlantByCompanyId" />
 <c:url var="getCompanyByCompanyId" value="/getCompanyByCompanyId" />
 
@@ -279,8 +281,8 @@
 									<div class="col-md-3">
 										<input type="text" readonly id="bill_no" name="bill_no"
 											style="width: 100%;" class="form-control"
-											value="${editComp.exVar2}-${var}"> <span
-											class="error" aria-live="polite"></span>
+											value="${editPlant.plantFax1}/${var}/${editPlant.plantFax2}">
+										<span class="error" aria-live="polite"></span>
 									</div>
 
 									<div class="col-md-2">Bill Date*</div>
@@ -723,6 +725,8 @@ function allowOnlyNumber1(evt)
 
 				});
 			}//end of if
+			
+			getBillNo();
 
 		}
 	</script>
@@ -1295,7 +1299,7 @@ function toggle() {
 	
 	</script>
 
-	<script type="text/javascript">
+	<!-- 	<script type="text/javascript">
 		function GSTBillNo(type){
 			
 			var companyId=document.getElementById("companyId").value;
@@ -1417,14 +1421,21 @@ function toggle() {
 			
 			
 		}
-		
-		
-/* function getEnqNum() {
+		</script>
+ -->
+
+	<script>
+		function getBillNo() {
 			
 			var plantId = document.getElementById("plant_id").value;
-			alert("Plant Id " +plantId);
+			//alert("Plant Id " +plantId);
 		
 			var valid = true;
+			if (plantId == null || plantId == "") {
+				valid = false;
+				
+			}
+
 			if (valid == true) {
 
 				$.getJSON('${getEnqNumber}', {
@@ -1437,7 +1448,9 @@ function toggle() {
 				function(data) {
 				
 					var sn=data.plantFax1;
-					var count=data.exInt1;
+					var count=data.exVar2;
+					var word=data.plantFax2;
+					
 					
 					//alert("sn"+sn);
 					//alert("count"+count);
@@ -1456,20 +1469,123 @@ function toggle() {
 						var c= "0"+count;
 
 					}
-					//alert("var c:"+c);
-					var enqNum="ENQ"+ "-" +sn+"-"+c;
-					//alert("enqNum"+enqNum);
+					 
+					var enqNum=sn+"/"+c+"/"+word;
+					 
 					
-					document.getElementById("enq_no").value=enqNum;
+					document.getElementById("bill_no").value=enqNum;
 				});
 
 				
 			}//end of if
 
 		}
-	 */
-		
+	
+	
+	
 		</script>
+
+
+
+	<script type="text/javascript">
+		function GSTBillNo(type){
+			
+			var plantId=document.getElementById("plant_id").value;
+			//alert(plantId);
+			 
+			
+			
+				$
+				.getJSON(
+						'${getEnqNumber}',
+						{
+							plantId : plantId,
+							
+							ajax : 'true',
+
+						},
+						function(data) {
+							
+							
+							if(type==1){
+								//alert(type);
+								
+								
+								var sn=data.plantFax1;
+								var count=data.exVar2;
+								var word=data.plantFax2;
+								
+								
+								//alert("sn"+sn);
+								//alert("count"+count);
+								var c;
+								var len1=count.toString().length;
+								//alert("len"+len1);
+								
+								
+								
+								if (len1 == 1) {
+									var c= "000"+count;
+
+								} else if (len1 == 2) {
+									var c= "00"+count;
+								} else if (len1 == 3) {
+									var c= "0"+count;
+
+								}
+								 
+								var enqNum=sn+"/"+c+"/"+word;
+								 
+								
+								document.getElementById("bill_no").value=enqNum;
+								
+								
+							
+						/* 	document.getElementById("bill_no").value=(data.exVar2)+"-"+(data.exInt2); */
+							}
+							else
+								{
+								//alert(type);
+								var sn=data.plantFax1;
+								var count=data.exVar3;
+								var word=data.plantFax2;
+								
+								
+								//alert("sn"+sn);
+								//alert("count"+count);
+								var c;
+								var len1=count.toString().length;
+								//alert("len"+len1);
+								
+								
+								
+								if (len1 == 1) {
+									var c= "000"+count;
+
+								} else if (len1 == 2) {
+									var c= "00"+count;
+								} else if (len1 == 3) {
+									var c= "0"+count;
+
+								}
+								 
+								var enqNum=sn+"N"+"/"+c+"/"+word;
+								 
+								
+								document.getElementById("bill_no").value=enqNum;
+								
+							//	document.getElementById("bill_no").value=(data.exVar1)+"-"+(data.exInt1);
+								}	
+						});
+				
+			
+			
+			
+		}
+		</script>
+
+
+
 
 
 
