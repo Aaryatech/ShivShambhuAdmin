@@ -265,14 +265,14 @@
 								<div class="form-group"></div>
 
 								<div class="row">
-									<div class="col-md-2">Address*</div>
+									<div class="col-md-2">Address</div>
 
 									<div class="col-md-4">
 										<textarea id="address" name="address" class="form-control"
 											autocomplete="off"
 											oninvalid="setCustomValidity('Please enter address')"
 											onchange="try{setCustomValidity('')}catch(e){}" required
-											style="width: 100%;">${editPro.address}</textarea>
+											style="width: 100%;">-</textarea>
 									</div>
 
 									<div class="col-md-2">PIN Code No</div>
@@ -289,11 +289,11 @@
 								<div class="row">
 
 
-									<div class="col-md-2">Kilometer*</div>
+									<div class="col-md-2">Kilometer</div>
 									<div class="col-md-4">
 										<input type="text" id="km" name="km" class="form-control"
-											pattern="\d+(\.\d{1,2})?" style="width: 100%;"
-											value="${editPro.km}" maxlength="10" autocomplete="off"
+											pattern="\d+(\.\d{1,2})?" style="width: 100%;" value="0"
+											maxlength="10" autocomplete="off"
 											oninvalid="setCustomValidity('Please enter correct kilometer')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>

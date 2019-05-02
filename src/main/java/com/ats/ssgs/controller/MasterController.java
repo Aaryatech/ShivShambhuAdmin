@@ -1317,7 +1317,7 @@ public class MasterController {
 				isError = 1;
 			}
 
-			Project proj = new Project();
+			/*Project proj = new Project();
 
 			proj.setCustId(custInsertRes.getCustId());
 			proj.setDelStatus(1);
@@ -1339,7 +1339,7 @@ public class MasterController {
 				map.add("docCode", 9);
 				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
 				System.out.println("info is   updateDocSr " + updateDocSr);
-			}
+			}*/
 
 		} catch (Exception e) {
 

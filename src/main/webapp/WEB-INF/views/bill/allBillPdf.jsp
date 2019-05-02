@@ -114,6 +114,10 @@
 							style="color: #000; font-size: 13px; text-align: left; margin: 0px;">
 							<b>${billHeaderRes.custName}</b>
 						</p>
+
+						<p
+							style="color: #000; font-size: 13px; text-align: left; margin: 0px;">
+							Address:${billHeaderRes.custAddress}</p>
 						<p
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
 							GSTIN/UIN: ${billHeaderRes.custGstNo}</p>

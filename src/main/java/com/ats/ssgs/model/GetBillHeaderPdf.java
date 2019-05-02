@@ -86,6 +86,8 @@ public class GetBillHeaderPdf {
 
 	private float exFloat2;
 
+	private String custAddress;
+
 	List<GetBillDetail> getBillDetails;
 	List<GetBillDetByHsn> getBillDetByHsn;
 
@@ -473,6 +475,14 @@ public class GetBillHeaderPdf {
 		this.chalanNo = chalanNo;
 	}
 
+	public String getCustAddress() {
+		return custAddress;
+	}
+
+	public void setCustAddress(String custAddress) {
+		this.custAddress = custAddress;
+	}
+
 	@Override
 	public String toString() {
 		return "GetBillHeaderPdf [billHeadId=" + billHeadId + ", billNo=" + billNo + ", billDate=" + billDate
@@ -486,9 +496,9 @@ public class GetBillHeaderPdf {
 				+ taxAmt + ", totalAmt=" + totalAmt + ", accId=" + accId + ", orderId=" + orderId + ", orderNo="
 				+ orderNo + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3="
 				+ exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exFloat1=" + exFloat1
-				+ ", exFloat2=" + exFloat2 + ", getBillDetails=" + getBillDetails + ", getBillDetByHsn="
-				+ getBillDetByHsn + ", printWord=" + printWord + ", bankDetail=" + bankDetail + ", projName=" + projName
-				+ ", location=" + location + ", chalanNo=" + chalanNo + "]";
+				+ ", exFloat2=" + exFloat2 + ", custAddress=" + custAddress + ", getBillDetails=" + getBillDetails
+				+ ", getBillDetByHsn=" + getBillDetByHsn + ", printWord=" + printWord + ", bankDetail=" + bankDetail
+				+ ", projName=" + projName + ", location=" + location + ", chalanNo=" + chalanNo + "]";
 	}
 
 }
