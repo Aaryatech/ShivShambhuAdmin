@@ -1584,7 +1584,10 @@ function toggle() {
 					} else if (len1 == 3) {
 						var c= "0"+count;
 
-					}
+					}else
+						{
+						var c= count;
+						}
 				//alert("var c:"+c);
 					var enqNum="CH"+ "-" +sn+"-"+c;
 				//alert("enqNum"+enqNum);
