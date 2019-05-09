@@ -84,8 +84,8 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showAddUser" style="color:black"><strong>Add
-										User </strong></a>
+								<a href="${pageContext.request.contextPath}/showAddUser"
+									style="color: black"><strong>Add User </strong></a>
 							</div>
 
 						</div>
@@ -110,6 +110,7 @@
 											<th style="text-align: center">User Email</th>
 											<!-- 	<th style="text-align: center">Plant Name</th> -->
 											<th style="text-align: center">Company</th>
+											<th style="text-align: center">Department</th>
 											<th style="text-align: center; width: 5%;">Action</th>
 										</tr>
 									</thead>
@@ -130,22 +131,25 @@
 														value="${user.usrEmail}" /></td>
 
 
+
+
 												<%-- 	<td style="text-align: left"><c:out
 														value="${user.plantName}" /></td> --%>
 
 												<td style="text-align: left"><c:out
 														value="${user.compName}" /></td>
 
-
+												<td style="text-align: left"><c:out
+														value="${user.deptName}" /></td>
 
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editUser/${user.userId}"><i
-														class="fa fa-edit" style="color:black"  title="Edit"></i> <span
-														class="text-muted"></span></a> &nbsp; <a
+														class="fa fa-edit" style="color: black" title="Edit"></i>
+														<span class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deleteUser/${user.userId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o" style="color:black" title="Delete"></i></a></td>
+														class="fa fa-trash-o" style="color: black" title="Delete"></i></a></td>
 
 											</tr>
 										</c:forEach>

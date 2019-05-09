@@ -40,6 +40,7 @@ public class GetUser {
 	private String exDate2;
 
 	private String compName;
+	private String deptName;
 
 	public int getUserId() {
 		return userId;
@@ -201,6 +202,14 @@ public class GetUser {
 		this.compName = compName;
 	}
 
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetUser [userId=" + userId + ", usrName=" + usrName + ", usrPass=" + usrPass + ", usrMob=" + usrMob
@@ -208,7 +217,7 @@ public class GetUser {
 				+ ", usrDob=" + usrDob + ", roleId=" + roleId + ", sortNo=" + sortNo + ", delStatus=" + delStatus
 				+ ", deviceToken=" + deviceToken + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVar1=" + exVar1
 				+ ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", exDate2=" + exDate2 + ", compName=" + compName
-				+ "]";
+				+ ", deptName=" + deptName + "]";
 	}
 
 }
