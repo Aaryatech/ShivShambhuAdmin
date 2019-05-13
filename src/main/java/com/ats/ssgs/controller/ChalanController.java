@@ -588,6 +588,43 @@ public class ChalanController {
 
 	}
 
+	@RequestMapping(value = "/showCancleChalanList", method = RequestMethod.GET)
+	public ModelAndView showCancleChalanList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("chalan/cancle_chalan_list");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			model.addObject("title", "Cancle Challan List");
+
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+		} catch (Exception e) {
+			System.err.println("Exce in /showChalanList   " + e.getMessage());
+			e.printStackTrace();
+		}
+		return model;
+
+	}
+
 	// getChalanListByPlant
 	List<GetChalanHeader> chalanHeadList = new ArrayList<>();
 
@@ -628,6 +665,85 @@ public class ChalanController {
 		 */
 		System.out.println("3.....");
 		System.err.println("Ajax chalanHeadList /getChalanListByPlant " + chalanHeadList.toString());
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+
+		rowData.add("Sr. No");
+		rowData.add("Chalan No");
+		rowData.add("Chalan Date");
+		rowData.add("Customer Name");
+		rowData.add("Project Name");
+		rowData.add("Vehicle No");
+		rowData.add("Driver Name");
+		rowData.add("Status");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		int cnt = 1;
+		for (int i = 0; i < chalanHeadList.size(); i++) {
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			cnt = cnt + i;
+			rowData.add("" + (i + 1));
+
+			rowData.add("" + chalanHeadList.get(i).getChalanNo());
+
+			rowData.add("" + chalanHeadList.get(i).getChalanDate());
+
+			rowData.add("" + chalanHeadList.get(i).getCustName());
+			rowData.add("" + chalanHeadList.get(i).getProjName());
+			rowData.add("" + chalanHeadList.get(i).getVehNo());
+			rowData.add("" + chalanHeadList.get(i).getDriverName());
+
+			String status1 = null;
+			float stat = chalanHeadList.get(i).getExFloat1();
+			if (stat == 0) {
+				status1 = "Pending";
+			} else if (stat == 1) {
+				status1 = "Closed";
+			} else {
+
+				status1 = "Bill Generated";
+			}
+
+			rowData.add("" + status1);
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "Chalan List");
+
+		return chalanHeadList;
+	}
+
+	@RequestMapping(value = "/getCancleChalanListByPlant", method = RequestMethod.GET)
+	public @ResponseBody List<GetChalanHeader> getCancleChalanListByPlant(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		int custId = Integer.parseInt(request.getParameter("custId"));
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+
+		map.add("plantId", plantId);
+		map.add("custId", custId);
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+
+		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getCancleChalanHeadersByPlantAndStatus", map,
+				GetChalanHeader[].class);
+
+		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
+
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		ExportToExcel expoExcel = new ExportToExcel();

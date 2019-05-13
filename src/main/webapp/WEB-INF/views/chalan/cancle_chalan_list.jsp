@@ -10,7 +10,7 @@
 <title>Shiv Admin</title>
 
 
-<c:url var="getChalanListByPlant" value="/getChalanListByPlant" />
+<c:url var="getChalanListByPlant" value="/getCancleChalanListByPlant" />
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
 
 <%-- 
@@ -334,8 +334,7 @@
 										class="table table-striped table-bordered">
 										<thead>
 											<tr>
-												<th style="text-align: center"><input type="checkbox"
-													name="selAll" id="selAll" /></th>
+
 												<th style="text-align: center">Sr.</th>
 												<th style="text-align: center">Challan No</th>
 												<th style="text-align: center">Challan Date</th>
@@ -344,8 +343,7 @@
 												<th style="text-align: center">Vehicle No</th>
 												<th style="text-align: center">Driver Name</th>
 
-												<th style="text-align: center">Status</th>
-												<th style="text-align: center">Action</th>
+
 											</tr>
 										</thead>
 
@@ -372,10 +370,7 @@
 									&nbsp;
 								</div>
 
-								<input type="submit" class="btn btn-primary" value="Delete"
-									id="deleteId"
-									onClick="var checkedVals = $('.chk:checkbox:checked').map(function() { return this.value;}).get();checkedVals=checkedVals.join(',');if(checkedVals==''){alert('No Rows Selected');return false;	}else{   return confirm('Are you sure want to delete record');}"
-									style="align-content: center; width: 113px; margin-left: 40px;">
+
 							</form>
 						</div>
 					</div>
@@ -596,104 +591,89 @@
 			if (valid == true) {
 				//	alert("plant Id " +plantId);
 				$('#loader').show();
-				$
-						.getJSON(
-								'${getChalanListByPlant}',
-								{
-									plantId : plantId,
-									custId : custId,
-									fromDate : fromDate,
-									toDate : toDate,
-									ajax : 'true',
-								},
+				$.getJSON('${getChalanListByPlant}', {
+					plantId : plantId,
+					custId : custId,
+					fromDate : fromDate,
+					toDate : toDate,
+					ajax : 'true',
+				},
 
-								function(data) {
-									$('#loader').hide();
-									document.getElementById("expExcel").disabled = false;
-									document.getElementById("PDFButton").disabled = false;
+				function(data) {
+					$('#loader').hide();
+					document.getElementById("expExcel").disabled = false;
+					document.getElementById("PDFButton").disabled = false;
 
-									if (data == "") {
-										alert("No records found !!");
-										document.getElementById("expExcel").disabled = true;
-										document.getElementById("PDFButton").disabled = true;
+					if (data == "") {
+						alert("No records found !!");
+						document.getElementById("expExcel").disabled = true;
+						document.getElementById("PDFButton").disabled = true;
 
-									}
+					}
 
-									//alert("Order Data " +JSON.stringify(data));
-									var chBox;
-									var dataTable = $('#bootstrap-data-table')
-											.DataTable();
-									dataTable.clear().draw();
+					//alert("Order Data " +JSON.stringify(data));
+					var chBox;
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
 
-									$
-											.each(
-													data,
-													function(i, v) {
-														var status;
-														if (v.exFloat1 == 0) {
-															status = "Open";
-															var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																	+ v.chalanId
-																	+ ','
-																	+ i
-																	+ ')" style="color:black"><i class="fa fa-edit" title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
-																	+ v.chalanId
-																	+ ','
-																	+ i
-																	+ ')" style="color:black"><i class="fa fa-trash" title="Delete"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose('
-																	+ v.chalanId
-																	+ ','
-																	+ i
-																	+ ')" style="color:black"><i class="fa fa-times" title="Close Chalan"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
-																	+ v.chalanId
-																	+ ','
-																	+ i
-																	+ ')" style="color:black"><i class="fa fa-file-pdf-o" title="Generate Pdf"></i></a>'
+					$.each(data, function(i, v) {
+						/* var status;
+						if (v.exFloat1 == 0) {
+							status = "Open";
+							var acButton = '<a href="#" class="action_btn" onclick="callEdit('
+									+ v.chalanId
+									+ ','
+									+ i
+									+ ')" style="color:black"><i class="fa fa-edit" title="Edit"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callDelete('
+									+ v.chalanId
+									+ ','
+									+ i
+									+ ')" style="color:black"><i class="fa fa-trash" title="Delete"></i></a>&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callClose('
+									+ v.chalanId
+									+ ','
+									+ i
+									+ ')" style="color:black"><i class="fa fa-times" title="Close Chalan"></i></a>&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
+									+ v.chalanId
+									+ ','
+									+ i
+									+ ')" style="color:black"><i class="fa fa-file-pdf-o" title="Generate Pdf"></i></a>'
 
-															chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
-														} else if (v.exFloat1 == 1) {
-															status = "Closed";
-															var acButton = '<a href="#" class="action_btn" onclick="callPdf('
-																	+ v.chalanId
-																	+ ','
-																	+ i
-																	+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
+							chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
+						} else if (v.exFloat1 == 1) {
+							status = "Closed";
+							var acButton = '<a href="#" class="action_btn" onclick="callPdf('
+									+ v.chalanId
+									+ ','
+									+ i
+									+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
 
-															chBox = "  "
+							chBox = "  "
 
-														} else {
-															status = "Bill Generated";
-															var acButton = '<a href="#" class="action_btn" onclick="callEdit1('
-																	+ v.chalanId
-																	+ ','
-																	+ i
-																	+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
-																	+ v.chalanId
-																	+ ','
-																	+ i
-																	+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
+						} else {
+							status = "Bill Generated";
+							var acButton = '<a href="#" class="action_btn" onclick="callEdit1('
+									+ v.chalanId
+									+ ','
+									+ i
+									+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callPdf('
+									+ v.chalanId
+									+ ','
+									+ i
+									+ ')" style="color:black"><i class="fa fa-file-pdf-o"></i></a>'
 
-															chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
+							chBox = '<input  type="checkbox" class="chk" name="selectChalanToDelete" id='+v.chalanId+' class="check"  value='+v.chalanId+'>'
 
-														}
+						}
+						 */
+						dataTable.row.add(
+								[
 
-														dataTable.row
-																.add(
-																		[
-																				chBox,
-																				i + 1,
-																				v.chalanNo,
-																				v.chalanDate,
-																				v.custName,
-																				v.projName,
-																				v.vehNo,
-																				v.driverName,
-																				status,
-																				acButton ])
-																.draw();
-													});
+								i + 1, v.chalanNo, v.chalanDate, v.custName,
+										v.projName, v.vehNo, v.driverName ])
+								.draw();
+					});
 
-								});
+				});
 
 			}//end of if valid ==true
 
