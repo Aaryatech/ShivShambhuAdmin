@@ -1317,29 +1317,23 @@ public class MasterController {
 				isError = 1;
 			}
 
-			/*Project proj = new Project();
-
-			proj.setCustId(custInsertRes.getCustId());
-			proj.setDelStatus(1);
-			proj.setIsUsed(1);
-			proj.setLocation(custAdd);
-			proj.setProjName(custName);
-			proj.setStartDate(curDate);
-			proj.setEndDate(curDate);
-			proj.setContactPerMob(mobNo);
-			proj.setContactPerName(custName);
-			proj.setAddress(custAdd);
-			// proj.setKm(Float.parseFloat(km));
-
-			Project projInsertRes = rest.postForObject(Constants.url + "saveProject", proj, Project.class);
-
-			if (projInsertRes != null) {
-				map = new LinkedMultiValueMap<String, Object>();
-				map.add("srNo", doc.getSrNo() + 1);
-				map.add("docCode", 9);
-				Info updateDocSr = rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
-				System.out.println("info is   updateDocSr " + updateDocSr);
-			}*/
+			/*
+			 * Project proj = new Project();
+			 * 
+			 * proj.setCustId(custInsertRes.getCustId()); proj.setDelStatus(1);
+			 * proj.setIsUsed(1); proj.setLocation(custAdd); proj.setProjName(custName);
+			 * proj.setStartDate(curDate); proj.setEndDate(curDate);
+			 * proj.setContactPerMob(mobNo); proj.setContactPerName(custName);
+			 * proj.setAddress(custAdd); // proj.setKm(Float.parseFloat(km));
+			 * 
+			 * Project projInsertRes = rest.postForObject(Constants.url + "saveProject",
+			 * proj, Project.class);
+			 * 
+			 * if (projInsertRes != null) { map = new LinkedMultiValueMap<String, Object>();
+			 * map.add("srNo", doc.getSrNo() + 1); map.add("docCode", 9); Info updateDocSr =
+			 * rest.postForObject(Constants.url + "updateDocSrNo", map, Info.class);
+			 * System.out.println("info is   updateDocSr " + updateDocSr); }
+			 */
 
 		} catch (Exception e) {
 
@@ -1512,10 +1506,6 @@ public class MasterController {
 			taxList = new ArrayList<Tax>(Arrays.asList(taxArray));
 			model.addObject("taxList", taxList);
 
-			Vendor[] vendorArray = rest.getForObject(Constants.url + "getAllVendList", Vendor[].class);
-			vendList = new ArrayList<Vendor>(Arrays.asList(vendorArray));
-			model.addObject("vendList", vendList);
-
 		} catch (Exception e) {
 
 			System.err.println("exception In showAddItem at Master Contr" + e.getMessage());
@@ -1555,6 +1545,7 @@ public class MasterController {
 			int uomId = Integer.parseInt(request.getParameter("uomId"));
 
 			int taxId = Integer.parseInt(request.getParameter("taxId"));
+			System.out.println(taxId);
 
 			String shortName = request.getParameter("short_name");
 			String rate = request.getParameter("rate");
@@ -1701,9 +1692,12 @@ public class MasterController {
 			taxList = new ArrayList<Tax>(Arrays.asList(taxArray));
 			model.addObject("taxList", taxList);
 
-			Vendor[] vendorArray = rest.getForObject(Constants.url + "getAllVendList", Vendor[].class);
-			vendList = new ArrayList<Vendor>(Arrays.asList(vendorArray));
-			model.addObject("vendList", vendList);
+			/*
+			 * Vendor[] vendorArray = rest.getForObject(Constants.url + "getAllVendList",
+			 * Vendor[].class); vendList = new
+			 * ArrayList<Vendor>(Arrays.asList(vendorArray)); model.addObject("vendList",
+			 * vendList);
+			 */
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 

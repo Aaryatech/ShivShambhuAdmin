@@ -1,10 +1,8 @@
 package com.ats.ssgs.model.chalan;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ChalanPrintItem {
-
 
 	private int chalanDetailId;
 
@@ -12,33 +10,31 @@ public class ChalanPrintItem {
 
 	private String chalanNo;
 	private String chalanDate;
-	
+
 	private String custName;
 	private String custMobNo;
 	private String projName;
 	private String address;
 
-
 	private String itemName;
 	private String itemCode;
+	private String shortName;
 	private String uom;
 
 	private String usrName;
 	private String vehNo;
 	private String vehicleName;
-	
-	private String  devAddress;
-	
+
+	private String devAddress;
+
 	private String plantAddress1;
 
 	private String batchNo;
-	
+
 	private float totalQuan;
-	
+
 	private String plantContactNo1;
 	private String plantContactNo2;
-
-
 
 	public String getDevAddress() {
 		return devAddress;
@@ -112,8 +108,6 @@ public class ChalanPrintItem {
 		this.custName = custName;
 	}
 
-	
-
 	public String getProjName() {
 		return projName;
 	}
@@ -154,11 +148,14 @@ public class ChalanPrintItem {
 		this.uom = uom;
 	}
 
-	
-	
-	
-	
-	
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+
 	public String getPlantContactNo1() {
 		return plantContactNo1;
 	}
@@ -174,7 +171,6 @@ public class ChalanPrintItem {
 	public void setPlantContactNo2(String plantContactNo2) {
 		this.plantContactNo2 = plantContactNo2;
 	}
-
 
 	public String getChalanDate() {
 		return chalanDate;
@@ -341,6 +337,7 @@ public class ChalanPrintItem {
 	public void setOutKm(float outKm) {
 		this.outKm = outKm;
 	}
+
 	public float getInKm() {
 		return inKm;
 	}
@@ -545,25 +542,21 @@ public class ChalanPrintItem {
 	public String toString() {
 		return "ChalanPrintItem [chalanDetailId=" + chalanDetailId + ", chalanId=" + chalanId + ", chalanNo=" + chalanNo
 				+ ", chalanDate=" + chalanDate + ", custName=" + custName + ", custMobNo=" + custMobNo + ", projName="
-				+ projName + ", address=" + address + ", itemName=" + itemName + ", itemCode=" + itemCode + ", uom="
-				+ uom + ", usrName=" + usrName + ", vehNo=" + vehNo + ", vehicleName=" + vehicleName + ", devAddress="
-				+ devAddress + ", plantAddress1=" + plantAddress1 + ", batchNo=" + batchNo + ", totalQuan=" + totalQuan
-				+ ", plantContactNo1=" + plantContactNo1 + ", plantContactNo2=" + plantContactNo2 + ", vehicleId="
-				+ vehicleId + ", plantId=" + plantId + ", custId=" + custId + ", projId=" + projId + ", driverId="
-				+ driverId + ", vehTimeOut=" + vehTimeOut + ", vehTimeIn=" + vehTimeIn + ", vehInDate=" + vehInDate
-				+ ", outKm=" + outKm + ", inKm=" + inKm + ", sitePersonName=" + sitePersonName + ", sitePersonMob="
-				+ sitePersonMob + ", orderId=" + orderId + ", orderNo=" + orderNo + ", chalanRemark=" + chalanRemark
-				+ ", itemId=" + itemId + ", itemUom=" + itemUom + ", itemQty=" + itemQty + ", itemLengthPlant="
-				+ itemLengthPlant + ", itemWidthPlant=" + itemWidthPlant + ", itemHeightPlant=" + itemHeightPlant
-				+ ", itemTotalPlant=" + itemTotalPlant + ", itemLengthSite=" + itemLengthSite + ", itemWidthSite="
-				+ itemWidthSite + ", itemHeightSite=" + itemHeightSite + ", itemTotalSite=" + itemTotalSite
-				+ ", status=" + status + ", delStatus=" + delStatus + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1
-				+ ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exDate1=" + exDate1 + ", orderDetailId="
-				+ orderDetailId + "]";
+				+ projName + ", address=" + address + ", itemName=" + itemName + ", itemCode=" + itemCode
+				+ ", shortName=" + shortName + ", uom=" + uom + ", usrName=" + usrName + ", vehNo=" + vehNo
+				+ ", vehicleName=" + vehicleName + ", devAddress=" + devAddress + ", plantAddress1=" + plantAddress1
+				+ ", batchNo=" + batchNo + ", totalQuan=" + totalQuan + ", plantContactNo1=" + plantContactNo1
+				+ ", plantContactNo2=" + plantContactNo2 + ", vehicleId=" + vehicleId + ", plantId=" + plantId
+				+ ", custId=" + custId + ", projId=" + projId + ", driverId=" + driverId + ", vehTimeOut=" + vehTimeOut
+				+ ", vehTimeIn=" + vehTimeIn + ", vehInDate=" + vehInDate + ", outKm=" + outKm + ", inKm=" + inKm
+				+ ", sitePersonName=" + sitePersonName + ", sitePersonMob=" + sitePersonMob + ", orderId=" + orderId
+				+ ", orderNo=" + orderNo + ", chalanRemark=" + chalanRemark + ", itemId=" + itemId + ", itemUom="
+				+ itemUom + ", itemQty=" + itemQty + ", itemLengthPlant=" + itemLengthPlant + ", itemWidthPlant="
+				+ itemWidthPlant + ", itemHeightPlant=" + itemHeightPlant + ", itemTotalPlant=" + itemTotalPlant
+				+ ", itemLengthSite=" + itemLengthSite + ", itemWidthSite=" + itemWidthSite + ", itemHeightSite="
+				+ itemHeightSite + ", itemTotalSite=" + itemTotalSite + ", status=" + status + ", delStatus="
+				+ delStatus + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1 + ", exVar1=" + exVar1 + ", exVar2="
+				+ exVar2 + ", exDate1=" + exDate1 + ", orderDetailId=" + orderDetailId + "]";
 	}
-	
-	
-	
-	
 
 }

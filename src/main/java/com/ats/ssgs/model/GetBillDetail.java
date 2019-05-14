@@ -2,79 +2,80 @@ package com.ats.ssgs.model;
 
 import java.io.Serializable;
 
-
-public class GetBillDetail implements Serializable{
+public class GetBillDetail implements Serializable {
 
 	private int billDetailId;
-	
+
 	private int billHeadId;
-	
+
 	private int itemId;
-	
+
 	private String itemName;
-	
+
+	private String shortName;
+
 	private float qty;
-	
+
 	private String hsnCode;
-	
+
 	private float rate;
-	
+
 	private float cgstPer;
-	
+
 	private float sgstPer;
-	
+
 	private float igstPer;
-	
+
 	private float cgstAmt;
-	
+
 	private float sgstAmt;
-	
+
 	private float igstAmt;
-	
+
 	private float taxAmt;
-	
+
 	private float discPer;
-	
+
 	private String uomName;
-	
+
 	private float discAmt;
-	
+
 	private float taxableAmt;
-	
+
 	private float totalAmt;
-	
+
 	private int exInt1;
-	
+
 	private int exInt2;
-	
+
 	private float exFloat1;
-	
+
 	private float exFloat2;
-	
+
 	private String exVar1;
-	
+
 	private String exVar2;
-	
+
 	private int delStatus;
 
-private int company_id;
-	
+	private int company_id;
+
 	private String comp_name;
-	
+
 	private String comp_office_add;
-	
+
 	private String contact_no1;
-	
+
 	private String email1;
-	
-/*	private int plantId;*/
-	
+
+	/* private int plantId; */
+
 	private String plantName;
-	
+
 	private String orderNo;
-	
+
 	private String refNo;
-	
+
 	public String getUomName() {
 		return uomName;
 	}
@@ -283,7 +284,6 @@ private int company_id;
 		this.delStatus = delStatus;
 	}
 
-	
 	public int getCompany_id() {
 		return company_id;
 	}
@@ -324,14 +324,11 @@ private int company_id;
 		this.email1 = email1;
 	}
 
-	/*public int getPlantId() {
-		return plantId;
-	}
-
-	public void setPlantId(int plantId) {
-		this.plantId = plantId;
-	}
-*/
+	/*
+	 * public int getPlantId() { return plantId; }
+	 * 
+	 * public void setPlantId(int plantId) { this.plantId = plantId; }
+	 */
 	public String getPlantName() {
 		return plantName;
 	}
@@ -340,8 +337,6 @@ private int company_id;
 		this.plantName = plantName;
 	}
 
-	
-	
 	public String getOrderNo() {
 		return orderNo;
 	}
@@ -358,19 +353,26 @@ private int company_id;
 		this.refNo = refNo;
 	}
 
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetBillDetail [billDetailId=" + billDetailId + ", billHeadId=" + billHeadId + ", itemId=" + itemId
-				+ ", itemName=" + itemName + ", uomName=" + uomName + ", qty=" + qty + ", hsnCode=" + hsnCode
+				+ ", itemName=" + itemName + ", shortName=" + shortName + ", qty=" + qty + ", hsnCode=" + hsnCode
 				+ ", rate=" + rate + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer
 				+ ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt + ", taxAmt=" + taxAmt
-				+ ", discPer=" + discPer + ", discAmt=" + discAmt + ", taxableAmt=" + taxableAmt + ", totalAmt="
-				+ totalAmt + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exFloat1=" + exFloat1 + ", exFloat2="
-				+ exFloat2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", delStatus=" + delStatus + ", company_id="
-				+ company_id + ", comp_name=" + comp_name + ", comp_office_add=" + comp_office_add + ", contact_no1="
-				+ contact_no1 + ", email1=" + email1 +  ", plantName=" + plantName
+				+ ", discPer=" + discPer + ", uomName=" + uomName + ", discAmt=" + discAmt + ", taxableAmt="
+				+ taxableAmt + ", totalAmt=" + totalAmt + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exFloat1="
+				+ exFloat1 + ", exFloat2=" + exFloat2 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", delStatus="
+				+ delStatus + ", company_id=" + company_id + ", comp_name=" + comp_name + ", comp_office_add="
+				+ comp_office_add + ", contact_no1=" + contact_no1 + ", email1=" + email1 + ", plantName=" + plantName
 				+ ", orderNo=" + orderNo + ", refNo=" + refNo + "]";
 	}
 
-	
 }

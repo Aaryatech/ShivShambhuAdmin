@@ -27,7 +27,8 @@
 				<p
 					style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
 					<b>Office Address:</b>${printData.comp.compOfficeAdd}<br></br>
-					Mobile No. ${printData.comp.contactNo1} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email:
+					Mobile No. ${printData.comp.contactNo1}
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email:
 					${printData.comp.email1}
 				</p>
 
@@ -56,10 +57,10 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Date
 			: </b> ${printData.chalanItemList[0].chalanDate}
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<b>RST No : </b>${printData.chalanItemList[0].exVar1}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<b>RST No : </b>${printData.chalanItemList[0].exVar1}
 	</div>
 	<div style="margin-left: 10px; padding: 4px; font-size: 13px;">
 		<b>Customer Name : </b>
@@ -116,7 +117,7 @@
 				<td
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${count3.index+1}</td>
 				<td
-					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemName}</td>
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.shortName}</td>
 				<td
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.uom}</td>
 				<td
@@ -141,7 +142,8 @@
 
 	<div style="margin-left: 10px; padding: 3px; font-size: 13px;"
 		align="left">
-		<b>Vehicle No : </b> ${printData.chalanItemList[0].vehNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<b>Vehicle No : </b>
+		${printData.chalanItemList[0].vehNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<b>Out Time : </b>${printData.chalanItemList[0].vehTimeOut}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>In
 			Time : </b>${temp}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 

@@ -869,6 +869,74 @@ public class BillController {
 
 	}
 
+	@RequestMapping(value = "/showCancleBillList", method = RequestMethod.GET)
+	public ModelAndView showCancleBillList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("bill/cancleBillList");
+
+			model.addObject("title", "Bill List");
+			model.addObject("status", -1);
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			List<Plant> plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			String fromDate = null, toDate = null;
+
+			if (request.getParameter("fromDate") == null || request.getParameter("fromDate") == "") {
+
+				System.err.println("onload call  ");
+
+				Calendar date = Calendar.getInstance();
+				date.set(Calendar.DAY_OF_MONTH, 1);
+
+				Date firstDate = date.getTime();
+
+				DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+				fromDate = dateFormat.format(firstDate);
+
+				toDate = dateFormat.format(new Date());
+				System.err.println("cu Date  " + fromDate + "todays date   " + toDate);
+
+			} else {
+
+				System.err.println("After page load call");
+				fromDate = request.getParameter("fromDate");
+				toDate = request.getParameter("toDate");
+
+			}
+
+			// getOrderListBetDate
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("keyList", "11,12,13");
+
+			Setting[] settArray = rest.postForObject(Constants.url + "getSettingValueByKeyList", map, Setting[].class);
+			settingList = new ArrayList<Setting>(Arrays.asList(settArray));
+
+			model.addObject("settingList", settingList);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showBillList at OrderController " + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
 	List<GetBillHeader> getBillList = new ArrayList<>();
 
 	@RequestMapping(value = "/getBillListBetDate", method = RequestMethod.GET)
@@ -889,6 +957,7 @@ public class BillController {
 		map.add("custId", custId);
 		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		map.add("delStatus", 1);
 
 		GetBillHeader[] ordHeadArray = rest.postForObject(Constants.url + "getBillHeadersByDateAndCustAndPlant", map,
 				GetBillHeader[].class);
@@ -1103,6 +1172,35 @@ public class BillController {
 		session = request.getSession();
 		session.setAttribute("exportExcelList2", exportToExcelList2);
 		session.setAttribute("excelName2", "Customer List");
+
+		return getBillList;
+	}
+
+	@RequestMapping(value = "/getCancleBillListBetDate", method = RequestMethod.GET)
+	public @ResponseBody List<GetBillHeader> getCancleBillListBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		int custId = Integer.parseInt(request.getParameter("custId"));
+		int statusList = Integer.parseInt(request.getParameter("statusList"));
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+
+		map.add("plantId", plantId);
+		map.add("tax", statusList);
+		map.add("custId", custId);
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		map.add("delStatus", 0);
+
+		GetBillHeader[] ordHeadArray = rest.postForObject(Constants.url + "getBillHeadersByDateAndCustAndPlant", map,
+				GetBillHeader[].class);
+		getBillList = new ArrayList<GetBillHeader>(Arrays.asList(ordHeadArray));
+
+		System.out.println("getBillList" + getBillList.toString());
 
 		return getBillList;
 	}
@@ -1840,6 +1938,26 @@ public class BillController {
 
 		return editComp;
 
+	}
+
+	@RequestMapping(value = "/deleteBill/{billHeadId}", method = RequestMethod.GET)
+	public String deleteBill(HttpServletRequest request, HttpServletResponse response, @PathVariable int billHeadId) {
+
+		try {
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("billHeadId", billHeadId);
+
+			Info errMsg = rest.postForObject(Constants.url + "deleteBill", map, Info.class);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in /deleteBill @MastContr  " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return "redirect:/showBillList";
 	}
 
 }

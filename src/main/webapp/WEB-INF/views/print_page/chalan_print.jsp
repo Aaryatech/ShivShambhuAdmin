@@ -148,7 +148,7 @@
 				<td
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${count3.index+1}</td>
 				<td
-					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemName}</td>
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.shortName}</td>
 				<td
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.uom}</td>
 				<td
@@ -206,7 +206,8 @@
 
 	<div style="margin-left: 10px; padding: 3px; font-size: 13px;"
 		align="left">
-		<b>Vehicle No : </b> ${printData.chalanItemList[0].vehNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<b>Vehicle No : </b>
+		${printData.chalanItemList[0].vehNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<b>Out Time : </b>${printData.chalanItemList[0].vehTimeOut}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>In
 			Time : </b>${temp}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -215,7 +216,7 @@
 			Km : </b>${temp1}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	</div>
 
-	
+
 	<div style="margin-left: 10px; padding: 3px; font-size: 13px;">
 		<b>Driver : ${printData.chalanItemList[0].usrName}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -86,13 +86,14 @@ body {
 </style>
 
 <head>
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>Shiv Admin</title>
 
 
 <c:url var="getCustByPlantId" value="/getCustByPlantId" />
-<c:url var="getBillListBetDate" value="/getBillListBetDate" />
+<c:url var="getBillListBetDate" value="/getCancleBillListBetDate" />
 <%-- 
 
 <c:url var="getCustInfoByCustId" value="/getCustInfoByCustId" />
@@ -391,8 +392,8 @@ body {
 								<thead>
 									<tr>
 
-										<th style="text-align: center"><input type="checkbox"
-											id="selectAll" /></th>
+										<!-- <th style="text-align: center"><input type="checkbox"
+											id="selectAll" /></th> -->
 										<th style="text-align: center">Sr.</th>
 										<th style="text-align: center">Bill No</th>
 										<th style="text-align: center">Bill Date</th>
@@ -402,15 +403,15 @@ body {
 										<th style="text-align: center">Tax Amount</th>
 										<th style="text-align: center">Total Amount</th>
 
-										<th style="text-align: center">Action</th>
+										<!-- <th style="text-align: center">Action</th> -->
 									</tr>
 								</thead>
 
 								<tbody>
 									<c:forEach items="${getBillList}" var="bill" varStatus="count">
 										<tr>
-											<td><input type="checkbox" class="chk" name="quotIds"
-												id="quotIds${count.index+1}" value="${bill.billHeadId}" /></td>
+											<%-- <td><input type="checkbox" class="chk" name="quotIds"
+												id="quotIds${count.index+1}" value="${bill.billHeadId}" /></td> --%>
 
 											<td style="text-align: center">${count.index+1}</td>
 
@@ -434,13 +435,13 @@ body {
 
 
 
-											<td><a
+											<%-- <td><a
 												href="${pageContext.request.contextPath}/editBill/${bill.billHeadId}"><i
 													class="fa fa-edit" style="color: black"
 													title="Generate Quotation"></i> <span class="text-muted"></span></a>
 												&nbsp;<input type="button" id="btn_submit"
 												class="btn btn-primary"
-												onclick="singleBillPdf(${bill.billHeadId})" value="Pdf" /></td>
+												onclick="singleBillPdf(${bill.billHeadId})" value="Pdf" /></td> --%>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -448,7 +449,7 @@ body {
 							</table>
 
 
-							<center>
+							<%-- <center>
 								<input type="button" margin-right: 5px;" id="btn_submit"
 									class="btn btn-primary" onclick="billPdf()" value="Bill Pdf" />
 
@@ -471,7 +472,7 @@ body {
 									onclick="exportToExcel2();" id="expExcel2"
 									style="align-content: center; width: 200px; margin-left: 80px;">
 									Export Customer(Talley)</button>
-							</center>
+							</center> --%>
 
 						</div>
 
@@ -661,100 +662,57 @@ body {
 			}
 			if (valid == true) {
 				$('#loader').show();
-				$
-						.getJSON(
-								'${getBillListBetDate}',
-								{
-									plantId : plantId,
-									custId : custId,
-									fromDate : fromDate,
-									toDate : toDate,
-									statusList : statusList,
-									ajax : 'true',
-								},
+				$.getJSON('${getBillListBetDate}', {
+					plantId : plantId,
+					custId : custId,
+					fromDate : fromDate,
+					toDate : toDate,
+					statusList : statusList,
+					ajax : 'true',
+				},
 
-								function(data) {
-									$('#loader').hide();
-									//alert("Order Data " +JSON.stringify(data));
+				function(data) {
+					$('#loader').hide();
+					//alert("Order Data " +JSON.stringify(data));
 
-									var dataTable = $('#bootstrap-data-table')
-											.DataTable();
-									dataTable.clear().draw();
+					var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw();
 
-									$
-											.each(
-													data,
-													function(i, v) {
-														//alert("hdjfh");
+					$.each(data, function(i, v) {
+						//alert("hdjfh");
 
-														var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v.billHeadId+' class="chk"  value='+v.billHeadId+'>'
-													
-														
-														var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"  onclick="callEdit('
-															+ v.billHeadId
-															+ ','
-															+ i
-															+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file-pdf-o" title="Bill Pdf" onclick="singleBillPdf('
-															+ v.billHeadId
-															+ ','
-															+ i
-															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#" class="action_btn" onclick="callDelete('
-																+ v.billHeadId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-trash" title="Delete"></i></a>&nbsp;&nbsp;&nbsp;'
-													/* 	var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"  onclick="callEdit('
-																+ v.billHeadId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file-pdf-o" title="Bill Pdf" onclick="singleBillPdf('
-																+ v.billHeadId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
-																 */
-																
+						/* 	var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v.billHeadId+' class="chk"  value='+v.billHeadId+'>'
 
-														dataTable.row
-																.add(
-																		[
-																				checkB,
-																						
-																			 (i + 1),
-																				v.billNo,
-																				v.billDate,
-																				v.custName,
-																				v.taxableAmt,
-																				v.taxAmt,
-																				v.totalAmt,
-																				acButton
-																		 ])
-																.draw();
-													});
+							var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"  onclick="callEdit('
+									+ v.billHeadId
+									+ ','
+									+ i
+									+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file-pdf-o" title="Bill Pdf" onclick="singleBillPdf('
+									+ v.billHeadId
+									+ ','
+									+ i
+									+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'
+						 */
+						dataTable.row.add(
+								[
 
-								});
+								(i + 1), v.billNo, v.billDate, v.custName,
+										v.taxableAmt, v.taxAmt, v.totalAmt ])
+								.draw();
+					});
+
+				});
 
 			}//end of if valid ==true
 
 		}
-		
+
 		function callEdit(billHeadId) {
 
 			window.open("${pageContext.request.contextPath}/editBill/"
 					+ billHeadId);
 
 		}
-		function callDelete(billHeaderId, key) {
-			var isDel = confirm('Are you sure want to delete this record');
-			if (isDel == true) {
-				window.open('${pageContext.request.contextPath}/deleteBill/'
-						+ billHeaderId, "_self");
-
-			}
-		}
-
-		
-		
 	</script>
 
 	<div class="row"></div>
@@ -808,80 +766,68 @@ body {
 
 	<script type="text/javascript">
 		function singleBillPdf(id) {
-			
+
 			//alert("hi"+id);
-			
-			var isValid=true;
-			if(id==null){
-				isValid=false;
+
+			var isValid = true;
+			if (id == null) {
+				isValid = false;
 			}
-			if(isValid==true){
-			 var span = document.getElementById("close");
+			if (isValid == true) {
+				var span = document.getElementById("close");
 				var modal = document.getElementById('myModal');
 
 				modal.style.display = "block";
 				span.onclick = function() {
-				    modal.style.display = "none"; 
+					modal.style.display = "none";
 				}
 
 				// When the user clicks anywhere outside of the modal, close it
 				window.onclick = function(event) {
-				    if (event.target == modal) {
-				        modal.style.display = "none";
-				        
-				    }
+					if (event.target == modal) {
+						modal.style.display = "none";
+
+					}
 				}
-				
-				document.getElementById("billHeaderIdTemp").value=id;
-			
+
+				document.getElementById("billHeaderIdTemp").value = id;
+
 			}
 		}
-			
-		
-		
-		
-		</script>
+	</script>
 
 
 	<script type="text/javascript">
 		function showSinglePdf() {
-			
-			
+
 			var modal = document.getElementById('myModal');
-	        modal.style.display = "none";
-	        
-	        
-	        var id =document.getElementById("billHeaderIdTemp").value; 
-	      
-	       
-	        
-	        var checkedVals = $('input:checkbox:checked').map(function() {
+			modal.style.display = "none";
+
+			var id = document.getElementById("billHeaderIdTemp").value;
+
+			var checkedVals = $('input:checkbox:checked').map(function() {
 				return this.value;
 			}).get();
-			
+
 			checkedVals = checkedVals.join(",");
-			
-			
+
 			var str2 = checkedVals.replace('/', ',');
-			var str3=str2.replace('on,', "");
-			
+			var str3 = str2.replace('on,', "");
+
 			if (checkedVals == "") {
 				alert("Please Select")
 			} else {
 				window
 						.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-								+ id+ '/' + str3 );
+								+ id + '/' + str3);
 			}
-	      
+
 		}
-			
-		 	/* window
-			.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-					+ id);   */
-		
-		
-	
-		</script>
+
+		/* window
+		.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
+			+ id);   */
+	</script>
 
 
 
@@ -892,11 +838,10 @@ body {
 			}).get();
 			//checkedVals=checkedVals.slice(0,- 1);alert(checkedVals);
 			checkedVals = checkedVals.join(",");
-			
-			
+
 			var str2 = checkedVals.replace('/', ',');
-			var str3=str2.replace('on,', "");
-			
+			var str3 = str2.replace('on,', "");
+
 			//alert("Ids : ------------ "+str3);
 
 			if (checkedVals == "") {
@@ -904,9 +849,9 @@ body {
 			} else {
 				window
 						.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-								+ str3 +'/' + "11");
+								+ str3 + '/' + "11");
 			}
-		} 
+		}
 	</script>
 	<script type="text/javascript">
 		$('#selectAll').click(
@@ -928,7 +873,7 @@ body {
 		function exportToExcel() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel");
-	 	document.getElementById("expExcel").disabled = true; 
+			document.getElementById("expExcel").disabled = true;
 		}
 	</script>
 
@@ -936,14 +881,14 @@ body {
 		function exportToExcel1() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel1");
-			 document.getElementById("expExcel1").disabled = true; 
+			document.getElementById("expExcel1").disabled = true;
 		}
 	</script>
 	<script type="text/javascript">
 		function exportToExcel2() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcel2");
-			 document.getElementById("expExcel2").disabled = true; 
+			document.getElementById("expExcel2").disabled = true;
 		}
 	</script>
 	<script type="text/javascript">

@@ -49,25 +49,28 @@
 		<b>Delivery Challan (for sale) </b>
 	</center>
 
-	<div
-		style="margin-left: 10px;  font-size: 15px; text-align: left">
-		
+	<div style="margin-left: 10px; font-size: 15px; text-align: left">
+
 		<table style="width: 100%">
-		<tr>
-		<td width="50%"><b>Challan No  </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  : ${ch_no1}</td>
-		<td width="50%"><b>Date	: </b>${printData.chalanItemList[0].chalanDate}</td>
-		</tr>
+			<tr>
+				<td width="50%"><b>Challan No </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					: ${ch_no1}</td>
+				<td width="50%"><b>Date : </b>${printData.chalanItemList[0].chalanDate}</td>
+			</tr>
 		</table>
-		
+
 	</div>
-	
-	<div style="margin-left: 10px; padding: 3px; font-size: 15px; text-align: left">
-		
-		<b>Customer Name </b>&nbsp;&nbsp; : ${printData.chalanItemList[0].custName}
+
+	<div
+		style="margin-left: 10px; padding: 3px; font-size: 15px; text-align: left">
+
+		<b>Customer Name </b>&nbsp;&nbsp; :
+		${printData.chalanItemList[0].custName}
 	</div>
 	<div
-		style="margin-left: 10px; padding: 3px;font-size: 15px; text-align: left">
-		<b>Project Name </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :  ${printData.chalanItemList[0].projName}
+		style="margin-left: 10px; padding: 3px; font-size: 15px; text-align: left">
+		<b>Project Name </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; :
+		${printData.chalanItemList[0].projName}
 
 	</div>
 
@@ -77,15 +80,16 @@
 
 	</div>
 
-	<div
-		style="margin-left: 10px;  font-size: 15px; text-align: left">
-		
+	<div style="margin-left: 10px; font-size: 15px; text-align: left">
+
 		<table style="width: 100%">
-		<td width="50%"><b>Batch No </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${printData.chalanItemList[0].batchNo}</td>
-		<td width="50%"><b>RST No : </b>${printData.chalanItemList[0].exVar1}</td></table>
+			<td width="50%"><b>Batch No </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+				${printData.chalanItemList[0].batchNo}</td>
+			<td width="50%"><b>RST No : </b>${printData.chalanItemList[0].exVar1}</td>
+		</table>
 
 	</div>
-	
+
 
 	<br />
 
@@ -123,7 +127,7 @@
 				<td
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${count3.index+1}</td>
 				<td
-					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemName}</td>
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.shortName}</td>
 				<td
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.uom}</td>
 				<td

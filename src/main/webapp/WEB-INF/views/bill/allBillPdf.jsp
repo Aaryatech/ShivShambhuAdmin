@@ -473,7 +473,7 @@
 					<td
 						style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${count.index+1}</td>
 					<td class="cut-text"
-						style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${billDetails.itemName}</td>
+						style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${billDetails.shortName}</td>
 					<td align="left"
 						style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${billDetails.hsnCode}</td>
 

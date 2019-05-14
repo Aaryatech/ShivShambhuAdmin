@@ -237,7 +237,17 @@
 											oninvalid="setCustomValidity('Please select tax')"
 											onchange="try{setCustomValidity('')}catch(e){}">
 											<c:forEach items="${taxList}" var="tax">
-												<option value="${tax.taxId}">${tax.taxName}</option>
+
+												<c:choose>
+													<c:when test="${tax.taxId==editItem.taxId}">
+														<option value="${tax.taxId}" selected>${tax.taxName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${tax.taxId}">${tax.taxName}</option>
+													</c:otherwise>
+												</c:choose>
+
+
 											</c:forEach>
 										</select>
 									</div>
