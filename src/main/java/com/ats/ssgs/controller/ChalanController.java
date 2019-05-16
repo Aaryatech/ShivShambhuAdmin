@@ -298,7 +298,8 @@ public class ChalanController {
 			tempChItemList.add(chItem);
 		} else {
 			try {
-				System.err.println("Inside edit try block");
+				System.err.println("Inside edit try block" + index);
+
 				TempChalanItem chItem = new TempChalanItem();
 
 				chItem.setChalanQty(chalanQty);
