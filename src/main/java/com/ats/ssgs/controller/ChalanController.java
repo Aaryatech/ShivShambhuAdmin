@@ -466,7 +466,9 @@ public class ChalanController {
 			String var = null;
 			String count = pData.getExVar1();
 
-			String formattedChalanNo = String.format("%04d", count);
+			System.out.println("count===========" + count);
+
+			// String formattedChalanNo = String.format("%04d", count);
 			if (String.valueOf(count).length() == 1) {
 				var = "000".concat(String.valueOf(count));
 
@@ -480,7 +482,7 @@ public class ChalanController {
 				var = count;
 			}
 
-			String ChalanNO = "CH" + "-" + pData.getPlantFax1() + "-" + formattedChalanNo;
+			String ChalanNO = "CH" + "-" + pData.getPlantFax1() + "-" + var;
 
 			chHeader.setChalanNo(ChalanNO);
 
