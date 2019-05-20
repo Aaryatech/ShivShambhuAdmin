@@ -211,7 +211,7 @@ body {
 }
 </style>
 </head>
-<body onload="showOrderItemPopup(${orderId})">
+<body onload="getEnqNum()">
 
 
 	<!-- Left Panel -->
@@ -349,7 +349,7 @@ body {
 
 									<div class="col-md-2">Select Order</div>
 
-									<div class="col-md-2">
+									<div class="col-md-4">
 										<select id="order_id" name="order_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select order')"
@@ -360,11 +360,11 @@ body {
 										</select>
 									</div>
 
-									<div class="col-md-2">
+									<!-- <div class="col-md-2">
 										<input type="button" onclick="showPopupForGetData()"
 											class="btn btn-primary" value="View Item">
 
-									</div>
+									</div> -->
 
 
 
@@ -551,6 +551,10 @@ body {
 												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
+												<th style="text-align: center">PO Qty</th>
+												<th style="text-align: center">PO Rem Qty</th>
+												<th style="text-align: center">Order Qty</th>
+												<th style="text-align: center">Order Rem Qty</th>
 												<th style="text-align: center">Challan Qty</th>
 												<th style="text-align: center">Width</th>
 												<th style="text-align: center">Height</th>
@@ -560,8 +564,63 @@ body {
 										</thead>
 
 										<tbody>
+											<c:forEach items="${ordDetailList}" var="item"
+												varStatus="count">
+												<tr id="color${item.itemId}">
 
 
+													<td style="text-align: center">${count.index+1}</td>
+
+
+													<td style="text-align: left"><c:out
+															value="${item.itemName}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${item.uomName}" /></td>
+
+
+
+
+													<td style="text-align: left"><c:out
+															value="${item.poQty}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${item.poRemainingQty}" /></td>
+
+													<td style="text-align: left"><c:out
+															value="${item.orderQty}" /></td>
+
+
+													<td style="text-align: left"><c:out
+															value="${item.remOrdQty}" /></td>
+
+													<td style="text-align: center"><input type="text"
+														onkeypress="return allowOnlyNumber(event);"
+														class="form-control" value="0"
+														oninput="chalanItemValidation(this.value,${item.remOrdQty},${item.itemId})"
+														name="chalanQty${item.itemId}"
+														id="chalanQty${item.itemId}" /></td>
+													<td style="text-align: center"><input type="text"
+														onkeypress="return allowOnlyNumber(event);"
+														class="form-control" value="0" name="width${item.itemId}"
+														id="width${item.itemId}" /></td>
+
+													<td style="text-align: center"><input type="text"
+														onkeypress="return allowOnlyNumber(event);"
+														class="form-control" value="0" name="height${item.itemId}"
+														id="height${item.itemId}" /></td>
+													<td style="text-align: center"><input type="text"
+														onkeypress="return allowOnlyNumber(event);"
+														class="form-control" value="0" name="length${item.itemId}"
+														id="length${item.itemId}" /></td>
+
+
+
+													<td style="text-align: center"><input type="text"
+														readonly class="form-control" id="itemTotal${item.itemId}"
+														value="0" name="itemChalanTotal${item.itemId}" />'</td>
+												</tr>
+											</c:forEach>
 										</tbody>
 
 									</table>
@@ -1138,7 +1197,36 @@ function allowOnlyNumber1(evt)
 		
 	}
 	</script>
-
+	<script type="text/javascript">
+	function chalanItemValidation(chalanQty,remOrdQty,itemId){
+		//alert("chalanQty Id" +remOrdQty  );
+		//alert("Item Id" +itemId + "poId" +poId+ "detail PO Id " +poDetailId + "rem Ord Qty  " +remOrdQty );
+	 
+		 
+		
+	if(chalanQty<0){
+		 
+		document.getElementById("chalanQty"+itemId).value="0";
+		alert("Please Enter Correct Chalan Quantity");
+	}
+	
+	if(chalanQty>0){ 
+		if(remOrdQty<chalanQty){
+			document.getElementById("color"+itemId).style.backgroundColor ="white";
+			document.getElementById("chalanQty"+itemId).value="0";
+			alert("Chalan Quantity can not be greater than  Remaining Order Quantity ");
+		
+		}else
+			{
+		document.getElementById("color"+itemId).style.backgroundColor ="#66ff66";
+			}
+	}
+	if(chalanQty==0){
+		document.getElementById("color"+itemId).style.backgroundColor ="white";
+		
+	}
+	}
+	</script>
 	<script type="text/javascript">
 	function allowOnlyNumber(evt){
 	    var charCode = (evt.which) ? evt.which : event.keyCode

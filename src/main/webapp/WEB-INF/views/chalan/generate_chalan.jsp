@@ -371,7 +371,7 @@ body {
 
 									<div class="col-md-2">Select Order*</div>
 
-									<div class="col-md-2">
+									<div class="col-md-4">
 										<select id="order_id" name="order_id" class="standardSelect"
 											tabindex="1" required
 											oninvalid="setCustomValidity('Please select order')"
@@ -384,12 +384,12 @@ body {
 										</select>
 									</div>
 
-									<div class="col-md-2">
+									<!-- <div class="col-md-2">
 										<input type="button" onclick="showPopupForGetData()"
 											class="btn btn-primary" value="View Item">
 
 									</div>
-
+ -->
 
 
 								</div>
@@ -584,6 +584,10 @@ body {
 												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
+												<th style="text-align: center">PO Qty</th>
+												<th style="text-align: center">PO Rem Qty</th>
+												<th style="text-align: center">Order Qty</th>
+												<th style="text-align: center">Order Rem Qty</th>
 												<th style="text-align: center">Challan Qty</th>
 												<th style="text-align: center">Width</th>
 												<th style="text-align: center">Height</th>
@@ -1033,74 +1037,192 @@ function allowOnlyNumber1(evt)
 	
 	</script>
 
-	<script type="text/javascript">
+	<!-- <script>
 	function showOrderItemPopup(orderId){
 		var isValid=true;
 		if(orderId==-1){
 			isValid=false;
 		}
-		if(isValid==true){
-		 var span = document.getElementById("close");
-			var modal = document.getElementById('myModal');
-
-			modal.style.display = "block";
-			span.onclick = function() {
-			    modal.style.display = "none"; 
-			}
-
-			// When the user clicks anywhere outside of the modal, close it
-			window.onclick = function(event) {
-			    if (event.target == modal) {
-			        modal.style.display = "none";
-			        
-			    }
-			}
-
+		if(isValid==true){ 
+			 
+			 
 		  $.getJSON('${getOrderDetailForChalan}', {
 			  orderId : orderId,
 					ajax : 'true',
 
 				},
 
-				function(data) {
-					
-					//alert("detail  " +JSON.stringify(data));
-					if(data==null){
-						document.getElementById('poupSubButton').disabled=true;
-						
-					}else{
-						document.getElementById('poupSubButton').disabled=false;
-					}
-					
-					if(data[0].alertMsg==" ")
-						{
-						
-						}
-					else
-						{
-					alert(data[0].alertMsg);
-						}
+				function(data) { 
+					// alert("detail  " +JSON.stringify(data));
+				 
 					var len = data.length;
-					//alert("Len " +len);
-								var dataTable = $('#table_grid1')
+					// alert("Len " +len);
+								var dataTable = $('#bootstrap-data-table')
 										.DataTable();
 								dataTable.clear().draw();
 								$
 										.each(
 												data,
 												function(i, v) {
+													
+													try {
+														var tr = $('<tr></tr>');
+														tr
+																.append($(
+																		'<td class="col-sm-1" ></td>')
+																		.html(
+																				i + 1));
+														tr
+																.append($(
+																		'<td class="col-md-1" ></td>')
+																		.html(
+																				data.itemName));
+														tr
+																.append($(
+																		'<td class="col-md-4" ></td>')
+																		.html(
+																				data.uomName));
+														tr
+																.append($(
+																		'<td class="col-md-1" ></td>')
+																		.html(
+																				data.poQty));
+														
+														
+														tr
+																.append($(
+																		'<td class="col-md-1" ></td>')
+																		.html(
+																				'<input type=text    class=form-control id= "Qty'
+																						+ data.itemId
+																						+ '" name="Qty'
+																						+ data.itemId
+																						+ '" value = '
+																						+ data.itemOpQty
+																						+ ' onchange="changeValues('
+																						+ data.itemId
+																						+ ')">'));
+														tr
+																.append($(
+																		'<td class="col-md-1" ></td>')
+																		.html(
+																				'<input type=text    class=form-control id= "Rate'
+																						+ data.itemId
+																						+ '" name="Rate'
+																						+ data.itemId
+																						+ '" value = '
+																						+ data.itemOpRate
+																						+ ' onchange="changeValues('
+																						+ data.itemId
+																						+ ')">'));
+														tr
+																.append($(
+																		'<td class="col-md-1" style="text-align: right;"></td>')
+																		.html(
+																				'<input type=hidden    class=form-control id= "taxper'
+																						+ data.itemId
+																						+ '" name="taxper'
+																						+ data.itemId
+																						+ '" value = '
+																						+ (data.cgstPer + data.sgstPer)
+																						+ ' ">'
+																						+ (data.cgstPer + data.sgstPer)));
+														tr
+																.append($(
+																		'<td class="col-md-1" style="text-align: right;" id="taxableAmt'+data.itemId+'"></td>')
+																		.html(
+																				(data.itemOpRate * data.itemOpQty)
+																						.toFixed(2)));
+														tr
+																.append($(
+																		'<td class="col-md-1" style="text-align: right;" id="taxAmt'+data.itemId+'"></td>')
+																		.html(
+																				((data.itemOpRate
+																						* data.itemOpQty * (data.cgstPer + data.sgstPer)) / 100)
+																						.toFixed(2)));
+														tr
+																.append($(
+																		'<td class="col-md-1" style="text-align: right;" id="totalAmt'+data.itemId+'"></td>')
+																		.html(
+																				((data.itemOpRate * data.itemOpQty) + (data.itemOpRate
+																						* data.itemOpQty * (data.cgstPer + data.sgstPer)) / 100)
+																						.toFixed(2)));
+														tr
+																.append($(
+																		'<td class="col-md-1" style="text-align: center;"></td>')
+																		.html(
+																				"<a href='#' class='action_btn'onclick=deleteIndentItem("
+																						+ key
+																						+ ")><abbr title='Delete'><i class='fa fa-trash-o  fa-lg'></i></abbr></a>"));
+														$('#table1 tbody')
+																.append(tr);
+														$('#ind_cat')
+																.prop(
+																		'disabled',
+																		true)
+																.trigger(
+																		"chosen:updated");
+														document
+																.getElementById("catId").value = catId;
+														document
+																.getElementById("submitt").disabled = false;
+													} catch (err) {
+													}
+												})
+							});
+		}
+	</script>
+
+ -->
+
+	<script type="text/javascript">
+	function showOrderItemPopup(orderId){
+		var isValid=true;
+		if(orderId==-1){
+			isValid=false;
+		}
+		if(isValid==true){ 
+			 
+			 
+		  $.getJSON('${getOrderDetailForChalan}', {
+			  orderId : orderId,
+					ajax : 'true',
+
+				},
+
+				function(data) { 
+					// alert("detail  " +JSON.stringify(data));
+				 
+					var len = data.length;
+					// alert("Len " +len);
+								var dataTable = $('#bootstrap-data-table')
+										.DataTable();
+								dataTable.clear().draw();
+								$
+										.each(
+												data,
+												function(i, v) {
+													
+													
 													//var checkB = '<input  type="checkbox" name="selChalanItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
-		var chalanQty = '<input  type="text" value="0"  class="form-control"  id="chalanQty'+v.itemId+'" name="chalanQty'+v.itemId+'" onchange="setChalanItem(this.value,'+v.itemId+','+v.poId+','+v.poDetailId+','+v.remOrdQty+','+v.orderDetId+','+v.orderId+','+i+','+v.uomId+',/'+v.itemName+'/,/'+v.uomName+'/)" onkeypress="return allowOnlyNumber(event);"/>'
-													//var itemTotal = '<input  type="text" readonly  class="form-control"  id="itemTotal'+v.itemId+'" name='+v.itemId+'/>'
-													var index=i+1;
-													dataTable.row
-															.add(
-																	[
-																		index,v.itemName,v.uomName,v.orderQty,v.remOrdQty,v.poQty,v.poRemainingQty,chalanQty])
-															.draw();
-												});
-				
-		} );
+		var width = '<input  type="text" value="0"  class="form-control"  id="width'+v.itemId+'" name="width'+v.itemId+'"   oninput="calcChalanTotal('+v.itemId+')"  onkeypress="return allowOnlyNumber(event);"/>'
+		var height = '<input  type="text" value="0"  class="form-control"  id="height'+v.itemId+'" name="height'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
+		var length = '<input  type="text" value="0"  class="form-control"  id="length'+v.itemId+'" name="length'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
+		 var itemChalanTotal = '<input  type="text" value="0" readonly class="form-control"  id="itemChalanTotal'+v.itemId+'" name="itemChalanTotal'+v.itemId+'"/>'
+		var chalanQty = '<input  type="text" value="0"   class="form-control"  id="chalanQty'+v.itemId+'" name="chalanQty'+v.itemId+'" oninput="chalanItemValidation(this.value,'+v.remOrdQty+','+v.itemId+')"  onkeypress="return allowOnlyNumber(event);"/>'
+	
+	
+		  
+		var index=i+1;
+		dataTable.row
+				.add(
+						[
+							index,v.itemName,v.uomName,v.poQty,v.poRemainingQty,v.orderQty,v.remOrdQty,chalanQty,width,height,length,itemChalanTotal]).node().id='tr'+v.itemId;
+		dataTable.draw(false);
+		 
+					});
+					 
+			} );
 		
 		}
 	}
@@ -1144,13 +1266,7 @@ function allowOnlyNumber1(evt)
 				function(data) {
 					
 					//alert("detail  " +JSON.stringify(data));
-					if(data==null){
-						document.getElementById('poupSubButton').disabled=true;
-						
-					}else{
-						document.getElementById('poupSubButton').disabled=false;
-					}
-					
+					 
 					if(data[0].alertMsg==" ")
 					{
 					}
@@ -1174,8 +1290,10 @@ function allowOnlyNumber1(evt)
 													dataTable.row
 															.add(
 																	[
-																		index,v.itemName,v.uomName,v.orderQty,v.remOrdQty,v.poQty,v.poRemainingQty,chalanQty])
-															.draw();
+																		index,v.itemName,v.uomName,v.orderQty,v.remOrdQty,v.poQty,v.poRemainingQty,chalanQty]);
+															 
+															
+													
 												});
 				
 		} );
@@ -1206,48 +1324,33 @@ function allowOnlyNumber1(evt)
 	    return true;
 	}
 	
-	function setChalanItem(chalanQty,itemId,poId,poDetailId,remOrdQty,orderDetId,orderId,index,uomId,itemName,uomName){
-		//alert("chalanQty Id" +chalanQty  );
+	function chalanItemValidation(chalanQty,remOrdQty,itemId){
+		//alert("chalanQty Id" +remOrdQty  );
 		//alert("Item Id" +itemId + "poId" +poId+ "detail PO Id " +poDetailId + "rem Ord Qty  " +remOrdQty );
-		var isValid=true;
+	 
 		
-		if(remOrdQty<chalanQty){
-			isValid=false;
+		if(chalanQty<0){
+			 
 			document.getElementById("chalanQty"+itemId).value="0";
-			alert("Chalan Quantity can not be greater than  Remaining Order Quantity ");
+			alert("Please Enter Correct Chalan Quantity");
 		}
-	if(chalanQty<0){
-		isValid=false;
-		document.getElementById("chalanQty"+itemId).value="0";
-		alert("Please Enter Correct Chalan Quantity");
-	}
-	
-		if(isValid==true){
-	 	$
-		.getJSON(
-				'${setChalanItem}',
+		
+		if(chalanQty>0){ 
+			if(remOrdQty<chalanQty){
+				document.getElementById("tr"+itemId).style.backgroundColor ="white";
+				document.getElementById("chalanQty"+itemId).value="0";
+				alert("Chalan Quantity can not be greater than  Remaining Order Quantity ");
+			
+			}else
 				{
-					chalanQty : chalanQty,
-					itemId : itemId,
-					poId : poId,
-					poDetailId : poDetailId,
-					remOrdQty : remOrdQty,
-					orderDetId : orderDetId,
-					orderId : orderId,
-					index : index,
-					uomId : uomId,
-					itemName :itemName,
-					uomName : uomName,
-					
-					ajax : 'true',
-				},
-
-				function(data) {
-					//alert("Data  " +JSON.stringify(data));
-					
-				}); 
-	 	
-		}//end if 
+			document.getElementById("tr"+itemId).style.backgroundColor ="#66ff66";
+				}
+		}
+		if(chalanQty==0){
+			document.getElementById("tr"+itemId).style.backgroundColor ="white";
+			
+		}
+	  
 	}
 	
 	</script>
@@ -1289,8 +1392,8 @@ function allowOnlyNumber1(evt)
 														dataTable.row
 																.add(
 																		[
-																			index,v.itemName,v.uomName,chalanQty,width,height,length,itemChalanTotal])
-																.draw();
+																			index,v.itemName,v.uomName,v.poQty,v.poRemainingQty,v.orderQty,v.remOrdQty,chalanQty,width,height,length,itemChalanTotal]).node()
+																			 $(dataTable).attr("id","tr"+v.itemId);
 													});
 					 
 			} );
@@ -1312,218 +1415,8 @@ function allowOnlyNumber1(evt)
 
 
 
-	<!-- <script type="text/javascript">
-		function addItem() {
-			//alert("in add Item ");
-			var itemId = document.getElementById("item_name").value;
-			var itemName = $("#item_name option:selected").html();
-			var uomId = document.getElementById("uomId").value;
-			var uomName = $("#uomId option:selected").html();
-			var qty = document.getElementById("qty").value;
-			var isEdit = document.getElementById("isEdit").value;
-			var itemRemark = document.getElementById("item_remark").value;
-			var itemUomId = document.getElementById("itemUomId").value;
-			var x = false;
-			var y = false;
-			x = isNaN(qty);
-
-			var plantId = document.getElementById("plant_id").value;
-			var valid = false;
-
-			if (plantId == null || plantId == "") {
-				valid = true;
-				var msg = "Please Select plant";
-				callAlert(msg);
-			}
-
-			else if (itemId == "" || itemId < 0) {
-				valid = true;
-				var msg = "Please Select Item Name";
-				callAlert(msg);
-			} else if ((x == true) || (qty == null) || (qty == "") || (qty < 0)) {
-				var msg = "Please Enter Valid Quantity";
-				valid = true;
-				callAlert(msg);
-			}
-
-			//alert("x=" +x + "y= " +y);
-			if (valid == false) {
-				alert("Inside add ajax");
-				$
-						.getJSON(
-								'${addEnqItem}',
-								{
-									isEdit : isEdit,
-									key : -1,
-									itemId : itemId,
-									itemName : itemName,
-									uomId : uomId,
-									uomName : uomName,
-									qty : qty,
-									itemRemark : itemRemark,
-									itemUomId : itemUomId,
-									ajax : 'true',
-
-								},
-
-								function(data) {
-									var dataTable = $('#bootstrap-data-table')
-											.DataTable();
-									dataTable.clear().draw();
-
-									$
-											.each(
-													data,
-													function(i, v) {
-														if (v.isDuplicate == 1) {
-															alert("Item Already Added in Enquiry");
-														}
-														//var str = '<input  type="button"  class="fa  fa-stack-exchange" onclick="callEdit('+v.itemId+','+i+')" style="width:100%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:100%;"/> ';
-
-														var str = '<a href="#" class="action_btn" onclick="callDelete('
-																+ v.itemId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-																+ v.itemId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-edit"></i></a>'
-
-														dataTable.row
-																.add(
-																		[
-																				i + 1,
-																				v.itemName,
-																				v.uomName,
-																				v.enqQty,
-																				str ])
-																.draw();
-													});
-									document.getElementById("qty").value = "";
-									document.getElementById("item_remark").value = "";
-									document.getElementById("item_name").options.selectedIndex = "0";
-									document.getElementById("uomId").options.selectedIndex = "0";
-									$("#uomId").trigger("chosen:updated");
-									$("#item_name").trigger("chosen:updated");
-									document.getElementById("isEdit").value = 0;
-									document.getElementById("itemUomId").value = "0";
-									document.getElementById("item_rate").value = "0"
-								});
-
-			}//end of if
-			else {
-
-			}
-		}
-
-		function callEdit(itemId, index) {
-			$
-					.getJSON(
-							'${getItemForEdit}',
-							{
-								itemId : itemId,
-								index : index,
-								ajax : 'true',
-
-							},
-							function(data) {
-
-								document.getElementById("uomId").value = data.uomId;
-								$("#uomId").trigger("chosen:updated");
-								document.getElementById("qty").value = data.enqQty;
-								document.getElementById("item_remark").value = data.itemEnqRemark;
-								document.getElementById("item_name").value = data.itemId;
-								$("#item_name").trigger("chosen:updated");
-								document.getElementById("isEdit").value = 1;
-								document.getElementById("itemUomId").value = data.itemUomId;
-								document.getElementById("item_rate").value = data.itemRate1;
-							});
-
-		}
-
-		function callDelete(itemId, index) {
-			document.getElementById("isEdit").value = 0;
-
-			$
-					.getJSON(
-							'${addEnqItem}',
-							{
-								isEdit : 0,
-								key : index,
-								ajax : 'true',
-
-							},
-
-							function(data) {
-								var dataTable = $('#bootstrap-data-table')
-										.DataTable();
-								dataTable.clear().draw();
-								$
-										.each(
-												data,
-												function(i, v) {
-													//	var str = '<input  type="button" value="callEdit" onclick="callEdit('+v.itemId+','+i+')" style="width:30%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:30%;"/> ';
-													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.itemId
-															+ ','
-															+ i
-															+ ')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.itemId
-															+ ','
-															+ i
-															+ ')"><abbr title="Edit"><i class="fa fa-edit"></i></abbr></a>'
-
-													dataTable.row.add(
-															[ i + 1,
-																	v.itemName,
-																	v.uomName,
-																	v.enqQty,
-																	str ])
-															.draw();
-												});
-							});
-
-			document.getElementById("qty").value = "";
-			document.getElementById("item_remark").value = "";
-			document.getElementById("item_name").options.selectedIndex = "0";
-			document.getElementById("uomId").options.selectedIndex = "0";
-			$("#uomId").trigger("chosen:updated");
-			$("#item_name").trigger("chosen:updated");
-			document.getElementById("item_rate").value = "0";
-		}
-		function validate(s) {
-			var rgx = /^[0-9]*\.?[0-9]*$/;
-			return s.match(rgx);
-		}
-		function callAlert(msg) {
-			alert(msg);
-		}
-	</script> -->
-
-	<!-- <script type="text/javascript">
-		$(document).ready(function() {
-			var dataTable = $('#bootstrap-data-table').DataTable();
-				columnDefs : [ {
-					targets : [ 1,2],
-					className : "right"
-				}, ]
-			
-		});
-	</script> -->
 
 
-
-	<script type="text/javascript">
-	function placeTempTotal(chalanQty){
-		
-		//alert("hiii");
-		//alert(chalanQty);
-		
-		//document.getElementById("itemChalanTotal").value = chalanQty;
-		//document.getElementById("itemChalanTotal"+itemId).value="0";
-	}
-	</script>
 	<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(

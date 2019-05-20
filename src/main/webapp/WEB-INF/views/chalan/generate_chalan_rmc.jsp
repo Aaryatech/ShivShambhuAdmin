@@ -211,7 +211,7 @@ body {
 }
 </style>
 </head>
-<body onload="showOrderItemPopup(${rmcOrd.orderId})">
+<body onload="showOrderItemPopupNew()">
 
 
 	<!-- Left Panel -->
@@ -582,6 +582,10 @@ body {
 												<th style="text-align: center">Sr</th>
 												<th style="text-align: center">Item Name</th>
 												<th style="text-align: center">UOM</th>
+												<th style="text-align: center">PO Qty</th>
+												<th style="text-align: center">PO Rem Qty</th>
+												<th style="text-align: center">Order Qty</th>
+												<th style="text-align: center">Order Rem Qty</th>
 												<th style="text-align: center">Challan Qty</th>
 												<th style="text-align: center">Width</th>
 												<th style="text-align: center">Height</th>
@@ -1029,6 +1033,106 @@ function allowOnlyNumber1(evt)
 	</script>
 
 	<script type="text/javascript">
+	function showOrderItemPopupNew(){
+		var isValid=true;
+		var orderId=${rmcOrd.orderId};
+		var itemId=${rmcOrd.itemId};
+		if(orderId==-1){
+			isValid=false;
+		}
+		if(isValid==true){ 
+			 
+			 
+		  $.getJSON('${getOrderDetailForChalan}', {
+			  orderId : orderId,
+					ajax : 'true',
+
+				},
+
+				function(data) { 
+					// alert("detail  " +JSON.stringify(data));
+					
+					if(data[0].alertMsg==" ")
+					{
+					}
+				else
+					{
+				alert(data[0].alertMsg);
+					}
+				 
+					var len = data.length;
+					// alert("Len " +len);
+								var dataTable = $('#bootstrap-data-table')
+										.DataTable();
+								dataTable.clear().draw();
+								$
+										.each(
+												data,
+												function(i, v) {
+													
+													if(itemId==v.itemId)
+														{
+													
+													
+													//var checkB = '<input  type="checkbox" name="selChalanItem" id='+v.itemId+' class="check"  value='+v.itemId+'/>'
+		var width = '<input  type="text" value="0"  class="form-control"  id="width'+v.itemId+'" name="width'+v.itemId+'"   oninput="calcChalanTotal('+v.itemId+')"  onkeypress="return allowOnlyNumber(event);"/>'
+		var height = '<input  type="text" value="0"  class="form-control"  id="height'+v.itemId+'" name="height'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
+		var length = '<input  type="text" value="0"  class="form-control"  id="length'+v.itemId+'" name="length'+v.itemId+'" oninput="calcChalanTotal('+v.itemId+')" onkeypress="return allowOnlyNumber(event);"/>'
+		 var itemChalanTotal = '<input  type="text" value="0" readonly class="form-control"  id="itemChalanTotal'+v.itemId+'" name="itemChalanTotal'+v.itemId+'"/>'
+		 var chalanQty = '<input  type="text" value="0"   class="form-control"  id="chalanQty'+v.itemId+'" name="chalanQty'+v.itemId+'" oninput="chalanItemValidation(this.value,'+v.remOrdQty+','+v.itemId+')"  onkeypress="return allowOnlyNumber(event);"/>'
+			
+			
+		  
+			var index=i+1;
+			dataTable.row
+					.add(
+							[
+								index,v.itemName,v.uomName,v.poQty,v.poRemainingQty,v.orderQty,v.remOrdQty,chalanQty,width,height,length,itemChalanTotal]).node().id='tr'+v.itemId;
+			dataTable.draw(false);	
+			
+														}
+			});
+								
+								
+					 
+			} );
+		
+		}
+		getEnqNum();
+	}
+	</script>
+	<script type="text/javascript">
+		function chalanItemValidation(chalanQty,remOrdQty,itemId){
+		//alert("chalanQty Id" +remOrdQty  );
+		//alert("Item Id" +itemId + "poId" +poId+ "detail PO Id " +poDetailId + "rem Ord Qty  " +remOrdQty );
+	  
+			if(chalanQty<0){
+				 
+				document.getElementById("chalanQty"+itemId).value="0";
+				alert("Please Enter Correct Chalan Quantity");
+			}
+			
+			if(chalanQty>0){ 
+				if(remOrdQty<chalanQty){
+					document.getElementById("tr"+itemId).style.backgroundColor ="white";
+					document.getElementById("chalanQty"+itemId).value="0";
+					alert("Chalan Quantity can not be greater than  Remaining Order Quantity ");
+				
+				}else
+					{
+				document.getElementById("tr"+itemId).style.backgroundColor ="#66ff66";
+					}
+			}
+			if(chalanQty==0){
+				document.getElementById("tr"+itemId).style.backgroundColor ="white";
+				
+			}
+		}
+		</script>
+
+
+
+	<!-- 	<script type="text/javascript">
 	function showOrderItemPopup(orderId){
 		
 		var itemId=${rmcOrd.itemId};
@@ -1110,85 +1214,8 @@ function allowOnlyNumber1(evt)
 		getEnqNum();
 	}
 	</script>
-
-	<!-- <script type="text/javascript">
-	function showOrderItemPopup(orderId){
-		//alert(JSON.stringify(rmcOrd));
-	/* 	var itemId=${rmcOrd.itemId};
-		alert("itemName Id " +itemId);
-		 */
-		
-		var itemName=document.getElementById("itemName").value;
-		var uomName = document.getElementById("uomName").value;
-		var orderQty=${rmcOrd.orderQty};
-		var remOrdQty=${rmcOrd.remOrdQty};
-		
-		var itemId=${rmcOrd.itemId};
-		var poId=${rmcOrd.poId};
-		var poDetailId=${rmcOrd.poDetailId};
-		var orderDetId=${rmcOrd.orderDetId};
-		var uomId=${rmcOrd.uomId};
-		
-		
-		var chalanQty = '<input  type="text" value='+remOrdQty+'  class="form-control"  id="chalanQty'+itemId+'" name="chalanQty'+itemId+'" oninput="setChalanItem('+remOrdQty+','+itemId+','+poId+','+poDetailId+','+remOrdQty+','+orderDetId+','+orderId+','+0+','+uomId+',/'+itemName+'/)" onkeypress="return allowOnlyNumber(event);"/>'
-
-		
-		//alert("uomName"+uomName);
-		//alert("itemName"+itemName)
-		
-	/* var itemName=${rmcOrd.itemName};
-	
-	var uomName=${rmcOrd.itemCode};
-	
-	
-	alert("orderQty"+orderQty)
-	
-	alert("remOrdQty"+remOrdQty)
-
-	alert("chalanQty"+chalanQty); */
-	
-		 var isValid=true;
-		if(orderId==-1){
-			isValid=false;
-		}
-		if(isValid==true){
-		 var span = document.getElementById("close");
-			var modal = document.getElementById('myModal');
-
-			modal.style.display = "block";
-			span.onclick = function() {
-			    modal.style.display = "none"; 
-			}
-
-			// When the user clicks anywhere outside of the modal, close it
-			window.onclick = function(event) {
-			    if (event.target == modal) {
-			        modal.style.display = "none";
-			        
-			    }
-			}
-var no=1;
-			
-			var dataTable = $('#table_grid1')
-			.DataTable();
-	dataTable.clear().draw();
-	dataTable.row
-	.add(
-			[
-				no,itemName,uomName,orderQty,remOrdQty,chalanQty])
-	.draw(); 
-	
-		 }
-		itemName='/'+itemName+'/';
-		uomName='/'+uomName+'/';
-		setChalanItem(remOrdQty,itemId,poId,poDetailId,remOrdQty,orderDetId,orderId,0,uomId,itemName,uomName);
-		showChalnItems();
-		}
-	
-	
-	
-</script>
  -->
+
 
 
 	<script type="text/javascript">
@@ -1402,207 +1429,6 @@ var no=1;
 	</script>
 
 
-
-
-	<!-- <script type="text/javascript">
-		function addItem() {
-			//alert("in add Item ");
-			var itemId = document.getElementById("item_name").value;
-			var itemName = $("#item_name option:selected").html();
-			var uomId = document.getElementById("uomId").value;
-			var uomName = $("#uomId option:selected").html();
-			var qty = document.getElementById("qty").value;
-			var isEdit = document.getElementById("isEdit").value;
-			var itemRemark = document.getElementById("item_remark").value;
-			var itemUomId = document.getElementById("itemUomId").value;
-			var x = false;
-			var y = false;
-			x = isNaN(qty);
-
-			var plantId = document.getElementById("plant_id").value;
-			var valid = false;
-
-			if (plantId == null || plantId == "") {
-				valid = true;
-				var msg = "Please Select plant";
-				callAlert(msg);
-			}
-
-			else if (itemId == "" || itemId < 0) {
-				valid = true;
-				var msg = "Please Select Item Name";
-				callAlert(msg);
-			} else if ((x == true) || (qty == null) || (qty == "") || (qty < 0)) {
-				var msg = "Please Enter Valid Quantity";
-				valid = true;
-				callAlert(msg);
-			}
-
-			//alert("x=" +x + "y= " +y);
-			if (valid == false) {
-				alert("Inside add ajax");
-				$
-						.getJSON(
-								'${addEnqItem}',
-								{
-									isEdit : isEdit,
-									key : -1,
-									itemId : itemId,
-									itemName : itemName,
-									uomId : uomId,
-									uomName : uomName,
-									qty : qty,
-									itemRemark : itemRemark,
-									itemUomId : itemUomId,
-									ajax : 'true',
-
-								},
-
-								function(data) {
-									var dataTable = $('#bootstrap-data-table')
-											.DataTable();
-									dataTable.clear().draw();
-
-									$
-											.each(
-													data,
-													function(i, v) {
-														if (v.isDuplicate == 1) {
-															alert("Item Already Added in Enquiry");
-														}
-														//var str = '<input  type="button"  class="fa  fa-stack-exchange" onclick="callEdit('+v.itemId+','+i+')" style="width:100%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:100%;"/> ';
-
-														var str = '<a href="#" class="action_btn" onclick="callDelete('
-																+ v.itemId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-																+ v.itemId
-																+ ','
-																+ i
-																+ ')"><i class="fa fa-edit"></i></a>'
-
-														dataTable.row
-																.add(
-																		[
-																				i + 1,
-																				v.itemName,
-																				v.uomName,
-																				v.enqQty,
-																				str ])
-																.draw();
-													});
-									document.getElementById("qty").value = "";
-									document.getElementById("item_remark").value = "";
-									document.getElementById("item_name").options.selectedIndex = "0";
-									document.getElementById("uomId").options.selectedIndex = "0";
-									$("#uomId").trigger("chosen:updated");
-									$("#item_name").trigger("chosen:updated");
-									document.getElementById("isEdit").value = 0;
-									document.getElementById("itemUomId").value = "0";
-									document.getElementById("item_rate").value = "0"
-								});
-
-			}//end of if
-			else {
-
-			}
-		}
-
-		function callEdit(itemId, index) {
-			$
-					.getJSON(
-							'${getItemForEdit}',
-							{
-								itemId : itemId,
-								index : index,
-								ajax : 'true',
-
-							},
-							function(data) {
-
-								document.getElementById("uomId").value = data.uomId;
-								$("#uomId").trigger("chosen:updated");
-								document.getElementById("qty").value = data.enqQty;
-								document.getElementById("item_remark").value = data.itemEnqRemark;
-								document.getElementById("item_name").value = data.itemId;
-								$("#item_name").trigger("chosen:updated");
-								document.getElementById("isEdit").value = 1;
-								document.getElementById("itemUomId").value = data.itemUomId;
-								document.getElementById("item_rate").value = data.itemRate1;
-							});
-
-		}
-
-		function callDelete(itemId, index) {
-			document.getElementById("isEdit").value = 0;
-
-			$
-					.getJSON(
-							'${addEnqItem}',
-							{
-								isEdit : 0,
-								key : index,
-								ajax : 'true',
-
-							},
-
-							function(data) {
-								var dataTable = $('#bootstrap-data-table')
-										.DataTable();
-								dataTable.clear().draw();
-								$
-										.each(
-												data,
-												function(i, v) {
-													//	var str = '<input  type="button" value="callEdit" onclick="callEdit('+v.itemId+','+i+')" style="width:30%;"/>&nbsp<input  type="button" value="callDelete" onclick="callDelete('+v.itemId+','+i+')" style="width:30%;"/> ';
-													var str = '<a href="#" class="action_btn" onclick="callDelete('
-															+ v.itemId
-															+ ','
-															+ i
-															+ ')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
-															+ v.itemId
-															+ ','
-															+ i
-															+ ')"><abbr title="Edit"><i class="fa fa-edit"></i></abbr></a>'
-
-													dataTable.row.add(
-															[ i + 1,
-																	v.itemName,
-																	v.uomName,
-																	v.enqQty,
-																	str ])
-															.draw();
-												});
-							});
-
-			document.getElementById("qty").value = "";
-			document.getElementById("item_remark").value = "";
-			document.getElementById("item_name").options.selectedIndex = "0";
-			document.getElementById("uomId").options.selectedIndex = "0";
-			$("#uomId").trigger("chosen:updated");
-			$("#item_name").trigger("chosen:updated");
-			document.getElementById("item_rate").value = "0";
-		}
-		function validate(s) {
-			var rgx = /^[0-9]*\.?[0-9]*$/;
-			return s.match(rgx);
-		}
-		function callAlert(msg) {
-			alert(msg);
-		}
-	</script> -->
-
-	<!-- <script type="text/javascript">
-		$(document).ready(function() {
-			var dataTable = $('#bootstrap-data-table').DataTable();
-				columnDefs : [ {
-					targets : [ 1,2],
-					className : "right"
-				}, ]
-			
-		});
-	</script> -->
 	<script type="text/javascript">
 		$(function() {
 			$('#submitForm').submit(

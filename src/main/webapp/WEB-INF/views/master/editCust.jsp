@@ -279,6 +279,16 @@
 
 											</div>
 										</c:when>
+										<c:otherwise>
+											<div class="col-md-1">
+												Yes <input type="radio" checked name="cheque" id="cheque"
+													value="1">
+											</div>
+
+											<div class="col-md-1">
+												NO <input type="radio" name="cheque" id="cheque" value="0">
+											</div>
+										</c:otherwise>
 									</c:choose>
 
 								</div>
@@ -468,6 +478,16 @@
 
 											</div>
 										</c:when>
+										<c:otherwise>
+											<div class="col-md-1">
+												Yes <input type="radio" checked name="state" id="state"
+													value="1">
+											</div>
+
+											<div class="col-md-1">
+												NO <input type="radio" name="state" id="state" value="0">
+											</div>
+										</c:otherwise>
 									</c:choose>
 								</div>
 								<div class="form-group"></div>

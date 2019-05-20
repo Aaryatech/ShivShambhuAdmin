@@ -45,6 +45,7 @@ import com.ats.ssgs.model.chalan.ChalanDetail;
 import com.ats.ssgs.model.chalan.ChalanHeader;
 import com.ats.ssgs.model.chalan.GetChalanDetail;
 import com.ats.ssgs.model.chalan.GetChalanHeader;
+import com.ats.ssgs.model.chalan.GetChalanHeaderDetail;
 import com.ats.ssgs.model.chalan.TempChalanItem;
 import com.ats.ssgs.model.chalan.getChalanPDFData;
 import com.ats.ssgs.model.enq.EnqHeader;
@@ -378,7 +379,8 @@ public class ChalanController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
-			map.add("orderId", tempChItemList.get(0).getOrderId());
+			map.add("orderId", ordDetailList.get(0).getOrderId());
+
 			GetOrder getOrder = rest.postForObject(Constants.url + "getOrderHeaderById", map, GetOrder.class);
 
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
@@ -401,41 +403,43 @@ public class ChalanController {
 			String curDate = dateFormat.format(new Date());
 
 			List<ChalanDetail> chDetailList = new ArrayList<>();
-			for (int i = 0; i < tempChItemList.size(); i++) {
+			for (int i = 0; i < ordDetailList.size(); i++) {
 
-				float width = Float.parseFloat(request.getParameter("width" + tempChItemList.get(i).getItemId()));
-				float height = Float.parseFloat(request.getParameter("height" + tempChItemList.get(i).getItemId()));
-				float length = Float.parseFloat(request.getParameter("length" + tempChItemList.get(i).getItemId()));
+				float width = Float.parseFloat(request.getParameter("width" + ordDetailList.get(i).getItemId()));
+				float height = Float.parseFloat(request.getParameter("height" + ordDetailList.get(i).getItemId()));
+				float length = Float.parseFloat(request.getParameter("length" + ordDetailList.get(i).getItemId()));
 
 				float chalanQty = Float
-						.parseFloat(request.getParameter("chalanQty" + tempChItemList.get(i).getItemId()));
+						.parseFloat(request.getParameter("chalanQty" + ordDetailList.get(i).getItemId()));
 
 				System.out.println("Qty is::" + chalanQty);
 				float total = Float
-						.parseFloat(request.getParameter("itemChalanTotal" + tempChItemList.get(i).getItemId()));
+						.parseFloat(request.getParameter("itemChalanTotal" + ordDetailList.get(i).getItemId()));
 				System.out.println("total is::" + total);
-				ChalanDetail chDetail = new ChalanDetail();
+				if (chalanQty > 0) {
+					ChalanDetail chDetail = new ChalanDetail();
 
-				chDetail.setDelStatus(1);
-				chDetail.setExDate1(curDate);
-				chDetail.setExFloat1(0);
-				chDetail.setExVar1(rstNo);
-				chDetail.setExVar2("NA");
-				chDetail.setItemHeightPlant(height);
-				chDetail.setItemHeightSite(0);
-				chDetail.setItemId(tempChItemList.get(i).getItemId());
-				chDetail.setItemLengthPlant(length);
-				chDetail.setItemLengthSite(0);
-				chDetail.setItemQty(chalanQty);
-				chDetail.setItemTotalSite(0);
-				chDetail.setItemUom(tempChItemList.get(i).getUomId());
-				chDetail.setItemWidthPlant(width);
-				chDetail.setItemWidthSite(0);
-				chDetail.setStatus(0);
-				chDetail.setItemTotalPlant(total);
+					chDetail.setDelStatus(1);
+					chDetail.setExDate1(curDate);
+					chDetail.setExFloat1(0);
+					chDetail.setExVar1(rstNo);
+					chDetail.setExVar2("NA");
+					chDetail.setItemHeightPlant(height);
+					chDetail.setItemHeightSite(0);
+					chDetail.setItemId(ordDetailList.get(i).getItemId());
+					chDetail.setItemLengthPlant(length);
+					chDetail.setItemLengthSite(0);
+					chDetail.setItemQty(chalanQty);
+					chDetail.setItemTotalSite(0);
+					chDetail.setItemUom(ordDetailList.get(i).getUomId());
+					chDetail.setItemWidthPlant(width);
+					chDetail.setItemWidthSite(0);
+					chDetail.setStatus(0);
+					chDetail.setItemTotalPlant(total);
 
-				chDetail.setOrderDetailId(tempChItemList.get(i).getOrderDetId());
-				chDetailList.add(chDetail);
+					chDetail.setOrderDetailId(ordDetailList.get(i).getOrderDetId());
+					chDetailList.add(chDetail);
+				}
 
 			}
 
@@ -453,7 +457,32 @@ public class ChalanController {
 			HttpSession session = request.getSession();
 			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
 
-			chHeader.setChalanNo(chalanNo);
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("plantId", plantId);
+
+			Plant pData = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+
+			String var = null;
+			String count = pData.getExVar1();
+
+			String formattedChalanNo = String.format("%04d", count);
+			if (String.valueOf(count).length() == 1) {
+				var = "000".concat(String.valueOf(count));
+
+			} else if (String.valueOf(count).length() == 2) {
+				var = "00".concat(String.valueOf(count));
+
+			} else if (String.valueOf(count).length() == 3) {
+				var = "0".concat(String.valueOf(count));
+
+			} else {
+				var = count;
+			}
+
+			String ChalanNO = "CH" + "-" + pData.getPlantFax1() + "-" + formattedChalanNo;
+
+			chHeader.setChalanNo(ChalanNO);
 
 			chHeader.setChalanDate(DateConvertor.convertToYMD(chalanDate));
 			chHeader.setChalanDetailList(chDetailList);
@@ -505,8 +534,8 @@ public class ChalanController {
 				map = new LinkedMultiValueMap<String, Object>();
 				map.add("plantId", plantId);
 
-				Plant pData = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
-				int a = Integer.parseInt(pData.getExVar1()) + 1;
+				Plant plantData = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+				int a = Integer.parseInt(plantData.getExVar1()) + 1;
 				String c = String.valueOf(a);
 
 				map = new LinkedMultiValueMap<String, Object>();
@@ -629,6 +658,8 @@ public class ChalanController {
 	// getChalanListByPlant
 	List<GetChalanHeader> chalanHeadList = new ArrayList<>();
 
+	List<GetChalanHeaderDetail> chHeaderDList = new ArrayList<>();
+
 	@RequestMapping(value = "/getChalanListByPlant", method = RequestMethod.GET)
 	public @ResponseBody List<GetChalanHeader> getChalanListByPlant(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -668,6 +699,20 @@ public class ChalanController {
 		System.err.println("Ajax chalanHeadList /getChalanListByPlant " + chalanHeadList.toString());
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
+		System.out.println("1.....");
+
+		map = new LinkedMultiValueMap<String, Object>();
+
+		map.add("plantId", plantId);
+		map.add("custId", custId);
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		GetChalanHeaderDetail[] chList = rest.postForObject(Constants.url + "getChalanByPlantAndCust", map,
+				GetChalanHeaderDetail[].class);
+
+		chHeaderDList = new ArrayList<GetChalanHeaderDetail>(Arrays.asList(chList));
+		System.out.println("chHeaderDListchHeaderDListchHeaderDListchHeaderDList" + chHeaderDList.toString());
+
 		ExportToExcel expoExcel = new ExportToExcel();
 		List<String> rowData = new ArrayList<String>();
 
@@ -679,28 +724,31 @@ public class ChalanController {
 		rowData.add("Vehicle No");
 		rowData.add("Driver Name");
 		rowData.add("Status");
+		rowData.add("Item Name");
+		rowData.add("Item Qty");
+		rowData.add("Item Rate");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 		int cnt = 1;
-		for (int i = 0; i < chalanHeadList.size(); i++) {
+		for (int i = 0; i < chHeaderDList.size(); i++) {
 
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 			cnt = cnt + i;
 			rowData.add("" + (i + 1));
 
-			rowData.add("" + chalanHeadList.get(i).getChalanNo());
+			rowData.add("" + chHeaderDList.get(i).getChalanNo());
 
-			rowData.add("" + chalanHeadList.get(i).getChalanDate());
+			rowData.add("" + chHeaderDList.get(i).getChalanDate());
 
-			rowData.add("" + chalanHeadList.get(i).getCustName());
-			rowData.add("" + chalanHeadList.get(i).getProjName());
-			rowData.add("" + chalanHeadList.get(i).getVehNo());
-			rowData.add("" + chalanHeadList.get(i).getDriverName());
+			rowData.add("" + chHeaderDList.get(i).getCustName());
+			rowData.add("" + chHeaderDList.get(i).getProjName());
+			rowData.add("" + chHeaderDList.get(i).getVehNo());
+			rowData.add("" + chHeaderDList.get(i).getDriverName());
 
 			String status1 = null;
-			float stat = chalanHeadList.get(i).getExFloat1();
+			float stat = chHeaderDList.get(i).getExFloat1();
 			if (stat == 0) {
 				status1 = "Pending";
 			} else if (stat == 1) {
@@ -711,6 +759,9 @@ public class ChalanController {
 			}
 
 			rowData.add("" + status1);
+			rowData.add("" + chHeaderDList.get(i).getItemName());
+			rowData.add("" + chHeaderDList.get(i).getItemQty());
+			rowData.add("" + chHeaderDList.get(i).getItemRate1());
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
@@ -1582,47 +1633,66 @@ public class ChalanController {
 		System.out.println("open chalan " + chalanHeadList.toString());
 		System.err.println("Ajax chalanHeadList /getChalanListByPlant " + chalanHeadList.toString());
 
-		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+		map = new LinkedMultiValueMap<String, Object>();
 
+		map.add("plantId", plantId);
+
+		GetChalanHeaderDetail[] chList = rest.postForObject(Constants.url + "getCancleChalanByPlantAndCust", map,
+				GetChalanHeaderDetail[].class);
+
+		chHeaderDList = new ArrayList<GetChalanHeaderDetail>(Arrays.asList(chList));
+		System.out.println("chHeaderDListchHeaderDListchHeaderDListchHeaderDList" + chHeaderDList.toString());
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 		ExportToExcel expoExcel = new ExportToExcel();
 		List<String> rowData = new ArrayList<String>();
 
 		rowData.add("Sr. No");
 		rowData.add("Chalan No");
 		rowData.add("Chalan Date");
-
 		rowData.add("Customer Name");
 		rowData.add("Project Name");
 		rowData.add("Vehicle No");
 		rowData.add("Driver Name");
+		rowData.add("Status");
+		rowData.add("Item Name");
+		rowData.add("Item Qty");
+		rowData.add("Item Rate");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 		int cnt = 1;
-		for (int i = 0; i < chalanHeadList.size(); i++) {
+		for (int i = 0; i < chHeaderDList.size(); i++) {
 
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 			cnt = cnt + i;
 			rowData.add("" + (i + 1));
 
-			rowData.add("" + chalanHeadList.get(i).getChalanNo());
+			rowData.add("" + chHeaderDList.get(i).getChalanNo());
 
-			rowData.add("" + chalanHeadList.get(i).getChalanDate());
-			rowData.add("" + chalanHeadList.get(i).getCustName());
-			rowData.add("" + chalanHeadList.get(i).getProjName());
-			rowData.add("" + chalanHeadList.get(i).getVehNo());
-			rowData.add("" + chalanHeadList.get(i).getDriverName());
+			rowData.add("" + chHeaderDList.get(i).getChalanDate());
 
-			/*
-			 * String status1 = null; int stat = getOrdList.get(i).getStatus(); if (stat ==
-			 * 0) { status1 = "Pending"; } else if (stat == 1) { status1 =
-			 * "Partial Completed"; } else {
-			 * 
-			 * status1 = "Completed"; }
-			 * 
-			 * rowData.add("" + status1);
-			 */
+			rowData.add("" + chHeaderDList.get(i).getCustName());
+			rowData.add("" + chHeaderDList.get(i).getProjName());
+			rowData.add("" + chHeaderDList.get(i).getVehNo());
+			rowData.add("" + chHeaderDList.get(i).getDriverName());
+
+			String status1 = null;
+			float stat = chHeaderDList.get(i).getExFloat1();
+			if (stat == 0) {
+				status1 = "Pending";
+			} else if (stat == 1) {
+				status1 = "Closed";
+			} else {
+
+				status1 = "Bill Generated";
+			}
+
+			rowData.add("" + status1);
+			rowData.add("" + chHeaderDList.get(i).getItemName());
+			rowData.add("" + chHeaderDList.get(i).getItemQty());
+			rowData.add("" + chHeaderDList.get(i).getItemRate1());
+
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
@@ -1630,7 +1700,7 @@ public class ChalanController {
 
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
-		session.setAttribute("excelName", "Open Chalan List");
+		session.setAttribute("excelName", "Chalan List");
 
 		return chalanHeadList;
 	}
@@ -2000,6 +2070,471 @@ public class ChalanController {
 		}
 
 		return model;
+	}
+
+	List<GetOrder> getOrdList = new ArrayList<>();
+
+	// *********************Pending Order*******************************
+
+	@RequestMapping(value = "/showPendingOrderList", method = RequestMethod.GET)
+	public ModelAndView showPendingOrderList(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("order/pendingOrder");
+
+			model.addObject("title", "Pending Challan List");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			getChalanPDFData gc = new getChalanPDFData();
+
+			int mchalanId = gc.getcId();
+			int mPlantId = gc.getpId();
+
+			model.addObject("mPlantId", mPlantId);
+			model.addObject("mchalanId", mchalanId);
+
+			// System.err.println("chalan id in order " + mchalanId + "plantId " +
+			// mPlantId);*/
+			model.addObject("plantList", plantList);
+
+			gc.setcId(0);
+			gc.setpId(0);
+
+			String fromDate = null, toDate = null;
+
+			if (request.getParameter("fromDate") == null || request.getParameter("fromDate") == "") {
+
+				System.err.println("onload call  ");
+
+				Calendar date = Calendar.getInstance();
+				date.set(Calendar.DAY_OF_MONTH, 1);
+
+				Date firstDate = date.getTime();
+
+				DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+				fromDate = dateFormat.format(firstDate);
+
+				toDate = dateFormat.format(new Date());
+				System.err.println("cu Date  " + fromDate + "todays date   " + toDate);
+
+			} else {
+
+				System.err.println("After page load call");
+				fromDate = request.getParameter("fromDate");
+				toDate = request.getParameter("toDate");
+
+			}
+
+			// getOrderListBetDate
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+
+	@RequestMapping(value = "/getOrderPendingListBetDate", method = RequestMethod.GET)
+	public @ResponseBody List<GetOrder> getOrderPendingListBetDate(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		System.err.println(" in getTempOrderHeader");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+		int custId = Integer.parseInt(request.getParameter("custId"));
+
+		String fromDate = request.getParameter("fromDate");
+		String toDate = request.getParameter("toDate");
+
+		map.add("plantId", plantId);
+		map.add("custId", custId);
+		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		// map.add("status", 0);
+
+		GetOrder[] ordHeadArray = rest.postForObject(Constants.url + "getPendingOrderListBetDate", map,
+				GetOrder[].class);
+		getOrdList = new ArrayList<GetOrder>(Arrays.asList(ordHeadArray));
+
+		System.out.println("order list is" + getOrdList.toString());
+
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+
+		rowData.add("Sr. No");
+		rowData.add("Order No");
+		rowData.add("Order Date");
+		rowData.add("Delivery Date");
+
+		rowData.add("Customer Name");
+		rowData.add("Mobile No");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		int cnt = 1;
+		for (int i = 0; i < getOrdList.size(); i++) {
+
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			cnt = cnt + i;
+			rowData.add("" + (i + 1));
+
+			rowData.add("" + getOrdList.get(i).getOrderNo());
+
+			rowData.add("" + getOrdList.get(i).getOrderDate());
+			// rowData.add("" + getOrdList.get(i).getCustName());
+			rowData.add("" + getOrdList.get(i).getDeliveryDate());
+
+			rowData.add("" + getOrdList.get(i).getCustName());
+			rowData.add("" + getOrdList.get(i).getCustMobNo());
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "Pending Chalan List");
+
+		return getOrdList;
+	}
+
+	@RequestMapping(value = "/showPendingOrderListPdf/{fromDate}/{toDate}/{custId}/{plantId}", method = RequestMethod.GET)
+	public void showOrderDateWisePdf(@PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate,
+			@PathVariable("custId") int custId, @PathVariable("plantId") int plantId, HttpServletRequest request,
+			HttpServletResponse response) throws FileNotFoundException {
+		BufferedOutputStream outStream = null;
+		System.out.println("Inside Pdf showDatewisePdf");
+		Document document = new Document(PageSize.A4);
+		System.out.println("custId " + custId);
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+
+		System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		String FILE_PATH = Constants.REPORT_SAVE;
+		File file = new File(FILE_PATH);
+
+		PdfWriter writer = null;
+
+		FileOutputStream out = new FileOutputStream(FILE_PATH);
+		try {
+			writer = PdfWriter.getInstance(document, out);
+		} catch (DocumentException e) {
+
+			e.printStackTrace();
+		}
+
+		PdfPTable table = new PdfPTable(6);
+		try {
+			System.out.println("Inside PDF Table try");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			headFont1.setColor(BaseColor.WHITE);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+
+			PdfPCell hcell = new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			hcell.setPadding(3);
+			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Order No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Order date ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Delivery date ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Customer Name ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Mobile No ", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			int index = 0;
+			for (GetOrder work : getOrdList) {
+				index++;
+				PdfPCell cell;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPadding(3);
+				cell.setPaddingRight(2);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getOrderNo(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getOrderDate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getDeliveryDate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getCustName(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getCustMobNo(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				// tot=tot+work.getTotal();
+				// System.out.println("total is"+tot);
+
+			}
+			document.open();
+			Paragraph name = new Paragraph("Shiv Shambhu(Datewise Pending Chalan List)\n", f);
+			name.setAlignment(Element.ALIGN_CENTER);
+			document.add(name);
+			document.add(new Paragraph(" "));
+
+			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new Date());
+
+			String plantname = null;
+			String custName = null;
+
+			if (plantId == 0) {
+				plantname = "All";
+
+			} else {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("plantId", plantId);
+
+				Plant getPlant = rest.postForObject(Constants.url + "getPlantByPlantId", map, Plant.class);
+				plantname = getPlant.getPlantName();
+				System.out.println("plantname" + plantname);
+
+			}
+			if (custId == 0) {
+				custName = "All";
+
+			} else {
+
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				System.out.println();
+
+				map.add("custId", custId);
+
+				GetCust getcus1 = rest.postForObject(Constants.url + "getCustomerByCustId", map, GetCust.class);
+				custName = getcus1.getCustName();
+				System.out.println("custName" + custName);
+
+			}
+			Paragraph p2 = new Paragraph(
+					"FromDate:" + fromDate + " ToDate:" + toDate + "  Plant:" + plantname + "  Customer:" + custName,
+					headFont);
+			p2.setAlignment(Element.ALIGN_CENTER);
+			document.add(p2);
+			document.add(new Paragraph("\n"));
+
+			document.add(table);
+
+			/*
+			 * Paragraph p1 = new Paragraph("Total:"+tot, headFont);
+			 * p1.setAlignment(Element.ALIGN_CENTER); document.add(p1); document.add(new
+			 * Paragraph("\n"));
+			 */
+
+			int totalPages = writer.getPageNumber();
+
+			System.out.println("Page no " + totalPages);
+
+			document.close();
+
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+				try {
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
+					e.printStackTrace();
+				}
+			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error: " + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+
+	}
+
+	@RequestMapping(value = "/showGenerateChalanForPendingOrder", method = RequestMethod.POST)
+	public ModelAndView showGenerateChalan1(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+			Calendar cal = Calendar.getInstance();
+
+			model = new ModelAndView("chalan/generateChalan1");
+
+			model.addObject("title", "Add Chalan");
+
+			SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+
+			String curTime = sdf.format(cal.getTime());
+
+			model.addObject("curTime", curTime);
+
+			int id = Integer.parseInt(request.getParameter("orderId"));
+			int key = Integer.parseInt(request.getParameter("key"));
+
+			System.out.println("key are" + id + key);
+
+			String curDate = dateFormat.format(new Date());
+
+			model.addObject("curDate", curDate);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("docCode", 5);
+			com.ats.ssgs.model.master.Document doc = rest.postForObject(Constants.url + "getDocument", map,
+					com.ats.ssgs.model.master.Document.class);
+			model.addObject("doc", doc);
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
+
+			map1.add("vehicleType", 2);
+
+			Vehicle[] vehArray = rest.postForObject(Constants.url + "getVehListByVehicleType", map1, Vehicle[].class);
+			vehicleList = new ArrayList<Vehicle>(Arrays.asList(vehArray));
+
+			model.addObject("vehicleList", vehicleList);
+
+			User[] usrArray = rest.getForObject(Constants.url + "getDriverList", User[].class);
+			usrList = new ArrayList<User>(Arrays.asList(usrArray));
+
+			model.addObject("usrList", usrList);
+
+			model.addObject("title", "Add Challan");
+
+			map.add("docCode", 3);
+			System.out.println("before");
+
+			com.ats.ssgs.model.master.Document doc1 = rest.postForObject(Constants.url + "getDocument", map,
+					com.ats.ssgs.model.master.Document.class);
+
+			model.addObject("doc", doc1);
+			System.out.println("after");
+			System.out.println("open chalan data :" + getOrdList.get(key).toString());
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("orderHeaderId", getOrdList.get(key).getOrderId());
+			GetOrderDetail[] ordDetailArray = rest.postForObject(Constants.url + "getOrderDetailList", map,
+					GetOrderDetail[].class);
+
+			ordDetailList = new ArrayList<GetOrderDetail>(Arrays.asList(ordDetailArray));
+
+			model.addObject("custName", getOrdList.get(key).getCustName());
+			model.addObject("plantName", getOrdList.get(key).getPlantName());
+			model.addObject("projName", getOrdList.get(key).getProjName());
+			model.addObject("orderNo", getOrdList.get(key).getOrderNo());
+			model.addObject("custId", getOrdList.get(key).getCustId());
+			model.addObject("plantId", getOrdList.get(key).getPlantId());
+			model.addObject("projId", getOrdList.get(key).getProjId());
+			model.addObject("orderId", getOrdList.get(key).getOrderId());
+
+			model.addObject("ordDetailList", ordDetailList);
+
+			model.addObject("curDate", curDate);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showAddOrder at OrderController " + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
 	}
 
 }
