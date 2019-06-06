@@ -702,8 +702,17 @@ body {
 														value="${item.itemRate1}" name="itemRate${item.itemId}"
 														class="form-control"></td>
 
-													<td class="col-md-1" style="text-align: left"><c:out
-															value="${item.royaltyRate}" /></td>
+
+
+													<td class="col-md-1" style="text-align: center"><input
+														type="text" min="0"
+														onkeypress="return allowOnlyNumber(event);"
+														onchange="itemCalc(${item.itemId},${item.freightRate},${item.itemRate1},${item.royaltyRate},${item.totalTaxPer})"
+														id="royalty_rate${item.itemId}"
+														value="${item.royaltyRate}"
+														name="royalty_rate${item.itemId}" class="form-control"></td>
+
+
 
 													<td class="col-md-1" style="text-align: left"><c:out
 															value="${item.totalTaxPer}%" /></td>
@@ -1275,8 +1284,10 @@ body {
 	//var tollCost =document.getElementById("toll_cost"+itemId).value;
 	var transCost =document.getElementById("trans_cost"+itemId).value;
 	var otherCost= document.getElementById("other_cost"+itemId).value;
+	
+	var royaltyRate= document.getElementById("royalty_rate"+itemId).value;
 	//transCost=parseFloat(transCost)+parseFloat(tollCost);
-	//alert("Trans Cost " +transCost);
+	//alert("royaltyRate Cost " +royaltyRate);
 	var valid=true;
 	 if(otherCost<0){
 		 valid=false;
@@ -1291,6 +1302,11 @@ body {
 	 valid=false;
 	 alert("Please enter valid transport cost");
 		}
+	 
+	 else if(royaltyRate<0){
+		 valid=false;
+		 alert("Please enter valid Royalty Rate");
+			}
 	 
 	var otherCostAfterTax= document.getElementById("oth_cost_aft_tax"+itemId).value;
 	 if(otherCostAfterTax==null || otherCostAfterTax=="" || otherCostAfterTax<0){
@@ -1307,7 +1323,7 @@ body {
 	 
 	 if(valid==true){
 
-	 var taxableAmt=parseFloat(itemRate)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royRate);
+	 var taxableAmt=parseFloat(itemRate)+parseFloat(transCost)+parseFloat(otherCost)+parseFloat(royaltyRate);
 		//alert("is valid =true1");
 
 	 taxableAmt=taxableAmt.toFixed(2);

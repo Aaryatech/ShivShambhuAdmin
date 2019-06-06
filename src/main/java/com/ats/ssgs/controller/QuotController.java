@@ -1227,6 +1227,9 @@ public class QuotController {
 						float otherCostAfterTax = Float
 								.parseFloat(request.getParameter("oth_cost_aft_tax" + quotDetList.get(i).getItemId()));
 
+						float royaltyRateDetail = Float
+								.parseFloat(request.getParameter("royalty_rate" + quotDetList.get(i).getItemId()));
+
 						QuotDetail detail;
 
 						detail = quotDetList.get(i);
@@ -1269,8 +1272,9 @@ public class QuotController {
 						detail.setTransCost(transCost);
 						detail.setOtherCostBeforeTax(0);
 						detail.setOtherCostAfterTax(otherCostAfterTax);
-
-						detail.setRoyaltyRate(enqItemList.get(j).getRoyaltyRate());
+//royaltyRateDetail
+						// detail.setRoyaltyRate(enqItemList.get(j).getRoyaltyRate());
+						detail.setRoyaltyRate(royaltyRateDetail);
 						detail.setNoOfKm(noOfKm);
 
 						if (taxValue > 0) {

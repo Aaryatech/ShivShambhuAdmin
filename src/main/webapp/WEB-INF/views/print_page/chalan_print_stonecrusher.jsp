@@ -42,10 +42,9 @@
 			</td>
 		</tr>
 	</table>
-	<hr style="margin-left: 10px;"></hr>
 
-	<!-- <p style="text-align: center; font-size: 14px;font-weight: bold;"><u>Chalan</u></p>
- -->
+
+
 	<center>
 		<b>Delivery Challan (for sale) </b>
 	</center>
@@ -54,28 +53,24 @@
 		style="margin-left: 10px; text-align: left; padding: 3px; font-size: 13px;">
 		<b>Challan No : </b>${ch_no1}
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Date
 			: </b> ${printData.chalanItemList[0].chalanDate}
+
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<b>RST No : </b>${printData.chalanItemList[0].exVar1}
+
+
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<b>RST No : </b>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Royalty
+			No. : </b>
 	</div>
 	<div style="margin-left: 10px; padding: 3px; font-size: 13px;">
 		<b>Customer Name : </b>
 		<c:out value="${printData.chalanItemList[0].custName}"></c:out>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Royalty
-			No. : </b>${printData.chalanItemList[0].exVar1}
+
+
 	</div>
 	<div
 		style="margin-left: 10px; text-align: left; padding: 3px; font-size: 13px;">
@@ -98,23 +93,23 @@
 		style="border-top: 1px solid #313131; border-right: 1px solid #313131; margin-left: 10px;">
 		<tr>
 			<td rowspan="2" width="2%"
-				style="border-bottom: 1px solid #313131; border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 12px;">Sr.
+				style="border-bottom: 1px solid #313131; border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px; color: #000; font-size: 12px;">Sr.
 				No.</td>
 			<td align="left" width="25%" rowspan="2"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Item
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">Item
 				Name</td>
 			<td align="left" width="5%" rowspan="2"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">UOM
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">UOM
 			</td>
 			<td align="left" width="5%" rowspan="2"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Order
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">Order
 				Quantity</td>
 
 			<td align="left" width="5%" rowspan="2"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">
 				Chalan Quantity</td>
 			<td align="left" width="3%" rowspan="2"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Cumulative
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">Cumulative
 				Chalan Quantity</td>
 
 			<td align="center" width="16%" colspan="4"
@@ -233,12 +228,12 @@
 		style="border-top: 1px solid #313131; border-right: 1px solid #313131; margin-left: 10px;">
 		<tr>
 			<td align="left" width="35%" rowspan="1"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 13px; text-align: left">
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px; color: #000; font-size: 13px; text-align: left">
 				<b>M/S.${printData.comp.compName}</b> <br /> <br /> <br /> <b>Authorized
 					Signature</b>
 			</td>
 			<td align="left" width="35%" rowspan="2"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 12px; text-align: left">
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px; color: #000; font-size: 12px; text-align: left">
 				<p style="font-size: 12px; text-align: left">I/we Certify that
 					to the best of my/our knowledge the particulars are true and
 					correct and complete</p> <br />
@@ -256,41 +251,11 @@
 
 	</table>
 	<br></br>
-	<br></br>
-	<%-- 	<div
-		style="color: black; font-size: 20px; text-align: center; margin: 0px; font-weight: bold;">M/S.${printData.comp.compName}</div>
 
-	<table style="margin-left: 10px;" width="100%">
-		<tr>
-			<td align="left"><img
-				src="/ssgs/resources/images/shambhu_logo.PNG"
-				style="height: 45px; width: 45px;" alt="User Avatar" /></td>
-			<td colspan="1" rowspan="1" width="90%"
-				style="border-bottom: 1px solid #313131; border-top: 1px solid #313131 padding:10px; color: #FFF; font-size: 15px;">
-				<p
-					style="color: black; font-size: 20px; text-align: center; margin: 0px; font-weight: bold;">M/S.${printData.comp.compName}</p>
-				<p
-					style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-					<b>Office Address:</b>${printData.comp.compOfficeAdd}<br></br>
-					Mobile No. ${printData.comp.contactNo1}
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Email:${printData.comp.email1}
-				</p>
-
-				<p
-					style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-					<b>Plant Address:</b>${printData.chalanItemList[0].plantAddress1}
-					Mobile No. ${printData.chalanItemList[0].plantContactNo1}<br></br>
-
-				</p>
-
-			</td>
-		</tr>
-	</table>
-	<hr style="margin-left: 10px;"></hr>
- --%>
 	<!-- <p style="text-align: center; font-size: 14px;font-weight: bold;"><u>Chalan</u></p>
  -->
-	<%-- 	<center>
+	<hr style="margin-left: 5px;"></hr>
+	<center>
 		<b>Delivery Challan (for sale) </b>
 	</center>
 
@@ -298,28 +263,20 @@
 		style="margin-left: 10px; text-align: left; padding: 3px; font-size: 13px;">
 		<b>Challan No : </b>${ch_no1}
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Date
 			: </b> ${printData.chalanItemList[0].chalanDate}
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 		<b>RST No : </b>${printData.chalanItemList[0].exVar1}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<b>Royalty No. : </b>
 	</div>
 	<div style="margin-left: 10px; padding: 3px; font-size: 13px;">
 		<b>Customer Name : </b>
 		<c:out value="${printData.chalanItemList[0].custName}"></c:out>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Royalty
-			No. : </b>
 	</div>
 	<div
 		style="margin-left: 10px; text-align: left; padding: 3px; font-size: 13px;">
@@ -342,23 +299,23 @@
 		style="border-top: 1px solid #313131; border-right: 1px solid #313131; margin-left: 10px;">
 		<tr>
 			<td rowspan="2" width="2%"
-				style="border-bottom: 1px solid #313131; border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 12px;">Sr.
+				style="border-bottom: 1px solid #313131; border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px; color: #000; font-size: 12px;">Sr.
 				No.</td>
 			<td align="left" width="25%" rowspan="2"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Item
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">Item
 				Name</td>
 			<td align="left" width="5%" rowspan="2"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">UOM
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">UOM
 			</td>
 			<td align="left" width="5%" rowspan="2"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Order
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">Order
 				Quantity</td>
 
 			<td align="left" width="5%" rowspan="2"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">
 				Chalan Quantity</td>
 			<td align="left" width="3%" rowspan="2"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 15px; color: #000; font-size: 12px; text-align: left">Cumulative
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">Cumulative
 				Chalan Quantity</td>
 
 			<td align="center" width="16%" colspan="4"
@@ -472,32 +429,183 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp; <b></b>${printData.chalanItemList[0].sitePersonName}</div>
 
+	<hr style="margin-left: 5px;"></hr>
+
+	<center>
+		<b>Delivery Challan (for sale) </b>
+	</center>
+
+	<div
+		style="margin-left: 10px; text-align: left; padding: 3px; font-size: 13px;">
+		<b>Challan No : </b>${ch_no1}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Date
+			: </b> ${printData.chalanItemList[0].chalanDate}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+		<b>RST No : </b>${printData.chalanItemList[0].exVar1}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<b>Royalty No. : </b>
+	</div>
+	<div style="margin-left: 10px; padding: 3px; font-size: 13px;">
+		<b>Customer Name : </b>
+		<c:out value="${printData.chalanItemList[0].custName}"></c:out>
+
+	</div>
+	<div
+		style="margin-left: 10px; text-align: left; padding: 3px; font-size: 13px;">
+		<b>Project Name : </b> ${printData.chalanItemList[0].projName}
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+	</div>
+
+	<div
+		style="margin-left: 10px; text-align: left; padding: 3px; font-size: 13px;">
+		<b>Delivery Address : </b>${printData.chalanItemList[0].devAddress}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+	</div>
+
+
 	<table width="100%" border="0" cellpadding="0" cellspacing="0"
 		style="border-top: 1px solid #313131; border-right: 1px solid #313131; margin-left: 10px;">
 		<tr>
-			<td align="left" width="35%" rowspan="1"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 13px; text-align: left">
-				<b>M/S.${printData.comp.compName}</b> <br /> <br /> <br /> <b>Authorized
-					Signature</b>
+			<td rowspan="2" width="2%"
+				style="border-bottom: 1px solid #313131; border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px; color: #000; font-size: 12px;">Sr.
+				No.</td>
+			<td align="left" width="25%" rowspan="2"
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">Item
+				Name</td>
+			<td align="left" width="5%" rowspan="2"
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">UOM
 			</td>
-			<td align="left" width="35%" rowspan="2"
-				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 12px; text-align: left">
-				<p style="font-size: 12px; text-align: left">I/we Certify that
-					to the best of my/our knowledge the particulars are true and
-					correct and complete</p> <br />
+			<td align="left" width="5%" rowspan="2"
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">Order
+				Quantity</td>
 
+			<td align="left" width="5%" rowspan="2"
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">
+				Chalan Quantity</td>
+			<td align="left" width="3%" rowspan="2"
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: left">Cumulative
+				Chalan Quantity</td>
 
-				<center>
-					<p style="font-size: 12px; text-alignn: left">
-						Authorize Signature & Name with Seal of Receiver <br />
-						<center>(of/on behalf of Customer)</center>
-					</p>
-				</center>
-
-			</td>
+			<td align="center" width="16%" colspan="4"
+				style="border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px; text-align: center;">Site</td>
 		</tr>
 
-	</table> --%>
+		<tr>
+			<td align="center" width="4%"
+				style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">Length
+			</td>
+			<td align="center" width="4%"
+				style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">Width</td>
+			<td align="center" width="4%"
+				style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">Height
+			</td>
+			<td align="center" width="4%"
+				style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;">Thickness</td>
+
+		</tr>
+
+
+
+		<c:forEach items="${printData.chalanItemList}" var="quot"
+			varStatus="count3">
+
+			<tr>
+				<td
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${count3.index+1}</td>
+				<td
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.shortName}</td>
+				<td
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.uom}</td>
+				<td
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.totalQuan}</td>
+				<td
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemQty}</td>
+
+				<c:forEach items="${rstList}" var="temp" varStatus="count3">
+					<c:if test="${quot.itemId==temp.itemId}">
+						<td
+							style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${temp.result}</td>
+					</c:if>
+				</c:forEach>
+
+
+
+
+				<c:if test="${quot.itemTotalSite>0}">
+					<td align="right" width="2%"
+						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemLengthSite}</td>
+					<td width="2%" align="right"
+						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemWidthSite}</td>
+					<td align="right" width="2%"
+						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemHeightSite}</td>
+					<td width="2%" align="right"
+						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 10px;">${quot.itemTotalSite}</td>
+				</c:if>
+
+				<c:if test="${quot.itemTotalSite==0}">
+					<td align="right" width="2%"
+						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; color: white; font-size: 10px;">-</td>
+					<td width="2%" align="right"
+						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; color: white; font-size: 10px;">-</td>
+					<td align="right" width="2%"
+						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; color: white; font-size: 10px;">-</td>
+					<td width="2%" align="right"
+						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; color: white; font-size: 10px;">-</td>
+				</c:if>
+			</tr>
+
+		</c:forEach>
+
+
+	</table>
+
+
+
+
+	<div style="margin-left: 10px; padding: 3px; font-size: 13px;"
+		align="left">
+		<b>Vehicle No : </b>
+		${printData.chalanItemList[0].vehNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<b>Out Time : </b>${printData.chalanItemList[0].vehTimeOut}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>In
+			Time : </b>${temp}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+		<b>Out Km : </b>
+		${printData.chalanItemList[0].outKm}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>In
+			Km : </b>${temp1}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	</div>
+
+
+	<div style="margin-left: 10px; padding: 3px; font-size: 13px;">
+		<b>Driver : ${printData.chalanItemList[0].usrName}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+		&nbsp;&nbsp;&nbsp;&nbsp;<b>Site Incharge</b>
+	</div>
+
+
+
+	<div style="margin-left: 10px; padding: 3px; font-size: 13px;">
+		<b>Sign</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp; <b></b>${printData.chalanItemList[0].sitePersonName}</div>
+
+
 	<div style="page-break-after: always;"></div>
 
 

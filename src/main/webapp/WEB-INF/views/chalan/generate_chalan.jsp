@@ -407,7 +407,7 @@ body {
 											aria-live="polite"></span>
 									</div>
 
-									<div class="col-md-2">RST No*</div>
+									<div class="col-md-2">RST/Royalty No*</div>
 
 									<div class="col-md-4">
 										<input type="text" id="rstNo" name="rstNo" required value="-"
