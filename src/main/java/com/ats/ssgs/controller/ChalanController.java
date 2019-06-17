@@ -1388,6 +1388,10 @@ public class ChalanController {
 			model.addObject("chDetailList", chDetailList);
 			model.addObject("rstNo", chDetailList.get(0).getExVar1());
 
+			System.out.println(
+					"chDetailList.get(0).getExVar1()chDetailList.get(0).getExVar1()chDetailList.get(0).getExVar1()"
+							+ chDetailList.get(0).getExVar1());
+
 			model.addObject("editChalan", editChalan);
 
 			model.addObject("title", "Edit Challan");
@@ -1446,6 +1450,9 @@ public class ChalanController {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			String curDate = dateFormat.format(new Date());
 
+			String rstNo = request.getParameter("rstNo");
+			String batchNo = request.getParameter("batchNo");
+
 			List<ChalanDetail> chDeList = new ArrayList<>();
 			for (int i = 0; i < chDetailList.size(); i++) {
 
@@ -1485,6 +1492,7 @@ public class ChalanController {
 
 				det.setItemUom(chDetailList.get(i).getItemUom());
 				det.setItemWidthSite(chDetailList.get(i).getItemWidthSite());
+				det.setExVar1(rstNo);
 
 				det.setStatus(0);
 				det.setDelStatus(1);
@@ -1516,7 +1524,7 @@ public class ChalanController {
 			chHeader.setChalanRemark(chalanRemark);
 			chHeader.setCustId(custId);
 			chHeader.setDriverId(driverId);
-			chHeader.setExDate1(curDate);
+			chHeader.setExDate1(batchNo);
 
 			chHeader.setInKm(0);
 			chHeader.setOrderId(orderId);
