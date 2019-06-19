@@ -975,6 +975,7 @@ $
 		var taxPerc=parseFloat(v.cgstPer)+parseFloat(v.sgstPer);
 		 if(v.isTaxIncluding==0)
     	{
+				var baseRate = ((v.orderRate * 100) / (100 + taxPerc));
     	  var taxableAmt=(parseFloat(v.orderRate)*parseFloat(v.itemQty)*100/(100+taxPerc));
      	 var taxAmt=((taxableAmt*taxPerc)/100);
      	 var total=(taxableAmt+taxAmt);
@@ -1001,7 +1002,7 @@ $
     		
     		} 
 		var index=i+1;
-		dataTable.row.add([ index,v.itemName,v.itemUom,v.poRate,v.orderRate+""+rate+""+isTaxIncluding,v.itemQty,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
+		dataTable.row.add([ index,v.itemName,v.itemUom,baseRate.toFixed(2),v.orderRate+""+rate+""+isTaxIncluding,v.itemQty,chalanQty,discPer,taxableAmt,discAmt,taxPer,taxAmt,total]).draw();
 		$('#loader').hide();
 			
 			});

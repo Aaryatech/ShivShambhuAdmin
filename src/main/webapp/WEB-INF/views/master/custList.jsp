@@ -83,8 +83,8 @@
 							</div>
 							<div class="col-md-8"></div>
 							<div class="col-md-2" align="left">
-								<a href="${pageContext.request.contextPath}/showAddCustomer" style="color:black"><strong>Add
-										Customer </strong></a>
+								<a href="${pageContext.request.contextPath}/showAddCustomer"
+									style="color: black"><strong>Add Customer </strong></a>
 							</div>
 
 						</div>
@@ -106,11 +106,10 @@
 											<th style="text-align: center; width: 5%;">Sr.</th>
 											<th style="text-align: center">Customer Name</th>
 											<th style="text-align: center">Mobile No</th>
+											<th style="text-align: center">GST No</th>
 											<th style="text-align: center">Contact Person</th>
 											<th style="text-align: center">Contact Mobile No</th>
-
 											<th style="text-align: center">Plant Name</th>
-
 											<th style="text-align: center">Action</th>
 
 										</tr>
@@ -128,6 +127,9 @@
 												<td style="text-align: center"><c:out
 														value="${cust.custMobNo}" /></td>
 
+												<td style="text-align: center"><c:out
+														value="${cust.custGstNo}" /></td>
+
 												<td style="text-align: left"><c:out
 														value="${cust.contactPerName}" /></td>
 
@@ -142,11 +144,11 @@
 
 												<td style="text-align: center"><a
 													href="${pageContext.request.contextPath}/editCust/${cust.custId}"><i
-														class="fa fa-edit" style="color:black" title="Edit"></i> <span
-														class="text-muted"></span></a> &nbsp; <a
+														class="fa fa-edit" style="color: black" title="Edit"></i>
+														<span class="text-muted"></span></a> &nbsp; <a
 													href="${pageContext.request.contextPath}/deleteCust/${cust.custId}"
 													onClick="return confirm('Are you sure want to delete this record');"><i
-														class="fa fa-trash-o" style="color:black" title="Delete"></i></a></td>
+														class="fa fa-trash-o" style="color: black" title="Delete"></i></a></td>
 
 											</tr>
 										</c:forEach>
@@ -161,6 +163,16 @@
 
 
 								</div>
+
+
+								<div class="col-md-3">
+
+									<button type="button" class="btn btn-primary"
+										onclick="exportToExcel();" id="expExcel"
+										style="align-content: center; width: 200px; margin-left: 80px;">
+										Export To Excel</button>
+								</div>
+
 							</form>
 						</div>
 					</div>
@@ -296,6 +308,14 @@
 																this.checked);
 											});
 						});
+	</script>
+
+	<script type="text/javascript">
+		function exportToExcel() {
+
+			window.open("${pageContext.request.contextPath}/exportToExcel");
+			document.getElementById("expExcel").disabled = true;
+		}
 	</script>
 </body>
 </html>

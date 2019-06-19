@@ -170,14 +170,14 @@
 								</div>
 								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Tax Include</div>
+									<div class="col-md-2">Is Tax Extra</div>
 									<div class="col-md-4">
 										<c:choose>
 											<c:when test="${quotHeader.taxValue==1}">
-										 No
+										 YES
 										</c:when>
 											<c:otherwise>
-										YES
+										  No
 										</c:otherwise>
 										</c:choose>
 

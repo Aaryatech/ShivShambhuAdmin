@@ -468,7 +468,7 @@ public class BillController {
 					ma.add("custId", custId);
 					Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", ma, Cust.class);
 
-					if (isTaxIncluding == 0) {
+					if (gstNo == 0) {
 						System.out.println("Mrp: " + rate);
 						System.out.println("Tax1 : " + tax1);
 						System.out.println("tax2 : " + tax2);
@@ -498,15 +498,15 @@ public class BillController {
 						billDetail.setQty(qty);
 						billDetail.setRate(rate);
 
-						billDetail.setCgstPer(tax2);
-						billDetail.setSgstPer(tax1);
+						billDetail.setCgstPer(0);
+						billDetail.setSgstPer(0);
 
 						billDetail.setDiscAmt(discAmt);
 						billDetail.setDiscPer(discountPer);
 
 						if (editCust.getIsSameState() == 1) {
-							billDetail.setCgstAmt(cgstRs);
-							billDetail.setSgstAmt(sgstRs);
+							billDetail.setCgstAmt(0);
+							billDetail.setSgstAmt(0);
 							billDetail.setIgstAmt(0);
 						} else {
 
@@ -518,9 +518,8 @@ public class BillController {
 						billDetail.setIgstPer(tax3);
 
 						billDetail.setTaxableAmt(taxableAmt);
-						billDetail.setTaxAmt(totalTax);
-
-						billDetail.setTotalAmt(grandTotal);
+						billDetail.setTaxAmt(0);
+						billDetail.setTotalAmt(taxableAmt);
 						totalTaxable = totalTaxable + taxableAmt;
 						totalTaxAmt = totalTaxAmt + totalTax;
 					} else {
@@ -556,7 +555,7 @@ public class BillController {
 						grandTotalAmt = grandTotalAmt + grandTotal;
 						// -------------------------------------------
 						billDetail.setQty(qty);
-						billDetail.setRate(rate);
+						billDetail.setRate(mrpBaseRate);
 
 						if (editCust.getIsSameState() == 1) {
 							billDetail.setCgstAmt(cgstRs);
@@ -1362,6 +1361,8 @@ public class BillController {
 
 			// model.addObject("title", "Add Order");
 
+			String billDate = request.getParameter("ord_date");
+
 			int billHeadId = Integer.parseInt(request.getParameter("billHeadId"));
 			// int custId = Integer.parseInt(request.getParameter("cust_name"));
 			// int projId = Integer.parseInt(request.getParameter("proj_id"));
@@ -1385,7 +1386,10 @@ public class BillController {
 
 				float qty = Float
 						.parseFloat(request.getParameter("chalanQty" + i + "" + billDetailList.get(i).getItemId()));
-				float rate = billDetailList.get(i).getRate();
+
+				float rate = Float
+						.parseFloat(request.getParameter("billRate" + i + "" + billDetailList.get(i).getItemId()));
+				/* float rate = billDetailList.get(i).getRate(); */
 				float discountPer = Float
 						.parseFloat(request.getParameter("discPer" + i + "" + billDetailList.get(i).getItemId()));
 				float taxPer = Float
@@ -1395,12 +1399,20 @@ public class BillController {
 				float tax2 = billDetailList.get(i).getCgstPer();
 				float tax3 = billDetailList.get(i).getIgstPer();
 
+				System.out.println("rateraterate" + rate);
+
+				MultiValueMap<String, Object> ma = new LinkedMultiValueMap<String, Object>();
+				ma = new LinkedMultiValueMap<String, Object>();
+				ma.add("custId", billHeader.getCustId());
+				Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", ma, Cust.class);
+
 				if (qty > 0) {
 
 					BillDetail billDetail = new BillDetail();
 					billDetail.setItemId(billDetailList.get(i).getItemId());
 
-					if (isTaxIncluding == 0) {
+					if (billHeader.getExInt2() == 0) {
+						System.out.println("IN IF" + billHeader.getExInt2());
 						System.out.println("Mrp: " + rate);
 						System.out.println("Tax1 : " + tax1);
 						System.out.println("tax2 : " + tax2);
@@ -1424,38 +1436,45 @@ public class BillController {
 
 						Float grandTotal = totalTax + taxableAmt;
 						grandTotal = roundUp(grandTotal);
+
+						grandTotalAmt = grandTotalAmt + grandTotal;
 						// -------------------------------------------
 						billDetail.setQty(qty);
 						billDetail.setRate(rate);
 
-						billDetail.setCgstPer(tax2);
-						billDetail.setCgstAmt(cgstRs);
+						billDetail.setCgstPer(0);
+						billDetail.setSgstPer(0);
 
 						billDetail.setDiscAmt(discAmt);
 						billDetail.setDiscPer(discountPer);
 
-						billDetail.setSgstAmt(sgstRs);
-						billDetail.setSgstPer(tax1);
+						if (editCust.getIsSameState() == 1) {
+							billDetail.setCgstAmt(0);
+							billDetail.setSgstAmt(0);
+							billDetail.setIgstAmt(0);
+						} else {
 
-						billDetail.setIgstAmt(igstRs);
+							billDetail.setCgstAmt(0);
+							billDetail.setSgstAmt(0);
+							billDetail.setIgstAmt(igstRs);
+						}
+
 						billDetail.setIgstPer(tax3);
 
 						billDetail.setTaxableAmt(taxableAmt);
-						billDetail.setTaxAmt(totalTax);
-
-						billDetail.setTotalAmt(grandTotal);
+						billDetail.setTaxAmt(0);
+						billDetail.setTotalAmt(taxableAmt);
 						totalTaxable = totalTaxable + taxableAmt;
 						totalTaxAmt = totalTaxAmt + totalTax;
-						grandTotalAmt = grandTotalAmt + grandTotal;
 					} else {
-						Float mrpBaseRate = (rate * 100) / (100 + (tax1 + tax2));
-						mrpBaseRate = roundUp(mrpBaseRate);
+
+						System.out.println("IN ELSE" + billHeader.getExInt2());
 
 						System.out.println("Mrp: " + rate);
 						System.out.println("Tax1 : " + tax1);
 						System.out.println("tax2 : " + tax2);
 
-						Float taxableAmt = (float) (mrpBaseRate * qty);
+						Float taxableAmt = (float) (rate * qty);
 						taxableAmt = roundUp(taxableAmt);
 
 						float discAmt = ((taxableAmt * discountPer) / 100);
@@ -1482,16 +1501,24 @@ public class BillController {
 						billDetail.setQty(qty);
 						billDetail.setRate(rate);
 
+						if (editCust.getIsSameState() == 1) {
+							billDetail.setCgstAmt(cgstRs);
+							billDetail.setSgstAmt(sgstRs);
+							billDetail.setIgstAmt(0);
+						} else {
+
+							billDetail.setCgstAmt(0);
+							billDetail.setSgstAmt(0);
+							billDetail.setIgstAmt(igstRs);
+						}
+
 						billDetail.setCgstPer(tax2);
-						billDetail.setCgstAmt(cgstRs);
 
 						billDetail.setDiscAmt(discAmt);
 						billDetail.setDiscPer(discountPer);
 
-						billDetail.setSgstAmt(sgstRs);
 						billDetail.setSgstPer(tax1);
 
-						billDetail.setIgstAmt(igstRs);
 						billDetail.setIgstPer(tax3);
 
 						billDetail.setTaxableAmt(taxableAmt);
@@ -1523,6 +1550,7 @@ public class BillController {
 			billHeader.setTaxableAmt(totalTaxable);
 			billHeader.setTaxAmt(totalTaxAmt);
 			billHeader.setTotalAmt(grandTotalAmt);
+			billHeader.setBillDate(billDate);
 
 			System.err.println("billHeader" + billHeader.toString());
 

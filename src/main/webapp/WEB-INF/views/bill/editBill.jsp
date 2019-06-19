@@ -228,8 +228,8 @@
 								<div class="row">
 									<div class="col-md-2">Bill Date</div>
 									<div class="col-md-4">
-										<input type="text" disabled id="ord_date" name="ord_date"
-											required style="width: 100%;" class="form-control"
+										<input type="text" id="ord_date" name="ord_date" required
+											style="width: 100%;" class="form-control"
 											value="${editBill.billDate}"> <span class="error"
 											aria-live="polite"></span>
 									</div>
@@ -353,9 +353,14 @@
 													<%-- <td style="text-align: center"><c:out
 													value="${billDetail.itemUom}" /></td>
  --%>
-													<td style="text-align: left"><c:out
-															value="${billDetail.rate}" /></td>
+													<%-- 	<td style="text-align: left"><c:out
+															value="${billDetail.rate}" /></td> --%>
 
+													<td style="text-align: center"><input type="text"
+														class="form-control" value="${billDetail.rate}"
+														id="billRate${count.index}${billDetail.itemId}"
+														name="billRate${count.index}${billDetail.itemId}"
+														oninput="calculation(${count.index},${billDetail.itemId})" />
 													<td style="text-align: center"><input type="text"
 														class="form-control" value="${billDetail.qty}"
 														id="chalanQty${count.index}${billDetail.itemId}"
@@ -981,10 +986,11 @@ function calculation(key,itemId){
 	var discPer=parseFloat(document.getElementById("discPer"+key+''+itemId).value); //alert(discPer+"discPer");
 	var taxPer=parseFloat(document.getElementById("taxPer"+key+''+itemId).value); //alert(taxPer+"taxPer");
     var isTaxIncluding=document.getElementById("isTaxIncluding"+key+''+itemId).value; //alert(isTaxIncluding+"isTaxIncluding");
+    var billRate=document.getElementById("billRate"+key+''+itemId).value; //alert(billRate+"billRate");
     
-    if(isTaxIncluding==0)
-    	{
-    	  var taxableAmt=(orderRate*chalanQty);
+   /*  if(isTaxIncluding==0)
+    	{ */
+    	  var taxableAmt=(billRate*chalanQty);
     	  //alert("taxableAmt"+taxableAmt);
     	
     	 
@@ -1014,7 +1020,7 @@ function calculation(key,itemId){
      	  
      	 
 
-    	}else
+    	/*} else
     		{
     		//alert((orderRate+100)+"Order Rate");alert((100 + taxPer));
     		var baseRate = ((orderRate * 100) / (100 + taxPer));
@@ -1046,7 +1052,7 @@ function calculation(key,itemId){
          	 // document.getElementById("taxAmt"+key+''+itemId).innerHTML=taxAmt;
          	 
 
-    		}
+    		} */
 }
 	
 	</script>

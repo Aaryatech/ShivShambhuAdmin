@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ats.ssgs.common.Constants;
 import com.ats.ssgs.common.DateConvertor;
+import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.master.Code;
 import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Cust;
@@ -1364,6 +1365,49 @@ public class MasterController {
 
 			model.addObject("title", "Customer List");
 			model.addObject("custList", getCustList);
+
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No");
+			rowData.add("Customer Name");
+
+			rowData.add("Mobile No");
+			rowData.add("Address");
+
+			rowData.add("GST No.");
+			rowData.add("Contact Person Name");
+			rowData.add("Contact Person No.");
+			rowData.add("Plant Name");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+			int cnt = 1;
+			for (int i = 0; i < getCustList.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				cnt = cnt + i;
+				rowData.add("" + (i + 1));
+
+				rowData.add("" + getCustList.get(i).getCustName());
+				rowData.add("" + getCustList.get(i).getCustMobNo());
+				rowData.add("" + getCustList.get(i).getCustAddress());
+				rowData.add("" + getCustList.get(i).getCustGstNo());
+
+				rowData.add("" + getCustList.get(i).getContactPerName());
+				rowData.add("" + getCustList.get(i).getContactPerMob());
+				rowData.add("" + getCustList.get(i).getPlantName());
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "Customer List");
 
 		} catch (Exception e) {
 

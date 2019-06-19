@@ -487,7 +487,7 @@
 					<td align="center"
 						style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
 							type="number" maxFractionDigits="2" minFractionDigits="2"
-							value="${(billDetails.rate*100)/(100+billDetails.cgstPer+billDetails.sgstPer)}" /></td>
+							value="${billDetails.rate}" /></td>
 					<td align="left"
 						style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${billDetails.uomName}</td>
 

@@ -171,12 +171,12 @@
 								</div>
 								<input type="hidden" id="taxIncl" name="taxIncl"
 									value="${editPo.extra1}" readonly>
-								<div class="form-group"></div>
+								<%-- <div class="form-group"></div>
 								<div class="row">
 									<div class="col-md-2">Tax Include</div>
 									<div class="col-md-4">
 										<c:choose>
-											<c:when test="${editPo.extra1==1}">
+											<c:when test="${editPo.editPo==1}">
 										 No
 										</c:when>
 											<c:otherwise>
@@ -187,6 +187,26 @@
 									</div>
 
 								</div>
+								 --%>
+
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Is Tax Extra</div>
+									<div class="col-md-4">
+										<c:choose>
+											<c:when test="${editPo.extra1==1}">
+										 YES
+										</c:when>
+											<c:otherwise>
+										  No
+										</c:otherwise>
+										</c:choose>
+
+									</div>
+
+								</div>
+
+
 
 
 
