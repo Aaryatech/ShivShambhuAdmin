@@ -78,6 +78,7 @@ import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.master.Setting;
+import com.ats.ssgs.model.master.Vendor;
 import com.ats.ssgs.model.prodrm.RmcQuotTemp;
 import com.ats.ssgs.model.rec.PayRecoveryHead;
 
@@ -1569,6 +1570,51 @@ public class BillController {
 				Info updateChalanStatus = rest.postForObject(Constants.url + "updateChalanStatus", map, Info.class);
 
 				System.err.println(updateChalanStatus.toString());
+
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("billHeadId", billHeadId);
+
+				PayRecoveryHead editPaymentRec = rest.postForObject(Constants.url + "getPayRecByPayHeadId", map,
+						PayRecoveryHead.class);
+
+				editPaymentRec.setBillTotal(grandTotalAmt);
+				editPaymentRec.setBillDate(DateConvertor.convertToYMD(billDate));
+				editPaymentRec.setBillHeadId(billHeadId);
+				editPaymentRec.setPendingAmt(grandTotalAmt);
+
+				editPaymentRec.setPaidAmt(0);
+
+				System.out.println(editPaymentRec.toString());
+
+				MultiValueMap<String, Object> map2 = new LinkedMultiValueMap<String, Object>();
+
+				map2.add("custId", insertBillHeadRes.getCustId());
+				Cust cust = rest.postForObject(Constants.url + "getCustByCustId", map2, Cust.class);
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				Calendar c = Calendar.getInstance();
+				Calendar c1 = Calendar.getInstance();
+
+				c.setTime(sdf.parse(billDate));
+				c1.setTime(sdf.parse(billDate));
+
+				System.out.println("cust credit days" + cust.getCreaditDays());
+
+				c.add(Calendar.DAY_OF_MONTH, (int) cust.getCreaditDays());
+				c1.add(Calendar.DAY_OF_MONTH, (int) (cust.getCreaditDays() - 5));
+				String creaditDate2 = sdf.format(c.getTimeInMillis());
+
+				String creaditDate1 = sdf.format(c1.getTimeInMillis());
+				editPaymentRec.setCreditDate2(DateConvertor.convertToYMD(creaditDate2));
+				System.out.println("creaditDate2" + creaditDate2);
+
+				editPaymentRec.setCreditDate3(DateConvertor.convertToYMD(creaditDate1));
+				editPaymentRec.setCreditDate1(DateConvertor.convertToYMD(creaditDate1));
+
+				PayRecoveryHead insertHeadRes = rest.postForObject(Constants.url + "savePaymentRecoveryHeader",
+						editPaymentRec, PayRecoveryHead.class);
+
+				System.out.println(insertHeadRes.toString());
 			} else {
 
 				// isError = 1;

@@ -607,7 +607,7 @@
 	    	okay=false;
 	    	alert("Please select customer ");
 	    }
-	    else if(projId<0 || projId=="" || projId==null){
+	    else if(projId=="" || projId==null){
 	    	okay=false;
 	    	alert("Please select project ");
 	    }
@@ -876,7 +876,7 @@ $
 							//var html;
 							var len = data.length;
 							//alert("data " +JSON.stringify(data));
-							var html='<option value="-1">Select</option>';
+							var html='<option value=" ">Select</option><option value="-1">All</option>';
 
 							for (var i = 0; i < len; i++) {
 								var projData=data[i].projName+"-"+data[i].address

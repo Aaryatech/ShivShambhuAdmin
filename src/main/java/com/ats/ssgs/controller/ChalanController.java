@@ -683,7 +683,7 @@ public class ChalanController {
 		map.add("toDate", DateConvertor.convertToYMD(toDate));
 
 		System.out.println("1.....");
-		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByPlantAndStatus", map,
+		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByPlant", map,
 				GetChalanHeader[].class);
 
 		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
