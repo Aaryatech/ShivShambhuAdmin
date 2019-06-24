@@ -107,6 +107,7 @@
 											<th style="text-align: center">Customer Name</th>
 											<th style="text-align: center">Mobile No</th>
 											<th style="text-align: center">GST No</th>
+											<th style="text-align: center">GST Registered</th>
 											<th style="text-align: center">Contact Person</th>
 											<th style="text-align: center">Contact Mobile No</th>
 											<th style="text-align: center">Plant Name</th>
@@ -129,6 +130,19 @@
 
 												<td style="text-align: center"><c:out
 														value="${cust.custGstNo}" /></td>
+
+												<c:set var="gstReg" value=" "></c:set>
+
+												<c:choose>
+													<c:when test="${cust.exInt1==0}">
+														<c:set var="gstReg" value="No"></c:set>
+													</c:when>
+													<c:otherwise>
+														<c:set var="gstReg" value="Yes"></c:set>
+													</c:otherwise>
+												</c:choose>
+
+												<td style="text-align: left"><c:out value="${gstReg}" /></td>
 
 												<td style="text-align: left"><c:out
 														value="${cust.contactPerName}" /></td>

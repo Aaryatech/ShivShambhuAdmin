@@ -466,6 +466,20 @@
 									</div>
 
 
+									<div class="col-md-2">Is GST Registered?</div>
+
+
+									<div class="col-md-1">
+										Yes <input type="radio" name="gstReg" id="gstReg" value="1">
+									</div>
+
+									<div class="col-md-1">
+										NO <input type="radio" name="gstReg" checked id="gstReg"
+											value="0">
+									</div>
+
+
+
 								</div>
 								<div class="form-group"></div>
 

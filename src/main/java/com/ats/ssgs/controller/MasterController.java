@@ -1213,6 +1213,7 @@ public class MasterController {
 			String custVendor = request.getParameter("cust_vendor");
 
 			int sameState = Integer.parseInt(request.getParameter("state"));
+			int gstReg = Integer.parseInt(request.getParameter("gstReg"));
 			String dateOfReg = request.getParameter("reg_date");
 
 			if (refName.equals("")) {
@@ -1261,6 +1262,7 @@ public class MasterController {
 			cust.setRespPerson(refName);
 			cust.setPlantId(plantId);
 			cust.setIsSameState(sameState);
+			cust.setExInt1(gstReg);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("docCode", 9);

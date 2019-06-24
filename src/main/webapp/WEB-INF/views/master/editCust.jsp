@@ -530,6 +530,43 @@
 											value="${editCust.custCode}" class="form-control"
 											style="width: 100%;">
 									</div>
+
+									<div class="col-md-2">Is GST Registered?</div>
+									<c:choose>
+										<c:when test="${editCust.exInt1==0}">
+											<div class="col-md-1">
+
+												<input type="radio" name="gstReg" id="gstReg" value="1">Yes
+
+											</div>
+
+											<div class="col-md-1">
+												<input type="radio" name="gstReg" value="0" checked>
+												No
+											</div>
+										</c:when>
+										<c:when test="${editCust.exInt1==1}">
+											<div class="col-md-1">
+
+												<input type="radio" name="gstReg" id="gstReg" value="1"
+													checked>Yes
+											</div>
+											<div class="col-md-1">
+												<input type="radio" name="gstReg" value="0"> No
+
+											</div>
+										</c:when>
+										<c:otherwise>
+											<div class="col-md-1">
+												Yes <input type="radio" name="gstReg" id="gstReg" value="1">
+											</div>
+
+											<div class="col-md-1">
+												NO <input type="radio" name="gstReg" id="gstReg" checked
+													value="0">
+											</div>
+										</c:otherwise>
+									</c:choose>
 								</div>
 
 								<div class="form-group"></div>
