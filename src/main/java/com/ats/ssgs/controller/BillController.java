@@ -278,19 +278,16 @@ public class BillController {
 
 		map.add("projId", projId);
 		map.add("custId", custId);
-		map.add("chalanStatus", "0,1");
+		/* map.add("chalanStatus", 0); */
 
-		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByCustAndStatusAndProj", map,
+		/*
+		 * GetChalanHeader[] chArray = rest.postForObject(Constants.url +
+		 * "getChalanHeadersByCustAndStatusAndProj", map, GetChalanHeader[].class);
+		 */
+		GetChalanHeader[] chArray = rest.postForObject(Constants.url + "getChalanHeadersByCustAndCostSegAndProj", map,
 				GetChalanHeader[].class);
 
 		chalanHeadList = new ArrayList<GetChalanHeader>(Arrays.asList(chArray));
-
-		/*
-		 * for (int i = 0; i < chalanHeadList.size(); i++) {
-		 * 
-		 * chalanHeadList.get(i).setChalanDate(DateConvertor.convertToDMY(chalanHeadList
-		 * .get(i).getChalanDate())); }
-		 */
 
 		System.err.println("Ajax chalanHeadList " + chalanHeadList.toString());
 
@@ -752,7 +749,8 @@ public class BillController {
 					String chList = idList.substring(1, idList.length() - 1).replace(", ", ",");
 					map.add("chalanDetailId", chList);
 
-					Info updateChalanStatus = rest.postForObject(Constants.url + "updateChalanStatus", map, Info.class);
+					Info updateChalanStatus = rest.postForObject(Constants.url + "updateCostSegAfterBillGen", map,
+							Info.class);
 
 					System.err.println(updateChalanStatus.toString());
 

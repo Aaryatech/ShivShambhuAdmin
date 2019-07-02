@@ -362,14 +362,6 @@
 											value="${editChalan.chalanRemark}"> <span
 											class="error" aria-live="polite"></span>
 									</div>
-									<div class="col-md-2">Cost Segment</div>
-
-									<div class="col-md-4">
-										<input type="text" id="cost_segment" name="cost_segment"
-											value="${editChalan.costSegment}" required
-											style="width: 100%;" class="form-control"> <span
-											class="error" aria-live="polite"></span>
-									</div>
 
 								</div>
 								<div class="form-group"></div>

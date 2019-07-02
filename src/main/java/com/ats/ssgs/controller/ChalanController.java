@@ -392,7 +392,7 @@ public class ChalanController {
 			String chalanNo = request.getParameter("chalan_no");
 			String chalanRemark = request.getParameter("chalan_remark");
 			String rstNo = request.getParameter("rstNo");
-			String costSegment = request.getParameter("cost_segment");
+			// String costSegment = request.getParameter("cost_segment");
 
 			int driverId = Integer.parseInt(request.getParameter("driver_id"));
 			int vehicleId = Integer.parseInt(request.getParameter("veh_id"));
@@ -507,7 +507,7 @@ public class ChalanController {
 			chHeader.setVehTimeIn("-");
 			chHeader.setVehTimeOut(outTime);
 			chHeader.setChalanDate(DateConvertor.convertToYMD(chalanDate));
-			chHeader.setCostSegment(costSegment);
+			chHeader.setCostSegment("0");
 
 			chHeader.setExVar1(String.valueOf(login.getUser().getUserId()));// userId
 			chHeader.setExInt1(1);// delStatus
@@ -1167,7 +1167,7 @@ public class ChalanController {
 			String inTime = request.getParameter("in_time");
 			float inKm = Float.parseFloat(request.getParameter("in_km"));
 			String chalanRemark = request.getParameter("chalan_remark");
-			String costSegment = request.getParameter("cost_segment");
+			// String costSegment = request.getParameter("cost_segment");
 			String sitePerName = request.getParameter("site_per_name");
 			String sitePerMob = request.getParameter("site_per_mob");
 
@@ -1181,7 +1181,7 @@ public class ChalanController {
 			chHeader.setVehTimeIn(inTime);
 
 			chHeader.setInKm(inKm);
-			chHeader.setCostSegment(costSegment);
+			chHeader.setCostSegment("0");
 			chHeader.setSitePersonName(sitePerName);
 			chHeader.setSitePersonMob(sitePerMob);
 			chHeader.setOrderId(orderId);
@@ -1252,7 +1252,7 @@ public class ChalanController {
 			String inTime = request.getParameter("in_time");
 			float inKm = Float.parseFloat(request.getParameter("in_km"));
 			String chalanRemark = request.getParameter("chalan_remark");
-			String costSegment = request.getParameter("cost_segment");
+			// String costSegment = request.getParameter("cost_segment");
 			String sitePerName = request.getParameter("site_per_name");
 			String sitePerMob = request.getParameter("site_per_mob");
 
@@ -1266,7 +1266,7 @@ public class ChalanController {
 			chHeader.setVehTimeIn(inTime);
 
 			chHeader.setInKm(inKm);
-			chHeader.setCostSegment(costSegment);
+			chHeader.setCostSegment("0");
 			chHeader.setSitePersonName(sitePerName);
 			chHeader.setSitePersonMob(sitePerMob);
 			chHeader.setOrderId(orderId);
@@ -1506,7 +1506,7 @@ public class ChalanController {
 
 			String chalanDate = request.getParameter("chalan_date");
 			String chalanRemark = request.getParameter("chalan_remark");
-			String costSegment = request.getParameter("cost_segment");
+			// String costSegment = request.getParameter("cost_segment");
 
 			String chalanNo = request.getParameter("chalan_no");
 
@@ -1540,7 +1540,7 @@ public class ChalanController {
 			chHeader.setVehTimeIn("-");
 			chHeader.setVehTimeOut(outTime);
 			chHeader.setChalanDate(DateConvertor.convertToYMD(chalanDate));
-			chHeader.setCostSegment(costSegment);
+			chHeader.setCostSegment("0");
 
 			chHeader.setExInt1(1);// delStatus
 			chHeader.setExFloat1(0);// isClosed yes-1/no-0
@@ -2011,7 +2011,7 @@ public class ChalanController {
 			String inTime = request.getParameter("in_time");
 			float inKm = Float.parseFloat(request.getParameter("in_km"));
 			String chalanRemark = request.getParameter("chalan_remark");
-			String costSegment = request.getParameter("cost_segment");
+			// String costSegment = request.getParameter("cost_segment");
 			String sitePerName = request.getParameter("site_per_name");
 			String sitePerMob = request.getParameter("site_per_mob");
 
@@ -2025,7 +2025,7 @@ public class ChalanController {
 			chHeader.setVehTimeIn(inTime);
 
 			chHeader.setInKm(inKm);
-			chHeader.setCostSegment(costSegment);
+			chHeader.setCostSegment("0");
 			chHeader.setSitePersonName(sitePerName);
 			chHeader.setSitePersonMob(sitePerMob);
 			chHeader.setOrderId(orderId);

@@ -561,13 +561,13 @@ body {
 											required style="width: 100%;" class="form-control" value="-">
 										<span class="error" aria-live="polite"></span>
 									</div>
-									<div class="col-md-2">Cost Segment</div>
+									<!-- <div class="col-md-2">Cost Segment</div>
 
 									<div class="col-md-4">
 										<input type="text" id="cost_segment" name="cost_segment"
-											value="-" required style="width: 100%;" class="form-control">
+											value="-"   style="width: 100%;" class="form-control">
 										<span class="error" aria-live="polite"></span>
-									</div>
+									</div> -->
 
 								</div>
 
@@ -763,7 +763,7 @@ body {
 		 var vehId=document.getElementById("veh_id").value;
 		
 		 var chalanDate=document.getElementById("chalan_date").value;
-		 var costSegment=document.getElementById("cost_segment").value;
+		// var costSegment=document.getElementById("cost_segment").value;
 		 var outTime=document.getElementById("out_time").value;
 		 var outKm=document.getElementById("out_km").value;
 		 var chalanRemark =document.getElementById("chalan_remark").value;
@@ -802,10 +802,7 @@ body {
 	    	alert("Please select chalan date ");
 	    }
 	      
-	    else if(costSegment<0 || costSegment=="" || costSegment==null){
-	    	okay=false;
-	    	alert("Please enter cost segment ");
-	    }
+	   
 	      
 	    else if(outTime<0 || outTime=="" || outTime==null){
 	    	okay=false;
