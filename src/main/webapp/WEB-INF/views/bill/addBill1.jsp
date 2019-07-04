@@ -1374,6 +1374,12 @@ function toggle() {
 									var c= "0"+count;
 
 								}
+								
+								else
+								{
+								var c =count;
+								}
+
 								 
 								var enqNum=sn+"/"+c+"/"+word;
 								 
@@ -1409,6 +1415,10 @@ function toggle() {
 									var c= "0"+count;
 
 								}
+								else
+									{var c =count;
+									
+									}
 								 
 								var enqNum=sn+"N"+"/"+c+"/"+word;
 								 

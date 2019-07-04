@@ -1262,7 +1262,10 @@ function toggle() {
 							} else if (len1 == 3) {
 								var c= "0"+count;
 
-							}
+							}else
+								{
+								var c =count;
+								}
 							var billNumber=sn+"-"+c;
 				
 							document.getElementById("bill_no").value=billNumber;

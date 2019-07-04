@@ -1470,6 +1470,11 @@ function toggle() {
 						var c= "0"+count;
 
 					}
+					else
+					{
+					var c =count;
+					}
+
 					 
 					var enqNum=sn+"/"+c+"/"+word;
 					 
@@ -1534,6 +1539,11 @@ function toggle() {
 									var c= "0"+count;
 
 								}
+								else
+								{
+								var c =count;
+								}
+
 								 
 								var enqNum=sn+"/"+c+"/"+word;
 								 
@@ -1568,7 +1578,10 @@ function toggle() {
 								} else if (len1 == 3) {
 									var c= "0"+count;
 
-								}
+								}else
+									{
+									var c =count;
+									}
 								 
 								var enqNum=sn+"N"+"/"+c+"/"+word;
 								 
