@@ -25,6 +25,7 @@ import com.ats.ssgs.common.DateConvertor;
 import com.ats.ssgs.model.GetBillHeaderPdf;
 import com.ats.ssgs.model.chalan.ChalanPrintData;
 import com.ats.ssgs.model.chalan.GetChalanHeader;
+import com.ats.ssgs.model.chalan.GetChalanHeader2;
 import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.DocTermHeader;
 import com.ats.ssgs.model.quot.GetQuotHeads;
@@ -108,8 +109,8 @@ public class PdfController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("chalanId", chalanId);
-			GetChalanHeader chPrint = rest.postForObject(Constants.url + "/getChalanHeadersByChalanId", map,
-					GetChalanHeader.class);
+			GetChalanHeader2 chPrint = rest.postForObject(Constants.url + "/getChalanHeaders2ByChalanId", map,
+					GetChalanHeader2.class);
 
 			int orderId = chPrint.getOrderId();
 			System.err.println("Order id:::::" + orderId);
@@ -157,10 +158,11 @@ public class PdfController {
 				model.addObject("temp1", b);
 			}
 
-			System.err.println("pdf data 2/showChalanPdf Print" + chPrintData.toString());
+			System.err.println("pdf data 2/showChalanPdf Print================================" + chPrint.toString());
 
 			model.addObject("printData", chPrintData);
 
+			model.addObject("chPrint", chPrint);
 			for (int i = 0; i < chPrintData.getChalanItemList().size(); i++) {
 				System.out.println("inside for");
 				System.err.println("2 result " + chPrintData.getChalanItemList().get(i).getItemId());

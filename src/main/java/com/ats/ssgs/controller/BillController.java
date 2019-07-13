@@ -1672,7 +1672,7 @@ public class BillController {
 			}
 			settingsValues = settingsValues.substring(1);
 
-			System.out.println("settingsValues============" + settingsValues);
+			System.out.println("billHeaders=====================================" + billHeaders.toString());
 
 			MultiValueMap<String, Object> map1 = new LinkedMultiValueMap<String, Object>();
 

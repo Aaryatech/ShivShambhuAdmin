@@ -170,19 +170,48 @@
 									<thead>
 										<tr>
 											<th style="text-align: center; width: 5%;">Sr.</th>
-											<th style="text-align: center">Bill Date</th>
-											<th style="text-align: center">Bill No</th>
-											<th style="text-align: center">Customer Name</th>
-											<th style="text-align: center">Project Name</th>
-											<th style="text-align: center">Taxable Amount</th>
-											<th style="text-align: center">CGST Amount</th>
-											<th style="text-align: center">SGST Amount</th>
-											<th style="text-align: center">IGST Amount</th>
-											<th style="text-align: center">Tax Amount</th>
-											<th style="text-align: center">Total Amount</th>
+											<th width="5%" style="text-align: center">Bill Date</th>
+											<th width="10%" style="text-align: center">Bill No</th>
+											<th width="10%" style="text-align: center">Customer Name</th>
+											<!-- 	<th width="10%" style="text-align: center">Project Name</th> -->
+											<th width="10%" style="text-align: center">Taxable
+												Amount</th>
+											<th width="10%" style="text-align: center">CGST Amount</th>
+											<th width="10%" style="text-align: center">SGST Amount</th>
+											<th width="10%" style="text-align: center">IGST Amount</th>
+											<th width="10%" style="text-align: center">Tax Amount</th>
+											<th width="10%" style="text-align: center">Total Amount</th>
 
 										</tr>
 									</thead>
+									<tbody></tbody>
+									<tr>
+										<td width="5%"></td>
+										<td width="5%"></td>
+										<td width="10%"></td>
+										<!-- 	<td width="10%"></td> -->
+
+
+
+
+										<td><b>Total</b></td>
+										<td><input type="text" id="totalTaxableAmt" width="10%"
+											name="totalTaxableAmt" value="0" readonly></td>
+
+										<td><input type="text" id="totalCgstAmt" width="10%"
+											name="totalCgstAmt" value="0" readonly></td>
+										<td><input type="text" id="totalSgstAmt" width="10%"
+											name="totalSgstAmt" value="0" readonly></td>
+										<td><input type="text" id="totalIgstAmt" width="10%"
+											name="totalIgstAmt" value="0" readonly></td>
+										<td><input type="text" id="totalTax" name="totalTax"
+											width="10%" value="0" readonly></td>
+										<td><input type="text" id="totalAmt" name="totalAmt"
+											width="10%" value="0" readonly></td>
+
+									</tr>
+
+
 
 								</table>
 								<div class="col-md-2"></div>
@@ -344,45 +373,100 @@
 			}
 			if (valid == true) {
 
-				$.getJSON('${getBillListBetweenDate}', {
-					companyId : compId,
-					plantId : plantId,
-					fromDate : fromDate,
-					toDate : toDate,
-					ajax : 'true',
+				$
+						.getJSON(
+								'${getBillListBetweenDate}',
+								{
+									companyId : compId,
+									plantId : plantId,
+									fromDate : fromDate,
+									toDate : toDate,
+									ajax : 'true',
 
-				},
+								},
 
-				function(data) {
+								function(data) {
 
-					document.getElementById("expExcel").disabled = false;
-					document.getElementById("PDFButton").disabled = false;
+									document.getElementById("expExcel").disabled = false;
+									document.getElementById("PDFButton").disabled = false;
 
-					if (data == "") {
-						alert("No records found !!");
-						document.getElementById("expExcel").disabled = true;
-						document.getElementById("PDFButton").disabled = true;
+									if (data == "") {
+										alert("No records found !!");
+										document.getElementById("expExcel").disabled = true;
+										document.getElementById("PDFButton").disabled = true;
 
-					}
+									}
 
-					var dataTable = $('#bootstrap-data-table').DataTable();
-					dataTable.clear().draw();
+									var dataTable = $('#bootstrap-data-table')
+											.DataTable();
+									dataTable.clear().draw();
 
-					$.each(data, function(i, v) {
+									var totalTaxableAmt = 0;
+									var totalCgstAmt = 0;
+									var totalSgstAmt = 0;
+									var totalIgstAmt = 0;
+									var totalTax = 0;
+									var totalAmt = 0;
+									var space = " ";
+									var total = "Total";
 
-						dataTable.row.add(
-								[ i + 1, v.billDate, v.billNo, v.custName,
-										v.projName, v.taxableAmt.toFixed(2),
-										v.cgstAmt.toFixed(2),
-										v.sgstAmt.toFixed(2),
-										v.igstAmt.toFixed(2),
-										v.taxAmt.toFixed(2),
-										v.totalAmt.toFixed(2)
+									$
+											.each(
+													data,
+													function(i, v) {
 
-								]).draw();
-					});
+														dataTable.row
+																.add(
+																		[
+																				i + 1,
+																				v.billDate,
+																				v.billNo,
+																				v.custName,
+																				/* v.projName, */
+																				v.taxableAmt
+																						.toFixed(2),
+																				v.cgstAmt
+																						.toFixed(2),
+																				v.sgstAmt
+																						.toFixed(2),
+																				v.igstAmt
+																						.toFixed(2),
+																				v.taxAmt
+																						.toFixed(2),
+																				v.totalAmt
+																						.toFixed(2)
 
-				});
+																		])
+																.draw();
+
+														totalTaxableAmt = totalTaxableAmt
+																+ v.taxableAmt;
+														totalCgstAmt = totalCgstAmt
+																+ v.cgstAmt;
+														totalSgstAmt = totalSgstAmt
+																+ v.sgstAmt;
+														totalIgstAmt = totalIgstAmt
+																+ v.igstAmt;
+														totalTax = totalTax
+																+ v.taxAmt;
+														totalAmt = totalAmt
+																+ v.totalAmt;
+													});
+
+									document.getElementById("totalTaxableAmt").value = totalTaxableAmt
+											.toFixed(2);
+									document.getElementById("totalCgstAmt").value = totalCgstAmt
+											.toFixed(2);
+									document.getElementById("totalSgstAmt").value = totalSgstAmt
+											.toFixed(2);
+									document.getElementById("totalIgstAmt").value = totalIgstAmt
+											.toFixed(2);
+									document.getElementById("totalTax").value = totalTax
+											.toFixed(2);
+									document.getElementById("totalAmt").value = totalAmt
+											.toFixed(2);
+
+								});
 
 			}//end of if valid ==true
 

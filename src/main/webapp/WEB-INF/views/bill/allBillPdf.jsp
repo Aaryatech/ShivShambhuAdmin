@@ -189,6 +189,7 @@
 			<c:set var="totalAmt" value="0" />
 			<c:set var="totalCgst" value="0" />
 			<c:set var="totalSgst" value="0" />
+			<c:set var="totalIgst" value="0" />
 			<c:set var="totalDisc" value="0" />
 
 
@@ -218,11 +219,20 @@
 						style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">Taxable
 						Amt</td>
 
-					<td align="center" width="10%" colspan="2"
-						style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">
-						CGST</td>
-					<td align="center" width="10%" colspan="2"
-						style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">SGST</td>
+					<c:choose>
+						<c:when test="${billHeaderRes.isSameState==1}">
+
+							<td align="center" width="10%" colspan="2"
+								style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">
+								CGST</td>
+							<td align="center" width="10%" colspan="2"
+								style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">SGST</td>
+						</c:when>
+						<c:otherwise>
+							<td align="center" width="20%" colspan="2"
+								style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">IGST</td>
+						</c:otherwise>
+					</c:choose>
 					<td align="center" width="10%" colspan="2"
 						style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">Disc.</td>
 
@@ -233,16 +243,28 @@
 
 				</tr>
 				<tr>
-					<td align="center"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">CGST
-						%</td>
-					<td align="center"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
-					<td align="center"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">SGST
-						%</td>
-					<td align="center"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
+
+					<c:choose>
+						<c:when test="${billHeaderRes.isSameState==1}">
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">CGST
+								%</td>
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">SGST
+								%</td>
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
+						</c:when>
+						<c:otherwise>
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">IGST
+								%</td>
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
+						</c:otherwise>
+					</c:choose>
 					<td align="center"
 						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Disc.
 						%</td>
@@ -429,11 +451,23 @@
 						style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">Taxable
 						Amt</td>
 
-					<td align="center" width="10%" colspan="2"
-						style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">
-						CGST</td>
-					<td align="center" width="10%" colspan="2"
-						style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">SGST</td>
+					<c:choose>
+						<c:when test="${billHeaderRes.isSameState==1}">
+
+							<td align="center" width="10%" colspan="2"
+								style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">
+								CGST</td>
+							<td align="center" width="10%" colspan="2"
+								style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">SGST</td>
+						</c:when>
+						<c:otherwise>
+							<td align="center" width="20%" colspan="4"
+								style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">
+								IGST</td>
+						</c:otherwise>
+					</c:choose>
+
+
 					<td align="center" width="10%" colspan="2"
 						style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">Disc.</td>
 
@@ -444,16 +478,28 @@
 
 				</tr>
 				<tr>
-					<td align="center"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">CGST
-						%</td>
-					<td align="center"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
-					<td align="center"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">SGST
-						%</td>
-					<td align="center"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
+
+					<c:choose>
+						<c:when test="${billHeaderRes.isSameState==1}">
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">CGST
+								%</td>
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">SGST
+								%</td>
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
+						</c:when>
+						<c:otherwise>
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">IGST
+								%</td>
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
+						</c:otherwise>
+					</c:choose>
 					<td align="center"
 						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Disc.
 						%</td>
@@ -495,26 +541,45 @@
 						style="border-left: 1px solid #313131; padding: 3px 4px; color: #000; font-size: 10px;"><fmt:formatNumber
 							type="number" maxFractionDigits="2" minFractionDigits="2"
 							value="${billDetails.taxableAmt}" /></td>
-					<td align="right"
-						style="border-left: 1px solid #313131; padding: 3px 4px; color: #000; font-size: 10px;"><fmt:formatNumber
-							type="number" maxFractionDigits="2" minFractionDigits="2"
-							value="${billDetails.cgstPer}" /></td>
+
 					<c:set var="taxableAmt"
 						value="${taxableAmt+billDetails.taxableAmt}" />
 
-					<td align="right"
-						style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
-							type="number" maxFractionDigits="2" minFractionDigits="2"
-							value="${billDetails.cgstAmt}" /></td>
-					<td align="right"
-						style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
-							type="number" maxFractionDigits="2" minFractionDigits="2"
-							value="${billDetails.sgstPer}" /></td>
-					<c:set var="totalCgst" value="${totalCgst+billDetails.cgstAmt}" />
-					<td align="right"
-						style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
-							type="number" maxFractionDigits="2" minFractionDigits="2"
-							value="${billDetails.sgstAmt}" /></td>
+
+					<c:choose>
+						<c:when test="${billHeaderRes.isSameState==1}">
+							<td align="right"
+								style="border-left: 1px solid #313131; padding: 3px 4px; color: #000; font-size: 10px;"><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"
+									value="${billDetails.cgstPer}" /></td>
+
+
+							<td align="right"
+								style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"
+									value="${billDetails.cgstAmt}" /></td>
+							<td align="right"
+								style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"
+									value="${billDetails.sgstPer}" /></td>
+							<c:set var="totalCgst" value="${totalCgst+billDetails.cgstAmt}" />
+							<td align="right"
+								style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"
+									value="${billDetails.sgstAmt}" /></td>
+						</c:when>
+						<c:otherwise>
+							<td align="right"
+								style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"
+									value="${billDetails.igstPer}" /></td>
+							<c:set var="totalIgst" value="${totalIgst+billDetails.igstAmt}" />
+							<td align="right"
+								style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"
+									value="${billDetails.igstAmt}" /></td>
+						</c:otherwise>
+					</c:choose>
 					<td align="right"
 						style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
 							type="number" maxFractionDigits="2" minFractionDigits="2"
@@ -555,20 +620,34 @@
 						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
 								type="number" maxFractionDigits="2" minFractionDigits="2"
 								value="${taxableAmt}" /></b></td>
-					<td align="center"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
 
-					<td align="right"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
-								type="number" maxFractionDigits="2" minFractionDigits="2"
-								value="${totalCgst}" /></b></td>
-					<td align="center"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+					<c:choose>
+						<c:when test="${billHeaderRes.isSameState==1}">
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
 
-					<td align="right"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
-								type="number" maxFractionDigits="2" minFractionDigits="2"
-								value="${totalSgst}" /></b></td>
+							<td align="right"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+										type="number" maxFractionDigits="2" minFractionDigits="2"
+										value="${totalCgst}" /></b></td>
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+
+							<td align="right"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+										type="number" maxFractionDigits="2" minFractionDigits="2"
+										value="${totalSgst}" /></b></td>
+						</c:when>
+						<c:otherwise>
+							<td align="center"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+
+							<td align="right"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+										type="number" maxFractionDigits="2" minFractionDigits="2"
+										value="${totalIgst}" /></b></td>
+						</c:otherwise>
+					</c:choose>
 					<td align="center"
 						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
 
@@ -591,35 +670,69 @@
 
 				<c:set var="roundOffVal" value="${roundVal-tAmt}" />
 
-				<tr>
-					<td align="left"
-						style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
-					<td colspan="12" align="right"
-						style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b>Round
-							off</b></td>
+				<c:choose>
+					<c:when test="${billHeaderRes.isSameState==1}">
 
-					<td align="right"
-						style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
-								type="number" maxFractionDigits="2" minFractionDigits="2"
-								value="${roundOffVal}" /></b></td>
+						<tr>
+							<td align="left"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+							<td colspan="12" align="right"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b>Round
+									off</b></td>
 
-				</tr>
+							<td align="right"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+										type="number" maxFractionDigits="2" minFractionDigits="2"
+										value="${roundOffVal}" /></b></td>
 
-				<!-- TOTAL -->
-				<tr>
-					<td align="left"
-						style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
-					<td colspan="12" align="right"
-						style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b>Total</b></td>
+						</tr>
 
-					<td align="right"
-						style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
-								type="number" maxFractionDigits="2" minFractionDigits="2"
-								value="${roundVal}" /></b></td>
+						<!-- TOTAL -->
+						<tr>
+							<td align="left"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+							<td colspan="12" align="right"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b>Total</b></td>
 
-				</tr>
+							<td align="right"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+										type="number" maxFractionDigits="2" minFractionDigits="2"
+										value="${roundVal}" /></b></td>
 
+						</tr>
+					</c:when>
+					<c:otherwise>
 
+						<tr>
+							<td align="left"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+							<td colspan="10" align="right"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b>Round
+									off</b></td>
+
+							<td align="right"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+										type="number" maxFractionDigits="2" minFractionDigits="2"
+										value="${roundOffVal}" /></b></td>
+
+						</tr>
+
+						<!-- TOTAL -->
+						<tr>
+							<td align="left"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+							<td colspan="10" align="right"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b>Total</b></td>
+
+							<td align="right"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+										type="number" maxFractionDigits="2" minFractionDigits="2"
+										value="${roundVal}" /></b></td>
+
+						</tr>
+					</c:otherwise>
+
+				</c:choose>
 			</table>
 
 

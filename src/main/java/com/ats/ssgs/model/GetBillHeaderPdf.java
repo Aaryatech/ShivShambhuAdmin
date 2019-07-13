@@ -99,6 +99,16 @@ public class GetBillHeaderPdf {
 	private String location;
 	private String chalanNo;
 
+	private int isSameState;
+
+	public int getIsSameState() {
+		return isSameState;
+	}
+
+	public void setIsSameState(int isSameState) {
+		this.isSameState = isSameState;
+	}
+
 	public String getCustVendor() {
 		return custVendor;
 	}
@@ -498,7 +508,8 @@ public class GetBillHeaderPdf {
 				+ exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exFloat1=" + exFloat1
 				+ ", exFloat2=" + exFloat2 + ", custAddress=" + custAddress + ", getBillDetails=" + getBillDetails
 				+ ", getBillDetByHsn=" + getBillDetByHsn + ", printWord=" + printWord + ", bankDetail=" + bankDetail
-				+ ", projName=" + projName + ", location=" + location + ", chalanNo=" + chalanNo + "]";
+				+ ", projName=" + projName + ", location=" + location + ", chalanNo=" + chalanNo + ", isSameState="
+				+ isSameState + "]";
 	}
 
 }
