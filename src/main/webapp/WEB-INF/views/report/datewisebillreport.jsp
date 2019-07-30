@@ -598,6 +598,8 @@
 																		[
 																				i + 1,
 																				v.billDate,
+																				v.taxableAmt
+																						.toFixed(2),
 																				v.cgstAmt
 																						.toFixed(2),
 																				v.sgstAmt
@@ -606,8 +608,7 @@
 																						.toFixed(2),
 																				v.taxAmt
 																						.toFixed(2),
-																				v.taxableAmt
-																						.toFixed(2),
+
 																				v.totalAmt
 																						.toFixed(2),
 																				acButton
