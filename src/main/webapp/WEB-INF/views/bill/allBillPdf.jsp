@@ -45,7 +45,8 @@
 						style="border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 						<p
 							style="color: black; font-size: 20px; text-align: left; margin: 0px; font-weight: bold;">
-						<c:if test="${billHeaderRes.exInt1==68}">M/S</c:if> <b>${billHeaderRes.compName}</b>
+							<c:if test="${billHeaderRes.exInt1==68}">M/S</c:if>
+							<b>${billHeaderRes.compName}</b>
 						</p>
 						<p
 							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
@@ -294,7 +295,8 @@
 						style="border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 						<p
 							style="color: black; font-size: 20px; text-align: left; margin: 0px; font-weight: bold;">
-							<c:if test="${billHeaderRes.exInt1==68}">M/S</c:if> <b>${billHeaderRes.compName}</b>
+							<c:if test="${billHeaderRes.exInt1==68}">M/S</c:if>
+							<b>${billHeaderRes.compName}</b>
 						</p>
 						<p
 							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
@@ -1001,7 +1003,10 @@
 						style="border-top: 1px solid #313131; padding: 8px; color: #000; font-size: 13px;">&nbsp;
 						Declaration: We declare that this invoice shows actual price of
 						the goods described and that all particulars are true and correct
-						.</td>
+						. <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Interest
+						@ 18% p.a. will be charged if payment is not paid within due date.
+					</td>
 				</tr>
 				<tr>
 					<td colspan="8" width="60%"
@@ -1014,8 +1019,9 @@
 					</td>
 					<td align="center" colspan="4" width="40%"
 						style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px;">
-						<b> for <c:if test="${billHeaderRes.exInt1==68}">M/S</c:if> ${billHeaderRes.compName}</b><br /> <br /> <br />
-						Authorised Signature
+						<b> for <c:if test="${billHeaderRes.exInt1==68}">M/S</c:if>
+							${billHeaderRes.compName}
+					</b><br /> <br /> <br /> Authorised Signature
 					</td>
 				</tr>
 

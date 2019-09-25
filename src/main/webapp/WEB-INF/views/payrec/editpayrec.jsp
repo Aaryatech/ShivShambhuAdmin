@@ -771,8 +771,8 @@
 	<script>
 		function checkstock() {
 
-			var pendingAmt= document.getElementById("pendingAmt").value;
-			var paidAmt= document.getElementById("paidAmt").value;
+			var pendingAmt= parseFloat(document.getElementById("pendingAmt").value);
+			var paidAmt= parseFloat(document.getElementById("paidAmt").value);
 		
 			if (  paidAmt > pendingAmt  ) {
 
