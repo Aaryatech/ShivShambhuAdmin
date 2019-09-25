@@ -140,26 +140,23 @@ public class PdfController {
 
 			if (a.equals("00:00:00")) {
 
-				System.err.println("hiiiiii" + a);
 				model.addObject("temp", "--:--:--");
 
 			} else {
-				System.err.println("pdf time:::::" + a);
+
 				model.addObject("temp", a);
 			}
 
 			if (b == 0.0) {
 
-				System.err.println("hiiiiii" + a);
 				model.addObject("temp1", "--");
 
 			} else {
-				System.err.println("pdf time:::::" + a);
+
 				model.addObject("temp1", b);
 			}
 
-			System.err.println("pdf data 2/showChalanPdf Print================================" + chPrint.toString());
-
+			System.out.println(chPrint);
 			model.addObject("printData", chPrintData);
 
 			model.addObject("chPrint", chPrint);
@@ -173,8 +170,6 @@ public class PdfController {
 						System.out.println("matched");
 						model.addObject("result", rstList);
 
-						System.out.println("result is rstlist >>>>>" + rstList);
-						System.out.println("result is >>>>>" + rstList.get(i1).getResult());
 					}
 				}
 			}

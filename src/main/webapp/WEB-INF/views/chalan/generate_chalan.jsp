@@ -1468,13 +1468,15 @@ function toggle() {
 					
 					
 					if (len1 == 1) {
-						var c= "000"+count;
+						var c= "0000"+count;
 
 					} else if (len1 == 2) {
-						var c= "00"+count;
+						var c= "000"+count;
 					} else if (len1 == 3) {
-						var c= "0"+count;
+						var c= "00"+count;
 
+					}else if (len1 == 4) {
+						var c= "0"+count; 
 					}else
 						{
 						var c= count;

@@ -1904,7 +1904,7 @@ public class BillController {
 		// File f = new File("/report.pdf");
 		//File f = new File("/home/lenovo/Desktop/bill.pdf");
 		// File f = new File("E:\\bill.pdf");
-		 File f = new File("apache-tomcat-8.5.40/webapps/uploads/shiv/bill.pdf");
+		 File f = new File(Constants.REPORT_SAVE);
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1923,11 +1923,9 @@ public class BillController {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 
-		//String filename = "/home/lenovo/Desktop/bill.pdf";
-		// String filename = "E:\\bill.pdf";
-		String filename = "apache-tomcat-8.5.40/webapps/uploads/shiv/bill.pdf";
-		//String filePath = "/home/lenovo/Desktop/bill.pdf";
-		 String filePath = "apache-tomcat-8.5.40/webapps/uploads/shiv/bill.pdf";
+		 
+		String filename = Constants.REPORT_SAVE;
+		 String filePath = Constants.REPORT_SAVE;
 
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 		// String filePath = "E:\\bill.pdf";

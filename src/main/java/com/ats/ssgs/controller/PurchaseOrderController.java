@@ -98,7 +98,8 @@ public class PurchaseOrderController {
 
 			model.addObject("shortName", shortName);
 
-			int a = doc.getSrNo();
+			/*int a = doc.getSrNo();
+
 			if (String.valueOf(a).length() == 1) {
 				var = "0000".concat(String.valueOf(a));
 
@@ -108,7 +109,14 @@ public class PurchaseOrderController {
 			} else if (String.valueOf(a).length() == 3) {
 				var = "00".concat(String.valueOf(a));
 
-			}
+			} else if (String.valueOf(a).length() == 4) {
+				var = "0".concat(String.valueOf(a));
+			} else {
+				var = String.valueOf(a);
+			}*/
+
+			var = String.format("%05d", doc.getSrNo());
+			
 			System.out.println("doc data is" + doc);
 			model.addObject("var", var);
 
