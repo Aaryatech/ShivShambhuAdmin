@@ -3,11 +3,11 @@ package com.ats.ssgs.common;
 public class Constants {
 
 	// Global
-  public static final String url = "http://localhost:8094/";
-  public static final String REPORT_SAVE =  "/home/lenovo/Desktop/Report.pdf";
+	//public static final String url = "http://localhost:8094/";
+	// public static final String REPORT_SAVE = "/home/lenovo/Desktop/Report.pdf";
 
-	//public static final String url = "http://192.169.205.160:8080/ShivShambhuWebApi/";
-	//public static final String REPORT_SAVE = "apache-tomcat-8.5.40/webapps/uploads/shiv/Report.pdf";
+	public static final String url = "http://192.169.205.160:8080/ShivShambhuWebApi/";
+	public static final String REPORT_SAVE = "apache-tomcat-8.5.40/webapps/uploads/shiv/Report.pdf";
 
 	public static final String ReportURL = "http://192.169.205.160:8080/ShivShambhuAdmin/";
 	public static final String VEH_IMG_URL = "http://192.169.205.160:8080/uploads/shiv/Veh/";

@@ -74,6 +74,7 @@ import com.ats.ssgs.model.master.Document;
 import com.ats.ssgs.model.master.GetCust;
 import com.ats.ssgs.model.master.GetItem;
 import com.ats.ssgs.model.master.Info;
+import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
@@ -771,9 +772,7 @@ public class BillController {
 
 					}
 
-				} else {
-
-				}
+				} 
 				System.err.println("insertBillHeadRes " + insertBillHeadRes.toString());
 			}
 
@@ -968,7 +967,7 @@ public class BillController {
 		List<ExportToExcel> exportToExcelList2 = new ArrayList<ExportToExcel>();
 		ExportToExcel expoExcel = new ExportToExcel();
 		List<String> rowData = new ArrayList<String>();
-
+		rowData.add("Sr.No");
 		rowData.add("Voucher Type");
 		rowData.add("Voucher No.");
 		rowData.add("Date");
@@ -995,18 +994,25 @@ public class BillController {
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 		System.out.println("hello...................");
-		int cnt = 1;
+		int cnt = 0;
 		for (int i = 0; i < getBillList.size(); i++) {
 			// 6
 			System.out.println("item len is " + getBillList.get(i).getGetBillDetails().size());
-
-			cnt = cnt + i;
-
+			
 			for (int j = 0; j < getBillList.get(i).getGetBillDetails().size(); j++) {
+				cnt = cnt + 1;
 				expoExcel = new ExportToExcel();
 				rowData = new ArrayList<String>();
-
-				rowData.add("" + "Sales Voucher");
+				rowData.add("" + cnt);
+				if(getBillList.get(i).getExInt1()==70 || getBillList.get(i).getExInt1()==68) {
+				rowData.add("" + "GST SALES");
+				}else if(getBillList.get(i).getExInt1()==74) {
+				
+					rowData.add("PAVER BLOCK SALE");
+				}else
+				{
+					rowData.add("Sales Voucher");
+				}
 				rowData.add("" + getBillList.get(i).getBillNo());
 				rowData.add("" + getBillList.get(i).getBillDate());
 				rowData.add("" + getBillList.get(i).getBillNo());
@@ -1014,7 +1020,7 @@ public class BillController {
 				rowData.add("" + "-");
 				rowData.add("" + "-");
 				rowData.add("" + "-");
-				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getItemName());
+				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getShortName());//itemName Replaced
 				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getQty());
 				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getTaxableAmt()
 						/ getBillList.get(i).getGetBillDetails().get(j).getQty());
@@ -1065,7 +1071,7 @@ public class BillController {
 
 		ExportToExcel expoExcel1 = new ExportToExcel();
 		List<String> rowData1 = new ArrayList<String>();
-
+		rowData1.add("Sr.No");
 		rowData1.add("Name");
 		rowData1.add("Group");
 		rowData1.add("HSN");
@@ -1077,15 +1083,15 @@ public class BillController {
 		expoExcel1.setRowData(rowData1);
 		exportToExcelList1.add(expoExcel1);
 
-		int cnt1 = 1;
+		int cnt1 = 0;
 
 		for (int i = 0; i < getItemList.size(); i++) {
 			expoExcel1 = new ExportToExcel();
 			rowData1 = new ArrayList<String>();
 
-			cnt1 = cnt1 + i;
-
-			rowData1.add("" + getItemList.get(i).getItemName());
+			cnt1 = cnt1 + 1;
+			rowData1.add("" +cnt1);
+			rowData1.add("" + getItemList.get(i).getShortName());
 
 			rowData1.add("" + "Ready Mix Concrete");
 			rowData1.add("" + getItemList.get(i).getHsnCode());
@@ -1112,7 +1118,7 @@ public class BillController {
 
 		ExportToExcel expoExcel2 = new ExportToExcel();
 		List<String> rowData2 = new ArrayList<String>();
-
+		rowData2.add("Sr.No");
 		rowData2.add("Name");
 		rowData2.add("Group");
 		rowData2.add("GSTIN");
@@ -1135,14 +1141,14 @@ public class BillController {
 		expoExcel2.setRowData(rowData2);
 		exportToExcelList2.add(expoExcel2);
 
-		int cnt2 = 1;
+		int cnt2 = 0;
 
 		for (int i = 0; i < getCustList.size(); i++) {
 			expoExcel2 = new ExportToExcel();
 			rowData2 = new ArrayList<String>();
 
-			cnt2 = cnt2 + i;
-
+			cnt2 = cnt2 + 1;
+			rowData2.add("" +cnt2);
 			rowData2.add("" + getCustList.get(i).getCustName());
 
 			rowData2.add("" + "Sundry Debtor");
@@ -1204,7 +1210,7 @@ public class BillController {
 	}
 
 	List<GetBillDetail> billDetailList;
-
+	List<GetItem>  getItemList;
 	@RequestMapping(value = "/editBill/{billHeadId}", method = RequestMethod.GET)
 	public ModelAndView editBill(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable int billHeadId) {
@@ -1250,7 +1256,17 @@ public class BillController {
 			System.err.println(billDetailList.toString());
 
 			model.addObject("billDetailList", billDetailList);
+			//-----------------Get ItemList By PlantId -----------------
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("plantId", editBill.getExInt1());//planId=exInt1 in db
 
+
+			GetItem[] itemArray = rest.postForObject(Constants.url + "getGetItemsByPlantId", map, GetItem[].class);
+			getItemList = new ArrayList<GetItem>(Arrays.asList(itemArray));
+		
+			model.addObject("itemList", getItemList);
+			
+            //-----------------------------------------------------------
 			model.addObject("editBill", editBill);
 			model.addObject("projList", projList);
 
@@ -1261,6 +1277,171 @@ public class BillController {
 			e.printStackTrace();
 		}
 		return model;
+	}
+	
+	
+	@RequestMapping(value = "/addItemInEditBill", method = RequestMethod.GET)
+	public @ResponseBody List<GetBillDetail> addItemInEditBill(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			int billHeadId = Integer.parseInt(request.getParameter("billHeadId"));
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("billHeadId", billHeadId);
+			GetBillHeader billHeaderResponse = rest.postForObject(Constants.url + "getBillHeaderById", map, GetBillHeader.class);
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("custId", billHeaderResponse.getCustId());
+			Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
+
+			int itemId = Integer.parseInt(request.getParameter("itemId"));System.err.println("itemId"+itemId);
+
+			float qty =Float.parseFloat(request.getParameter("qty"));System.err.println("qty"+qty);
+			float rate = Float.parseFloat(request.getParameter("rate"));System.err.println("rate"+rate);
+			GetItem item=new GetItem();
+			for(int i=0;i<getItemList.size();i++)
+			{
+				if(getItemList.get(i).getItemId()==itemId)
+				{
+					item=getItemList.get(i);
+				}
+			}System.err.println("item"+item.toString());
+				
+
+			float totalTaxable = 0.0f;
+			float totalTaxAmt = 0.0f;
+			float grandTotalAmt = 0.0f;
+			GetBillDetail billDetail = new GetBillDetail();
+			billDetail.setItemId(itemId);
+			billDetail.setItemName(item.getItemName());
+			if (billHeaderResponse.getExInt2() == 0) {
+				System.out.println("IN IF" + billHeaderResponse.getExInt2());
+			
+				Float taxableAmt = (float) (qty * rate);
+				taxableAmt = roundUp(taxableAmt);
+
+				float discAmt = 0;
+				taxableAmt = taxableAmt - discAmt;
+
+				float sgstRs = (taxableAmt * item.getSgst()) / 100;
+				float cgstRs = (taxableAmt * item.getCgst()) / 100;
+				float igstRs = (taxableAmt * item.getIgst()) / 100;
+
+				sgstRs = roundUp(sgstRs);
+				cgstRs = roundUp(cgstRs);
+				igstRs = roundUp(igstRs);
+
+				Float totalTax = sgstRs + cgstRs;
+				totalTax = roundUp(totalTax);
+
+				Float grandTotal = totalTax + taxableAmt;
+				grandTotal = roundUp(grandTotal);
+
+				grandTotalAmt = grandTotalAmt + grandTotal;
+				// -------------------------------------------
+				billDetail.setQty(qty);
+				billDetail.setRate(rate);
+
+				billDetail.setCgstPer(0);
+				billDetail.setSgstPer(0);
+
+				billDetail.setDiscAmt(discAmt);
+				billDetail.setDiscPer(0);
+
+				if (editCust.getIsSameState() == 1) {
+					billDetail.setCgstAmt(0);
+					billDetail.setSgstAmt(0);
+					billDetail.setIgstAmt(0);
+				} else {
+
+					billDetail.setCgstAmt(0);
+					billDetail.setSgstAmt(0);
+					billDetail.setIgstAmt(igstRs);
+				}
+
+				billDetail.setIgstPer(item.getIgst());
+
+				billDetail.setTaxableAmt(taxableAmt);
+				billDetail.setTaxAmt(0);
+				billDetail.setTotalAmt(taxableAmt);
+				totalTaxable = totalTaxable + taxableAmt;
+				totalTaxAmt = totalTaxAmt + totalTax;
+			} else {
+
+				System.out.println("IN ELSE" + billHeaderResponse.getExInt2());
+
+				System.out.println("Mrp: " + rate);
+
+				Float taxableAmt = (float) (rate * qty);
+				taxableAmt = roundUp(taxableAmt);
+
+				float discAmt = 0;
+				taxableAmt = taxableAmt - discAmt;
+
+				float sgstRs = (taxableAmt * item.getSgst()) / 100;
+				float cgstRs = (taxableAmt * item.getCgst()) / 100;
+				float igstRs = (taxableAmt * item.getIgst()) / 100;
+
+				sgstRs = roundUp(sgstRs);
+				cgstRs = roundUp(cgstRs);
+				igstRs = roundUp(igstRs);
+
+				Float totalTax = sgstRs + cgstRs;
+				totalTax = roundUp(totalTax);
+
+				Float grandTotal = totalTax + taxableAmt;
+				grandTotal = roundUp(grandTotal);
+
+				totalTaxable = totalTaxable + taxableAmt;
+				totalTaxAmt = totalTaxAmt + totalTax;
+				grandTotalAmt = grandTotalAmt + grandTotal;
+				// -------------------------------------------
+				billDetail.setQty(qty);
+				billDetail.setRate(rate);
+
+				if (editCust.getIsSameState() == 1) {
+					billDetail.setCgstAmt(cgstRs);
+					billDetail.setSgstAmt(sgstRs);
+					billDetail.setIgstAmt(0);
+				} else {
+
+					billDetail.setCgstAmt(0);
+					billDetail.setSgstAmt(0);
+					billDetail.setIgstAmt(igstRs);
+				}
+
+				billDetail.setCgstPer(item.getCgst());
+
+				billDetail.setDiscAmt(discAmt);
+				billDetail.setDiscPer(0);
+
+				billDetail.setSgstPer(item.getSgst());
+
+				billDetail.setIgstPer(item.getIgst());
+
+				billDetail.setTaxableAmt(taxableAmt);
+				billDetail.setTaxAmt(totalTax);
+
+				billDetail.setTotalAmt(grandTotal);
+			}
+
+			billDetail.setBillDetailId(0);
+			billDetail.setBillHeadId(billHeaderResponse.getBillHeadId());
+			billDetail.setDelStatus(1);
+			billDetail.setExFloat1(0);
+			billDetail.setExFloat2(0);
+			billDetail.setExInt1(billDetailList.get(0).getExInt1());//Is Tax Including?
+			billDetail.setExInt2(0);
+			billDetail.setExVar1("");
+			billDetail.setExVar2("");
+			billDetail.setHsnCode(item.getHsnCode());
+			
+            billDetailList.add(billDetail);
+			System.err.println("billDetail" + billDetail.toString());
+			System.err.println("billDetailList"+billDetailList.toString());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return billDetailList;
 	}
 
 	@RequestMapping(value = "/addBillByChalan/{chalanId}", method = RequestMethod.GET)
@@ -1405,7 +1586,7 @@ public class BillController {
 				ma.add("custId", billHeader.getCustId());
 				Cust editCust = rest.postForObject(Constants.url + "getCustByCustId", ma, Cust.class);
 
-				if (qty > 0) {
+				if (qty >= 0) {
 
 					BillDetail billDetail = new BillDetail();
 					billDetail.setItemId(billDetailList.get(i).getItemId());
@@ -1721,9 +1902,9 @@ public class BillController {
 		System.out.println("URL " + url);
 		// http://monginis.ap-south-1.elasticbeanstalk.com
 		// File f = new File("/report.pdf");
-		// File f = new File("/home/lenovo/Desktop/bill.pdf");
+		//File f = new File("/home/lenovo/Desktop/bill.pdf");
 		// File f = new File("E:\\bill.pdf");
-		File f = new File("apache-tomcat-8.5.40/webapps/uploads/shiv/bill.pdf");
+		 File f = new File("apache-tomcat-8.5.40/webapps/uploads/shiv/bill.pdf");
 
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1742,11 +1923,11 @@ public class BillController {
 		ServletContext context = request.getSession().getServletContext();
 		String appPath = context.getRealPath("");
 
-		// String filename = "/home/lenovo/Desktop/bill.pdf";
+		//String filename = "/home/lenovo/Desktop/bill.pdf";
 		// String filename = "E:\\bill.pdf";
 		String filename = "apache-tomcat-8.5.40/webapps/uploads/shiv/bill.pdf";
-		// String filePath = "/home/lenovo/Desktop/bill.pdf";
-		String filePath = "apache-tomcat-8.5.40/webapps/uploads/shiv/bill.pdf";
+		//String filePath = "/home/lenovo/Desktop/bill.pdf";
+		 String filePath = "apache-tomcat-8.5.40/webapps/uploads/shiv/bill.pdf";
 
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
 		// String filePath = "E:\\bill.pdf";

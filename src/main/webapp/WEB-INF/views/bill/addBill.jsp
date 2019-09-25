@@ -1214,7 +1214,7 @@ $
 		
 				window
 				.open('${pageContext.request.contextPath}/pdf?url=pdf/showBillsPdf/'
-						+ billHeadId + '/' + "11");
+						+ billHeadId + '/' + "11,12,13");
 				
 				$
 				/* .getJSON(

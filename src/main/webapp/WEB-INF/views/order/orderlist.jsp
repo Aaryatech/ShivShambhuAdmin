@@ -283,6 +283,7 @@
 													name="selAll" id="selAll" /></th>
 												<th style="text-align: center">Sr.</th>
 												<th style="text-align: center">Order No</th>
+												<th style="text-align: center">PO No</th>
 												<th style="text-align: center">Order Date</th>
 												<th style="text-align: center">Delivery Date</th>
 												<th style="text-align: center">Customer Name</th>
@@ -578,10 +579,10 @@
 				alert("Please select to date");
 			}
 
-			if (fromDate > toDate) {
+			/* if (fromDate > toDate) {
 				valid = false;
 				alert("from date greater than todate ");
-			}
+			} */
 			if (valid == true) {
 
 				$
@@ -620,6 +621,7 @@
 													function(i, v) {
 														var chBox;
 														var status1;
+														var acButton;
 														if (v.status == 0) {
 															status1 = "Pending";
 														} else if (v.status == 1) {
@@ -628,16 +630,24 @@
 															status1 = "Completed";
 														}
 
-														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
-																+ v.orderId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;<a href="#" class="action_btn" onclick="callClose('
-																+ v.orderId
-																+ ','
-																+ i
-																+ ')" style="color:black"><i class="fa fa-times" title="Close Order"></i></a>'
+														if (v.status != 2) {
 
+															acButton = '<a href="#" class="action_btn" onclick="callEdit('
+																	+ v.orderId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>&nbsp;<a href="#" class="action_btn" onclick="callClose('
+																	+ v.orderId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-times" title="Close Order"></i></a>'
+														} else {
+															acButton = ' <a href="#" class="action_btn" onclick="callEdit('
+																	+ v.orderId
+																	+ ','
+																	+ i
+																	+ ')" style="color:black"><i class="fa fa-edit"  title="Edit"></i></a>'
+														}
 														chBox = '<input  type="checkbox" class="chk" name="selectOrderToDelete" id='+v.orderId+' class="check"  value='+v.orderId+'>'
 														/* if (v.status == 0) {
 														} else {
@@ -656,6 +666,7 @@
 																				chBox,
 																				i + 1,
 																				v.orderNo,
+																				v.poNo,
 																				v.orderDate,
 																				deliveryDate,
 																				v.custName,

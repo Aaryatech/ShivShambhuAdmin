@@ -338,6 +338,7 @@
 													name="selAll" id="selAll" /></th>
 												<th style="text-align: center">Sr.</th>
 												<th style="text-align: center">Challan No</th>
+												<th style="text-align: center">Order No</th>
 												<th style="text-align: center">Challan Date</th>
 												<th style="text-align: center">Customer Name</th>
 												<th style="text-align: center">Project Name</th>
@@ -683,6 +684,7 @@
 																				chBox,
 																				i + 1,
 																				v.chalanNo,
+																				v.orderNo,
 																				v.chalanDate,
 																				v.custName,
 																				v.projName,

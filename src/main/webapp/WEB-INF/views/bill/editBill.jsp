@@ -17,9 +17,9 @@
 
 <c:url var="getProjectByCustId" value="/getProjectByCustId" />
 
+<c:url var="addItemInEditBill" value="/addItemInEditBill" />
 
-<c:url var="getPoDetailForOrderByPoId"
-	value="/getPoDetailForOrderByPoId" />
+<c:url var="getPoDetailForOrderByPoId"	value="/getPoDetailForOrderByPoId" />
 
 
 <c:url var="getTempOrderHeader" value="/getTempOrderHeader" />
@@ -290,6 +290,29 @@
 
 
 								<div class="form-group"></div>
+									<div class="row">
+
+									<div class="col-md-2">Item</div>
+
+									<div class="col-md-3">
+										<select id="itemId" name="itemId" class="standardSelect"
+											tabindex="1" 
+											oninvalid="setCustomValidity('Please select item')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+														<option  value="" selected>Select Item</option>
+
+											<c:forEach items="${itemList}" var="item">
+														<option value="${item.itemId}">${item.itemName}</option>
+											</c:forEach>
+
+										</select>
+									</div>
+										<div class="col-md-1">Qty</div>
+										<div class="col-md-1"><input type="text" style="text-align: center;" name="qty" id="qty" value="0" class="form-control"/></div>
+										<div class="col-md-1">Rate</div>
+										<div class="col-md-1"><input type="text" style="text-align: center;"  name="rate" id="rate" value="0" class="form-control"/></div>
+										<div class="col-md-1"><input type="button" class="btn btn-primary" value="Add Item" onclick="addItem()"></div>
+								</div>
 								<%--	<div class="row">
 
 									<div class="col-md-2">Select PO</div>
@@ -309,7 +332,7 @@
 
 								<div class="card-body card-block">
 									<table id="bootstrap-data-table"
-										class="table table-striped table-bordered">
+										class="table table-striped table-bordered" >
 										<thead>
 											<tr>
 												<th style="text-align: center">Sr</th>
@@ -360,12 +383,12 @@
 														class="form-control" value="${billDetail.rate}"
 														id="billRate${count.index}${billDetail.itemId}"
 														name="billRate${count.index}${billDetail.itemId}"
-														oninput="calculation(${count.index},${billDetail.itemId})" />
+														oninput="calculation(${count.index},${billDetail.itemId})" /></td>
 													<td style="text-align: center"><input type="text"
 														class="form-control" value="${billDetail.qty}"
 														id="chalanQty${count.index}${billDetail.itemId}"
 														name="chalanQty${count.index}${billDetail.itemId}"
-														oninput="calculation(${count.index},${billDetail.itemId})" />
+														oninput="calculation(${count.index},${billDetail.itemId})" /></td>
 													<td style="text-align: center"><p
 															id="taxableAmt${count.index}${billDetail.itemId}">
 															<c:out value="${billDetail.taxableAmt}" />
@@ -409,7 +432,7 @@
 
 								</div> -->
 								<div class="form-group"></div>
-								<div class="row">
+								<div class="row" >
 
 									<!-- 	<div class="col-md-2">Other Cost After Tax</div>
 
@@ -418,7 +441,7 @@
 
 									<div class="col-md-3" id="ordTotal">${editBill.totalAmt}</div> --%>
 
-									<div class="col-md-2">
+									<div class="col-md-6" style="text-align: right;">
 										<input type="submit" class="btn btn-primary" value="Submit">
 
 									</div>
@@ -714,7 +737,104 @@
 			
 		}
 	</script>
+   <script type="text/javascript">
+	function addItem() {
+		//alert("in add Item ");
+		var itemId=$('#itemId').val();
 
+		var qty = document.getElementById("qty").value;
+		var rate = document.getElementById("rate").value;
+		//var discPer = document.getElementById("discPerc").value;
+		var	billHeadId= document.getElementById("billHeadId").value;
+		var x = false;
+		x = isNaN(qty);
+		
+		var valid = false;
+       if (itemId == "" || itemId < 0) {
+			valid = true;
+			var msg = "Please Select Item";
+			callAlert(msg);
+		} else if ((x == true) || (qty == null) || (qty == "") || (qty < 0)) {
+			var msg = "Please Enter Valid Quantity";
+			valid = true;
+			callAlert(msg);
+		}
+
+		if (valid == false) {
+			$
+					.getJSON(
+							'${addItemInEditBill}',
+							{
+								itemId : itemId,
+								billHeadId:billHeadId,
+								qty : qty,
+								rate:rate,
+								ajax : 'true',
+
+							},
+
+							function(data) {
+								var dataTable = $('#bootstrap-data-table')
+										.DataTable();
+								dataTable.clear().draw();
+
+								$
+										.each(
+												data,
+												function(i, v) {
+												
+													/* var str = '<a href="#" class="action_btn" onclick="callDelete('
+															+ v.itemId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-trash"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" onclick="callEdit('
+															+ v.itemId
+															+ ','
+															+ i
+															+ ')"><i class="fa fa-edit"></i></a>' */
+               var billRate='<input type="text" class="form-control" value="'+v.rate+'" id="billRate'+i+''+v.itemId+'" name="billRate'+i+''+v.itemId+'"'
+             										+'	oninput="calculation('+i+','+v.itemId+')" />'
+               var chalanQty='<input type="text" class="form-control" value="'+v.qty+'" id="chalanQty'+i+''+v.itemId+'"	name="chalanQty'+i+''+v.itemId+'"'
+						+'oninput="calculation('+i+','+v.itemId+')" />'
+			   var taxableAmt='<p id="taxableAmt'+i+''+v.itemId+'">'+v.taxableAmt+'</p>'					
+			   var discPer='<input type="text"	class="form-control" value="'+v.discPer+'"	id="discPer'+i+''+v.itemId+'"	name="discPer'+i+''+v.itemId+'"'
+						+'oninput="calculation('+i+','+v.itemId+')" />	'	
+				var discAmt='<p id="discAmt'+i+''+v.itemId+'">'+v.discAmt+'</p>'
+				var sgstPer=v.cgstPer+v.sgstPer	
+				var taxAmt='<p	id="taxAmt'+i+''+v.itemId+'">'+v.taxAmt+'</p>'
+				var totalAmt='<p	id="total'+i+''+v.itemId+'">'+v.totalAmt+'</p>'
+						
+				var hidden='<input type="hidden" class="form-control"	value="'+v.rate+'"	id="orderRate'+i+''+v.itemId+'" name="orderRate'+i+''+v.itemId+'"	oninput="calculation('+i+','+v.itemId+')" />'
+				+'<input type="hidden" class="form-control"	value="'+v.exInt1+'"	id="isTaxIncluding'+i+''+v.itemId+'"	name="isTaxIncluding'+i+''+v.itemId+'"	oninput="calculation('+i+','+v.itemId+')" />'
+				+'<input type="hidden" class="form-control"	value="'+(v.cgstPer+v.sgstPer)+'"	id="taxPer'+i+''+v.itemId+'"	name="taxPer'+i+''+v.itemId+'"	oninput="calculation('+i+','+v.itemId+')" />'
+													dataTable.row
+															.add(
+																	[
+																			i + 1,
+																			v.itemName,
+																			billRate,
+																			chalanQty,
+																			taxableAmt,
+																			discPer,
+																			discAmt,
+																			sgstPer,
+																			taxAmt,
+																			totalAmt+""+hidden
+																			 ])
+															.draw();
+												});
+								document.getElementById("qty").value = "0";
+								document.getElementById("rate").value = "0";
+								document.getElementById("itemId").options.selectedIndex = "";
+								$("#itemId").trigger("chosen:updated");
+							
+							});
+
+		}//end of if
+		
+	}
+   
+   </script>
 	<!-- <script type="text/javascript">
 	// on poId c change function 
 		function getPoDetailItem() {

@@ -45,7 +45,7 @@
 						style="border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 						<p
 							style="color: black; font-size: 20px; text-align: left; margin: 0px; font-weight: bold;">
-							M/S <b>${billHeaderRes.compName}</b>
+						<c:if test="${billHeaderRes.exInt1==68}">M/S</c:if> <b>${billHeaderRes.compName}</b>
 						</p>
 						<p
 							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
@@ -56,10 +56,10 @@
 
 					</td>
 
-					<td width="25%" colspan="3"
+					<td width="30%" colspan="4"
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
 						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
+							style="color: #000; font-size: 14px; text-align: left; margin: 0px;">
 							Invoice No.
 							<!-- </p> 
       	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
@@ -67,10 +67,10 @@
 						</p>
 
 					</td>
-					<td colspan="3" width="25%"
+					<td colspan="2" width="20%"
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
+							style="color: #000; font-size: 14px; text-align: left; margin: 0px;">
 							Dated.
 							<!-- </p> 
       	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
@@ -85,7 +85,7 @@
 					<td width="25%" colspan="6"
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
 						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Despatch
+							style="color: #000; font-size: 14px; text-align: left; margin: 0px;">Dispatch
 							Doc. No. ${billHeaderRes.chalanNo}</p>
 
 					</td>
@@ -160,7 +160,7 @@
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
 
 						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
+							style="color: #000; font-size: 14px; text-align: left; margin: 0px;">
 							Buyer's Order No.: <b>${ref}</b>
 						</p>
 					</td>
@@ -172,7 +172,7 @@
 					<td colspan="6" width="25%"
 						style="border-left: 1px solid #313131; border-bottom: 0px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Project
+							style="color: #000; font-size: 14px; text-align: left; margin: 0px;">Project
 							Name - ${billHeaderRes.projName} ${billHeaderRes.location}</p>
 
 					</td>
@@ -294,7 +294,7 @@
 						style="border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 						<p
 							style="color: black; font-size: 20px; text-align: left; margin: 0px; font-weight: bold;">
-							M/S <b>${billHeaderRes.compName}</b>
+							<c:if test="${billHeaderRes.exInt1==68}">M/S</c:if> <b>${billHeaderRes.compName}</b>
 						</p>
 						<p
 							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
@@ -305,10 +305,10 @@
 
 					</td>
 
-					<td width="25%" colspan="3"
+					<td width="30%" colspan="4"
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
 						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
+							style="color: #000; font-size: 13px; text-align: left; margin: 0px;">
 							Invoice No.
 							<!-- </p> 
       	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
@@ -316,10 +316,10 @@
 						</p>
 
 					</td>
-					<td colspan="3" width="25%"
+					<td colspan="2" width="20%"
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
+							style="color: #000; font-size: 14px; text-align: left; margin: 0px;">
 							Dated.
 							<!-- </p> 
       	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
@@ -334,7 +334,7 @@
 					<td width="25%" colspan="6"
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
 						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Despatch
+							style="color: #000; font-size: 14px; text-align: left; margin: 0px;">Dispatch
 							Doc. No. ${billHeaderRes.chalanNo}</p>
 
 					</td>
@@ -405,7 +405,7 @@
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
 
 						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
+							style="color: #000; font-size: 14px; text-align: left; margin: 0px;">
 							Buyer's Order No.: <b>${ref}</b>
 						</p>
 					</td>
@@ -417,7 +417,7 @@
 					<td colspan="6" width="25%"
 						style="border-left: 1px solid #313131; border-bottom: 0px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 						<p
-							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">Project
+							style="color: #000; font-size: 14px; text-align: left; margin: 0px;">Project
 							Name - ${billHeaderRes.projName} ${billHeaderRes.location}</p>
 
 					</td>
@@ -1014,7 +1014,7 @@
 					</td>
 					<td align="center" colspan="4" width="40%"
 						style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 12px;">
-						<b> for M/S ${billHeaderRes.compName}</b><br /> <br /> <br />
+						<b> for <c:if test="${billHeaderRes.exInt1==68}">M/S</c:if> ${billHeaderRes.compName}</b><br /> <br /> <br />
 						Authorised Signature
 					</td>
 				</tr>

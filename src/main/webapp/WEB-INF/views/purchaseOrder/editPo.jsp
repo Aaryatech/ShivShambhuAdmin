@@ -230,9 +230,9 @@
 													Rate</th>
 												<th style="text-align: center" class="col-md-1">GST</th>
 												<th style="text-align: center" class="col-md-1">Tax</th>
-												<th style="text-align: center" class="col-md-1">Other
+												<!-- <th style="text-align: center" class="col-md-1">Other
 													Cost After Tax</th>
-
+ -->
 												<th style="text-align: center" class="col-md-1">Final</th>
 
 											</tr>
@@ -282,7 +282,7 @@
 														style="text-align: right"><c:out
 															value="${getPoDetailList.taxAmt}" /></td>
 
-													<td style="width: 100px"><input type="text"
+													<%-- <td style="width: 100px"><input type="text"
 														id="othCostAftTax${getPoDetailList.itemId}"
 														style="height: 32px; padding-bottom: 12px; text-align: right; font-size: 15px;"
 														name="othCostAftTax${getPoDetailList.itemId}"
@@ -292,7 +292,7 @@
 														class="form-control" required> <input
 														type="hidden" id="taxAmt${getPoDetailList.itemId}"
 														name="taxAmt${getPoDetailList.itemId}"
-														value="${getPoDetailList.taxAmt}" required></td>
+														value="${getPoDetailList.taxAmt}" required></td> --%>
 
 													<td style="width: 100px"><input type="text" readonly
 														id="finalAmt${getPoDetailList.itemId}"

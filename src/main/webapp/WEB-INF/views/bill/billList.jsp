@@ -456,21 +456,21 @@ body {
 								<button type="button" class="btn btn-primary"
 									onclick="exportToExcel();" id="expExcel"
 									style="align-content: center; width: 200px; margin-left: 80px;">
-									Export Bills(Talley)</button>
+									Export Bills(Tally)</button>
 
 
 
 								<button type="button" class="btn btn-primary"
 									onclick="exportToExcel1();" id="expExcel1"
 									style="align-content: center; width: 200px; margin-left: 80px;">
-									Export Item(Talley)</button>
+									Export Item(Tally)</button>
 
 
 
 								<button type="button" class="btn btn-primary"
 									onclick="exportToExcel2();" id="expExcel2"
 									style="align-content: center; width: 200px; margin-left: 80px;">
-									Export Customer(Talley)</button>
+									Export Customer(Tally)</button>
 							</center>
 
 						</div>
