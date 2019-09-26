@@ -1,10 +1,11 @@
 <%@page pageEncoding="UTF-8"%>
 
-<link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Merriweather"
+	rel="stylesheet">
 
-<div id="right-panel" class="right-panel" >
+<div id="right-panel" class="right-panel">
 
-	<header id="header" class="header" style="height: 58px; ">
+	<header id="header" class="header" style="height: 58px;">
 
 		<div class="header-menu">
 
@@ -13,7 +14,9 @@
 					class="fa fa fa-tasks"></i></a>
 				<div class="header-left">
 
-					<strong class="card-title" style="color:#58bdc3;font-size:16px; font-family: 'Merriweather', serif;">Shiv Shambhu-Gajanan Stone Admin </strong>
+					<strong class="card-title"
+						style="color: #58bdc3; font-size: 16px; font-family: 'Merriweather', serif;">Shiv
+						Shambhu-Gajanan Stone Admin </strong>
 
 					<!-- <div class="dropdown for-notification">
 						<button class="btn btn-secondary dropdown-toggle" type="button"
@@ -89,19 +92,21 @@
 						style="align-self: center; align-content: center; align-items: center; vertical-align: middle;">
 
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" title="PROFILE"> <img
-							class="user-avatar rounded-circle"
+							aria-haspopup="true" aria-expanded="false" data-toggle="tooltip"
+							title="PROFILE"> <img class="user-avatar rounded-circle"
 							src="${pageContext.request.contextPath}/resources/images/shambhu_logo.PNG"
 							alt="User Avatar">
 						</a>
 
 						<div class="user-menu dropdown-menu">
-							<a class="nav-link" href="#"><i class="fa fa- user"></i>My
+							<!-- <a class="nav-link" href="#"><i class="fa fa- user"></i>My
 								Profile</a> <a class="nav-link" href="#"><i class="fa fa- user"></i>Notifications
 								<span class="count">13</span></a> <a class="nav-link" href="#"><i
-								class="fa fa -cog"></i>Settings</a> <a class="nav-link"
+								class="fa fa -cog"></i>Settings</a> -->
+							<a class="nav-link"
 								href="${pageContext.request.contextPath}/logout"><i
-								class="fa fa-power -off"></i>Logout</a>
+								class="fa fa-power -off"></i>Logout
+								(${sessionScope.UserDetail.user.usrName})</a>
 						</div>
 					</div>
 				</div>

@@ -153,14 +153,14 @@ font-size:14;
 					</c:forEach>
 
               
-               <li class="menu-item-has-children dropdown">
+               <%-- <li class="menu-item-has-children dropdown">
                 
                  <a  style="font-family:  'Merriweather', serif;"
 									
 										href="${pageContext.request.contextPath}/logout"><c:out
 												value="Logout" /><i
 								class="menu-icon fa fa-table"></i></a>
-                 </li>
+                 </li> --%>
                 
 
 
