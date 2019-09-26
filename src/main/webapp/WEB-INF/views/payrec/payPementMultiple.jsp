@@ -107,167 +107,175 @@ table-striped tbody tr:nth-of-type(2n+1) {
 
 						<div class="card-body card-block">
 
+							<form
+								action="${pageContext.request.contextPath}/fillInfoForMultiplePayment"
+								method="post">
 
+								<div class="form-group"></div>
 
-							<div class="form-group"></div>
+								<div class="row">
 
-							<div class="row">
+									<div class="col-md-2">Select Plant</div>
 
-								<div class="col-md-2">Select Plant</div>
-
-								<div class="col-md-2">
-									<select id="plant_id" name="plant_id" class="standardSelect"
-										tabindex="1" required
-										oninvalid="setCustomValidity('Please select plant name')"
-										onchange="getData()">
-										<c:if test="${sessionScope.plantId==0}">
-											<option value="0">All</option>
-										</c:if>
-										<c:forEach items="${plantList}" var="plant">
+									<div class="col-md-2">
+										<select id="plant_id" name="plant_id" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select plant name')"
+											onchange="getData()">
 											<c:if test="${sessionScope.plantId==0}">
-												<option value="${plant.plantId}">${plant.plantName}</option>
+												<option value="0">All</option>
 											</c:if>
-											<c:if test="${sessionScope.plantId!=0}">
-												<c:choose>
-													<c:when test="${sessionScope.plantId==plant.plantId}">
-														<option value="${plant.plantId}" selected>${plant.plantName}</option>
-													</c:when>
-													<c:otherwise>
-														<option value="${plant.plantId}" disabled>${plant.plantName}</option>
-													</c:otherwise>
-												</c:choose>
-											</c:if>
+											<c:forEach items="${plantList}" var="plant">
+												<c:if test="${sessionScope.plantId==0}">
+													<option value="${plant.plantId}">${plant.plantName}</option>
+												</c:if>
+												<c:if test="${sessionScope.plantId!=0}">
+													<c:choose>
+														<c:when test="${sessionScope.plantId==plant.plantId}">
+															<option value="${plant.plantId}" selected>${plant.plantName}</option>
+														</c:when>
+														<c:otherwise>
+															<option value="${plant.plantId}" disabled>${plant.plantName}</option>
+														</c:otherwise>
+													</c:choose>
+												</c:if>
 
 
-										</c:forEach>
-									</select>
-								</div>
-								<div class="col-md-2">Select Customer</div>
-								<div class="col-md-2">
-									<select id="cust_name" name="cust_name" class="standardSelect"
-										tabindex="1" required
-										oninvalid="setCustomValidity('Please select customer')"
-										onchange="getCustInfo()">
-										<option value="0">All</option>
-									</select>
-								</div>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="col-md-2">Select Customer</div>
+									<div class="col-md-2">
+										<select id="cust_name" name="cust_name" class="standardSelect"
+											tabindex="1" required
+											oninvalid="setCustomValidity('Please select customer')"
+											onchange="getCustInfo()">
+											<option value="0">All</option>
+										</select>
+									</div>
 
-								<div class="col-md-2">Select Category</div>
+									<div class="col-md-2">Select Category</div>
 
-								<div class="col-md-2">
-									<select id="cust_cate" name="cust_cate" class="standardSelect"
-										tabindex="1"
-										oninvalid="setCustomValidity('Please enter customer category')"
-										onchange="try{setCustomValidity('')}catch(e){}">
-										<option value="0">All</option>
-										<c:forEach items="${settingList}" var="custCate">
-											<option value="${custCate.settingId}">${custCate.settingValue}</option>
-										</c:forEach>
-									</select>
-								</div>
+									<div class="col-md-2">
+										<select id="cust_cate" name="cust_cate" class="standardSelect"
+											tabindex="1"
+											oninvalid="setCustomValidity('Please enter customer category')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+											<option value="0">All</option>
+											<c:forEach items="${settingList}" var="custCate">
+												<option value="${custCate.settingId}">${custCate.settingValue}</option>
+											</c:forEach>
+										</select>
+									</div>
 
-							</div>
-
-
-							<div class="form-group"></div>
-							<div class="row">
-								<div class="col-md-2">From Date</div>
-								<div class="col-md-2">
-									<input type="text" autocomplete="off" id="from_date"
-										name="from_date" required style="width: 100%;"
-										class="form-control" value="${fromDate}"> <span
-										class="error" aria-live="polite"></span>
-								</div>
-								<div class="col-md-2">To Date</div>
-								<div class="col-md-2">
-									<input type="text" autocomplete="off" id="to_date"
-										name="to_date" style="width: 100%;" class="form-control"
-										value="${toDate}"> <span class="error"
-										aria-live="polite"></span>
 								</div>
 
 
-								<div class="col-md-1"></div>
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">From Date</div>
+									<div class="col-md-2">
+										<input type="text" autocomplete="off" id="from_date"
+											name="from_date" required style="width: 100%;"
+											class="form-control" value="${fromDate}"> <span
+											class="error" aria-live="polite"></span>
+									</div>
+									<div class="col-md-2">To Date</div>
+									<div class="col-md-2">
+										<input type="text" autocomplete="off" id="to_date"
+											name="to_date" style="width: 100%;" class="form-control"
+											value="${toDate}"> <span class="error"
+											aria-live="polite"></span>
+									</div>
 
-								<div class="col-md-2">
-									<input type="button" class="btn btn-primary"
-										onclick="showQuot()" value="Submit">
+
+									<div class="col-md-1"></div>
+
+									<div class="col-md-2">
+										<input type="button" class="btn btn-primary"
+											onclick="showQuot()" value="Submit">
+									</div>
 								</div>
-							</div>
+								<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Selected Amount</div>
+									<div class="col-md-2">
+										<input type="text" id="selectedAmt" name="selectedAmt"
+											class="form-control" value="0" readonly
+											style="text-align: right;">
+									</div>
 
-							<div class="form-group"></div>
-							<div class="card-body card-block">
-								<table id="bootstrap-data-table" class="table  table-bordered"
-									data-page-length='-1'>
-									<thead>
+								</div>
+
+								<div class="form-group"></div>
+								<div class="card-body card-block">
+									<table id="bootstrap-data-table" class="table  table-bordered"
+										data-page-length='-1'>
+										<thead>
+											<tr>
+												<th style="text-align: center; width: 5%;"></th>
+												<th style="text-align: center; width: 5%;">Sr.</th>
+												<th style="text-align: center; width: 10%;">Customer
+													Name</th>
+												<th style="text-align: center; width: 5%;">Class</th>
+												<th style="text-align: center; width: 10%;">Bill No</th>
+												<th style="text-align: center; width: 10%;">Bill Date</th>
+												<th style="text-align: center; width: 10%;">Billing
+													Amount</th>
+												<th style="text-align: center; width: 10%;">Due Date</th>
+												<th style="text-align: center; width: 5%;">Days</th>
+												<th style="text-align: center; width: 10%;">Received
+													Amt</th>
+												<th style="text-align: center; width: 10%;">Pending Amt</th>
+												<th style="text-align: center; width: 10%;">Status</th>
+												<th style="text-align: center; width: 5%;">Action</th>
+											</tr>
+										</thead>
+
+										<tbody></tbody>
+
 										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td><b>Total</b></td>
+											<td><input type="text" id="totalBillAmt"
+												style="width: 80px;" name="totalBillAmt" value="0" readonly></td>
+											<td></td>
+											<td></td>
 
-											<th style="text-align: center; width: 5%;">Sr.</th>
-											<th style="text-align: center; width: 10%;">Customer
-												Name</th>
-											<th style="text-align: center; width: 5%;">Class</th>
-											<th style="text-align: center; width: 10%;">Bill No</th>
-											<th style="text-align: center; width: 10%;">Bill Date</th>
-											<th style="text-align: center; width: 10%;">Billing
-												Amount</th>
-											<th style="text-align: center; width: 10%;">Due Date</th>
-											<th style="text-align: center; width: 5%;">Days</th>
-											<th style="text-align: center; width: 10%;">Received Amt</th>
-											<th style="text-align: center; width: 10%;">Pending Amt</th>
-											<th style="text-align: center; width: 10%;">Status</th>
-											<th style="text-align: center; width: 5%;">Action</th>
+
+											<td><input type="text" id="totalReceivedAmt"
+												style="width: 80px;" name="totalReceivedAmt" value="0"
+												readonly></td>
+											<td><input type="text" id="totalPendingAmt"
+												style="width: 80px;" name="totalPendingAmt" value="0"
+												readonly></td>
+											<td></td>
+											<td></td>
 										</tr>
-									</thead>
 
-									<tbody></tbody>
+									</table>
 
-									<tr>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td><b>Total</b></td>
-										<td><input type="text" id="totalBillAmt"
-											style="width: 80px;" name="totalBillAmt" value="0" readonly></td>
-										<td></td>
-										<td></td>
+									<div class="col-md-2"></div>
+
+									<div class="col-md-3"></div>
 
 
-										<td><input type="text" id="totalReceivedAmt"
-											style="width: 80px;" name="totalReceivedAmt" value="0"
-											readonly></td>
-										<td><input type="text" id="totalPendingAmt"
-											style="width: 80px;" name="totalPendingAmt" value="0"
-											readonly></td>
-										<td></td>
-										<td></td>
-									</tr>
+									<div class="col-md-3">
 
-								</table>
+										<input type="submit" class="btn btn-primary"
+											style="align-content: center; margin-left: 80px;"
+											value="Make Common Payment">
 
-								<div class="col-md-2"></div>
+									</div>
+									&nbsp;
 
-								<div class="col-md-3">
-
-									<button type="button" class="btn btn-primary"
-										onclick="exportToExcel();" id="expExcel" disabled
-										style="align-content: center; width: 200px; margin-left: 80px;">
-										Export To Excel</button>
 								</div>
 
-
-								<div class="col-md-3">
-
-									<button type="button" class="btn btn-primary" disabled
-										onclick="genPdf()" id="PDFButton"
-										style="align-content: center; width: 100px; margin-left: 80px;">
-										PDF</button>
-								</div>
-								&nbsp;
-
-							</div>
-
-
+							</form>
 						</div>
 
 
@@ -412,21 +420,16 @@ table-striped tbody tr:nth-of-type(2n+1) {
 											.each(
 													data,
 													function(i, v) {
-														var chBox;
 
-														document
-																.getElementById("expExcel").disabled = false;
-														document
-																.getElementById("PDFButton").disabled = false;
-
-														if (data == "") {
-															alert("No records found !!");
-															document
-																	.getElementById("expExcel").disabled = true;
-															document
-																	.getElementById("PDFButton").disabled = true;
-
-														}
+														var chBox = '<input type="checkbox" id="payId'
+																+ v.payHeadId
+																+ '" name="payId" value="'
+																+ v.payHeadId
+																+ '" onclick="calSum('
+																+ v.pendingAmt
+																+ ','
+																+ v.payHeadId
+																+ ')"> &nbsp;';
 
 														var status1;
 														if (v.status == 0) {
@@ -448,11 +451,14 @@ table-striped tbody tr:nth-of-type(2n+1) {
 																+ v.paidAmt;
 														totalPendingAmt = totalPendingAmt
 																+ v.pendingAmt;
+
+														var index = i + 1;
 														if (v.days > 0) {
 															dataTable.row
 																	.add(
 																			[
-																					i + 1,
+																					chBox,
+																					index,
 																					v.custName,
 																					v.custClass,
 																					v.billNo,
@@ -478,7 +484,8 @@ table-striped tbody tr:nth-of-type(2n+1) {
 															dataTable.row
 																	.add(
 																			[
-																					i + 1,
+																					chBox,
+																					index,
 																					v.custName,
 																					v.custClass,
 																					v.billNo,
@@ -560,6 +567,20 @@ table-striped tbody tr:nth-of-type(2n+1) {
 		}
 	</script>
 
+	<script type="text/javascript">
+		function calSum(ammnt, payId) {
+			ammnt = parseFloat(ammnt);
+			var selectedAmt = parseFloat(document.getElementById("selectedAmt").value);
+
+			if (document.getElementById("payId" + payId).checked == true) {
+				selectedAmt = selectedAmt + ammnt;
+			} else {
+				selectedAmt = selectedAmt - ammnt;
+			}
+			document.getElementById("selectedAmt").value = selectedAmt
+					.toFixed(2);
+		}
+	</script>
 	<script type="text/javascript">
 		function genPdf() {
 			//alert("hiii");

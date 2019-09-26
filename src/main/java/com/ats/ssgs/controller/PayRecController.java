@@ -157,16 +157,17 @@ public class PayRecController {
 		getPayRecHeadDataList = new ArrayList<GetPayRecoveryHeadData>(Arrays.asList(recArray));
 		System.out.println("payrec data:" + getPayRecHeadDataList.toString());
 
-		/*float totalBillAmt = 0;
-		float totalPendingAmt = 0;
-		float totalReceivedAmt = 0;
-		for (int i = 0; i < getPayRecHeadDataList.size(); i++) {
-			totalBillAmt = totalBillAmt + getPayRecHeadDataList.get(i).getBillTotal();
-			totalPendingAmt = totalPendingAmt + getPayRecHeadDataList.get(i).getPendingAmt();
-			totalReceivedAmt = totalReceivedAmt + getPayRecHeadDataList.get(i).getPaidAmt();
-			getPayRecHeadDataList.get(i).setTotalBillAmt(totalBillAmt);
-
-		}*/
+		/*
+		 * float totalBillAmt = 0; float totalPendingAmt = 0; float totalReceivedAmt =
+		 * 0; for (int i = 0; i < getPayRecHeadDataList.size(); i++) { totalBillAmt =
+		 * totalBillAmt + getPayRecHeadDataList.get(i).getBillTotal(); totalPendingAmt =
+		 * totalPendingAmt + getPayRecHeadDataList.get(i).getPendingAmt();
+		 * totalReceivedAmt = totalReceivedAmt +
+		 * getPayRecHeadDataList.get(i).getPaidAmt();
+		 * getPayRecHeadDataList.get(i).setTotalBillAmt(totalBillAmt);
+		 * 
+		 * }
+		 */
 
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
@@ -317,7 +318,7 @@ public class PayRecController {
 			table.addCell(hcell);
 
 			int index = 0;
-			float billTotal=0,receivedTotal=0,pendingTotal=0;
+			float billTotal = 0, receivedTotal = 0, pendingTotal = 0;
 			for (GetPayRecoveryHeadData work : getPayRecHeadDataList) {
 				index++;
 				PdfPCell cell;
@@ -363,8 +364,8 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				billTotal=billTotal+work.getBillTotal();
+
+				billTotal = billTotal + work.getBillTotal();
 
 				cell = new PdfPCell(new Phrase("" + work.getCreditDate2(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -386,8 +387,8 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				receivedTotal=receivedTotal+ work.getPaidAmt();
+
+				receivedTotal = receivedTotal + work.getPaidAmt();
 
 				cell = new PdfPCell(new Phrase("" + work.getPendingAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -395,11 +396,11 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				pendingTotal=pendingTotal+work.getPendingAmt();
+
+				pendingTotal = pendingTotal + work.getPendingAmt();
 
 			}
-			
+
 			PdfPCell cell;
 
 			cell = new PdfPCell(new Phrase(" ", headFont));
@@ -409,7 +410,7 @@ public class PayRecController {
 			cell.setPaddingRight(2);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell = new PdfPCell(new Phrase(" ", headFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setPaddingRight(2);
@@ -423,57 +424,55 @@ public class PayRecController {
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell = new PdfPCell(new Phrase(" ", headFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" Total " , boldFont));
+			cell = new PdfPCell(new Phrase(" Total ", boldFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(""+billTotal , boldFont));
+			cell = new PdfPCell(new Phrase("" + billTotal, boldFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell = new PdfPCell(new Phrase(" ", headFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell = new PdfPCell(new Phrase(" ", headFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(""+receivedTotal , boldFont));
+			cell = new PdfPCell(new Phrase("" + receivedTotal, boldFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(""+pendingTotal , boldFont));
+			cell = new PdfPCell(new Phrase("" + pendingTotal, boldFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
-		
-			
-			
+
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
@@ -985,7 +984,7 @@ public class PayRecController {
 			table.addCell(hcell);
 
 			int index = 0;
-			float billTotal=0,recTotal=0,pendingTotal=0;
+			float billTotal = 0, recTotal = 0, pendingTotal = 0;
 			for (GetPayRecoveryHead work : recList) {
 				index++;
 				PdfPCell cell;
@@ -1024,8 +1023,8 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				billTotal=billTotal+work.getBillTotal();
+
+				billTotal = billTotal + work.getBillTotal();
 
 				cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1033,8 +1032,8 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				recTotal=recTotal+work.getPaidAmt();
+
+				recTotal = recTotal + work.getPaidAmt();
 
 				cell = new PdfPCell(new Phrase("" + work.getPendingAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1042,11 +1041,11 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				pendingTotal=pendingTotal+ work.getPendingAmt();
+
+				pendingTotal = pendingTotal + work.getPendingAmt();
 
 			}
-			
+
 			PdfPCell cell;
 
 			cell = new PdfPCell(new Phrase(" ", headFont));
@@ -1056,7 +1055,7 @@ public class PayRecController {
 			cell.setPaddingRight(2);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell = new PdfPCell(new Phrase(" ", headFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setPaddingRight(2);
@@ -1070,34 +1069,34 @@ public class PayRecController {
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" Total " , boldFont));
+			cell = new PdfPCell(new Phrase(" Total ", boldFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("" +billTotal , boldFont));
+			cell = new PdfPCell(new Phrase("" + billTotal, boldFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" " +recTotal, boldFont));
+			cell = new PdfPCell(new Phrase(" " + recTotal, boldFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase("" +  pendingTotal, boldFont));
+			cell = new PdfPCell(new Phrase("" + pendingTotal, boldFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
-			
+
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
@@ -1340,7 +1339,7 @@ public class PayRecController {
 			table.addCell(hcell);
 
 			int index = 0;
-			float billTotal=0,recTotal=0,pendingTotal=0;
+			float billTotal = 0, recTotal = 0, pendingTotal = 0;
 			for (GetPayRecoveryHeadCustWise work : reccustwiseList) {
 				index++;
 				PdfPCell cell;
@@ -1372,8 +1371,8 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				billTotal=billTotal+work.getBillTotal();
+
+				billTotal = billTotal + work.getBillTotal();
 
 				cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1381,8 +1380,8 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				recTotal=recTotal+work.getPaidAmt();
+
+				recTotal = recTotal + work.getPaidAmt();
 
 				cell = new PdfPCell(new Phrase("" + work.getPendingAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1390,11 +1389,11 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				pendingTotal=pendingTotal+work.getPendingAmt();
+
+				pendingTotal = pendingTotal + work.getPendingAmt();
 
 			}
-			
+
 			PdfPCell cell;
 
 			cell = new PdfPCell(new Phrase(" ", headFont));
@@ -1404,14 +1403,14 @@ public class PayRecController {
 			cell.setPaddingRight(2);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell = new PdfPCell(new Phrase(" ", headFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" Total " , boldFont));
+			cell = new PdfPCell(new Phrase(" Total ", boldFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setPaddingRight(2);
@@ -1438,7 +1437,7 @@ public class PayRecController {
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
-			
+
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
@@ -1782,7 +1781,7 @@ public class PayRecController {
 			table.addCell(hcell);
 
 			int index = 0;
-			float billTotal=0,recTotal=0,pendingTotal=0;
+			float billTotal = 0, recTotal = 0, pendingTotal = 0;
 			for (GetPayRecoveryHead work : recList) {
 				index++;
 				PdfPCell cell;
@@ -1822,16 +1821,16 @@ public class PayRecController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				billTotal=billTotal+work.getBillTotal();
-				
+				billTotal = billTotal + work.getBillTotal();
+
 				cell = new PdfPCell(new Phrase("" + work.getPaidAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				recTotal=recTotal+work.getPaidAmt();
+
+				recTotal = recTotal + work.getPaidAmt();
 
 				cell = new PdfPCell(new Phrase("" + work.getPendingAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -1839,11 +1838,11 @@ public class PayRecController {
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
-				
-				pendingTotal=pendingTotal+work.getPendingAmt();
+
+				pendingTotal = pendingTotal + work.getPendingAmt();
 
 			}
-			
+
 			PdfPCell cell;
 
 			cell = new PdfPCell(new Phrase(" ", headFont));
@@ -1853,7 +1852,7 @@ public class PayRecController {
 			cell.setPaddingRight(2);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" " , headFont));
+			cell = new PdfPCell(new Phrase(" ", headFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			cell.setPaddingRight(2);
@@ -1867,7 +1866,7 @@ public class PayRecController {
 			cell.setPadding(3);
 			table.addCell(cell);
 
-			cell = new PdfPCell(new Phrase(" Total " , boldFont));
+			cell = new PdfPCell(new Phrase(" Total ", boldFont));
 			cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell.setPaddingRight(2);
@@ -1894,7 +1893,7 @@ public class PayRecController {
 			cell.setPaddingRight(2);
 			cell.setPadding(3);
 			table.addCell(cell);
-			
+
 			document.open();
 			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
 			name.setAlignment(Element.ALIGN_CENTER);
@@ -2536,6 +2535,122 @@ public class PayRecController {
 			ex.printStackTrace();
 
 		}
+
+	}
+
+	@RequestMapping(value = "/showPaymentRecoveryListForPaymentMultiple", method = RequestMethod.GET)
+	public ModelAndView showPaymentRecoveryListForPaymentMultiple(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("payrec/payPementMultiple");
+			model.addObject("title", "Recovery List");
+
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+			Date firstDate = date.getTime();
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+			String fromDate = dateFormat.format(firstDate);
+			String toDate = dateFormat.format(new Date());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			List<Integer> keyList = new ArrayList<>();
+
+			keyList.add(1);
+			keyList.add(2);
+			keyList.add(3);
+			keyList.add(4);
+
+			map.add("keyList", "1,2,3,4");
+
+			Setting[] settArray = rest.postForObject(Constants.url + "getSettingValueByKeyList", map, Setting[].class);
+			settingList = new ArrayList<Setting>(Arrays.asList(settArray));
+
+			model.addObject("settingList", settingList);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/fillInfoForMultiplePayment", method = RequestMethod.POST)
+	public ModelAndView fillInfoForMultiplePayment(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("payrec/fillInfoForMultiplePayment");
+			model.addObject("title", "Fill Info For Payment");
+
+			String[] payId = request.getParameterValues("payId");
+			String ids = new String();
+
+			float selectedAmt = Float.parseFloat(request.getParameter("selectedAmt"));
+			Math.round(selectedAmt);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			for (int i = 0; i < payId.length; i++) {
+
+				ids = ids + payId[i] + ",";
+			}
+
+			map.add("payId", ids.substring(0, ids.length() - 1));
+
+			GetPayRecoveryHeadData[] getPayRecoveryHeadData = rest
+					.postForObject(Constants.url + "getPayHeaderByHeaderId", map, GetPayRecoveryHeadData[].class);
+			List<GetPayRecoveryHeadData> payheaderList = new ArrayList<GetPayRecoveryHeadData>(
+					Arrays.asList(getPayRecoveryHeadData));
+			model.addObject("payheaderList", payheaderList);
+			model.addObject("selectedAmt", (int) Math.ceil(selectedAmt));
+			model.addObject("selectedAmt1", selectedAmt);
+			
+			HttpSession session = request.getSession();
+			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
+			map = new LinkedMultiValueMap<String, Object>(); 
+			map.add("companyId", login.getUser().getCompanyId());
+			GetBankDetail[] quotArray = rest.postForObject(Constants.url + "getBankDetailByCompanyId", map,
+					GetBankDetail[].class);
+			List<GetBankDetail> bankDetailList = new ArrayList<GetBankDetail>(Arrays.asList(quotArray));
+			model.addObject("bankDetailList", bankDetailList);
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+
+	@RequestMapping(value = "/submitInfoForMultiplePayment", method = RequestMethod.POST)
+	public String submitInfoForMultiplePayment(HttpServletRequest request, HttpServletResponse response) {
+
+		try {
+
+			 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+
+		return "redirect:/showPaymentRecoveryListForPaymentMultiple";
 
 	}
 }
