@@ -765,7 +765,7 @@ public class BillReportController {
 	// detailDatewise
 	List<GetDateWiseDetailBill> dateBillDetailList;
 
-	@RequestMapping(value = "/showDateBillDetailReport/{billHeadId}/{billDate}/{fromDate}/{toDate}", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/showDateBillDetailReport/{billHeadId}/{billDate}/{fromDate}/{toDate}", method = RequestMethod.GET)
 	public ModelAndView showDateBillDetailReport(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable int billHeadId, @PathVariable String billDate, @PathVariable String fromDate,
 			@PathVariable String toDate) {
@@ -788,6 +788,90 @@ public class BillReportController {
 			model.addObject("dateBillList", dateBillDetailList);
 			model.addObject("fromDate", fromDate);
 			model.addObject("toDate", toDate);
+
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No");
+			rowData.add("Bill Date");
+			rowData.add("Bill No");
+			rowData.add("Customer Name");
+			rowData.add("Taxable Amount");
+			rowData.add("CGST");
+			rowData.add("IGST");
+			rowData.add("SGST");
+			rowData.add("Tax Amount");
+			rowData.add("Total Amount");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+			int cnt = 1;
+			for (int i = 0; i < dateBillDetailList.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				cnt = cnt + i;
+				rowData.add("" + (i + 1));
+
+				rowData.add("" + dateBillDetailList.get(i).getBillDate());
+				rowData.add("" + dateBillDetailList.get(i).getBillNo());
+				rowData.add("" + dateBillDetailList.get(i).getCustName());
+				rowData.add("" + dateBillDetailList.get(i).getTaxableAmt());
+				rowData.add("" + dateBillDetailList.get(i).getCgstAmt());
+				rowData.add("" + dateBillDetailList.get(i).getIgstAmt());
+				rowData.add("" + dateBillDetailList.get(i).getSgstAmt());
+				rowData.add("" + dateBillDetailList.get(i).getTaxAmt());
+				rowData.add("" + dateBillDetailList.get(i).getTotalAmt());
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "GetDatewiseReport");
+
+		} catch (Exception e) {
+			System.err.println("exception In contractorDetailReport at Mat Contr" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}*/
+	
+	@RequestMapping(value = "/showDateBillDetailReport", method = RequestMethod.GET)
+	public ModelAndView showDateBillDetailReport(HttpServletRequest request, HttpServletResponse response ) {
+
+		ModelAndView model = null;
+		try {
+			
+			
+			
+			int custId = Integer.parseInt(request.getParameter("custId"));
+			int plantId = Integer.parseInt(request.getParameter("plantId"));
+			String billDate = request.getParameter("billDate");
+			
+			 
+			
+			model = new ModelAndView("report/datebilldetailreport");
+			model.addObject("title", "Datewise Detail Report");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("custIdList", custId);
+			map.add("plantIdList", plantId);
+			map.add("billDate", DateConvertor.convertToYMD(billDate));
+
+			GetDateWiseDetailBill[] ordHeadArray = rest.postForObject(Constants.url + "getDatewiseDetailBillReport",
+					map, GetDateWiseDetailBill[].class);
+			dateBillDetailList = new ArrayList<GetDateWiseDetailBill>(Arrays.asList(ordHeadArray));
+
+			System.out.println("DatebillDetailList" + dateBillDetailList.toString());
+
+			model.addObject("dateBillList", dateBillDetailList); 
+			model.addObject("billDate", billDate); 
 
 			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 

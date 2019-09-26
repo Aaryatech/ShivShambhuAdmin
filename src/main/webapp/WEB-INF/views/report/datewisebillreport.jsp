@@ -397,10 +397,14 @@
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.billHeadId
-																+ ',/'
+																+ ',\''
 																+ v.billDate
-																+ '/,'
+																+ '\','
 																+ i
+																+ ','
+																+ custId
+																+ ','
+																+ plantId
 																+ ')" style="color:black"><i class="fa fa-list"></i></a>'
 
 														dataTable.row
@@ -431,12 +435,12 @@
 			}//end of if valid ==true
 
 		}
-		function callEdit(billHeadId, billDate) {
+		/* function callEdit(billHeadId, billDate, i, custId, plantId) {
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-			/* 	
-				alert("Bill Head id is"+billDate);
-				alert("date is"+billDate); */
+
+			alert("custId id is" + custId);
+			alert("plantId is" + plantId);
 
 			window
 					.open("${pageContext.request.contextPath}/showDateBillDetailReport/"
@@ -446,6 +450,22 @@
 							+ fromDate
 							+ '/'
 							+ toDate);
+
+		} */
+
+		function callEdit(billHeadId, billDate, i, custId, plantId) {
+			var fromDate = document.getElementById("from_date").value;
+			var toDate = document.getElementById("to_date").value;
+			 
+			//alert("billDate id is" + billDate); 
+
+			window
+					.open("${pageContext.request.contextPath}/showDateBillDetailReport?custId="
+							+ custId
+							+ '&plantId='
+							+ plantId
+							+ '&billDate='
+							+ billDate);
 
 		}
 	</script>
@@ -587,10 +607,14 @@
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.billHeadId
-																+ ',/'
+																+ ',\''
 																+ v.billDate
-																+ '/,'
+																+ '\','
 																+ i
+																+ ','
+																+ custId
+																+ ','
+																+ plantId
 																+ ')" style="color:black"><i class="fa fa-list"></i></a>'
 
 														dataTable.row
@@ -622,12 +646,12 @@
 			}//end of if valid ==true
 
 		}
-		function callEdit(billHeadId, billDate) {
+		/* function callEdit(billHeadId, billDate) {
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
-			/* 	
+			  	
 				alert("Bill Head id is"+billDate);
-				alert("date is"+billDate); */
+				alert("date is"+billDate);  
 
 			window
 					.open("${pageContext.request.contextPath}/showDateBillDetailReport/"
@@ -638,7 +662,7 @@
 							+ '/'
 							+ toDate);
 
-		}
+		} */
 	</script>
 
 

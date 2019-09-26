@@ -105,24 +105,17 @@
 								id="submitForm" method="post">
 								<div class="row">
 
-									<div class="col-md-2">From Date</div>
+									<div class="col-md-2">Bill Date</div>
 
 
 									<div class="col-md-4">
 										<input type="text" id="fromDate" name="fromDate"
-											value="${fromDate}" class="form-control" style="width: 100%;"
+											value="${billDate}" class="form-control" style="width: 100%;"
 											autocomplete="off" readonly
 											oninvalid="setCustomValidity('Please enter Issue No')"
 											onchange="try{setCustomValidity('')}catch(e){}" required>
 									</div>
-
-
-									<div class="col-md-2">To Date</div>
-									<div class="col-md-4">
-										<input type="text" id="toDate" name="toDate"
-											autocomplete="off" value="${toDate}" required
-											class="form-control" readonly required style="width: 100%;">
-									</div>
+ 
 								</div>
 
 								<%-- 	<div class="row">
