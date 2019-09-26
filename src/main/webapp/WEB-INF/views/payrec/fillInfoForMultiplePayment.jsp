@@ -165,9 +165,13 @@
 								</c:forEach>
 								<div class="row">
 
-									<div class="col-md-1"></div>
-									<div class="col-md-2"></div>
 
+									<div class="col-md-2">Follow Up Date</div>
+									<div class="col-md-2">
+										<input type="text" id="creditDate2" name="creditDate2"
+											autocomplete="off" class="form-control" required
+											style="width: 100%;">
+									</div>
 									<div class="col-md-2"></div>
 									<div class="col-md-2"></div>
 
@@ -196,7 +200,7 @@
 										<select id="txType" name="txType" class="standardSelect"
 											onchange="hideDiv(this.value)" tabindex="1">
 											<option value="">Select</option>
-											
+
 											<option value="0">Cash</option>
 											<option value="1">Online</option>
 											<option value="2">Cheque</option>
@@ -379,8 +383,12 @@
 			isError = false;
 
 		}
+		if (!$("#creditDate2").val()) {
+			alert("Select follo up Date");
+			isError = false;
+
+		}
 		
-		 
 		if(isError==true){
 			 
 			  
@@ -708,9 +716,8 @@
 		  return false;
 		  }
 		  }
-	</script>
-
-	<script>
+	</script> 
+	<!-- <script>
 		function checkstock() {
 
 			var pendingAmt= parseFloat(document.getElementById("pendingAmt").value);
@@ -726,8 +733,7 @@
 		}
 
 		
-	</script>
-
+	</script> -->   
 	<script type="text/javascript">
 		function hideDiv(type) {
 

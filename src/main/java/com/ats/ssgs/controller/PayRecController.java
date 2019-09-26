@@ -2588,6 +2588,8 @@ public class PayRecController {
 
 	}
 
+	List<GetPayRecoveryHeadData> payheaderList = new ArrayList<>();
+
 	@RequestMapping(value = "/fillInfoForMultiplePayment", method = RequestMethod.POST)
 	public ModelAndView fillInfoForMultiplePayment(HttpServletRequest request, HttpServletResponse response) {
 
@@ -2613,21 +2615,22 @@ public class PayRecController {
 
 			GetPayRecoveryHeadData[] getPayRecoveryHeadData = rest
 					.postForObject(Constants.url + "getPayHeaderByHeaderId", map, GetPayRecoveryHeadData[].class);
-			List<GetPayRecoveryHeadData> payheaderList = new ArrayList<GetPayRecoveryHeadData>(
-					Arrays.asList(getPayRecoveryHeadData));
+			payheaderList = new ArrayList<GetPayRecoveryHeadData>(Arrays.asList(getPayRecoveryHeadData));
 			model.addObject("payheaderList", payheaderList);
 			model.addObject("selectedAmt", (int) Math.ceil(selectedAmt));
 			model.addObject("selectedAmt1", selectedAmt);
-			
+
 			HttpSession session = request.getSession();
 			LoginResUser login = (LoginResUser) session.getAttribute("UserDetail");
-			map = new LinkedMultiValueMap<String, Object>(); 
+			map = new LinkedMultiValueMap<String, Object>();
 			map.add("companyId", login.getUser().getCompanyId());
 			GetBankDetail[] quotArray = rest.postForObject(Constants.url + "getBankDetailByCompanyId", map,
 					GetBankDetail[].class);
 			List<GetBankDetail> bankDetailList = new ArrayList<GetBankDetail>(Arrays.asList(quotArray));
 			model.addObject("bankDetailList", bankDetailList);
-			
+
+			System.out.println(payheaderList);
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -2643,7 +2646,134 @@ public class PayRecController {
 
 		try {
 
-			 
+			String creditDate2 = request.getParameter("creditDate2");
+			float selectedAmt = Float.parseFloat(request.getParameter("selectedAmt"));
+			float paidAmt = Float.parseFloat(request.getParameter("paidAmt"));
+			int typeTx = Integer.parseInt(request.getParameter("txType"));
+			String paymentDate = request.getParameter("paymentDate");
+			String remark = request.getParameter("remark");
+
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String curDate = dateFormat.format(new Date());
+
+			float remainingAmt = paidAmt;
+			//System.out.println("remainingAmt" + remainingAmt);
+			
+			
+			for (int i = 0; i < payheaderList.size(); i++) {
+
+				GetPayRecoveryHead editRec = new GetPayRecoveryHead();
+
+				editRec.setPayHeadId(payheaderList.get(i).getPayHeadId());
+				editRec.setBillNo(payheaderList.get(i).getBillNo());
+				editRec.setBillHeadId(payheaderList.get(i).getBillHeadId());
+				editRec.setBillDate(payheaderList.get(i).getBillDate());
+				editRec.setCustId(payheaderList.get(i).getCustId());
+				editRec.setCreditDate1(payheaderList.get(i).getCreditDate1());
+				editRec.setCreditDate2(payheaderList.get(i).getCreditDate2());
+				editRec.setCreditDate3(payheaderList.get(i).getCreditDate2());
+				editRec.setBillTotal(payheaderList.get(i).getBillTotal());
+				editRec.setPaidAmt(payheaderList.get(i).getPaidAmt());
+				editRec.setPendingAmt(payheaderList.get(i).getPendingAmt());
+				editRec.setStatus(payheaderList.get(i).getStatus());
+				editRec.setRemark(payheaderList.get(i).getRemark());
+				editRec.setUserId(payheaderList.get(i).getUserId());
+				editRec.setDelStatus(payheaderList.get(i).getDelStatus());
+				editRec.setExInt1(payheaderList.get(i).getExInt1());
+				editRec.setExInt2(payheaderList.get(i).getExInt2());
+				editRec.setExInt3(payheaderList.get(i).getExInt3());
+				editRec.setExVarchar1(payheaderList.get(i).getExVarchar1());
+				editRec.setExVarchar2(payheaderList.get(i).getExVarchar2());
+				editRec.setExDate1(payheaderList.get(i).getExDate1());
+				editRec.setExBool1(payheaderList.get(i).getExBool1());
+				editRec.setExBool2(payheaderList.get(i).getExBool2());
+
+				PayRecoveryDetail detail = new PayRecoveryDetail();
+				detail.setDelStatus(1);
+				detail.setExBool1(1);
+				detail.setExDate1(curDate);
+				detail.setExInt1(1);
+				detail.setExInt2(1);
+				detail.setExVarchar1("NA");
+				detail.setExVarchar2("NA");
+				// detail.setPaidAmt(paidAmt);
+				detail.setPaymentDate(DateConvertor.convertToYMD(paymentDate));
+				detail.setTypeTx(typeTx);
+				detail.setRemark(remark);
+				detail.setPayHeadId(payheaderList.get(i).getPayHeadId());
+				
+				try {
+					detail.setTxNo(request.getParameter("txNo"));
+
+				} catch (Exception e) {
+					detail.setTxNo("0");
+
+				}
+
+				try {
+					detail.setRemark(request.getParameter("remark"));
+				} catch (Exception e) {
+					detail.setRemark("NA");
+				}
+
+				editRec.setCreditDate2(DateConvertor.convertToYMD(creditDate2));
+				editRec.setRemark(remark);
+
+				float paidAmt1 = editRec.getPaidAmt();
+
+				int isBreak = 0;
+
+				if (remainingAmt > 0) {
+
+					if (remainingAmt < editRec.getPendingAmt()) {
+ 
+						detail.setPaidAmt(remainingAmt);
+						paidAmt1 = paidAmt1 + remainingAmt;
+						remainingAmt=remainingAmt-remainingAmt;
+						isBreak = 1;
+					}else {
+						 
+						detail.setPaidAmt(editRec.getPendingAmt());
+						paidAmt1 = paidAmt1 + editRec.getPendingAmt();
+						remainingAmt=remainingAmt-editRec.getPendingAmt();
+						
+					}
+					List<PayRecoveryDetail> payRecoveryDetailList =new ArrayList<>();
+					payRecoveryDetailList.add(detail);
+					editRec.setPayRecoveryDetailList(payRecoveryDetailList);
+					
+					
+					float billTotal = editRec.getBillTotal();
+					editRec.setPaidAmt(paidAmt1);
+					editRec.setPendingAmt(billTotal - paidAmt1);
+					editRec.setPayRecoveryDetailList(editRec.getPayRecoveryDetailList());
+
+					System.out.println("payRec" + editRec.toString());
+
+					PayRecoveryHead matIssueInsertRes = rest.postForObject(Constants.url + "savePaymentRecovery",
+							editRec, PayRecoveryHead.class);
+
+					if (matIssueInsertRes != null) {
+
+						if ((int) matIssueInsertRes.getPendingAmt() == 0) {
+
+							MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+							map.add("payHeadId", matIssueInsertRes.getPayHeadId());
+
+							Info updateStatus = rest.postForObject(Constants.url + "updatePayRecStatus", map,
+									Info.class);
+
+						}
+					}
+					
+					if(isBreak==1) {
+						break;
+					}
+
+				}
+
+			}
+
 		} catch (Exception e) {
 
 			e.printStackTrace();

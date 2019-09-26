@@ -408,7 +408,8 @@ table-striped tbody tr:nth-of-type(2n+1) {
 								function(data) {
 
 									//alert("Order Data " + JSON.stringify(data));
-
+									document.getElementById("selectedAmt").value = 0
+											.toFixed(2);
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();
 									dataTable.clear().draw();
