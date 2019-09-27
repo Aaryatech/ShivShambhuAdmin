@@ -204,7 +204,7 @@ body {
 }
 </style>
 </head>
-<body onload="showBill()">
+<body>
 
 
 	<!-- Left Panel -->

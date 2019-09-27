@@ -939,7 +939,7 @@ public class BillController {
 	@RequestMapping(value = "/getBillListBetDate", method = RequestMethod.GET)
 	public @ResponseBody List<GetBillHeader> getBillListBetDate(HttpServletRequest request,
 			HttpServletResponse response) {
-
+ 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
@@ -960,7 +960,21 @@ public class BillController {
 				GetBillHeader[].class);
 		getBillList = new ArrayList<GetBillHeader>(Arrays.asList(ordHeadArray));
 
-		System.out.println("getBillList" + getBillList.toString());
+		String strBillTempIds = "0";
+		for (int i = 0; i < getBillList.size(); i++) {
+			strBillTempIds = strBillTempIds + "," + getBillList.get(i).getBillHeadId();
+		}
+		 
+
+		map = new LinkedMultiValueMap<String, Object>();
+		map.add("billTempIds", strBillTempIds);
+		
+		System.out.println(strBillTempIds);
+		
+		GetBillHeaderPdf[] billHeaderRes = rest.postForObject(Constants.url + "/findBillsByHeaderId", map,
+				GetBillHeaderPdf[].class); 
+		
+		//System.out.println("getBillList" + getBillList.toString());
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		List<ExportToExcel> exportToExcelList1 = new ArrayList<ExportToExcel>();
@@ -993,11 +1007,11 @@ public class BillController {
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
-		System.out.println("hello...................");
+		//System.out.println("hello...................");
 		int cnt = 0;
 		for (int i = 0; i < getBillList.size(); i++) {
 			// 6
-			System.out.println("item len is " + getBillList.get(i).getGetBillDetails().size());
+			//System.out.println("item len is " + getBillList.get(i).getGetBillDetails().size());
 			
 			for (int j = 0; j < getBillList.get(i).getGetBillDetails().size(); j++) {
 				cnt = cnt + 1;
@@ -1017,9 +1031,29 @@ public class BillController {
 				rowData.add("" + getBillList.get(i).getBillDate());
 				rowData.add("" + getBillList.get(i).getBillNo());
 				rowData.add("" + getBillList.get(i).getCustName());
-				rowData.add("" + "-");
-				rowData.add("" + "-");
-				rowData.add("" + "-");
+				
+				int flag=0;
+				
+				for(int k=0 ; k<billHeaderRes.length ; k++) {
+					
+					if(billHeaderRes[k].getBillHeadId()==getBillList.get(i).getBillHeadId()) {
+						
+						rowData.add("" + billHeaderRes[k].getChalanNo());
+						rowData.add("" + "-");
+						rowData.add("" + billHeaderRes[k].getProjName());
+						flag=1;
+						break;
+					}
+				}
+				
+				if(flag==0) {
+					
+					rowData.add("" + "-");
+					rowData.add("" + "-");
+					rowData.add("" + "-");
+					 
+				}
+				
 				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getShortName());//itemName Replaced
 				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getQty());
 				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getTaxableAmt()
@@ -1067,7 +1101,7 @@ public class BillController {
 		map.add("plantId", plantId);
 		GetItem[] itemArray = rest.postForObject(Constants.url + "getGetItemsByPlantId", map, GetItem[].class);
 		List<GetItem> getItemList = new ArrayList<GetItem>(Arrays.asList(itemArray));
-		System.out.println("hello...................1111" + getItemList.toString());
+		//System.out.println("hello...................1111" + getItemList.toString());
 
 		ExportToExcel expoExcel1 = new ExportToExcel();
 		List<String> rowData1 = new ArrayList<String>();
@@ -1114,7 +1148,7 @@ public class BillController {
 
 		GetCust[] custArray = rest.postForObject(Constants.url + "getAllCustomerList", map, GetCust[].class);
 		List<GetCust> getCustList = new ArrayList<GetCust>(Arrays.asList(custArray));
-		System.out.println("hello...................1111" + getCustList.toString());
+		//System.out.println("hello...................1111" + getCustList.toString());
 
 		ExportToExcel expoExcel2 = new ExportToExcel();
 		List<String> rowData2 = new ArrayList<String>();
