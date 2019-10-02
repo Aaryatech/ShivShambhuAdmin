@@ -669,6 +669,16 @@ body {
 			var valid = true;
 			getData1();
 
+			
+			
+			
+			var dateParts1 = fromDate.split("-"); 
+			var dateObject1 = new Date(+dateParts1[2], dateParts1[1] - 1, +dateParts1[0]); 
+			
+			var dateParts2 = toDate.split("-"); 
+			var dateObject2 = new Date(+dateParts2[2], dateParts2[1] - 1, +dateParts2[0]); 
+			 
+			
 			if (plantId == null || plantId == "") {
 				valid = false;
 				alert("Please select plant");
@@ -698,7 +708,7 @@ body {
 				alert("Please select to date");
 			}
 
-			if (fromDate > toDate) {
+			if (dateObject2 < dateObject1) {
 				valid = false;
 				alert("from date greater than todate ");
 			}

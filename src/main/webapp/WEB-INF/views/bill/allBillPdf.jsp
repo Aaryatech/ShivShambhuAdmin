@@ -50,8 +50,8 @@
 						</p>
 						<p
 							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-							<b>${billHeaderRes.compOfficeAdd}</b> <br></br> <b>GSTIN/UIN:${billHeaderRes.compGstNo}</b>
-							<br></br> <b>State : Maharashtra ,Code: 27 </b> <br></br> <b>Contact:${billHeaderRes.contactNo1}</b>
+							<b>${billHeaderRes.compOfficeAdd}</b> <br></br> <b>GSTIN/UIN:${billHeaderRes.compGstNo}</b> <br></br> PAN No: ${billHeaderRes.custPanNo} 
+							<b>State : Maharashtra </b> <br></br> <b>Contact:${billHeaderRes.contactNo1}</b>
 							<br></br> <b>Email:${billHeaderRes.email1}</b>
 						</p>
 
@@ -123,8 +123,11 @@
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
 							GSTIN/UIN: ${billHeaderRes.custGstNo}</p>
 						<p
+							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
+							PAN No: ${billHeaderRes.custPanNo}</p>
+						<p
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">State
-							: Maharashtra ,Code: 27</p>
+							: Maharashtra</p>
 						<p
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">Contact:
 							${billHeaderRes.custMobNo}</p>
@@ -301,7 +304,8 @@
 						<p
 							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
 							<b>${billHeaderRes.compOfficeAdd}</b> <br></br> <b>GSTIN/UIN:${billHeaderRes.compGstNo}</b>
-							<br></br> <b>State : Maharashtra ,Code: 27 </b> <br></br> <b>Contact:${billHeaderRes.contactNo1}</b>
+							<br></br> PAN No: ${billHeaderRes.custPanNo}<br></br> <b>State
+								: Maharashtra </b> <br></br> <b>Contact:${billHeaderRes.contactNo1}</b>
 							<br></br> <b>Email:${billHeaderRes.email1}</b>
 						</p>
 
@@ -369,8 +373,11 @@
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
 							GSTIN/UIN: ${billHeaderRes.custGstNo}</p>
 						<p
+							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
+							PAN No: ${billHeaderRes.custPanNo}</p>
+						<p
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">State
-							: Maharashtra ,Code: 27</p>
+							: Maharashtra</p>
 						<p
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">Contact:
 							${billHeaderRes.custMobNo}</p>

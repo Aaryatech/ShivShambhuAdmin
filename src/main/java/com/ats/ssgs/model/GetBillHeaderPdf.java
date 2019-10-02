@@ -100,7 +100,8 @@ public class GetBillHeaderPdf {
 	private String chalanNo;
 
 	private int isSameState;
-
+	private String custPanNo;
+	
 	public int getIsSameState() {
 		return isSameState;
 	}
@@ -493,6 +494,14 @@ public class GetBillHeaderPdf {
 		this.custAddress = custAddress;
 	}
 
+	public String getCustPanNo() {
+		return custPanNo;
+	}
+
+	public void setCustPanNo(String custPanNo) {
+		this.custPanNo = custPanNo;
+	}
+
 	@Override
 	public String toString() {
 		return "GetBillHeaderPdf [billHeadId=" + billHeadId + ", billNo=" + billNo + ", billDate=" + billDate
@@ -509,7 +518,7 @@ public class GetBillHeaderPdf {
 				+ ", exFloat2=" + exFloat2 + ", custAddress=" + custAddress + ", getBillDetails=" + getBillDetails
 				+ ", getBillDetByHsn=" + getBillDetByHsn + ", printWord=" + printWord + ", bankDetail=" + bankDetail
 				+ ", projName=" + projName + ", location=" + location + ", chalanNo=" + chalanNo + ", isSameState="
-				+ isSameState + "]";
+				+ isSameState + ", custPanNo=" + custPanNo + "]";
 	}
 
 }
