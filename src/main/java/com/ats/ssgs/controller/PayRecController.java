@@ -145,16 +145,39 @@ public class PayRecController {
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
 		int category = Integer.parseInt(request.getParameter("category"));
 		int custId = Integer.parseInt(request.getParameter("custId"));
+		
+		String radioValue = request.getParameter("radioValue");
+		
+	
 
-		map.add("fromDate", DateConvertor.convertToYMD(fromDate));
-		map.add("toDate", DateConvertor.convertToYMD(toDate));
+		
 		map.add("plantId", plantId);
 		map.add("custId", custId);
 		map.add("custCatId", category);
 
-		GetPayRecoveryHeadData[] recArray = rest.postForObject(Constants.url + "getPayRecoveryData", map,
-				GetPayRecoveryHeadData[].class);
-		getPayRecHeadDataList = new ArrayList<GetPayRecoveryHeadData>(Arrays.asList(recArray));
+		
+		
+		if(radioValue!=null) {
+			if(radioValue.equalsIgnoreCase("date")) {
+				
+				map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+				map.add("toDate", DateConvertor.convertToYMD(toDate));
+				
+				GetPayRecoveryHeadData[] recArray = rest.postForObject(Constants.url + "getPayRecoveryData", map,
+						GetPayRecoveryHeadData[].class);
+				getPayRecHeadDataList = new ArrayList<GetPayRecoveryHeadData>(Arrays.asList(recArray));
+				
+			}else if(radioValue.equalsIgnoreCase("all")) {
+				
+				GetPayRecoveryHeadData[] recArray = rest.postForObject(Constants.url + "getPayRecoveryDataAll", map,
+						GetPayRecoveryHeadData[].class);
+				getPayRecHeadDataList = new ArrayList<GetPayRecoveryHeadData>(Arrays.asList(recArray));
+				
+			}
+		}
+		
+		
+		
 		System.out.println("payrec data:" + getPayRecHeadDataList.toString());
 
 		/*

@@ -1127,7 +1127,7 @@ public class BillController {
 			rowData1.add("" +cnt1);
 			rowData1.add("" + getItemList.get(i).getShortName());
 
-			rowData1.add("" + "Ready Mix Concrete");
+			rowData1.add("" + ""+getItemList.get(i).getExVar3());
 			rowData1.add("" + getItemList.get(i).getHsnCode());
 			rowData1.add("" + (getItemList.get(i).getCgst() + getItemList.get(i).getSgst()));
 			rowData1.add("" + getItemList.get(i).getMaxStock());

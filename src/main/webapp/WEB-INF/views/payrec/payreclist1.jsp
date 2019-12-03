@@ -73,8 +73,40 @@ table-striped tbody tr:nth-of-type(2n+1) {
 </style>
 
 
+
+<style>
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+</style>
+
+
 </head>
-<body onload="getData1()">
+<body onload="getData1(),hideDate()">
 
 
 	<!-- Left Panel -->
@@ -170,30 +202,40 @@ table-striped tbody tr:nth-of-type(2n+1) {
 
 
 							<div class="form-group"></div>
-							<div class="row">
-								<div class="col-md-2">From Date</div>
-								<div class="col-md-2">
-									<input type="text" autocomplete="off" id="from_date"
-										name="from_date" required style="width: 100%;"
+
+							<div class="row" style="text-align: center; line-height: 40px;">
+
+								<div class="col-md-1">
+									<input type="radio" name="type" value="all" checked>All
+								</div>
+								<div class="col-md-1">
+									<input type="radio" name="type" value="date">Date
+								</div>
+
+								<div class="col-md-4" style="display: block ruby;"
+									id="fromDateDiv">
+									From Date <input type="text" autocomplete="off" id="from_date"
+										name="from_date" required style="width: 50%;"
 										class="form-control" value="${fromDate}"> <span
 										class="error" aria-live="polite"></span>
 								</div>
-								<div class="col-md-2">To Date</div>
-								<div class="col-md-2">
-									<input type="text" autocomplete="off" id="to_date"
-										name="to_date" style="width: 100%;" class="form-control"
+								<div class="col-md-4" style="display: block ruby;"
+									id="toDateDiv">
+									To Date <input type="text" autocomplete="off" id="to_date"
+										name="to_date" style="width: 50%;" class="form-control"
 										value="${toDate}"> <span class="error"
 										aria-live="polite"></span>
 								</div>
-
-
-								<div class="col-md-1"></div>
 
 								<div class="col-md-2">
 									<input type="button" class="btn btn-primary"
 										onclick="showQuot()" value="Submit">
 								</div>
+
 							</div>
+							
+							 <div class="loader" id="loader" style="display: none;"></div> 
+
 
 							<div class="form-group"></div>
 							<div class="card-body card-block">
@@ -355,12 +397,16 @@ table-striped tbody tr:nth-of-type(2n+1) {
 		function showQuot() {
 
 			//alert("Hi View reports  ");
+			
+			$("#loader").show();
 
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
 			var plantId = document.getElementById("plant_id").value;
 			var custId = document.getElementById("cust_name").value;
 			var category = document.getElementById("cust_cate").value;
+			var radioValue = $("input[name='type']:checked").val();
+			//alert("type -- " + radioValue);
 			/* 	alert(fromDate);
 				alert(toDate);
 				alert(plantId);
@@ -394,10 +440,13 @@ table-striped tbody tr:nth-of-type(2n+1) {
 									plantId : plantId,
 									custId : custId,
 									category : category,
+									radioValue : radioValue,
 									ajax : 'true',
 								},
 
 								function(data) {
+									
+									$("#loader").hide();
 
 									//alert("Order Data " + JSON.stringify(data));
 
@@ -627,6 +676,7 @@ table-striped tbody tr:nth-of-type(2n+1) {
 	<script type="text/javascript">
 		// on plant change function 
 		function getData1() {
+
 			var plantId = document.getElementById("plant_id").value;
 			var valid = true;
 
@@ -668,6 +718,36 @@ table-striped tbody tr:nth-of-type(2n+1) {
 				});
 			}//end of if
 
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+
+			$("input[type='radio']").click(function() {
+
+				var radioValue = $("input[name='type']:checked").val();
+
+				if (radioValue == 'all') {
+
+					$("#fromDateDiv").hide();
+					$("#toDateDiv").hide();
+
+				} else if (radioValue == 'date') {
+
+					$("#fromDateDiv").show();
+					$("#toDateDiv").show();
+
+				}
+
+			});
+
+		});
+
+		function hideDate() {
+			$("#fromDateDiv").hide();
+			$("#toDateDiv").hide();
 		}
 	</script>
 
