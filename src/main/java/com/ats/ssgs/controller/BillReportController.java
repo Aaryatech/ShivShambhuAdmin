@@ -39,26 +39,19 @@ import com.ats.ssgs.common.ExportToExcel;
 import com.ats.ssgs.model.GetBillReport;
 import com.ats.ssgs.model.GetDateWiseDetailBill;
 import com.ats.ssgs.model.GetDatewiseReport;
-import com.ats.ssgs.model.GetItemsForBill;
 import com.ats.ssgs.model.GetItenwiseBillReport;
+import com.ats.ssgs.model.GetPoChallan;
 import com.ats.ssgs.model.GetPoReport;
 import com.ats.ssgs.model.MonthWiseBill;
+import com.ats.ssgs.model.PoChallanDetails;
 import com.ats.ssgs.model.TaxSummery;
 import com.ats.ssgs.model.TaxWiseBill;
 import com.ats.ssgs.model.chalan.GetChalanDetail;
 import com.ats.ssgs.model.chalan.GetChalanHeader;
 import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Cust;
-import com.ats.ssgs.model.master.GetWeighing;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.Plant;
-import com.ats.ssgs.model.master.Project;
-import com.ats.ssgs.model.master.Setting;
-import com.ats.ssgs.model.master.User;
-import com.ats.ssgs.model.master.Vehicle;
-import com.ats.ssgs.model.mat.GetMatIssueHeader;
-import com.ats.ssgs.model.mat.GetMatIssueReport;
-import com.ats.ssgs.model.order.OrderHeader;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -4185,5 +4178,548 @@ public class BillReportController {
 		}
 
 	}
+/*************************************************************************************/
+	//Mahendra
+	//06-01-2020
+	
+//showCustomerwiseReport
+	@RequestMapping(value = "/showPOChallanReport", method = RequestMethod.GET)
+	public ModelAndView showPOChallanReport(HttpServletRequest request, HttpServletResponse response) {
 
+		ModelAndView model = null;
+		try {
+
+			model = new ModelAndView("report/pochallanreport");
+
+			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
+			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
+
+			model.addObject("plantList", plantList);
+
+			Cust[] custArray = rest.getForObject(Constants.url + "getAllCustList", Cust[].class);
+			custList = new ArrayList<Cust>(Arrays.asList(custArray));
+
+			model.addObject("custList", custList);
+
+			model.addObject("title", "PO Challan Report");
+
+			Calendar date = Calendar.getInstance();
+			date.set(Calendar.DAY_OF_MONTH, 1);
+
+			Date firstDate = date.getTime();
+
+			DateFormat dateFormat = new SimpleDateFormat("dd-MM-YYYY");
+
+			String fromDate = dateFormat.format(firstDate);
+
+			String toDate = dateFormat.format(new Date());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+
+		} catch (Exception e) {
+
+			System.err.println("exception In showCustomerwiseReport at billreport Contr" + e.getMessage());
+
+			e.printStackTrace();
+
+		}
+
+		return model;
+
+	}
+	
+List<GetPoChallan> poList = null;	
+	@RequestMapping(value = "/getPoInfoByCustList", method = RequestMethod.GET)
+	public @ResponseBody List<GetPoChallan> getPoInfoByCustList(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		String selectedFr = request.getParameter("values");
+
+		selectedFr = selectedFr.substring(1, selectedFr.length() - 1);
+		selectedFr = selectedFr.replaceAll("\"", "");
+
+		System.out.println("cust:::::" + selectedFr);
+
+		System.err.println(" in getCustListBetweenDate");
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+		int plantId = Integer.parseInt(request.getParameter("plantId"));
+
+		System.out.println("plantIdList lengtr" + plantId);
+
+
+		map.add("plantId", plantId);
+		map.add("custIds", selectedFr);
+
+		GetPoChallan[] ordHeadArray = rest.postForObject(Constants.url + "getPoChallanReportInfo", map,
+				GetPoChallan[].class);
+		poList = new ArrayList<GetPoChallan>(Arrays.asList(ordHeadArray));
+System.out.println("----------"+poList);
+		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+		ExportToExcel expoExcel = new ExportToExcel();
+		List<String> rowData = new ArrayList<String>();
+
+		rowData.add("Sr. No");
+
+		rowData.add("PO No.");
+		rowData.add("PO Date");
+		rowData.add("Item Name");
+		rowData.add("PO Qty.");
+		rowData.add("PO Challan Qty.");
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		int cnt = 1;
+		for (int i = 0; i < poList.size(); i++) {
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			cnt = cnt + i;
+			rowData.add("" + (i + 1));
+
+			rowData.add("" + poList.get(i).getPoNo());
+			rowData.add("" + poList.get(i).getPoDate());
+			rowData.add("" + poList.get(i).getItemDesc());
+			rowData.add("" + poList.get(i).getPoQty());
+			rowData.add("" + poList.get(i).getPoChallanQty());
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+		}
+
+		HttpSession session = request.getSession();
+		session.setAttribute("exportExcelList", exportToExcelList);
+		session.setAttribute("excelName", "PoChallanReport");
+
+		return poList;
+	}
+
+	@RequestMapping(value = "/showPOChallanPdf", method = RequestMethod.GET)
+	public void showCustwisePdf(HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+		BufferedOutputStream outStream = null;
+		System.out.println("Inside Pdf showCustwisePdf");
+		Document document = new Document(PageSize.A4);
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+
+		System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		String FILE_PATH = Constants.REPORT_SAVE;
+		File file = new File(FILE_PATH);
+
+		PdfWriter writer = null;
+
+		FileOutputStream out = new FileOutputStream(FILE_PATH);
+		try {
+			writer = PdfWriter.getInstance(document, out);
+		} catch (DocumentException e) {
+
+			e.printStackTrace();
+		}
+
+		PdfPTable table = new PdfPTable(6);
+		try {
+			System.out.println("Inside PDF Table try");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			headFont1.setColor(BaseColor.WHITE);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+
+			PdfPCell hcell = new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			hcell.setPadding(3);
+			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("PO No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("PO Date", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Item Name", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("PO Qty.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+			hcell = new PdfPCell(new Phrase("PO Challan Qty.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+			
+			int index = 0;
+			for (GetPoChallan work : poList) {
+				index++;
+				PdfPCell cell;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPadding(3);
+				cell.setPaddingRight(2);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getPoNo(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getPoDate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getItemDesc(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getPoQty(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getPoChallanQty(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+			}
+			document.open();
+			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
+			name.setAlignment(Element.ALIGN_CENTER);
+			document.add(name);
+			document.add(new Paragraph(" "));
+			Paragraph company = new Paragraph("PO Challan Report\n", f);
+			company.setAlignment(Element.ALIGN_CENTER);
+			document.add(company);
+			document.add(new Paragraph(" "));
+
+			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new Date());
+			/*Paragraph p1 = new Paragraph("From Date:" + fromDate + "  To Date:" + toDate, headFont);
+			p1.setAlignment(Element.ALIGN_CENTER);
+			document.add(p1);*/
+			document.add(new Paragraph("\n"));
+			document.add(table);
+
+			int totalPages = writer.getPageNumber();
+
+			System.out.println("Page no " + totalPages);
+
+			document.close();
+
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+				try {
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
+					e.printStackTrace();
+				}
+			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error: " + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+
+	}
+	
+	List<PoChallanDetails> chalanList=null;
+	@RequestMapping(value = "/getChallanDetails/{challanId}/{poNo}/{poNoItm}", method = RequestMethod.GET)
+	public ModelAndView getChallan(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable int challanId, @PathVariable String poNo, @PathVariable String poNoItm) {
+		
+		String str = poNoItm;
+		String[] values = str.split("\\s*,\\s*");
+		System.out.println(Arrays.toString(values));
+		
+		String poDate = values[0];
+		String itemDesc = values[1];
+		
+		ModelAndView model = null;
+		try {
+			model = new ModelAndView("report/challanDetails");
+			model.addObject("title", "PO Challan Details");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("challanId", challanId);
+			PoChallanDetails[] chalanArray = rest.postForObject(Constants.url + "getChalanDetailInfo", map,
+					PoChallanDetails[].class);
+			chalanList = new ArrayList<PoChallanDetails>(Arrays.asList(chalanArray));
+
+			model.addObject("poNo", poNo);
+			model.addObject("poDate", poDate);
+			model.addObject("itemName", itemDesc);
+			model.addObject("chalanList", chalanList);
+
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No");
+			rowData.add("Challan No");
+			rowData.add("Challan Date");
+			rowData.add("Challan Qty.");
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+			
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+			
+			rowData.add("");
+			rowData.add("PO No : "+poNo);
+			rowData.add("PO Date : "+poDate);
+			rowData.add("Item Name : "+itemDesc);
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+			
+			int cnt = 1;
+			for (int i = 0; i < chalanList.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+				cnt = cnt + i;
+				rowData.add("" + (i + 1));
+
+				rowData.add("" + chalanList.get(i).getChalanNo());
+				rowData.add("" + chalanList.get(i).getChalanDate());
+				rowData.add("" + chalanList.get(i).getItemQty());
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+			}
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelList", exportToExcelList);
+			session.setAttribute("excelName", "PO Challan Details");
+
+		} catch (Exception e) {
+			System.err.println("exception In getChallanDetails at Mat Contr" + e.getMessage());
+			e.printStackTrace();
+
+		}
+
+		return model;
+	}
+	
+	@RequestMapping(value = "/showPOChallanDetailPdf/{poNo}/{poDate}/{itemName}", method = RequestMethod.GET)
+	public void showPOChallanDetailPdf( @PathVariable String poNo, @PathVariable String poDate, @PathVariable String itemName,
+			HttpServletRequest request, HttpServletResponse response) throws FileNotFoundException {
+		BufferedOutputStream outStream = null;
+		System.out.println("Inside Pdf showPOChallanDetailPdf");
+		Document document = new Document(PageSize.A4);
+
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Calendar cal = Calendar.getInstance();
+
+		System.out.println("time in Gen Bill PDF ==" + dateFormat.format(cal.getTime()));
+		String FILE_PATH = Constants.REPORT_SAVE;
+		File file = new File(FILE_PATH);
+
+		PdfWriter writer = null;
+
+		FileOutputStream out = new FileOutputStream(FILE_PATH);
+		try {
+			writer = PdfWriter.getInstance(document, out);
+		} catch (DocumentException e) {
+
+			e.printStackTrace();
+		}
+
+		PdfPTable table = new PdfPTable(4);
+		try {
+			System.out.println("Inside PDF Table try");
+			table.setWidthPercentage(100);
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f});
+			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
+			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
+			headFont1.setColor(BaseColor.WHITE);
+			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
+
+			PdfPCell hcell = new PdfPCell();
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			hcell.setPadding(3);
+			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Challan No.", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Challan", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+
+			hcell = new PdfPCell(new Phrase("Challan Qty", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+			
+			int index = 0;
+			for (PoChallanDetails work : chalanList) {
+				index++;
+				PdfPCell cell;
+
+				cell = new PdfPCell(new Phrase(String.valueOf(index), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPadding(3);
+				cell.setPaddingRight(2);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getChalanNo(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getChalanDate(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+				cell = new PdfPCell(new Phrase("" + work.getItemQty(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+
+			}
+			document.open();
+			Paragraph name = new Paragraph("Shiv Shambhu\n", f);
+			name.setAlignment(Element.ALIGN_CENTER);
+			document.add(name);
+			document.add(new Paragraph(" "));
+			Paragraph company = new Paragraph("PO Challan Details\n", f);
+			company.setAlignment(Element.ALIGN_CENTER);
+			document.add(company);
+			document.add(new Paragraph(" "));
+
+			DateFormat DF = new SimpleDateFormat("dd-MM-yyyy");
+			String reportDate = DF.format(new Date());
+			
+			Paragraph p1 = new Paragraph("PO No:" + poNo , headFont);
+			p1.setAlignment(Element.ALIGN_LEFT);
+			document.add(p1);
+			
+			Paragraph p2 = new Paragraph("PO Date:" + poDate, headFont);
+			p1.setAlignment(Element.ALIGN_LEFT);
+			document.add(p2);
+			
+			//document.add(new Paragraph("\n"));
+			
+			Paragraph p3 = new Paragraph("Item Name:" + itemName, headFont);
+			p1.setAlignment(Element.ALIGN_LEFT);
+			document.add(p3);
+			document.add(new Paragraph("\n"));
+			
+			document.add(table);
+
+			int totalPages = writer.getPageNumber();
+
+			System.out.println("Page no " + totalPages);
+
+			document.close();
+
+			if (file != null) {
+
+				String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+
+				if (mimeType == null) {
+
+					mimeType = "application/pdf";
+
+				}
+
+				response.setContentType(mimeType);
+
+				response.addHeader("content-disposition", String.format("inline; filename=\"%s\"", file.getName()));
+
+				response.setContentLength((int) file.length());
+
+				InputStream inputStream = new BufferedInputStream(new FileInputStream(file));
+
+				try {
+					FileCopyUtils.copy(inputStream, response.getOutputStream());
+				} catch (IOException e) {
+					System.out.println("Excep in Opening a Pdf File");
+					e.printStackTrace();
+				}
+			}
+
+		} catch (DocumentException ex) {
+
+			System.out.println("Pdf Generation Error: " + ex.getMessage());
+
+			ex.printStackTrace();
+
+		}
+
+	}
 }
