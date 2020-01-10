@@ -59,6 +59,15 @@
 .left {
 	text-align: left;
 }
+
+.buttonload {
+	background-color: white; /* Green background */
+	border: none; /* Remove borders */
+	color: #ec268f; /* White text */
+	padding: 12px 15px; /* Some padding */
+	font-size: 13px; /* Set a font-size */
+	display: none;
+}
 </style>
 
 
@@ -146,8 +155,13 @@
 									<input type="button" class="btn btn-primary"
 										onclick="showPoInfo()" value="Submit">
 								</div>
-
 							</div>
+							<div class="row">
+								<div class="col-md-6"></div>
+								<div class="buttonload" id="loader">
+										<i class="fa fa-spinner fa-spin"></i>Loading
+									</div>
+								</div>
 
 
 
@@ -318,7 +332,7 @@
 			}
 
 			if (valid == true) {
-
+				$('#loader').show();
 				$
 						.getJSON(
 								'${getPoInfoByCustList}',
@@ -331,7 +345,7 @@
 								},
 
 								function(data) {
-
+									$('#loader').hide();
 									document.getElementById("expExcel").disabled = false;
 									document.getElementById("PDFButton").disabled = false;
 
