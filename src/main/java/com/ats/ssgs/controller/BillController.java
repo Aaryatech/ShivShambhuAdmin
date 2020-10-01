@@ -383,7 +383,7 @@ public class BillController {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("key", 75);
 			Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
-			float tcsAmt = Float.parseFloat(tcsSetting.getSettingValue());
+			float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
 			
 			String[] chalanId = request.getParameterValues("chalanId");
 			int companyId = Integer.parseInt(request.getParameter("companyId"));
@@ -617,10 +617,18 @@ public class BillController {
 			billHeader.setTaxableAmt(totalTaxable);
 			billHeader.setTaxAmt(totalTaxAmt);
 			
+			float calTcsAmt = 0;
+			MultiValueMap<String, Object> ma = new LinkedMultiValueMap<String, Object>();
+			ma = new LinkedMultiValueMap<String, Object>();
+			ma.add("custId", custId);
+			Cust tcsCust = rest.postForObject(Constants.url + "getCustByCustId", ma, Cust.class);
+			if(tcsCust.getExBool1()==1) {
+				calTcsAmt = ((totalTaxable+totalTaxAmt)*tcsPer)/100;
+			}else {
+				calTcsAmt = 0;
+			}			
 			
-			float calTcsAmt = ((totalTaxable+totalTaxAmt)*tcsAmt)/100;
-			
-			billHeader.setTotalAmt(grandTotalAmt+calTcsAmt);
+			billHeader.setTotalAmt(Math.round(grandTotalAmt+calTcsAmt));
 			billHeader.setExFloat1(calTcsAmt);
 			
 			System.err.println("billHeader" + billHeader.toString());
@@ -951,6 +959,11 @@ public class BillController {
 			HttpServletResponse response) {
  
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		
+		map = new LinkedMultiValueMap<String, Object>();
+        map.add("key", 75);
+        Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
+        float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
 
 		int plantId = Integer.parseInt(request.getParameter("plantId"));
 		int custId = Integer.parseInt(request.getParameter("custId"));
@@ -958,7 +971,7 @@ public class BillController {
 
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
-
+		map = new LinkedMultiValueMap<String, Object>();
 		map.add("plantId", plantId);
 		map.add("tax", statusList);
 		map.add("custId", custId);
@@ -1011,6 +1024,7 @@ public class BillController {
 		rowData.add("SGST Amt");
 		rowData.add("IGST Ledger");
 		rowData.add("IGST Amt");
+		rowData.add("TCS Amt ("+tcsPer+"%)");
 		rowData.add("Roundoff");
 		rowData.add("Invoice Amt");
 		rowData.add("Narration");
@@ -1019,6 +1033,8 @@ public class BillController {
 		exportToExcelList.add(expoExcel);
 		//System.out.println("hello...................");
 		int cnt = 0;
+		float calTcsAmt = 0;
+		float  billAmtTcs = 0;
 		for (int i = 0; i < getBillList.size(); i++) {
 			// 6
 			//System.out.println("item len is " + getBillList.get(i).getGetBillDetails().size());
@@ -1085,14 +1101,27 @@ public class BillController {
 						.concat(String.valueOf(getBillList.get(i).getGetBillDetails().get(j).getSgstPer()))
 						.concat("%"));
 				rowData.add("" + getBillList.get(i).getGetBillDetails().get(j).getIgstAmt());
+				
+				calTcsAmt = getBillList.get(i).getExFloat1();
 
-				float roundOff = (Math.round(getBillList.get(i).getTotalAmt()) - getBillList.get(i).getTotalAmt());
-
+				//System.out.println("Bill Amt--------------"+getBillList.get(i).getTotalAmt());
+				//System.out.println("TCS %--------------"+tcsPer);
+				//System.out.println("TCS Amt--------------"+calTcsAmt);
+				//System.out.println("TCS Bill Amt--------------"+(getBillList.get(i).getTotalAmt()+calTcsAmt));
+				
+				rowData.add("" + calTcsAmt);
+				
+				billAmtTcs =  getBillList.get(i).getTotalAmt();  
+				//float roundOff = (Math.round(getBillList.get(i).getTotalAmt()) - getBillList.get(i).getTotalAmt());
+				float roundOff = (Math.round(getBillList.get(i).getTotalAmt()+calTcsAmt) - billAmtTcs);
+				
 				DecimalFormat df = new DecimalFormat("#.##");
 				String decimalRndOff = df.format(roundOff);
 
 				rowData.add("" + decimalRndOff);
-				rowData.add("" + Math.round(getBillList.get(i).getTotalAmt()));
+				
+				//rowData.add("" + Math.round(getBillList.get(i).getTotalAmt()));
+				rowData.add("" + Math.round(billAmtTcs));
 
 				rowData.add("" + "-");
 
@@ -1584,6 +1613,12 @@ public class BillController {
 			model = new ModelAndView("bill/editBill");
 
 			// model.addObject("title", "Add Order");
+			
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("key", 75);
+			Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
+			float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
 
 			String billDate = request.getParameter("ord_date");
 
@@ -1599,7 +1634,7 @@ public class BillController {
 			List<BillDetail> billDetailsList = new ArrayList<>();
 			BillHeader billHeader = new BillHeader();
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map = new LinkedMultiValueMap<String, Object>();
 			map.add("billHeadId", billHeadId);
 			billHeader = rest.postForObject(Constants.url + "getBillHeaderByBillHeadId", map, BillHeader.class);
 
@@ -1773,9 +1808,19 @@ public class BillController {
 			// billHeader.setOrderId(billHeader.getOrderId());
 			billHeader.setTaxableAmt(totalTaxable);
 			billHeader.setTaxAmt(totalTaxAmt);
-			billHeader.setTotalAmt(grandTotalAmt);
 			billHeader.setBillDate(billDate);
-
+			
+			float calTcsAmt = 0;
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("custId", billHeader.getCustId());
+			Cust tcsCust = rest.postForObject(Constants.url + "getCustByCustId", map, Cust.class);
+			if(tcsCust.getExBool1()==1) {
+				calTcsAmt = ((totalTaxable+totalTaxAmt)*tcsPer)/100;
+			}else {
+				calTcsAmt = 0;
+			}
+			billHeader.setTotalAmt(Math.round(grandTotalAmt+calTcsAmt));
+			billHeader.setExFloat1(calTcsAmt);
 			System.err.println("billHeader" + billHeader.toString());
 
 			// billHeader.setBillNo(billHeader.getBillNo());
