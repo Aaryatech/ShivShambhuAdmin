@@ -203,11 +203,10 @@
 
 								<div class="row">
 									<div class="col-md-2">PAN No</div>
-
+									<!-- pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}" -->
 									<div class="col-md-4">
 										<input type="text" id="pan_no" name="pan_no"
-											value="${editCust.custPanNo}" autocomplete="off"
-											pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}"
+											value="${editCust.custPanNo}" autocomplete="off"											
 											onkeydown="upperCaseF(this)" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct pan no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
@@ -215,12 +214,11 @@
 									</div>
 
 									<div class="col-md-2">GST No</div>
-
+									<!-- pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$" -->
 									<div class="col-md-4">
 										<input type="text" id="gst_no" name="gst_no"
 											autocomplete="off" value="${editCust.custGstNo}"
 											class="form-control"
-											pattern="^([0]{1}[1-9]{1}|[1-2]{1}[0-9]{1}|[3]{1}[0-7]{1})([a-zA-Z]{5}[0-9]{4}[a-zA-Z]{1}[1-9a-zA-Z]{1}[zZ]{1}[0-9a-zA-Z]{1})+$"
 											onkeydown="upperCaseF(this)" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct GST no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
@@ -567,6 +565,22 @@
 											</div>
 										</c:otherwise>
 									</c:choose>
+								</div>
+								
+									<div class="form-group"></div>
+								<div class="row">
+									<div class="col-md-2">Is TCS Applicable?</div>
+
+
+									<div class="col-md-1">
+										Yes <input type="radio" name="isTcs" id="isTcsY"
+										 value="1" ${editCust.exBool1==1 ? 'checked' : ''}>
+									</div>
+
+									<div class="col-md-1">
+										NO <input type="radio" name="isTcs" id="isTcsN"
+											value="0" ${editCust.exBool1==0 ? 'checked' : ''}>
+									</div>
 								</div>
 
 								<div class="form-group"></div>

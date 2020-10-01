@@ -50,8 +50,9 @@
 						</p>
 						<p
 							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-							<b>${billHeaderRes.compOfficeAdd}</b> <br></br> <b>GSTIN/UIN:${billHeaderRes.compGstNo}</b> <br></br> PAN No: ${billHeaderRes.custPanNo} 
-							<b>State : Maharashtra </b> <br></br> <b>Contact:${billHeaderRes.contactNo1}</b>
+							<b>${billHeaderRes.compOfficeAdd}</b> <br></br> <b>GSTIN/UIN:${billHeaderRes.compGstNo}</b>
+							<br></br> PAN No: ${billHeaderRes.custPanNo} <b>State :
+								Maharashtra </b> <br></br> <b>Contact:${billHeaderRes.contactNo1}</b>
 							<br></br> <b>Email:${billHeaderRes.email1}</b>
 						</p>
 
@@ -133,33 +134,24 @@
 							${billHeaderRes.custMobNo}</p>
 
 					</td>
+
 					<!--  1st td ends -->
+					<td width="50%" rowspan="4" colspan="6"
+						style="font-size: 14px; border-left: 1px solid #313131;">
+
+						<p
+							style="color: #000; font-size: 14px; text-align: left; margin: 0px; padding: 8px 0 20px 8px; border-bottom: 1px solid #313131;">
+							Buyer's Order No.: <b>${ref}</b>
+						</p>
+						<p
+							style="color: #000; font-size: 14px; text-align: left; margin: 0px; padding: 20px 0 8px 8px;">Project
+							Name - ${billHeaderRes.projName} ${billHeaderRes.location}</p>
+					</td>
 
 
-					<%-- <td width="25%" colspan="3"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Buyer's Order No.:
-						
-						<b>${ref}</b>
-					</p>
-
-				</td>
-				<td colspan="3" width="25%"
-					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
-					<p
-						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Dated.
-						<!-- </p> 
-      	<p style="color:#000; font-size:11px; text-align:left;margin:0px;"> -->
-						<b>${billHeaderRes.billDate}</b>
-					</p>
-				</td>
- --%>
 				</tr>
 				<!-- row ends -->
-				<tr>
+				<%-- <tr>
 					<td width="25%" colspan="6"
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 10px; color: #000; font-size: 15px; text-align: center">
 
@@ -180,13 +172,16 @@
 							Name - ${billHeaderRes.projName} ${billHeaderRes.location}</p>
 
 					</td>
+					
 
-				</tr>
-				<!-- <tr>
-
-			</tr> -->
+				</tr> --%>
 
 			</table>
+			<c:set var="isTcs" value="0" />
+			<c:if test="${billHeaderRes.exBool1==1}">
+				<c:set var="isTcs" value="1" />
+			</c:if>
+
 			<c:set var="tAmt" value="0" />
 			<c:set var="totalQty" value="0" />
 			<c:set var="taxableAmt" value="0" />
@@ -606,6 +601,12 @@
 					<c:set var="tAmt" value="${tAmt+billDetails.totalAmt}" />
 
 
+					<c:set var="tcsAmt" value="0" />
+					<c:if test="${isTcs==1}">
+						<c:set var="tcsAmt" value="${tAmt*tcsPer/100}" />
+					</c:if>
+
+
 				</tr>
 				</c:forEach>
 				<tr>
@@ -675,12 +676,31 @@
 
 				<!-- Round_Off -->
 
-				<c:set var="roundVal" value="${Math.round(tAmt)}" />
+				<c:set var="roundVal" value="${Math.round(tAmt+tcsAmt)}" />
 
-				<c:set var="roundOffVal" value="${roundVal-tAmt}" />
+				<c:set var="calTotalAmt" value="${tAmt+tcsAmt}" />
+
+				<c:set var="roundOffVal" value="${roundVal-calTotalAmt}" />
 
 				<c:choose>
 					<c:when test="${billHeaderRes.isSameState==1}">
+
+						<c:if test="${isTcs==1}">
+							<tr>
+								<td align="left"
+									style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+								<td colspan="12" align="right"
+									style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b>TCS
+										(${tcsPer}%) </b></td>
+
+								<td align="right"
+									style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+											type="number" maxFractionDigits="2" minFractionDigits="2"
+											value="${tcsAmt}" /></b></td>
+
+							</tr>
+						</c:if> 
+
 
 						<tr>
 							<td align="left"
@@ -711,6 +731,21 @@
 						</tr>
 					</c:when>
 					<c:otherwise>
+						<c:if test="${isTcs==1}">							
+							<tr>
+							<td align="left"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
+							<td colspan="10" align="right"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b>TCS (${tcsPer}%)
+								</b></td>
+
+							<td align="right"
+								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+										type="number" maxFractionDigits="2" minFractionDigits="2"
+										value="${billHeaderRes.exFloat1}" /></b></td>
+
+						</tr>
+						</c:if> 
 
 						<tr>
 							<td align="left"
@@ -790,6 +825,11 @@
 						style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">IGST
 					</td>
 
+					<c:if test="${isTcs==1}">
+						<td align="center" width="5%" rowspan="2"
+							style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">TCS
+							(${tcsPer}%)</td>
+					</c:if>
 
 					<td align="center" width="15%" rowspan="2"
 						style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">Amount</td>
@@ -877,13 +917,15 @@
 								value="${hsnpdf.igstAmt}" /></td>
 
 
-
-
+						<c:if test="${isTcs==1}">
+							<td align="right"
+								style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${tcsAmt}</td>
+						</c:if>
 
 						<td align="right"
 							style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
 								type="number" maxFractionDigits="2" minFractionDigits="2"
-								value="${hsnpdf.totalAmt}" var="t" /> ${t}</td>
+								value="${hsnpdf.totalAmt+tcsAmt}" var="t" /> ${t}</td>
 
 
 
@@ -935,12 +977,17 @@
 								type="number" maxFractionDigits="2" minFractionDigits="2"
 								value="${totalHsnIgst}" /></b></td>
 
-
+					<c:if test="${isTcs==1}">
+						<td align="right"
+							style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+									type="number" maxFractionDigits="2" minFractionDigits="2"
+									value="${tcsAmt}" /></b></td>
+					</c:if>
 
 					<td align="right"
 						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
 								type="number" maxFractionDigits="2" minFractionDigits="2"
-								value="${tHsnAmt}" /></b></td>
+								value="${tHsnAmt+tcsAmt}" /></b></td>
 
 
 

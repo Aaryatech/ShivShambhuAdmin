@@ -1311,6 +1311,7 @@ public class MasterController {
 				cust.setCustVendor(0);
 
 			}
+			cust.setExBool1(Integer.parseInt(request.getParameter("isTcs")));
 
 			Cust custInsertRes = rest.postForObject(Constants.url + "saveCust", cust, Cust.class);
 
@@ -1343,7 +1344,7 @@ public class MasterController {
 			System.err.println("Exc in saving customet ->project  " + e.getMessage());
 			e.printStackTrace();
 		}
-		return "redirect:/showAddCustomer";
+		return "redirect:/showCustList";
 
 	}
 

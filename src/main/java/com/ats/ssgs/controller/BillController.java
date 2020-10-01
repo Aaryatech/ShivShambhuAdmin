@@ -379,6 +379,12 @@ public class BillController {
 			model = new ModelAndView("bill/addBill");
 
 			model.addObject("title", "Add Bill");
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("key", 75);
+			Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
+			float tcsAmt = Float.parseFloat(tcsSetting.getSettingValue());
+			
 			String[] chalanId = request.getParameterValues("chalanId");
 			int companyId = Integer.parseInt(request.getParameter("companyId"));
 			int plantId = Integer.parseInt(request.getParameter("plant_id"));
@@ -409,7 +415,6 @@ public class BillController {
 			billHeader.setCustId(custId);
 			billHeader.setDeliveryTerm(billItems.get(0).getDeliveryTerm());
 			billHeader.setDelStatus(1);
-			billHeader.setExFloat1(0);
 			billHeader.setExFloat2(0);
 			billHeader.setExInt1(plantId);
 			billHeader.setExInt2(gstNo);
@@ -611,10 +616,15 @@ public class BillController {
 			billHeader.setOrderId(removeComma(orderIdList));
 			billHeader.setTaxableAmt(totalTaxable);
 			billHeader.setTaxAmt(totalTaxAmt);
-			billHeader.setTotalAmt(grandTotalAmt);
-
+			
+			
+			float calTcsAmt = ((totalTaxable+totalTaxAmt)*tcsAmt)/100;
+			
+			billHeader.setTotalAmt(grandTotalAmt+calTcsAmt);
+			billHeader.setExFloat1(calTcsAmt);
+			
 			System.err.println("billHeader" + billHeader.toString());
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map = new LinkedMultiValueMap<String, Object>();
 
 			billHeader.setBillNo(billNo);
 			billHeader.setBillDetailList(billDetailList);
@@ -1908,7 +1918,13 @@ public class BillController {
 			HttpSession httpSession = request.getSession();
 			httpSession.setAttribute("Currency", new Currency());
 			model.addObject("billHeaderList", billHeaders);
-
+			
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("key", 75);
+			Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
+			float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
+			model.addObject("tcsPer", tcsPer);
+			
 			model.addObject("val", "");
 		} catch (Exception e) {
 			e.printStackTrace();

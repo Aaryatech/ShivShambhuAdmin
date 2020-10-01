@@ -477,8 +477,21 @@
 											value="0">
 									</div>
 
+								</div>
+								
+								<div class="form-group"></div>
+								
+								<div class="row">
+									<div class="col-md-2">Is TCS Applicable?</div>
 
+									<div class="col-md-1">
+										Yes <input type="radio" name="isTcs" id="isTcsY" value="1">
+									</div>
 
+									<div class="col-md-1">
+										NO <input type="radio" name="isTcs" checked id="isTcsN"
+											value="0">
+									</div>
 								</div>
 								<div class="form-group"></div>
 
@@ -494,8 +507,6 @@
 										style="align-content: center; width: 113px; margin-left: 40px;">
 
 								</div>
-
-
 							</form>
 						</div>
 					</div>
