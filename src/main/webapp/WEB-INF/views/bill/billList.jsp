@@ -394,15 +394,16 @@ body {
 										<th style="text-align: center"><input type="checkbox"
 											id="selectAll" /></th>
 										<th style="text-align: center">Sr.</th>
-										<th style="text-align: center">Bill No</th>
-										<th style="text-align: center">Bill Date</th>
-										<th style="text-align: center">Customer Name</th>
+										<th style="text-align: center" width="15%">Bill No</th>
+										<th style="text-align: center" width="13%">Bill Date</th>
+										<th style="text-align: center" width="20%">Customer Name</th>
 
-										<th style="text-align: center">Taxable Amount</th>
-										<th style="text-align: center">Tax Amount</th>
-										<th style="text-align: center">Total Amount</th>
+										<th style="text-align: center" width="10%">Taxable Amount</th>
+										<th style="text-align: center" width="10%">Tax Amount</th>
+										<th style="text-align: center" width="10%">Total Amount</th>
+										<th style="text-align: center" width="10%">TCS Amount</th>
 
-										<th style="text-align: center">Action</th>
+										<th style="text-align: center" width="14%">Action</th>
 									</tr>
 								</thead>
 
@@ -743,19 +744,19 @@ body {
 														var checkB = '<input  type="checkbox" name=select_to_print id=select_to_print'+v.billHeadId+' class="chk"  value='+v.billHeadId+'>'
 													
 														
-														var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"  onclick="callEdit('
+														var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn" title="Edit Bill" onclick="callEdit('
 															+ v.billHeadId
 															+ ','
 															+ i
-															+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file-pdf-o" title="Bill Pdf" onclick="singleBillPdf('
+															+ ')" style="color:black"><i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;<a href="#" class="fa fa-file-pdf-o fa-1" title="Bill Pdf" onclick="singleBillPdf('
 															+ v.billHeadId
 															+ ','
 															+ i
-															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="#" class="action_btn" onclick="callDelete('
+															+ ')" style="color:black"><i class="fa fa-edit"></i></a>&nbsp;&nbsp; <a href="#" class="action_btn" title="Delete Bill" onclick="callDelete('
 																+ v.billHeadId
 																+ ','
 																+ i
-																+ ')" style="color:black"><i class="fa fa-trash" title="Delete"></i></a>&nbsp;&nbsp;&nbsp;'
+																+ ')" style="color:black"><i class="fa fa-trash" title="Delete"></i></a>&nbsp;&nbsp;'
 													/* 	var acButton = '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="action_btn"  onclick="callEdit('
 																+ v.billHeadId
 																+ ','
@@ -780,6 +781,7 @@ body {
 																				v.taxableAmt,
 																				v.taxAmt,
 																				v.totalAmt,
+																				v.exFloat1,
 																				acButton
 																		 ])
 																.draw();

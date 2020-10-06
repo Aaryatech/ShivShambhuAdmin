@@ -601,14 +601,15 @@
 					<c:set var="tAmt" value="${tAmt+billDetails.totalAmt}" />
 
 
-					<c:set var="tcsAmt" value="0" />
+					<%-- <c:set var="tcsAmt" value="0" />
 					<c:if test="${isTcs==1}">
 						<c:set var="tcsAmt" value="${tAmt*tcsPer/100}" />
-					</c:if>
+					</c:if> --%>
 
 
 				</tr>
 				</c:forEach>
+				
 				<tr>
 					<td align="left"
 						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
@@ -673,19 +674,31 @@
 
 				</tr>
 
-
+				<c:set var="tcsAmt" value="${billHeaderRes.exFloat1}" />
+				<c:set var="tempVar" value="0" />
+				
 				<!-- Round_Off -->
-
-				<c:set var="roundVal" value="${Math.round(tAmt+tcsAmt)}" />
-
-				<c:set var="calTotalAmt" value="${tAmt+tcsAmt}" />
+				<c:if test="${isTcs==1 && tcsAmt > 0}">
+					<c:set var="tempVar" value="1" />
+				</c:if>
+				
+				<c:choose>
+					<c:when test="${tempVar==1}">
+						<c:set var="roundVal" value="${Math.round(tAmt+tcsAmt)}" />	
+						<c:set var="calTotalAmt" value="${tAmt+tcsAmt}" />					
+					</c:when>
+					<c:otherwise>
+						<c:set var="roundVal" value="${Math.round(tAmt)}" />
+						<c:set var="calTotalAmt" value="${tAmt}" />										
+					</c:otherwise>				
+				</c:choose>			
 
 				<c:set var="roundOffVal" value="${roundVal-calTotalAmt}" />
 
 				<c:choose>
 					<c:when test="${billHeaderRes.isSameState==1}">
 
-						<c:if test="${isTcs==1}">
+						<c:if test="${tempVar==1}">
 							<tr>
 								<td align="left"
 									style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
@@ -731,7 +744,7 @@
 						</tr>
 					</c:when>
 					<c:otherwise>
-						<c:if test="${isTcs==1}">							
+						<c:if test="${tempVar==1}">							
 							<tr>
 							<td align="left"
 								style="border-top: 0px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
@@ -825,7 +838,7 @@
 						style="border-left: 1px solid #313131; border-top: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">IGST
 					</td>
 
-					<c:if test="${isTcs==1}">
+					<c:if test="${tempVar==1}">
 						<td align="center" width="5%" rowspan="2"
 							style="border-bottom: 1px solid #313131; border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">TCS
 							(${tcsPer}%)</td>
@@ -917,15 +930,26 @@
 								value="${hsnpdf.igstAmt}" /></td>
 
 
-						<c:if test="${isTcs==1}">
-							<td align="right"
+						<c:choose>
+						<c:when test="${tempVar==1}">
+						<td align="right"
 								style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;">${tcsAmt}</td>
-						</c:if>
-
+							
 						<td align="right"
 							style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
 								type="number" maxFractionDigits="2" minFractionDigits="2"
 								value="${hsnpdf.totalAmt+tcsAmt}" var="t" /> ${t}</td>
+						</c:when>
+						<c:otherwise>						
+						<td align="right"
+							style="border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+								type="number" maxFractionDigits="2" minFractionDigits="2"
+								value="${hsnpdf.totalAmt}" var="t" /> ${t}</td>
+						</c:otherwise>
+						</c:choose>
+						
+
+						
 
 
 
@@ -976,18 +1000,30 @@
 						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
 								type="number" maxFractionDigits="2" minFractionDigits="2"
 								value="${totalHsnIgst}" /></b></td>
+								
 
-					<c:if test="${isTcs==1}">
-						<td align="right"
-							style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
-									type="number" maxFractionDigits="2" minFractionDigits="2"
-									value="${tcsAmt}" /></b></td>
-					</c:if>
+					<c:choose>
+						<c:when test="${tempVar==1}">
+							<td align="right"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+										type="number" maxFractionDigits="2" minFractionDigits="2"
+										value="${tcsAmt}" /></b></td>
+							<td align="right"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+										type="number" maxFractionDigits="2" minFractionDigits="2"
+										value="${tHsnAmt+tcsAmt}" /></b></td>
+						</c:when>
 
-					<td align="right"
-						style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
-								type="number" maxFractionDigits="2" minFractionDigits="2"
-								value="${tHsnAmt+tcsAmt}" /></b></td>
+						<c:otherwise>
+							<td align="right"
+								style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+										type="number" maxFractionDigits="2" minFractionDigits="2"
+										value="${tHsnAmt}" /></b></td>
+						</c:otherwise>
+					</c:choose>
+					
+
+					
 
 
 
