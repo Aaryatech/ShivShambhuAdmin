@@ -51,7 +51,7 @@
 						<p
 							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
 							<b>${billHeaderRes.compOfficeAdd}</b> <br></br> <b>GSTIN/UIN:${billHeaderRes.compGstNo}</b>
-							<br></br> PAN No: ${billHeaderRes.custPanNo} <b>State :
+							<br></br> PAN No: ADHFS8127N <b>State :
 								Maharashtra </b> <br></br> <b>Contact:${billHeaderRes.contactNo1}</b>
 							<br></br> <b>Email:${billHeaderRes.email1}</b>
 						</p>

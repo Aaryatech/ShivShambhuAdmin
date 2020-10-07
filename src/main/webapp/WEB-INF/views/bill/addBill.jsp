@@ -152,7 +152,7 @@
 						</div>
 						<div class="card-body card-block">
 							<form action="${pageContext.request.contextPath}/insertBill"
-								id="addBill" onsubmit="validate()" method="post">
+								id="addBill"  method="post" onsubmit="validate">
 
 								<div class="row">
 									<div class="col-md-2">Select Company*</div>
@@ -470,7 +470,7 @@
 
 									<div class="col-md-2">
 
-										<input type="Submit" class="btn btn-primary" value="Submit">
+										<input type="submit" class="btn btn-primary" value="Submit"  >
 
 									</div>
 
@@ -589,6 +589,7 @@
 	    var projId=document.getElementById("proj_id").value;
 	  //  var poId=document.getElementById("po_id").value;
 		var chalanId=document.getElementById("chalan_id").value;
+		//document.getElementById("submitBill").disabled=true;
 		
 		
 		 var billDate=document.getElementById("bill_date").value;
@@ -630,8 +631,14 @@
 	    	okay=false;
 	    	alert("Please enter bill remark ");
 	    }
-	    return okay;
-	   
+		  
+		  /* if(okay==true)
+			  {
+		  			var form = document.getElementById("validation-form")
+		    		form.action ="addRawMaterial";
+		    		form.submit();
+			  } */
+	   return true;
 	}
 	</script>
 

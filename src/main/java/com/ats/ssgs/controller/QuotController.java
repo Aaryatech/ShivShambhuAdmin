@@ -1550,7 +1550,7 @@ public class QuotController {
 
 		// File f = new File("/home/lenovo/Desktop/quot.pdf");
 
-		File f = new File("apache-tomcat-8.5.40/webapps/uploads/shiv/quotation.pdf");
+		File f = new File(Constants.REPORT_SAVE);
 		// File f = new File("E:\\bill.pdf");
 		// File f = new
 		// File("/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf");
@@ -1570,9 +1570,9 @@ public class QuotController {
 		String appPath = context.getRealPath("");
 
 		// String filename = "/home/lenovo/Desktop/quot.pdf";
-		String filename = "apache-tomcat-8.5.40/webapps/uploads/shiv/quotation.pdf";
+		String filename = Constants.REPORT_SAVE;
 		// String filename ="E:\\bill.pdf";
-		String filePath = "apache-tomcat-8.5.40/webapps/uploads/shiv/quotation.pdf";
+		String filePath = Constants.REPORT_SAVE;
 
 		// String filePath = "/home/lenovo/Desktop/quot.pdf";
 		// "/Users/MIRACLEINFOTAINMENT/ATS/uplaods/reports/ordermemo221.pdf";
