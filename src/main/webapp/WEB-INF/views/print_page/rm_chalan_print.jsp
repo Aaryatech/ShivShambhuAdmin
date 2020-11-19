@@ -173,6 +173,49 @@
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		&nbsp;&nbsp; <b></b>${printData.chalanItemList[0].sitePersonName}</div>
+		
+		
+		<!-- 19-11-2020 Mahendra -->
+		<table width="100%" border="0" cellpadding="0" cellspacing="0"
+		style="border-top: 1px solid #313131; border-right: 1px solid #313131; margin-left: 10px;">
+
+		<tr>
+			<td align="left" width="35%" rowspan="2"
+				style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 5px; text-align: left">
+				<span style="font-size: 12px;"> <b>CAUTION:</b>Wet Cement and
+					Concrete Are Caustic Material Which Can Cause Serious Skin
+					Injuiry.To Avoid Risk Of Such Injury Protective Clothing
+					(Gloves,Booted) Should Be Worn During All Handling Operations Where
+					Direct Skin Contact Occurs,Area Should Be Washed Throughly With
+					Clean Water.We Are Not Responsible For Slump Strength OrQuality Of
+					Concrete When Water Has Been Added On Site At The Request Of
+					Customer<br />
+					<hr></hr> <b>WARRANTY DISCLAIMER</b>:<b> SSIP Ready mix concrete
+				</b>warrants that the product identified are in accordance with the
+					appropriate BIS specification.No one is authorized to make any
+					modification or additions to this warranty <b>SSIP Ready mix
+						concrete </b> makes no warranty either expressed or implied with
+					respect to this products and disclaims any implied of merchantable
+					or fitness for particular purpose.<b> SSIP Ready mix concrete </b>
+					has no control over other ingredient mixed with this product or in
+					final application.<b>SSIP Ready mix concrete </b> warrants <b>SSIP
+						Ready mix concrete </b> does not and can not warrant the finished
+					work.In all event <b>SSIP Ready mix concrete </b> shall not be
+					liable to direct,indirect,special,incidental of consequential
+					damages arising out of the use of this product.Even if advised of
+					possibilities of such damages in no case shall<b>SSIP Ready mix
+						concrete </b> liability exceed the purchase price of the product <b>Contact
+						No:</b> 9922419336/9823354777.
+					<hr /> <b>Note:1) If necessary,additional does of admixture may
+						be added at project site to regain the workability of concrete .
+						2) Concrete should be consumed within 3 hours of batching time.</b>
+			</span>
+			</td>
+
+		</tr>
+
+	</table>
+		<!--  -->
 
 	<table width="100%" border="0" cellpadding="0" cellspacing="0"
 		style="border-top: 1px solid #313131; border-right: 1px solid #313131; margin-left: 10px;">
