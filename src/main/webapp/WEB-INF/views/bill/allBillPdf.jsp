@@ -51,8 +51,11 @@
 						<p
 							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
 							<b>${billHeaderRes.compOfficeAdd}</b> <br></br> <b>GSTIN/UIN:${billHeaderRes.compGstNo}</b>
-							<br></br> PAN No: ${billHeaderRes.custPanNo} <b>State :
-								Maharashtra </b> <br></br> <b>Contact:${billHeaderRes.contactNo1}</b>
+							<br></br>
+							
+							<b> PAN No: ${billHeaderRes.compPanNo}</b><br></br>							
+							
+							<b>State : Maharashtra </b> <br></br> <b>Contact:${billHeaderRes.contactNo1}</b>
 							<br></br> <b>Email:${billHeaderRes.email1}</b>
 						</p>
 
@@ -123,9 +126,12 @@
 						<p
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
 							GSTIN/UIN: ${billHeaderRes.custGstNo}</p>
-						<p
-							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
-							PAN No: ${billHeaderRes.compPanNo}<%-- ${billHeaderRes.custPanNo} --%></p>
+							
+							<c:if test="${not empty billHeaderRes.custPanNo}">						
+								<p
+								style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
+								PAN No: ${billHeaderRes.custPanNo}</p>
+							</c:if>
 						<p
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">State
 							: Maharashtra</p>
@@ -299,7 +305,11 @@
 						<p
 							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
 							<b>${billHeaderRes.compOfficeAdd}</b> <br></br> <b>GSTIN/UIN:${billHeaderRes.compGstNo}</b>
-							<br></br> PAN No: ${billHeaderRes.custPanNo}<br></br> <b>State
+							
+							<br></br> 
+							<c:if test="${not empty billHeaderRes.custPanNo}">
+							<b>PAN No: ${billHeaderRes.custPanNo}</b><br></br></c:if>
+							 <b>State
 								: Maharashtra </b> <br></br> <b>Contact:${billHeaderRes.contactNo1}</b>
 							<br></br> <b>Email:${billHeaderRes.email1}</b>
 						</p>
@@ -367,9 +377,12 @@
 						<p
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
 							GSTIN/UIN: ${billHeaderRes.custGstNo}</p>
-						<p
-							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
-							PAN No: ${billHeaderRes.compPanNo}<%-- ${billHeaderRes.custPanNo} --%></p>
+							
+						<c:if test="${not empty billHeaderRes.custPanNo}">
+							<p
+								style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
+								PAN No: ${billHeaderRes.custPanNo}</p>
+						</c:if>
 						<p
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">State
 							: Maharashtra</p>
@@ -1072,8 +1085,8 @@
 
 				<tr>
 					<td colspan="8" width="60%"
-						style="padding: 8px; color: #000; font-size: 13px;">Company's
-						PAN: ${billHeaderRes.compPanNo}<br />Remark :
+						style="padding: 8px; color: #000; font-size: 13px;"><%-- Company's
+						PAN: ${billHeaderRes.compPanNo} --%><br />Remark :
 						${billHeaderRes.exVar2}
 					</td>
 					<td colspan="4" width="60%"
