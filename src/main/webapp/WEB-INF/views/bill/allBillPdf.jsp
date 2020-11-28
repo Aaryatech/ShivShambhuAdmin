@@ -304,13 +304,17 @@
 						</p>
 						<p
 							style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-							<b>${billHeaderRes.compOfficeAdd}</b> <br></br> <b>GSTIN/UIN:${billHeaderRes.compGstNo}</b>
+							<b>${billHeaderRes.compOfficeAdd}</b> <br></br> 
 							
+							<b>GSTIN/UIN:${billHeaderRes.compGstNo}</b>
 							<br></br> 
-							<c:if test="${not empty billHeaderRes.custPanNo}">
-							<b>PAN No: ${billHeaderRes.custPanNo}</b><br></br></c:if>
-							 <b>State
-								: Maharashtra </b> <br></br> <b>Contact:${billHeaderRes.contactNo1}</b>
+							
+							<b>PAN No: ${billHeaderRes.compPanNo}</b><br></br> 
+							
+							<b>State : Maharashtra </b> <br></br> 
+							
+							<b>Contact:${billHeaderRes.contactNo1}</b>
+							
 							<br></br> <b>Email:${billHeaderRes.email1}</b>
 						</p>
 
