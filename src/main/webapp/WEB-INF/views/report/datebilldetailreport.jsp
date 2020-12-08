@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
 <!doctype html>
 <html class="no-js" lang="">
 
@@ -165,6 +167,13 @@
 									</div>
 								</div> --%>
 								<div class="card-body card-block">
+								<c:set value="0" var="ttlTaxable"/>
+								<c:set value="0" var="ttlCgst"/>
+								<c:set value="0" var="ttlSgst"/>
+								<c:set value="0" var="ttlIgst"/>
+								<c:set value="0" var="ttlTax"/>
+								<c:set value="0" var="ttlTcs"/>
+								<c:set value="0" var="ttlGrand"/>
 
 									<table class="table table-striped table-bordered">
 										<thead>
@@ -178,6 +187,7 @@
 												<th style="text-align: center">SGST</th>
 												<th style="text-align: center">IGST</th>
 												<th style="text-align: center">Tax Amount</th>
+												<th style="text-align: center">TCS Amount</th> 
 												<th style="text-align: center">Total Amount</th>
 
 											</tr>
@@ -199,27 +209,59 @@
 													<td style="text-align: left"><c:out
 															value="${bill.custName}" /></td>
 															
-													<td style="text-align: left"><c:out
-															value="${bill.taxableAmt}" /></td>
+													<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${bill.taxableAmt}" /></td>
 
-													<td style="text-align: left"><c:out
-															value="${bill.cgstAmt}" /></td>
+													<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${bill.cgstAmt}" /></td>
 
-													<td style="text-align: left"><c:out
-															value="${bill.sgstAmt}" /></td>
+													<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${bill.sgstAmt}" /></td>
 
-													<td style="text-align: left"><c:out
-															value="${bill.igstAmt}" /></td>
-
-
-													<td style="text-align: left"><c:out
-															value="${bill.taxAmt}" /></td>
+													<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${bill.igstAmt}" /></td>
 
 
-													<td style="text-align: left"><c:out
-															value="${bill.totalAmt}" /></td>
+													<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${bill.taxAmt}" /></td>
+															
+													<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${bill.tcsAmt}"/></td>
+
+													<td style="text-align: left">
+													<fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${bill.totalAmt}" /></td>
 												</tr>
+												
+												<c:set value="${ttlTaxable+bill.taxableAmt}" var="ttlTaxable"/>
+												<c:set value="${ttlCgst+bill.sgstAmt}" var="ttlCgst"/>
+												<c:set value="${ttlSgst+bill.sgstAmt}" var="ttlSgst"/>
+												<c:set value="${ttlIgst+bill.igstAmt}" var="ttlIgst"/>
+												<c:set value="${ttlTax+bill.taxAmt}" var="ttlTax"/>
+												<c:set value="${ttlTcs+bill.tcsAmt}" var="ttlTcs"/>
+												<c:set value="${ttlGrand+bill.totalAmt}" var="ttlGrand"/>
+												
 											</c:forEach>
+											 <tr>
+												<td></td>
+												<td></td>
+												<td>Total</td>
+												<td></td>
+												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${ttlTaxable}" /></td>
+												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${ttlCgst}" /></td>
+												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${ttlSgst}" /></td>
+												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${ttlIgst}" /></td>
+												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${ttlTax}" /></td>
+												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${ttlTcs}" /></td>
+												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${ttlGrand}" /></td>
+											</tr>
 										</tbody>
 									</table>
 
@@ -369,7 +411,8 @@
 		function genPdf() {
 			//alert("hiii");
 			var fromDate = document.getElementById("fromDate").value;
-			var toDate = document.getElementById("toDate").value;
+			var toDate = document.getElementById("fromDate").value;
+			//var toDate = document.getElementById("toDate").value;
 
 			window.open('${pageContext.request.contextPath}/showDatewiseDetailPdf/'
 					+ fromDate + '/' + toDate);

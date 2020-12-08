@@ -195,12 +195,12 @@
 											<th style="text-align: center">SGST</th>
 											<th style="text-align: center">IGST</th>
 											<th style="text-align: center">Tax Amount</th>
+											<th style="text-align: center">TCS Amount</th>
 											<th style="text-align: center">Total Amount</th>
 											<th style="text-align: center">Action</th>
-
 										</tr>
 									</thead>
-
+									<tbody></tbody>
 								</table>
 								<div class="col-md-2"></div>
 
@@ -317,8 +317,6 @@
 		// onclick of submit to search order 
 		function showQuot() {
 
-			//alert("Hi View Orders  ");
-
 			var custId = document.getElementById("custId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
@@ -375,7 +373,6 @@
 								},
 
 								function(data) {
-
 									document.getElementById("expExcel").disabled = false;
 									document.getElementById("PDFButton").disabled = false;
 
@@ -389,11 +386,25 @@
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();
 									dataTable.clear().draw();
-
+	
+									var ttlTaxable = 0;
+									var ttlCgst= 0;
+									var ttlSgst = 0;
+									var ttlTax = 0;
+									var ttlGrand = 0;
+									var ttlTcs = 0;
+									var ttlIgst = 0;
 									$
 											.each(
 													data,
 													function(i, v) {
+														ttlTaxable= ttlTaxable+v.taxableAmt;
+														ttlCgst = ttlCgst+v.cgstAmt;
+														ttlSgst = ttlSgst+v.sgstAmt;
+														ttlIgst = ttlIgst+v.igstAmt;
+														ttlTax = ttlTax+v.taxAmt
+														ttlGrand = ttlGrand+v.totalAmt;
+														ttlTcs = ttlTcs+v.tcsAmt;
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.billHeadId
@@ -421,14 +432,66 @@
 																				v.igstAmt
 																						.toFixed(2),
 																				v.taxAmt
+																						.toFixed(2),																						
+																				v.tcsAmt
 																						.toFixed(2),
 																				v.totalAmt
 																						.toFixed(2),
+																				
 																				acButton
 
 																		])
 																.draw();
 													});
+									
+									var tr1 = $('<tr></tr>');
+									tr1
+									.append($(
+											'<td></td>')
+											.html(''));
+
+									tr1
+											.append($(
+													'<td></td>')
+													.html('Total'));									
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlTaxable.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlCgst.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlSgst.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlIgst.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlTax.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlTcs.toFixed(2)));
+									
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlGrand.toFixed(2)));									
+									tr1
+									.append($(
+											'<td></td>')
+											.html());
+									
+									$(
+									'#bootstrap-data-table tbody')
+									.append(
+											tr1);
 
 								});
 
@@ -558,7 +621,6 @@
 	<script type="text/javascript">
 		// onclick of submit to search order 
 		function showQuot1() {
-
 			//alert("Hi View Orders  ");
 			//var custId=0;
 			//var plantId=0;
@@ -595,6 +657,13 @@
 										document.getElementById("PDFButton").disabled = true;
 
 									}
+									var ttlTaxable = 0;
+									var ttlCgst= 0;
+									var ttlSgst = 0;
+									var ttlTax = 0;
+									var ttlGrand = 0;
+									var ttlTcs = 0;
+									var ttlIgst = 0;
 
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();
@@ -604,6 +673,13 @@
 											.each(
 													data,
 													function(i, v) {
+														ttlTaxable= ttlTaxable+v.taxableAmt;
+														ttlCgst = ttlCgst+v.cgstAmt;
+														ttlSgst = ttlSgst+v.sgstAmt;
+														ttlIgst = ttlIgst+v.igstAmt;
+														ttlTax = ttlTax+v.taxAmt
+														ttlGrand = ttlGrand+v.totalAmt;
+														ttlTcs = ttlTcs+v.tcsAmt;
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.billHeadId
@@ -631,15 +707,66 @@
 																				v.igstAmt
 																						.toFixed(2),
 																				v.taxAmt
+																						.toFixed(2),																						
+																				v.tcsAmt
 																						.toFixed(2),
-
 																				v.totalAmt
 																						.toFixed(2),
+																				
 																				acButton
 
 																		])
 																.draw();
 													});
+									var tr1 = $('<tr></tr>');
+									tr1
+									.append($(
+											'<td></td>')
+											.html(''));
+
+									tr1
+											.append($(
+													'<td></td>')
+													.html('Total'));									
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlTaxable.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlCgst.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlSgst.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlIgst.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlTax.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlTcs.toFixed(2)));
+									
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlGrand.toFixed(2)));
+									
+									tr1
+									.append($(
+											'<td></td>')
+											.html());
+									
+									$(
+									'#bootstrap-data-table tbody')
+									.append(
+											tr1);
 
 								});
 
