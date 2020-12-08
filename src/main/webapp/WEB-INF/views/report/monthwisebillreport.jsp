@@ -175,6 +175,7 @@
 											<th style="text-align: center">IGST</th>
 											<th style="text-align: center">Tax Amount</th>
 											<th style="text-align: center">Total Amount</th>
+											<th style="text-align: center">Total TCS Amount</th>
 											<th style="text-align: center">Action</th>
 
 										</tr>
@@ -401,6 +402,8 @@
 																						.toFixed(2),
 
 																				v.totalAmt
+																						.toFixed(2),
+																				v.tcsAmt
 																						.toFixed(2),
 																				acButton
 

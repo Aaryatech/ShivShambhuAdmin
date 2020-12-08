@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -53,6 +54,7 @@ import com.ats.ssgs.model.master.Company;
 import com.ats.ssgs.model.master.Cust;
 import com.ats.ssgs.model.master.Item;
 import com.ats.ssgs.model.master.Plant;
+import com.ats.ssgs.model.master.Setting;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -2836,8 +2838,8 @@ public class BillReportController {
 		String items1 = sb1.toString();
 		items1 = items1.substring(0, items1.length() - 1);
 
-		System.out.println("plantIdList" + items1);
-		System.out.println("custIdList" + items);
+		System.out.println("plantIdList" + items1.toString());
+		System.out.println("custIdList" + items.toString());
 		String fromDate = request.getParameter("fromDate");
 		String toDate = request.getParameter("toDate");
 		System.out.println("data is: " + fromDate + toDate);
@@ -2850,8 +2852,16 @@ public class BillReportController {
 				MonthWiseBill[].class);
 		monthList = new ArrayList<MonthWiseBill>(Arrays.asList(monthHeadArray));
 
-		System.out.println("data is" + monthList.toString());
-
+		map = new LinkedMultiValueMap<String, Object>();
+		map.add("key", 75);
+		Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
+		float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
+		float tcsAmt = 0;
+		for (int i = 0; i < monthList.size(); i++) {
+			tcsAmt = ((monthList.get(i).getTaxableAmt()+monthList.get(i).getTaxAmt())*tcsPer)/100;
+			monthList.get(i).setTcsAmt(tcsAmt);
+		}
+		
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
 		ExportToExcel expoExcel = new ExportToExcel();
@@ -2865,6 +2875,7 @@ public class BillReportController {
 		rowData.add("Tax Amount");
 		rowData.add("Taxable Amount");
 		rowData.add("Total Amount");
+		rowData.add("Total TCS Amount");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -2883,6 +2894,7 @@ public class BillReportController {
 			rowData.add("" + monthList.get(i).getTaxAmt());
 			rowData.add("" + monthList.get(i).getTaxableAmt());
 			rowData.add("" + monthList.get(i).getTotalAmt());
+			rowData.add("" + roundUp(monthList.get(i).getTcsAmt()));
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
@@ -2890,7 +2902,7 @@ public class BillReportController {
 
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
-		session.setAttribute("excelName", "GetTaxWiseBillReport");
+		session.setAttribute("excelName", "GetMonthWiseBillReport");
 
 		return monthList;
 
@@ -2920,11 +2932,11 @@ public class BillReportController {
 			e.printStackTrace();
 		}
 
-		PdfPTable table = new PdfPTable(8);
+		PdfPTable table = new PdfPTable(9);
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 0.4f, 0.7f, 0.6f, 0.6f, 0.6f, 1.0f, 1.0f, 1.0f });
+			table.setWidths(new float[] { 0.4f, 0.7f, 0.6f, 0.6f, 0.6f, 1.0f, 1.0f, 1.0f, 1.0f});
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -2977,6 +2989,12 @@ public class BillReportController {
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("Total Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+			
+			hcell = new PdfPCell(new Phrase("Total TCS Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
@@ -3037,6 +3055,13 @@ public class BillReportController {
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("" + roundUp(work.getTcsAmt()), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
@@ -5035,5 +5060,9 @@ System.out.println("----------"+poList);
 
 		}
 
+	}
+	
+	public static float roundUp(float d) {
+		return BigDecimal.valueOf(d).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 	}
 }

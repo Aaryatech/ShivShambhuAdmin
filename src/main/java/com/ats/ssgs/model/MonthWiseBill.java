@@ -1,12 +1,6 @@
 package com.ats.ssgs.model;
 
-
-
-
 public class MonthWiseBill {
-	
-	
-		
 		
 		private String month;
 		
@@ -31,10 +25,11 @@ public class MonthWiseBill {
 		
 		private float taxAmt;
 		
-		private float taxableAmt;
-		
+		private float taxableAmt;		
 		
 		private float totalAmt;
+		
+		private float tcsAmt;
 
 
 		
@@ -172,22 +167,25 @@ public class MonthWiseBill {
 		}
 
 
+		public float getTcsAmt() {
+			return tcsAmt;
+		}
+
+
+		public void setTcsAmt(float tcsAmt) {
+			this.tcsAmt = tcsAmt;
+		}
+
+
 		@Override
 		public String toString() {
 			return "MonthWiseBill [month=" + month + ", monthNo=" + monthNo + ", year=" + year + ", billNo=" + billNo
 					+ ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt
 					+ ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt + ", taxAmt=" + taxAmt + ", taxableAmt="
-					+ taxableAmt + ", totalAmt=" + totalAmt + ", getMonth()=" + getMonth() + ", getBillNo()="
-					+ getBillNo() + ", getCgstPer()=" + getCgstPer() + ", getSgstPer()=" + getSgstPer()
-					+ ", getIgstPer()=" + getIgstPer() + ", getCgstAmt()=" + getCgstAmt() + ", getSgstAmt()="
-					+ getSgstAmt() + ", getIgstAmt()=" + getIgstAmt() + ", getTaxAmt()=" + getTaxAmt()
-					+ ", getTaxableAmt()=" + getTaxableAmt() + ", getTotalAmt()=" + getTotalAmt() + ", getMonthNo()="
-					+ getMonthNo() + ", getYear()=" + getYear() + ", getClass()=" + getClass() + ", hashCode()="
-					+ hashCode() + ", toString()=" + super.toString() + "]";
+					+ taxableAmt + ", totalAmt=" + totalAmt + ", tcsAmt=" + tcsAmt + "]";
 		}
 
 
-	
 
 
 }

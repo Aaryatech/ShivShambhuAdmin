@@ -1045,12 +1045,20 @@ public class BillController {
 				rowData = new ArrayList<String>();
 				rowData.add("" + cnt);
 				if(getBillList.get(i).getExInt1()==70 || getBillList.get(i).getExInt1()==68) {
-				rowData.add("" + "GST SALES");
-				}else if(getBillList.get(i).getExInt1()==74) {
+					
+					rowData.add("" + "GST SALES");
 				
-					rowData.add("PAVER BLOCK SALE");
-				}else
-				{
+				}else if(getBillList.get(i).getExInt1()==74) {
+					
+					rowData.add("CEMENT PIPE SALE");	// Cement Pipe
+					//rowData.add("PAVER BLOCK SALE");					
+					
+				}else if(getBillList.get(i).getExInt1()==77) {
+						
+					rowData.add("GST SALES");	//New Rmc
+					
+				}else{
+					
 					rowData.add("Sales Voucher");
 				}
 				rowData.add("" + getBillList.get(i).getBillNo());
