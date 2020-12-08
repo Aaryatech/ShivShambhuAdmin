@@ -180,16 +180,17 @@
 											<th width="10%" style="text-align: center">SGST Amount</th>
 											<th width="10%" style="text-align: center">IGST Amount</th>
 											<th width="10%" style="text-align: center">Tax Amount</th>
+											<th width="10%" style="text-align: center">TCS Amount</th>
 											<th width="10%" style="text-align: center">Total Amount</th>
 
 										</tr>
 									</thead>
 									<tbody></tbody>
-									<tr>
+									<!-- <tr>
 										<td width="5%"></td>
 										<td width="5%"></td>
 										<td width="10%"></td>
-										<!-- 	<td width="10%"></td> -->
+											<td width="10%"></td>
 
 
 
@@ -206,10 +207,12 @@
 											name="totalIgstAmt" value="0" readonly></td>
 										<td><input type="text" id="totalTax" name="totalTax"
 											width="10%" value="0" readonly></td>
+										<td><input type="text" id="tcsAmt" name="tcsAmt"
+											width="10%" value="0" readonly></td>
 										<td><input type="text" id="totalAmt" name="totalAmt"
 											width="10%" value="0" readonly></td>
 
-									</tr>
+									</tr> -->
 
 
 
@@ -409,6 +412,7 @@
 									var totalAmt = 0;
 									var space = " ";
 									var total = "Total";
+									var ttlTcs = 0;
 
 									$
 											.each(
@@ -433,6 +437,8 @@
 																						.toFixed(2),
 																				v.taxAmt
 																						.toFixed(2),
+																				v.tcsAmt
+																						.toFixed(2),
 																				v.totalAmt
 																						.toFixed(2)
 
@@ -451,9 +457,11 @@
 																+ v.taxAmt;
 														totalAmt = totalAmt
 																+ v.totalAmt;
+														
+														ttlTcs = ttlTcs+v.tcsAmt;
 													});
 
-									document.getElementById("totalTaxableAmt").value = totalTaxableAmt
+									/* document.getElementById("totalTaxableAmt").value = totalTaxableAmt
 											.toFixed(2);
 									document.getElementById("totalCgstAmt").value = totalCgstAmt
 											.toFixed(2);
@@ -464,7 +472,59 @@
 									document.getElementById("totalTax").value = totalTax
 											.toFixed(2);
 									document.getElementById("totalAmt").value = totalAmt
-											.toFixed(2);
+											.toFixed(2);									
+									document.getElementById("tcsAmt").value = ttlTcs
+											.toFixed(2); */
+									var tr1 = $('<tr></tr>');
+									tr1
+									.append($(
+											'<td></td>')
+											.html(''));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(''));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(''));
+
+									tr1
+											.append($(
+													'<td></td>')
+													.html('Total'));									
+									tr1
+									.append($(
+											'<td></td>')
+											.html(totalTaxableAmt.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(totalCgstAmt.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(totalSgstAmt.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(totalIgstAmt.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(totalTax.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlTcs.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(totalAmt.toFixed(2)));
+									$(
+									'#bootstrap-data-table tbody')
+									.append(
+											tr1);
 
 								});
 

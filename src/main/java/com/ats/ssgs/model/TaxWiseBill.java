@@ -44,6 +44,8 @@ public class TaxWiseBill {
 	
 	
 	private float totalAmt;
+	
+	private float tcsAmt;
 
 
 	public int getCustId() {
@@ -229,23 +231,24 @@ public class TaxWiseBill {
 	}
 
 
+	public float getTcsAmt() {
+		return tcsAmt;
+	}
+
+
+	public void setTcsAmt(float tcsAmt) {
+		this.tcsAmt = tcsAmt;
+	}
+
+
 	@Override
 	public String toString() {
 		return "TaxWiseBill [billHeadId=" + billHeadId + ", custId=" + custId + ", qty=" + qty + ", custGstNo="
 				+ custGstNo + ", billNo=" + billNo + ", custName=" + custName + ", projId=" + projId + ", cgstPer="
 				+ cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt + ", sgstAmt="
 				+ sgstAmt + ", igstAmt=" + igstAmt + ", taxAmt=" + taxAmt + ", discPer=" + discPer + ", discAmt="
-				+ discAmt + ", taxableAmt=" + taxableAmt + ", totalAmt=" + totalAmt + ", getCustId()=" + getCustId()
-				+ ", getQty()=" + getQty() + ", getBillNo()=" + getBillNo() + ", getCustGstNo()=" + getCustGstNo()
-				+ ", getCustName()=" + getCustName() + ", getProjId()=" + getProjId() + ", getCgstPer()=" + getCgstPer()
-				+ ", getSgstPer()=" + getSgstPer() + ", getIgstPer()=" + getIgstPer() + ", getCgstAmt()=" + getCgstAmt()
-				+ ", getSgstAmt()=" + getSgstAmt() + ", getIgstAmt()=" + getIgstAmt() + ", getTaxAmt()=" + getTaxAmt()
-				+ ", getDiscPer()=" + getDiscPer() + ", getDiscAmt()=" + getDiscAmt() + ", getTaxableAmt()="
-				+ getTaxableAmt() + ", getTotalAmt()=" + getTotalAmt() + ", getBillHeadId()=" + getBillHeadId()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+				+ discAmt + ", taxableAmt=" + taxableAmt + ", totalAmt=" + totalAmt + ", tcsAmt=" + tcsAmt + "]";
 	}
-
 
 	
 }

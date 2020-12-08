@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html class="no-js" lang="">
 
@@ -172,6 +173,10 @@
 									</div>
 								</div> --%>
 								<div class="card-body card-block">
+								<c:set value="0" var="ttlTaxable"/>
+								<c:set value="0" var="ttlTax"/>
+								<c:set value="0" var="ttlTcs"/>
+								<c:set value="0" var="ttlGrand"/>
 
 									<table class="table table-striped table-bordered">
 										<thead>
@@ -183,7 +188,7 @@
 												<th style="text-align: center">Project Name</th>
 												<th style="text-align: center">Taxable Amount</th>
 												<th style="text-align: center">Tax Amount</th>
-
+												<th style="text-align: center">TCS Amount</th>
 												<th style="text-align: center">Total Amount</th>
 
 											</tr>
@@ -207,20 +212,42 @@
 													<td style="text-align: left"><c:out
 															value="${bill.projName}" /></td>
 
-													<td style="text-align: left"><c:out
+													<td style="text-align: right"><c:out
 															value="${bill.taxableAmt}" /></td>
 
 
 
-													<td style="text-align: left"><c:out
+													<td style="text-align: right"><c:out
 															value="${bill.taxAmt}" /></td>
 
+													<td style="text-align: right"><c:out
+															value="${bill.tcsAmt}" /></td>
 
-
-													<td style="text-align: left"><c:out
+													<td style="text-align: right"><c:out
 															value="${bill.totalAmt}" /></td>
 												</tr>
+												
+												<c:set value="${ttlTaxable+bill.taxableAmt}" var="ttlTaxable"/>
+												<c:set value="${ttlTax+bill.taxAmt}" var="ttlTax"/>
+												<c:set value="${ttlTcs+bill.tcsAmt}" var="ttlTcs"/>
+												<c:set value="${ttlGrand+bill.totalAmt}" var="ttlGrand"/>
 											</c:forEach>
+											
+											 <tr>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td></td>
+												<td>Total</td>												
+												<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${ttlTaxable}" /></td>												
+												<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${ttlTax}" /></td>
+												<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${ttlTcs}" /></td>
+												<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
+													maxFractionDigits="2" value="${ttlGrand}" /></td>
+											</tr>
 										</tbody>
 									</table>
 

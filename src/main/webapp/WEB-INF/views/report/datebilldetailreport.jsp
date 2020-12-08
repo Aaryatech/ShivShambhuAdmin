@@ -209,26 +209,26 @@
 													<td style="text-align: left"><c:out
 															value="${bill.custName}" /></td>
 															
-													<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${bill.taxableAmt}" /></td>
 
-													<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${bill.cgstAmt}" /></td>
 
-													<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${bill.sgstAmt}" /></td>
 
-													<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${bill.igstAmt}" /></td>
 
 
-													<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${bill.taxAmt}" /></td>
 															
-													<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+													<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${bill.tcsAmt}"/></td>
 
-													<td style="text-align: left">
+													<td style="text-align: right">
 													<fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${bill.totalAmt}" /></td>
 												</tr>
@@ -247,19 +247,19 @@
 												<td></td>
 												<td>Total</td>
 												<td></td>
-												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+												<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${ttlTaxable}" /></td>
-												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+												<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${ttlCgst}" /></td>
-												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+												<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${ttlSgst}" /></td>
-												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+												<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${ttlIgst}" /></td>
-												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+												<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${ttlTax}" /></td>
-												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+												<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${ttlTcs}" /></td>
-												<td style="text-align: left"><fmt:formatNumber type="number" minFractionDigits="2" 
+												<td style="text-align: right"><fmt:formatNumber type="number" minFractionDigits="2" 
 													maxFractionDigits="2" value="${ttlGrand}" /></td>
 											</tr>
 										</tbody>

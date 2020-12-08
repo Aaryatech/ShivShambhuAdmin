@@ -61,6 +61,7 @@ public class GetBillReport {
 	private float cgstAmt;
 	private float igstAmt;
 
+	private float tcsAmt;
 	
 	public float getSgstAmt() {
 		return sgstAmt;
@@ -318,6 +319,14 @@ public class GetBillReport {
 		this.plantName = plantName;
 	}
 
+	public float getTcsAmt() {
+		return tcsAmt;
+	}
+
+	public void setTcsAmt(float tcsAmt) {
+		this.tcsAmt = tcsAmt;
+	}
+
 	@Override
 	public String toString() {
 		return "GetBillReport [billHeadId=" + billHeadId + ", billNo=" + billNo + ", billDate=" + billDate + ", custId="
@@ -328,6 +337,7 @@ public class GetBillReport {
 				+ exInt2 + ", exInt3=" + exInt3 + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exVar3=" + exVar3
 				+ ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2 + ", projName=" + projName + ", custName="
 				+ custName + ", custMobNo=" + custMobNo + ", plantName=" + plantName + ", sgstAmt=" + sgstAmt
-				+ ", cgstAmt=" + cgstAmt + ", igstAmt=" + igstAmt + "]";
+				+ ", cgstAmt=" + cgstAmt + ", igstAmt=" + igstAmt + ", tcsAmt=" + tcsAmt + "]";
 	}
+
 }
