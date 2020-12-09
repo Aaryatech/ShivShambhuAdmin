@@ -45,6 +45,8 @@ public class GetItenwiseBillReport {
 	
 	private String uomName;
 	
+	private float tcsAmt;
+	
 	public String getHsnCode() {
 		return hsnCode;
 	}
@@ -237,25 +239,24 @@ public class GetItenwiseBillReport {
 	}
 
 
-	/*@Override
-	public String toString() {
-		return "GetItenwiseBillReport [ itemId="
-				+  " itemName=" + itemName + ", itemCode=" + itemCode + ", qty=" + qty + ", hsnCode=" + hsnCode
-				+ ", rate=" + rate + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer
-				+ ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt + ", taxAmt=" + taxAmt
-				+ ", discPer=" + discPer + ", discAmt=" + discAmt + ", taxableAmt=" + taxableAmt + ", totalAmt="
-				+ totalAmt + ", delStatus=" + delStatus + 
-				 + ", getItemId()="  + ", getItemName()="
-				+ getItemName() + ", getItemCode()=" + getItemCode() + ", getQty()=" + getQty() + ", getHsnCode()="
-				+ getHsnCode() + ", getRate()=" + getRate() + ", getCgstPer()=" + getCgstPer() + ", getSgstPer()="
-				+ getSgstPer() + ", getIgstPer()=" + getIgstPer() + ", getCgstAmt()=" + getCgstAmt() + ", getSgstAmt()="
-				+ getSgstAmt() + ", getIgstAmt()=" + getIgstAmt() + ", getTaxAmt()=" + getTaxAmt() + ", getDiscPer()="
-				+ getDiscPer() + ", getDiscAmt()=" + getDiscAmt() + ", getTaxableAmt()=" + getTaxableAmt()
-				+ ", getTotalAmt()=" + getTotalAmt() + ", getDelStatus()=" + getDelStatus() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+	public float getTcsAmt() {
+		return tcsAmt;
 	}
 
 
-	
-	*/
+	public void setTcsAmt(float tcsAmt) {
+		this.tcsAmt = tcsAmt;
+	}
+
+
+	@Override
+	public String toString() {
+		return "GetItenwiseBillReport [item_id=" + item_id + ", itemName=" + itemName + ", itemCode=" + itemCode
+				+ ", qty=" + qty + ", hsnCode=" + hsnCode + ", rate=" + rate + ", cgstPer=" + cgstPer + ", sgstPer="
+				+ sgstPer + ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt="
+				+ igstAmt + ", taxAmt=" + taxAmt + ", discPer=" + discPer + ", discAmt=" + discAmt + ", taxableAmt="
+				+ taxableAmt + ", totalAmt=" + totalAmt + ", delStatus=" + delStatus + ", uomName=" + uomName
+				+ ", tcsAmt=" + tcsAmt + "]";
+	}
+
 }

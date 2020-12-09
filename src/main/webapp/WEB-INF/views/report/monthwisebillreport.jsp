@@ -339,9 +339,9 @@
 				alert("Please select to date");
 			}
 
-			if (fromDate > toDate) {
+			if(!validateDates(fromDate, toDate)){
 				valid = false;
-				alert("from date greater than todate ");
+				alert("from date must be smaller than to date");
 			}
 			if (valid == true) {
 
@@ -463,6 +463,10 @@
 									.append($(
 											'<td></td>')
 											.html(ttlGrand.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(''));
 									$(
 									'#bootstrap-data-table tbody')
 									.append(
@@ -491,6 +495,23 @@
 							+ '/'
 							+ custId);
 
+		}
+		
+		function validateDates(from_date, to_date) {			
+			var fromdate = from_date.split('-');
+			from_date = new Date();
+			from_date.setFullYear(fromdate[2], fromdate[1] - 1, fromdate[0]);
+			
+			var todate = to_date.split('-');
+			to_date = new Date();
+			to_date.setFullYear(todate[2], todate[1] - 1, todate[0]);
+			
+			if (from_date > to_date) {
+						
+				return false;
+			} else {
+				return true;				
+			}
 		}
 	</script>
 

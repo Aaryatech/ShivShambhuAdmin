@@ -163,10 +163,8 @@
 											<th style="text-align: center">SGST</th>
 											<th style="text-align: center">IGST</th>
 											<th style="text-align: center">Tax Amount</th>
+											<th style="text-align: center">TCS Amount</th>
 											<th style="text-align: center">Total Amount</th>
-
-
-
 										</tr>
 									</thead>
 
@@ -318,10 +316,15 @@
 				alert("Please select to date");
 			}
 
-			if (fromDate > toDate) {
+			/* if (fromDate > toDate) {
 				valid = false;
 				alert("from date greater than todate ");
+			} */
+			if(!validateDates(fromDate, toDate)){
+				valid = false;
+				alert("from date must be smaller than to date");
 			}
+				
 			if (valid == true) {
 
 				$.getJSON('${getItemListBetweenDate}', {
@@ -347,8 +350,24 @@
 
 					var dataTable = $('#bootstrap-data-table').DataTable();
 					dataTable.clear().draw();
+					
+					var ttlTaxable = 0;
+					var ttlCgst= 0;
+					var ttlSgst = 0;
+					var ttlTax = 0;
+					var ttlGrand = 0;
+					var ttlTcs = 0;
+					var ttlIgst = 0;
 
 					$.each(data, function(i, v) {
+						
+						ttlTaxable= ttlTaxable+v.taxableAmt;
+						ttlCgst = ttlCgst+v.cgstAmt;
+						ttlSgst = ttlSgst+v.sgstAmt;
+						ttlIgst = ttlIgst+v.igstAmt;
+						ttlTax = ttlTax+v.taxAmt
+						ttlGrand = ttlGrand+v.totalAmt;
+						ttlTcs = ttlTcs+v.tcsAmt;
 
 						dataTable.row.add(
 								[ i + 1, v.itemCode, v.itemName, v.qty,
@@ -358,10 +377,72 @@
 										v.sgstAmt.toFixed(2),
 										v.igstAmt.toFixed(2),
 										v.taxAmt.toFixed(2),
+										v.tcsAmt.toFixed(2),
 										v.totalAmt.toFixed(2)
 
 								]).draw();
 					});
+					
+					
+					var tr1 = $('<tr></tr>');
+					tr1
+					.append($(
+							'<td></td>')
+							.html(''));
+					tr1
+					.append($(
+							'<td></td>')
+							.html(''));
+					
+					tr1
+					.append($(
+							'<td></td>')
+							.html(''));
+					tr1
+					.append($(
+							'<td></td>')
+							.html(''));
+					tr1
+					.append($(
+							'<td></td>')
+							.html(''));
+
+					tr1
+							.append($(
+									'<td></td>')
+									.html('Total'));									
+					tr1
+					.append($(
+							'<td></td>')
+							.html(ttlTaxable.toFixed(2)));
+					tr1
+					.append($(
+							'<td></td>')
+							.html(ttlCgst.toFixed(2)));
+					tr1
+					.append($(
+							'<td></td>')
+							.html(ttlSgst.toFixed(2)));
+					tr1
+					.append($(
+							'<td></td>')
+							.html(ttlIgst.toFixed(2)));
+					tr1
+					.append($(
+							'<td></td>')
+							.html(ttlTax.toFixed(2)));
+					tr1
+					.append($(
+							'<td></td>')
+							.html(ttlTcs.toFixed(2)));
+					tr1
+					.append($(
+							'<td></td>')
+							.html(ttlGrand.toFixed(2)));
+					$(
+					'#bootstrap-data-table tbody')
+					.append(
+							tr1);
 
 				});
 
@@ -380,6 +461,24 @@
 			window.open("${pageContext.request.contextPath}/deleteWeighing/"
 					+ weighId);
 
+		}
+		
+		
+		function validateDates(from_date, to_date) {			
+			var fromdate = from_date.split('-');
+			from_date = new Date();
+			from_date.setFullYear(fromdate[2], fromdate[1] - 1, fromdate[0]);
+			
+			var todate = to_date.split('-');
+			to_date = new Date();
+			to_date.setFullYear(todate[2], todate[1] - 1, todate[0]);
+			
+			if (from_date > to_date) {
+						
+				return false;
+			} else {
+				return true;				
+			}
 		}
 	</script>
 
