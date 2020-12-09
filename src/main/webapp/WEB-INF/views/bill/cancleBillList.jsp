@@ -602,8 +602,8 @@ body {
 					$('#po_id').html("-1");
 					$("#po_id").trigger("chosen:updated");
 					 */
-					var dataTable = $('#bootstrap-data-table').DataTable();
-					dataTable.clear().draw();
+					/* var dataTable = $('#bootstrap-data-table').DataTable();
+					dataTable.clear().draw(); */
 
 				});
 			}//end of if
@@ -656,10 +656,11 @@ body {
 				alert("Please select to date");
 			}
 
-			if (fromDate > toDate) {
+			if(!validateDates(fromDate, toDate)){
 				valid = false;
-				alert("from date greater than todate ");
+				alert("from date must be smaller than to date");
 			}
+			
 			if (valid == true) {
 				$('#loader').show();
 				$.getJSON('${getBillListBetDate}', {
@@ -712,6 +713,23 @@ body {
 			window.open("${pageContext.request.contextPath}/editBill/"
 					+ billHeadId);
 
+		}
+		
+		function validateDates(from_date, to_date) {			
+			var fromdate = from_date.split('-');
+			from_date = new Date();
+			from_date.setFullYear(fromdate[2], fromdate[1] - 1, fromdate[0]);
+			
+			var todate = to_date.split('-');
+			to_date = new Date();
+			to_date.setFullYear(todate[2], todate[1] - 1, todate[0]);
+			
+			if (from_date > to_date) {
+						
+				return false;
+			} else {
+				return true;				
+			}
 		}
 	</script>
 
