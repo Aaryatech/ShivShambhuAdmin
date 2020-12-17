@@ -1551,14 +1551,8 @@ public class BillReportController {
 				GetBillReport[].class);
 		billList = new ArrayList<GetBillReport>(Arrays.asList(ordHeadArray));
 		
-		map = new LinkedMultiValueMap<String, Object>();
-		map.add("key", 75);
-		Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
-		float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
-		float tcsAmt = 0;
-		for (int i = 0; i < billList.size(); i++) {
-			tcsAmt = ((billList.get(i).getTaxableAmt()+billList.get(i).getTaxAmt())*tcsPer)/100;
-			billList.get(i).setTcsAmt(tcsAmt);
+		for (int i = 0; i < billList.size(); i++) {			
+			billList.get(i).setTcsAmt(billList.get(i).getExFloat1());
 		}
 
 		float ttlTaxable = 0;
@@ -2110,14 +2104,9 @@ public class BillReportController {
 				GetBillReport[].class);
 		
 		billList = new ArrayList<GetBillReport>(Arrays.asList(ordHeadArray));
-		map = new LinkedMultiValueMap<String, Object>();
-		map.add("key", 75);
-		Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
-		float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
-		float tcsAmt = 0;
-		for (int i = 0; i < billList.size(); i++) {
-			tcsAmt = ((billList.get(i).getTaxableAmt()+billList.get(i).getTaxAmt())*tcsPer)/100;
-			billList.get(i).setTcsAmt(tcsAmt);
+		
+		for (int i = 0; i < billList.size(); i++) {			
+			billList.get(i).setTcsAmt(billList.get(i).getExFloat1());
 		}
 
 		float ttlTaxable = 0;
@@ -2648,23 +2637,12 @@ public class BillReportController {
 		GetItenwiseBillReport[] itemHeadArray = rest.postForObject(Constants.url + "getItemwiseReport", map,
 				GetItenwiseBillReport[].class);
 		itemList1 = new ArrayList<GetItenwiseBillReport>(Arrays.asList(itemHeadArray));
-		
-		map = new LinkedMultiValueMap<String, Object>();
-		map.add("key", 75);
-		Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
-		float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
-		float tcsAmt = 0;
-		for (int i = 0; i < itemList1.size(); i++) {
-			tcsAmt = ((itemList1.get(i).getTaxableAmt()+itemList1.get(i).getTaxAmt())*tcsPer)/100;
-			itemList1.get(i).setTcsAmt(tcsAmt);
-		}
 
 		float ttlTaxable = 0;
 		float ttlCgst= 0;
 		float ttlSgst = 0;
 		float ttlTax = 0;
 		float ttlGrand = 0;
-		float ttlTcs = 0;
 		float ttlIgst = 0;
 		
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
@@ -2683,7 +2661,6 @@ public class BillReportController {
 		rowData.add("SGST");
 		rowData.add("IGST");
 		rowData.add("Tax Amount");
-		rowData.add("TCS Amount");
 		rowData.add("Total Amount");
 
 		expoExcel.setRowData(rowData);
@@ -2705,7 +2682,6 @@ public class BillReportController {
 			rowData.add("" + itemList1.get(i).getSgstAmt());
 			rowData.add("" + itemList1.get(i).getIgstAmt());
 			rowData.add("" + itemList1.get(i).getTaxAmt());
-			rowData.add("" + itemList1.get(i).getTcsAmt());
 			rowData.add("" + itemList1.get(i).getTotalAmt());
 			
 			
@@ -2714,7 +2690,6 @@ public class BillReportController {
 			ttlSgst = ttlSgst + itemList1.get(i).getSgstAmt();
 			ttlTax = ttlTax + itemList1.get(i).getTaxAmt();
 			ttlGrand = ttlGrand + itemList1.get(i).getTotalAmt();
-			ttlTcs = ttlTcs + roundUp(itemList1.get(i).getTcsAmt());
 			ttlIgst = ttlIgst + itemList1.get(i).getIgstAmt();
 
 			expoExcel.setRowData(rowData);
@@ -2734,7 +2709,6 @@ public class BillReportController {
 		rowData.add("" + roundUp(ttlSgst));
 		rowData.add("" + roundUp(ttlIgst));
 		rowData.add("" + roundUp(ttlTax));
-		rowData.add("" + roundUp(ttlTcs));	
 		rowData.add("" + roundUp(ttlGrand));
 		
 		expoExcel.setRowData(rowData);
@@ -2782,14 +2756,13 @@ public class BillReportController {
 		float ttlSgst = 0;
 		float ttlTax = 0;
 		float ttlGrand = 0;
-		float ttlTcs = 0;
 		float ttlIgst = 0;
 
-		PdfPTable table = new PdfPTable(13);
+		PdfPTable table = new PdfPTable(12);
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 2.4f, 2.4f});
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 2.4f});
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -2802,72 +2775,61 @@ public class BillReportController {
 			hcell = new PdfPCell(new Phrase("Sr.No.", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("Item Code", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("Item Name", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
+			
 			hcell = new PdfPCell(new Phrase("Qty", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
+			
 			hcell = new PdfPCell(new Phrase("Uom", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
+			
 			hcell = new PdfPCell(new Phrase("Hsn Code", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
+			
 			hcell = new PdfPCell(new Phrase("Total Taxable Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
 			
 			hcell = new PdfPCell(new Phrase("CGST Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
+			
 			hcell = new PdfPCell(new Phrase("SGST Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
+			
 			hcell = new PdfPCell(new Phrase("IGST Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("Tax Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell.setBackgroundColor(BaseColor.PINK);
-			
-			table.addCell(hcell);
-			hcell = new PdfPCell(new Phrase("TCS Amount", headFont1));
-			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			hcell.setBackgroundColor(BaseColor.PINK);
-
+			hcell.setBackgroundColor(BaseColor.PINK);			
 			table.addCell(hcell);
 			
 			hcell = new PdfPCell(new Phrase("Total Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
-
 			table.addCell(hcell);
 			
 			int index = 0;
@@ -2950,14 +2912,7 @@ public class BillReportController {
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
-				table.addCell(cell);
-				
-				cell = new PdfPCell(new Phrase("" + work.getTcsAmt(), headFont));
-				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				cell.setPaddingRight(2);
-				cell.setPadding(3);
-				table.addCell(cell);
+				table.addCell(cell);				
 
 				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -2971,7 +2926,6 @@ public class BillReportController {
 				ttlSgst = ttlSgst + work.getSgstAmt();
 				ttlTax = ttlTax + work.getTaxAmt();
 				ttlGrand = ttlGrand + work.getTotalAmt();
-				ttlTcs = ttlTcs + work.getTcsAmt();
 				ttlIgst = ttlIgst + work.getIgstAmt();
 
 			}
@@ -3049,13 +3003,6 @@ public class BillReportController {
 			table.addCell(cell1);
 			
 			cell1 = new PdfPCell(new Phrase(String.valueOf(roundUp(ttlTax)), headFont));
-			cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-			cell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
-			cell1.setPadding(3);
-			cell1.setPaddingRight(2);
-			table.addCell(cell1);	
-			
-			cell1 = new PdfPCell(new Phrase(String.valueOf(roundUp(ttlTcs)), headFont));
 			cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			cell1.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			cell1.setPadding(3);
@@ -3206,14 +3153,9 @@ public class BillReportController {
 		TaxWiseBill[] taxHeadArray = rest.postForObject(Constants.url + "getTaxwiseReport", map, TaxWiseBill[].class);
 		taxList = new ArrayList<TaxWiseBill>(Arrays.asList(taxHeadArray));
 		
-		map = new LinkedMultiValueMap<String, Object>();
-		map.add("key", 75);
-		Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
-		float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
-		float tcsAmt = 0;
-		for (int i = 0; i < taxList.size(); i++) {
-			tcsAmt = ((taxList.get(i).getTaxableAmt()+taxList.get(i).getTaxAmt())*tcsPer)/100;
-			taxList.get(i).setTcsAmt(tcsAmt);
+		
+		for (int i = 0; i < taxList.size(); i++) {			
+			taxList.get(i).setTcsAmt(taxList.get(i).getExFloat1());
 		}
 
 		float ttlTaxable = 0;
@@ -3260,13 +3202,13 @@ public class BillReportController {
 			rowData.add("" + taxList.get(i).getIgstAmt());
 			rowData.add("" + taxList.get(i).getTaxAmt());
 			rowData.add("" + taxList.get(i).getTcsAmt());
-			rowData.add("" + taxList.get(i).getTotalAmt());
+			rowData.add("" + taxList.get(i).getGrandTotal());
 			
 			ttlTaxable = ttlTaxable + taxList.get(i).getTaxableAmt();
 			ttlCgst = ttlCgst + taxList.get(i).getCgstAmt();
 			ttlSgst = ttlSgst + taxList.get(i).getSgstAmt();
 			ttlTax = ttlTax + taxList.get(i).getTaxAmt();
-			ttlGrand = ttlGrand + taxList.get(i).getTotalAmt();
+			ttlGrand = ttlGrand + taxList.get(i).getGrandTotal();
 			ttlTcs = ttlTcs + roundUp(taxList.get(i).getTcsAmt());
 			ttlIgst = ttlIgst + taxList.get(i).getIgstAmt();
 
@@ -3491,7 +3433,7 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
+				cell = new PdfPCell(new Phrase("" + work.getGrandTotal(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
@@ -3503,7 +3445,7 @@ public class BillReportController {
 				ttlCgst = ttlCgst + work.getCgstAmt();
 				ttlSgst = ttlSgst + work.getSgstAmt();
 				ttlTax = ttlTax + work.getTaxAmt();
-				ttlGrand = ttlGrand + work.getTotalAmt();
+				ttlGrand = ttlGrand + work.getGrandTotal();
 				ttlTcs = ttlTcs + work.getTcsAmt();
 				ttlIgst = ttlIgst + work.getIgstAmt();
 

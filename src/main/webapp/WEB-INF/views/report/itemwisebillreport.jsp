@@ -163,7 +163,6 @@
 											<th style="text-align: center">SGST</th>
 											<th style="text-align: center">IGST</th>
 											<th style="text-align: center">Tax Amount</th>
-											<th style="text-align: center">TCS Amount</th>
 											<th style="text-align: center">Total Amount</th>
 										</tr>
 									</thead>
@@ -356,7 +355,6 @@
 					var ttlSgst = 0;
 					var ttlTax = 0;
 					var ttlGrand = 0;
-					var ttlTcs = 0;
 					var ttlIgst = 0;
 
 					$.each(data, function(i, v) {
@@ -367,7 +365,6 @@
 						ttlIgst = ttlIgst+v.igstAmt;
 						ttlTax = ttlTax+v.taxAmt
 						ttlGrand = ttlGrand+v.totalAmt;
-						ttlTcs = ttlTcs+v.tcsAmt;
 
 						dataTable.row.add(
 								[ i + 1, v.itemCode, v.itemName, v.qty,
@@ -377,7 +374,6 @@
 										v.sgstAmt.toFixed(2),
 										v.igstAmt.toFixed(2),
 										v.taxAmt.toFixed(2),
-										v.tcsAmt.toFixed(2),
 										v.totalAmt.toFixed(2)
 
 								]).draw();
@@ -430,11 +426,7 @@
 					tr1
 					.append($(
 							'<td></td>')
-							.html(ttlTax.toFixed(2)));
-					tr1
-					.append($(
-							'<td></td>')
-							.html(ttlTcs.toFixed(2)));
+							.html(ttlTax.toFixed(2)));					
 					tr1
 					.append($(
 							'<td></td>')

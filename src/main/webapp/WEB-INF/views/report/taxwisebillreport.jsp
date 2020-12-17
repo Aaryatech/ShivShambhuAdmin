@@ -390,7 +390,7 @@
 						ttlSgst = ttlSgst+v.sgstAmt;
 						ttlIgst = ttlIgst+v.igstAmt;
 						ttlTax = ttlTax+v.taxAmt
-						ttlGrand = ttlGrand+v.totalAmt;
+						ttlGrand = ttlGrand+v.grandTotal;
 						ttlTcs = ttlTcs+v.tcsAmt;
 
 						dataTable.row.add(
@@ -401,7 +401,7 @@
 										v.igstAmt.toFixed(2),
 										v.taxAmt.toFixed(2),
 										v.tcsAmt.toFixed(2),
-										v.totalAmt.toFixed(2)
+										v.grandTotal.toFixed(2)
 
 								]).draw();
 					});
