@@ -36,6 +36,7 @@ public class GetDatewiseReport {
 	private float totalAmt;
 	
 	private float tcsAmt;
+	private float grandTotal;
 
 	public String getBillDate() {
 		return billDate;
@@ -181,14 +182,22 @@ public class GetDatewiseReport {
 		this.tcsAmt = tcsAmt;
 	}
 
+	public float getGrandTotal() {
+		return grandTotal;
+	}
+
+	public void setGrandTotal(float grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+
 	@Override
 	public String toString() {
 		return "GetDatewiseReport [billDate=" + billDate + ", custId=" + custId + ", billHeadId=" + billHeadId
 				+ ", qty=" + qty + ", billNo=" + billNo + ", custName=" + custName + ", cgstPer=" + cgstPer
 				+ ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt
 				+ ", igstAmt=" + igstAmt + ", taxAmt=" + taxAmt + ", discPer=" + discPer + ", discAmt=" + discAmt
-				+ ", taxableAmt=" + taxableAmt + ", totalAmt=" + totalAmt + ", tcsAmt=" + tcsAmt + "]";
+				+ ", taxableAmt=" + taxableAmt + ", totalAmt=" + totalAmt + ", tcsAmt=" + tcsAmt + ", grandTotal="
+				+ grandTotal + "]";
 	}
-
 
 }

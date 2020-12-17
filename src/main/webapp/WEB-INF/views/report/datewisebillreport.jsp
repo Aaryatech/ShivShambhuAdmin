@@ -136,12 +136,14 @@
 										<option value="0">All</option>
 
 										<c:forEach items="${custList}" var="cust">
-											<c:choose>
+											<c:choose>											
 												<c:when test="${cust.custId==custId}">
 													<option value="${cust.custId}" selected>${cust.custName}</option>
 												</c:when>
+												<c:otherwise>
+													<option value="${cust.custId}">${cust.custName}</option>
+												</c:otherwise>
 											</c:choose>
-
 										</c:forEach>
 									</select>
 								</div>
@@ -316,7 +318,6 @@
 	<script type="text/javascript">
 		// onclick of submit to search order 
 		function showQuot() {
-
 			var custId = document.getElementById("custId").value;
 			var fromDate = document.getElementById("from_date").value;
 			var toDate = document.getElementById("to_date").value;
@@ -398,13 +399,14 @@
 											.each(
 													data,
 													function(i, v) {
-														ttlTaxable= ttlTaxable+v.taxableAmt;
-														ttlCgst = ttlCgst+v.cgstAmt;
-														ttlSgst = ttlSgst+v.sgstAmt;
-														ttlIgst = ttlIgst+v.igstAmt;
-														ttlTax = ttlTax+v.taxAmt
-														ttlGrand = ttlGrand+v.totalAmt;
-														ttlTcs = ttlTcs+v.tcsAmt;
+														
+														ttlTaxable= ttlTaxable + v.taxableAmt;
+														ttlCgst = ttlCgst + v.cgstAmt;
+														ttlSgst = ttlSgst + v.sgstAmt;
+														ttlIgst = ttlIgst + v.igstAmt;
+														ttlTax = ttlTax + v.taxAmt
+														ttlTcs = ttlTcs + v.tcsAmt;
+														ttlGrand = ttlGrand + v.grandTotal;
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.billHeadId
@@ -435,7 +437,7 @@
 																						.toFixed(2),																						
 																				v.tcsAmt
 																						.toFixed(2),
-																				v.totalAmt
+																				v.grandTotal
 																						.toFixed(2),
 																				
 																				acButton
@@ -695,7 +697,7 @@
 														ttlSgst = ttlSgst+v.sgstAmt;
 														ttlIgst = ttlIgst+v.igstAmt;
 														ttlTax = ttlTax+v.taxAmt
-														ttlGrand = ttlGrand+v.totalAmt;
+														ttlGrand = ttlGrand+v.grandTotal;
 														ttlTcs = ttlTcs+v.tcsAmt;
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
@@ -727,7 +729,7 @@
 																						.toFixed(2),																						
 																				v.tcsAmt
 																						.toFixed(2),
-																				v.totalAmt
+																				v.grandTotal
 																						.toFixed(2),
 																				
 																				acButton

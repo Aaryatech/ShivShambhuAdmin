@@ -393,6 +393,11 @@ public class BillReportController {
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
+			
+			Cust[] custArray = rest.getForObject(Constants.url + "getAllCustList", Cust[].class);
+			custList = new ArrayList<Cust>(Arrays.asList(custArray));
+			
+			model.addObject("custList", custList);
 
 			model.addObject("title", "Datewise Bill Report");
 
@@ -509,16 +514,6 @@ public class BillReportController {
 				GetDatewiseReport[].class);
 		dateBillList = new ArrayList<GetDatewiseReport>(Arrays.asList(ordHeadArray));
 		
-		map = new LinkedMultiValueMap<String, Object>();
-		map.add("key", 75);
-		Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
-		float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
-		float tcsAmt = 0;
-		for (int i = 0; i < dateBillList.size(); i++) {
-			tcsAmt = ((dateBillList.get(i).getTaxableAmt()+dateBillList.get(i).getTaxAmt())*tcsPer)/100;
-			dateBillList.get(i).setTcsAmt(tcsAmt);
-		}
-		
 		float ttlTaxable = 0;
 		float ttlCgst= 0;
 		float ttlSgst = 0;
@@ -558,13 +553,13 @@ public class BillReportController {
 			rowData.add("" + dateBillList.get(i).getSgstAmt());
 			rowData.add("" + dateBillList.get(i).getTaxAmt());
 			rowData.add("" + dateBillList.get(i).getTcsAmt());
-			rowData.add("" + dateBillList.get(i).getTotalAmt());
+			rowData.add("" + dateBillList.get(i).getGrandTotal());
 			
 			ttlTaxable = ttlTaxable + dateBillList.get(i).getTaxableAmt();
 			ttlCgst = ttlCgst + dateBillList.get(i).getCgstAmt();
 			ttlSgst = ttlSgst + dateBillList.get(i).getSgstAmt();
 			ttlTax = ttlTax + dateBillList.get(i).getTaxAmt();
-			ttlGrand = ttlGrand + dateBillList.get(i).getTotalAmt();
+			ttlGrand = ttlGrand + dateBillList.get(i).getGrandTotal();
 			ttlTcs = ttlTcs + roundUp(dateBillList.get(i).getTcsAmt());
 			ttlIgst = ttlIgst + dateBillList.get(i).getIgstAmt();
 
@@ -754,7 +749,7 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
+				cell = new PdfPCell(new Phrase("" + work.getGrandTotal(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
@@ -765,7 +760,7 @@ public class BillReportController {
 				ttlCgst = ttlCgst + work.getCgstAmt();
 				ttlSgst = ttlSgst + work.getSgstAmt();
 				ttlTax = ttlTax + work.getTaxAmt();
-				ttlGrand = ttlGrand + work.getTotalAmt();
+				ttlGrand = ttlGrand + work.getGrandTotal();
 				ttlTcs = ttlTcs + work.getTcsAmt();
 				ttlIgst = ttlIgst + work.getIgstAmt();
 			}
@@ -1003,16 +998,6 @@ public class BillReportController {
 
 			System.out.println("DatebillDetailList" + dateBillDetailList.toString());
 		
-			map = new LinkedMultiValueMap<String, Object>();
-			map.add("key", 75);
-			Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
-			float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
-			float tcsAmt = 0;
-			for (int i = 0; i < dateBillDetailList.size(); i++) {
-				tcsAmt = ((dateBillDetailList.get(i).getTaxableAmt()+dateBillDetailList.get(i).getTaxAmt())*tcsPer)/100;
-				dateBillDetailList.get(i).setTcsAmt(tcsAmt);
-			}
-			
 			model.addObject("dateBillList", dateBillDetailList); 
 			model.addObject("billDate", billDate); 
 			
@@ -1059,13 +1044,13 @@ public class BillReportController {
 				rowData.add("" + dateBillDetailList.get(i).getSgstAmt());
 				rowData.add("" + dateBillDetailList.get(i).getTaxAmt());
 				rowData.add("" + dateBillDetailList.get(i).getTcsAmt());
-				rowData.add("" + dateBillDetailList.get(i).getTotalAmt());
+				rowData.add("" + dateBillDetailList.get(i).getGrandTotal());
 				
 				ttlTaxable = ttlTaxable + dateBillDetailList.get(i).getTaxableAmt();
 				ttlCgst = ttlCgst + dateBillDetailList.get(i).getCgstAmt();
 				ttlSgst = ttlSgst + dateBillDetailList.get(i).getSgstAmt();
 				ttlTax = ttlTax + dateBillDetailList.get(i).getTaxAmt();
-				ttlGrand = ttlGrand + dateBillDetailList.get(i).getTotalAmt();
+				ttlGrand = ttlGrand + dateBillDetailList.get(i).getGrandTotal();
 				ttlTcs = ttlTcs + roundUp(dateBillDetailList.get(i).getTcsAmt());
 				ttlIgst = ttlIgst + dateBillDetailList.get(i).getIgstAmt();
 
@@ -1289,7 +1274,7 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
+				cell = new PdfPCell(new Phrase("" + work.getGrandTotal(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setPaddingRight(2);
@@ -1300,7 +1285,7 @@ public class BillReportController {
 				ttlCgst = ttlCgst + work.getCgstAmt();
 				ttlSgst = ttlSgst + work.getSgstAmt();
 				ttlTax = ttlTax + work.getTaxAmt();
-				ttlGrand = ttlGrand + work.getTotalAmt();
+				ttlGrand = ttlGrand + work.getGrandTotal();
 				ttlTcs = ttlTcs + work.getTcsAmt();
 				ttlIgst = ttlIgst + work.getIgstAmt();
 
@@ -3734,16 +3719,6 @@ public class BillReportController {
 		MonthWiseBill[] monthHeadArray = rest.postForObject(Constants.url + "getMonthwiseBillReport", map,
 				MonthWiseBill[].class);
 		monthList = new ArrayList<MonthWiseBill>(Arrays.asList(monthHeadArray));
-
-		map = new LinkedMultiValueMap<String, Object>();
-		map.add("key", 75);
-		Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
-		float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
-		float tcsAmt = 0;
-		for (int i = 0; i < monthList.size(); i++) {
-			tcsAmt = ((monthList.get(i).getTaxableAmt()+monthList.get(i).getTaxAmt())*tcsPer)/100;
-			monthList.get(i).setTcsAmt(tcsAmt);
-		}
 		
 		float ttlTaxable = 0;
 		float ttlCgst= 0;
@@ -3785,13 +3760,13 @@ public class BillReportController {
 			rowData.add("" + monthList.get(i).getTaxAmt());
 			rowData.add("" + monthList.get(i).getTaxableAmt());
 			rowData.add("" + roundUp(monthList.get(i).getTcsAmt()));
-			rowData.add("" + monthList.get(i).getTotalAmt());
+			rowData.add("" + monthList.get(i).getGrandTotal());
 			
 			ttlTaxable = ttlTaxable + monthList.get(i).getTaxableAmt();
 			ttlCgst = ttlCgst + monthList.get(i).getCgstAmt();
 			ttlSgst = ttlSgst + monthList.get(i).getSgstAmt();
 			ttlTax = ttlTax + monthList.get(i).getTaxAmt();
-			ttlGrand = ttlGrand + monthList.get(i).getTotalAmt();
+			ttlGrand = ttlGrand + monthList.get(i).getGrandTotal();
 			ttlTcs = ttlTcs + monthList.get(i).getTcsAmt();
 			ttlIgst = ttlIgst + monthList.get(i).getIgstAmt();
 			
@@ -3966,7 +3941,7 @@ public class BillReportController {
 
 				cell = new PdfPCell(new Phrase("" + work.getTaxAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
 				cell.setPadding(3);
 				table.addCell(cell);
@@ -3985,7 +3960,7 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
+				cell = new PdfPCell(new Phrase("" + work.getGrandTotal(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
@@ -3996,7 +3971,7 @@ public class BillReportController {
 				ttlCgst = ttlCgst + work.getCgstAmt();
 				ttlSgst = ttlSgst + work.getSgstAmt();
 				ttlTax = ttlTax + work.getTaxAmt();
-				ttlGrand = ttlGrand + work.getTotalAmt();
+				ttlGrand = ttlGrand + work.getGrandTotal();
 				ttlTcs = ttlTcs + work.getTcsAmt();
 				ttlIgst = ttlIgst + work.getIgstAmt();
 

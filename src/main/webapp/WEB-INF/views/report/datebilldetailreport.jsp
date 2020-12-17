@@ -230,7 +230,7 @@
 
 													<td style="text-align: right">
 													<fmt:formatNumber type="number" minFractionDigits="2" 
-													maxFractionDigits="2" value="${bill.totalAmt}" /></td>
+													maxFractionDigits="2" value="${bill.grandTotal}" /></td>
 												</tr>
 												
 												<c:set value="${ttlTaxable+bill.taxableAmt}" var="ttlTaxable"/>
@@ -239,7 +239,7 @@
 												<c:set value="${ttlIgst+bill.igstAmt}" var="ttlIgst"/>
 												<c:set value="${ttlTax+bill.taxAmt}" var="ttlTax"/>
 												<c:set value="${ttlTcs+bill.tcsAmt}" var="ttlTcs"/>
-												<c:set value="${ttlGrand+bill.totalAmt}" var="ttlGrand"/>
+												<c:set value="${ttlGrand+bill.grandTotal}" var="ttlGrand"/>
 												
 											</c:forEach>
 											 <tr>
