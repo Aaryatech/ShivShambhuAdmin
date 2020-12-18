@@ -364,7 +364,7 @@
 						ttlCgst = ttlCgst+v.cgstAmt;
 						ttlSgst = ttlSgst+v.sgstAmt;
 						ttlIgst = ttlIgst+v.igstAmt;
-						ttlGrand = ttlGrand+v.totalAmt;
+						ttlGrand = ttlGrand+v.grandTotal;
 						ttlTcs = ttlTcs+v.tcsAmt;
 
 
@@ -375,7 +375,7 @@
 										v.sgstAmt.toFixed(2),
 										v.igstAmt.toFixed(2),
 										v.tcsAmt.toFixed(2),
-										v.totalAmt.toFixed(2), ]).draw();
+										v.grandTotal.toFixed(2), ]).draw();
 					});
 					
 					var tr1 = $('<tr></tr>');

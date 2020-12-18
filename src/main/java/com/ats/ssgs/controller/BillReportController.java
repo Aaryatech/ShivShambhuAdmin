@@ -4451,16 +4451,6 @@ public class BillReportController {
 		TaxSummery[] taxReportArray = rest.postForObject(Constants.url + "getTaxSummeryBetweenDate", map,
 				TaxSummery[].class);
 		taxSumList = new ArrayList<TaxSummery>(Arrays.asList(taxReportArray));
-		
-		map = new LinkedMultiValueMap<String, Object>();
-		map.add("key", 75);
-		Setting tcsSetting = rest.postForObject(Constants.url + "getSettingValueByKey", map, Setting.class);
-		float tcsPer = Float.parseFloat(tcsSetting.getSettingValue());
-		float tcsAmt = 0;
-		for (int i = 0; i < taxSumList.size(); i++) {
-			tcsAmt = ((taxSumList.get(i).getTaxableAmt()+taxSumList.get(i).getTaxAmt())*tcsPer)/100;
-			taxSumList.get(i).setTcsAmt(tcsAmt);
-		}
 		System.out.println(taxSumList);
 
 		float ttlTaxable = 0;
@@ -4498,12 +4488,12 @@ public class BillReportController {
 			rowData.add("" + taxSumList.get(i).getSgstAmt());
 			rowData.add("" + taxSumList.get(i).getIgstAmt());
 			rowData.add("" + taxSumList.get(i).getTcsAmt());
-			rowData.add("" + taxSumList.get(i).getTotalAmt());
+			rowData.add("" + taxSumList.get(i).getGrandTotal());
 			
 			ttlTaxable = ttlTaxable + taxSumList.get(i).getTaxableAmt();
 			ttlCgst = ttlCgst + taxSumList.get(i).getCgstAmt();
 			ttlSgst = ttlSgst + taxSumList.get(i).getSgstAmt();
-			ttlGrand = ttlGrand + taxSumList.get(i).getTotalAmt();
+			ttlGrand = ttlGrand + taxSumList.get(i).getGrandTotal();
 			ttlTcs = ttlTcs + roundUp(taxSumList.get(i).getTcsAmt());
 			ttlIgst = ttlIgst + taxSumList.get(i).getIgstAmt();
 
@@ -4676,7 +4666,7 @@ public class BillReportController {
 				cell.setPadding(3);
 				table.addCell(cell);
 
-				cell = new PdfPCell(new Phrase("" + work.getTotalAmt(), headFont));
+				cell = new PdfPCell(new Phrase("" + work.getGrandTotal(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);
@@ -6003,6 +5993,13 @@ System.out.println("----------"+poList);
 		System.err.println("Daily Sales Rep-------------"+dailySales);
 		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
+		float ttlRate = 0;
+		float ttlQty= 0;
+		float ttlTaxable = 0;
+		float ttlGrand = 0;
+		float ttlTcs = 0;
+
+		
 		ExportToExcel expoExcel = new ExportToExcel();
 		List<String> rowData = new ArrayList<String>();
 
@@ -6014,6 +6011,7 @@ System.out.println("----------"+poList);
 		rowData.add("Rate");
 		rowData.add("Qty");		
 		rowData.add("Taxable Amount");
+		rowData.add("TCS Amount");
 		rowData.add("Total Amount");
 
 		expoExcel.setRowData(rowData);
@@ -6031,12 +6029,35 @@ System.out.println("----------"+poList);
 			rowData.add("" + dailySales.get(i).getRate());
 			rowData.add("" + dailySales.get(i).getQty());			
 			rowData.add("" + dailySales.get(i).getTaxableAmt());
-			rowData.add("" + dailySales.get(i).getTotalAmt());
-
+			rowData.add("" + dailySales.get(i).getTcsAmt());
+			rowData.add("" + dailySales.get(i).getGrandTotal());
+			
+			ttlRate = ttlRate+dailySales.get(i).getRate();
+			ttlQty = ttlQty + dailySales.get(i).getQty();
+			ttlTaxable = ttlTaxable + dailySales.get(i).getTaxableAmt();
+			ttlTcs = ttlTcs + dailySales.get(i).getTcsAmt();
+			ttlGrand = ttlGrand + dailySales.get(i).getGrandTotal();	
+			
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
 		}
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		
+		rowData.add("");
+		rowData.add("");
+		rowData.add("Total");
+		rowData.add("");
+		rowData.add("" + ttlRate);
+		rowData.add("" + ttlQty);
+		rowData.add("" + ttlTaxable);
+		rowData.add("" + ttlTcs);
+		rowData.add("" + ttlGrand);	
+		
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
 
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
@@ -6069,11 +6090,11 @@ System.out.println("----------"+poList);
 			e.printStackTrace();
 		}
 
-		PdfPTable table = new PdfPTable(8);
+		PdfPTable table = new PdfPTable(9);
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
+			table.setWidths(new float[] { 2.4f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f, 3.2f });
 			Font headFont = new Font(FontFamily.TIMES_ROMAN, 12, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 12, Font.BOLD, BaseColor.BLACK);
 			headFont1.setColor(BaseColor.WHITE);
@@ -6121,6 +6142,13 @@ System.out.println("----------"+poList);
 			hcell.setBackgroundColor(BaseColor.PINK);
 
 			table.addCell(hcell);
+			
+			hcell = new PdfPCell(new Phrase("TCS Amount", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			hcell.setBackgroundColor(BaseColor.PINK);
+
+			table.addCell(hcell);
+			
 			hcell = new PdfPCell(new Phrase("Total Amount", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			hcell.setBackgroundColor(BaseColor.PINK);
@@ -6174,6 +6202,13 @@ System.out.println("----------"+poList);
 				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase("" + work.getTaxableAmt(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				cell.setPaddingRight(2);
+				cell.setPadding(3);
+				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase("" + work.getTcsAmt(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(2);

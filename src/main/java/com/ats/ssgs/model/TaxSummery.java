@@ -17,6 +17,7 @@ public class TaxSummery {
 	private float sgstAmt;
 	private float cgstAmt;
 	private float igstAmt;
+	private float grandTotal;
 	private float tcsAmt;
 
 	public int getBillDetailId() {
@@ -107,12 +108,20 @@ public class TaxSummery {
 		this.tcsAmt = tcsAmt;
 	}
 
+	public float getGrandTotal() {
+		return grandTotal;
+	}
+
+	public void setGrandTotal(float grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+
 	@Override
 	public String toString() {
 		return "TaxSummery [billDetailId=" + billDetailId + ", custGstNo=" + custGstNo + ", custName=" + custName
 				+ ", gstPer=" + gstPer + ", taxableAmt=" + taxableAmt + ", taxAmt=" + taxAmt + ", totalAmt=" + totalAmt
-				+ ", sgstAmt=" + sgstAmt + ", cgstAmt=" + cgstAmt + ", igstAmt=" + igstAmt + ", tcsAmt=" + tcsAmt + "]";
+				+ ", sgstAmt=" + sgstAmt + ", cgstAmt=" + cgstAmt + ", igstAmt=" + igstAmt + ", grandTotal="
+				+ grandTotal + ", tcsAmt=" + tcsAmt + "]";
 	}
-
 
 }

@@ -187,7 +187,8 @@
 											<th style="text-align: center">Product Name</th>	
 											<th style="text-align: center">Rate</th>										
 											<th style="text-align: center">Qty.</th>											
-											<th style="text-align: center">Taxable Amount</th>											
+											<th style="text-align: center">Taxable Amount</th>
+											<th style="text-align: center">TCS Amount</th>											
 											<th style="text-align: center">Total Amount</th>
 										</tr>
 									</thead>
@@ -378,11 +379,23 @@
 									var dataTable = $('#bootstrap-data-table')
 											.DataTable();
 									dataTable.clear().draw();
+									
+									var ttlRate = 0;
+									var ttlQty= 0;
+									var ttlTaxable = 0;
+									var ttlGrand = 0;
+									var ttlTcs = 0;
 
 									$
 											.each(
 													data,
 													function(i, v) {
+														
+														ttlTaxable= ttlTaxable+v.taxableAmt;
+														ttlRate = ttlRate+v.rate;
+														ttlQty = ttlQty+v.qty;
+														ttlGrand = ttlGrand+v.grandTotal;
+														ttlTcs = ttlTcs+v.tcsAmt;
 
 														var acButton = '<a href="#" class="action_btn" onclick="callEdit('
 																+ v.custId
@@ -403,13 +416,61 @@
 																					.toFixed(2),
 																				v.taxableAmt
 																					.toFixed(2),
-																				v.totalAmt
+																				v.tcsAmt
+																					.toFixed(2),
+																				v.grandTotal
 																					.toFixed(2)/* ,
 																				acButton */
 
 																		])
 																.draw();
 													});
+									
+									var tr1 = $('<tr></tr>');
+									tr1
+									.append($(
+											'<td></td>')
+											.html(''));	
+									
+									tr1
+									.append($(
+											'<td></td>')
+											.html(''));	
+
+									tr1
+										.append($(
+													'<td></td>')
+													.html('Total'));									
+									tr1
+									.append($(
+												'<td></td>')
+												.html(''));	
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlRate.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlQty.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlTaxable.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlTcs.toFixed(2)));
+									tr1
+									.append($(
+											'<td></td>')
+											.html(ttlGrand.toFixed(2)));
+									
+									
+									$(
+									'#bootstrap-data-table tbody')
+									.append(
+											tr1);
 
 								});
 

@@ -12,6 +12,9 @@ public class GetDailySalesReport {
 	private float cgstAmt;
 	private float sgstAmt;
 	private float totalAmt;
+	private float grandTotal;
+	private float tcsAmt;
+	
 	public String getId() {
 		return id;
 	}
@@ -72,12 +75,24 @@ public class GetDailySalesReport {
 	public void setTotalAmt(float totalAmt) {
 		this.totalAmt = totalAmt;
 	}
+	public float getGrandTotal() {
+		return grandTotal;
+	}
+	public void setGrandTotal(float grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+	public float getTcsAmt() {
+		return tcsAmt;
+	}
+	public void setTcsAmt(float tcsAmt) {
+		this.tcsAmt = tcsAmt;
+	}
 	@Override
 	public String toString() {
 		return "GetDailySalesReport [id=" + id + ", custName=" + custName + ", siteName=" + siteName + ", itemDesc="
 				+ itemDesc + ", qty=" + qty + ", rate=" + rate + ", taxableAmt=" + taxableAmt + ", cgstAmt=" + cgstAmt
-				+ ", sgstAmt=" + sgstAmt + ", totalAmt=" + totalAmt + "]";
+				+ ", sgstAmt=" + sgstAmt + ", totalAmt=" + totalAmt + ", grandTotal=" + grandTotal + ", tcsAmt="
+				+ tcsAmt + "]";
 	}
-	
-	
+
 }
