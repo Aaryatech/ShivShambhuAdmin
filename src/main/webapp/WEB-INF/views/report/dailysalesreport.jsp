@@ -464,8 +464,7 @@
 									tr1
 									.append($(
 											'<td></td>')
-											.html(ttlGrand.toFixed(2)));
-									
+											.html(ttlGrand.toFixed(2)));									
 									
 									$(
 									'#bootstrap-data-table tbody')

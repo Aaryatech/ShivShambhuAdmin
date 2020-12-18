@@ -360,6 +360,7 @@
 					var ttlIgst = 0;
 
 					$.each(data, function(i, v) {
+						
 						ttlTaxable= ttlTaxable+v.taxableAmt;
 						ttlCgst = ttlCgst+v.cgstAmt;
 						ttlSgst = ttlSgst+v.sgstAmt;

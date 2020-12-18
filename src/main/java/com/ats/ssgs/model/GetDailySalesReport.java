@@ -87,6 +87,7 @@ public class GetDailySalesReport {
 	public void setTcsAmt(float tcsAmt) {
 		this.tcsAmt = tcsAmt;
 	}
+	
 	@Override
 	public String toString() {
 		return "GetDailySalesReport [id=" + id + ", custName=" + custName + ", siteName=" + siteName + ", itemDesc="
