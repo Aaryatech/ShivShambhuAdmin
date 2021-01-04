@@ -198,6 +198,8 @@ public class BillController {
 			model.addObject("billHeadId", billHeadId);
 			model.addObject("custId", pdfCustId);
 
+			billHeadId=0;
+			
 			Plant[] plantArray = rest.getForObject(Constants.url + "getAllPlantList", Plant[].class);
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
