@@ -216,11 +216,13 @@ public class BillController {
 			String var = null;
 			String a = editPlant.getExVar2();
 			if (String.valueOf(a).length() == 1) {
+				
 				var = "000".concat(String.valueOf(a));
 
 			} else if (String.valueOf(a).length() == 2) {
+				
 				var = "00".concat(String.valueOf(a));
-
+				
 			}
 
 			model.addObject("var", var);
