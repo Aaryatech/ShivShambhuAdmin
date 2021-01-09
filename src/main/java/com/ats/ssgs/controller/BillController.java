@@ -79,6 +79,7 @@ import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.master.Setting;
+import com.ats.ssgs.model.master.States;
 import com.ats.ssgs.model.master.Vendor;
 import com.ats.ssgs.model.prodrm.RmcQuotTemp;
 import com.ats.ssgs.model.rec.PayRecoveryHead;
@@ -1918,7 +1919,7 @@ public class BillController {
 			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("bill/allBillPdf");
-
+		int custId = 0;
 		try {
 
 			RestTemplate rest = new RestTemplate();
@@ -1946,6 +1947,8 @@ public class BillController {
 				String printWord = Currency
 						.convertToIndianCurrency(String.valueOf(Math.round(billHeaders.get(i).getTotalAmt())));
 				billHeaders.get(i).setPrintWord(printWord);
+				
+				custId=billHeaders.get(i).getCustId();
 			}
 
 			String settingsValues = new String();
@@ -1983,6 +1986,14 @@ public class BillController {
 			model.addObject("tcsPer", tcsPer);
 			
 			model.addObject("val", "");
+			
+			System.out.println("Cust Id Found------------"+custId);
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("custId", custId);
+			States states = rest.postForObject(Constants.url + "getStatesByCust", map,States.class);
+			
+			model.addObject("custState", states.getStateName());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

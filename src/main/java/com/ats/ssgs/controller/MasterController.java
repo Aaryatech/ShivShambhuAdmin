@@ -46,6 +46,7 @@ import com.ats.ssgs.model.master.LoginResUser;
 import com.ats.ssgs.model.master.Plant;
 import com.ats.ssgs.model.master.Project;
 import com.ats.ssgs.model.master.Setting;
+import com.ats.ssgs.model.master.States;
 import com.ats.ssgs.model.master.Tax;
 import com.ats.ssgs.model.master.Uom;
 import com.ats.ssgs.model.master.User;
@@ -63,6 +64,7 @@ public class MasterController {
 	List<ItemType> itemTypeList;
 	List<Tax> getTaxList;
 	List<GetVendor> getVendList;
+	List<States> statesList;
 	int isError = 0;
 
 	@RequestMapping(value = "/showAddVendor", method = RequestMethod.GET)
@@ -1089,6 +1091,11 @@ public class MasterController {
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
+			
+			States[] statesArray = rest.getForObject(Constants.url + "getStatesList", States[].class);
+			statesList = new ArrayList<States>(Arrays.asList(statesArray));
+
+			model.addObject("statesList", statesList);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
@@ -1213,6 +1220,14 @@ public class MasterController {
 			String custVendor = request.getParameter("cust_vendor");
 
 			int sameState = Integer.parseInt(request.getParameter("state"));
+			
+			int state = 0;
+			try{
+				state = Integer.parseInt(request.getParameter("cust_state"));
+			}catch (Exception e) {
+				state = 0;
+			}
+			
 			int gstReg = Integer.parseInt(request.getParameter("gstReg"));
 			String dateOfReg = request.getParameter("reg_date");
 
@@ -1263,6 +1278,7 @@ public class MasterController {
 			cust.setPlantId(plantId);
 			cust.setIsSameState(sameState);
 			cust.setExInt1(gstReg);
+			cust.setExInt3(state);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("docCode", 9);
@@ -1435,6 +1451,12 @@ public class MasterController {
 			plantList = new ArrayList<Plant>(Arrays.asList(plantArray));
 
 			model.addObject("plantList", plantList);
+			
+			States[] statesArray = rest.getForObject(Constants.url + "getStatesList", States[].class);
+			statesList = new ArrayList<States>(Arrays.asList(statesArray));
+
+			model.addObject("statesList", statesList);
+
 
 			CustType[] custTypeArray = rest.getForObject(Constants.url + "getAllCustTypeList", CustType[].class);
 			custTypeList = new ArrayList<CustType>(Arrays.asList(custTypeArray));
@@ -1564,7 +1586,14 @@ public class MasterController {
 		return model;
 
 	}
-
+	
+	
+	@RequestMapping(value = "/getStatesList", method = RequestMethod.GET)
+	@ResponseBody
+	public List<States> getStatesList(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("statesList "+statesList);
+		return statesList;
+	}
 	@RequestMapping(value = "/insertItem", method = RequestMethod.POST)
 	public String insertItem(HttpServletRequest request, HttpServletResponse response) {
 
