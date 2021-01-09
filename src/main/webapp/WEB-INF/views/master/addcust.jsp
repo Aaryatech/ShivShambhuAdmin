@@ -61,7 +61,7 @@
 </head>
 <body>
 
-
+<c:url var="getStatesList" value="/getStatesList"/>
 	<!-- Left Panel -->
 	<jsp:include page="/WEB-INF/views/common/left.jsp"></jsp:include>
 	<!-- Left Panel -->
@@ -409,16 +409,16 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Is same State?</div>
+									<div class="col-md-2">Is TCS Applicable?</div>
 
 
 									<div class="col-md-1">
-										Yes <input type="radio" checked name="state" id="state"
-											value="1">
+										Yes <input type="radio" name="isTcs" id="isTcsY" value="1">
 									</div>
 
 									<div class="col-md-1">
-										NO <input type="radio" name="state" id="state" value="0">
+										NO <input type="radio" name="isTcs" checked id="isTcsN"
+											value="0">
 									</div>
 
 
@@ -482,15 +482,33 @@
 								<div class="form-group"></div>
 								
 								<div class="row">
-									<div class="col-md-2">Is TCS Applicable?</div>
+									<div class="col-md-2">Is same State?</div>
 
 									<div class="col-md-1">
-										Yes <input type="radio" name="isTcs" id="isTcsY" value="1">
+										Yes <input type="radio" checked name="state" id="statey"
+											value="1" onchange="selState(this.value)">
 									</div>
 
 									<div class="col-md-1">
-										NO <input type="radio" name="isTcs" checked id="isTcsN"
-											value="0">
+										NO <input type="radio" name="state" id="staten" value="0"
+										onchange="selState(this.value)">
+									</div>
+									
+									<div class="col-md-2"></div>
+									
+									<div id="all_state" class="col-md-6">
+									<div class="col-md-4">Select State</div>									
+									<div class="col-md-8">
+										<select id="cust_state" name="cust_state" class="standardSelect"
+											tabindex="1" data-placeholder="Select State"
+											oninvalid="setCustomValidity('Please select customer state')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+												<option value="-1">Select State</option>
+											<c:forEach items="${statesList}" var="statesList">
+												<option value="${statesList.stateId}">${statesList.stateName}</option>
+											</c:forEach>
+										</select>
+									</div>
 									</div>
 								</div>
 								<div class="form-group"></div>
@@ -692,8 +710,43 @@
 			}
 
 		}
+		
+		function selState(val){
+			
+			
+			$.getJSON('${getStatesList}', {					
+				ajax : 'true'
+				}, function(data) {
+				
+				var len = data.length;
+				var htmld;
+				
+					$('#cust_state').find('option').remove().end()
+					/* $("#cust_state").append(
+					 $("<option value='-1'>Select State</option>")); */
+					for (var i = 0; i < len; i++) {
+					if(val==1){							
+						if(data[i].stateId==1){
+						htmld = $("<option selected></option>").attr(
+								"value", data[i].stateId).text(
+										data[i].stateName);
+						}
+					} else{
+						htmld = $("<option></option>").attr(
+								"value", data[i].stateId).text(
+										data[i].stateName);
+					}
+					$("#cust_state").append(htmld);
+				}
+				$("#cust_state").trigger("chosen:updated");
+				});
+		
+	}
+		
+		$(document).ready(function () {
+			selState($("#submitForm input[name=state]").val()); 
+		});
 	</script>
-
 
 </body>
 </html>

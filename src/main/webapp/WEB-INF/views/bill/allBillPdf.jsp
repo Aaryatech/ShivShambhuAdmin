@@ -132,9 +132,12 @@
 								style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
 								PAN No: ${billHeaderRes.custPanNo}</p>
 							</c:if>
-						<p
-							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">State
-							: Maharashtra</p>
+							
+							<c:if test="${not empty custState}">	
+							<p
+								style="color: #000; font-size: 12px; text-align: left; margin: 0px;">State
+								: ${custState}</p>
+							</c:if>
 						<p
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">Contact:
 							${billHeaderRes.custMobNo}</p>
@@ -387,10 +390,14 @@
 								style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
 								PAN No: ${billHeaderRes.custPanNo}</p>
 						</c:if>
+						
+						<c:if test="${not empty custState}">
+							<p
+								style="color: #000; font-size: 12px; text-align: left; margin: 0px;">State
+								: ${custState}</p>
+						</c:if>
 						<p
-							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">State
-							: Maharashtra</p>
-						<p
+						
 							style="color: #000; font-size: 12px; text-align: left; margin: 0px;">Contact:
 							${billHeaderRes.custMobNo}</p>
 

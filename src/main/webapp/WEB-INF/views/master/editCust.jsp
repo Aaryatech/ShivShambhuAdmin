@@ -56,7 +56,7 @@
 </style>
 </head>
 <body>
-
+<c:url var="getStatesList" value="/getStatesList"/>
 
 	<!-- Left Panel -->
 	<jsp:include page="/WEB-INF/views/common/left.jsp"></jsp:include>
@@ -189,7 +189,7 @@
 
 									<div class="col-md-4">
 										<input type="text" id="email" name="email" autocomplete="off"
-											style="width: 100%;" class="form-control" required
+											style="width: 100%;" class="form-control" 
 											oninvalid="setCustomValidity('Please enter email')"
 											maxlength="50" value="${editCust.custEmail}"
 											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
@@ -206,7 +206,7 @@
 									<!-- pattern="[A-Za-z]{5}\d{4}[A-Za-z]{1}" -->
 									<div class="col-md-4">
 										<input type="text" id="pan_no" name="pan_no"
-											value="${editCust.custPanNo}" autocomplete="off"											
+											value="${editCust.custPanNo}" autocomplete="off"
 											onkeydown="upperCaseF(this)" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct pan no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
@@ -218,8 +218,8 @@
 									<div class="col-md-4">
 										<input type="text" id="gst_no" name="gst_no"
 											autocomplete="off" value="${editCust.custGstNo}"
+											class="form-control" onkeydown="upperCaseF(this)"
 											class="form-control"
-											onkeydown="upperCaseF(this)" class="form-control"
 											oninvalid="setCustomValidity('Please enter correct GST no')"
 											onchange="try{setCustomValidity('')}catch(e){}"
 											style="width: 100%;">
@@ -447,46 +447,18 @@
 											onchange="try{setCustomValidity('')}catch(e){}">
 									</div>
 
-									<div class="col-md-2">Is same State?</div>
-
-									<c:choose>
-										<c:when test="${editCust.isSameState==0}">
-											<div class="col-md-1">
-
-												<input type="radio" name="state" id="state" value="1">Yes
-
-											</div>
+									<div class="col-md-2">Is TCS Applicable?</div>
 
 
+									<div class="col-md-1">
+										Yes <input type="radio" name="isTcs" id="isTcsY" value="1"
+											${editCust.exBool1==1 ? 'checked' : ''}>
+									</div>
 
-											<div class="col-md-1">
-												<input type="radio" name="state" value="0" checked>
-												No
-
-											</div>
-										</c:when>
-										<c:when test="${editCust.isSameState==1}">
-											<div class="col-md-1">
-
-												<input type="radio" name="state" id="state" value="1"
-													checked>Yes
-											</div>
-											<div class="col-md-1">
-												<input type="radio" name="state" value="0"> No
-
-											</div>
-										</c:when>
-										<c:otherwise>
-											<div class="col-md-1">
-												Yes <input type="radio" checked name="state" id="state"
-													value="1">
-											</div>
-
-											<div class="col-md-1">
-												NO <input type="radio" name="state" id="state" value="0">
-											</div>
-										</c:otherwise>
-									</c:choose>
+									<div class="col-md-1">
+										NO <input type="radio" name="isTcs" id="isTcsN" value="0"
+											${editCust.exBool1==0 ? 'checked' : ''}>
+									</div>
 								</div>
 								<div class="form-group"></div>
 
@@ -566,20 +538,45 @@
 										</c:otherwise>
 									</c:choose>
 								</div>
-								
-									<div class="form-group"></div>
+
+								<div class="form-group"></div>
 								<div class="row">
-									<div class="col-md-2">Is TCS Applicable?</div>
+									<div class="col-md-2">Is same State?</div>
 
 
 									<div class="col-md-1">
-										Yes <input type="radio" name="isTcs" id="isTcsY"
-										 value="1" ${editCust.exBool1==1 ? 'checked' : ''}>
+
+										<input type="radio" name="state" id="state" value="1"
+											onchange="selState(this.value)"
+											${editCust.isSameState==1 ? 'checked' : ''}>Yes
+
 									</div>
 
 									<div class="col-md-1">
-										NO <input type="radio" name="isTcs" id="isTcsN"
-											value="0" ${editCust.exBool1==0 ? 'checked' : ''}>
+										<input type="radio" name="state" value="0"
+											onchange="selState(this.value)"
+											${editCust.isSameState==0 ? 'checked' : ''}> No
+
+									</div>
+
+									<div class="col-md-2"></div>
+									<div class="col-md-2">Select State</div>		
+									<div class="col-md-4" id="all_state">
+										<select id="cust_state" name="cust_state"
+											class="standardSelect" tabindex="1"
+											oninvalid="setCustomValidity('Please select customer state')"
+											onchange="try{setCustomValidity('')}catch(e){}">
+											<c:forEach items="${statesList}" var="statesList">
+												<c:choose>
+													<c:when test="${editCust.exInt3==statesList.stateId}">
+														<option selected value="${statesList.stateId}">${statesList.stateName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${statesList.stateId}">${statesList.stateName}</option>
+													</c:otherwise>
+												</c:choose>
+											</c:forEach>
+										</select>
 									</div>
 								</div>
 
@@ -732,8 +729,84 @@
 			}
 
 		}
+		
+		
+		function selState(val){
+						
+			
+				$.getJSON('${getStatesList}', {					
+					ajax : 'true'
+					}, function(data) {
+					
+					var len = data.length;
+					var htmld;
+					
+						$('#cust_state').find('option').remove().end()
+						/*$("#cust_state").append(
+						 $("<option value='-1'>All</option>")); */
+						for (var i = 0; i < len; i++) {
+						if(val==1){							
+							if(data[i].stateId==1){
+							htmld = $("<option selected></option>").attr(
+									"value", data[i].stateId).text(
+											data[i].stateName);
+							}else{
+								htmld = $("<option></option>").attr(
+										"value", data[i].stateId).text(
+												data[i].stateName);
+							} 
+						}else{
+							if(data[i].stateId==${editCust.exInt3}){
+								
+								htmld = $("<option selected ></option>").attr(
+										"value", data[i].stateId).text(
+												data[i].stateName);
+								}else{
+									htmld = $("<option></option>").attr(
+											"value", data[i].stateId).text(
+													data[i].stateName);
+								} 
+						}
+						$("#cust_state").append(htmld);
+					}
+					$("#cust_state").trigger("chosen:updated");
+					});
+			
+		}
+		$(document).ready(function () {
+			selState(${editCust.isSameState}); 
+		});
+		
 	</script>
 
-
+	<script>
+	function setAllFrSelected(frId) {
+	//alert("frId" + frId);
+	//alert("hii")
+	if (frId == -1) {
+	
+	$.getJSON('${getFrListofAllFr}', {
+	
+	ajax : 'true'
+	}, function(data) {
+	
+	var len = data.length;
+	
+	//alert(len);
+	
+		$('#selectFr').find('option').remove().end()
+		$("#selectFr").append(
+		$("<option value='-1'>All</option>"));
+		for (var i = 0; i < len; i++) {
+		$("#selectFr").append(
+		$("<option selected ></option>").attr(
+		"value", data[i].frId).text(
+		data[i].frName));
+	}
+	$("#selectFr").trigger("chosen:updated");
+	});
+	}
+	}
+</script>
 </body>
 </html>
